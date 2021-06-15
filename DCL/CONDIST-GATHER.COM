@@ -17,13 +17,20 @@ $! The CDROM's [CDROM]CD_CONTENTS.DAT will then be copied to VAXVMS_CONDIST_yyyy
 $! A subdirectory [.VAXVMS_CONDIST_yyyy_mm_nn] will be created in the target directory.
 $! All text and PostScript SPDs on the CDROM will be copied into this subdirectory.
 $!
-$! Note that on the early CONDISTS (at least until NOV 1989) the CD_CONTENTS.DAT on each CONDIST only listed products on that specific CDROM.
-$! Later CONDISTS changed to list all the products and also listed all the CDROM volume names.
+$! For an OpenVMS Alpha CONDIST, the same actions will happen except that the target will be AXP_VMS_CONDIST_yyyy_mm_nn.
+$!
+$! NOTES
+$!
+$! On the early CONDISTS (at least until NOV 1989) the CD_CONTENTS.DAT on each CONDIST only listed products on that
+$! specific CDROM. Later CONDISTS changed to list all the products and also listed all the CDROM volume names.
 $! This command procedure only works with the latter format.
 $!
-$! Further note that early CONDISTs kept TXT and PS docs in [product.LINE_DOCS] and [product.POST_DOCS] subdirectories. This later
-$! switched to keeping all the documents together in a [product.DOCUMENTATION] subdirectory. This command procedure copies from all
-$! three possible locations and just ignores errors from whichever set does not exist.
+$! Early CONDISTs kept TXT and PS docs in [product.LINE_DOCS] and [product.POST_DOCS] subdirectories.
+$! This later switched to keeping all the documents together in a [product.DOCUMENTATION] subdirectory. This command procedure
+$! copies from all three possible locations and just ignores errors from whichever set does not exist.
+$!
+$! By August 1994 the %RELEASE_DATE field on OpenVMS Alpha CONDISTs had changed to use three letter short form months
+$! (Aug rather than August).
 $!
 $! Inputs:
 $!
@@ -41,8 +48,31 @@ $ CDROM_DEVICE = P1
 $ CDROM_CONTENTS_FILENAME = "''CDROM_DEVICE'[CDROM]CD_CONTENTS.DAT"
 $ DESTINATION_DIRECTORY = P2
 $!
+$ STOP_ON_ERROR = 0
+$ IF CDROM_DEVICE .EQS. ""
+$ THEN
+$     say "First parameter must specify CDROM device"
+$     STOP_ON_ERROR = 1
+$ ELSE
+$     IF .NOT. F$GETDVI(CDROM_DEVICE, "MNT")
+$     THEN
+$         say "First parameter must specify a mounted device"
+$         STOP_ON_ERROR = 1
+$     ENDIF
+$ ENDIF
+$!
+$ IF P2 .EQS. ""
+$ THEN
+$     say "Second parameter must specify target directory"
+$     STOP_ON_ERROR = 1
+$ ENDIF
+$!
+$ IF STOP_ON_ERROR .NE. 0 THEN EXIT %X10
+$!
 $! Parse CD_CONTENTS.DAT on teh CDROM to work out which CDROM it is and write the final name ot 'OUTPUT_NAME'
 $ CALL BUILD_CDROM_NAME 'CDROM_DEVICE' 'CDROM_CONTENTS_FILENAME' OUTPUT_NAME
+$ STATUS = $STATUS
+$ IF .NOT. STATUS THEN EXIT STATUS
 $!
 $ CONTENTS_FILENAME = DESTINATION_DIRECTORY + OUTPUT_NAME + "_CD_CONTENTS.DAT"
 $ CALL COPY_CD_CONTENTS 'CDROM_CONTENTS_FILENAME' 'CONTENTS_FILENAME'
@@ -96,11 +126,12 @@ $!+
 $! Builds a name that represents the CDROM specified by the device named in P1.
 $!
 $! The destination filename will be of the form:
-$!    VAXVMS_CONDIST_yyyy_mm_vv_CD_CONTENTS
+$!    VAXVMS_CONDIST_yyyy_mm_vv_CD_CONTENTS for OpenVMS VAX CONDISTs
+$!    AXPVMS_CONDIST_yyyy_mm_vv_CD_CONTENTS for OpenVMS Alpha CONDISTs
 $! where
 $!    yyyy: is the four digit year (found from CD_CONTENTS.DAT)
 $!    mm:   is the two digit month (found from CD_CONTENTS.DAT)
-$!    vv:   is the two digit disc number in the set (found by comparing the CDROM device volume label with the list in CD_CONTENTS.DAT)
+$!    vv:   is the two digit disc number in the set (found by comparing the CDROM volume label with the list in CD_CONTENTS.DAT)    
 $!
 $! We look for the following lines in CD_CONTENTS.DAT:
 $! This line means this is a CONDIST CD:
@@ -108,6 +139,7 @@ $!   %TYPE CONDIST
 $!
 $! This line lists the labels of the discs in the set. We can use this to determine part of the name of our output file:
 $!   %LABEL CDBIN04MAR21,CDBIN04MAR22,CDBIN04MAR23,CDBIN04MAR24,CDBIN04MAR25,CDBIN04MAR26
+$! If the first label starts with AXP, then this is an OpenVMS Alpha CONDIST.
 $!
 $! This line gives us the CDROM date and is used to form part of the name of the output file:
 $!   %RELEASE_DATE March 1992
@@ -121,6 +153,7 @@ $! P3: symbol that will hold the resulting CDROM name
 $!-
 $BUILD_CDROM_NAME: SUBROUTINE
 $ dbg "in sub COPY_CD_CONTENTS: p1=[''p1'] p2=[''p2']"
+$ HW = "VAX"  ! This will change to "AXP" if an Alpha volume label is found later
 $ CONDIST = 0
 $ VOLUME_NAMES = ""
 $ RELEASE_DATE = ""
@@ -157,37 +190,41 @@ $ VOLUME_NUMBER = 1
 $VOLUME_LOOP:
 $ VOLNAM = F$ELEMENT(VOLUME_NUMBER - 1, ",", VOLUME_NAMES)
 $ IF VOLNAM .EQS. "," THEN GOTO NO_SUCH_VOLUME
+$! If the first label starts "AXP", then this is an OpenVMS Alpha CONDIST
+$ IF (VOLUME_NUMBER .EQ. 1) .AND. (F$EXTRACT(0,3,VOLNAM) .EQS. "AXP") THEN HW = "AXP" 
 $ IF VOLNAM .EQS. ACTUAL_VOLUME_NAME THEN GOTO VOLUME_FOUND
 $ VOLUME_NUMBER = VOLUME_NUMBER + 1
 $ GOTO VOLUME_LOOP
 $NO_SUCH_VOLUME:
-$ say "Device ''P1' has volume label [''VOLNAM''] which does not appear in the list of CDROM labels: [''VOLUME_NAMES']"
-$ EXIT %4
+$ say "Device ''P1' has volume label [''ACTUAL_VOLUME_NAME''] which does not appear in the list of CDROM labels: [''VOLUME_NAMES']"
+$ EXIT %X4
 $VOLUME_FOUND:
 $!
 $! Turn a date like "March 1989" into "1989-03"
 $ MONTH_TEXT = F$EDIT(RELEASE_MONTH, "UPCASE,TRIM")
 $ YEAR = F$EDIT(RELEASE_YEAR, "UPCASE,TRIM")
 $ MONTHS_OF_THE_YEAR = "JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER"
+$ SHORT_MONTHS_OF_THE_YEAR = "JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC"
 $ MONTH = 1
 $ dbg "Looking for [''MONTH_TEXT']"
 $MONTH_LOOP:
 $ CANDIDATE_MONTH = F$ELEMENT(MONTH - 1, ",", MONTHS_OF_THE_YEAR)
-$ IF CANDIDATE_MONTH .EQS. "," THEN GOTO NO_SUCH_MONTH
 $ IF CANDIDATE_MONTH .EQS. MONTH_TEXT THEN GOTO MONTH_FOUND
-$ dbg "month = ''MONTH'  candidate=[''candidate_moth']"
+$ CANDIDATE_SHORT_MONTH = F$ELEMENT(MONTH - 1, ",", SHORT_MONTHS_OF_THE_YEAR)
+$ IF CANDIDATE_SHORT_MONTH .EQS. MONTH_TEXT THEN GOTO MONTH_FOUND
+$ IF (CANDIDATE_MONTH .EQS. ",") .AND. (CANDIDATE_SHORT_MONTH .EQS. ",") THEN GOTO NO_SUCH_MONTH
 $ MONTH = MONTH + 1
 $ GOTO MONTH_LOOP
 $NO_SUCH_MONTH:
 $ say "Month [''MONTH_TEXT'] is not a known month of the year: [''MONTHS_OF_THE_YEAR']"
-$ EXIT %6
+$ EXIT %X6
 $MONTH_FOUND:
 $!
 $ dbg "CONDIST = ", CONDIST
 $ dbg "YEAR = ", YEAR
 $ dbg "MONTH = ", MONTH
 $ dbg "VOLNUM = ", VOLUME_NUMBER
-$ CDROM_NAME = "VAXVMS_CONDIST_"
+$ CDROM_NAME = HW + "VMS_CONDIST_"
 $ CDROM_NAME = CDROM_NAME + YEAR + "_"
 $ IF MONTH .LE. 9 THEN CDROM_NAME = CDROM_NAME + "0"
 $ CDROM_NAME = CDROM_NAME + "''MONTH'" + "_"
