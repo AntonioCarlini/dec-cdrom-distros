@@ -1,0 +1,226 @@
+PRODUCT NAME:  VAX Volume Shadowing, Version 5.1 	   SPD 27.29.04
+    
+DESCRIPTION 
+    
+VAX Volume Shadowing is a feature available on VMS systems using HSC
+controllers with RA-series disks. This feature enhances data availability by
+duplicating all data written to disk onto two or three compatible disk
+volumes. (Compatible disks are those that have the same physical geometry.) 
+The system disk and FILES-11 ODS2 data disks may be volume shadowed.  Shadow
+sets may be used as constituents of a volume set. 
+    
+A set of two or three disks on which the data is duplicated is called a
+``shadow set''.  A disk which is part of a shadow set is called a ``member''.
+ Every member of a shadow set is identical to every other member of the
+shadow set.  In the event of failure of any shadow set member, disk
+input/output continues with the remaining member(s) of the shadow set. Since
+it does not provide for recovery from accidental file deletion, volume
+shadowing is not a complete substitute for regular BACKUP operations. 
+    
+Shadow Set Membership 
+    
+The minimum number of disks in a shadow set is one. The maximum number of
+disks in a shadow set is three.  The ability to have a shadow set with only a
+single member allows a two-member shadow set to continue operation after the
+failure of one member. It also allows normal operation of a single member
+shadow set and addition of a second member during a volume backup procedure. 
+ 
+Refer to the ``Restrictions'' section of this SPD for further information on
+shadow set membership. 
+    
+Transparency to the End User 
+    
+The shadow set appears to act as a single disk, that is, the user makes no
+effort to have the data propagated to all of the members of a shadow set. 
+Rather, it is a task of the volume shadowing function to replicate the data
+on all shadow set members. 
+    
+The syntax and semantics of reading and writing data to and from a shadow set
+is identical to the syntax and semantics used for non-shadowed I/O
+operations. That is, all commands and program language features which address
+data on non-shadowed disks may be used to address data on shadowed disks. 
+    
+Enabling and disabling shadowing for a particular disk requires dismounting
+and remounting the disk. Disks may be added to or removed from the shadow set
+without affecting either the end user or any application. 
+    
+Shadow Set Transitions 
+    
+A disk is removed from the shadow set either by operator command, or in the
+event that the disk becomes inoperative.  In the latter case, the removal of
+the shadow set member is performed automatically, no operator intervention is
+required. 
+   
+A disk is added to the shadow set only upon command of the operator. The
+volume shadowing routines ensure that, within a reasonable period of time,
+the newly added shadow set member is made identical to the other member.
+Read/write access to the shadow set is permitted while the new member is
+being made identical to the other member. 
+    
+Disks may be added to or removed from the shadow set at any time. Some
+removal methods guarantee complete data consistency and others do not. When a
+shadow set is properly dismounted and dissolved, i.e. a DISMOUNT command has
+been executed and SHOW DEVICE shows the shadow set as dismounted, all shadow
+set members are fully consistent.  However, disks that are former members of
+an improperly dismounted shadow set may contain inconsistent file system or
+user data. 
+   
+Automatic Failover of Dual-Pathed Disks 
+    
+Shadow set members may be dual-pathed between two HSC controllers, i.e., each
+disk may be connected to each of two controllers.  Should the disks be
+dual-pathed, every disk must be dual-pathed between the same two HSC
+controllers. At any given time, only one HSC actually controls the shadow
+set. In the event of a controller failure, the volume shadowing software
+transfers the shadow set from the failed controller to the operational
+controller. Thus, the remaining controller will continue to perform the I/O
+with no loss of data. 
+    
+Refer to  the ``Restrictions'' section for information on shadow set
+membership. 
+    
+System Disk Shadow Sets 
+   
+The system disk (or boot device), like all other disks, may belong to a
+shadow set. If this is the case, normal system operation is conducted using a
+shadow set that contains the system boot device. However, when no members of
+a VAXcluster system have a shadowed system disk mounted (e.g. when no other
+VAXcluster members are booted), that shadow set does not exist. When the
+required shadow set does not exist, the initial stages of system booting are
+performed using only the single disk system boot device. 
+   
+During this brief interval, a hardware failure occurring in the single disk
+boot device may adversely affect the system's ability to boot. In this
+respect, shadowed system disks are briefly identical to non-shadowed system
+disks. After the initial stages of system booting, shadowed system disks have
+most of the failure recovery properties of shadow sets. 
+   
+Restrictions 
+   
+In a VAXcluster system, the quorum disk cannot be shadowed. 
+ 
+The maximum number of disks per HSC (or per HSC pair in the case of
+dual-pathed disks) that may be shadowed is sixteen. 
+
+The maximum number of shadow sets per HSC (or per HSC pair in the case of
+dual-pathed disks) is eight. 
+
+The maximum number of disks per shadow set is three. 
+
+Advanced Technology Implementation 
+    
+This volume shadowing product combines the efforts of an intelligent
+controller and a host operating system into a single shadowing solution. By
+allowing the two participants to perform those tasks to which they are best
+suited, the volume shadowing product in conjunction with the VMS Operating
+System and the HSC-series controller achieves maximum product performance
+with minimal processor overhead. 
+    
+HARDWARE REQUIREMENTS
+    
+Refer to the VMS Operating System Software Product Description (SPD 25.01.xx)
+and VAXcluster Software Product Description (SPD 29.78.xx) for hardware
+requirements and supported processors. 
+    
+At least one HSC series controller is required. 
+   
+At least two RA-series disks having the same geometry (i.e. of the same type)
+are required. In a VAXcluster system, the quorum file cannot be on a shadowed
+disk. Therefore, in those VAXcluster systems in which a quorum file is being
+used, a minimum of two RA-series disks having the same geometry are required
+for the shadow set, and an additional disk is required for the quorum file. 
+   
+OPTIONAL HARDWARE 
+    
+Shadow sets may contain up to three shadow set members. Each shadow set
+member must be an RA-series disk with geometry identical to that of the other
+shadow set members. 
+    
+For each HSC (or per HSC pair in the case of dual-pathed disks), up to a
+total of sixteen disks may be shadowed. 
+
+CLUSTER ENVIRONMENT
+
+This layered product is fully supported when installed on any valid and
+licensed VAXcluster* configuration without restrictions.  The HARDWARE
+REQUIREMENTS sections of this product's Software Product Description and the
+VMS Operating System Software Product Description (SPD 25.01.xx) detail any
+special hardware required by this product. 
+
+* V5.x VAXcluster configurations are fully described in the VAXcluster 
+  Software Product Description (29.78.xx) and include CI, Ethernet and Mixed 
+  Interconnect configurations.
+  
+SOFTWARE REQUIREMENTS
+    
+VMS Operating System V5.1
+  
+HSC Software, at least at Version 3.5 
+   
+In a VAXcluster system, each VAX must be running the same version of VMS. 
+    
+VMS Tailoring
+
+For VMS 5.0 systems, the VMS Required Saveset contains what is necessary for
+full functionality of this layered product. 
+
+For more information on VMS classes and tailoring, refer to the VMS Operating
+System Software Product Description (SPD 25.01.xx). 
+
+OPTIONAL SOFTWARE
+  
+None
+
+GROWTH CONSIDERATIONS
+  
+The minimum hardware/software requirements for any future version of this
+product may be different from the minimum requirements of the current
+version. 
+
+ORDERING INFORMATION
+
+Software Licenses: QL-AB2A*-**
+Software Documentation: QA-AB2AA-GZ
+Software Product Services: QT-AB2A*-**
+
+*  Denotes variant fields.  For additional information on available licenses, 
+   services and media refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about DIGITAL's
+licensing terms and policies, contact your local DIGITAL office. 
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+This layered product supports the VMS License Management Facility. 
+
+License units for this product are allocated on a CPU-capacity basis. 
+
+For more information on the License Management Facility, refer to the VMS
+Operating System Software Product Description (SPD 25.01.xx) or the License
+Management Utility Manual of the VMS Operating System documentation set. 
+
+For more information on DIGITAL's licensing terms and policies, contact your
+local DIGITAL office. 
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more
+information contact your local DIGITAL office. 
+
+SOFTWARE WARRANTY
+ 
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum of
+this SPD. 
+  
+The above information is valid at the time of release.  Please contact 
+your local DIGITAL office for the most up-to-date information.
+  
+
+
+January 1989
+AE-HP37E-TE
+

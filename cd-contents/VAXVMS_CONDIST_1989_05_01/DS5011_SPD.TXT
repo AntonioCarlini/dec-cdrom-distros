@@ -1,0 +1,675 @@
+PRODUCT NAME: DECserver 500, Version 1.1                      SPD 26.97.01
+              For VMS and MicroVMS 
+
+DESCRIPTION
+
+The DECserver 500 series server is an Ethernet Communications Server for
+Ethernet Local Area Networks (LANs). The DECserver 500 series server can 
+provide up to 128 DEC423, DEC422 or 64 RS-232 asynchronous port connections to
+DIGITAL asynchronous terminals. 
+
+RS-232, via the 8 port CXY08 communication option card, DEC423, via the 
+16 port CXA16 communication option card and DEC422 via the 16 port CXB16 
+communication option card, can be mixed together in any combination from 
+2 to 8 cards in one server.  The DECserver 500 series server provides a 
+convenient method to logically connect up to 128 DIGITAL asynchronous 
+terminals to one or more service nodes (hosts) on an Ethernet.
+
+Once the terminal is connected, a user can utilize application programs and
+utilities as though the terminal was directly connected to a host via a DZ11,
+DMF32, or DHU11 device, with a few exceptions. Thus, it may be possible to 
+utilize the DECserver 500 series server to connect all terminals to service 
+nodes in place of traditional interfaces, except for host console terminals.
+Remote connection via dial-in modems is fully supported.  Refer to the 
+Restrictions section for limitations.
+
+The DECserver 500 series server also allows for VMS host-initiated connections
+to asynchronous printers. A special print symbiont on VMS service nodes can 
+initiate connections to asynchronous printers connected to DECserver ports.
+This allows the printers to be distributed throughout a facility and accessed
+transparently by service node users. Incoming host-initiated connect 
+requests may be queued FIFO at the server.  This special print symbiont is
+included in the software distribution kits for VMS 4.4 and later.
+
+The DECserver 500 series server also provides the capability to connect host
+systems that do not support the LAT protocol, DIGITAL personal computers, and
+dial-out modems directly to ports on the server. Interactive server users 
+can issue commands to connect to services which are offered on such ports. 
+Port-to-port connections on the same server are also supported.
+
+The DECserver 500 series server implements the Local Area Transport 
+(LAT) protocol for communication with service nodes that implement 
+this protocol on the same Ethernet. This interface has been optimized 
+for high terminal I/O performance over an Ethernet, while reducing host 
+CPU cycles required to handle interrupts. Hence, under most I/O loading 
+conditions, a significant performance gain may be realized by using the 
+DECserver 500 series server versus direct terminal connections via DZ11s.
+
+Software that runs on the DECserver 500 series server is downline 
+loaded over the network from a Phase IV DECnet load host. Terminal 
+access using the DECserver 500 series server does not require DECnet 
+running in the same service node; LAT uses the Ethernet addressing mechanism 
+to transport terminal messages. 
+
+Features such as login load balancing, multiple terminal sessions,
+automatic failover, and remote printer support can lead to greater
+user productivity.
+
+For wide area network (WAN) communications, terminal users can connect 
+to a LAN service node running DECnet, where they can ``SET HOST'' to a 
+remote system via the DECnet network terminal protocol. If this system 
+has the requisite X.29 or SNA 3270 access routines, a terminal user could 
+communicate to a remote SNA or X.25 host through the appropriate gateway 
+and this intervening host. A DECserver terminal user cannot communicate 
+directly to remote hosts through DECnet Routers or X.25/SNA Gateways. Wide 
+area network traffic will not provide the same high level of performance as 
+local terminal connections, due to the additional DECnet and internet 
+protocol overhead.
+
+DECserver 500 Series Options
+
+There are three asynchronous communication options currently offered for use 
+in the DECserver 500 series hardware:
+
+^  The CXY08-AA module, containing 8 RS-232-C lines with full modem control
+
+^  The CXA16-AA module, containing 16 DECconnect (DEC423) lines with data- 
+   leads-only control 
+
+^  The CXB16-AA module, containing 16 DECconnect (DEC422) lines with data-
+   leads-only control
+
+The DECserver 500 series server can be ordered in two versions: 
+
+^  DSRVS-CA/CB  A rackmount version which is most suitable 
+   for those customers desiring to utilize a DECconnect, patch panel or 
+   punchdown block wiring scheme.
+
+^  DSRVS-DA/DB  A version which includes plastic skins and should be 
+   utilized only in those situations where the customer will be placing 
+   the unit in an office environment and has capabilities or desires to 
+   implement a DECconnect, patch panel or punchdown block wiring scheme.
+
+The DSRVS-AA/AB/BA/BB are also valid configurations for the DECserver 500
+V1.1 software. However, all features pertaining to modem control, 
+modem support and modem-signal flow control apply to the CXY08 hardware
+option only. In addition, it is strongly recommended that the CXY08 option 
+be used when directly connecting non-LAT host systems to the server. The 
+CXA16 option may be used when connecting most terminals and printers to 
+the server.
+
+Features
+
+Terminal Connection Management
+
+Through the use of a simple command, users can establish a logical 
+connection, called a session, to any service node that implements the 
+LAT protocol on the same Ethernet LAN. This connection makes the terminal 
+appear as if it were physically connected to the service node, and the 
+terminal user can use standard system utilities and applications supported 
+by that node. Each terminal connected to the server can connect to the same 
+or a different service node on the Ethernet. Furthermore, several servers 
+can be used to connect many terminals to one or more service nodes.
+
+A service node can have one or more services that are offered to DECserver 
+500 series users. Services and nodes are identified by name. Users always
+connect to services, not to nodes, although often one of the service names
+will be the node name.  Users can optionally specify a node and/or a port
+name when they connect to a service.
+
+In a VAXcluster environment, the DECserver 500 series server sees each
+VAXcluster on the Ethernet as a collection of service nodes offering a 
+common service.  Each cluster node may also offer a service whose name is
+equivalent to its node name. In this case, a terminal user can connect either
+to the cluster service or a service associated with a particular cluster node.
+
+Non-LAT Host Support
+
+The DECserver 500 series server can be used to provide logical terminal
+connections to hosts that do not implement the LAT protocol. In this type of
+configuration, the server becomes the Ethernet connection and protocol support
+for these hosts. This expands the LAT network accessibility to the terminal
+user to include LAT hosts directly connected to the same Ethernet and hosts
+connected to the LAT network via the DECserver 500 series server.  Non-LAT host 
+support should be implemented through the use of the CXY08 hardware option only.
+
+A host that supports XON/XOFF, ASCII standards and EIA RS-232-C/CCITT 
+V.24/V.28 interfaces can be connected to the DECserver 500 series server. This 
+provides the terminal user with a transparent connection to the non-LAT host.
+It is strongly recommended that server port and the host side port utilize 
+modem control signals to automatically signal the host upon session 
+disconnection.  In this application the server port appears to the host as a
+dial-in modem.  However, hosts that require more than one transition of the
+RING signal are not supported.
+
+In this configuration, there is a one-to-one correspondence between the 
+port on a DECserver 500 series server and the connection on the host. The server
+manager assigns service names to individual ports or groups of ports that
+connect the host interface to the server.
+
+Load Balancing
+
+When a connection is made to a service, the actual node for the connection 
+is determined by load balancing. Load balancing is a process the server 
+uses when more than one node offers the same service. Service nodes do not 
+have to be configured in a cluster in order for load balancing to be used. 
+Service nodes with the same names may be running different operating systems.
+Using the load balancing process, the server connects to the node
+with the highest rating for the service desired. This rating is based on 
+the current loading on the nodes that offer the service.
+
+Multiple Sessions
+
+The DECserver 500 series server allows a single user to establish and 
+maintain up to 8 sessions to one or more service nodes (up to 64), up 
+to a maximum of 256 sessions per DECserver 500 unit when configured with 
+a KDJ11-SB cpu processor. When upgraded with a KDJ11-SD cpu processor, 
+the maximum number of sessions is 512.  Only one session can be active at 
+a time on each port.  Through simple switching commands, the user can access 
+the different sessions without repeating a login dialog each time.  The 
+number of simultaneous LAT sessions supported by a service node depends 
+on the type of operating system running on that node.
+
+Local Mode and Service Mode
+
+For the most part, the environment provided by the DECserver 500 series 
+server is identical to that the user would experience if attached directly 
+to the service node. When operating in this mode, the user is said to be in 
+Service Mode. Occasionally, such as during connection establishment, the 
+user interacts directly with the DECserver 500 series unit. When operating 
+in this mode, the user is in Local Mode.
+
+In Local Mode, the terminal input is interpreted directly by DECserver 500 
+software as commands to be performed by the server. 
+
+Local Mode has three different levels of privilege: privileged, 
+nonprivileged and secure. Privileged mode is provided for the server 
+manager to control the environment of the server and the terminal users. 
+Access to this mode is password protected. Nonprivileged commands allow the 
+terminal user to control their service sessions, set their terminal 
+characteristics and show server information. The server manager can set 
+the server to secure mode on a per-terminal basis which further limits 
+the commands users can enter to only those which directly relate to the 
+user's own terminal.
+
+The server manager environment is a logical extension of the user 
+environment. The server manager is treated as a server user with a 
+privileged status. The server manager sets a terminal to this status 
+using a command which requires a password. This privileged status allows 
+the server manager to enter commands not normally available to server users. 
+These commands set server characteristics, provide control over server port 
+usage, and provide the ability to control the user's access to the server 
+and network services.
+
+In Service Mode, the terminal input is passed directly to the connected 
+service node with several exceptions. One exception, called the local 
+switch character, allows the user to enter Local Mode from Service Mode. 
+The <BREAK> key may also be used for this function.
+
+Other exceptions, called the forward and backward switch characters, allow 
+the user to switch between sessions without the need to enter local mode. 
+The switch characters are disabled by default but may be enabled by 
+command. Both CTRL/S and CTRL/Q are normally interpreted locally but flow 
+control using these characters can be disabled.
+
+Autoconnection
+
+Autoconnection is a function that automatically connects a user 
+terminal to a service node when connection failures occur or upon 
+user login to the server. In conjunction with this function, a 
+dedicated or preferred service can be specified for each terminal 
+user.  If a failure occurs, the server automatically tries every 
+30 seconds to re-establish a connection to the desired service.
+
+If a dedicated service is specified for a port, the DECserver 500 
+series server attempts to connect the port to that service when a 
+character is typed on the terminal keyboard or when an existing 
+connection fails. In dedicated service mode, only one session is 
+available. As this mode is designed to simulate a direct terminal 
+connection, no local mode commands or messages are available to 
+the terminal user. Ports with dedicated service can be automatically 
+logged out of the server when the user logs out of the service node. 
+
+If a preferred service is specified for a port, the DECserver 500 
+server attempts to connect the port to the service as with the 
+dedicated service mode of operation.  However, the terminal user can 
+enter local mode and establish other sessions.
+
+Automatic Session Failover
+
+If a service is available on two or more service nodes and a 
+connection to a service fails, the server attempts to connect 
+the user to another service node offering the same service.  The 
+user does not have to be already connected to that service node. 
+Furthermore, the user's context at the time of failure is not 
+automatically restored and login to the new service is required.
+
+Groups
+
+Every terminal and service node in a LAT network is a member of 
+one or more groups, which are specified by a list of numbers from 
+0 - 255. Groups allow an easy means of subdividing the network into 
+what appears to be many smaller networks. A terminal user is only 
+aware of the services that are offered by nodes in the same group(s).
+
+The server manager can specify the authorized group(s) in which 
+a terminal is a member. The authorized groups define the set of 
+services that the user is allowed to access. In addition, a user 
+can further restrict access to services by disabling some of the 
+authorized groups using a non-privileged group command. The 
+user-settable groups are a subset of the authorized groups.
+
+Groups provide a restrictive view of the network. This restricted 
+view is mainly for user convenience and, although it also provides 
+a form of security, it is not intended to be the primary form of 
+access authorization or system security for a node.  Groups can also 
+be used by the server manager to tune the server's usage of its 
+available memory.
+
+Security
+
+The DECserver 500 software provides functions which enhance security 
+features already available in the service nodes.  DECserver 500 software 
+security includes the ability to lock a terminal's keyboard from other 
+users, optional login protection, and nonprivileged local mode of 
+operation as a default.
+
+A user may lock the terminal using a lock password. This allows the 
+user to leave sessions running at the terminal without fear of security 
+violations. When a terminal is locked, all input from the terminal is 
+ignored until the lock password is re-entered. The lock feature may 
+be disabled by the Server Manager, but not on a per-port basis.
+
+Each terminal port can be set on the server to operate in a secure 
+mode which causes all commands that relate to other users to be 
+disabled for that port. 
+
+The server manager can also define a unique password for each set of server
+ports offered as a service.  This is useful for restricting access to devices
+such as dial-out modems.
+
+Login password protection can be enabled on a per-line basis by the Server 
+Manager.  If enabled, the terminal user must enter a login password to access 
+server functions.  The login password is changeable, but is a server wide
+password.  
+ 
+There is also a maintenance password for protecting unauthorized 
+downline loads of the server or use of the Remote Console Facility 
+(RCF) to remotely manage the server.
+
+The DSRLOGOUT feature can be set for any terminal and is used with 
+the CXY08 and BC22D, BC17D or BC22R cable to detect terminal power 
+down and enact an automatic port logout which disconnects all sessions 
+established from that port.
+
+On modem controlled dial-in ports, the server automatically 
+disconnects an incoming call if the user does not successfully log in 
+to the server within 60 seconds.
+
+In Local Mode, DECserver users normally can use only the server's 
+nonprivileged commands.  In this mode, users may only issue commands 
+that affect their own terminal environment.  The server has a privileged 
+mode for the server manager's use.  This mode is password protected.
+
+Online HELP Facility
+
+A full online reference HELP facility is available. The server's HELP 
+command provides information on the correct syntax and details about 
+each command. In addition, a tutorial HELP feature allows new users to 
+quickly learn the basics of DECserver operation. Tutorial HELP may be 
+entered before logging into the server by typing HELP at the username prompt.
+
+Directory Service
+
+Any DECserver user can obtain a directory of services available 
+to that user with a SHOW SERVICES command. Services for which the 
+user is not authorized will not be displayed.
+
+Permanent Characteristics
+
+Each DECserver 500 series unit has a unique software image on its 
+downline load host. A database of permanent characteristics is kept within 
+each image.  These characteristics can be changed prior to downline 
+load by the server manager or load host manager.   All permanent 
+characteristics can be changed by using the Terminal Server Configurator 
+(TSC) utility provided in the DECserver 500 software distribution kit.
+
+Port Characteristics Configuration
+
+Characteristics governing the operation of an individual port 
+can be displayed by a nonprivileged terminal user interactively 
+from their terminal. Many of the characteristics may be setup by 
+the user, but certain characteristics are privileged and may only 
+be changed by the server manager.
+
+Port parameters that can be set and displayed include: speed, character 
+size, group, parity, terminal type, access, autobaud, modem and 
+password protection.
+
+Port Access
+
+A port on a DECserver 500 series server may be set up in different ways
+depending on the device attached to the port and its intended use.  Port
+access is the characteristic which determines how a port may access or be
+accessed by interactive users and service nodes. 
+
+^  Access Local - Designed for interactive terminals. This allows the device
+   (typically an interactive terminal) attached to the port to CONNECT to LAT
+   services. This type of access is also used for dial-in modems.
+
+^  Access Remote - Designed for applications-driven devices such as
+   asynchronous printers which are allocated by a service node process.
+   This allows the implementation of certain shared printers by multiple
+   service nodes. This type of access is also used for connections to 
+   dial-out modems, and non-LAT host systems by interactive users.
+
+^  Access Dynamic - Designed for devices (such as dial-in/dial-out modems or
+   printers with keyboards) which require both Local and Remote access but
+   not simultaneously.
+
+^  Access None - Designed to allow the server manager to disable the use of 
+   a port. 
+
+With printer support capabilities, the setup procedure of remote printers 
+needs to be done once and is automatically reconfigured on server and/or 
+system startup. The particular server port must be configured for remote 
+access and set up to match the characteristics of the printer. The 
+system startup command file must be modified to call the two command files 
+provided with the service node software.  Finally, the command files 
+themselves must be customized to reflect the environment of their node. 
+
+The server can optionally queue remote connects if these connects cannot be 
+satisfied immediately. This queue management can be enabled for the server 
+by the server manager. Note that this is a connection queue only. 
+
+Terminal Operation
+
+The DECserver 500 software supports the simultaneous operation of up 
+to 128 asynchronous devices at speeds from 50 bps to 38.4K bps under 
+specified application conditions. The software also supports:
+
+^  Full modem control support (with CXY08 hardware option only)
+
+^  Data-leads-only support
+
+^  XON/XOFF flow control
+
+^  CTS/RTS and DSR/DTR flow control (with CXY08 hardware option only)
+
+^  Split speed (transmit and receive) terminal operation
+
+^  Block Mode transfers
+
+^  Automatic terminal line speed detection
+
+^  DIGITAL personal computer file transfer and terminal emulation
+
+^  Data transparency mode
+
+^  Ability to pass BREAK condition.
+
+Terminals Supported
+
+The DECserver 500 software supports the following DIGITAL terminal devices 
+that have keyboards:
+
+^  LA120, LA34, LA35, LA36, LA38, LA75 
+
+^  VT100, VT101, VT102, VT125, VT131
+
+^  VT220, VT240, VT241
+
+^  VT330, VT340 (session management disabled)
+
+Supported terminal parameters are:
+
+Character size: 7 or 8 bits per character
+
+Parity: Even, Odd, or None
+
+The automatic line speed detection (Autobaud) feature is supported for either
+seven-bit characters with even parity or eight-bit characters with no parity.
+
+The DECserver 500 software also supports the following DIGITAL Personal 
+Computers (PCs) in both terminal emulation mode and file transfer mode:
+
+^  Professional 325, 350, 380
+
+^  Rainbow 100A, 100B, 100+, 190
+
+^  DECmate II
+
+^  DECmate III
+
+^  VAXmate
+
+Note: This product is NOT WARRANTED to support non-DIGITAL terminal devices 
+      or personal computers. However, terminals supporting VT100 or VT200-like 
+      characteristics and personal computers supporting IBM PC, IBM PC/XT, 
+      and IBM PC/AT characteristics MAY operate with this product. 
+
+Printers Supported
+
+The DECserver 500 software supports the following DIGITAL asynchronous printers
+when accessed from VMS and MicroVMS systems:
+
+^  LA50, LA200, LA120, LA210
+
+^  LQP02, LQP03
+
+^  LXY12-DA, LXY22-DA
+
+^  LN01-S, LN03S, LCP01
+
+Modems Supported
+
+For DECserver 500 series server with CXY08 hardware option:
+
+^  DF03, DF112, DF124, DF224 and DFM X.29 pad full-duplex asynchronous modems 
+   for either dial-in or dial-out use. Also supported are private or leased 
+   line modem applications, however, connections to data switches are NOT
+   WARRANTED but MAY operate with this product.
+
+For DECserver 500 series server without CXY08 hardware option:
+
+^  None
+
+Server Management
+
+Several facilities exist for managing and troubleshooting server operation. 
+The server manager in privileged mode can set up server identification 
+information, change port characteristics, or fine tune the operating 
+characteristics of the server. The server manager can also assign service 
+names to groups of one or more ports which are connected to non-LAT hosts 
+or modems. Troubleshooting facilities include diagnostic tests, a remote 
+console feature, on-line statistics and modem signal and flow control 
+monitoring.
+
+A privileged user can diagnose Ethernet communications problems by looping 
+messages to an Ethernet host and through the Ethernet hardware interface at 
+the server. To diagnose terminal problems, users can execute a command to 
+transmit test data to their terminal.  The server manager can send test 
+data to any terminal, optionally using internal or external loopback with
+data comparison.
+
+The capability also exists for the server manager to test a service 
+connection by sending data from the initiating port to the service 
+node and back again. 
+
+The data is then compared and any discrepancies reported. At the service 
+node, the data can be looped back by the LAT protocol, or internally or 
+externally at the service port. This feature is supported by DECserver 
+service nodes; VMS service nodes do not support this service loopback 
+capability.
+
+The server maintains a variety of statistics and counters. These include 
+the following: Ethernet data link statistics, LAT protocol statistics, and 
+port error statistics. This data can be displayed and zeroed by the server
+manager. 
+
+Remote Server Management
+
+The DECserver 500 software implements the Maintenance Operations 
+Protocol (MOP) console carrier protocol which enables access to the 
+DECserver 500 series server from a Phase IV DECnet host on the same 
+LAN.  The entire local mode user interface is accessible to the remote 
+management port user. This includes the privileged commands, if the user 
+knows the server's privileged password.  This capability allows centralized 
+server management and remote server diagnosis.
+
+The DECserver 500 series server can be remotely managed by the Terminal Server
+Manager (TSM) V1.2 software on VMS systems.
+
+Communications
+
+DECserver 500 software is exclusively designed to run on DECserver 500 
+series hardware which includes an Ethernet interface for connection to 
+an Ethernet transceiver cable. 
+
+The CXY08 hardware option has eight EIA RS-232-C/CCITT V.24 asynchronous 
+line interfaces for connecting terminals to the unit. 
+
+The CXA16 hardware option has sixteen DECconnect connections (DEC423) 
+for connecting terminals to the unit.
+
+The CXB16 hardware option has sixteen DECconnect connections (DEC422) 
+for connecting terminals to the unit.
+
+Using the CXY08 hardware option, each port can be set up by the server 
+manager to operate using full-duplex modem control. The CXY08 hardware 
+option is compatible with DIGITAL's family of modems and with Bell 100 
+and 200 series modems and their equivalents. A BREAK feature is available 
+and can be set on a per-port basis. This allows a BREAK condition to be 
+passed through from a terminal connected on the server to the non-LAT 
+host connected to a port on a DECserver 500 series server.
+
+DECserver 500 Series Server Operation
+
+The DECserver 500 series server provides the necessary Maintenance 
+Operation Protocol boot ROM support for down-line loading DECserver 
+500 software from a Phase IV DECnet load host over the Ethernet into 
+server memory and also for upline dumping. All self-test diagnostics 
+are in DECserver ROM, so down-line loading is not a precondition for 
+DECserver self-test. In the event of a bugcheck  caused by a fatal error, 
+the unit normally attempts to upline dump server memory to a DECnet 
+Phase IV host. Following this, the unit automatically initializes 
+itself and invoke a downline load.
+
+DECserver 500 Series System Configuration and Performance
+
+The process of configuring the DECserver 500 series system is 
+based primarily on tradeoffs of cost and performance within the 
+realm of satisfying user application requirements. Network applications will 
+range from low-speed, low-cost situations (e.g. connecting remote terminals 
+through low-speed modems) to those of relatively high performance (e.g., 
+connecting high-speed local terminals to local hosts within a local area 
+network or connecting to non-LAT systems). The performance of a 
+given server is a function of the expected network traffic, the load 
+on hosts to which terminals are connected, and resultant processing pursuant 
+to the dedicated function of the unit. Thus performance depends on several 
+factors:
+
+^  Number of terminals
+
+^  Number of host systems with active connections to the server
+
+^  Number of active connections to non-LAT hosts
+
+^  Terminal speeds
+
+^  Terminal user applications
+
+^  Number and size of host buffers
+
+^  Terminal workload
+
+The DECserver 500 series server can sustain an aggregate user-data output
+throughput (from server to port devices of 160,000 characters per second using
+a 20 millisecond timer. The DECserver can sustain an aggregate user-data input
+throughput (port device to server) of 14,000 characters per second.
+
+In order to achieve a viable configuration, the user and/or a DIGITAL 
+software specialist should perform a level of application analysis which 
+addresses the factors above. The actual maximum data throughput cannot be 
+calculated by multiplying the number of lines by the line speed, since many 
+factors already discussed in this section may reduce the actual throughput.
+
+Restrictions on DECserver 500 Series Server Usage
+
+While terminal connections using the DECserver 500 series terminal server have
+been designed to simulate direct terminal connections as much as possible, a
+few differences necessarily exist because of the nature of the product.  Under
+most circumstances, these differences are not noticed by terminal users or 
+service node application programs. However, applications which are directly 
+dependent on the following functions may not operate as with a direct 
+connection:
+
+^  Applications that depend on reading or setting the terminal speed, 
+   character size and parity by manipulating system data structures
+
+^  Applications that depend on an extremely fast response time (typically 
+   less than 200 ms) to operate
+
+^  Applications that utilize an alternate terminal driver in the service 
+   node
+
+^  Applications that expect incoming connections to have fixed device
+   names, or to obtain information about the name of the server and/or port
+
+Applications that depend on certain physical device response times or do
+their own modem signal handling are not supported.
+
+There are two restrictions which should be noted;  for connections from the
+server, the LAT device created has an unpredictable name and for host
+initiated connections, application programming will not be supported.
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX or VAXstation configuration as specified in the System Support
+Addendum (SSA 26.97.01-x).
+
+SOFTWARE REQUIREMENTS *
+
+VMS Operating System or MicroVMS Operating System
+
+DECnet-VAX
+
+OPTIONAL SOFTWARE *
+
+Terminal Server Manager 
+
+* Refer to the System Support Addendum for availability and required versions
+  of prerequisite software (SSA 26.97.01-x).
+
+ORDERING INFORMATION
+
+Software Licenses:  Included with the DSRVS hardware.
+Software Media: QA-03KA*-**
+Software Documentation: QA-03KAA-GZ
+User Software Documentation: QA-03KAB-GZ
+Software Product Services: QT-03KA*-**
+
+* Denotes variant fields.  For additional information on available licenses,
+  services and media refer to the appropriate price book.
+
+SOFTWARE WARRANTY
+
+Warranty  for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum
+of this SPD.
+
+SOFTWARE LICENSING
+
+License for this software is included with the purchase of the hardware.
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about DIGITAL's
+Licensing terms and policies, contact your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more 
+information contact your local DIGITAL office.
+
+September 1989
+BH-KN88B-TE

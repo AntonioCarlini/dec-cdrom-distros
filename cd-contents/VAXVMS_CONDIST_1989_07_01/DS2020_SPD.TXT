@@ -1,0 +1,785 @@
+PRODUCT NAME: DECserver 200 for VMS and MicroVMS,          SPD 27.53.03 
+              Version 2.0                
+            
+DESCRIPTION
+
+The DECserver 200 Terminal Server is a network terminal switch for Ethernet
+Local Area Networks. The DECserver 200 provides a convenient method to
+logically connect up to eight DIGITAL asynchronous terminals to one or more
+service nodes (hosts) on an Ethernet. Once the terminal is connected, a user
+can utilize application programs and utilities as though the terminal was
+directly connected to a host via a DZ11, DMF32, or DHU11 device, with a few
+exceptions. Thus, it may be possible to utilize the DECserver 200 to connect
+all terminals to service nodes in place of traditional interfaces, except for
+host console terminals. Remote connection via dial-in modems is fully
+supported. 
+
+The DECserver 200 also allows for VMS host-initiated connections to
+asynchronous printers. A special print symbiont on VMS service nodes can
+initiate connections to asynchronous printers connected to DECserver 200
+ports. This allows the printers to be distributed throughout a facility and
+accessed transparently by service node users. Incoming host-initiated connect
+requests may be queued FIFO at the server. 
+
+The DECserver 200 also provides the capability to connect host systems that
+do not support the LAT protocol, DIGITAL personal computers, and dial-out
+modems directly to ports on the server. Interactive server users can issue
+commands to connect to services which are offered on such ports. Port-to-port
+connections on the same server are also supported. 
+
+The DECserver 200 implements the Local Area Transport (LAT) protocol for
+communication with service nodes that implement this protocol on the same
+Ethernet. This interface has been optimized for high terminal I/O performance
+over an Ethernet, while reducing host CPU cycles required to handle
+interrupts. Hence, under most I/O loading conditions, a significant
+performance gain may be realized by using the DECserver 200 versus direct
+terminal connections via DZ11s. 
+
+The DECserver 200 also implements and supports the Terminal Device/Session
+Management Protocol (TD/SMP) to manage multiple sessions at the device level.
+The DECserver 200 provides the ability to communicate with devices which
+also implement this protocol, and assist in the management of multiple
+sessions for these devices. By implementing this protocol, the DECserver 200
+can permit attached devices to maintain screen and keyboard context for
+multiple LAT sessions, as well as allow these devices to run multiple LAT
+sessions concurrently. 
+
+Software that runs on the DECserver 200 is down-line loaded over the network
+from a Phase IV DECnet load host. Terminal access using the DECserver 200
+does not require DECnet running in the same service node; LAT uses the
+Ethernet addressing mechanism to transport terminal messages. 
+
+Features such as login load balancing, multiple terminal sessions, automatic
+failover, and remote printer support can lead to greater user productivity. 
+
+For wide area network communications, terminal users can connect to a local
+service node running DECnet, where they can ``SET HOST'' to a remote system
+via the DECnet network terminal protocol. If this system has the requisite
+X.29 or SNA 3270 access routines, a terminal user could communicate to a
+remote SNA or X.25 host through the appropriate gateway and this intervening
+host. A DECserver 200 terminal user cannot communicate directly to remote
+hosts through DECnet Routers or X.25/SNA Gateways. Wide area network traffic
+will not provide the same high level of performance as local terminal
+connections, due to the additional DECnet and internet protocol overhead. 
+
+DECserver 200 Options
+
+There are two options of DECserver 200 hardware:
+
+^  The DECserver 200/MC, containing RS-232-C lines with full modem control
+
+^  The DECserver 200/DL, containing DECconnect lines with data leads only
+
+The DECserver 200 server software is configured to operate on either option.
+However, all features pertaining to modem control, modem support and
+modem-signal flow control, apply to the DECserver 200/MC hardware only. In
+addition, it is strongly recommended that the DECserver 200/MC option be used
+when directly connecting non-LAT host systems to the server. The DECserver
+200/DL may be used when connecting most terminals and printers to the server.
+
+Features
+
+Terminal Connection Management
+
+Through the use of a simple command, users can establish a logical
+connection, called a session, to any service node that implements the LAT
+protocol on the same Ethernet LAN. This connection makes the terminal appear
+as if it were physically connected to the service node, and the terminal user
+can use standard system utilities and applications supported by that node.
+Each terminal connected to the server can connect to the same or a different
+service node on the Ethernet. Furthermore, several servers can be used to
+connect many terminals to one or more service nodes. 
+
+A service node can have one or more services that are offered to DECserver
+200 users. Services and nodes are identified by name. Users always connect to
+services, not to nodes, although often one of the service names will be the
+node name. 
+
+In a VAXcluster environment, the DECserver 200 sees each VAXcluster on the
+Ethernet as a collection of service nodes offering a common service. Each
+cluster node may also offer a service whose name is equivalent to its node
+name. In this case, a terminal user can connect either to the cluster service
+or a service associated with a particular cluster node. 
+
+Non-LAT Host Support
+
+The DECserver 200 can be used to provide logical terminal connections to
+hosts that do not implement the LAT protocol. In this type of configuration,
+the server becomes the Ethernet connection and protocol support for these
+hosts. This expands the LAT network accessibility to the terminal user to
+include LAT hosts directly connected to the same Ethernet and hosts connected
+to the LAT network via the DECserver 200. 
+
+A host that supports XON/XOFF, ASCII standards and EIA RS-232-C/CCITT
+V.24/V.28 interfaces can be connected to the DECserver 200. This provides the
+terminal user with a transparent connection to the non-LAT host. It is
+strongly recommended that server port and the host side port utilize modem
+control signals to automatically signal the host upon session disconnection. 
+
+In this configuration, there is a one-to-one correspondence between the port
+on a DECserver 200 and the connection on the host. The server manager assigns
+service names to individual ports or groups of ports that connect the host
+interface to the server. 
+
+Load Balancing
+
+When a connection is made to a service, the actual node for the connection is
+determined by load balancing. Load balancing is a process the server uses
+when more than one node offers the same service. Service nodes do not have to
+be configured in a cluster in order for load balancing to be used. Service
+nodes with the same names may be running different operating systems. Using
+the load balancing process, the server connects to the node with the highest
+rating for the service desired. This rating is based on the current loading
+on the nodes that offer the service. 
+
+Multiple Sessions
+
+The DECserver 200 allows each user to establish and maintain up to 8 sessions
+to one or more service nodes, up to a maximum of 64 per DECserver 200. Only
+one session can be active at a time. Through simple switching commands, the
+user can access the different sessions without repeating a login dialog each
+time. Some operating systems may impose limits on the number of LAT sessions
+such a host will support. 
+
+Multiple Session Management
+
+The DECserver 200 server allows direct communication with devices which
+support the TD/SMP protocol.  This protocol provides the ability for the
+attached device to maintain screen and keyboard context for the multiple LAT
+sessions which the DECserver 200 provides.  By implementing the ability to
+directly communicate with this protocol to the attached device, the DECserver
+200 can now assist in the management of context of these multiple sessions,
+as well as allow for simultaneous output to multiple LAT sessions being
+maintained by the device. 
+
+Outbound Connection Queues
+
+If a terminal user requests a connection to a server, and the requested
+service is currently in use, the terminal server users may opt to have the
+connection requested queued to the remote service.  This feature will happen
+automatically whenever a connection fails for this reason if the user's port
+has been appropriately configured.  The connection request is queued at the
+service node end and is processed first-in/first-out until such time as the
+user's connection request can be completed.  This feature assists in the fair
+management of limited network resources.  Once queued for connection, the
+user also has the option to cancel the queue entry and proceed with other
+sessions. 
+
+Welcome Identification
+
+The DECserver 200 server standard welcome banner which includes terminal
+server type, version number, internal baselevel, and protocol version number
+is issued whenever a user successfully logs in to the server.  The server
+will also print a server manager settable identification string.   This can
+be useful for automatic server identification, or for small daily messages
+used for communication with the terminal server users. 
+
+Local Mode and Service Mode
+
+For the most part, the environment provided by the DECserver 200 is identical
+to that the user would experience if attached directly to the service node.
+When operating in this mode, the user is said to be in Service Mode.
+Occasionally, such as during connection establishment, the user interacts
+directly with the DECserver 200. When operating in this mode, the user is in
+Local Mode. 
+
+In Local Mode, the terminal input is interpreted directly by DECserver 200 as
+commands to be performed by the server. 
+
+Additional commands and displays to support the new features available with
+the TD/SMP protocol are usable in Local Mode.  These commands will be used to
+enable or disable server recognition of the TD/SMP commands. 
+
+Local Mode has three different levels of privilege: privileged, nonprivileged
+and secure. Privileged mode is provided for the Server Manager to control the
+environment of the server and the terminal users. Access to this mode is
+password protected. Nonprivileged commands allow the terminal user to control
+their service sessions, set their terminal characteristics and show server
+information. The Server Manager can set the server to secure mode on a
+per-terminal basis which further limits the commands users can enter to only
+those which directly relate to the user's own terminal. 
+
+The Server Manager environment is a logical extension of the user
+environment. The Server Manager is treated as a server user with a privileged
+status. The Server Manager sets a terminal to this status using a command
+which requires a password. This privileged status allows the Server Manager
+to enter commands not normally available to server users. These commands set
+server characteristics, provide control over server port usage, and provide
+the ability to control the user's access to the server and network services. 
+
+In Service Mode, the terminal input is passed directly to the connected
+service node with several exceptions. One exception, called the local switch
+character, allows the user to enter Local Mode from Service Mode. The <BREAK>
+key may also be used for this function. Other exceptions, called the forward
+and backward switch characters, allow the user to switch between sessions
+without the need to enter Local Mode. The switch characters are disabled by
+default but may be enabled by command. Both CTRL/S and CTRL/Q are normally
+interpreted locally but flow control using these characters can be disabled. 
+
+Autoconnection
+
+Autoconnection is a function that automatically connects a user terminal to a
+service node when connection failures occur or upon user login to the server.
+In conjunction with this function, a dedicated or preferred service can be
+specified for each terminal user. 
+
+If a dedicated service is specified, the DECserver 200 will attempt to
+connect to that service when a character is typed on the terminal keyboard or
+when an existing connection fails. In dedicated service mode, only one
+session is available. As this mode is designed to simulate a direct terminal
+connection, no local mode commands or messages are available to the terminal
+user. Ports with dedicated service can be automatically logged out of the
+server when the user logs out of the service node. 
+
+If a preferred service is specified, the DECserver 200 will attempt to
+connect to that service as with the dedicated service mode of operation.
+However, the terminal user can enter local mode and establish other sessions.
+
+Automatic Session Failover
+
+If a service is available on two or more service nodes and a connection to a
+service fails, the server will attempt to connect the user to another service
+node offering the same service.  The user does not have to be already
+connected to that service node. Furthermore, the user's context at the time
+of failure is not automatically restored and login to the new service is
+required. 
+
+Groups
+
+Every terminal and service node in a LAT network is a member of one or more
+groups, which are specified by a list of numbers from 0 - 255. Groups allow
+an easy means of subdividing the network into what appears to be many smaller
+networks. A terminal user is only aware of the services that are offered by
+nodes in the same group(s). 
+
+The Server Manager can specify the authorized group(s) in which a terminal is
+a member. The authorized groups define the set of services that the user is
+allowed to access. In addition, a user can further restrict access to
+services by disabling some of the authorized groups using a non-privileged
+group command. The user-settable group codes are a subset of the authorized
+groups. 
+
+Groups provide a restrictive view of the network. This restricted view is
+mainly for user convenience and, although it also provides a form of
+security, it is not intended to be the primary form of access authorization
+or system security for a node. 
+
+Security
+
+The DECserver 200 provides functions which enhance security features already
+available in the service nodes.  DECserver 200 security includes the ability
+to lock a terminal's keyboard from other users, optional login protection,
+and nonprivileged local mode of operation as a default. 
+
+A user may lock the terminal using a lock password. This allows the user to
+leave sessions running at the terminal without fear of security violations.
+When a terminal is locked, all input from the terminal is ignored until the
+lock password is re-entered. The lock feature may be disabled by the Server
+Manager. 
+
+Each terminal port can be set to operate in a secure mode which causes all
+commands that relate to other users to be disabled for that port. 
+
+Login passwords can be enabled on a per-line basis by the server manager. If
+enabled, the terminal user must enter a login password to access server
+functions. 
+
+DECserver 200 users normally have access to the nonprivileged local mode. In
+this mode, users may only issue commands that affect their own terminal
+environment. The server has a privileged mode for server manager's use. The
+mode is password protected. 
+
+On-line HELP Facility
+
+A full on-line reference HELP facility is available. The server's HELP
+command provides information on the correct syntax and details about each
+command. In addition, a tutorial HELP feature allows new users to quickly
+learn the basics of DECserver 200 operation. Tutorial HELP may be entered
+upon logging into the server. 
+
+Directory Service
+
+Any DECserver 200 user can obtain a directory of services available to that
+user with a SHOW SERVICES command. Services for which the user is not
+authorized will not be displayed. 
+
+Permanent Characteristics
+
+The DECserver 200 maintains permanent characteristics in non-volatile memory
+which is retained even when the power is disconnected. Permanent
+characteristics are maintained for service and server parameters as well as
+per-port parameters. Permanent characteristics can be reset to factory
+defaults by pressing the software reset button on the hardware unit while
+plugging in the power cord. 
+
+Port Characteristics Configuration
+
+Characteristics governing the operation of an individual port can be
+displayed by a nonprivileged terminal user interactively from their terminal.
+Many of the characteristics may be set-up by the user, but certain
+characteristics are privileged and may only be changed by the Server Manager.
+
+Port parameters that can be set and displayed include: speed, character size,
+group codes, parity, terminal type, access, autobaud, modem and password
+protection. 
+
+Port Access
+
+A port on a DECserver 200 may be set up in different ways depending on the
+device attached to the port and its intended use. DECserver 200 supports
+RS-232-C and DECconnect asynchronous devices operating at speeds up to 19.2K
+bps. 
+
+Port access is the characteristic which determines how a port may access or
+be accessed by interactive users and service nodes. 
+
+^  Access Local - Designed for interactive terminals. This allows the device
+   (typically an interactive terminal) attached to the port to CONNECT to LAT
+   services. This type of access is also used for dial-in modems.
+
+^  Access Remote - Designed for applications-driven devices such as
+   asynchronous printers which are allocated by a service node process.
+   This allows the implementation of certain shared printers by multiple
+   service nodes. This type of access is also used for connections to 
+   dial-out modems, and non-LAT host systems.
+
+^  Access Dynamic - Designed for devices (such as personal computers or
+   printers with keyboards) which require both Local and Remote access. 
+
+^  Access None - Designed to allow the server manager to disable the use of 
+   a port. 
+
+With printer support capabilities, the setup procedure of remote printers
+needs to be done once and is automatically reconfigured on system startup.
+The particular server port must be configured for remote access and set up to
+match the characteristics of the printer. The system startup command file
+must be modified to call the two command files provided with the service node
+software. Finally, the command files themselves must be customized to reflect
+the environment of their node. The server can optionally queue remote
+connects if these connects cannot be satisfied immediately. This queue
+management can be enabled for the server by the server manager. Note that
+this is a connection queue only. 
+
+Terminal Operation
+
+The DECserver 200 software supports the simultaneous operation of up to eight
+asynchronous devices at speeds from 75 bps to 19.2K bps. The software also
+supports: 
+
+^  Full modem control support (DECserver 200/MC only)
+
+^  Data leads only support
+
+^  XON/XOFF flow control
+
+^  CTS/RTS and DSR/DTR flow control (DECserver 200/MC only)
+
+^  Split speed (transmit and receive) terminal operation
+
+^  Modem fallback features (DECserver 200/MC only)
+
+^  Block Mode transfers
+
+^  Automatic line speed detection
+
+^  DIGITAL personal computer file transfer
+
+^  Data transparency mode
+
+^  Ability to pass break character and error notification
+
+^  Ability to assist in multiple session management via TD/SMP
+
+Terminals Supported
+
+The DECserver 200 software supports the following DIGITAL terminal devices
+that have keyboards: 
+
+^  LA12, LA34, LA35, LA36, LA38
+
+^  VT52
+
+^  VT100, VT101, VT102, VT125, VT131
+
+^  VT220, VT240, VT241
+
+^  VT320, VT330, VT340
+
+Supported terminal parameters are:
+
+^  Character size: 7 or 8 bits per character
+
+^  Parity: Even, Odd, Mark, or None
+
+The automatic line speed detection (Autobaud) feature is supported for either
+seven-bit characters with even parity or eight-bit characters with no parity.
+
+The DECserver 200 software also supports the following DIGITAL Personal
+Computers (PCs) in both terminal emulation mode and file transfer mode: 
+
+^  Professional 325, 350, 380
+
+^  Rainbow 100A, 100B, 100+
+
+^  DECmate II
+
+^  DECmate III
+
+Note: This product is NOT WARRANTED to support non-DIGITAL terminal devices 
+      or personal computers. However, Terminals supporting VT200-like 
+      characteristics and personal computers supporting IBM PC, IBM PC/XT, 
+      and IBM PC/AT characteristics MAY operate with this product. 
+
+Printers Supported
+
+The DECserver 200 software supports the following DIGITAL asynchronous
+printers when accessed from VMS and MicroVMS systems: 
+
+^  LA50, LA200, LA120, LA210
+
+^  LQP02, LQP03
+
+^  LXY12-DA, LXY22-DA
+
+^  LN01S, LN03S, LCP01
+
+^  LG01S, LG02
+ 
+^  DTC01, DTC03
+
+Modems Supported
+
+For DECserver 200/MC:
+
+^  DF01, DF02, DF03, DF112, DF124, and DF224 full-duplex asynchronous modems 
+   for either dial-in or dial-out use. Also supported are private or leased 
+   line modem applications.
+
+For DECserver 200/DL:
+
+^  None
+
+Server Management
+
+Several facilities exist for managing and troubleshooting server operation.
+The Server Manager in privileged mode can set up server identification
+information, change port characteristics, or fine tune the operating
+characteristics of the server. The Server Manager can also assign service
+names to groups of one or more ports which are connected to non-LAT hosts or
+modems. Troubleshooting facilities include diagnostic tests, a remote console
+feature, and online statistics. 
+
+A privileged user can diagnose Ethernet communications problems by looping
+messages to an Ethernet host and through the Ethernet hardware interface at
+the server. To diagnose terminal problems, users can execute a command to
+transmit test data to their terminal, or the server manager can send test
+data to any terminal. 
+
+The capability also exists for the server manager to test a service
+connection by sending data from the initiating port to the service node and
+back again. The data is then compared and any discrepancies reported. At the
+service node, the data can be looped back by the LAT protocol, or internally
+or externally at the service port. This feature is supported only by
+DECserver 200 service nodes; VMS service nodes do not support this
+service loopback capability. 
+
+The server maintains a variety of statistics and counters. These include the
+following: Ethernet data link statistics, LAT protocol statistics, and port
+error statistics. These data can be displayed and zeroed by the Server
+Manager. Server parameters that can be modified and displayed include the
+server identification, circuit timer, session limits, and login limits. 
+
+Remote Server Management
+
+The DECserver 200 implements the console carrier feature which enables access
+to the DECserver 200 local mode from a Phase IV DECnet host on the same LAN.
+With the exception of remote console port configuration, the entire local
+mode user interface is accessible to the remote console carrier user. This
+includes the privileged commands, if the user knows the server's privileged
+password. This capability allows centralized server management and remote
+server diagnosis. 
+
+Communications
+
+DECserver 200 software is designed to run on DECserver 200 hardware
+exclusively which includes an Ethernet interface for connection to an
+Ethernet transceiver cable. 
+
+The DECserver 200/MC has eight EIA RS-232-C/CCITT V.24 asynchronous line
+interfaces for connecting terminals to the unit. 
+
+The DECserver 200/DL has a single 36 pin DECconnect connector for 8 ports. 
+
+On the DECserver 200/MC, each port on the server can be set up by the Server
+Manager to operate using full-duplex modem control. The DECserver 200/MC is
+compatible with DIGITAL's family of modems and with Bell 100 and 200 series
+modems and their equivalents. A BREAK feature is available and can be set on
+a per-port basis. This allows the DECserver 200/MC to force a break condition
+on connections to host interfaces. BREAK can also be passed through from a
+terminal connected on the server to the non-LAT host connected on the server.
+
+DECserver 200 Operation
+
+The DECserver 200 ROM-based firmware provides the necessary maintenance
+operation protocols for down-line loading DECserver 200 software from a Phase
+IV DECnet load host over the Ethernet into server memory. All self-test
+diagnostics are in DECserver ROM, so down-line loading is not a precondition
+for DECserver self-test. In the event of a bugcheck caused by a fatal error,
+the unit will normally attempt to upline dump server memory to a DECnet Phase
+IV host. Following this, the unit will automatically initialize itself and
+invoke a down-line load. 
+
+DECserver 200 Configuration and Performance
+
+The process of configuring the DECserver 200 is based primarily on tradeoffs
+of cost and performance within the realm of satisfying user application
+requirements. Network applications will range from low-speed, low-cost
+situations (e.g. connecting remote terminals through low-speed modems) to
+those of relatively high performance (e.g., connecting high-speed local
+terminals to local hosts within a local area network or connecting to non-LAT
+systems). The performance of a given server is a function of the expected
+network traffic, the load on hosts to which terminals are connected, and 
+resultant processing pursuant to the dedicated function of the unit. Thus
+performance depends on several factors: 
+
+^  Number of terminals
+
+^  Number of host systems with active connections to the server
+
+^  Number of active connections to non-LAT hosts
+
+^  Terminal speeds
+
+^  Terminal user applications
+
+^  Number and size of host buffers
+
+^  Terminal workload
+
+The DECserver can sustain an aggregate character throughput of over 11520
+characters per second. This is equivalent to running 4 ports at 19200 bits
+per second, and 4 at 9600 bps. 
+
+In order to achieve a viable configuration, the user and/or a DIGITAL
+software specialist should perform a level of application analysis which
+addresses the factors above. The actual maximum data throughput cannot be
+calculated by multiplying the number of lines by the line speed, since many
+factors already discussed in this section may reduce the actual throughput. 
+
+Restrictions on DECserver 200 Usage
+
+While terminal connections using the DECserver 200 have been designed to
+simulate direct terminal connections as much as possible, a few differences
+necessarily exist because of the nature of the product.  Under most
+circumstances, these differences are not noticed by terminal users or service
+node application programs. However, applications which are directly dependent
+on the following functions may not operate as with a direct connection: 
+
+^  Applications that depend on reading or setting the terminal speed, 
+   character size and parity by manipulating system data structures
+
+^  Applications that depend on an extremely fast response time (typically 
+   less than 200 ms) to operate
+
+^  Applications that utilize an alternate terminal driver in the service node
+
+^  Applications that expect incoming connections to have fixed device names
+
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX or VAXstation configuration as specified in the System Support 
+Addendum (SSA 27.53.03-x).
+
+SOFTWARE REQUIREMENTS*
+
+VMS Operating System or MicroVMS Operating System
+DECnet-VAX
+
+OPTIONAL SOFTWARE*
+
+Terminal Server Manager
+
+* Refer to the System Support Addendum for availability and required versions 
+  of Prerequisite/Optional software.
+
+The DECserver 200 software is installed on a VAX/VMS or MicroVMS load host,
+which must contain DECnet-VAX (Phase IV). DECnet is used for down-line
+loading the server software into the DECserver 200 units. 
+
+The DECserver 200 server software will operate with all DIGITAL service nodes
+which support the LAT protocol. 
+
+Refer to the following SPDs for information on other supported DECserver 200
+systems: 
+
+DECserver 200 for RSX-11M-PLUS and Micro/RSX (SPD 15.72.xx)
+DECserver 200 for ULTRIX-32 (SPD 27.54.xx)
+	
+ORDERING INFORMATION 
+
+The unique product identifier for this software product is VCB.
+
+SOFTWARE WARRANTY
+ 
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum of
+this SPD. 
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about DIGITAL's
+licensing terms and policies, contact your local DIGITAL office. 
+
+The software license for DECserver 200 is sold with the hardware only, 
+and cannot be purchased separately.
+
+The DECserver 200 software license applies to the DECserver 200 on which the
+server software runs, not to service host node CPUs in the network. 
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more
+information contact your local DIGITAL office. 
+
+                        SYSTEM SUPPORT ADDENDUM
+
+HARDWARE REQUIREMENTS 
+
+Processor Support
+
+VAX: VAX 6210, VAX 6220, VAX 6230, VAX 6240, VAX 8200, VAX 8250, VAX 8300, 
+     VAX 8350, VAX 8500, VAX 8530, VAX 8550, VAX 8600, VAX 8650, VAX 8700, 
+     VAX 8800, VAX 8810, VAX 8820, VAX 8830, VAX 8840, VAX 8974, VAX 8978
+
+     VAX-11/725, VAX-11/730, VAX-11/750, VAX-11/780, VAX-11/785, VAX-11/782
+
+MicroVAX: MicroVAX I, MicroVAX II, MicroVAX 2000, MicroVAX 3500/3600
+
+VAXstation: VAXstation 2000, VAXstation 3200/3500
+
+VAXserver:  VAXserver 3500/3600/3602
+
+Not supported: VAXstation I, VAXstation II
+
+The DECserver 200 software runs on either of the following packaged hardware
+options: 
+
+DSRVB-AA/AB   DECserver 200/MC hardware, including eight EIA RS-232-C/CCITT 
+	      V.24 asynchronous ports supporting speeds up to 19.2K bps, 
+	      factory set at 120V/240V.
+
+DSRVB-BA/BB   DECserver 200/DL hardware, including eight DECconnect 
+	      asynchronous ports supporting speeds up to 19.2K bps, factory 
+	      set at 120V/240V.
+
+Use the following SHIELDED cables with each of the physical lines on the 
+DECserver 200/MC unit:
+
+BC22D     Null modem cable for local terminal or printer connections.
+BC22E     Full modem straight through cable for modem connections.
+BC22F     Full modem straight through cable for modem connections.
+BC22R     Recommended null modem cable for host systems and other devices, 
+	  including those which utilize CTS/RTS flow control.
+BC17D	  Null modem cable for host systems and other devices which do not
+	  utilize CTS/RTS flow control.
+
+Use DECconnect cables with the DECserver 200/DL unit.
+
+The DECserver hardware requires both a transceiver drop cable and Ethernet
+connection, H4000 or DELNI, to connect to the Ethernet physical channel. 
+
+^  An R80/RL02 configuration is required for VAX-11/730 systems.
+
+^  VAX workstations are not supported as down-line load hosts.
+
+^  All software run on the DECserver is down-line loaded over the Ethernet 
+   from a Phase IV DECnet load host.
+
+Block Space Requirements (Block Cluster Size = 1):
+
+Disk space required for installation:             700 blocks 
+                                               (358.4 bytes)
+
+Disk space required for use (permanent):          700 blocks 
+                                               (358.4 bytes)
+
+The block space requirements above refer to the disk space required on the
+down-line load host system disk. The sizes are approximations; actual sizes
+may vary depending on the user's system environment, configuration, and
+software options. 
+
+OPTIONAL HARDWARE
+
+None
+
+CLUSTER ENVIRONMENT
+
+This layered product is fully supported when installed on any valid and
+licensed VAXcluster* configuration without restrictions.  The HARDWARE
+REQUIREMENTS sections of this product's Software Product Description and
+System Support Addendum detail any special hardware required by this product.
+
+* V5.x VAXcluster configurations are fully described in the VAXcluster
+  Software Product Description (29.78.xx) and include CI, Ethernet, and Mixed
+  Interconnect configurations. 
+
+SOFTWARE REQUIREMENTS
+
+VMS Operating System, V4.4 - V5.0
+MicroVMS Operating System, V4.4 - V4.7
+
+DECnet-VAX V4.4 - V5.0
+
+VMS Tailoring
+
+For VMS V5.0 systems, the following VMS classes are required for full
+functionality of this layered product: 
+
+^  BASE
+^  DRVR
+^  NET
+^  UUTIL
+
+For more information on VMS classes and tailoring, refer to the VMS
+Operating System Software Product Description (SPD 25.01.xx). 
+
+MicroVMS Tailoring
+
+For MicroVMS V4.x systems, the following components of MicroVMS are required
+for full functionality of this layered product. 
+
+^  Base System
+^  Common Utilities
+^  Program Development
+
+OPTIONAL SOFTWARE
+
+Terminal Server Manager, V1.0 - V1.2
+
+GROWTH CONSIDERATIONS
+
+The minimum hardware and software requirements for any future version of this
+product may be different from the minimum hardware and software requirements
+for the current version. 
+
+DISTRIBUTION MEDIA
+
+Disk:  RX50 Floppy Diskette, RX01 Floppy Diskette
+
+Tape:  9-track 1600 BPI Magtape (PE), TK50 Streaming Tape, TU58 DECtape II 
+       Cartridge
+
+ORDERING INFORMATION 
+
+Software Licenses: QL-VCBA*-**
+Software Media: QA-VCBA*-**
+Software Documentation: QA-VCBAA-GZ
+Software Product Services: QT-VCBA*-**
+
+* Denotes variant fields.  For additional information on available licenses, 
+  services and media refer to the appropriate price book.
+
+The above information is valid at time of release. Please contact your local
+DIGITAL office for the most up-to-date information. 

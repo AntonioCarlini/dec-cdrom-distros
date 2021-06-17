@@ -1,0 +1,711 @@
+PRODUCT NAME: MUXserver 100 Remote Term. Server, Version 2.2                 
+              For VMS and MicroVMS Load Hosts        SPD 28.45.01
+
+DESCRIPTION
+
+The MUXserver 100 Remote Terminal Server is a statistical multiplexer
+server for connecting remote terminals to Ethernet Local Area Networks.
+The MUXserver 100 provides a convenient method to logically connect up
+to sixteen remotely located DIGITAL asynchronous terminals via wide area
+telecommunications services to one or more service nodes (hosts) on an
+Ethernet.  
+
+The MUXserver 100 allows for VMS host initiated connections to       
+asynchronous printers.  A special print symbiont on VMS service nodes   
+can initiate connections to asynchronous printers connected to DECmux IIs
+located at remote sites.  This allows certain asynchronous printers
+to be distributed throughout the LAN/WAN network, and accessed
+transparently by service node users.  Incoming host-initiated connect
+requests are queued in a First-in-First-Out (FIFO) priority scheme. 
+
+The MUXserver 100 implements the Local Area Transport (LAT) protocol for
+communication with service nodes that implement this protocol on the
+same Ethernet.  Remote terminal data streams are concentrated at a
+DECmux II statistical multiplexer device and connected back to the
+LAN-site MUXserver 100 on a single leased phone line using an HDLC
+based, synchronous data transmission, statistical multiplexer protocol.
+Response time at the remote terminal is a function of the Ethernet
+loading, the LAT  protocol performance, the synchronous link speed and
+the I/O loading requirements of the remote terminals.
+
+Software that runs on the MUXserver 100 is downline loaded over the
+Ethernet network from a Phase IV DECnet load host.
+
+Terminal access using the MUXserver 100 does not require DECnet running
+in the same service node.  LAT uses the Ethernet addressing mechanism to
+transport terminal messages.  
+
+Features 
+
+^ Login load balancing
+
+^ Multiple terminal sessions
+           
+^ Automatic login failover
+
+^ Remote printer support 
+
+Terminal Connection Management
+
+Through the use of a simple terminal command, users can  
+
+^ Establish a logical connection,called a sesseion, to
+  any local service node that implements the LAT protocol
+  on the same Ethernet. 
+
+^ Connect to the same or a different service node on the Ethernet.   
+
+^ Several servers can be used to connect many terminals to one or more 
+  service nodes.
+
+A service node can have one or more services that are offered to MUXserver 
+100 users.  Services and nodes are identified by name.  Users always connect 
+to services, not to nodes, although often one of the service names will be 
+the node name.  
+
+In a VAXcluster environment, each VAXcluster on the Ethernet is seen as 
+a collection of service nodes offering a common service.
+
+Load Balancing
+
+When a connection is made to a service, the actual node for the
+connection is determined by load balancing.  Load balancing is a process
+the server uses when more than one node offers the same service.
+Service nodes do not have to be configured as a VAXcluster in order for
+load balancing to be used.  Service nodes with the same names may be
+running different operating systems.  Using the load balancing process,
+the server connects to the node with the highest rating for the service
+desired. This rating is based on the current loading, memory available,
+CPU class, and the number of users on the nodes that offer the service.
+        
+Multiple Sessions
+
+^ Allows each user to establish and maintain up to six sessions to one or 
+  more service nodes.
+
+^ Up to a maximum of 28 per MUXserver 100 depending on the number of 
+  nodes in the server database.
+
+^ Only one session can be active at a time.
+
+^ Through simple switching commands, the user can access the different 
+  sessions without repeating a login dialog each time.  Some operating 
+  systems may impose limits on the number of LAT sessions such a host 
+  will support.
+
+Local Mode and Service Mode
+
+For the most part, the environment provided by the MUXserver 100 is
+identical to that the user would experience if attached through
+stand-alone multiplexers to the service node.  When operating in this
+mode, the user is said to be in Service Mode.  Occasionally, such as
+during connection establishment, the user interacts directly with the
+MUXserver 100.  When operating in this mode, the user is in Local Mode.
+
+Local Mode - The terminal input is interpreted directly by the
+MUXserver 100 as commands to be performed by the server. 
+
+^ Two different levels of operation:  nonprivileged and privileged.
+
+^ Nonprivileged commands allow the terminal users to control 
+  their service sessions, set terminal characteristics, and show server 
+  information.
+          
+^ Privileged mode is provided for the Server Manager to control the 
+  environment of the server and of the terminal users. Access to this 
+  mode is password protected.
+
+^ The Terminal Server Manager environment is a logical extension of the 
+  user environment.  
+
+^ The Server Manager is treated as a server user with a privileged status. 
+
+^ The Server Manager sets a terminal to this status using a command which 
+  requires a password. This privileged status allows the Server Manager to 
+  enter commands not normally available to server users. These commands
+  set server characteristics,  provide control over server port usage, and 
+  provide the ability to  control  the user's access to the server and 
+  network services.
+
+  The MUXserver 100 also has a dedicated supervisory port that 
+  allows the Server Manager to control the environment of the server and 
+  of the terminal users.  Access to this mode is password protected.
+
+Service Mode - The terminal input is passed directly to the connected
+service node with several exceptions.  One exception, called the Local
+Switch Character, allows the user to enter Local Mode from Service Mode.
+
+^ The <BREAK> key may also be used for this function.  
+
+Other exceptions, called the Forward and Backward Switch Characters, allow  
+the user to switch between sessions without the need to enter Local 
+Mode.  The Switch Characters are disabled by default but may be enabled by 
+command. Both CTRL/S and CTRL/Q are normally interpreted locally but flow 
+control using these characters can be disabled.
+
+Autoconnection
+
+^ Automatically connects a user terminal to a service node when connection 
+  failures occur or upon user login to the server.  
+
+^ A dedicated or preferred service can be specified for each terminal user.
+
+Dedicated Service 
+
+^ The MUXserver 100 will attempt to connect to that service when a character 
+  is typed on the terminal keyboard or when an existing connection fails.
+
+^ Only one session is available.   
+
+^ No Local Mode commands or messages are available to the terminal user. 
+
+^ Ports with dedicated service can be automatically logged out 
+  of the server when the user logs out of the service node.
+
+Preferred Service 
+
+^ The MUXserver 100 will attempt to connect to that service as with the 
+  dedicated service mode of operation.
+  
+^ The terminal user can also enter Local Mode and establish other sessions.
+
+Automatic Session Failover
+
+If a service is available on two or more service nodes, and a connection
+to a service fails, the server will attempt to connect the user to
+another service node offering the same service.  Autoconnection must be
+enabled for this feature to work.  The user does not have to be already
+connected to that service node.  Furthermore, the user's context at the
+time of failure is not automatically restored and login to the new
+service is required.
+
+Groups
+
+Every terminal and service node in a LAT network is a member of one or
+more groups. These groups are identified by numbers called group codes. 
+Group codes allow an easy means of subdividing the network into what appears 
+to be many smaller networks.  A terminal user is only aware of the services 
+that are offered by nodes in the same group(s).
+
+^ A privileged user can change the group(s) in which a terminal is a member.
+   
+^ Group codes provide a restrictive view of the network.
+
+This restricted view is mainly for user convenience and, although it also
+provides a form of security, it is not intended to be the primary form
+of access authorization or system security for a node.
+
+Security
+
+MUXserver 100 security includes:
+
+^ The ability to lock a terminal's keyboard from other users.  
+
+^ Optional login protection and nonprivileged Local Mode of operation as 
+  a default.
+
+Terminal Locking
+
+A user may lock the terminal using a lock  password.  This allows the
+user to leave sessions running at the terminal without fear of security
+violations.  When a terminal is locked, all input from the  terminal is
+ignored until the lock password is re-entered.
+
+Password
+
+Login passwords can be enabled on a per-line basis by the privileged
+user.  If enabled, the terminal user must enter a login password to
+access server functions.  If a dedicated service is specified, login 
+protection is not available.
+
+Terminal users normally have access to the  non-privileged Local  Mode.   
+In this mode, users may issue commands that affect their own terminal 
+environment.  The server itself has a privileged mode for Server Manager's 
+use. The mode is password protected.
+
+On-line HELP Facility
+
+A limited on-line HELP facility is available to remind users of command
+syntax. It is not intended as a replacement for the documentation set.
+
+Directory Service
+
+Any MUXserver 100 user can obtain a directory of services available to
+that user with a SHOW SERVICES command.  Services for which the user is
+not authorized will not be displayed.
+
+Port Parameter Configuration
+
+Parameters governing the operation of an individual terminal can be
+modified and displayed  by a nonprivileged terminal user interactively
+from their terminal.  In the privileged mode, a Server Manager can
+modify parameters for other users' ports or for the server as a whole,
+and can also specify the composite, synchronous link parameters.
+
+Permanent characteristics are maintained in MUXserver 100  memory, even
+when  the  power is disconnected.  Permanent characteristics are
+maintained for server-wide parameters as well as per-terminal
+parameters.  Permanent characteristics can be reset to factory defaults
+by pressing the software reset button on the MUXserver 100 hardware unit
+while  plugging in the power cord.  Terminal parameters that can be set
+and displayed include:  speed, character size, group codes, parity, and
+terminal type.
+
+Port Access Characteristics
+
+A port on a MUXserver 100, Version 2.2 may be set up in different ways     
+depending on the device attached to the port and its intended use.
+The MUXserver 100, supports RS-232-C asynchronous devices operating at
+speeds up to 9.6K bps (19.2K bps for interactive terminals), and which
+support XON/XOFF flow control.
+
+Port access is the characteristic which determines how a port may access
+or be accessed by interactive users and service nodes.
+
+1.  Access Local - Designed for interactive terminals.  This allows
+    the device (typically an interactive terminal) attached to the
+    port to CONNECT to LAT services.
+
+2.  Access Remote - Designed for application driven devices such as
+    asynchronous printers which are allocated by a service node
+    process by request.  This allows the implementation of certain
+    shared, remote printers by multiple service nodes.
+
+3.  Access Dynamic - Designed for devices (such as personal computers 
+    or printers with keyboards) which require both Local and Remote access.
+
+4.  Access None - Designed to allow the Server Manager to disable the use 
+    of a port.
+
+Printers
+
+With printer support capabilities, the setup procedure of remote
+printers needs to be done once and is automatically reconfigured on
+system startup.  The particular server port must be configured for
+remote access and set up to match the characteristics of the printer.
+
+The system startup command file must be modified to call the two command
+files provided with the service node software.  Finally, the command
+files themselves must be customized to reflect the environment of their
+node.  The server can optionally queue remote connects if these connects
+cannot be satisfied immediately.  This queue management can  be  enabled
+for the server by the server manager.  Note that this is a connection
+queue only.
+
+Network Configuration
+
+The MUXserver 100 is connected to Ethernet using a DELNI, DECOM, DESTA, or
+H4000 Transceiver and a transceiver cable.  Two synchronous, composite,       
+data link connections are supported, each of which can connect to
+a remote, eight line DECmux II concentrator.  Two DECmux II concentrators
+can also be connected together using the route-through mode of
+operation, in which case only a single MUXserver 100 composite link
+connection can be utilized. 
+
+Four LAN/WAN configurations are supported with the default, factory-set,
+MUXserver 100 parameters.  These default configurations are:
+
+Default MUXserver Network Configurations
+
+^ Eight users (one DECmux) at ONE Remote Site
+
+^ Sixteen users (two DECmuxes) at ONE Remote Site
+
+^ Sixteen users, with eight users (one DECmux) at each 
+  of TWO Remote Sites. Two composite links are run from 
+  the MUXserver.
+
+^ Sixteen users, with eight users (one DECmux) at each 
+  of TWO Remote Sites. Only ONE composite link is run 
+  from the MUXserver to the closest Remote Site. The 
+  link is then ``Routed-through'' on a second composite 
+  link from the first DECmux to the DECmux at the 
+  farther Remote Site.
+                                        
+The composite link is HDLC based with remote data link transfer rates of
+2400, 4800, 9600, or 19.2K bps.  The rate is selectable by the server
+manager in privileged mode.
+
+Both RS-232-C/CCITT V.24 modem connections or RS-422-A long line (up to
+one kilometer) are supported  on the two MUXserver 100 composite link
+interfaces.  Five optional RS-422-A configurations are supported.
+
+Terminal Operation
+
+The MUXserver 100 supports the simultaneous operation of up to sixteen
+terminals connected over two DECmux II modules at speeds from 75 bps to
+19.2K bps.  The DECmux II modules also support:
+
+^  Split speed (transmit and receive) terminal operation
+
+^  Block Mode transfers
+
+^  Automatic line speed detection
+
+^  DIGITAL Personal Computer file transfer
+
+^  XON/XOFF handling
+
+^  Data Transparency mode
+
+^  Ability to pass BREAK character and/or error notification
+
+Terminals Supported
+
+The MUXserver 100 software supports the following DIGITAL terminal
+devices that have keyboards:
+
+^  LA12, LA34, LA35, LA36, LA38
+
+^  VT52, VT100, VT101, VT102, VT125, VT131
+
+^  VT220, VT240, VT241
+
+^  VT320, VT330, VT340*                                                  
+
+* The MUXserver 100 does not support the multi-sesson capability of the       
+  VT340.                                                                        
+
+The asynchronous device ports support DIGITAL's terminals and printers, but
+NOT modems.  Each device must meet the following DECmux II device
+interface specifications: 
+
+1.  Each port is CCITT V.24/EIA RS-232-C and is terminated  with  a
+    DB25-P connector.
+
+2.  Data format is asynchronous start/stop,  having  7  or  8  data
+    bits; 1 or 2 stop bits (1.5 stop bits for 5 data bits).
+
+3.  Protocol is full duplex with optional local echo, XON/XOFF flow
+    control.
+
+4.  Speed is selectable from one of the following:  75, 110, 134.5,
+    150, 300, 600, 1200, 1800, 2000, 2400, 4800, 9600, or 19200;
+    split speeds of 1200/75, 75/1200, 2400/150, 150/2400.
+
+5.  A DECmux II port logically connected to the MUXserver 100 will
+    also autobaud at speeds 110, 134.5, 150, 300, 600, 1200, 2400,
+    4800, 9600, and 19,200 if the corresponding MUXserver 100 port
+    set to AUTOBAUD ENABLED.
+
+The MUXserver 100 software also supports the following DIGITAL Personal
+Computers (PCs) in both terminal emulation mode and file transfer mode.
+
+^  The Professional 325, 350, 380
+
+^  The Rainbow 100A, 100B, 100+, 190
+
+^  DECmate II
+
+^  DECmate III
+
+^  VAXmate (PC500)                                                       
+
+NOTE:  This product is not warranted to support non-DIGITAL 
+       terminal devices and Personal Computers. However, 
+       those supporting VT100-like characteristics may operate 
+       with this product.
+
+Printers Supported
+
+The MUXserver 100 software supports the following DIGITAL asynchronous
+printers when accessed from VMS. 
+
+^  LA50, LA100, LA120, LA210
+
+^  LQP02, LQP03
+
+^  LN01S, LN03S
+
+^  LG01, LG02
+
+^  LCG01                                                                 
+
+^  LJ250                                                                 
+
+Modems Supported
+
+None, on terminal channels
+
+Server Management
+
+Several facilities exist for managing and trouble-shooting MUXserver
+operation.  A Server Manager connected in privileged mode via the
+supervisory port can establish the composite link parameters, set up
+server identification information, change port parameters, or fine tune
+the operating characteristics of the server.  Trouble-shooting
+facilities include diagnostic tests and on-line statistics.
+
+A privileged user can diagnose Ethernet communications problems by
+looping messages to an Ethernet host and through the Ethernet hardware
+interface at the server.  Connections to remote DECmux II modules can
+also be made to test the composite link integrity.  To diagnose terminal
+problems, users can execute a command to transmit test data to their
+terminal, or the Server Manager can send test data to any terminal.
+
+The server maintains a variety of statistics and counters.  These
+include the following:  Ethernet data link statistics, LAT protocol
+statistics and composite link statistics.   The Ethernet data can be
+displayed and zeroed by a privileged terminal user.  Server parameters
+that can be modified and displayed include the server identification,
+circuit timer, session limits, and login limits.
+                                               
+Remote Server Management
+
+The MUXserver 100 implements the console carrier feature which enables
+access to the MUXserver 100 Local Mode from a Phase IV DECnet host on
+the same LAN.  A restricted set of Local Mode functions are available to
+a console carrier user.  This capability provides centralized server
+management and remote server diagnosis.
+
+Communications Supported on the MUXserver 100
+
+MUXserver 100 software is designed to run on MUXserver hardware
+exclusively.  This hardware includes an Ethernet interface for
+connection to an Ethernet transceiver cable, two composite link ports,
+and a single supervisory terminal port.
+
+Ethernet-connection alternatives:
+
+^  H4000          Baseband Ethernet Transceiver                          
+
+^  DESTA          ThinWire Ethernet Station Adapter                      
+
+^  DECOM          Broadband Ethernet Transceiver                         
+
+^  DELNI          Ethernet Local Area Interconnect                       
+
+Composite Link-connection alternatives include the following with 1200,
+2400, 4800, 9600, 19200  and 38400 being the only available transfer
+rates on the interfaces:
+
+^ Leased Line Modem       Non-dialup synchronous, full-duplex via BC22F 
+                          RS232 cable (non-satellite links). Bell 
+                          compatibility: 202 FDX, 201B, 208B, 209. 
+                          CCITT compatibility: V.23, V.26, V.27bis, 
+                          V.29. (up to the highest speed supported
+                          by the modem used)
+
+^ Direct RS-422-A Cable   Customer-supplied RS-422-A cable up to 1 
+                          kilometer or 3280 feet in length.
+
+^ Digital Transmission    Full duplex, Synchronous RS232 interface 
+                          (non-switched)
+
+Supervisory Terminal port can accept directly connected asynchronous
+terminals with the following Comm. characteristics:
+
+1.  Asynchronous RS-232-C start/stop transmission, having eight data
+    bits, 1 stop bit, no parity.
+
+2.  Full duplex with XON/XOFF flow control.
+
+3.  Speeds selectable from one of the following: 300, 600, 1200,
+    2400, 4800, 9600 baud, or AUTOBAUD.
+
+4.  Physical connections includes data lines only on a DB25-P
+    connector.
+
+At least one dedicated, hardcopy, Supervisory Terminal is recommended
+per MUXserver 100 site for use in diagnostic trouble-shooting,
+re-configuration, or performance monitoring.
+
+Devices Supported on the DECmux II
+
+The DECmux II has four types of interfaces to which external equipment
+can be connected:
+
+1.  Two RS-232-C Modem Composite Link Ports
+
+2.  Two RS-422-A Composite Link Ports
+
+3.  A single Supervisory Terminal Port
+
+4.  Eight Asynchronous RS-232-C Device Ports
+
+The RS-232-C Composite Link-connection alternatives include the 
+following with 1200, 2400, 4800, 9600, and 19200 bps being the only
+available transfer rates on the interfaces:
+
+^ Leased Line Modem       Non-dialup synchronous, full-duplex via BC22F 
+                          RS232 cable (non-satellite links). Bell 
+                          compatibility: 202 FDX, 201B, 208B, 209. 
+                          CCITT compatibility: V.23, V.26, V.27bis, 
+                          V.29. (up to the highest speed supported
+                          by the modem used)
+
+^ Digital Transmission    Full duplex, Synchronous RS232 interface 
+                          (non-switched)
+
+The only RS-422-A Composite Link-connection alternative is direct wire
+connection (customer-supplied cable) with 1200, 2400, 4800, 9600, 19200
+and 38400 bps being the only available transfer rates.
+
+Supervisory Terminal port can accept directly connected asynchronous
+terminals with the following communication characteristics:
+
+^   Asynchronous RS-232-C start/stop, having 8 data bits, 1 stop
+    bit, no parity.
+
+^   Full duplex with XON/XOFF flow control.
+
+^   Speeds selectable from one of the following: 300, 600, 1200,
+    2400, 4800, 9600 baud, or AUTOBAUD.
+
+^   Physical connections include data lines only on a DB25-P
+    connector.
+
+MUXserver 100 Operation
+
+The MUXserver 100 ROM-based firmware provides the necessary maintenance
+operation protocols for downline loading MUXserver 100 software from a
+Phase IV DECnet load host over the Ethernet into MUXserver memory.   All
+self-test diagnostics are in MUXserver ROM, so downline loading is not a
+precondition for MUXserver self-test.  In the event of a bugcheck caused
+by a fatal error, the unit will normally attempt to upline dump server
+memory to a DECnet Phase IV host.  Following this, the unit will
+automatically initialize itself and invoke a downline load.
+
+Restrictions on MUXserver 100 Usage
+
+While terminal connections using the MUXserver 100 have been designed to
+simulate direct terminal connections as much as possible, a few
+differences necessarily exist because of the nature of the product.
+
+Under most circumstances, these differences are not noticed by terminal
+users or service node application programs.  However, applications which
+are directly dependent on the following functions may not operate as
+with a direct connection:
+
+1.  Applications that depend on reading or setting the terminal
+    speed, character size and parity by manipulating system data
+    structures
+
+2.  Applications that depend on an extremely fast response time
+    (typically less than 200 ms) to operate
+
+3.  Applications that utilize an alternate terminal driver in the
+    service node
+
+4.  Applications that expect incoming connections to have fixed
+    device names
+
+5.  Applications that directly receive and send BREAK signals
+    and/or XON/XOFF flow control characters (since these characters
+    are normally intercepted and processed locally by the MUXserver
+    100 and DECmux II).
+
+6.  Applications that require dial-up modems connected to the
+    DECmux II. (This is because unauthorized connection could
+    occur if a call is disconnected and the terminal session is NOT
+    logged out first).
+
+7.  Applications that utilize asynchronous DECnet software or
+    protocols are not supported on the MUXserver 100.
+
+INSTALLATION    
+
+This software product can be installed by the customer using the
+step-by-step documentation available for this product.  Optionally, you
+can purchase DIGITAL Installation Services which provide for the
+installation of the software product by an experienced DIGITAL Software
+Specialist.
+
+The installation service consists of:
+
+^  Installation of MUXserver 100 software on up to two DECnet load
+   hosts.
+
+^  Configuration of up to two MUXserver 100 units on each load
+   host, along with configuration of up to two DECmux II units for
+   each MUXserver.
+
+^  Configuration of LAT service node software (i.e. LTDRIVER) on
+   up to two service nodes
+
+^  Installation verification and checkout.
+
+^  Customer orientation demo.
+
+Customer Responsibilities
+
+Before installation of the software, the customer must:
+
+Previously have installed all requisite hardware including terminals.
+
+Obtain, install, and demonstrate as operational other communications
+equipment and facilities necessary to interface to and transfer 
+composite link data between the MUXserver 100 and DECmux(es).
+
+Make available for a reasonable period of time, as mutually agreed by
+DIGITAL and the customer, all hardware, communication facilities, and
+terminals that are to be used during the installation.
+
+For multi-node networks, designate one Ethernet host to verify
+installation/connectivity.
+
+HARDWARE REQUIREMENTS
+
+VAX or MicroVAX configuration as specified in the System Support 
+Addendum (SSA 28.45.01-x).
+
+SOFTWARE REQUIREMENTS *
+
+VMS or MicroVMS Operating System 
+
+DECnet-VAX
+
+Host initiated connect capability and shared printer support are only
+available on VMS service nodes running LATplus/VMS.  LATplus/VMS, Version 
+1.0 or greater is included with the MUXserver 100, distribution and 
+documentation option.  Prior versions of VMS, without LATplus are also 
+supported, but will NOT exhibit the features that require LATplus.
+
+A DECnet Load Host is required. 
+
+OPTIONAL SOFTWARE *
+
+None
+
+* Refer to the System Support Addendum for availability and required
+  versions of Prerequisite/Optional Software (SSA 28.45.01-x).
+
+ORDERING INFORMATION
+ 
+Software Licenses: QL-VE4A*-**
+Software Media: QA-VE4A*-**
+Software Documentation: QA-VE4AA-GZ
+Software Product Services: QT-VE4A*-**
+
+* Denotes variant fields.  For additional information on licenses, 
+  services and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING     
+
+The MUXserver 100 software license applies to the MUXserver 100 hardware
+on which the MUXserver software runs, NOT to the host node CPUs which
+downline load the software image, or service node CPUs in the network.
+
+You will need a separate license for each MUXserver 100 CPU on which you
+will be using the software product (except as otherwise specified by
+DIGITAL). Then, Materials and Service Options are selected to utilize 
+the product effectively.  
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions.  For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the
+purchase of a license for the product as defined in the Software
+Warranty Addendum of this SPD.
+
+SOFTWARE PRODUCT SERVICES 
+
+A variety of service options are available from DIGITAL.  For more 
+information contact your local DIGITAL office.
+
+
+May 1988
+AE-JS04B-TE

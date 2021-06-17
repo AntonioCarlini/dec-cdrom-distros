@@ -1,0 +1,363 @@
+
+PRODUCT NAME: DECnet/SNA Gateway for Synchronous Transport, Version 1.0   
+                                                      SPD 25.C6.00
+                                                            
+                                                           
+DESCRIPTION 
+  
+DECnet/SNA Gateway for Synchronous Transport (DECnet/SNA Gateway-ST) is a
+member of the DECnet/SNA Gateway product family. This family consists of 
+hardware and software products that allow users to bidirectionally exchange 
+information and share resources between suitably configured DIGITAL systems in 
+a DECnet environment and IBM systems in a Systems Network Architecture (SNA) 
+environment. Users on one or more DIGITAL systems can simultaneously perform 
+functions such as accessing IBM application programs or other system resources,
+act as a 3270 display station, perform data transfer between DIGITAL and IBM 
+file systems, exchange electronic documents and mail messages, submit jobs to 
+IBM batch subsystems acting as a Remote Job Entry workstation, and implement 
+distributed, task-to-task, application programs that run between DIGITAL and 
+IBM systems.  
+
+The DECnet/SNA product set provides a system connecting DECnet and
+SNA networks which can be used by a wide variety of DIGITAL supplied 
+access routines running under VMS, MS-DOS, and ULTRIX operating environments. 
+DECnet/SNA Gateway-ST is managed and configured using the DECnet/SNA VMS 
+Gateway Management V2.0 product. For additional information on 
+the various access routines and their capabilities, consult the 
+OPTIONAL SOFTWARE section in the System Support Addendum.
+
+DECnet/SNA Gateway for Synchronous Transport V1.0
+
+DECnet/SNA Gateway-ST V1.0 is part of both the DECnet and the
+SNA networks.  Architecturally, it is a DECnet Phase IV end node to DECnet and 
+a Physical Unit Type 2.0 node to SNA. It's purpose is to provide bi-directional
+network access between DECnet and SNA networks.
+                                                  
+The DECnet/SNA Gateway-ST hardware unit, known as the DEC MicroServer, 
+connects directly to an Ethernet Local Area Network. When used in
+conjunction with DECnet/SNA Gateway-ST, it provides SNA connectivity 
+to any Phase IV [or Phase IV+] DECnet system in the DECnet network.
+This product can be used in networks currently using other
+DECnet/SNA Gateway systems and can share access routines, Ethernet LANs, and 
+load host resources with those systems.
+
+The DECnet/SNA Gateway-ST software is down-line loaded into the 
+DEC MicroServer and must be ordered in addition to the DEC MicroServer. 
+DECnet/SNA VMS Gateway Management V2.0 software is also 
+required for the VMS node in the Ethernet Local Area Network designated as
+the load host for DECnet/SNA Gateway-ST. Other DECnet systems wishing access 
+to the SNA network through the DEC MicroServer should be configured with the 
+appropriate DECnet/SNA access routines. 
+
+DECnet/SNA Gateway-ST V1.0 supports SNA synchronous communications using the 
+SDLC protocol. The number of links supported depends on the line speeds
+required by the customer and the electrical interface used. Table 1 shows 
+the configuration matrix for connecting into the SNA network:
+
+
+                           Table 1
+               Number Of Synchronous Lines Supported 
+
+                     Maximum Line Speed 
+Electrical                   (Kbps)
+Interface         2.4-19.2   56/64   128   256
+
+RS232-D/V.24          4        -      -    -
+V.35                  4        4      2    1
+
+Lines connected to the DEC MicroServer should be configured according to 
+guidelines specified in the DECnet/SNA Gateway-ST user documentation. 
+
+Loading DECnet/SNA Gateway-ST V1.0 Software
+
+The DEC MicroServer requires software to be loaded into memory prior to 
+DECnet/SNA Gateway operation. DECnet/SNA Gateway-ST software is down-line 
+loaded across the Ethernet Local Area Network from a VMS system acting as 
+DECnet load host system.
+
+Most VAX, MicroVAX, and VAXstation systems running VMS or MicroVMS are
+supported as Ethernet load hosts for DECnet/SNA Gateway-ST. Supported
+VMS load host configurations are described in the System Support Addendum.
+
+DECnet/SNA VMS Gateway Management V2.0
+
+DECnet/SNA VMS Gateway Management V2.0 software is required on 
+the VMS load host CPU used to support the DECnet/SNA Gateway. 
+It must also be present on any other VAX node whose users want to 
+manage DECnet/SNA Gateway-ST and the DEC MicroServer. It is strongly 
+recommended that the software also be installed on VMS systems where 
+IBM Interconnect application programs are developed using DECnet/SNA VMS 
+Programming Interface products in order to facilitate application debugging
+functions.
+ 
+Management of DECnet/SNA Gateway-ST should be viewed as part of the DIGITAL
+environment while the management of the synchronous circuits connecting the 
+DECnet/SNA Gateway to the IBM network is a joint responsibility of the IBM and
+DIGITAL systems managers. (Refer to the Customer Responsibilities section 
+of this Software Product Description.) 
+
+For more information on DECnet/SNA VMS Gateway Management V2.0, refer to
+the DECnet/SNA VMS Gateway Management V2.0  Software Product Description. 
+
+New and Changed Features
+
+This  section  lists the  major  differences  between
+DECnet/SNA Gateway V1.x (DECSA-FA/DX24 based) and DECnet/SNA Gateway-ST 
+(DEC MicroServer based) products.
+
+      ^  Higher line speeds -  The  DEC MicroServer hardware supports lines 
+         at speeds up to 256Kbps.
+
+      ^  Additional Synchronous Lines - DECnet/SNA Gateway-ST supports up to
+         four SDLC connections at speeds of 64Kbs/circuit or less, two 
+         connections at 128Kbs/circuit or a single connection at 256Kbs.     
+
+      ^  More Sessions - DECnet/SNA Gateway-ST supports up to 128
+         concurrent (Logical Unit) sessions for selected access routines.
+        
+      ^  NRZI support - You can set the signaling mode for the lines
+         from  the  Gateway  to  the  IBM  system  to  NORMAL  or NRZI
+         (non-return-to-zero-inverted) so that  the  line  characteristics  can
+         match those set in the IBM ACF/NCP LINE macro.
+
+      ^  Circuits can be set FULL duplex - Data can be sent
+         and  received  simultaneously on full duplex lines.  This new
+         setting corresponds to DATMODE=FULL in the  IBM  ACF/NCP  PU
+         macro.
+
+      ^  Support for RECFMS - The Gateway can send  Record  Formatted
+         Maintenance  Statistics  (RECFMS) messages to the IBM system.
+         These messages contain counters requested by the IBM  Network
+         Problem   Determination   Application  (NPDA)  using  Request
+         Maintenance Statistics  (REQMS)  messages.   Not  all  RECFMS
+         messages are supported by the Gateway, refer to the DECnet/SNA
+         Gateway-ST user documentation for more information.
+
+      ^  A simplified  configuration  procedure  -  After  installing
+         Gateway-ST and Gateway Management V2.0 software, you run a
+         single configuration procedure which creates command procedures 
+         that define items for the DECnet database on the  load  host,  
+         and the SNA and DECnet databases on the Gateway.
+
+      ^  Extended SDLC - Support for Extended Response Mode SDLC (Modulo 128).
+
+INSTALLATION
+ 
+In order for this product to be DIGITAL supported, purchase of
+the Gateway Orientation/Installation Service is                         
+REQUIRED in conjunction with the customer's first purchase of a
+DECnet/SNA Gateway. Please refer to the SOFTWARE PRODUCT SERVICES
+section of this Software Product Description for further details.
+ 
+Only customers experienced with DIGITAL's IBM Interconnect products should
+attempt installation of second or subsequent DECnet/SNA Gateways. Any
+DECnet/SNA Gateway installations performed by customers are REQUIRED to be
+CERTIFIED by DIGITAL prior to customer purchase of the DECnet/SNA Gateway
+DECsupport Service, Basic Service or Self-Maintenance Service.
+CERTIFICATION is performed by DIGITAL software specialists. For
+installations that conform to the Software Product Description and cannot be
+certified, the customer must purchase DECnet/SNA Gateway
+Orientation/Installation Service to be eligible for DECnet/SNA Gateway
+DECsupport Service, Basic Service or Self-Maintenance Service.
+ 
+Customer Responsibilities
+
+Before installation of the software, the customer must:
+
+^  Previously have installed all requisite hardware. 
+
+^  Obtain, install, and demonstrate as operational any modems and other 
+   equipment and facilities necessary to interface to DIGITAL's communication 
+   equipment.
+
+^  Demonstrate equivalence of operation for modems other than Bell System 
+   201C, 208A, or 209A, IBM 5866 Model 1, AT&T 2596, 2556, Dataphone 
+   II,(2096A, Digital 2500, or equivalent) type  modems, or in Europe, PTT 
+   approved modems.
+
+^  Have generated, to DIGITAL's satisfaction, any necessary IBM 
+   host software that will be communicating with the DECnet/SNA Gateway.
+
+^  Have completed any additional requirements as described in the 
+   Orientation and Installation Service.
+
+^  Make available for a reasonable period of time, as mutually 
+   agreed by DIGITAL and the customer, all hardware, 
+   communication facilities, and terminals that are to be used 
+   during installation. 
+
+^  Be prepared to work with the DIGITAL and the IBM system 
+   manager in the pre-installation activities outlined in the 
+   Orientation and Installation Service.
+
+^  Be prepared to modify IBM component generation parameters to 
+   support DECnet/SNA Gateway-ST.
+
+Delays caused by any failure to meet these responsibilities will 
+be charged at DIGITAL's then prevailing rate for time and 
+materials.
+
+HARDWARE REQUIREMENTS
+
+In Ethernet Local Area Networks:
+
+^  VAX, MicroVAX, or VAXstation configuration as specified in the System
+   Support Addendum (SSA 25.C6.00-x).
+
+^  DEC MicroServer (DEMSA-Ax) and appropriate extension cables
+
+^  Bell System compatible modems as listed in the Customer Responsibilities 
+   section, or in Europe, PTT approved modems
+
+SOFTWARE REQUIREMENTS*
+
+VMS Operating System  or MicroVMS Operating System
+
+DECnet-VAX
+
+DECnet/SNA VMS Gateway Management for each VMS load host. 
+
+OPTIONAL SOFTWARE*
+
+DECnet/SNA VMS  APPC/LU6.2 Programming Interface      
+DECnet/SNA VMS Application Programming Interface      
+DECnet/SNA Data Transfer Facility                     
+DECnet/SNA VMS Distributed Host Command Facility      
+DECnet/SNA VMS DISOSS Document Exchange Facility      
+DECnet/SNA VMS Printer Emulator                       
+DECnet/SNA VMS Remote Job Entry                       
+DECnet/SNA VMS 3270 Data Stream Programming Interface 
+DECnet/SNA VMS 3270 Terminal Emulator                 
+DECnet/SNA MS-DOS 3270 Terminal Emulator              
+DECnet/SNA ULTRIX 3270 Terminal Emulator              
+
+*Refer to the System Support Addendum for availability and required versions
+ of required/optional software (SSA 25.C6.00-x).
+
+ORDERING INFORMATION
+
+Software Licenses:  QL-S01AA-AA
+Software Media: QA-S01AA-**
+Software Documentation: QA-S01AA-GZ 
+Software Product Services:  QT-S01A*-**
+
+*Denotes variant fields. For additional information on available
+licenses, services, and media refer to the appropriate price book. 
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with 
+the purchase of a license for the product as defined in the Software
+Warranty Addendum of this SPD.  
+
+WARRANTY LIMITATIONS
+
+IBM Supported Configurations
+
+This product has been designed to operate with the IBM host systems and 
+software subsystems listed below. While this software may function 
+correctly with other IBM software and equipment, and with 
+hardware and software other than that supported by IBM, DIGITAL cannot offer 
+its standard warranty for this product unless it has been tested 
+with such equipment and software configurations and found 
+acceptable to DIGITAL.
+
+The DECnet/SNA Gateway-ST software has been tested and warranted with 
+the following IBM software configurations:
+
+
+Software Product             Version        Release
+
+ACF/VTAM                        2              2
+                                3              1
+                                3              1.1
+
+
+MVS/SP                          1              3.6
+                                2              1.2
+                                2              1.3
+                                2              1.5
+                                2              1.7
+                                2              2.0
+                               
+VM/SP                                          4.1
+
+DOS/VSE                         2              1.6
+
+For a complete list of IBM application subsystems (e.g., CICS/VS) that
+the various DECnet/SNA access routines have been certified against
+and that are supported configurations by DIGITAL, please consult the
+respective access routine Software Product Description. (Refer to the
+table provided in the Optional Software section of this Software Product
+Description.) 
+
+SOFTWARE LICENSING
+
+You will need to purchase a separate DECnet/SNA Gateway-ST license for each 
+DEC MicroServer unit on which you will be using the software product (except 
+as otherwise specified by DIGITAL). 
+
+The licensing provisions of DIGITAL's Standard Terms and Conditions
+provide in part that the software and any part thereof (but excluding 
+those parts specific to the load hosts) may be used only on
+the single DEC MicroServer hardware unit on which the software is
+operated, but may be copied, in whole or in part (with the proper
+inclusion of DIGITAL's copyright notice and any proprietary notices on
+the software) between multiple load hosts on the same LAN. 
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions. For more information about
+DIGITAL's licensing terms and policies, contact your local DIGITAL
+office. 
+
+
+SOFTWARE PRODUCT SERVICES
+
+DECnet/SNA Gateway Orientation and Installation Service 
+ 
+The Gateway Orientation/Installation Service  is                           
+REQUIRED in conjunction with the customer's first purchase of a DECnet/SNA
+Gateway if the installation is to be warranted and supported by
+DIGITAL.  The purpose of this service is to insure the
+installation of the DECnet/SNA Gateway will be completed and eliminate
+start-up problems.  It includes the following activities:
+ 
+^  Verify IBM and DIGITAL hardware and software prerequisites.
+ 
+^  Coordinate customer MIS and DIGITAL Software Services resources.
+ 
+^  Review IBM system generation parameters.
+ 
+^  Install the DECnet/SNA Gateway and any load host resident DECnet/SNA VMS
+   Gateway access routine software which has been ordered concurrently with
+   the DECnet/SNA Gateway for the first VAX host node.
+ 
+^  Verify connectivity between installed access routines and the IBM
+   system  if it has been pre-configured according to the  guidelines
+   provided by DIGITAL for those products.  The following access
+   routines qualify for this verification:
+ 
+   - DECnet/SNA VMS 3270 Terminal Emulation
+   - DECnet/SNA VMS DISOSS Document Exchange Facility
+   - DECnet/SNA VMS Printer Emulation
+   - DECnet/SNA VMS Remote Job Entry
+   - DECnet/SNA Data Transfer Facility
+ 
+   Connectivity verification of the DECnet/SNA Gateway with access routine
+   products other than those listed above will be done using the Installation
+   Verification (IVP) Software Program supplied with the each access
+   routine.
+ 
+ 
+An installation service is available for the simultaneous                  
+installation of the DECnet/SNA access routines for each
+additional VAX system.
+ 
+DIGITAL will provide these services upon customer notification
+that the system, including all prerequisite hardware and
+software, is ready for installation according to the guidelines
+listed in the Customer Responsibilities for INSTALLATION section of this
+Software Product Description.  Contact your local Field Service office for 
+additional information on these services.                                  
+
+

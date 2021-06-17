@@ -1,0 +1,641 @@
+
+PRODUCT NAME:  X25router, Version 1.0                     SPD 28.86.00
+
+DESCRIPTION
+
+For definitions of terms used in this SPD, refer to the section called
+``Terms and Definitions''.
+
+Introduction
+
+The X25router provides either or both of the following functions for a
+Local Area Network: 
+
+^  Routing DECnet messages
+
+^  Giving access to X.25 communications services
+
+For routing purposes, Phase IV DECnet networks consist of a number  of
+linked areas.  Each area is not limited to a specific geographic
+region, but is often localized (such as a LAN in a building).  Packet
+routing is handled by specified routing nodes, which may have to do
+this task in addition to providing services to users.  Routing works
+on two levels: 
+
+Level 1   Among nodes within an area (called intra-area routing)
+
+Level 2   From one area to another (called inter-area routing)
+
+The X25router is a routing system that can act as a level 1 and/or
+level 2 router. The system routes information over one LAN circuit,
+any synchronous DDCMP circuits, and DECnet circuits established across
+X.25 PSDNs. This gives other DECnet nodes on the LAN access to remote
+nodes, and also relieves them of the routing overhead. 
+
+The X25router can interface to one or more supported PSDNs (See Table
+1), using them to carry DECnet traffic.  The X25router also acts as a
+connector node to provide access to the PSDNs for any system on the
+LAN which runs a supported VAX Packetnet System Interface (P.S.I.)
+Access product. 
+
+The X25router can be used in many different ways.  An example might be
+as a level 2 router and a PSDN access point for a LAN,  connected to a
+DECnet node in another area via DDCMP, to a public PSDN with remote
+DECnet nodes in other DECnet areas, to a private PSDN with some DECnet
+nodes in the same area, and with a point-to-point ISO 8208 connection.
+In this case it would act as both a level 1 and level 2 DECnet router.
+
+System Overview
+
+The system is a combination of hardware and software.  The hardware is
+the DEC MicroServer communications server that runs the X25router
+software. 
+
+Some major features of the complete system are:
+
+^  Physical Characteristics
+
+   -  A table top unit, which can also be rack or wall mounted
+
+   -  Status display                                                      
+
+   -  LAN and four synchronous ports 
+
+   -  The four synchronous ports can be used in any combination of 
+      DECnet DDCMP lines and X.25 connections.
+
+^  Routing Capabilities
+
+   -  Level 1 and/or level 2 Phase IV DECnet routing
+
+   -  Ability to route messages between 63 areas, each of up to 1023
+      nodes; these are maximum values permitted by the Digital Network    
+      Architecture. Satisfactory operation in large networks requires     
+      proper network planning. 
+
+   -  Adaptive routing to and from the LAN, and using up to 63 other      
+      DECnet (DDCMP or DLM) circuits over the synchronous links.
+                                                                             
+   -  Ability to communicate with remote Phase III nodes in the same  
+      DECnet area.
+                                                                             
+   -  Path splitting, where there are two or more equal-cost paths
+      between the X25router and the destination DECnet node.  For this
+      feature, all the destination nodes must support out-of-order
+      packet caching. 
+
+^  Synchronous Line Capabilities
+
+   -  Data speeds of up to 256K bits per second (see Table 3)
+
+   -  V.24 interchange circuits
+
+   -  V.28 (RS232-D), RS232-C, V.36/V.11 (RS449/RS422), V.10 
+      (RS449/RS423), V.35 electrical interfaces
+
+   -  CCITT (1980) X.21 for leased line services only
+
+   -  Full modem control on all synchronous lines
+
+^  DDCMP Capabilities
+
+   -  Communicates with all supported synchronous DIGITAL DDCMP
+      products excluding the DMC11 
+
+   -  Ability to work on point-to-point or multipoint links.  However, 
+      on DDCMP multipoint links, the X25router can act only as a 
+      tributary.
+
+   -  Full- or half-duplex communications
+
+^  X.25 Capabilities
+
+   -  Can connect to multiple supported PSDN(s) on a per-line basis      
+
+   -  Can have more than one connection to a PSDN; each connection	
+      must have a unique DTE address, and the X25router can share 
+      outgoing calls between all the DTEs connected to a network         
+
+^  Network and Configuration Management Capabilities
+
+   -  Configuration using a utility on the load host                     
+
+   -  Remote management from any suitable DECnet node using the DECnet 
+      Network Control Program  
+
+   -  Remote problem diagnosis (for example, using the TRACE tool)
+
+   -  Automatic attempt to dump and reload following a system failure
+
+   -  Event logging to any Phase IV DECnet node
+
+   -  Dynamic reconfiguration while the system is running
+
+X.25 Capabilities
+
+The X.25 capabilities fall into two groups:
+
+^  As a packet-mode DTE connected to a supported PSDN (Refer to Table 1)
+
+^  As one end of a point-to-point connection that uses ISO 7776 and
+   8208 standard protocols. The X25router can act as either the DTE or
+   DCE. 
+   
+   Note: The X25router does not provide any packet-switching exchange 
+         facilities. 
+
+Some of the major features of the X.25 capabilities are:
+
+^  Conformance to CCITT recommendations X.25 (1978, 1980, 1984), and to
+   ISO standards 3309, 7776, and  8208 (Refer to the section called 
+   ``Standards Conformance'' for more information)
+
+^  Uses LAPB or LAPBE as the frame-level data link protocol              
+
+^  Ability to split and recombine messages that are longer than the 
+   packet size of a DECnet DLM circuit					
+
+^  Routes non-DECnet traffic from a PSDN to one or more VAX P.S.I. 
+   Access nodes on the LAN.  The network manager has full control over 	
+   which node the incoming call is routed to.
+
+^  Can communicate over both PVCs and SVCs                               
+
+^  Can maintain up to 512 virtual circuits, one for each incoming or 
+   outgoing SVC or PVC, and one for each DECnet DLM circuit active, 
+   depending on the configuration of the packet-level parameters         
+
+Accounting and Security
+
+Each VAX P.S.I. Access node using the X25router maintains accounting
+information for each virtual circuit in use. No additional accounting
+information is collected by the X25router. 
+
+VAX P.S.I. Access nodes can provide security checks for both inbound
+and outbound calls. No additional security features are provided by
+the X25router for P.S.I. Access connections. The X25router provides
+security mechanisms for incoming DECnet DLM circuits. 
+
+Supported Public Networks
+
+Table 1 lists the public PSDNs that the X25router can be connected to.
+The product is supported only on the individual networks in the          
+countries shown. Connections to networks outside this list are            
+customer-supported only.  Refer to Table 1 at the end of this 
+document.                                                  
+
+Network and Configuration Management                                     
+
+The network manager can create and modify the configuration databases    
+by using utilities that are part of the load host software. The          
+configuration database is loaded into the X25router during system        
+initialization.                                                          
+
+The manager controls the running system by using the DECnet Network      
+Control Program from any DECnet Phase IV node.  For example, the
+manager can use the utility from one of the systems on the LAN.
+Management of the X.25 part of this product is restricted to VMS
+or MicroVMS systems. 
+
+The utility provides three basic functions:
+
+^  Display statistics and error information for the X25router (for 
+   example, statistics on line usage or errors)					
+
+^  Control the X25router (for example, starting and stopping lines, 
+   setting parameters, and loading the software)
+
+^  Test the components of the network (for example, loop messages through
+   all or part of a communications path to isolate a defective component)
+
+In addition, a separate utility, available on VMS and MicroVMS
+load hosts, assists problem-solving by tracing information at various
+stages in its path through the X25router. 
+
+Host Systems
+
+The X25router has no file storage of its own, and so relies on host 
+systems to:
+
+^  Load the software
+
+^  Log events
+
+^  Receive any memory dumps
+
+The minimum requirement is for one host to load the DEC MicroServer.
+Event-logging and dump reception facilities can be used at the
+discretion of the customer. Only a DECnet Phase IV node on the same
+LAN can be a load host or dump receiver. 
+
+It is recommended that X25router software can be installed on a number
+of load hosts. This helps to protect against loss of service if a
+single load host is unavailable, or unable to load the system for any
+other reason. Each load host must be on the same LAN, but not 
+necessarily in the same DECnet area as the X25router. 
+
+Conformance To Standards
+
+The X25router conforms to the following international standards:
+
+^  CCITT recommendation X.25 (1978, 1980, or 1984) using the             
+   LAPB or LAPBE variants of the data link and X.25 packet protocols
+
+^  ISO standards 7776 and 8208
+
+^  ISO standard 3309 for HDLC frame generation and recognition (BSC
+   framing is not supported) on the X.25 ports
+
+The hardware can operate with a number of electrical interface
+standards (Refer to Table 3).  The X25router provides only the           
+electrical interface of a DTE rather than a DCE, and does not provide
+clock signals.  An external clock source (such as a modem) is required
+for any X.25 or DDCMP synchronous port. 
+
+The X.25 recommendation covers a wide range of optional facilities.
+Table 2 lists these facilities and indicates whether the X25router
+supports each of them.  The center column is the paragraph number in
+the X.25 recommendation (1984) that defines the facility. 
+
+The features in Table 2 are those that the X25router is capable of
+supporting, when used with a VAX P.S.I. Access product that also
+supports each feature.  However, individual PSDNs may not support all
+these features.  In these cases, you will not be able to use the
+facilities the PSDN does not provide.  The product documentation sets
+out the specific facilities available on each supported public PSDN.     
+
+Refer to Table 2 at the end of this document.
+
+Performance And Configuration
+
+The X25router can be set up in a number of ways.  The number of
+synchronous links supported on the system depends on the maximum line
+speed in use. Table 3 shows the number of lines supported for each        
+combination of line speed and electrical interface type.
+
+                     Table 3
+        Number Of Synchronous Lines Supported
+
+                                  Maximum Line Speed
+Interface                               (Kbps)
+Type                              19.2    64    256
+
+V.28/V.24 (RS232-C/D)              4      -      -
+V.36/V.11 (RS422/RS449)            4      4      2
+V.10 (RS423)                       4      4      -
+V.35                               4      4      2
+X.21 leased line                   4      4      2
+
+The actual packet rate will be less than that indicated by the
+aggregate synchronous line speed, and is determined by such factors
+as: 
+
+^  Type of traffic (routing updates or data packets) and data rates
+
+^  Proportion of DDCMP to  X.25 traffic, and the packet-sizes and the
+   ratio of DECnet (DLM) to non-DLM traffic, for X.25 links
+
+^  The path of messages through the X25router system (LAN-to-LAN, 
+   synchronous-to-LAN, or synchronous-to-synchronous)
+
+^  Communications line characteristics
+
+^  Frequency and type of errors on the synchronous links
+
+^  Network topology
+
+^  Applications
+
+^  Protocol overhead
+
+Terms And Definitions
+
+This SPD uses the following terms:
+
+DCE     Data Circuit Terminating Equipment. The X25router can act as a
+        DCE only as one end of a point-to-point DCE-DTE link using ISO
+        protocols.
+
+DLM     Data Link Mapping. This allows DECnet messages to be sent over
+        X.25 links.
+
+DTE     Data Terminal Equipment.  The X25router can act as a DTE when
+        connected to a PSDN, or at one end of a point-to-point DCE-DTE
+        link using ISO protocols.
+
+HDLC    Used here to denote the method (not the protocol) used to	
+        generate and recognize frames.
+
+ISO	International Standards Organization				
+
+LAN     Any local area network that conforms with the Ethernet, IEEE 
+	802.3 or the ISO 8802-3 standards.                                
+
+LAPB    The variant of the X.25 frame level protocol used in the 	
+	X25router.
+
+LAPBE   The name used to denote LAPB with extended sequence numbering.
+
+PSDN    Packet Switched Data Network that conforms to the CCITT
+        recommendation X.25 (1978, 1980, or 1984) and/or to the ISO
+        7776 and 8208 standards.
+
+P.S.I.	Packetnet Systems Interface (Packetnet is a DIGITAL trademark)
+
+PVC     Permanent Virtual Circuit
+
+SVC     Switched Virtual Circuit
+
+PREREQUISITE SUPPORT
+
+A Network Profile and DECnet Customer Support Plan covering all
+intended network nodes and their support may be required by your
+DIGITAL office. 
+
+INSTALLATION
+
+DIGITAL requires that a customer's first purchase of the product
+include DIGITAL Installation Services. These services provide for
+installation of the software product by an experienced DIGITAL
+software specialist. 
+
+Only customers experienced with DIGITAL's X.25 products should attempt    
+second or subsequent installations. DIGITAL recommends that all other     
+customers purchase DIGITAL's Installation Services.                       
+
+The DIGITAL installation service consists of:
+
+^  Installation of the X25router software on one load host
+
+^  Configuration of one X25router unit on that load host
+
+^  Installation verification using one connection to one supported PSDN  
+
+Customer Responsibilities
+
+In some cases, the X.25 network supplier (or PTT) may impose
+restrictions, limitations, or requirements on the proposed DIGITAL
+network configuration.  The customer must ensure that they understand
+and adhere to these controls for each and every network. 
+
+Before the software is installed, the customer must:
+
+^  Previously have installed all requisite software and hardware
+   (including terminals needed for the installation)
+   
+^  Obtain, install, and demonstrate as operational any modems and other 
+   equipment and facilities necessary to interface to DIGITAL's 
+   communication equipment.
+   
+^  Demonstrate where necessary that modems used meet the appropriate 
+   interface standards.
+
+^  Designate one adjacent node to verify connectivity for                   
+   any synchronous DDCMP circuits.
+
+^  Subscribe to the Open User Group and to at least two SVCs to be        
+   able to complete the product's installation checkout (this             
+   test loops information from the X25router to the PSDN and back to the  
+   X25router). Systems that use PVCs or Closed User Groups only, or where 
+   the PSDN does not support calls to the same DTE address, require       
+   specially negotiated arrangements for DIGITAL installation of the      
+   product. 
+
+^  Make available for a reasonable period of time all the hardware        
+   (including terminals), software, and communications facilities needed  
+   during the installation. This period of time is mutually agreed        
+   between the customer and DIGITAL. 
+
+Delays caused by failure to fulfill any of these responsibilities will
+be charged at the then prevailing rate for time and materials. 
+
+Courtesy Installation Service
+
+This software product will be installed by DIGITAL at no additional
+charge if you purchase it concurrent with a Startup Service Package       
+that includes installation service.  This service may not be available    
+in all countries. 
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX, or VAXstation configuration as specified in the System
+Support Addendum (SSA 28.86.00-x).
+
+DEC MicroServer as specified in the System Support Addendum.
+
+SOFTWARE REQUIREMENTS *
+
+For each VAX System acting as a load host or dump receiver:
+
+VMS Operating System or MicroVMS Operating System
+
+DECnet-VAX (either end-node or full-function)
+
+OPTIONAL SOFTWARE *
+
+VAX Packetnet System Interface (P.S.I.) Access
+
+* Refer to the System Support Addendum for availability and required
+  versions of the prerequisite/optional software (SSA 28.86.00-x).
+
+ORDERING INFORMATION
+
+Software Licenses:  QL-VIAA*-**                                           
+Software Media: QA-VIAAA-**                                               
+Software Documentation:  QA-VIAAA-GZ                                      
+Software Product Services:  QT-VIAA*-**                                   
+
+* Denotes variant fields. For additional information on available
+  licenses, services and media refer to the appropriate price book. 
+
+SOFTWARE WARRANTY
+
+The X25router is warranted for use only with supported Phase III and
+Phase IV DECnet products supplied by DIGITAL.  Any system connected to
+one of the X25router's synchronous DDCMP links, or attempting DECnet
+communication via a PSDN, must run a current version of a DECnet Phase
+III/IV product using any supported synchronous interface, but excluding
+a DMC11 device. 
+
+DIGITAL has designed or adapted the X.25 portion of this product to
+operate with:
+
+^  Equipment conforming to ISO standards 7776 and 8208
+
+^  The public networks in the appropriate countries listed in Table 1
+
+^  Certain private PSDNs, for which DIGITAL has included specific PSDN
+   profiles in this product
+
+DIGITAL cannot offer its standard warranty for this product unless it    
+has been configured appropriately for the PSDN. If not, connections      
+are customer-supported only.                                             
+
+Each network and country pairing in Table 1 indicates DIGITAL's
+commitment to supporting the X25router for that public service.
+However, it does not imply that the appropriate networking authority
+has granted network certification for the X25router. Please contact
+your DIGITAL sales office for up-to-date information on certification    
+status. 
+
+Warranty for this software product is provided by DIGITAL with the
+purchase of a license for the product as defined in the Software
+Warranty Addendum.
+
+SOFTWARE LICENSING
+
+You will need a separate license for each DEC MicroServer unit on
+which you will be using the software product (except as otherwise
+specified by DIGITAL). 
+
+The licensing provisions of DIGITAL's Standard Terms and Conditions 
+provide in part that the software and any part thereof (but 
+excluding those parts specific to the load hosts) may be used only on 
+the single DEC MicroServer hardware unit on which the software is 
+operated, but may be copied, in whole or in part (with the proper 
+inclusion of DIGITAL's copyright notice and any proprietary notices on 
+the software) between multiple load hosts on the same LAN.
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about
+DIGITAL's licensing terms and policies, contact your local DIGITAL
+office. 
+
+LICENSE MANAGEMENT FACILITY 
+
+??????
+
+SOFTWARE PRODUCT SERVICES 
+
+A variety of service options are available.  For more information on 
+these or other services, please contact your local DIGITAL office. 
+
+
+                         Table 1
+            Public PSDNs Supported By The X25router
+
+Country             Public Network and         
+                    CCITT Revisions            
+
+Australia           Austpac
+Austria             Datex-P
+Belgium             DCS
+Brazil              Renpac                                              
+Canada              Datapac (1976 or 1980)
+Denmark             Datapak
+Eire                Eirpac (1980)
+Finland             Datapak
+France              Transpac
+Hong Kong           Datapak
+                    Intelpak
+Italy               Itapac
+Japan               DDX (1976, 1980) (1)                 
+                    Venus-P (1980)
+Malaysia            Maypac
+Mexico              Telepac
+Netherlands         Datanet 1
+Norway              Datapak
+Portugal            Telepac
+Singapore           Telepac
+South Korea         Dacomnet
+Spain               Iberpac
+Sweden              Datapak
+Switzerland         Telepac (1978, 1980)
+Taiwan              Pacnet
+United Kingdom      PSS
+United States       Accunet
+                    Autonet
+                    Infonet
+                    Mark*Net Extended Service                            
+                    Telenet
+                    Tymnet
+                    Western Union PTN-1
+West Germany        Datex-P
+
+Note:
+
+1. DIGITAL offices in Japan can supply the mandatory additional 
+   information that explains the special use of the X25router with 
+   the DDX PSDN.
+
+Unless otherwise acknowledged within the product's documentation, the
+trademarks under which services are offered are proprietary to the
+respective national PTT, the owning or operating companies, or
+equivalent organization. 
+
+
+                              Table 2
+           Optional X.25 Facilities Supported by the X25router                 
+
+  Optional Facility               Paragraph Number      X25router
+                                  in CCITT X.25 (1984)  Support
+
+ 1. Extended packet sequence numbering         6.2        Yes
+ 2. Non-standard default window size           6.10       Yes
+ 3. Default throughput class assignment        6.11       n/a
+ 4. Packet re-transmission                     6.4        See Note 1
+ 5. Incoming calls barred                      6.5        n/a
+ 6. Outgoing calls barred                      6.6        n/a
+ 7. One-way logical channel outgoing           6.7        n/a
+ 8. One-way logical channel incoming           6.8        Yes
+ 9. Closed user group (CUG)                    6.14.1     Yes
+10. CUG with outgoing access                   6.14.2     Yes
+11. CUG with incoming access                   6.14.3     Yes
+12. Incoming calls barred within CUG           6.14.4     Yes
+13. Outgoing calls barred within CUG           6.14.5     Yes
+14. CUG selection                              6.14.6     Yes
+15. CUG with outgoing access selection         6.14.7     No
+16. Absence of both CUG selection facilities   6.14.8     Yes
+17. Bilateral CUG                              6.15.1     Yes
+18. Bilateral CUG with outgoing access         6.15.2     Yes
+19. Bilateral CUG selection                    6.15.3     Yes
+20. Reverse charging                           6.18       Yes
+21. Reverse charging acceptance                6.19       Yes
+22. Local charge prevention                    6.20       n/a
+23. Network user identification                6.21       Yes
+24. Charging information                       6.22       Yes
+25. RPOA selection                             6.23       Yes
+26. Hunt group                                 6.24       See Note 2
+27. Call redirection                           6.25       n/a
+28. Called line address modified notification  6.26       Yes
+29. Call redirection notification              6.27       Yes
+30. Transit delay selection and indication     6.28       Yes
+31. On-line facility registration              6.1        No
+32. Non-standard packet size                   6.9        Yes
+33. Flow control parameter negotiation         6.12       Yes
+34. Throughput class negotiation               6.13       Yes
+35. Fast select                                6.16       Yes
+36. Fast select acceptance                     6.17       Yes
+37. D-bit modification                          6.3        No
+38. Abbreviated address                         -          n/a
+39. Datagram queue length selection             -          No
+40. Datagram service signal logical channel     -          No
+41. Datagram non-delivery indication            -          No
+42. Datagram delivery confirmation              -          No
+43. Call statistics (non-X.25)                  -          See Note 3
+
+Notes:
+
+1. This is not applicable to a DTE. This product does not support
+   the reception of a level 3 Reject packet, and will not generate
+   one.
+
+2. The individual DTEs must be assigned their own addresses
+   independent of the hunt group address.  The X25router can then
+   ignore the hunt group. Alternatively, each line can be configured 
+   as if it were connected to a separate PSDN each with the same DTE 
+   address. In either case, all the lines must be connected to the 
+   same X25router. 
+
+3. This product does not generate these statistics. However, a
+   VAX P.S.I. Access node can obtain those supplied by the PSDN
+   through the programming interface.
+
+4. The X25router does not support the following items of the CCITT 
+   X.25 recommendation:
+
+   ^  Multi-link protocol
+   ^  Use of the D-bit in outgoing packets
+
+August 1988
+BH-KP96A-TN

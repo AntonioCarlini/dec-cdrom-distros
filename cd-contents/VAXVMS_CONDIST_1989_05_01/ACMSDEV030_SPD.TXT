@@ -1,0 +1,545 @@
+
+PRODUCT NAME: VAX ACMS, Version 3.0                          SPD 25.50.08   
+              (Application Control and Management System)
+
+DESCRIPTION
+
+  VAX ACMS (Application Control and Management System) is a  TP
+  (Transaction  Processing)  monitor, providing a run-time, development,
+  and application control system for TP applications.  TP applications
+  are  typically  applications  with  many users, doing predefined tasks
+  against shared data.  VAX ACMS was designed to address specific needs
+  of TP applications, to:
+  
+        ^  Make more efficient use of system resources with specialized
+           servers.
+  
+        ^  Provide flexibility in how users access data.
+  
+        ^  Improve application availability, particularly on a
+           VAXcluster or configurations with separate front-end
+           processors.
+  
+        ^  Provide an integrated application development environment
+           with an underlying data dictionary (VAX CDD) sharing data among VAX
+           TDMS forms, VAX Rdb/VMS databases and VAX DBMS databases.
+  
+        ^  Provide a modular development style and a utility to build
+           applications, task groups, tasks, and menus.
+  
+        ^  Provide utilities to manage and control these complex
+           applications.
+  
+  
+  VAX ACMS provides a multi-threaded run-time environment without
+  requiring multi-threaded application code.  VAX ACMS handles the
+  multi-threading in the front-end Command Process and the coordinating
+  Application Execution Controller, which calls procedures or database
+  routines that run in serially reusable server processes.  A VAX ACMS
+  system can allocate system processes to control the terminals and
+  forms processing so that each user does not require a separate
+  process. These transactions are then controlled in a multi-threaded
+  manner for many simultaneous users.  VAX ACMS  can  efficiently  share
+  system resources and can provide enhanced performance for a typical TP
+  application over that offered by a general timesharing environment.
+  
+  VAX ACMS applications can further improve throughput in terminal I/O
+  intensive applications by offloading the terminal control and forms
+  processing to a separate MicroVAX or other VMS system. VAX ACMS
+  allows this flexibility in configuring the system, so that a user on
+  one system can select a task from an application on another node.
+  Applications developed using VAX ACMS can be used in:
+  
+        ^  A single node environment
+  
+        ^  A VAXcluster environment with terminal users distributed
+           across the VAXcluster, or with users optionally attached via
+           a DECServer.
+  
+        ^  An offloaded environment, where terminal users and resulting
+           forms processing are offloaded to a front-end processor from the
+           back-end processor within a local-area or wide-area network.
+         
+           The back-end processor could be a single node or a VAXcluster, 
+           again with users optionally attached via a DECserver.
+
+        ^  VAXcluster, again with users optionally attached via a
+           DECServer.
+  
+  
+  VAX ACMS also increases the application's availability and access to
+  it by allowing applications to failover and failback in a VAXcluster
+  environment. If the node on which users are working fails, they can
+  continue on an alternate node without having to log into VAX ACMS
+  again.  VAX ACMS uses VMS search lists to specify primary and
+  alternate nodes for each application.  When the original node becomes
+  available again, the original system can again be specified as the
+  primary one, without stopping the VAX ACMS application.
+  
+  VAX ACMS has been used in such transaction processing applications as
+  order processing and inventory control, Materials Requirement Planning
+  (MRP) and shop floor control, and financial services applications, as well
+  as customer and administrative systems across a wide variety of industries.
+  
+  Features
+
+VAX ACMS provides three different environments: a run-time environment for
+executing VAX ACMS-developed applications, a development	
+environment in which to write VAX ACMS applications, and an application 
+control or management environment for overseeing the run-time           
+environment.  Each of these is described below.
+
+Run-time Environment						
+								
+VAX ACMS provides specialized servers, or control processes, for databases
+and terminal I/O.  A multi-threaded front-end server called the 	
+Command Process is provided to handle terminal users and the corresponding
+forms processing.  Serially resusable procedure servers handle computation 
+and     database I/O.  User code that executes in procedure servers can be   
+written	in any language conforming to the VMS calling standard.  
+The Application Execution Controller manages the servers and the
+flow of VAX ACMS task calls to them.   				
+
+Development Environment
+
+The VAX ACMS Development environment extends the basic concept of
+separating the terminal and menu functions from the database or file	
+processing and computation functions.  The VAX ACMS application entities
+are stored in the VAX Common Data Dictionary,				
+and can be shared across a VAX TDMS forms system, 			
+VAX Rdb/VMS relational database, or VAX DBMS CODASYL database.	
+This development approach is structured and modular, since VAX ACMS
+utilities are used to define the entities that build the application.
+
+^ Major Entities
+
+	Four major components are customer definable to provide
+	an VAX ACMS application: 
+
+	1.  Tasks
+
+        With VAX ACMS, tasks are defined as a sequence of one or more
+        steps to be processed after a menu selection has been made.  
+
+        Tasks can include steps of two types.  An exchange step handles terminal
+        I/O, usually by means of a VAX TDMS request.  
+	Processing steps do
+        the computation or database work needed by the task, most often by 
+        calling a subroutine written in a VMS programming language such as 
+        VAX COBOL, VAX BASIC, or VAX FORTRAN.  Processing steps can also
+        use VAX DATATRIEVE command procedures, DCL (Digital Command Language)
+        commands or DCL command procedures, or customer-written VMS images. 
+
+
+        The separation of tasks into distinct steps performing different 
+        functions can simplify maintenance.  It also allows VAX ACMS to 
+        allocate different VMS processes to different kinds of work.  
+        For example, a VAX ACMS system process, the Command Process,
+        can handle the terminal I/O for many users, while one or more of the 
+        specialized procedure servers can handle processing work on behalf of 
+        these users.  A procedure server can be used for many processing 
+        steps without having to be started and stopped for each task.  When 
+        VAX ACMS is being used in a distributed environment, the terminal 
+        I/O and the associated Command Process can be placed on one VAX 
+        system and the processing work and the associated procedure servers
+        on another.
+
+        In addition to defining steps, the task definition for a multiple-step 
+        task can specify workspaces which are records defined in the VAX 
+	Common Data Dictionary/Plus (CDD/Plus) used to pass information 
+        between the steps.  (Procedures written in many VMS languages
+	can, at compile time, copy these record                           
+	definitions directly from the CDD.  For procedures written in a 
+	language that does not support the CDD, the records must be defined 
+	in the procedures themselves as well as in the CDD.  (See the VAX 
+        CDD/Plus SPD for a list of languages that copy record definitions 
+        from the CDD.)  If the task uses VAX DBMS or VAX Rdb/VMS, database recovery 
+        actions can also be specified in the task definition.
+
+	2.  Task Groups
+
+        Once tasks are defined, a task group definition is written to identify
+        resources shared by many tasks.  For example, VAX TDMS request libraries,
+        VMS message files, and VAX ACMS workspaces are some of the resources 
+        that can be named in a task group definition.  At a minimum, the task 
+        group definition names the tasks in the group and the servers they 
+        use.  Two types of server processes can be defined with VAX ACMS:
+
+        ^    DCL servers - These handle images, DCL commands, VAX DATATRIEVE 
+             commands, and other processing than can be done from DCL command mode.
+             DCL servers cannot be used in a distributed environment if they 
+             perform any terminal I/O.
+
+        ^    Procedure servers - These specialized processes handle images
+             composed of VAX ACMS-supplied code linked with user-supplied
+             subroutines written in VAX COBOL, VAX C, or other VAX ACMS-supported
+             languages (refer to the Optional Software section).
+
+        Both types of servers can be reused by many tasks, but procedure servers
+        reduce the system overhead associated with image activation.  Images 
+        that run in DCL servers must be started and stopped at each task 
+        selection.  In contrast,  images that run in procedure servers
+        are prestarted when the server is created and are not stopped until 
+        the server is stopped.  In addition to saving image activation 
+        overhead, procedure servers have other advantages.  They can be shared 
+        by multiple users and they enable work such as opening files and/or 
+        binding databases to be done once for all tasks using the same server, 
+        rather than each time a task is selected.
+
+	3.  Application Definitions                                       
+
+        An application definition specifies the tasks that can be controlled 
+        as a unit and the VMS UICs (User Identification Codes) of users who 
+        are authorized to run each task.  Also included in the application 
+        definition are the control characteristics of servers, such as the 
+        number to start and the VMS user names under which they run.       
+
+	4.  Menus
+
+        A menu definition specifies the list of items from which a user can 
+        select and the descriptive text that appears on the screen for each  
+        item.  Terminal users can select tasks from menus or directly by     
+        command without a menu being displayed.  Menus can be hierarchical   
+        in structure; that is, a menu entry can refer to a task or to another 
+        menu.  Entries on the menu can refer to tasks which exist on the same 
+        node as the terminal user or exist on other nodes in a               
+        VAXcluster or network.
+
+        VAX ACMS can use VAX TDMS for menu processing.  Although VAX ACMS 
+        menu definitions have a standard format using a predefined VAX TDMS 
+        request, a user with knowledge of VAX TDMS can modify the menu 
+        request to create a different menu format.
+
+	With task-calling-task, the menuing system can be bypassed and	  
+	the user can provide menuing via menu tasks that then call actual 
+	tasks within the group.						  
+
+^ Tools for Application Programming
+
+        1.  VAX ACMS Task Debugger 
+
+        The VAX ACMS Task Debugger works with the VAX Symbolic Debugger.  
+        With the 
+        VAX ACMS task debugger it is possible to debug VAX ACMS tasks without 
+	having to first set up applications and menus.  		  
+
+     	2.  Application Definition Utility
+
+	The Application Definition Utility (ADU) provides a set of English-like 
+        clauses used to define the four major entities in an VAX ACMS system: 
+        tasks, task groups, applications, and menus.  VAX ACMS ADU commands are 
+        used to store these definitions in the VAX CDD and to change or delete 
+        them. 
+
+	3.  The Systems Interface
+
+	The Systems Interface is a set of callable software services which 
+        can be used by a systems programmer to:
+
+       -  Call tasks in VAX ACMS from devices not supported by VAX TDMS 
+          (a bar-code reader, for example)
+
+       -  Write special menu interfaces (as an alternative to using the 
+          standard VAX ACMS menu interface).
+
+       -  Write a terminal interface (as an alternative to using VAX TDMS)
+
+        The main purposes of the Systems Interface are the replacement 	
+	of the VAX ACMS front-end and the interfacing of other devices.	
+
+
+	4. VAX ACMS Queued Task Services 
+
+	The VAX ACMS Queued Task Services, together with the VAX ACMS	
+	Queued Task Initiator run-time component and the VAX ACMS Queue 
+	Manager Utility, allow you to defer task executions.  You can 	
+	call the VAX ACMS Queued Task Services to safestore (or retrieve) 
+	tasks and task data from VAX ACMS task queues.  These	
+	services can be called from a procedure server in an VAX ACMS task 
+	or from a stand-alone user-written program.  After these 	
+	queued task elements are safestored, they can be automatically 	
+	processed by the VAX ACMS Queued Task Initiator. 		
+
+        To run deferred tasks in a production environment requires a future
+        maintenance update to VMS V5.0.
+
+	5. The Request Interface 					
+
+	The Request Interface allows replacement of the front end 	
+	I/O method with your own customized front end processing.  	
+	For example, using the Request Interface you can use VAX FMS, 	
+	SMG, or other forms processing systems as the presentation 
+	service or form processing component of a VAX ACMS application.	
+
+Application Management Environment					
+
+   VAX ACMS provides tools to manage VAX ACMS applications.                
+   These application management tools are available as                     
+   part of the full development kit as well as the    			   
+   VAX ACMS Run-time Option and include:				  
+
+   1.  Access Definition Utilities
+
+	VAX ACMS provides three utilities that control access to VAX ACMS:  
+	the User Definition Utility, the Device Definition Utility and 
+	the Application Authorization Utility.  The User Definition Utility 
+	defines which authorized VMS users can log in to VAX ACMS and 
+	what menus they will see.  The Device Definition Utility defines 
+	which terminals can access VAX ACMS.  The Application Authorization 
+	Utility allows definition of which users can install VAX ACMS 
+	applications.  It also allows VAX ACMS system managers to restrict   
+	the VMS user names which can be used in the application definition.  
+
+   2.  Operator Facility
+
+       The Operator Facility provides a set of DCL commands and qualifiers
+       that perform operator functions such as starting and stopping 
+       applications, canceling tasks, enabling or disabling the VAX ACMS Audit 
+       Trail Facility, enabling VAX ACMS operator terminals, and displaying
+       information about applications, tasks, users, queues, and system 
+       components.  This facility also includes a failover and failback    
+       capability.  This feature enables applications to run with terminal 
+       input/output shifted to a front-end VAX or set of VAXes.            
+
+   3.  Audit Trail Facility
+
+       The VAX ACMS Audit Trail Facility records system-supplied information 
+       about task selections, user logins, and other events.  An associated 
+       report facility can be used to format the information, providing 
+       specific or summary information about users and tasks.
+
+   4.  ACMSGEN Utility
+
+       VAX ACMS includes a utility called ACMSGEN for changing VAX ACMS system |
+       parameters such as how many users can log in, the user names
+       under which VAX ACMS system processes run, and the priorities of
+       those processes.
+
+   5.   ACMSQUEMGR Utility						
+
+	The VAX ACMS Queue Manager, together with the VAX ACMS Queued Task
+	Initiator run-time component and the VAX ACMS Queued Task Services, 
+	allow applications to defer task executions.  The VAX ACMS Queue    
+        Manager utility provides commands to create and manage VAX ACMS task 
+        queues.	
+
+        To run deferred tasks in a production environment requires a future
+        maintenance update to VMS V5.0.
+
+Optional VAX ACMS Run-time Version					
+
+   A subset of VAX ACMS which allows applications to run 		
+   is available for purchase.  This Run-time Option does not provide 
+   the facilities for defining tasks and task groups (developing 
+   applications). The purpose of the Run-time Option is to support the 
+   execution of applications developed on a                                 
+   host machine using the development version of this product, and to run 
+   on production machines.                                         	    
+									    
+Optional VAX ACMS Remote Access Version					    
+
+   An optional remote access version of VAX ACMS is also available for purchase
+   The Remote Access Option is a subset of the Run-time Option and 
+   provides the ability to place users and the terminal I/O associated with 
+   them on a separate VAX system, offloaded from the application VAX or     
+   VAXcluster.  A DECnet link is required.  The Remote Access Option        
+   allows the terminal handling to be concentrated on a front-end system 
+   which frees up the other systems for processing work.  
+
+Documentation							
+									
+The VAX ACMS documentation set consists of the following manuals:	
+(The entire documentation set is orderable as QA-079AA-GZ.)
+									
+  ^  Introduction to VAX ACMS (AA-LD79A-TE)                                      
+
+     Provides a general introduction to VAX ACMS and the VAX Information 
+     Architecture transaction processing system.  This manual describes the 
+     VAX ACMS run-time system and components for developing and managing    
+     transaction processing applications.  This manual also includes a  
+     master glossary of VAX ACMS and transaction processing terms.          
+     
+  ^  Developing Applications with VAX ACMS (AA-EV63A-TE)		
+ 
+     This document gives a step-by-step explanation of how to develop   
+     VAX ACMS applications.						
+ 
+  ^  VAX Information Architecture Introduction to Application Development
+     (AA-JK93A-TE)							
+
+     A cross-product book on developing application with all the	
+     VAX Information Architecture products.				
+
+  ^  VAX Information Architecture Introduction to Database Development	
+     (AA-JK92A-TE)							
+
+     A cross-product book on developing databases with the		
+     VAX Information Architecture products.				
+
+									
+  ^  VAX ACMS Guide to Managing Transaction Processing Applications 	
+     (AA-N689D-TE)
+								
+     Explains how to authorize access to VAX ACMS, control VAX ACMS 
+     applications, monitor VAX ACMS system performance, set and tune system 
+     parameters, and set up an VAX ACMS  system for distributed processing.  
+     The manual also provides reference information for system management 
+     tools.                 
+									
+  ^  VAX ACMS Guide to Creating Transaction Processing ApplicationS (AA-LC14A-TE)
+									
+     Describes how to design and develop applications by explaining how to 
+     use the VAX ACMS  Application Definition Utility (ADU) to define tasks,
+     groups, applications, and menus.  This manual also discusses the factors
+     that can affect the performance of the VAX ACMS system.                 
+     (This book combines the VAX ACMS Application Definition Guide,       
+     VAX ACMS Application Design Guide, and VAX ACMS Task Definition Guide.)
+
+  ^  VAX ACMS Transaction Processing ADU Reference Manual (AA-U715D-TE)
+
+     Provides reference information about the clauses and commands of the
+     Application Definition Utility (ADU).                                
+
+
+  ^  VAX ACMS Guide to Transaction Processing Programming (AA-N691D-TE)	
+
+     Explains how to write and debug programs for VAX ACMS applications.  It
+     describes how to create message files, use system workspaces, use the 
+     VAX ACMS Request Interface (RI), and debug procedures.                  
+
+  ^  VAX ACMS Guide to Systems Interface Programming (AA-EA12C-TE)	
+
+     Describes the VAX ACMS Systems Interface (SI) and explains the interface
+     services a systems programmer can use to submit tasks to an VAX ACMS 
+     system. This guide also explains how to allow communication between 
+     task submitters and VAX ACMS tasks.
+
+  ^  VAX ACMS Transaction Processing Quick Reference Guide (AA-LD80A-TE)          
+
+     Lists the syntax for the VAX ACMS Application Definition Utility (ADU),
+     and for each of the VAX ACMS system management utilities.  This guide   
+     also provides a 
+     flowchart illustrating the steps in developing a VAX ACMS application. 
+     A checklist that accompanies the flowchart briefly describes each step.  
+     The guide also provides a table that lists the components in an VAX ACMS
+     application that can be changed, the other components that are affected 
+     when a component is changed, and when the changes take effect.  Finally,
+     the guide provides a table that lists the files used to debug VAX ACMS  
+     tasks.                                                                  
+
+  ^  VAX ACMS Release Notes (AA-GR03C-TE)
+
+     Includes specific information about the current VAX ACMS release and   
+     contains material added too late for publication in the other VAX ACMS 
+     documentation.                                                     
+									
+  ^  VAX ACMS Installation Guide (AA-N686F-TE)
+
+     Describes how to install ACMS and run the Installation Verification 
+     Procedure (IVP).           
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX, or VAXstation configuration as specified in the System    
+Support Addendum (SSA 25.50.08-x).
+
+SOFTWARE REQUIREMENTS*                                                        
+
+For VAX ACMS:
+
+VMS or MicroVMS Operating System 
+
+VAX Common Data Dictionary 
+
+For VAX ACMS Run-time Option:
+
+VMS or MicroVMS Operating System 
+
+VAX Common Data Dictionary/Plus
+
+For VAX ACMS Remote Access Option:
+
+VMS or MicroVMS Operating System 
+
+DECnet-VAX
+
+OPTIONAL SOFTWARE*
+
+ALL-IN-1
+VAX Ada
+VAX BASIC
+VAX BLISS-32
+VAX C
+VAX DEC/CMS
+VAX COBOL
+VAX COBOL GENERATOR
+VAX DATATRIEVE
+VAX DBMS
+VAX DEC/MMS
+VAX DEC/TEST MANAGER
+VAX DIBOL
+VAX FORTRAN
+VAX FMS
+VAX Language-Sensitive Editor
+VAX PASCAL
+VAX PL/I
+VAX RALLY
+VAX Rdb/VMS
+VAX RMS Journaling
+VAX RPG II
+VAXSet
+VAX TDMS
+VIDA with IDMS/R(tm)
+VMS Volume Shadowing
+
+*Refer to the System Support Addendum for availability and required        
+ versions of prerequisite/optional software (SSA 25.50.08-x).
+
+ORDERING INFORMATION             
+
+Software License:     QL-079A*-** Development System			
+                      QL-076A*-** Run-Time				
+                      QL-Y30A*-** Remote Access				
+
+Software Media:       QA-079A*-** Development System			
+                      QA-076A*-** Run-Time				
+                      QA-Y30A*-** Remote Access				
+
+Software Documentation: QA-079AA-GZ Development System			
+                        QA-076AA-GZ Run-Time				
+                        QA-Y30AA-GZ Remote Access			
+
+Software Product Services: QT-079A*-** Development System		
+                           QT-076A*-** Run-Time				
+                           QT-Y30A*-** Remote Access			
+
+*Denotes variant fields. For additional information on available licenses,
+ services, and media, refer to the appropriate price book.
+
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's  
+Standard Terms and Conditions. For more information about      
+DIGITAL's licensing terms and policies, contact your local DIGITAL office.
+
+License Management Facility
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer
+to the VMS Operating System Software Product Description
+(SPD 25.01.xx) or the VMS Operating System documentation set.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum. 
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more         
+information contact your local DIGITAL office.                             
+
