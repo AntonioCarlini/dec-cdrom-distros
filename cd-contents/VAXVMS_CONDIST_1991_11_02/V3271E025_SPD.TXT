@@ -1,0 +1,373 @@
+VAX 3271 Protocol Emulator, Version 2.5                     SPD 25.21.13
+
+DESCRIPTION
+
+The VAX 3271 Protocol Emulator (PE) enables Digital Equipment Corporation's 
+VT1XX, VT2XX and VT3XX terminals connected to and application programs running 
+on a VMS system to interact with IBM RO system application programs and system 
+services that utilize the Binary Synchronous Communications (BSC) line 
+discipline. Terminal users access the 3270 Terminal Emulator utility which is 
+part of the VAX 3271 Protocol Emulator; application programmers use the 
+application program interface provided with the VAX 3271 PE product.
+
+The VAX 3270 Terminal Emulator utility allows the VT1XX, VT2XX and VT3XX user 
+on a VMS system to access an IBM system. This feature is useful for users who 
+are implementing distributed processing with VMS systems. Users who are moving 
+applications from centralized mainframes to VMS distributed processors will 
+find this capability an efficient migration tool during the transition phase; 
+users who occasionally access applications that remain on mainframes can access 
+those applications through their local VMS systems.
+
+The application program interface provides a base for distributed applications 
+where one component of the application runs in an IBM host system and the other 
+component in a VMS system. This type of application is useful in situations 
+such as on-line access and update of a mainframe database in response to an 
+event in the VAX, or where it is inappropriate to present a 3270 type formatted 
+screen to a user who is accustomed to VMS style screens.
+
+Terminal Emulation
+
+The 3270 Terminal Emulator (TE) utility causes a screen display transmitted 
+from the IBM system to be displayed on the Digital terminal screen in a manner 
+similar to the format on a 3270 display, and maps the VT1XX, VT2XX and VT3XX 
+keyboard to simulate the IBM 3270 IDS keyboard. The TE facility is also 
+supported for the VMS user of other Digital products running in VT1XX and VT2XX 
+emulation mode. Emulation of screen sizes larger than the 24 lines by 132 
+columns is restricted to the Digital terminal able to display only a segment of 
+the larger emulated screen. This screen segment can be "moved" to cover any 
+part of the emulated screen.
+
+Easily modified translation tables convert ASCII terminal input to a subset of 
+IBM multinational EBCDIC code. Users can also change the default keyboard 
+mappings of the Digital terminal.
+F
+RO IBM is a registered trademark of IBM Corporation
+F
+
+A HELP facility is available that provides information on keys with altered 
+3270-oriented functions and other functions such as the display of status 
+information.
+
+The status line of a 3270 Display Station is not supported, however much of the 
+same information is reported on a special status line which may be overlaid on 
+the VT1XX, VT2XX and VT3XX's 24th line. Most existing IBM host application 
+programs will operate without modification. Those host programs that use 3270 
+features not included in this product (for example, 480 character screens) must 
+be modified.
+
+The 3270 Terminal Emulator utility supports the following features of the IBM 
+3278 Models 2, 3, 4 and 5 Display Station:
+
+oo   87 key-keyboard with 24 program function (PF) keys and three program assist 
+    (PA) keys
+
+oo   Numeric lock
+
+oo   Audible alarm
+
+oo   Protected and unprotected fields
+
+oo   Alphanumeric or numeric data
+
+oo   Intensified display, display, or non-display characters
+
+oo   Auto-repeat keys (as available on a VT1XX, VT2XX and VT3XX keyboard) 
+
+oo   Click and ALT CURSR (as available through the VT1XX, VT2XX and VT3XX SET-UP 
+    feature) 
+
+oo   3278 Display Station numeric lock override
+
+Note:	 Intensified and reverse video features require the Advanced Video 
+         Option when using a VT100 terminal.
+
+The following are among the features of the conventional IBM 3270 product that 
+are not supported for the 3270 TE:
+
+oo     Selector pen, security lock, magnetic strip card reader and operator 
+      identification card reader
+
+oo     !-> (tab) and <-! (new line) as auto-repeat keys
+
+oo     <!<! (fast left) and !>!> (fast right) keys
+
+oo     DEV CNCL, CURSR BLINK and CURSR SEL key functions
+
+oo     Structured fields
+
+oo     Programmed fields
+
+oo     960-character screens
+
+oo     3279 Display Station color support
+
+Refer to product documentation for a complete list of supported and unsupported 
+features.
+
+Application Program Support
+
+The VAX 3271 PE's applications program interface makes on-line access to a 
+mainframe database possible.  Applications on the IBM host system can be coded 
+using procedures normally used to support 3270 terminals; the VMS application 
+communicates with the IBM application by issuing calls to this package that are 
+consistent with other VMS input/output services. VAX 3271 PE manages the modems 
+and line protocols, and provides an easy-to-use interface so that the 
+application programmer need not be knowledgeable about communications.
+
+Up to 32 separate logical connections can be made simultaneously on a single 
+communications line.  The connections can be from the same program or several 
+programs on either the VMS system or the IBM host system.
+
+Command Sequence
+
+The emulator executes the WRITE, GENERAL POLL, and SPECIFIC POLL command 
+sequences. The VAX 3271 PE does support explicit READ MODIFIED and READ BUFFER 
+commands but may process them in a different manner than an IBM system. SENSE 
+and COPY commands are not supported.
+
+Network Management
+
+The VAX 3271 Protocol Emulator allows the system manager to control and monitor 
+the activity of the PE. The generation procedure can be verified with the 
+Installation Certification Procedure supplied with the product. Utilities are 
+provided which load the PE software and start and shut down the PE controlled 
+lines. The system manager can test communications components using the loopback 
+test program as an aid in determining failed components. This feature which 
+provides counts of the occurrence of specific types of data transmissions and 
+transmission failures, error logging, and statistical routines, can be used to 
+assist in tuning the system.
+
+Line Discipline
+
+The communications discipline used by the VAX 3271 Protocol Emulator is the 
+3271 subset of IBM's Binary Synchronous Communications (BSC) protocol using 
+EBCDIC code.  Specifically, this subset of BSC supports operation of full- and 
+half-duplex leased lines in either point-to-point or multi-point 
+configurations, at transmission speeds up to 9600 bits per second. Operation at 
+line speeds higher than 9600 bits per second is not supported, except as noted 
+in the System Support Addendum (SSA 25.21.13-x). The VAX 3271 Protocol Emulator 
+does not support switched facilities or contention line control. The VAX 3271 
+Protocol Emulator supports transparent BSC capability and can share a 
+multi-point line with control units functioning in transparent or 
+non-transparent mode.
+
+Note:	 When this software is used on a MicroVAX I system, the maximum 
+         supported transmission speed is 4,800 bits per second.
+
+INSTALLATION
+
+Only experienced customers should attempt installation of this product. Digital 
+recommends that all other customers purchase Digital's Installation Services.  
+These services provide for installation of the software product by an 
+experienced Digital Software Specialist.
+
+Customer Responsibilities
+
+Before installation of the software, the customer must:
+
+oo     Have previously installed all requisite hardware including terminals
+
+oo     Obtain, install and demonstrate as operational any modems and other 
+      equipment and facilities necessary to interface to Digital communication 
+      equipment
+
+oo     Demonstrate equivalency of operation for modems other than Bell System 
+      201C, 208A or 209A type modems, or outside the USA, PTT approved modems
+
+oo     Have generated any necessary IBM host software that will be communicating 
+      with the VAX 3271 Protocol Emulator to Digital's satisfaction
+
+oo     Make available for a reasonable period of time, as mutually agreed by 
+      Digital and the customer, all hardware, communication facilities, and 
+      terminals that are to be used during installation
+
+To use the VAX 3271 Protocol Emulator Application Program Interface 
+effectively, the customer must be prepared to work at the system programming 
+level as well as the more traditional applications program level in both 
+Digital and IBM systems.
+
+Successful use of this product requires that:
+
+oo     The customer design the application with full knowledge of what has to be 
+      done at the system programming level on the host IBM system to accomplish 
+      the desired function
+
+oo     The customer should be capable of generating both the IBM and Digital 
+      systems to achieve the desired CPU-to-CPU logical communications links
+
+Delays caused by any failure to meet these responsibilities will be charged at 
+Digital's then prevailing rate for time and materials.
+
+Digital installation will be considered complete when the following have been 
+successfully performed at the customer site by a qualified Digital Software 
+Specialist:
+
+oo     Verification of the contents of the VAX 3271 Protocol Emulator Software 
+      kit
+
+oo     Generation of the VAX 3271 Protocol Emulator for use on the customer's 
+      system
+
+oo     Verification that Digital supplied devices function with the VAX 3271 
+      Protocol Emulator
+
+In addition, if the customer has complied to Digital's satisfaction with all 
+items under the Customer Responsibilities section of this document, Digital 
+will demonstrate the Digital-IBM link.
+
+This test will consist of the following:
+
+oo     Bringing up the Digital system
+
+oo     Establishing the Digital-IBM link
+
+oo     Verifying that the Digital system is polled or selected by the IBM host
+
+oo     Transferring user-supplied data streams to and from the IBM host using 
+      the VAX 3271 PE control program (INS3271)
+
+oo     Logging into at least one IBM application using one of the customer's 
+      VTXXX terminals 
+
+It is the responsibility of the customer to ascertain that the host IBM system 
+is functioning properly. Digital will perform the demonstration only if the 
+necessary data streams are supplied by the customer, and if in Digital's view, 
+the host IBM system is in good working order. The 3270 data stream is described 
+in the IBM 3270 Information Display Systems: 3271 Control Unit, 3272 Control 
+Unit, 3275 Display Station Description and Programmer's Guide (IBM order No. 
+GA23-0060) and in the VAX 3271 Protocol Emulator Management and Programming 
+Guide.
+
+PREREQUISITE SUPPORT PLAN
+
+A Network Profile must be prepared jointly by Digital and the customer. This 
+plan includes descriptions of the Digital and IBM systems, the physical 
+communications link(s), the application, the expected traffic, and the 
+anticipated level of support required. 
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX or VAXstation configuration as specified in the System Support 
+Addendum (SSA 25.21.13-x).
+
+SOFTWARE REQUIREMENTS*
+
+VMS Operating System
+
+VAX Wide Area Network Device Drivers
+
+*   Refer to the System Support Addendum (SSA 25.21.13-x) for availability and 
+    required versions of prerequisite software.
+
+ORDERING INFORMATION
+
+Software Licenses: QL-112A*-**
+Software Media: QA-112A*-**
+Software Documentation: QA-112AA-GZ
+Software Product Services: QT-112A*-**
+
+*   Denotes variant fields.  For additional information on available licenses, 
+    services and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of Digital Equipment 
+Corporation's Standard Terms and Conditions.  For more information about 
+Digital's licensing terms and policies, contact your local Digital office. 
+
+LICENSE MANAGEMENT FACILITY
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (SPD 25.01.xx) or the VMS 
+Operating System documentation set.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from Digital.  For more information 
+on these or other services, please contact your local Digital office. 
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by Digital with the purchase of 
+a license for the product as defined in the Software Warranty Addendum of this 
+SPD.
+
+WARRANTY LIMITATIONS
+
+This software has been tested and is warranted against IBM system/370 (includes 
+30XX and 43XX series) class processor systems with the following IBM software.  
+While this software may function correctly with other IBM software and 
+equipment and with software other than that supported by IBM, Digital cannot 
+offer its standard warranty for this software unless it has been tested with 
+such equipment and software configurations.
+
+Although Digital has designed this software product according to the 
+specifications for the IBM 3271 Control Unit Model 2 and the IBM 3277 Display 
+Station Model 2, as indicated in IBM 3270 Information Display Systems: 3271 
+Control Unit, 3272 Control Unit, 3275 Display Station Description and 
+Programmer's Guide (IBM order No. GA23-0060), supported features are limited to 
+those specified in this Software Product Description.
+
+The following list shows the configurations with which the software has been 
+tested and is warranted:
+
+                    Digital Tested/Warranted Configurations
+
+IBM Host Based                  Version	          Release
+System Software
+
+For MVS Systems:
+
+   MVS/XA  SP			    2		    2.0
+
+   ISPF/PDF			    2		    3.0
+
+   TSO/E/XA			    1		    4.0
+
+   ACF/VTAM			    3		    2.0
+
+   NETVIEW			    1		    2.0
+
+   CICS				    1		    7.0
+
+   IMS				    2		    2.0
+
+For VM Systems:
+
+   VM/SP			    1		    5.0
+
+   ISPF/PDF			    2		    2.0
+
+   ACF/VTAM			    3		    2.0
+
+   NETVIEW			    1		    1.0
+
+For DOS/VSE Systems:
+
+   VSE SP			    2		    1.6
+
+   CICS/DOS/VS			    1		    6.0
+
+   VSE/ICCF			    2		    1.0
+
+   ACF/VTAM			    3		    1.0
+
+   NCCF				    2		    2.0
+
+   ACF/SSP			    3		    2.0
+
+   ISPF/PD			    1		    1.0
+
+
+November 1989
+BH-K792N-TE
+
+
+(R) The DIGITAL Logo is a registered trademark of Digital Equipment Corporation.
+
+(T) VAX, MicroVAX, VAXstation, VMS and VT are trademarks of Digital Equipment 
+Corporation

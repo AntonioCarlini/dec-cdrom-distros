@@ -1,0 +1,242 @@
+VIDA for DB2, Version 1.0                                    SPD 25.E7.00
+
+DESCRIPTION
+
+VIDA for DB2 (TM) is an interoperability product which permits access to DB2 
+databases resident on IBM (R) mainframe systems.  VIDA for DB2 provides read 
+access to DB2 databases from VAX-based applications using the read-only 
+subset of the DIGITAL Standard Relational Interface (DSRI) architecture. 
+VIDA for DB2 users can access IBM-resident DB2 data using products such as 
+VAX DATATRIEVE and VAX TEAMDATA, the VAX Rdb/VMS utilities including 
+interactive SQL and RDO, and VAX Data Distributor, as well as applications 
+with embedded SQL or Data Manipulation Language (DML).  
+
+VIDA for DB2 is engineered using a client/server architecture.  It consists 
+of two component products and uses DIGITAL's SNA interconnect products.  
+VIDA Client for DB2 (hereafter referred to as VIDA Client) is a 
+VAX-resident product that processes DSRI requests.  VIDA Client uses the 
+DECnet/SNA VMS APPC/LU6.2 Programming Interface to send the requests 
+through a DECnet/SNA Gateway or VMS/SNA (hereafter referred to as a 
+gateway) to an IBM mainframe.  VIDA Server for DB2 (hereafter referred to 
+as VIDA Server) is an IBM-resident product which accepts the LU6.2 messages 
+and submits the requests to DB2.  Data obtained from DB2 is passed back to 
+VIDA Client through the gateway, and VIDA Client returns the data to the 
+requesting application.  The application can use the accessed data as it 
+would any locally accessed data.  For example, the data can be stored in a 
+VAX database or VAX RMS file, or it could be displayed on a screen or 
+printed. 
+
+VIDA Client runs under VMS on VAX, MicroVAX, and VAXstation systems. VIDA 
+Server runs as a CICS/OS/VS transaction on IBM System/370 mainframe systems 
+running the IBM MVS/XA (TM) Operating System.
+
+Features
+
+oo   VIDA for DB2 provides direct database access to IBM-based DB2 tables 
+    and views.  The user application accesses DB2 data the same way it 
+    would access Rdb/VMS data.  
+
+oo   VIDA for DB2 does not require users to create a copy of the IBM 
+    database on a VAX system.  Creating VAX-resident extracts of IBM data 
+    is a matter of user preference and convenience.
+
+oo   Applications can be developed to retrieve data directly from the DB2 
+    database.  Data retrieved from the mainframe database can be displayed 
+    at a user's terminal, printed, or copied to VAX Rdb/VMS and VAX DBMS 
+    databases or to VAX RMS files.
+
+oo   VIDA for DB2 supports a number of DSRI-compliant user interfaces.  
+
+oo   DB2 data can be accessed interactively using VAX Rdb/VMS interactive 
+    SQL or RDO.  
+
+oo   DB2 data can be extracted and stored in Rdb/VMS tables using VAX Data 
+    Distributor.
+
+oo   DB2 data can be accessed directly from third generation language (3GL) 
+    programs using embedded VAX Rdb/VMS SQL, SQL module language, dynamic 
+    SQL, callable RDO, or VAX Data Manipulation Language (DML).  These data 
+    access sublanguages are the same sublanguages used to access VAX 
+    Rdb/VMS data tables and views.  The VAX Rdb/VMS development option is 
+    required to develop 3GL applications that use VIDA for DB2.  VAX 
+    Rdb/VMS provides SQL pre-compiler support for languages such as Ada, C, 
+    COBOL, FORTRAN, and PL/I.  VAX Rdb/VMS provides DML pre-compiler 
+    support for languages such as COBOL, C, BASIC, FORTRAN, and PASCAL.  
+    SQL module language or callable RDO can be used with any language that 
+    supports the VMS calling standard.  Reference VAX Rdb/VMS (SPD 
+    25.59.xx) for a complete description of programming language support. 
+
+oo   When VIDA for DB2 is used with VAX DATATRIEVE, users can generate 
+    DATATRIEVE queries and reports that include data from DB2 tables or 
+    views.
+
+oo   When VIDA for DB2 is used with VAX TEAMDATA, end users can access DB2 
+    data tables and views directly, join them with TEAMDATA tables, store 
+    the results in TEAMDATA folders, etc. for use in decision support and 
+    other personal and departmental applications.
+
+oo   VIDA Client accepts a DSRI request from a user application.  VIDA 
+    Client converts the request into DB2 SQL and sends the request to VIDA 
+    Server on the target IBM system.  The request is sent through a gateway 
+    using the DECnet/SNA VMS APPC/LU6.2 Programming Interface.
+
+oo   VIDA Server accepts the SQL request from VIDA Client and submits it to 
+    DB2 using the dynamic SQL interface.  The results of the request are 
+    passed back through the gateway to VIDA Client.  
+
+oo   VIDA Client performs automatic EBCDIC/ASCII translation and passes the 
+    results to the calling program.  EBCDIC/ASCII translation is performed 
+    using a default translation table.  An alternate user defined 
+    translation table can be used if the default is not appropriate.
+
+oo   VIDA Server runs as a CICS transaction.  Sites can apply CICS tuning 
+    techniques to the VIDA Server CICS transaction just as they can to 
+    other CICS transactions. 
+
+oo   VIDA Server works in conjunction with existing security products in IBM 
+    environments, for example ACF2 (TM) RACF, and default CICS security. VIDA 
+    users require an IBM account and must be properly authorized within 
+    CICS and DB2 to access DB2 data.
+
+oo   VIDA Server uses a view to retrieve metadata from the DB2 catalog.  The 
+    view can be redirected at installation time to access user defined data 
+    tables which contain catalog data.  The metadata is automatically 
+    passed to VIDA Client which converts the definitions into DIGITAL 
+    relational data definitions.
+
+oo   The DIGITAL relational data definitions created by VIDA Client can be 
+    stored in CDD/Plus using RDO or SQL INTEGRATE commands.  3GL programs 
+    can be compiled against data definitions in CDD/Plus.
+
+oo   VIDA for DB2 uses DIGITAL's SNA interconnect software and hardware, 
+    including the DECnet/SNA Gateways, VMS/SNA, and the DECnet/SNA VMS 
+    APPC/LU6.2 Programming Interface to make the VAX to IBM communications 
+    link.  
+
+oo   VIDA for DB2 uses LU6.2 communications protocols to achieve fast and 
+    efficient data transfer.
+
+oo   VIDA Client on one VMS system can provide DB2 data access to local or 
+    remote users in the same DECnet network provided that users on the 
+    remote systems have access to some other DSRI database product with 
+    remote capabilities. 
+
+oo   VIDA for DB2 provides a logging facility that can trace communications 
+    activity, log errors, and help isolate problems.
+
+Limitations
+
+VIDA for DB2 provides read-only access.
+     
+INSTALLATION
+
+Both VIDA Server and VIDA Client need to be installed to provide access to 
+DB2.  Due to the complexities of installing software on both IBM and VAX 
+machines and of ensuring proper communications between the Client and 
+Server, DIGITAL will provide advisory service for the installation of the 
+VIDA Server product.  The installation advisory service package is included 
+in the VIDA Server for DB2 license.
+
+HARDWARE REQUIREMENTS
+
+VIDA Client for DB2:
+
+VAX, MicroVAX, or VAXstation configuration as specified in the System 
+Support Addendum (SSA 25.E7.00-x).
+
+VIDA Server for DB2:
+
+IBM S/370 configuration as specified in the System Support Addendum (SSA 
+25.E7.00-x).
+
+SOFTWARE REQUIREMENTS* 
+
+VAX Software:
+
+   VMS Operating System 
+   DECnet/SNA VMS APPC/LU6.2 Programming Interface 
+
+IBM Software:
+
+   MVS/XA Operating System
+   CICS/OS/VS
+   DB2
+   DB2 Attachment Facility for CICS/OS/VS
+   SMP/E
+   Assembler H
+
+*  Refer to the System Support Addendum (SSA 25.E7.00-x) for availability 
+   and required versions of prerequisite/optional software.
+
+ORDERING INFORMATION
+
+The VIDA for DB2 components are ordered separately.  An installation 
+advisory service package and on-site user orientation program is included 
+with the VIDA Server for DB2 license.
+
+VIDA Server is available only on 6250 BPI Magtape media.  VIDA Client is 
+available on 1600 BPI Magtape or TK50 media.  TK50 devices are required for 
+VAXstation 2000 and MicroVAX 2000 systems.
+
+Software Licenses: 
+
+  VIDA Client: QL-VTWA*-**
+  VIDA Server: QB-VTXA9-BA
+
+Software Media: 
+
+  VIDA Client: QA-VTWA*-**
+  VIDA Server: QA-VTXAA-*A
+
+Software Documentation: 
+
+  VIDA Client: QA-VTWAA-GZ           
+  VIDA Server: QA-VTXAA-GZ
+
+Software Product Services: 
+
+  VIDA Client: QT-VTWA*-**         
+  VIDA Server: QT-VTXA*-**
+
+*   Denotes variant fields.  For additional information on available 
+    licenses, services and media refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions.  For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY 
+
+The VIDA Client for DB2 layered product supports the VMS License Management 
+Facility.  The License Management Facility does not apply to the VIDA 
+Server for DB2 product.
+
+License units for the VIDA Client product are allocated on a CPU-capacity 
+basis.  
+
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (SPD 25.01.xx) or the License 
+Management Facility manual of the VMS Operating System documentation set.
+
+For more information about DIGITAL's licensing terms and policies, contact 
+your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+VIDA for DB2 is a part of a database interconnect solution involving 
+database, networking, decision support and IBM software.  It is required 
+that a support contract be purchased with the VIDA Server license. 
+
+A variety of service options are available from DIGITAL.  For more 
+information contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase 
+of a license for the product as defined in the Software Warranty Addendum 
+of this SPD.
+
+June 1989
+AE-MH79A-TE

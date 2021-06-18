@@ -1,0 +1,221 @@
+VAX DSM, Version 5.1                                      SPD 25.08.17
+
+DESCRIPTION
+
+VAX DSM is a multi-user data management system that includes DIGITAL 
+Standard MUMPS (DSM). This high-level interpretive language is a superset 
+of the proposed American National Standard MUMPS specification X11.1-1988. 
+VAX DSM operates under the VMS Operating System and fully utilizes the 
+capabilities of the VMS operating environment.
+
+The VAX DSM Language
+
+The VAX DSM language couples the flexible processing of variable length 
+string data with a high-performance data-base system, making interactive 
+database application systems easier to implement and maintain.
+
+The VAX DSM language includes the following extensions to the ANSI standard 
+MUMPS specifications:
+
+oo   Commands, functions and variables to load, save and edit DSM routines.
+
+oo   Language elements that implement a subset of the VMS I/O options, for 
+    the support of terminals, including foreign terminals, magtape devices, 
+    mailboxes and VAX RMS sequential, relative, and indexed sequential 
+    files. The use of DECnet for remote file access and task-to-task 
+    communication is also possible. TCP/IP communication is supported 
+    through an interface to Wollongong WIN/TCPF
+TM WIN/TCP is a trademark of The Wollongong Group
+FTM. 
+
+oo   A symbolic debugger which aids in the development and maintenance of 
+    DSM applications. The debugger permits the programmer to set break 
+    points and watch points and to display the current state of the call 
+    stack.
+
+oo   An error handling capability, allowing a DSM application to establish 
+    hierarchical error processing routines.
+
+oo   An external call interface to procedures written in languages other 
+    than DSM, through a $ZCALL function. Procedures invoked through $ZCALL 
+    are also capable of calling back the DSM interpreter.
+
+In addition to supporting the calling of user-written procedures, VAX DSM 
+also includes built-in interfaces to selected VMS services and run-time 
+library functions, giving the VAX DSM language the ability to mount and 
+dismount disk or magnetic tape volumes, spawn DCL subprocesses, manipulate 
+logical names, call mathematical and text manipulation functions, or 
+editors.
+
+For high run-time efficiency, the VAX DSM language is implemented as a 
+precompiler which generates intermediate code that is then interpreted at 
+run-time. During the precompilation process, which is transparent to the 
+user, VAX DSM performs operations that optimize subsequent run-time 
+execution.  For example, precompilation strips comments, checks syntax, 
+optimizes label references, and transforms numeric constants into an 
+internal representation.
+
+Global Variables
+
+The VAX DSM language allows symbolic reference to hierarchical arrays, 
+called global variables (or simply globals) which can be simultaneously 
+accessed by many users of a DSM application. VAX DSM provides a 
+high-performance implementation of global variables using multi-way trees. 
+VAX DSM stores global variables and DSM routines  on data structures called 
+DSM volume sets, each comprised of up to eight logical volumes.  Volumes in 
+a DSM volume set can be either files on a VMS volume or disk packs 
+compatible with DSM-11, mounted as foreign VMS volumes. In a VAX DSM 
+run-time environment, up to sixteen volume  sets can be present 
+simultaneously.
+
+Database Sharing in a VAXcluster
+
+VAX DSM allows volume sets to be mounted and made accessible to all members 
+of a VAXcluster.  The globals and routines resident within the 
+cluster-mounted volume sets are accessible in the same manner as a local 
+mounted volume set.  Each cluster member maintains and updates a memory 
+disk buffer cache for the cluster-mounted volume set. VAXcluster software 
+is utilized to coordinate the access and update of physical disk blocks.
+
+Distributed Data Processing
+
+VAX DSM applications can access globals either locally or on a remote 
+system.  VAX DSM supports remote access to globals through a DSM-specific 
+Distributed Data Processing (DDP) protocol. VAX DSM implements this 
+high-performance protocol on Ethernet in a manner compatible with DSM-11 
+Version 4.1 (Refer to  SPD  12.18.xx), allowing the user to set up DSM 
+networks consisting of PDP-11 and/or VAX processors in a local area 
+network. The DDP auto-configuration facility automatically updates the 
+software tables of members of a DDP network when a new system comes on or 
+off-line.
+
+VAX DSM also supports DDP over DECnet logical links, allowing remote global 
+access from VAX to VAX in a wide area network.
+
+Distributed global access can be done either explicitly, through the 
+extended DSM global syntax, or transparently to DSM applications, through a 
+system of global translation.  Optionally, the system manager can specify 
+the replication of one or more globals across several systems.
+
+After-Image Journaling
+
+VAX DSM supports a journaling facility to provide a record on secondary 
+storage of all operations that modify the database (SET and KILL of global 
+variables).   Journaling can be done on a global-by-global basis or for a 
+whole DSM environment.  In the event of a database degradation, it is 
+possible to restore the current database from a full backup and the journal 
+files using a de-journal utility.
+
+Before-Image Journaling
+
+VAX DSM provides a journaling capability which records the physical image 
+of a database block before modifications have been made.  This facility 
+preserves database integrity in the event of a CPU failure. The physical 
+before-image journal contains only a very small number of blocks and is 
+used to quickly "roll-back" any operations in progress at the time of the 
+failure.  The operations protected are SETs to globals that result in a 
+database block split, or KILLs that result in a database block merge.
+
+Incremental Backup/Restore
+
+VAX DSM provides an Incremental Backup Utility for use with the DSM 
+database.  The utility, ^BACKUP, backs up only those blocks which have been 
+modified since the last full backup.  Because modified blocks usually 
+constitute a small portion of an entire DSM database, the Incremental 
+Backup Utility represents a major reduction in the time required for backup 
+and the amount of backup storage required.  On non-clustered volume sets, 
+the Incremental Backup Utility allows database modifications during the 
+entire backup process.  On cluster-mounted volume sets, database 
+modifications are disabled during the second phase of the backup process.
+
+Full database backup of VAX DSM Volume Set files is accomplished using the 
+VMS BACKUP utility.  Restoration of an incremental backup is accomplished 
+using the Incremental Restore Utility to apply an Incremental Backup file 
+onto a fully restored primary database.  The backup media supported by 
+Incremental Backup is VMS sequential disk files.
+     
+Utilities
+
+VAX DSM provides application and system level utilities written in the DSM 
+language. Application level utilities help the DSM programmer develop and 
+maintain application  software  and  data.   For  example, there are 
+utilities to edit and display DSM routines and globals.
+
+System level utilities allow the management of a DSM application 
+environment.  The  system manager can create and extend DSM volume sets, 
+specify DSM configuration parameters such as the number of concurrent DSM 
+jobs and disk buffers, define DSM command line defaults, establish DDP 
+links and control journaling. For increased efficiency of routine calling, 
+the system manager can map a selected set of DSM application routines in a 
+shared virtual memory section, resulting in higher application throughput.
+
+DSM Application Software Library (DASL)
+
+DASL is a set of menu-driven tools designed for developers of interactive 
+applications.  DASL automates many of the tasks involved in defining and 
+documenting a database, generating data input, menu and help text screens, 
+and designing reports for data output.
+
+DASL is integrated with VAX DSM.  Interaction with DASL is done through 
+menus and screens that were developed using DASL.  DASL uses code 
+generation to transform DASL commands into efficient VAX DSM code.  The 
+screens and reports defined using DASL are compiled and stored as separate 
+DSM routines.
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX or VAXstation configuration as specified in the System 
+Support Addendum (SSA 25.08.17-x).
+
+SOFTWARE REQUIREMENTS *
+
+VMS Operating System 
+
+VMS Workstation Software
+    
+*   Refer to the System Support Addendum for availability and required 
+    versions of prerequisite software  (SSA 25.08.17-x).
+
+ORDERING INFORMATION
+
+Software Licenses:  QL-130A*-**
+Software Media:  QA-130A*-**
+Software Documentation:  QA-130AA-GZ
+Software Product Services:  QT-130A*-**
+DASL Legend Strip:  36-20220-B1
+
+*   Denotes variant fields.  For additional information on available 
+    licenses, services and media refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions. For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY
+
+This layered product supports the VMS License Management Facility. License 
+units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the 
+VMS Operating System Software Product Description (SPD 25.01.xx) or the 
+VMS Operating System documentation set.
+
+For more information on DIGITAL's licensing policies, contact your local 
+DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more 
+information contact your local DIGITAL office. 
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase 
+of a license for the product as defined in the Software Warranty Addendum 
+of this SPD.
+
+May 1989
+AE-K412R-TE
+

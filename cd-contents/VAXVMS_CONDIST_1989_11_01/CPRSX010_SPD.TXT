@@ -1,0 +1,281 @@
+
+PRODUCT NAME: VAX CoProcessor/RSX, Version 1.0		SPD 29.79.00
+
+
+DESCRIPTION
+
+Overview
+
+VAX CoProcessor/RSX (CP/RSX) is a combined VMS software layered product
+and a PDP-11 operating system product.  VAX CoProcessor/RSX provides users
+with an RSX-11 development and run-time environment on their VMS system.
+VAX CoProcessor/RSX also allows for the migration of many existing RSX
+applications to VMS. 
+
+VAX CoProcessor/RSX is especially suited to customers who want to gradually
+rewrite their RSX applications into VMS native code.  VAX CoProcessor/RSX
+helps customers with this transition by allowing them to continue to run
+their RSX applications, under the VAX CoProcessor/RSX operating system, in
+the same system configuration where they are running the applications that
+have been re-written into VMS native code. 
+
+VAX CoProcessor/RSX employs the KXJ11 board which contains a J11 PDP-11
+processor, and communicates  over the Q-bus with a MicroVAX or VAXstation.
+
+
+	_________________________________________
+	|					|
+	|             MicroVAX 			|
+	|				--------|
+	|-------------------		|KXJ11  |
+	|       VMS        |		|(CPRSX)|
+   	|------------------|		|-------|
+   	|CPRSX LAYERED PROD|		|DRIVER	|
+   	|------------------|		--------|
+   	|      DRIVER      |		   |	|
+   	|-------------------		   |	|
+   	|	 |			   |	|
+   	|     =========Q-BUS================	|
+	|_______________________________________|
+	    ^			   	      ^	
+	    |		   		      |
+  VAX CoProcessor/RSX 	   		VAX CoProcessor/RSX 
+  Host Software		   		Satellite Software
+  (VMS Layered Product)	   	(PDP-11 Operating System Product)
+
+
+
+VAX CoProcessor/RSX creates an integrated coprocessing environment based on
+Micro/RSX V4.1, with full access to VMS software tools. 
+
+
+
+
+Features
+
+System to System Communication
+
+Tasks running on the KXJ11 board can communicate with tasks running on
+the MicroVAX system by using QIO routines.  The VAX CoProcessor/RSX task
+assigns a Logical Unit Number (LUN) to a VMS Mailbox, and then performs
+QIOs to that Mailbox. 
+
+General Access
+
+Users may gain access to VAX CoProcessor/RSX through two different command
+interfaces (also called command line interpreters, or CLIs): the VMS DCL
+command line interpreter and the VAX CoProcessor/RSX command line interpreter.
+
+When a user is logged onto VAX CoProcessor/RSX and using its CLI, all RSX
+commands that the user types are directed to the RSX system where they are
+in turn processed by the RSX CLI (MCR, DCL, or a user-written CLI)
+specified in the user's RSX account logon information. Users may access VMS
+facilities from the RSX environment by using the RSX ``VMS'' command as a
+prefix to any VMS DCL command. Some facilities of VMS DCL (such as symbol
+substitution and lexical functions) are not supported by VAX
+CoProcessor/RSX. 
+
+Alternatively, users logged onto the VMS system may want to use the VMS DCL
+CLI and only occasionally issue an RSX command for the VAX CoProcessor/RSX
+system.  The VMS DCL ``CPRSX'' command is available to issue one-line RSX 
+commands to the VAX CoProcessor/RSX system. Most RSX utilities can be 
+initiated in the same way. 
+
+Operations With Disk and Tape Volumes
+
+The peripheral devices connected to the Q-bus of the MicroVAX are
+controlled by the MicroVAX and are not directly accessable by the KXJ11, or
+by programs and applications executing on the KXJ11. The VAX
+CoProcessor/RSX software emulates the PDP-11 I/O environment and provides
+access to these devices via the MicroVAX.  I/O requests made by programs
+running on the coprocessor are processed by psuedo device drivers, which
+send the requests to cooperating software on the MicroVAX for execution.
+Exceptions to this mode of I/O processing may be made by user-written
+drivers that access the on-board I/O interfaces of the KXJ11. (These
+interfaces are independent of the Q-bus.) 
+
+Compatability
+
+
+Compatibility with Other Derivatives of RSX
+
+VAX CoProcessor/RSX is compatible at the program level with RSX-11M-PLUS
+and Micro/RSX, and with RSX-11M and RSX-11S which are subsets of
+RSX-11M-PLUS.  Features supported by VAX CoProcessor/RSX include: 
+
+   ^ Separate Instruction and Data (I&D) space 
+
+   ^ Extended Logical Names
+
+   ^ Supervisor Mode Libraries
+
+   ^ Record Management Services (RMS)
+
+   ^ File Control Services (FCS)
+
+   ^ Program Logical Address Space directives (PLAS)
+
+   ^ Fast Mapping
+
+   ^ Parent-offspring Tasking
+
+   ^ Virtual Terminals
+
+   ^ User-written Command Line Interpreters (CLIs)
+
+Limitations
+
+Every effort has been made to make the functions that this product supports
+as compatible as possible with the Micro/RSX V4.1 (SPD 14.28.05)
+environment given the constraints of the VMS Operating System environment.
+However, a few areas of incompatibility do exist in this product and may
+continue to exist in future versions.  The areas of incompatibility
+mentioned in this Software Product Description are not guaranteed to be all
+inclusive. 
+
+
+The following RSX-11M-PLUS utilities are specifically NOT supported:
+
+Queue Manager (QMG)
+Line Printer Processor (LPP)
+Error Logging (ERRLOG)
+
+However, these functions are provided by corresponding features in VMS.
+
+Restrictions and Non-uses
+
+VAX CoProcessor/RSX supports only  one KXJ11-based VAX CoProcessor/RSX
+operating system per MicroVAX system.  
+
+VAX CoProcessor/RSX does not include drivers to support the on-board I/O 
+capabilities of the KXJ11.  However, VAX CoProcessor/RSX supports the
+addition of user-written drivers to the RSX environment through the same
+loadable driver mechanism that is used in RSX-11M-PLUS and Micro/RSX.
+The user can write drivers for the KXJ11's I/O interfaces. Because of the
+limited nature of I/O connections to the KXJ11, it is unlikely that
+existing applications that rely on add-on or custom hardware can be moved
+from the RSX environment to the VAX CoProcessor/RSX environment. 
+
+Such applications can be moved if the device communicates with the
+VMS system by means of a VMS driver and if the device is of a class which VAX 
+CoProcessor/RSX supports by transporting requests to the VMS host.  
+VAX CoProcessor/RSX supports the following classes of devices:
+
+^ Disks
+^ Tapes
+^ Terminals
+^ Line printers
+^ Card readers
+^ Mailboxes
+
+
+No Ancillary Control Processors (ACPs) for local disks are provided, 
+because there are no local disks supported on the KXJ11.  VAX
+CoProcessor/RSX supports ODS-I and ODS-II file structures on VMS. 
+	
+Applications using Network Facilities (DECnet access through the NS: 
+driver) are portable.  The RSX network utilites are not provided but 
+there are equivalent VMS and DECnet-VMS utilities.
+
+
+
+HARDWARE REQUIREMENTS
+
+MicroVAX or VAXstation configuration and the KXJ11, as specified in
+the System Support Addendum (SSA 29.79.00-x).
+
+SOFTWARE REQUIREMENTS*
+
+VMS or MicroVMS Operating System 
+
+*Refer to the System Support Addendum for availability and required versions
+ of Prerequisite/Optional software (SSA 29.79.00-x).
+
+ORDERING INFORMATION
+
+Software Licenses: QL-VFEA*-** and QYVFE-UZ
+Software Media:    QA-VFEAA-**
+Software Documentation: QA-VFEAA-GZ
+Software Product Services: QT-VFEA*-** and QY-VFE**
+
+* Denotes variant fields. For additional information on available licenses, 
+  services and media, refer to the appropriate price book.
+
+
+SOFTWARE LICENSING 
+
+Single-Use License Options
+
+The Single-Use License is your right to use the software product on a 
+processor.
+
+For your first installation of this software product you must purchase as a
+minimum:
+
+	Host VAX
+
+	^ Single-Use License Option
+	^ Distribution and Documentation Option
+
+	The license gives you the right to use the software on a processor
+	and the Distribution and Documentation Option provides the 
+        machine-readable software and related documentation.
+
+	Satellite PDP-11
+
+	^ Single-Use License Option
+
+	The license gives you the right to use the software on a processor.
+	The license also grants you the right to install the product by 
+	transmitting the software onto the satellite PDP-11 system from the 
+        VMS host system.
+
+To use this software product on additional processors (VAX or PDP-11), you
+must purchase for each processor as a minimum:
+
+	^ Single-Use License Option (Host or Satellite as required)
+
+	In additon to the right to use, the license gives you the one-time
+	right to copy the software from your original processor to the 
+	additional processor.  Therefore, the Distribution and Documentation
+	Option is not required, but optional.
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions. For more information about
+DIGITAL's licensing terms and policies, contact your local DIGITAL office.
+
+Source License and Sources Listings Option
+
+This option provides you with listings of the source programs for this 
+software product.  It gives you the right to use the listings for any CPU 
+at the facility/location specified in the agreement which has a Single-Use 
+License for the object code.
+
+LICENSE MANAGEMENT FACILITY 
+
+This layered product supports the VMS License Management Facility.
+License units for this product are allocated on a CPU-capacity basis.
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (SPD 25.01.xx) or the VMS 
+Operating System documentation set.
+
+For more information about DIGITAL's licensing terms and policies, contact 
+your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+Because the software runs on both the VAX and PDP-11 processors, services 
+are available for the VAX and PDP-11 components of CP/RSX.  To properly 
+support the software, services for both processors are necessary. It is
+important to understand all of the available Software Product Service
+offerings and their relationships to each other. 
+
+A variety of service options are available.  For more information on these 
+or other services, please contact your local DIGITAL office. 
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum of
+this SPD. 
+

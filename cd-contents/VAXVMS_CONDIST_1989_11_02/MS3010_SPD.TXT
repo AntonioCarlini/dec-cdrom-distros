@@ -1,0 +1,666 @@
+PRODUCT NAME:  MUXserver 300 Remote Terminal Server      SPD 25.E9.00
+               for VMS, Version 1.0
+
+
+DESCRIPTION
+
+The MUXserver 300 Remote Terminal Server is a wide area terminal switch for 
+Ethernet Local Area Networks. It has been designed to support interactive 
+asynchronous terminal users, using data compression, background priority, and 
+statistical multiplexing to optimize the network performance. 
+
+A MUXserver/DECmux 300 network provides a convenient method to logically 
+connect workgroups of remotely located asynchronous terminals, printers, and 
+computers, to each other, and to one or more service nodes (hosts) on an 
+Ethernet. A fully configured MUXserver/DECmux 300 network will support 48 
+logically connected devices, and 192 physically connected devices. The devices 
+may be grouped in up to six different locations.  Remote connection via dial-in 
+modems is fully supported on up to sixteen lines per DECmux 300, allowing the 
+network to be further extended. 
+
+Once a connection is established a user can utilize application programs and 
+utilities as though the terminal was directly connected to a host via a DZ11, 
+DMF32, DHU11 device, with a few exceptions. Similarly a remote user connected 
+to a MUXserver/DECmux 300 network will be able to access the same facilities as 
+a user connected to a local DECserver 200 Terminal Server on the same Ethernet, 
+the only restriction being the speed of the synchronous communications link 
+between the remote DECmux 300 and the MUXserver 300.
+
+The MUXserver/DECmux 300 also allows for LAT service node host-initiated 
+connections to asynchronous printers. A special print symbiont on service nodes 
+can initiate connections to asynchronous printers connected to MUXserver/DECmux 
+300 ports. This allows the printers to be distributed throughout a LAN/WAN  and 
+accessed transparently by service node users. The MUXserver/DECmux 300 also 
+provides the capability to connect host systems that do not support the LAT 
+protocol, DIGITAL personal computers, and dial-out modems directly to ports on 
+the server. Interactive server users can issue commands to connect to services 
+which are offered on such ports. Port-to-port connections on the same server 
+are also supported, note that this counts as two logically connected devices. 
+
+The MUXserver/DECmux 300 implements the Local Area Transport (LAT) protocol for 
+communication with service nodes that implement this protocol on the same 
+Ethernet. This interface has been optimized for high terminal I/O performance 
+over an Ethernet, while reducing host CPU cycles required to handle interrupts. 
+Hence, under most I/O loading conditions, a significant performance gain may be 
+realized by using the MUXserver/DECmux 300 versus direct terminal connections 
+via DZ11s. 
+
+The MUXserver/DECmux 300 also implements and supports the Terminal 
+Device/Session Management Protocol (TD/SMP) to manage multiple sessions at the 
+device level. The MUXserver/DECmux 300 provides the ability to communicate with 
+devices which also implement this protocol, and assist in the management of 
+multiple sessions for these devices. By implementing this protocol, the 
+MUXserver/DECmux 300 can permit attached devices to maintain screen and 
+keyboard context for multiple LAT sessions, as well as allow these devices to 
+run multiple LAT sessions concurrently. 
+
+Features such as login load balancing, multiple terminal sessions, automatic 
+failover, and remote printer support can lead to greater user productivity. 
+
+MUXserver/DECmux 300 Configuration Options
+
+The MUXserver/DECmux 300 network is built from two basic options. The MUXserver 
+300, which connects to the Ethernet, and the remote unit the DECmux 300.
+
+Each MUXserver 300 can support up to two synchronous communications lines, and 
+each line can support up to three DECmux 300s, providing a maximum of six 
+DECmux 300s.
+
+A single DECmux 300 can be configured to support 8, 16, 24 or 32 asynchronous 
+port connections. Field upgrade panels are available to allow the configuration 
+to be changed. Panels are available to provide 8 EIA232-D ports with or without 
+modem control, or 16 DEC423 ports, using data leads only. Each DECmux 300 can 
+support two panels in total.
+
+
+Features
+
+Terminal Connection Management
+
+Through the use of a simple command, users can establish a logical connection, 
+called a session, to any service node that implements the LAT protocol on the 
+same Ethernet LAN. This connection makes the terminal appear as if it were 
+physically connected to the service node, and the terminal user can use 
+standard system utilities and applications supported by that node. Each 
+terminal connected to the DECmux 300 remote terminal multiplexer can connect to 
+the same or a different service node on the Ethernet. 
+
+A service node can have one or more services that are offered to 
+MUXserver/DECmux 300 network users. Services and nodes are identified by name. 
+Users always connect to services, not to nodes, although often one of the 
+service names will be the node name. 
+
+In a VAXcluster environment, the MUXserver/DECmux 300 sees each VAXcluster on 
+the Ethernet as a collection of service nodes offering a common service. Each 
+cluster node may also offer a service whose name is equivalent to its node 
+name. In this case, a terminal user can connect either to the cluster service 
+or a service associated with a particular cluster node. 
+
+Non-LAT Host Support
+
+The MUXserver/DECmux 300 can be used to provide logical terminal connections to 
+hosts that do not implement the LAT protocol. In this type of configuration, 
+the server becomes the Ethernet connection and protocol support for these 
+hosts. This expands the LAT network accessibility to the terminal user to 
+include LAT hosts directly connected to the same Ethernet and hosts connected 
+to the LAT network via the MUXserver/DECmux 300 network, and non-LAT hosts 
+connected to the same Ethernet via a DECserver 200 or DECserver 500 terminal 
+server. 
+
+A host that supports XON/XOFF, ASCII standards and EIA 232-D/CCITT V.24/V.28 
+interfaces can be connected to the MUXserver/DECmux 300. This provides the 
+terminal user with a transparent connection to the non-LAT host. It is strongly 
+recommended that server port and the host side port utilize modem control 
+signals to automatically signal the host upon session disconnection. 
+
+In this configuration, there is a one-to-one correspondence between the port on 
+a MUXserver/DECmux 300 and the connection on the host. The server manager 
+assigns service names to individual ports or groups of ports that connect the 
+host interface to the server. 
+
+Where a connection is established between two physical ports on the same 
+MUXserver/DECmux 300 network this will count as two logical connections. 
+
+Load Balancing
+
+When a connection is made to a service, the actual node for the connection is 
+determined by load balancing. Load balancing is a process the server uses when 
+more than one node offers the same service. Service nodes do not have to be 
+configured in a cluster in order for load balancing to be used. Service nodes 
+with the same names may be running different operating systems. Using the load 
+balancing process, the server connects to the node with the highest rating for 
+the service desired. This rating is based on the current loading on the nodes 
+that offer the service. 
+
+Multiple Sessions
+
+The MUXserver/DECmux 300 allows each user to establish and maintain up to eight 
+sessions to one or more service nodes, up to a maximum of 96 per 
+MUXserver/DECmux 300 network. Only one session per user can be active at a 
+time. Through simple switching commands, the user can access the different 
+sessions without repeating a login dialogue each time. Some operating systems 
+may impose limits on the number of LAT sessions such a host will support. 
+
+Multiple Session Management
+
+The MUXserver/DECmux 300 server allows direct communication with devices which 
+support the TD/SMP protocol.  This protocol provides the ability for the 
+attached device to maintain screen and keyboard context for the multiple LAT 
+sessions which the MUXserver/DECmux 300 provides.  By implementing the ability 
+to directly communicate with this protocol to the attached device, the 
+MUXserver/DECmux 300 will assist in the management of context of these multiple 
+sessions, as well as allow for simultaneous output to multiple LAT sessions 
+being maintained by the device. 
+
+Outbound Connection Queues
+
+If a terminal user requests a connection to a service, and the requested 
+service is currently in use, the terminal server users may opt to have the 
+connection requested queued to the remote service.  This feature will happen 
+automatically whenever a connection fails for this reason if the user's port 
+has been appropriately configured, and the service node is queuable.  The 
+connection request is queued at the service node end and is processed 
+first-in/first-out until such time as the user's connection request can be 
+completed.  This feature assists in the fair management of limited network 
+resources.  Once queued for connection, the user also has the option to cancel 
+the queue entry and proceed with other sessions. 
+
+Inbound Connection Queues
+
+The MUXserver/DECmux 300 may offer ports as services. If a request is received 
+for a connection to a service, and that service is being used the MUXserver 300 
+may offer a queuing facility for incoming connect requests, connect requests 
+are granted on a first come first served basis.
+
+Access Contention
+
+A fully configured MUXserver/DECmux 300 network can provide physical 
+connections for 192 terminals. The MUXserver 300 will provide access to the 
+first 48 users on a first come first served basis. Permanent logical 
+connections may be assigned to specific ports to ensure access at all times. 
+When a logical connection is not available a status message is relayed to the 
+port requiring access. 
+
+Welcome Identification
+
+The MUXserver/DECmux 300 server standard welcome banner which includes terminal 
+server type, version number, internal baselevel, and protocol version number is 
+issued whenever a user successfully logs in to the server.  The server will 
+also print a server manager settable identification string.   This can be 
+useful for automatic server identification, or for small daily messages used 
+for communication with the terminal server users. 
+
+
+Local Mode and Service Mode 
+
+For the most part, the environment provided by the MUXserver/DECmux 300 is 
+identical to that the user would experience if attached directly to the service 
+node. When operating in this mode, the user is said to be in Service Mode. 
+Occasionally, such as during connection establishment, the user interacts 
+directly with the MUXserver/DECmux 300. When operating in this mode, the user 
+is in Local Mode. 
+
+In Local Mode, the terminal input is interpreted directly by MUXserver/DECmux 
+300 as commands to be performed by the server. 
+
+Additional commands and displays to support the features available with the 
+TD/SMP protocol are usable in Local Mode.  These commands will be used to 
+enable or disable server recognition of the TD/SMP commands. 
+
+Local Mode has three different levels of privilege: privileged, nonprivileged 
+and secure. Privileged mode is provided for the Server Manager to control the 
+environment of the server and the terminal users. Access to this mode is 
+password protected. Nonprivileged commands allow the terminal user to control 
+their service sessions, set their terminal characteristics and show server 
+information. The Server Manager can set the server to secure mode on a 
+per-terminal basis which further limits the commands users can enter to only 
+those which directly relate to the user's own terminal. 
+
+The server management is a logical extension to the user environment. The 
+server manager is treated as a user with a privileged status. This privileged 
+status, which is password protected, allows the manager to enter commands not 
+normally available to server users. Typically these commands are used to 
+control the MUXserver/ DECmux 300 network operation and security. They are used 
+to set server characteristics, provide control over server port usage, and 
+control the user's access to the server and to network services. 
+
+In Service Mode, the terminal input is passed directly to the connected service 
+node with several exceptions. One exception, called the local switch character, 
+allows the user to enter Local Mode from Service Mode. The <BREAK> key may also 
+be used for this function. Other exceptions, called the forward and backward 
+switch characters, allow the user to switch between sessions without the need 
+to enter Local Mode. The switch characters are disabled by default but may be 
+enabled by command. Both CTRL/S and CTRL/Q are normally interpreted locally but 
+flow control using these characters can be disabled. 
+
+Autoconnection 
+
+Autoconnection is a function that automatically connects a user terminal to a 
+service node when connection failures occur or upon user login to the server. 
+In conjunction with this function, a dedicated or preferred service can be 
+specified for each terminal user. 
+
+If a dedicated service is specified, the MUXserver/DECmux 300 will attempt to 
+connect to that service when a character is typed on the terminal keyboard or 
+when an existing connection fails. In dedicated service mode, only one session 
+is available. As this mode is designed to simulate a direct terminal 
+connection, no local mode commands or messages are available to the terminal 
+user. Ports with dedicated service can be automatically logged out of the 
+server when the user logs out of the service node. 
+
+If a preferred service is specified, the MUXserver/DECmux 300 will attempt to 
+connect to that service as with the dedicated service mode of operation. 
+However, the terminal user can enter local mode and establish other sessions. 
+
+Automatic Session Failover 
+
+If a service is available on two or more service nodes and a connection to a 
+service fails, the server will attempt to connect the user to another service 
+node offering the same service.  The user does not have to be already connected 
+to that service node. Furthermore, the user's context at the time of failure is 
+not automatically restored and login to the new service is required. 
+
+Groups
+
+Every terminal and service node in a LAT network is a member of one or more 
+groups, which are specified by a list of numbers from 0 - 255. Groups allow an 
+easy means of subdividing the network into what appears to be many smaller 
+networks. A terminal user is only aware of the services that are offered by 
+nodes in the same group(s). 
+
+The server manager can specify the authorized group(s) in which a terminal is a 
+member. The authorized groups define the set of services that the user is 
+allowed to access. In addition, a user can further restrict access to services 
+by disabling some of the authorized groups using a non-privileged group 
+command. The user-settable group codes are a subset of the authorized groups. 
+
+Groups provide a restrictive view of the network. This restricted view is 
+mainly for user convenience and, although it also provides a form of security, 
+it is not intended to be the primary form of access authorization or system 
+security for a node. 
+
+Security
+
+The MUXserver/DECmux 300 provides functions which enhance security features 
+already available in the service nodes.  MUXserver/DECmux 300 security includes 
+the ability to lock a terminal's keyboard from other users, optional login 
+protection, and nonprivileged local mode of operation as a default. 
+
+A user may lock the terminal using a lock password. This allows the user to 
+leave sessions running at the terminal without fear of security violations. 
+When a terminal is locked, all input from the terminal is ignored until the 
+lock password is re-entered. The lock feature may be disabled by the server 
+manager. 
+
+Each terminal port can be set to operate in a secure mode which causes all 
+commands that relate to other users to be disabled for that port. 
+
+Login passwords can be enabled on a per-line basis by the server manager. If 
+enabled, the terminal user must enter a login password to access server 
+functions. 
+
+MUXserver/DECmux 300 users normally have access to the nonprivileged local 
+mode. In this mode, users may only issue commands that affect their own 
+terminal environment. The server has a privileged mode for server manager's 
+use. The mode is password protected. 
+
+On-line HELP Facility
+
+A full on-line reference HELP facility is available. The server's HELP command 
+provides information on the correct syntax and details about each command. In 
+addition, a tutorial HELP feature allows new users to quickly learn the basics 
+of MUXserver/DECmux 300 operation. Tutorial HELP may be entered upon logging 
+into the server. 
+
+Directory Service
+
+Any MUXserver/DECmux 300 user can obtain a directory of services available to 
+that user with a SHOW SERVICES command. Services for which the user is not 
+authorized will not be displayed. 
+
+Permanent Characteristics 
+
+The MUXserver/DECmux 300 maintains permanent characteristics in non-volatile 
+memory which is retained even when the power is disconnected. Permanent 
+characteristics are maintained for service and server parameters as well as 
+per-port parameters. Permanent characteristics can be reset to factory defaults 
+by pressing the software reset button on the hardware unit while plugging in 
+the power cord. 
+
+Port Characteristics Configuration 
+
+Characteristics governing the operation of an individual port can be displayed 
+by a nonprivileged terminal user interactively from their terminal. Many of the 
+characteristics may be set-up by the user, but certain characteristics are 
+privileged and may only be changed by the Server Manager. 
+
+Port parameters that can be set and displayed include: speed, character size, 
+group codes, parity, terminal type, access, autobaud, modem and password 
+protection. 
+
+Port Access 
+
+A port on a MUXserver/DECmux 300 may be set up in different ways depending on 
+the device attached to the port and its intended use. MUXserver/DECmux 300 
+supports EIA 232-D and DECconnect asynchronous devices operating at speeds up 
+to 19.2K bps. 
+
+Port access is the characteristic which determines how a port may access or be 
+accessed by interactive users and service nodes. 
+
+oo Access Local - Designed for interactive terminals. This allows the 
+  device (typically an interactive terminal) attached to the port to 
+  CONNECT to LAT services. This type of access is also used for dial-in 
+  modems. 
+
+oo Access Remote - Designed for applications-driven devices such as   
+  asynchronous printers which are allocated by a service node process.   
+  This allows the implementation of certain shared printers by multiple   
+  service nodes. This type of access is also used for connections to   
+  dial-out modems, and non-LAT host systems. 
+
+oo Access Dynamic - Designed for devices (such as personal computers or   
+  printers with keyboards) which require both Local and Remote access. 
+
+oo Access None - Designed to allow the server manager to disable the use 
+  of a port. 
+
+Data Compression
+
+Data Compression automatically enabled and disabled on a per port basis, 
+dependent on the type of data being transmitted. It is more effective on 
+blocks of data than on single characters, therefore compression 
+efficiency will vary with the application.
+
+Background Priority
+
+Background priority is enabled on a per port basis. Traffic to and from 
+ports set to background is reduced in favor of other traffic. This 
+feature is especially useful for ports that are used for printers.  
+
+Terminal Operation 
+
+The MUXserver/DECmux 300 software supports the simultaneous operation of 
+up to forty eight asynchronous devices at speeds from 75 bps to 19.2K 
+bps. The total aggregate throughput is dependent on network link speeds 
+and will typically be less than the sum of the individual terminal 
+connections. The software also supports: 
+
+oo Full modem control support (on DECmux 300 EIA 232-D ports only) 
+
+oo Data leads only support (on DECmux 300 EIA 232-D and DEC423 ports) 
+
+oo XON/XOFF flow control 
+
+oo CTS/RTS and DSR/DTR flow control (on DECmux 300 EIA 232-D ports only) 
+
+oo Split speed (transmit and receive) terminal operation 
+
+oo Modem fallback features (on DECmux 300 EIA 232-D ports only) 
+
+oo Block Mode transfers 
+
+oo Automatic line speed detection (equal receive and transmit speed only) 
+
+oo DIGITAL personal computer file transfer 
+
+oo Data transparency mode 
+
+oo Ability to pass break character and error notification 
+
+oo Ability to assist in multiple session management via TD/SMP 
+
+Network Configuration 
+
+The MUXserver 300 is connected to an Ethernet using a DELNI, DECOM, 
+DESTA, H4000, or H4005 via a transceiver cable. Two synchronous, 
+composite data link connections are supported each of which can connect 
+to a chain of one, two, or three, DECmux 300s. The maximum configuration 
+is one MUXserver using two synchronous, composite links to six DECmux 
+300s, with a maximum of three DECmux on a single composite link. 
+
+The MUXserver 300 Ethernet port is compatible with Ethernet V2 and IEEE 
+802.3 Local Area Networks.
+
+The MUXserver/DECmux 300 composite links use HDLC LAPB data link 
+protocols and can be connected using the following physical link options. 
+
+
+oo EIA 232-D/CCITT V.28 at 9.6K, to 19.2K bits per second
+
+oo CCITT X.21 bis /CCITT V.35 at 48K to 64K bits per second
+
+oo EIA RS-449/CCITT V.36 up to 64K bits per second
+
+oo CCITT X.21, leased line only, up to 64K bits per second
+
+oo EIA RS-422 up to 64K bits per second 
+
+The MUXserver/DECmux 300 EIA RS-422 composite link can be used to connect 
+two units together; clocking signals are supplied from the MUXserver. 
+Distances up to 1200 meters or 4000 feet are supported on suitable cable 
+installations.
+
+The MUXserver/DECmux 300 network is designed to operate over wide area 
+network links that provide no significant delay and a transparent data 
+path. Synchronous composite links operating over multiplexing equipment 
+or satellite links are not supported.
+
+Network configuration, link types, and link speeds will automatically 
+configure, when the correct cables are used.
+
+The DECmux 300 remote units require a connection to a MUXserver 300 for 
+proper operation.
+
+The DECmux units are available in the following configurations:
+
+oo Base unit supporting eight EIA 232-D/CCITT V.24 ports with modem 
+  control 
+
+oo Base unit supporting sixteen EIA 232-D/CCITT V.24 ports with modem 
+  control 
+
+oo Base unit supporting sixteen DEC423 ports data leads only 
+
+oo Base units supporting thirty two DEC423 ports, data leads only 
+
+The eight and sixteen port units are field upgradable using the following 
+upgrade panels kits. Software will automatically reconfigure the network 
+and the DECmux 300 NVR will be initialized to factory default settings.
+
+oo Eight EIA 232-D/CCITT V.24 ports with modem control
+
+oo Sixteen DEC423 ports, data leads only  
+
+The DECmux 300 EIA 232-D ports are compatible with DIGITAL's family of 
+modems and with Bell 100 and 200 series modems and their equivalents. A 
+BREAK feature is available and can be set on a per-port basis. This 
+allows the DECmux 300 to force a break condition on connections to host 
+interfaces. BREAK can also be passed through from a terminal connected on 
+the server to the non-LAT host connected on the server. 
+
+Server Management 
+
+The MUXserver 300 supervisory port can accept directly connected 
+asynchronous terminals with the following characteristics:
+
+oo DEC423 asynchronous start/stop transmission, having 8 data bits, 1 stop 
+  bit, and no parity.
+
+oo Full duplex with XON/XOFF flow control
+
+oo Speed selectable from one of the following: 300, 600 
+  1200,2400,4800,9600 baud, or AUTOBAUD
+
+Several facilities exist for managing and troubleshooting server 
+operation. The Server Manager in privileged mode can set up server 
+identification information, change port characteristics, or fine tune the 
+operating characteristics of the server. The Server Manager can also 
+assign service names to groups of one or more ports which are connected 
+to non-LAT hosts or modems. Troubleshooting facilities include diagnostic 
+tests, a remote console feature, and online statistics. 
+
+A privileged user can diagnose Ethernet communications problems by 
+looping messages to an Ethernet host and through the Ethernet hardware 
+interface at the server. To diagnose terminal problems, users can execute 
+a command to transmit test data to their terminal, or the server manager 
+can send test data to any terminal. 
+
+A privileged user can also diagnose synchronous line problems by looping 
+test messages between adjacent MUXserver 300 and DECmux 300 units.
+
+The capability also exists for the server manager to test a service 
+connection by sending data from the initiating port to the service node 
+and back again. The data is then compared and any discrepancies reported. 
+At the service node, the data can be looped back by the LAT protocol, or 
+internally or externally at the service port. This feature is supported 
+only by MUXserver/DECmux 300 service nodes; VMS service nodes do not 
+support this service loopback capability. 
+
+The server maintains a variety of statistics and counters. These include 
+the following: Synchronous composite data link statistics, Ethernet data 
+link statistics, LAT protocol statistics, and port error statistics. This 
+data can be displayed and zeroed by the Server Manager. Server parameters 
+that can be modified and displayed include the server identification, 
+circuit timer, session limits, and login limits. 
+
+Remote Server Management 
+
+The MUXserver/DECmux 300 implements the console carrier feature which 
+enables access to the MUXserver/DECmux 300 local mode from a Phase IV 
+DECnet host on the same LAN. With the exception of remote console port 
+configuration, the entire local mode user interface is accessible to the 
+remote console carrier user. This includes the privileged commands, if 
+the user knows the server's privileged password. This capability allows 
+centralized server management and remote server diagnosis. 
+
+MUXserver/DECmux 300 Operation 
+
+The MUXserver 300 ROM-based firmware provides the necessary maintenance 
+operation protocols for down-line loading MUXserver 300 software from a 
+load host, over the Ethernet, into server memory. All self-test 
+diagnostics are in MUXserver 300 ROM, so down-line loading is not a 
+precondition for MUXserver self-test. In the event of a bugcheck caused 
+by a fatal error, the unit will normally attempt to upline dump server 
+memory to a DECnet Phase IV host. Following this the unit will 
+automatically initialize itself, execute the self test routines, and if 
+still operational invoke a down-line load. 
+
+Once the MUXserver 300 downline load is complete the network will self 
+configure and communications are established with the remote DECmux 300.
+
+The remote DECmux 300 operates on ROM-based firmware; operational 
+characteristics are stored in none volatile RAM. The remote DECmux 300 
+does not require downline loading, but does require a connection to a 
+MUXserver 300 for operation.
+
+MUXserver/DECmux 300 Configuration and Performance 
+
+The process of configuring the MUXserver/DECmux 300 network is based 
+primarily on tradeoffs of cost and performance within the realm of 
+satisfying user application requirements. Network applications will range 
+from low-speed, low-cost situations (e.g. connecting single remote 
+terminals through low-speed modems to remote DECmux 300s) to remote work 
+groups or terminals with shared printing resources). The performance of a 
+given network is a function of the network topology and line speeds, the 
+expected network traffic, the load on hosts to which terminals are 
+connected, and resultant processing pursuant to the dedicated function of 
+the unit. Thus performance depends on several factors: 
+
+oo Composite port speed
+
+oo Number of route through composite ports
+
+oo Number of terminals 
+
+oo Number of host systems with active connections to the server 
+
+oo Number of active connections to non-LAT hosts 
+
+oo Terminal speeds 
+
+oo Terminal user applications 
+
+oo Number and size of host buffers 
+
+oo Terminal workload 
+
+In order to achieve a viable configuration, the user and/or a DIGITAL 
+software specialist should perform a level of application analysis which 
+addresses the factors above. The actual maximum data throughput cannot be 
+calculated by multiplying the number of lines by the line speed, since 
+many factors already discussed in this section may reduce the actual 
+throughput.
+
+Restrictions on MUXserver/DECmux 300 Usage 
+
+While terminal connections using the MUXserver/DECmux 300 have been 
+designed to simulate direct terminal connections as much as possible, a 
+few differences necessarily exist because of the nature of the product.  
+Under most circumstances, these differences are not noticed by terminal 
+users or service node application programs. However, applications which 
+are directly dependent on the following functions may not operate as with 
+a direct connection: 
+
+oo Applications that depend on reading or setting the terminal speed,   
+  character size and parity by manipulating system data structures 
+
+oo Applications that depend on an extremely fast response time (typically  
+  less than 200 ms) to operate 
+
+oo Applications that utilize an alternate terminal driver in the service 
+  node 
+
+oo Applications that expect incoming connections to have fixed device 
+  names
+
+HARDWARE REQUIREMENTS 
+
+VAX, MicroVAX or VAXstation configuration as specified in the System 
+Support Addendum (SSA 25.E9.00-x).
+
+SOFTWARE REQUIREMENTS* 
+
+VMS Operating System or MicroVMS Operating System
+
+DECnet-VAX
+
+* Refer to the Systems Support Addendum for availability and required 
+  versions of prerequisite software (SSA 25.E9.00-x).
+       
+ORDERING INFORMATION 
+
+Software Licenses: QL-VT7A*-**
+Software Media: QA-VT7A*-**
+Software Documentation: QA-VT7AA-GZ
+Software Product Services: QT-VT7A*-**
+
+* Denotes variant fields.  For additional information on available 
+  licenses, services and media refer to the appropriate price book.
+
+SOFTWARE LICENSING 
+
+The MUXserver 300 software license applies to the MUXserver 300 on which 
+the server software runs, not to service host node CPUs in the network. 
+
+The MUXserver 300 software license is included with the MUXserver 300 
+hardware.
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions.  For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office. 
+
+SOFTWARE PRODUCT SERVICES 
+
+A variety of service options are available from DIGITAL.  For more 
+information contact your local DIGITAL office. 
+
+SOFTWARE WARRANTY 
+
+Warranty for this software product is provided by DIGITAL with the 
+purchase of a license for the product as defined in the Software Warranty 
+Addendum of this SPD. 
+
+April 1989
+BH-MG98A-TE
+

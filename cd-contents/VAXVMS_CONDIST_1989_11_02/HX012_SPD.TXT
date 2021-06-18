@@ -1,0 +1,138 @@
+PRODUCT NAME: MicroVAX/DRQ3B Device Driver, Version 1.2       SPD 29.25.01
+
+DESCRIPTION
+
+The MicroVAX/DRQ3B Device Driver V1.2 (HXDRIVER) supports the DRQ3B
+interface, which is a general purpose 16 bit parallel interface between the
+MicroVAX Q-bus and a user's peripheral. The DRQ3B, under driver control, is
+capable of performing double buffered direct memory access (DMA) using the
+block mode capabilities of the Q-bus to provide high bandwidth data
+transfers. The DRQ3B interface also has 512 word FIFO (First In, First Out)
+buffers on both the input and output ports to allow data to be transferred
+while an interrupt service routine is setting up the next buffer. 
+
+Driver Features
+
+^  Double buffering of I/O requests
+^  Buffer termination via an external event (EOP)
+^  External interrupt
+^  Function bit setting/clearing
+^  DMA operations directly to Q-bus memory
+^  Error handling
+
+Double buffering of I/O requests
+
+As long as two or more buffers are queued to the driver it will automatically
+try to double buffer the I/O requests.  A function modifier IO$M_HX_HOLD_DMA
+allows an applications to queue up multiple buffers before starting I/O, so
+that all of those queued buffers can be double buffered. 
+
+Buffer termination via an external event (EOP)
+
+The hardware has a line on the input connector that is handled like a 17th
+data bit but will cause a DMA operation to terminate and a new one to start
+when asserted and read out of the FIFO by the DMA controller.  The driver
+supports this condition and returns the number of words transferred including
+the last one transferred with the external event asserted as well as the
+success code SS$_WASSET rather than the conventional SS$_NORMAL so that an
+application can test for the occurrence of this condition. 
+
+External interrupt
+
+A line separate from the external event line allows an interrupt to be
+generated.  The driver allows the detection of this condition in an AST
+routine. 
+
+Function bit setting/clearing 
+
+The driver provides SETMODE functions that will set/clear the function bits
+for a given port, and allows the function bits to be read with a SENSEMODE
+function. 
+
+DMA operations directly to Q-bus memory 
+
+The driver supports two forms of I/O, logical and physical.
+
+^  Physical I/O transfers allow the transfer of data directly to Q-bus memory 
+   and specialized I/O subsystems such as those found in some types of array 
+   processors.
+
+^  The driver also allows MicroVAX memory to be used for physical I/O 
+   transfers to reduce overhead.
+
+^  Logical I/O supports the more traditional mechanisms for performing DMA.  
+   As a result, it is easier to program but is a little less efficient.
+
+Error handling
+
+The driver will report nonexistent memory conditions (NXM's), FIFO overruns
+and FIFO underruns in case the interface logic stops handshaking correctly. 
+
+The DRQ3B MicroVAX Device Driver can support up to four DRQ3B Interfaces.
+
+INSTALLATION
+
+Only experienced customers should attempt installation of this product.
+DIGITAL recommends that all other customers purchase DIGITAL's Installation
+Services.  These services provide for installation of the software product by
+an experienced DIGITAL Software Specialist. 
+
+HARDWARE REQUIREMENTS
+
+MicroVAX, or VAXstation configuration as specified in the System Support
+Addendum (SSA 29.25.01-x). 
+
+SOFTWARE REQUIREMENTS*
+
+VMS Operating System or MicroVMS Operating System
+
+*  Refer to the System Support Addendum (SSA 29.25.01-x) for availability and 
+   required versions of prerequisite software.
+
+ORDERING INFORMATION
+   
+Software Licenses: QL-0APA*-**
+Software Media: QA-0APA*-**
+Software Documentation: QA-0APAA-GZ
+Software Product Services: QT-0APA*-**
+
+* Denotes variant fields.  For additional information on available licenses, 
+  services and media refer to the appropriate price book.
+
+SOFTWARE WARRANTY
+
+Warranty for this software is provided by DIGITAL with the purchase of a
+license for the product as defined in the Software Warranty Addendum of this
+SPD.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about DIGITAL's
+licensing terms and policies, contact your local DIGITAL office. 
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the VMS
+Operating System Software Product Description (SPD 25.01.xx) or the VMS
+Operating System documentation set. 
+
+For more information about DIGITAL's licensing terms and policies, contact
+your local DIGITAL office. 
+
+SOFTWARE PRODUCT SERVICES
+   
+A variety of service options are available from DIGITAL.  For more
+information contact your local DIGITAL office. 
+    
+
+December 1988
+AE-KV48B-TE
+
+
+
+

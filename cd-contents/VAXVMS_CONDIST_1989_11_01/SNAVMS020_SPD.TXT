@@ -1,0 +1,326 @@
+
+PRODUCT NAME: VMS/SNA, Version 2.0                            SPD 27.01.05
+
+DESCRIPTION
+
+VMS/SNA is a layered software product that allows suitably configured VMS
+systems the ability to directly participate in an IBM Systems Network
+Architecture (SNA) networking environment. After installing the VMS/SNA
+software and one or more DECnet/SNA Access Routines, users can perform
+functions such as accessing IBM (r) application programs or other system
+resources, act as a 3270 display station, exchange data files and documents
+with an IBM Host, and implement distributed application programs that run
+between the VMS and IBM systems. 
+
+Architecturally, a VAX system running VMS/SNA appears to the SNA network as
+a Physical Unit Type 2 node, and is attached to the SNA network through a
+synchronous communications device to an IBM 37xx Communications Controller.
+The VMS/SNA software supports one synchronous communication line at speeds
+from 1.2K bps to 64K bps, depending on the communications device being used
+and a maximum of 16-64 concurrent SNA logical unit sessions depending on
+the VAX CPU it is running on. Both local and remote connections are
+supported from VMS/SNA into the IBM SNA network, using switched or leased
+lines in point-to-point or multi-point environments. VMS/SNA also supports
+connections over X.25 switched virtual circuits using Qualified Logical
+Link Control (QLLC).  VAX Packetnet System Interface (VAX P.S.I.) or VAX
+P.S.I. Access is required for SNA over X.25 connections. 
+
+VMS/SNA can send Record Formatted Maintenance Statistics (RECFMS) messages
+to the IBM system.  These messages contain counters requested by the IBM
+Netview(r) Hardware Monitor using Request Maintenance
+Statistics (REQMS) messages.   Not all RECFMS messages are supported by
+VMS/SNA. Refer to the VMS/SNA user documentation for more information. 
+
+Devices supported with VMS/SNA include the DST32, DSH32, DPV11, DSV11, 
+DMB32, and DSB32.  All VAX P.S.I. supported devices for VAXBI and Q-bus 
+based systems are supported when communicating with X.25 networks using 
+QLLC circuits.  This excludes all UNIBUS devices, but does include the 
+KMV1A.  See the VAX P.S.I. Software Product Description (25.40.xx) or VAX 
+P.S.I. Access Software Product Description (27.78.xx) for more 
+information.
+
+Each device supports different configurations. Refer to the following
+table for details of each supported device. 
+
+Device    VAX CPU    NRZI*   EIA-232-D   V.35    Maximum Line Speed
+                               V.24
+
+DMB32     BI         Yes        Yes      Yes     64   Kbps
+DSB32     BI         Yes        Yes      Yes     64   Kbps
+DSV11     Q-bus      Yes        Yes      Yes     64   Kbps
+DPV11     Q-bus      No         Yes      No       9.6 Kbps
+DST32     MV2000     Yes        Yes      No      19.2 Kbps
+DSH32     MV2000     Yes        Yes      No      19.2 Kbps
+
+* NRZI support means that the signaling mode for the lines from VMS/SNA to
+the IBM system can be set to NORMAL or NRZI (non-return-to-zero-inverted)
+so that the line characteristics can match those set in the IBM ACF/NCP
+LINE macro. 
+
+Circuits can be set FULL duplex. Data can be sent and  received 
+simultaneously on full duplex lines.  This setting corresponds to
+DATMODE=FULL in the  IBM  ACF/NCP  PU macro. 
+
+VMS/SNA will support the following session maximums:
+
+MicroVAX 2000, MicroVAX II, VAXstation 3200/3500       16 sessions
+MicroVAX 3300, 3400, 3500, 3600                        32 sessions 
+VAXserver 3300, 3400, 3500, 3600, 3602                 32 sessions
+VAXserver 6210, 6220, 6310, 6320                       32 sessions
+VAX 8250, 8350, 6210                                   32 sessions
+VAX 6220, 6230, 8550, 8810 (8700)                      48 sessions
+VAX 6310, 6320, 6330                                   48 sessions
+VAX 6240, 6340, 6350, 6360,                            64 sessions
+VAX 8820 (8800), 8830, 8840                            64 sessions
+
+You may configure your IBM line such that you activate more LUs than the
+maximum number of sessions allowed for your processor. The maximum number
+of active LUs is twice the number of maximum sessions. For example, 64 LUs 
+may be activated on a MicroVAX 3600. 
+
+Whether the connection is via X.25 or SDLC, the functions provided by the 
+VMS/SNA software will be comparable to those provided by the DECnet/SNA
+Gateway product. Systems wishing access to the SNA environment must be
+configured with the appropriate DECnet/SNA VMS Access Routines. For
+additional information on which Access Routines are supported with VMS/SNA,
+consult the table in the Optional Software section of this SPD. 
+
+VMS/SNA supports connections over X.25 switched virtual circuits (QLLC) as
+well as SDLC circuits.  The QLLC circuit can be configured to use either 
+Incoming or Outgoing X.25 Switched Vitual Ciruits (SVCs).  VMS/SNA does not 
+support X.25 Permanent Virtual Ciruits (PVCs). VMS/SNA requires IBM Network 
+Packet Switched Interface (NPSI) in order to use QLLC circuits.  The IBM 
+NPSI software should be generated to support "Boundary Network Node, 
+Qualified Logical Link Control" (BNN QLLC) type-3 switched virtual circuits. 
+VMS/SNA also supports the following optional facilities for QLLC circuits:
+
+^ Flow Control Negotiation
+^ Closed User Groups
+^ Reverse Charging
+
+VMS/SNA Management Utilities
+
+VMS/SNA provides the management utilities SNANCP and SNAEVL. SNANCP is used
+to manage and monitor VMS/SNA components such as line, circuit, PU, and LU.
+SNANCP provides the human interface for the DIGITAL System Manager to
+monitor, control, and troubleshoot VMS/SNA and its IBM/SNA environment. All
+management functions pertaining to VMS/SNA are performed on the VAX. The
+SNANCP commands allow you to display and modify information pertaining to
+the line, circuit, PU, LUs, and access names. On-line help is provided.
+SNAEVL is used to log events generated by these components. 
+
+Management of the VMS/SNA node should be viewed as part of the DIGITAL
+environment while the management of the line connecting the VMS system
+to the IBM system is a joint responsibility of the IBM and DIGITAL system
+managers. 
+
+VMS/SNA Problem Isolation and Determination Tools
+
+SNA Protocol Trace Utility (SNATRACE) and a new tool, NETTRACE, are problem
+determination tools that provide frame level tracing of a circuit to help
+in debugging application programs, as well as identifying system problems.
+A privileged user can run a trace at the Physical Unit (PU) level, SDLC
+level, or session level.  The trace feature is helpful in identifying an
+error for remedial action. NETTRACE can also be used to trace QLLC circuits.
+
+The VMS/SNA Installation Verification Procedure (IVP), SNAVMS$IVP, is also
+useful for problem isolation.  SNAVMS$IVP is run separately from any Access
+Routine, and may be used to verify connectivity to specific IBM applications
+over specific LU sessions.  In failure cases, SNAVMS$IVP displays an
+expanded error text that attempts to diagnose the cause of failure. 
+
+INSTALLATION
+
+Purchase of the VMS/SNA Installation/Orientation Service is REQUIRED in
+conjunction with the customer's purchase of VMS/SNA software for the first
+DIGITAL node connected to each IBM host in order for the VMS/SNA software to
+be warranted and supported by DIGITAL. 
+
+Only experienced customers should attempt installation of second or
+subsequent nodes running the VMS/SNA software. 
+
+Refer to the MATERIALS AND SERVICE OPTIONS section of this SPD for a
+description of the VMS/SNA Orientation/Installation Service. 
+
+Customer Responsibilities
+
+Before installation of the software, the customer must:
+
+^  Previously have installed all prerequisite hardware including terminals
+
+^  Obtain, install, and demonstrate as operational any modems and other 
+   equipment and facilities necessary to interface to DIGITAL's 
+   communication equipment
+
+^  Demonstrate equivalence of operation for modems other than Bell System 
+   201C, 208A or 209A, AT&T 2596, 2556,  Dataphone II (2096A, Digital 2500, 
+   or equivalent) type modems, or in Europe PTT approved modems
+
+^  Have generated, to DIGITAL's satisfaction, any necessary IBM host software 
+   that will be communicating with the VMS/SNA software
+
+^  Have installed VAX P.S.I. or VAX P.S.I. Access, if required.  Refer to
+   the VAX P.S.I. and VAX P.S.I. Access Software Product Descriptions 
+   (SPD 25.40.xx and SPD 27.78.xx) for Installation Requirements 
+
+^  Have completed any additional requirements as described in the VMS/SNA 
+   Orientation/Installation Service 
+
+^  Make available for a reasonable period of time, as mutually agreed by 
+   DIGITAL and the customer, all hardware, communication facilities, and 
+   terminals that are to be used during installation
+
+^  Be prepared to work with the DIGITAL and the IBM system manager in the 
+   pre-installation activities outlined in the VMS/SNA 
+   Orientation/Installation Service 
+
+^  Be prepared to modify IBM component generation parameters to support the 
+   VMS/SNA software 
+
+Delays caused by any failure to meet these responsibilities will be charged
+at DIGITAL's then prevailing rate for time and materials. 
+
+Customer Installation
+
+Only customers experienced with IBM Interconnect products should attempt
+installation of second or subsequent nodes running the VMS/SNA software. Any
+VMS/SNA software installations performed by customers are REQUIRED to be
+CERTIFIED by DIGITAL prior to customer purchase of VMS/SNA Service 
+Contracts. CERTIFICATION is performed by DIGITAL software specialists. For
+installations that conform to the SPD and cannot be certified, the customer
+must purchase VMS/SNA Orientation/Installation Service to be eligible for
+VMS/SNA Services. 
+
+HARDWARE REQUIREMENTS
+
+VAX or MicroVAX configuration as specified in the System Support Addendum
+(SSA 27.01.05-x).
+
+SOFTWARE REQUIREMENTS*
+
+For VAXBI and MicroVAX Systems:
+
+^ VMS Operating System
+
+^ VAX Wide Area Network Device Drivers Software is required for all 
+  synchronous devices (except the DPV11 when used with an SDLC circuit)
+  (refer to SPD 29.64.xx) 
+
+For SNA over X.25 support in addition to above:
+
+^  VAX Packetnet System Interface (VAX P.S.I.) or VAX P.S.I. Access
+    
+^  DECnet-VAX
+
+*Refer to the System Support Addendum for availability and required versions
+ of prerequisite/optional software (SSA 27.01.05-x).
+
+ORDERING INFORMATION
+
+Software Licenses:  QL-362A*-**
+Software Media:  QA-362A*-**
+Software Documentation:  QA-362A*-GZ
+Software Product Services:  QT-362A*-**
+
+* Denotes variant fields.  For additional information on available licenses, 
+  services, and media refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about DIGITAL's
+licensing terms and policies, contact your local DIGITAL office. 
+
+Restrictions/Comments
+
+Cluster licenses are not available for this product; a Single-Use license 
+is necessary for each CPU on which this product will be used.
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+This layered product supports the VMS License Management Facility. 
+
+License units for this product are allocated on a CPU-capacity basis. 
+
+For more information on the License Management Facility, refer to the VMS
+Operating System Software Product Description (SPD 25.01.xx) or the License
+Management Facility manual of the VMS Operating System documentation set. 
+
+For more information about DIGITAL's licensing terms and policies, contact 
+your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more
+information contact your local DIGITAL office. 
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum of
+this SPD. 
+
+WARRANTY LIMITATIONS
+
+IBM Supported Configurations
+
+This product has been designed to operate with the IBM software subsystems
+listed below. While this software may function correctly with other IBM
+software and equipment, and with software other than that supported by IBM,
+DIGITAL cannot offer its standard warranty for this software unless it has
+been tested with such equipment and software configurations and found
+acceptable to DIGITAL. 
+
+VMS/SNA has been tested and warranted with the following IBM software 
+configurations:
+
+Software Product             Version        Release
+
+ACF/VTAM                        2              2.0
+                                3              1.0
+                                3              1.1
+                                3              2.0
+
+ACF/NCP                         2              1.0
+                                3              1.0
+                                4              1.0
+                                4              2.0
+                                5              1.0
+                                5              2.0
+
+MVS/SP                          1              3.6
+MVS/SP (a.k.a. MVS/XA)          2              1.5
+                                2              1.7
+                                2              2.0
+
+VM/SP                                          4.1
+                                               5.0
+
+VSE/SP                          2              1.6
+
+IBM NCP Packet Switching Interface (NPSI) software is required to support 
+SNA over X.25 and should be generated to support Boundary Network Node, 
+Qualified Logical Link Control (BNN QLLC) type-3 switched virtual circuits. 
+VMS/SNA has been tested and warranted with the following IBM NCP and NPSI
+Software:
+
+For 3725 Communications Controllers:                ACF/NCP V4 Release 2
+                                                    X.25 NPSI V1 Release 4.3
+
+For 3720 and 3745 Communications Controllers:       ACF/NCP V5 Release 1
+                                                    X.25 NPSI V3 Release 1
+                                                    ACF/NCP V5 Release 2
+                                                    X.25 NPSI V3 Release 2
+
+For a complete list of IBM application subsystems (e.g., CICS/VS) that the
+various Access Routines have been certified against and that are supported
+configurations by DIGITAL, please consult the respective Access Routine
+Software Product Description. (Refer to the table provided in the Optional
+Software section of this SPD.) 
+
+
+(r)  IBM is a registered trademark of International Business Machines
+(r) Netview is a registered trademark of International Business Machines
+    Corporation
+
+BH-ET77F-TE

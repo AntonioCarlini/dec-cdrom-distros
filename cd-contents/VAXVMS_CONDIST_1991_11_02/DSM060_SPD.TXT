@@ -1,0 +1,497 @@
+ 
+
+
+
+
+
+
+     Software
+     Product
+     Description
+
+     ________________________________________________________________
+
+     PRODUCT NAME:  VAX DSM, Version 6.0                 SPD 25.08.19
+
+     DESCRIPTION
+
+     VAX DSM (Digital Standard MUMPS[R]) is an implementation of
+     the ANSI Standard Specification for MUMPS (X11.1-1990) that is
+     layered on the VMS Operating System. It is a high level inter-
+     pretive programming language and a multiuser data management
+     system in which many users can share a common database. VAX DSM
+     software supports a superset of the ANSI MUMPS specification and
+     fully uses the capabilities of the VMS Operating System.
+
+     The VAX DSM utility set includes the DSM Application Software
+     Library (DASL) software. The DASL software is an application
+     creation tool which combines a Data Dictionary, Screen (form)
+     Compiler, Report Compiler, and an end user SQL compliant Query
+     Driver. DASL software uses code generation techniques to trans-
+     form DASL commands and SQL statements into efficient MUMPS code.
+
+     The VAX DSM Language
+
+     The VAX DSM language couples the flexible processing of variable
+     length string data with a high-performance database system, mak-
+     ing interactive database application systems easier to implement
+     and maintain.
+
+     The VAX DSM language includes the following extensions to the
+     ANSI standard MUMPS specification:
+
+     o  512 character maximum string length for local and global
+        variables.
+
+     o  245 character maximum string length for subscripted local and
+        global variable names.
+
+     o  Commands and functions to load, save, and edit DSM routines.
+
+                                  DIGITAL               November 1990
+
+                                                          AE-K412T-TE
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     o  Language elements that implement a subset of the VMS I/O
+        options for the support of terminals, including foreign
+        terminals, magnetic tape devices, mailboxes, and VMS RMS
+        sequential, relative, and indexed sequential files. The use
+        of DECnet for remote file access and task-to-task communi-
+        cation is also possible. TCP/IP communication is supported
+        through an interface to Wollongong WIN/TCP[TM].
+
+     o  A symbolic debugger that aids in the development and main-
+        tenance of DSM applications. The debugger permits the pro-
+        grammer to set breakpoints and watchpoints and to display the
+        current state of the call stack.
+
+     o  An error handling capability allowing a DSM application to
+        establish hierarchical error processing routines.
+
+     o  An external call interface to procedures written in languages
+        other than the DSM language through a $ZCALL function. Proce-
+        dures invoked through $ZCALL are also capable of calling back
+        the DSM interpreter.
+
+     In addition to supporting the calling of user-written proce-
+     dures, VAX DSM software also includes built-in interfaces to
+     selected VMS system services and run-time library routines. This
+     gives the VAX DSM language the ability to mount and dismount
+     disk or magnetic tape volumes, spawn DCL subprocesses, manipu-
+     late logical names, and call mathematical and text manipulation
+     functions, or editors.
+
+     For high run-time efficiency, the VAX DSM language is imple-
+     mented as a precompiler that generates intermediate code that
+     is interpreted at run-time. During the precompilation process,
+     which is transparent to the user, VAX DSM software performs
+     operations that optimize subsequent run-time execution. For
+     example, precompilation strips comments, checks syntax, opti-
+     mizes label references, and transforms numeric constants into an
+     internal representation.
+
+     Global Variables
+
+                                     2
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     The VAX DSM language allows symbolic reference to hierarchical
+     arrays called global variables (or simply globals) which can
+     be simultaneously accessed by many users of a DSM application.
+     VAX DSM software provides a high performance implementation of
+     global variables using multiway trees. VAX DSM stores global
+     variables and DSM routines on data structures called DSM volume
+     sets. Each is comprised of up to eight logical volumes. Volumes
+     in a DSM volume set can be either files on a VMS volume or disk
+     packs compatible with DSM-11, mounted as foreign VMS volumes. In
+     a VAX DSM run-time environment, up to sixteen volume sets can be
+     present simultaneously.
+
+     Database Sharing in a VAXcluster Environment
+
+     VAX DSM software allows volume sets to be mounted and made
+     accessible to all members of a VAXcluster environment. The
+     globals and routines resident within the cluster-mounted volume
+     sets are accessible in the same manner as a local mounted volume
+     set. Each cluster member maintains and updates a memory disk
+     buffer cache for the cluster-mounted volume set. VAXcluster
+     software is used to coordinate the access and update of physical
+     disk blocks.
+
+     Distributed Data Processing
+
+     VAX DSM applications can access globals either locally or on a
+     remote system. The VAX DSM software supports remote access to
+     globals through a DSM-specific Distributed Data Processing (DDP)
+     protocol. VAX DSM software implements this high-performance
+     protocol on Ethernet in a manner compatible with DSM-11, Version
+     4.1 (SPD 12.18.xx) and DSM DDP-DOS Version 1.0 (SPD 50.19.xx).
+     This allows the user to set up DSM networks consisting of any
+     combination of PDP-11 processors, VAX processors, and personal
+     computers in a local area network. The DDP autoconfiguration
+     facility automatically updates the software tables of members of
+     a DDP network when a new system goes on or off line.
+
+
+
+                                     3
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     VAX DSM software also supports DDP over DECnet logical links,
+     allowing remote global access from VAX processor to VAX proces-
+     sor in a wide area network.
+
+     Distributed global access can be done either explicitly, through
+     the extended DSM global syntax, or transparently to DSM appli-
+     cations through a system of global translation. Optionally, the
+     DSM environment manager can specify the replication of one or
+     more globals across several systems.
+
+     After-Image Journaling
+
+     VAX DSM software supports a journaling facility to provide a
+     record on secondary storage of all operations that modify the
+     database (SET and KILL of global variables). Journaling can be
+     done on a global-by-global basis or for a whole DSM environment.
+     In the event of database degradation, it is possible to restore
+     the current database from a full backup and the journal files
+     using a dejournaling utility.
+
+     Before-Image Journaling
+
+     VAX DSM software provides a journaling capability that records
+     the physical image of a database block before modifications
+     have been made. This facility preserves database integrity in
+     the event of a CPU failure. The physical before-image journal
+     contains only a very small number of blocks and is used to
+     quickly roll-back any operations in progress at the time of
+     the failure. The operations protected are SETs to globals that
+     result in a database block split, or KILLs that result in a
+     database block merge.
+
+     Transaction Processing
+
+     The VAX DSM product provides extensions to the ANSI MUMPS lan-
+     guage that allow MUMPS programmers to group global accesses into
+     well-defined transaction recovery units. The use of transaction
+     recovery units gives MUMPS application designers the ability to
+     create highly reliable and efficient fault-tolerant application
+     systems.
+
+                                     4
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     Database updates made within the context of a recovery unit are
+     treated as a single unit of work. Upon conclusion of a recovery
+     unit, VAX DSM software ensures that updates are either committed
+     entirely or not at all. If a failure occurs during recovery
+     unit processing, any partial updates made to the database are
+     rolled-back so that the database is restored to its original
+     state before the recovery unit began.
+
+     Through the conventional use of the MUMPS LOCK command and the
+     application of the recovery unit commands, MUMPS programmers
+     can construct database transactions that exhibit the transaction
+     processing properties of atomicity, consistency, isolation, and
+     durability.
+
+     VAX DSM software supports roll-back of recovery units through a
+     system of Before-Image and After-Image Journal files. Transac-
+     tion recovery unit processing is supported on database volume
+     sets that are mounted locally. VAX DSM does not support transac-
+     tion processing on volume sets mounted on multiple nodes within
+     a VAXcluster environment.
+
+     Recovery of updates made to databases that are shared using VAX
+     DSM Distributed Data Processing (DDP) is not supported within a
+     transaction recovery unit.
+
+     Incremental Backup/Restore
+
+     The VAX DSM product provides an Incremental Backup Utility
+     (^BACKUP) for use with the DSM database. The ^BACKUP Utility
+     backs up only those blocks that have been modified since the
+     last full backup. Because modified blocks usually constitute
+     a small portion of an entire DSM database, the ^BACKUP Utility
+     represents a major reduction in the time required for backup and
+     the amount of backup storage required.
+
+     On volume sets that are not mounted clusterwide, the ^BACKUP
+     Utility allows database modifications during the entire backup
+     process. On cluster-mounted volume sets, database modifications
+     are disabled during the second phase of the backup process.
+
+                                     5
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     Full database backup of VAX DSM volume set files is accomplished
+     using the VMS Backup Utility. Restoration of an incremental
+     backup is accomplished using the Incremental Restore Utility to
+     apply an incremental backup file onto a fully restored primary
+     database. The backup media supported by the ^BACKUP Utility is
+     VMS sequential disk files.
+
+     Callable Routines Interface
+
+     The callable routines interface allows routines written in
+     software languages that run under the VMS Operating System to
+     directly call the VAX DSM image. This capability gives programs
+     written in languages such as FORTRAN, C, PASCAL, and others
+     complete read and write access to globals resident in a VAX DSM
+     volume set. Functions such as global set, kill, get, or lock
+     to a VAX DSM database can be accomplished using any VMS layered
+     language. In addition, external programs can declare recovery
+     units, access the VAX DSM local symbol table, and execute MUMPS
+     code.
+
+     The following functions are available to external programs:
+
+     o  Callable interface initialization and rundown
+
+     o  Global database access
+
+     o  Declare recovery unit (start, commit, abort)
+
+     o  LOCK command
+
+     o  Local symbol access
+
+     o  MUMPS command and routine execution
+
+     Utilities
+
+     The VAX DSM product provides application and system level util-
+     ities written in the DSM language. Application level utilities
+     help the DSM programmer develop and maintain application soft-
+     ware and data. For example, there are utilities to edit and
+     display DSM routines and globals.
+
+                                     6
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     System level utilities allow the management of a DSM application
+     environment. The system manager can create and extend DSM vol-
+     ume sets, specify DSM configuration parameters such as access
+     control (security), the number of concurrent DSM jobs and disk
+     buffers, define DSM command line defaults, establish DDP links
+     and control journaling. For increased efficiency of routine
+     calling, the system manager can map a selected set of DSM appli-
+     cation routines in a shared virtual memory section, resulting in
+     higher application throughput.
+
+     DSM Application Software Library (DASL)
+
+     DASL software is a set of menu-driven tools designed for de-
+     velopers of interactive applications. The DASL package auto-
+     mates many of the tasks involved in defining and documenting a
+     database: generating data input, menu, and help text screens,
+     designing reports for data output, and creating tables for
+     database queries.
+
+     The DASL package is fully integrated with the VAX DSM product.
+     Therefore, DASL software provides both 4GL and 3GL capabilities
+     within a single environment. Users interact with DASL soft-
+     ware through menus and screens that were developed using DASL
+     software and are stored as VAX DSM routines.
+
+     The DASL package includes six major modules, each representing
+     a group of related functions that programmers use to develop
+     applications.
+
+     o  The Data Dictionary defines and documents the application
+        database.
+
+     o  The Screen Driver contains options to develop and modify
+        screen displays for data entry, menus, and help text.
+
+     o  The Report Driver contains options to define and modify
+        application reports.
+
+
+                                     7
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     o  The Query Driver contains options to define tables for the
+        DASL database and create queries to extract data from the
+        tables. The DASL Query Driver conforms to the syntax of
+        the ANSI Standard Database Language SQL (Structured Query
+        Language).
+
+     o  The Development Environment performs a variety of development
+        tasks such as specifying application parameters, or cre-
+        ating an international application using the DASL Language
+        Utilities.
+
+     o  The Application Environment provides facilities for con-
+        trolling the application's run-time environment such as a
+        security system, message center, query database, and error
+        logging.
+
+     Portable Run-Time DASL
+
+     Screens and reports defined using DASL can be compiled into
+     MUMPS code for use on systems other than VAX DSM systems.
+
+     The DASL software generates some non-ANSI Standard MUMPS code.
+     This code has been isolated and can be modified by a DASL devel-
+     oper so that DASL applications can run on platforms other than
+     VAX DSM.
+
+     The DASL Development Environment Menu contains Portable Run-
+     Time DASL utilities that enable DASL developers to port their
+     applications to other MUMPS implementations and computers. DASL
+     developers use these utilities to create an application run-
+     time package that contains their DASL application's screens and
+     reports, as well as a DASL run-time environment.
+
+     The application run-time package can be moved to a foreign
+     MUMPS system (i.e., a MUMPS implementation on a computer other
+     than the VAX computer). To run this package on a foreign MUMPS
+     system, you must have a Run-Time DASL License.
+
+     SOURCE CODE INFORMATION
+
+                                     8
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     VAX DSM provides source files in the SYS$EXAMPLES directory as
+     examples for writing ZCALLs and ZCALL Tables, using the callable
+     routines interface, and using Portable Run-Time DASL. This
+     source code is provided on an AS IS basis without any warranty
+     of any kind, either express or implied.
+
+     HARDWARE REQUIREMENTS
+
+     VAX, MicroVAX, or VAXstation configurations as specified in the
+     System Support Addendum (SSA 25.08.19-x).
+
+     SOFTWARE REQUIREMENTS
+
+     For systems using terminals (no DECwindows interface):
+
+     o  VMS Operating System
+
+     For workstations running VWS:
+
+     o  VMS Operating System
+
+     o  VMS Workstation Software
+
+     Refer to the System Support Addendum (SSA 25.08.19-x) for avail-
+     ability and required versions of prerequisite software.
+
+     ORDERING INFORMATION
+
+     Software Licenses (VAX DSM): QL-130A*-AA
+     Software Licenses (Run-Time DASL):
+         QL-YP29W-FA
+        QL-YP299-FA
+     Software Media: QA-130A*-**
+     Software Documentation: QA-130AA-GZ
+     Software Product Services: QT-130A*-**
+     DASL Legend Strip: 36-20220-B1
+
+     *  Denotes variant fields. For additional information on avail-
+        able licenses, services and media, refer to the appropriate
+        price book.
+
+     SOFTWARE LICENSING
+
+                                     9
+
+ 
+
+
+     VAX DSM, Version 6.0                                SPD 25.08.19
+
+
+
+     This software is furnished under the licensing provisions of
+     Digital Equipment Corporation's Standard Terms and Conditions.
+     For more information about the licensing terms and policies of
+     Digital, contact your local Digital office.
+
+     LICENSE MANAGEMENT FACILITY SUPPORT
+
+     This layered product supports the VMS License Management Fa-
+     cility (LMF). License units for this product are allocated on a
+     CPU-capacity basis.
+
+     For more information on the License Management Facility, refer
+     to the VMS Operating System Software Product Description (SPD
+     25.01.xx) or the License Management Utility Manual of the VMS
+     documentation set.
+
+     For more information on the licensing terms and policies of
+     Digital, contact your local Digital office.
+
+     SOFTWARE PRODUCT SERVICES
+
+     A variety of service options are available from Digital. For
+     more information, contact your local Digital office.
+
+     SOFTWARE WARRANTY
+
+     Warranty for this software product is provided by Digital with
+     the purchase of a license for the product as defined in the
+     Software Warranty Addendum of this SPD.
+
+     [R]  MUMPS is a registered trademark of Massachusetts General
+          Hospital.
+
+     [TM] WIN/TCP is a trademark of The Wollongong Group.
+
+     [TM] The DIGITAL Logo, DECnet, DECwindows, MicroVAX, RMS, VMS,
+          VAX, VAX DSM, VAX DSM DDP, VAXserver and VAXstation are
+          trademarks of Digital Equipment Corporation.
+
+                                    10

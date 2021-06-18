@@ -1,0 +1,314 @@
+
+PRODUCT NAME: MicroVAX MIRA Switch Control, Version 2.1    SPD 27.86.02
+
+DESCRIPTION
+
+System Overview
+
+MicroVAX MIRA Switch Control is the software for controlling a MicroVAX
+based MIRA System.
+
+A MIRA System is comprised of dual MicroVAX computers, each 
+supplied by its own power source and mounted in a single cabinet, or 
+in two cabinets for larger configurations. The configuration of each
+computer is normally identical, so that one computer is a backup for the 
+other in the event of failure.
+
+The computers are linked via Ethernet and MIRA unique hardware. The
+software controls the status (Master, Standby, or Idle) of each computer.  
+It detects a computer failure and changes the status of each computer 
+accordingly. 
+
+Designated devices which were previously connected to a failed Master computer
+are connected to the Standby computer, whose status then becomes Master.
+The user can then restart applications on the new Master and 
+continue operation.
+
+MIRA Systems are particularly suited to dedicated control applications, 
+rather than general purpose data processing. That is, applications that
+need to maintain communication with terminals and other computers,
+as well as full performance after a failure, or to recover without operator 
+intervention, can do so.
+
+The two computers operate independently; for example, process and volume 
+shadowing are not features of MIRA. A MIRA System provides the hardware and 
+software environment required for the development of such high availability 
+control applications.
+
+The Ethernet link can be utilized by the application programs to exchange 
+status information and to back-up critical data on the Standby computer. 
+Each computer has a unique Ethernet address and node name.
+
+For automatic recovery, the user application is required to maintain the 
+Standby in a state of readiness where it can assume Mastership. The 
+user application is also required to recover communication with the devices 
+which have been switched and for the restart/recovery of the Master 
+application. 
+
+Switched Devices
+
+Switched Devices are those which are configured such that they can be 
+connected to either computer. The devices are connected to the MIRA System
+via a common I/O distribution panel and the hardware and software controls
+to which computer they are assigned at any time.
+
+The operator specifies whether a device should be connected to the Master or
+Standby computer via a utility which creates the Switch Map File.  
+
+The computer with the status Master has those devices designated by the 
+Switch Map File as Master Devices connected to it; the computer with the status 
+Standby has Standby Devices connected.
+
+A computer with the status Idle has no switched devices connected.
+
+Start Up 
+
+The Start Up process for the complete MIRA System is normally synchronised 
+such that the same status is assigned as the last time the MIRA System was 
+active. This status is recorded by the Flag File; and the option is known 
+as Flag File Management. 
+
+If this option is disabled, or is the first time that the MIRA system 
+is started, or if one of the computers fails to start correctly, then the first 
+computer to complete the MIRA Start Up will become Master.
+
+Program and Manual Control
+
+A two position key switch on the front panel of the MIRA System, determines 
+the system mode. 
+
+Under Program Mode, the MIRA Switch Control software automatically
+reconfigures the Standby as Master if a failure is detected (System Failover) 
+and swaps the system status at the request of the operator 
+or a user application (System Swap).
+
+In Manual Mode, changes in status are inhibited and can only be effected from 
+the front panel.
+
+Failure Detection
+
+The MIRA Switch Control software exchanges status messages via the MIRA
+hardware, which includes a private communications link. If the software on
+either computer is unable to send its message within the user-specified
+period, this will be detected on each computer.
+
+If it is the Master computer that has failed to send its status message and
+the system is in Program Mode, then a System Failover occurs.
+ 
+If it is the Standby which has failed, then it is made Idle. 
+Optionally, Standby Devices can be reconnected to the Master computer.
+
+System Failover Operation
+
+In the event of a System Failover, the following occurs:
+
+^ The Master switched devices are disconnected and the Master computer's
+  status is changed to Idle.
+
+^ If the feature known as "DCLOW" is enabled, the Master system is 
+  automatically powered down (thus releasing any RA type disks, so that 
+  they can be mounted on the other system).
+
+^ If the other computer is in Standby mode, then the Master Devices 
+  are connected, and its status changed to Master. The Standby Devices
+  may optionally be released or kept connected to the new Master.
+
+The full MIRA Switch Control software can perform a System Failover in 
+less than two seconds, or in less than one second if Flag File Management 
+is disabled. After the System Failover is complete, the user's application 
+programs are responsible for failure recovery. 
+
+Diagnostics should then be run on the faulty computer. This can be done 
+without affecting the application(s) running in the new Master.  Repair
+can be effected on the faulty system, normally without affecting
+the Master computer in any way.
+
+The user can provoke a System Failover through the use of an operator
+command or user-callable subroutine (see below).
+
+Re-start
+
+If a failed computer is restarted and the other is Master, it will become the
+Standby and the Standby devices reconnected. If the option is selected to
+retain the Standby devices on the Master after System Failure, the Standby
+devices will not be re-connected to the Standby until the user's application
+on the Master has released them.
+
+System Swap Operation
+
+Customer written application programs or the operator can command a 
+System Swap. This operation can be disabled by the operator or
+an application program. It is only valid from the Master when the
+other computer is in Standby mode and when the system is in Program Mode.
+
+In the event of a valid System Swap, the following occurs:
+
+^ The switched devices are disconnected from both computers.
+
+^ The Master computer status becomes Standby and the other 
+  becomes Master.
+
+^ The Master Devices are connected to the new Master
+  and the Standby Devices to the new Standby.
+
+System Force Operation
+
+In Manual Mode, the operator can force a swap of the system, no matter 
+what the status is of either computer. However, if one of the computers 
+is Idle, then its status remains Idle. This is activated via the 
+front panel.
+
+Summary of the Effect of Failover, Swap and Force Operations
+
+                       Before                After
+
+                  Status A   Status B  Status A    Status B
+                -------------------------------------------
+    Failover	| master   | standby  | idle     | master  |
+ 		| master   | idle     | idle     | idle    |
+		| standby  | master   | master   | idle    |
+		| idle     | master   | idle     | idle    |
+                |------------------------------------------|
+    Swap	| master   | standby  | standby  | master  |
+		| standby  | master   | master   | standby |
+		|------------------------------------------|
+    Force       | master   | standby  | standby  | master  |
+ 		| master   | idle     | standby  | idle    |
+		| standby  | master   | master   | standby |
+		| standby  | idle     | master   | idle    |
+		| idle     | master   | idle     | standby |
+ 		| idle     | standby  | idle     | master  |
+		 ------------------------------------------
+
+Note: Status A and Status B differentiates the status of the two computers.
+
+On-Line Testing
+
+On-line Tests can be invoked by the operator to test the MIRA unique hardware 
+on a system. This tests all the MIRA hardware components without actually
+changing the state of a switch and thus can be used without disturbing the 
+applications running on either computer.
+
+Operator Commands
+
+A set of operator commands enables the operator to control the MIRA System.
+
+User Application Interface
+
+The User Application Interface provides a set of user-callable subroutines 
+by which a user application requests functions and receives information via 
+the MIRA Switch Control software which must be active.
+
+Subroutines are available for VAX PASCAL, VAX MACRO, VAX ADA 
+VAX BASIC, VAX COBOL, VAX BLISS32, VAX PLI, VAX C
+and VAX FORTRAN 
+including the following functions:
+
+MRACON	Connects the user application (maximum 8 simultaneous connections)
+
+MRADIS  Disables System Swap Operations
+
+MRAENA  Enables System Swap Operations
+
+MRAOVR  Provoke System Failure
+
+MRASWA	Requests a System Swap Operation
+
+MRAREL	Requests that Standby Lines be released from the Master 
+        computer
+
+MRAGET  Gets the MIRA system status
+
+The user applications can also be notified, if requested, of changes
+in system status and thus invoke the necessary recovery procedures.
+
+The Driver Interface
+
+The Driver Interface communicates with the MIRA Hardware via the Q-bus. 
+It provides a number of functions which can be requested using system service 
+calls and QIOs and thus enable an application to control the failure detection
+and switching mechanism itself.
+
+The interface gives access to the full capabilities of the MIRA hardware.
+Users may choose not to use the full MIRA Switch Control software, but to 
+perform this control from within their own applications. This requires a 
+fuller understanding of the MIRA hardware and is normally only 
+appropriate when a high level of real-time control is required by the 
+application. 
+
+Clock Synchronization
+
+The two computer clocks can be synchronized within a few milliseconds.
+This feature is available via the Driver Interface or may, optionally, be 
+managed automatically by the control software.
+
+SOURCE CODE
+
+The following source code modules are provided with binary, single-use
+license optiions on all magnetic distribution media:
+
+^ Symbolic definitions for the driver interface
+
+^ Message text
+
+^ MIRA logic module driver
+
+^ ADA Application Interface routines
+
+INSTALLATION
+
+Only experienced customers should attempt installation of this product.
+DIGITAL recommends that all other customers purchase DIGITAL's Installation
+Services. These services provide for installation of the software product by
+an experienced DIGITAL Software Specialist.
+
+HARDWARE REQUIREMENTS
+
+MicroVAX configuration as specified in the System Support Addendum (SSA
+27.86.02-x).
+
+SOFTWARE REQUIREMENTS*
+
+VMS Operating System or MicroVMS Operating System
+
+*Refer to the System Support Addendum for availability and required versions
+of prerequisite/optional software (SSA 27.86.02-x).
+
+ORDERING INFORMATION
+
+Software Licenses: QL-09TA*-**
+Software Media: QA-09TAA-*5 
+Software Documentation: QA-09TAA-GZ
+Software Product Services: QT-09TA*-**
+  
+* Denotes variant fields.  For additional information on 
+  available licenses, services and media refer to the appropriate 
+  price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions. For more information about DIGITAL's licensing 
+terms and policies, contact your local DIGITAL office.
+
+License Management Facility Support
+
+License units for this product are allocated on a CPU-capacity basis.
+For more information on the License Management Facility, refer to the
+VMS Operating System Software Product Description (25.01.xx) or
+the VMS Operating System documentation set. 
+
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL. For more information 
+contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this product is provided by DIGITAL with the purchase of 
+a license for the product as defined in the Software Warranty Addendum 
+of this SPD.
+
+
+

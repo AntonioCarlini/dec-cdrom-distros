@@ -1,0 +1,346 @@
+PRODUCT NAME:  Remote System Manager, Version 2.2       SPD 29.59.02
+
+DESCRIPTION
+
+Remote System Manager (RSM) is a VMS and ULTRIX layered product that permits a 
+system manager to efficiently manage a number of computer systems. 
+
+RSM uses the DECnet network to automate the recurring system management tasks 
+of: 
+
+^ Software distribution and installation (both operating systems and 
+  applications)
+
+^ System administration
+
+For flexibility in configuration, RSM is available as three separately 
+licensed products described below:
+
+RSM VMS Server 
+
+This product maintains RSM Client software and administrative 
+information, maintains libraries of operating system and application 
+software, directs the installation of software, schedules file backups, 
+and receives file backups.
+
+Additionally for RSM VMS Clients, the Server provides for the remote 
+maintenance of user accounts, directories, and DECnet proxies.
+
+The RSM Server license includes the right to install the RSM VMS Client 
+on the same node.
+
+RSM server software can be installed on a cluster and configured to use 
+the distributed resources available to all nodes that share the cluster 
+alias. Alternatively, the server software can be configured to operate on 
+a single, specified node in the cluster.
+
+Configuring the RSM server for full VAXcluster system operation allows 
+more efficient use of cluster-wide resources, providing redundancy and 
+load balancing with minimum manager preparation and effort.  In this 
+configuration, all members of the cluster, who share the cluster alias, 
+perform some of the work associated with RSM operations.
+
+Configuring the RSM server for operation on a single cluster-member 
+restricts the use of RSM and the associated workload to a single node.
+
+RSM VMS Client 
+
+This product provides VMS systems with the ability to receive software 
+distributed from an RSM Server. This product also permits files to be 
+backed up to and restored from an RSM Server.
+
+RSM ULTRIX Client 
+
+This product provides ULTRIX systems with the ability to receive software 
+distributed from an RSM Server. This product also permits files to be 
+backed up to and restored from an RSM Server.
+
+Typical networks would have one or more RSM Servers each serving a number 
+of Clients.
+
+Features
+
+Software Distribution and Installation
+
+The Software Distribution Services (SDS) component of the RSM Server 
+performs the installation of software to RSM Clients.  RSM stores copies 
+of operating systems and applications for both VMS and ULTRIX systems in 
+a library on the RSM Server and uses the DECnet network to automatically 
+distribute software to the RSM Client during the installation process.
+
+Note:	 Software that is installed using SDS remains subject to any 
+         licensing restrictions associated with that software.
+
+Application Software Installation
+
+RSM provides the ability to take applications from an RSM Server library 
+and install those applications on one or more RSM Clients.  Application 
+software is installed at the RSM Client using the standard installation 
+utility for that system (for VMS systems, the VMSINSTAL utility; for 
+ULTRIX systems, the setld utility). 
+
+RSM's Application Sets feature provides for the creation and manipulation 
+of "sets" of related applications. The concept of Application Sets makes 
+performing operations on an entire set of applications as easy as 
+performing operations on a single application. 
+
+RSM provides the ability to manage and enforce application prerequisites. 
+This feature permits applications to be stored in the library along with 
+information on the software prerequisites for the application.
+
+When RSM is requested to install this application, RSM automatically 
+verifies that RSM has installed all of the software prerequisites on the 
+Client. If RSM finds that any prerequisite software is not present on the 
+Client, RSM automatically installs the required prerequisite software. 
+
+Restrictions
+
+For VMS
+
+SDS can install any VMS application that can be installed with the 
+VMSINSTAL utility and conforms to the following rules:
+
+^ The application's installation procedure must conform to the guidelines  
+  presented in the VMS Developer's Guide to VMSINSTAL.
+
+^ The application must be installable while VMSINSTAL is running as a 
+  noninteractive process. In addition, the application must be 
+  installable using a VMSINSTAL auto-answer file.
+
+SDS executes VMSINSTAL as a detached process. Therefore, any application 
+installation procedure that performs terminal-related activities (such as 
+SET TERMINAL) or modifies its execution based on process mode (such as 
+INTERACTIVE or BATCH) may fail. 
+
+The application installation procedure must not depend on local 
+conditions such as node name or pre-existing files.
+
+For ULTRIX:
+
+SDS can install any ULTRIX application that can be installed with the 
+setld utility.
+
+The setld program does not permit the installation of subsets which 
+cannot fit into the available disk space.
+
+All NFS file systems should be dismounted before using setld with the -a, 
+-d, and -1 options.
+
+Operating System Software Installation
+
+RSM can install a VMS or ULTRIX operating system on an RSM Client. Using 
+this capability, managers of RSM Servers can take a VAXstation, MicroVAX, 
+or VAXserver, connect it to an Ethernet network, and have a preconfigured 
+operating system transmitted over the Ethernet and installed on the RSM 
+Client.
+
+With VMS the user prepares a "boot disk" which is actually a file 
+containing  a virtual disk image of a minimal VMS operating system, used 
+for remote booting the client.  The user selects a FETCHed operating 
+system from the SDS library for remote booting; it must be a version of 
+VMS which supports the system to be initial system loaded (ISLed).
+
+Restrictions
+
+For the installation of operating system software, both the RSM Server 
+and its Client must be on the same Local Area Network or Extended Local 
+Area Network.
+
+Approximately 15,000 blocks of disk space should be reserved for storing 
+the remote boot disk image that RSM uses to perform an initial system 
+load (ISL) on the management server.
+
+File Backup and Restore
+
+The Backup and Restore Services (BRS) component provides scheduled file 
+backups from RSM Clients to RSM Servers. BRS also has the ability to 
+restore files that it backed up.
+
+Backups are scheduled by creating an RSM Server database entry for each 
+backup task required for each Client. This entry defines all of the 
+attributes of the backup task, such as the frequency of the backup 
+(daily, weekly, monthly), the style of backup (incremental or full), the 
+files to be backed up, and whether to store the backed up data on disk or 
+tape.
+
+Restrictions
+
+When restoring to an RSM Client from a tape backup, RSM copies the 
+information to be restored to an RSM Server disk prior to transferring 
+this information to the RSM Client. There must be sufficient disk space 
+on the RSM Server for this operation.
+
+In order for RSM to perform an image restore of an RSM Client, that 
+Client must have at least two writable storage devices.
+
+System Administration
+
+The Client Administrative Services (CAS) component of the RSM Server 
+provides remote management of user accounts, directories, and proxies on 
+RSM VMS Clients. It provides a mechanism for maintaining consistent 
+logical names, symbol names, and DECnet node names across the set of RSM 
+VMS clients.  Also, it distributes VMS license information starting with 
+Version 5.0 and checks security of DECnet and guest accounts on RSM 
+clients.
+
+Restrictions
+
+The mechanism for maintaining consistent logical names, symbols, and 
+DECnet node names is provided by commands in a menu interface which allow 
+a master copy of these databases to be distributed from the RSM server to 
+specified RSM VMS clients.
+
+There is no command line interface to this component of RSM.
+
+Additional Features
+
+RSM Server Hierarchy 
+
+A single RSM Server can control the operation of up to four other RSM 
+Servers. This feature allows centralized scheduling of RSM operations 
+while other RSM Servers contain the SDS library or receive the backup 
+output files.
+
+Menu and Command Line User Interface 
+
+This version of RSM supports both a menu-style and a command line 
+interface. The menu interface is designed to aid the user in the correct 
+structuring of RSM command lines.
+
+Groups 
+
+In many situations, a number of computer systems perform similar tasks. 
+These systems typically use the same software and can operate on the same 
+backup schedule. RSM's Group feature permits all of these systems to be 
+referenced by a single group name. RSM operations on a Group are 
+performed on each system in the group.
+
+Management of LMF Licenses 
+
+RSM provides the ability to create and maintain a VMS License Management 
+database on the RSM VMS Server for each VMS Client. RSM can then transmit 
+this database to the VMS Client and install it as a Secondary LMF 
+Database. This feature requires that both the Server and Client be 
+executing VMS at least at V5.0.
+    
+Configuration
+
+Any given RSM Server should not be configured to support more than forty 
+RSM Clients.  
+
+RSM supports only a single level of Server hierarchy. Each RSM 
+environment must contain one and only one management server. A management 
+server can support a maximum of four other servers.  The other servers 
+can be target servers, library servers, combination target and library 
+servers, or any combination of these.  If you need to add more servers, 
+you must partition the client population into distinct management 
+domains.
+
+RSM makes extensive use of facilities provided by the operating system on 
+which it runs, causing RSM to be highly dependent upon the configuration 
+of the base operating system. Operating system related files should not 
+be moved from where they were placed during the installation process. 
+Also search lists should not be created which prevent RSM from accessing 
+the correct copy of these files in the standard locations. All 
+modifications to operating system data files (i.e., DECnet databases, 
+user authorization files, etc.) should be done using the operating system 
+provided utilities or as described in the appropriate documentation. 
+
+HARDWARE REQUIREMENTS 
+
+VAX, MicroVAX, or VAXstation configuration as specified in the System 
+Support Addendum (SSA 25.59.02-x).
+
+SOFTWARE REQUIREMENTS*
+
+The VAX Distributed Name Service (DNS) (SPD 28.79.xx) must be installed 
+within the network and accessible, via DECnet, from RSM Server nodes.
+
+RSM Clients require that there be at least one RSM Server in the network.
+
+For VAX Systems:
+
+VMS Operating System or MicroVMS Operating System
+
+DECnet-VAX
+
+For ULTRIX Systems:
+
+ULTRIX-32 Operating System or ULTRIX Worksystem Software
+
+DECnet-ULTRIX
+
+*    Refer to the System Support Addendum (SSA 25.59.02-x) for 
+     availability and required versions of prerequisite software. 
+
+ORDERING INFORMATION
+
+VMS Server
+
+Software Licenses: QL-B13A*-**
+Software Media: QA-B13A*-**
+Software Documentation: QA-B13AA-GZ
+Software Product Services: QT-B13A*-**
+
+VMS Client
+
+Software Licenses: QL-B14A*-**
+Software Media: None (1)
+Software Documentation: None (2)
+Software Product Services: None (3) 
+
+ULTRIX Client
+
+Software Licenses: Q****-**
+Software Media: None (1)
+Software Documentation: None (2) 
+Software Product Services: None (3)
+
+(1) Client is distributed on the VMS Server media
+(2) Client information covered in the documentation for the VMS Server
+(3) Client Services provided in the Services offering for the VMS Server
+
+* Denotes variant fields. For additional information on available 
+  licenses, services, and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+The licensing terms are based on clusterwide licensing in which the 
+license applies to a purchase power rating rather than a specific CPU.  
+Customers continue to receive the right-to-use software on nodes within a 
+cluster system.  The RSM server must be licensed on all members of the 
+VAXcluster system that share the cluster alias.  In this case, the 
+VAXcluster license would be restricted to the rating purchased rather 
+than the total rating of the VAXcluster system, unless the entire 
+VAXcluster system shared the cluster alias. 
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions. For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+The RSM VMS Server and RSM VMS Client layered products support the VMS 
+License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis. 
+
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (SPD 25.01.xx) or the VMS 
+Operating System documentation set. 
+
+For more information about DIGITAL's licensing terms and policies, 
+contact your local DIGITAL office. 
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL. For more 
+information contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the 
+purchase of a license for the product as defined in the Software Warranty 
+Addendum of this SPD.
+
+

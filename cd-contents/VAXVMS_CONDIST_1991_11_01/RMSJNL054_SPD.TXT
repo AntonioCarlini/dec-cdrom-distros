@@ -1,0 +1,488 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ________________________________________________________________
+
+          PRODUCT NAME:  VAX RMS Journaling, Version 5.4      SPD 27.58.05
+
+          DESCRIPTION
+
+          VAX RMS Journaling helps maintain the data integrity of RMS
+          files in the event of a number of failure scenarios. Jour-
+          naling helps to protect RMS file data from becoming lost or
+          inconsistent.
+
+          VAX RMS Journaling provides the following three methods of
+          journaling:
+
+          o  After-image (AI) journaling provides the ability to redo a
+             series of modifications to a data file. This type of jour-
+             naling helps recover lost or corrupted files. After-image
+             recovery restores the contents of the file from the point of
+             the latest backup copy of that file.
+
+          o  Before-image (BI) journaling provides the ability to undo a
+             series of modifications to a data file. This type of journal-
+             ing allows a file to be returned to a previous known state.
+             This is useful in the event that a file is updated with erro-
+             neous data.
+
+          o  Recovery unit journaling helps maintain transaction in-
+             tegrity, where a transaction consists of a group of related
+             operations that must be "atomic". That is, either all of the
+             operations complete in their entirety or none of the opera-
+             tions complete. This type of journaling helps prevent data
+             from becoming inconsistent due to the incomplete execution of
+             a transaction.
+
+
+                                       DIGITAL              September 1990
+
+                                                               AE-JG40F-TE
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          Journaling is applied on a file-by-file basis. A file can be
+          marked for after-image, before-image, recovery unit journaling,
+          or any combination of these methods. Within a given application,
+          any combination of journaling methods can be used.
+
+          VAX RMS Journaling stores the information necessary for data
+          recovery in files known as journals. Multiple data files may use
+          the same journal.
+
+          RMS Recovery Unit Journaling and DECdtm Transactions
+
+          Transactions are defined and managed using the DECdtm transac-
+          tion services available in VMS. An RMS recovery unit is a set
+          of RMS record operations, performed in the context of a single
+          process, that are part of transactions coordinated by DECdtm
+          services. RMS recovery units are started automatically by RMS
+          and RMS recovery units are committed or aborted along with the
+          transaction of which they are a part.
+
+          VAX RMS Journaling functions as a participating resource manager
+          through the utilization of DECdtm services. DECdtm services
+          are implemented using a two phase commit protocol as described
+          in the VMS Operating System Software Product Description (SPD
+          25.01.xx). Recovery unit journaling supports both a one-phase
+          and a two-phase commit protocol.
+
+          Remote RMS files (files accessed by means of the DAP/FAL proto-
+          col) that are marked for recovery unit journaling can be modi-
+          fied within a transaction, and will be included in the "atomic
+          unit of work" defined by the transaction. Also, the modifica-
+          tions made to RMS files marked for recovery unit journaling
+          can be combined with modifications made using any resource
+          manager that supports DECdtm services into a single "atomic"
+          transaction.
+
+          The Recovery Unit Facility (RUF) services have been superseded
+          by DECdtm services. However, the RUF services are still sup-
+          ported and are transparently emulated using the DECdtm services.
+          Existing applications written using the RUF services continue to
+          work without recompilation or relinking.
+
+                                          2
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          Supported File Organizations
+
+          All RMS file organizations are supported by VAX RMS Journaling.
+          Any sequential, relative, or Prolog 3 indexed file can use
+          journaling. However, the following restrictions apply:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          3
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          o  Prolog 1 and Prolog 2 indexed files are not supported by VAX
+             RMS Journaling.
+
+          o  Sequential files are limited to a record size of 32667 bytes.
+
+          o  Files marked for recovery unit journaling cannot be written
+             with the DCL WRITE command.
+
+          o  Stream files cannot be modified in shared mode in a recovery
+             unit.
+
+          o  Sequential files having VFC record format do not allow shared
+             access for recovery unit journaling.
+
+          When using recovery unit journaling with shared fixed-length
+          sequential files, any abort processing overwrites records added
+          to the recovery unit with zero bytes (null characters). This
+          occurs because the record cannot be deleted from the file.
+
+          All files that are marked for journaling must reside on Files-
+          11 Structure Level 2 disks. All journals must also reside on
+          a Files-11 Structure Level 2 disks. It is recommended that
+          journals used for after-image journaling reside on a disk volume
+          that is different from the disk volume where the data file that
+          uses the journal resides. Journaling across a network or to a
+          tape device is not supported.
+
+          Marking Files for Journaling
+
+          VAX RMS Journaling is enabled on a file-by-file basis. Files
+          marked for after-image, before-image, and recovery unit journal-
+          ing are enabled by using qualifiers to the DCL command SET FILE.
+          Any combination of qualifiers may be used with a particular SET
+          FILE command or series of SET FILE commands. Files are unmarked
+          for journaling using the SET NOFILE command.
+
+          The most recent SET FILE command for a given file overrides all
+          previous SET FILE commands for that file.
+
+                                          4
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          Successful marking of an RMS file for journaling requires ex-
+          clusive access to the file specified in the SET FILE command.
+          Exclusive access means the RMS file being marked for journal-
+          ing must be closed; that is, application programs accessing
+          that file must be shut down before the file can be successfully
+          marked for journaling.
+
+          No modifications to application programs are required for long-
+          term (after-image or before-image) journaling. Once a file has
+          been marked for long-term journaling, journal information will
+          be written to the journal each time the file is modified. The
+          file must have been opened subsequent to the issuance of the SET
+          FILE command that marked the file for VAX RMS Journaling. All
+          modifications to the file are recorded in the journal until the
+          file is unmarked for journaling.
+
+          Modifications to application programs are required for recovery
+          unit journaling. At a minimum, the program must specify the
+          start and end of a recovery unit, using the recovery unit system
+          services. When a file is marked for recovery unit journaling,
+          all modifications to that file within an application must be
+          within a recovery unit.
+
+          Journal File Maintenance
+
+          After-image and before-image journals require periodic main-
+          tenance. Because journal files can expand indefinitely and a
+          journal must reside on a single volume set, occasional remarking
+          of a file for journaling and all of the associated operations
+          is required. This implies that applications accessing RMS data
+          files marked for after-image or before-image, or both, jour-
+          naling must be stopped periodically for journal maintenance
+          operations.
+
+          Recovering Data - Long-Term Journaling
+
+
+
+
+                                          5
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          In the case of long-term (either after-image or before-image)
+          journaling, data recovery is done using the RMS Recovery Util-
+          ity. Recovery is on a file-by-file basis and must be explicitly
+          requested; it is not done automatically. The RMS Recovery Util-
+          ity is invoked at DCL level to either roll forward or roll back
+          changes to the file. The Recovery Utility requires exclusive ac-
+          cess to the file being recovered. Changes may be rolled forward
+          or rolled backward until a time specified by the user.
+
+          To roll forward a file and redo changes, a VMS backup copy of
+          the file must be on disk. This backup copy must have been made
+          after the file was marked for after-image journaling.
+
+          Recovering Data - Recovery Unit Journaling
+
+          No user intervention is required to roll back a recovery unit
+          that is incomplete. The rollback of an incomplete transaction
+          is started and completed automatically the next time the user
+          accesses the file.
+
+          Interaction with Backup
+
+          To recover data using after-image journaling, a backup copy
+          of the file must be available. This copy must be made with
+          the Backup Utility (BACKUP); a copy of the file made with the
+          COPY or CONVERT command cannot be used. A backup copy of the
+          file must be made after the the SET FILE/AI_JOURNAL command
+          is issued but before the file is opened for update. BACKUP
+          requires exclusive access to files being backed up. No user
+          or application program may access the file until BACKUP is
+          finished.
+
+
+
+
+
+
+
+
+                                          6
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          The use of BACKUP/RECORD is recommended. If the file is then
+          rolled forward, the modifications that have been made since the
+          most recent backup are applied.
+
+          If a backup copy of a file is rolled forward with the RMS Recov-
+          ery Utility, you must remark the file for after-image journaling
+          with the SET FILE/AI_JOURNAL command. A backup copy of that file
+          must be made after it has been marked for after-image journaling
+          and before application updates are allowed.
+
+          A backup copy of the file must be remarked for journaling if it
+          is to be used in place of the original file.
+
+          Interaction with VAX Volume Shadowing
+
+          VAX Volume Shadowing may be used in conjunction with after-image
+          journaling. After-image journaling helps recover data in the
+          following cases not addressed by VAX Volume Shadowing:
+
+          o  Mistaken deletion of a file by a system user or operator
+
+          o  Corruption of the file system pointers
+
+          o  RMS file corruption due to a software error or incomplete
+             bucket write operations to to an indexed file
+
+          Failures Not Addressed by RMS Recovery Unit Journaling
+
+          Recovery unit journaling alone does not provide recovery in
+          cases when a multi-block bucket write operation to an indexed
+          file is in progress, leaving the bucket in the indexed file in
+          a corrupt state. Use after-image journaling in conjunction with
+          recovery-unit journaling to recover from the following failed
+          multi-block bucket write operations:
+
+          o  Failure of the VAX host during a multi-block write operation,
+             such as a VMS crash, halt, power failure, or system shutdown.
+
+          o  Permanent loss of path to the disk during a multi-block write
+             operation.
+
+                                          7
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          o  Cancellation of a multi-block write operation in progress.
+             This occurs only in disks using DUDRIVER. Other disk drivers
+             ignore the cancellation of I/O and are not affected.
+
+          HARDWARE REQUIREMENTS
+
+          Refer to the VMS Operating System Software Product Descrip-
+          tion (SPD 25.01.xx) for hardware requirements and supported
+          processors.
+
+          OPTIONAL HARDWARE
+
+          None
+
+          CLUSTER ENVIRONMENT
+
+          This layered product is fully supported without restrictions
+          when installed on any valid and licensed VAXcluster* configura-
+          tion. The HARDWARE REQUIREMENTS sections of this product's Soft-
+          ware Product Description and the VMS Operating System Software
+          Product Description (SPD 25.01.xx) list any special hardware
+          required by this product.
+
+          *  VAXcluster configurations are fully described in the VAXclus-
+             ter Software Product Description (SPD 29.78.xx) and include
+             CI, Ethernet, and Mixed Interconnect configurations.
+
+          SOFTWARE REQUIREMENTS
+
+          VMS Operating System
+
+          VMS Tailoring
+
+          For VMS V5.x, the following VMS classes are required for full
+          functionality of this system integrated product:
+
+          o  VMS Required Saveset
+
+          For more information about VMS classes and tailoring, refer
+          to the VMS Operating System Software Product Description (SPD
+          25.01.xx).
+
+                                          8
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          OPTIONAL SOFTWARE
+
+          None
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future ver-
+          sion of this product may be different from the requirements for
+          the current version.
+
+          ORDERING INFORMATION
+
+          Software Licenses: QL-VDVA*-**
+          Software Documentation: QA-VDVAA-GZ
+          Software Product Services: QT-VDVA*-**
+
+          *  Denotes variant fields. For additional information on avail-
+             able licenses, services and media, refer to the appropriate
+             price book.
+
+          The above information is valid at the time of release. Please
+          contact your local Digital office for the most up-to-date infor-
+          mation.
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of
+          Digital's Equipment Corporation's Standard Terms and Condi-
+          tions. For more information about Digital's licensing terms and
+          policies, contact your local Digital office.
+
+
+
+
+
+
+
+
+
+                                          9
+
+ 
+
+
+          VAX RMS Journaling, Version 5.4                     SPD 27.58.05
+
+
+
+          LICENSE MANAGEMENT FACILITY
+
+          This system integrated product supports the VMS License Manage-
+          ment Facility.
+
+          License units for this product are allocated on a CPU-capacity
+          basis.
+
+          For more information about the License Management Facility,
+          refer to the VMS Operating System Software Product Description
+          (SPD 25.01.xx) or the License Management Utility Manual of the
+          VMS documentation set.
+
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available from Digital. For
+          more information, contact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with
+          the purchase of a license for the product as defined in the
+          Software Warranty Addendum of this SPD.
+
+          [TM] The DIGITAL Logo, DECdtm, VAX, VAX RMS and VMS are trade-
+               marks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+                                         10

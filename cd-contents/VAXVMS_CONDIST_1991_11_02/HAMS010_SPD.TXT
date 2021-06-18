@@ -1,0 +1,421 @@
+PRODUCT NAME:  MIRA High Availability Management        SPD 31.86.00
+               Software for VMS, Version 1.0 
+
+DESCRIPTION
+
+System Overview
+
+MIRA Applications Switch (MIRA AS) are High Availability systems based on a 
+Dual-Host architecture plus Watchdog modules installed in each computer and 
+communicating via a dedicated link.
+
+MIRA High Availability Management Software (MIRA HAMS) is a software 
+architecture for controlling MIRA Applications Switch systems, handling the 
+following main tasks:
+
+oo Error detection at system level as well as at device level provided 
+  that device errors are logged/recorded by their associated driver.
+
+oo Application failover and recovery initiation, upon error detected and 
+  in accordance with user-configured action templates.
+
+The complete application recovery (regain the lost process context) must 
+be accomplished by the application itself. Process/context shadowing is 
+not a feature of MIRA HAMS.
+
+Before running an application, the user must configure system environment 
+and error recovery strategy. This should be done on both computers, and 
+consists of filling in templates associating the devices dedicated to the 
+application and the actions to be taken in the event of device failure.
+
+The two computers of a MIRA Applications Switch system operate 
+independently. MIRA HAMS is installed on each computer and handles 
+connected applications in such a way that a complete failover is decided 
+only if absolutely necessary, thus increasing the system availability. 
+
+Upon detecting a device failure which does not impact the whole 
+functionality of one computer, and provided that the user has filled-in 
+the action tables accordingly, MIRA HAMS is able to decide the failover 
+of only those applications that are associated with this failed device.  
+The unaffected applications are kept running on the current computer.
+
+MIRA Applications Switch systems provide a hardware and software 
+environment required to create high availability applications which can 
+recover from failure without operator intervention.
+
+MIRA Applications Switch systems are particularly suited to dedicated 
+control applications allowing very short breaks of system availability 
+which do not affect its overall integrity during the 
+service/maintenance/replacement of the failed component. 
+
+Terminology
+
+LOCAL System - System currently operating or executing commands.
+
+REMOTE System - System at the other end of the watchdog link.
+
+MASTER Application - Application running on any of the two computers with 
+a backup application declared in STANDBY mode on the other computer.
+
+MASTER BACKUP Application - Application in STANDBY mode which temporarily 
+becomes MASTER following the failure of its partner on the remote system.
+
+SYSTEM failure - Failure affecting the integrity of the whole system 
+which is not recoverable by the application resulting in a SYSTEM 
+FAILOVER.
+
+NON-SYSTEM failure - Failure affecting a specific device and/or its 
+associated application(s). Recovery depends on customer needs and may 
+result in APPLICATION FAILOVER (all or part).
+
+Failure Detection Process
+
+MIRA HAMS is installed on each computer and exchanges status messages via 
+the dedicated watchdog link. 
+
+oo System Failure
+
+  If the software on either computer is unable to exchange messages 
+  within a user-specified period or detects a system failure, a system 
+  failover occurs on the computer which is still in operation.
+
+oo Non-System Failure
+
+  Once a device error threshold has been reached or whenever a MIRA 
+  Applications Switch application fails, a non-system error is generated. 
+  If the software on either computer sends a message with application or 
+  application device failure state, application failover or system 
+  failover occurs on the remote computer.
+
+Failover Operation
+
+In the event of system failover, the following automatically occurs on 
+the computer still operating:
+
+oo All the applications in STANDBY mode acquire the MASTER BACKUP state, 
+  thus initiating application(s) recovery.
+
+oo All the applications in MASTER mode keep the MASTER state.
+
+The following automatically occurs on the failed computer: 
+
+oo If the feature known as "DCLOW" is enabled, a power fail is simulated 
+  thus speeding up the release of the dual-port disks that were mounted 
+  so that they can be mounted on the other system (eg: RA type disks).
+
+  In the event of application failover, the local application is aborted.  
+  The partner application on the remote computer, in STANDBY mode, 
+  acquires the MASTER BACKUP state, thus initiating the application 
+  recovery.
+
+application failover => recovery initiation => recovery completion
+
+     --------------->	     |	<-------------
+       HAMS driven                     Application driven
+
+MIRA HAMS can perform failover, plus application recovery initialization, 
+in less than one second on normally loaded systems.
+
+On-Line Testing
+
+On-line Tests can be invoked by the operator to test the specific MIRA 
+Applications Swtich hardware on a system. Tests can be used without 
+disturbing the applications running on either computer.
+
+Diagnostics
+
+MDM Diagnostics must be run on the faulty computer. In case of partial 
+system failure, the user has to provoke a complete system failover by 
+using an operator command.  Diagnostics and repair can then be done 
+normally on the faulty system without affecting the applications running 
+on the computer still in operation.
+
+Re-Start
+
+Once a failed computer is repaired and restarted: 
+
+oo Local applications having a remote partner application in master backup 
+  state acquire the master state. 
+
+oo The remote partner application in master backup mode acquires the 
+  standby state. 
+
+oo The local application having a remote partner application in master 
+  state acquires the standby state. 
+
+oo The remote application in master state keeps the master state. 
+
+Thus, the user-configured load sharing mode will be re-established.
+
+Swap Operation
+
+A Customer application or the operator can command SYSTEM or APPLICATION 
+SWAP. This operation can be disabled by an application. It is only valid 
+from a local application in master state and with a remote partner 
+application in standby state. 
+
+In the event of SYSTEM SWAP, on both computers:
+
+oo All the applications in standby state acquire the master state.
+
+oo All the applications in master state acquire the standby state.
+
+oo All the applications in master backup state keep this state.
+
+In the event of APPLICATION SWAP:
+
+oo The local application in master/standby state acquires the 
+  standby/master state.
+
+oo The remote partner application in standby/master state acquires the 
+  master/standby state. 
+
+APPLICATION SWAP gives load sharing possibilities and allows use of 100% 
+of the available CPU resource of the MIRA II system.
+
+Failover and Swap Summary
+
+           Application state BEFORE
+
+                      On Computer 1          On Computer 2               
+
+Failover of	      Master		     Standby
+Application on	      Master		     Unknown
+Computer 1	      Master Backup	     Unknown
+		      Standby		     Master 
+
+                      On Computer 1          On Computer 2
+
+Failover of 	      Master		     Standby
+Application on	      Standby		     Master
+Computer 2	      Unknown		     Master
+		      Unknown		     Master Backup
+
+	    Application state AFTER
+
+                      On Computer 1          On Computer 2
+
+Failover of 	      Unknown		     Master Backup
+Application on	      Unknown		     Unknown
+Computer 1	      Unknown		     Unknown
+		      Unknown		     Master
+
+                      On Computer 1          On Computer 2
+
+Failover of 	      Master		     Unknown
+Application on	      Master Backup	     Unknown
+Computer 2	      Unknown		     Unknown
+		      Unknown		     Unknown
+
+	    Application state BEFORE
+
+                      On Computer 1          On Computer 2               
+
+Swap of		      Master		     Standby
+Application on	      Standby		     Master
+Computer 1	      Master 		     Unknown
+		      Master Backup	     Unknown
+
+                      On Computer 1          On Computer 2
+
+Swap of 	      Master		     Standby
+Application on	      Standby		     Master
+Computer 2	      Unknown		     Master
+		      Unknown		     Master Backup
+
+	     Application state AFTER
+
+                      On Computer 1          On Computer 2
+
+Swap of 	      Standby		     Master 
+Application on	      Standby		     Master
+Computer 1	      Master		     Unknown
+		      Master Backup	     Unknown
+
+                      On Computer 1          On Computer 2
+
+Swap of 	      Master		     Standby
+Application on	      Master 		     Standby
+Computer 2	      Unknown		     Master
+		      Unknown		     Master Backup
+
+Operator Commands
+
+The following set of operator commands enable the operator to control the 
+system:
+
+HELP		     Displays information on commands.
+
+EXIT		     Exits to DCL.
+
+START		     Starts MIRA II operation.
+
+STOP		     Stops MIRA II operation.
+
+SHOW SYSTEM	     Displays local/remote system states.
+
+TEST		     Tests local/remote watchdog link.
+
+SET LOG_FILE	     Creates new log files.
+
+SET SYSTEM	     Associates system or system device failure with an 
+                     action.        
+
+CLEAR SYSTEM	     Cancels effect of set system.
+
+Application Management Commands
+
+SWAP			 Forces swap of application states.
+
+FAILOVER		 Forces failover of application/system.
+
+RUN			 Starts local and remote application.
+
+SHOW APPLICATION	 Displays information about particular 
+                         application.
+
+SET APPLICATION		 Adds entry in application action table.
+
+CLEAR APPLICATION	 Removes entry from application action table.
+
+SHOW CONNECTIONS	 Displays informations about the running 
+                         applications.
+
+Error Management Commands
+
+SHOW DEVICE		  Displays device/application action tables.
+
+SET DEVICE		  Adds entry in device action table.
+
+CLEAR DEVICE		  Removes entry from device action table.
+
+User Application Interface
+
+The User Application Interface provides a set of user-callable 
+subroutines allowing exhanges of information via MIRA HAMS.  MIRA HAMS 
+must be active on each computer.
+
+These subroutines comply with the VMS Standard for Procedure Calling and 
+Condition Handling and are supported for VAX PASCAL, VAX MACRO, VAX Ada, 
+VAX BASIC, VAX COBOL, VAX BLISS-32, VAX PL/I, VAX C and VAX FORTRAN and 
+include the following functions:
+
+HAMS$CONNECT			  Connects the user application (maximum 
+                                  16 simultaneous connections supported)
+
+HAMS$DISCONNECT			  Disconnects the user application 
+
+HAMS$SWAP			  Swaps MASTER and STANDBY applications
+
+HAMS$FAILOVER			  Forces application failover 
+
+HAMS$DISABLE_SWAP		  Disables Application Swap Operations
+
+HAMS$ENABLE_SWAP		  Enables Application Swap Operations
+
+HAMS$GET_EVENT			  Gets MIRA HAMS event status.
+
+The user applications can also be notified, if requested, of changes in 
+application status and invoke the necessary recovery procedures.
+
+Clock Synchronization
+
+The two computer clocks can be synchronized within a few milliseconds. 
+This optional feature may be managed automatically by MIRA HAMS.
+
+SOURCE CODE
+
+The following source code modules are provided with Single-Use License, 
+binary options on TK50 distribution media:
+
+oo Ada Application Interface routines
+
+INSTALLATION
+
+Digital recommends that a customer's first purchase of this software 
+product include Digital Installation Services.  These services provide 
+for installation of the software product by an experienced Digital 
+Software Specialist. 
+
+For subsequent purchases of this product only experienced customers 
+should attempt installation.  Digital recommends that all other customers 
+purchase Digital's Installation Services. 
+
+Customer Responsibilities
+
+Before installation of the software, the customer must:
+
+oo Previously have installed all requisite software and hardware including 
+  terminals.
+
+oo Make available for a reasonable period of time, as mutually agreed by 
+  Digital and the customer, all hardware, communication facilities and 
+  terminals that are to be used during installation.
+
+Delays caused by any failure to meet the responsibilities will be charged 
+at the then prevailing rate for time and materials. 
+
+HARDWARE REQUIREMENTS
+
+MIRA Applications Switch Dual-Host MicroVAX configurations as specified 
+in the System Support Addendum (SSA 31.86.00-x).
+
+SOFTWARE REQUIREMENTS *
+
+VMS Operating System
+
+VAX Ada 
+
+* Refer to the Systems Support Addendum (SSA 31.86.00-x) for availability 
+  and versions of required software.
+
+ORDERING INFORMATION
+
+Software Licenses: QL-YHMA*-**
+Software Media: QA-YHMAA-**
+Software Documentation: QA-YHMAA-GZ
+Software Product Services: QT-YHMA*-** 
+  
+* Denotes variant fields.  For additional information on available 
+  licenses, services and media refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of Digital 
+Equipment Corporation's Standard Terms and Conditions. 
+
+For more information about Digital's licensing terms and policies, 
+contact your local Digital office.
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (25.01.xx) or the VMS 
+Operating System documentation set. 
+
+For more information about Digital's licensing terms and policies, 
+contact your local Digital office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from Digital.  For more 
+information contact your local Digital office.
+
+SOFTWARE WARRANTY
+
+Warranty for this product is provided by Digital with the purchase of a 
+license for the product as defined in the Software Warranty Addendum of 
+this SPD.
+
+The DIGITAL Logo is registered trademark of Digital Equipment Corporation.
+    
+VAX, VMS, and MicroVAX are trademarks of Digital Equipment Corporation.
+
+June 1990
+AE-PBFYA-TE
+
+

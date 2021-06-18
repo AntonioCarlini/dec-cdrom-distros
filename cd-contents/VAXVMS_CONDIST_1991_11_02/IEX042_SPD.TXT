@@ -1,0 +1,354 @@
+ 
+
+
+
+
+
+
+     Software
+     Product
+     Description
+
+     ________________________________________________________________
+
+     PRODUCT NAME:  IEX-VMS-DRIVER, Version 4.2B         SPD 26.30.07
+
+     DESCRIPTION
+
+     IEX-VMS-DRIVER allows programs written in MACRO-32 and higher
+     level languages (such as VAX FORTRAN, VAX BASIC and VAX Pas-
+     cal) to communicate through the IEU11-A or IEQ11-A with devices
+     containing an IEC 625-1 or IEEE Std. 488 interface. This commu-
+     nication is implemented through a choice of direct QIO calls or
+     a set of subroutines callable from high level languages.
+
+     Note: In the following description, the term IEX11 stands for
+     the IEU11-A and/or IEQ11-A interface. The IEU11-A supports the
+     VMS UNIBUS machines, and the IEQ11-A supports the MicroVMS Q-bus
+     machines.
+
+     The IEX11-A interface is a bit-parallel byte-serial device which
+     can perform transfers in either program interrupt or DMA (Direct
+     Memory Access) mode. Program interrupt is used for transferring
+     commands and addresses, while DMA is used for transferring data.
+     DMA significantly reduces processor loading during the transfer
+     of long data buffers.
+
+     The IEX11-A interface contains two independent IEC/
+     IEEE bus controllers, also known as General Purpose Interface
+     Buses (GPIBs). These two controllers may be connected to the
+     same or to different IEC/IEEE buses. Up to 15 devices may be
+     attached to each IEC/IEEE bus.
+
+     The IEX11 is most commonly used as Controller-in-Charge, but can
+     also be used when another device is Controller-in-Charge. The
+     Controller-in-Charge directs the sequence of information on the
+     bus.
+
+                                  DIGITAL                  March 1991
+
+                                                          AE-BW75J-TE
+
+ 
+
+
+     IEX-VMS-DRIVER, Version 4.2B                        SPD 26.30.07
+
+
+
+     When the IEX11 acts as Controller-in-Charge, it may request sta-
+     tus information from other devices through serial and parallel
+     polling. When the IEX11 is not Controller-in-Charge, it can be
+     polled in either fashion to provide status information.
+
+     Features
+
+     The IEX-VMS-DRIVER supports the following IEC/IEEE hardware
+     capabilities:
+
+     o  Controller (C1, C2, C3, C4, C5)
+
+     o  Talker and Extended Talker (T5, TE5)
+
+     o  Listener and Extended Listener (L3, LE3)
+
+     o  Automatic Source Handshake (SH1)
+
+     o  Automatic Acceptor Handshake (AH1)
+
+     o  Service Request (SR1)
+
+     o  Remote/Local (RL1)
+
+     o  Parallel Poll (PP1, PP2)
+
+     o  Device Clear (DC1)
+
+     o  Device Trigger (DT1)
+
+     The IEX-VMS-DRIVER supports QIO requests to perform the follow-
+     ing software functions:
+
+     o  Initialize Unit
+
+     o  Write Data
+
+     o  Read Data
+
+     o  Send one IEC/IEEE bus command*
+
+     o  Send a string of IEC/IEEE bus commands*
+
+     o  Request Service**
+
+     o  Issue a Serial Poll*
+
+                                     2
+
+ 
+
+
+     IEX-VMS-DRIVER, Version 4.2B                        SPD 26.30.07
+
+
+
+     o  Configure devices for Parallel Polls*
+
+     o  Load Parallel Poll Register**
+
+     o  Perform a Parallel Poll*
+
+     o  Go to Controller-Active-State (CACS)*
+
+     o  Go to Controller-Standby-State (CSBS)*
+
+     o  Pass Control*
+
+     o  Sense Mode
+
+     o  Set Mode
+
+     o  Enable Event Recognition
+
+     o  Recognize Events
+
+     The event recognition facility allows the user's process to
+     specify the events on the IEC/IEEE instrument bus which the
+     interface should detect. The interface is capable of detecting
+     the occurrence of the following events:
+
+     o  Service Request*
+
+     o  Addressed as Listener**
+
+     o  Addressed as Talker**
+
+     o  Deaddressed**
+
+     o  Addressed as Extended Listener**
+
+     o  Addressed as Extended Talker**
+
+     o  Device Clear**
+
+     o  Device Trigger**
+
+     o  Remote/Local Change**
+
+     o  Parallel Poll Configure**
+
+     o  Parallel Poll Unconfigure**
+
+                                     3
+
+ 
+
+
+     IEX-VMS-DRIVER, Version 4.2B                        SPD 26.30.07
+
+
+
+     o  Interface Clear
+
+     *  Functions that can only be used by the Controller-in-Charge
+
+     ** Functions used only by a device that is not Controller-in-
+        Charge
+
+     All IEC/IEEE bus commands are issued through a process request
+     and all data is transferred through the DMA mechanism. When the
+     IEX-VMS-DRIVER is processing a read data request, the three ways
+     to detect the end of the data transfer are:
+
+        Byte Count Overflow - Transfer terminates after the specified
+        number of bytes have been read.
+
+        EOI Termination - Transfer terminates if, during the recep-
+        tion of a byte, the EOI line is true.
+
+        Match Character - Transfer terminates after the Termination
+        specified match character has been consecutively received the
+        specified number of times.
+
+     A device exerciser is provided to verify that the IEX-VMS-
+     DRIVER is correctly installed and to aid the user in testing
+     an application. When the two bus controllers are connected with
+     a loop back cable (refer to the IEU11-A/IEQ11-A User's Guide),
+     the device exerciser can be run with command files delivered
+     with the exerciser. These command files demonstrate all features
+     of the driver and the IEC/IEEE bus interface functions. The
+     device exerciser can also be used by the user in a dialogue
+     mode to test devices. The commands to the exerciser are directly
+     converted into QIOs to the driver. Using the exerciser in the
+     dialogue mode, the user can quickly determine the set of QIOs
+     required for an application.
+
+     The IEX-VMS-DRIVER may be programmed in the following two ways:
+
+
+
+                                     4
+
+ 
+
+
+     IEX-VMS-DRIVER, Version 4.2B                        SPD 26.30.07
+
+
+
+     VMS and MicroVMS QIO System Service - The VMS QIO requests allow
+     direct access to the driver. These requests can be issued in
+     higher level languages (such as VAX FORTRAN, VAX BASIC, VAX Pas-
+     cal and MACRO-32). This is the most flexible way of programming
+     the IEX11 device, but requires the user to be familiar with the
+     QIO calling procedures.
+
+     Simplified User Interface - This is a package of subroutines
+     which can be called from higher level languages (such as VAX
+     FORTRAN and VAX BASIC) to perform the following functions:
+
+     IESTRT  -    Initialize an interface
+
+     IEPOLL  -    Setup for serial polling
+
+     IESEND  -    Send data
+
+     IERECV  -    Receive data
+
+     IERQSV  -    Request service
+
+     IECMD   -    Perform a bus control function
+
+     IEWFE   -    Wait for IEC/IEEE bus event
+
+     HARDWARE REQUIREMENTS
+
+     VAX, MicroVAX or VAXstation configuration as specified in the
+     System Support Addendum (SSA 26.30.07-x).
+
+
+     SOFTWARE REQUIREMENTS
+
+     VMS Operating System
+
+     or
+
+     MicroVMS Operating System
+
+                                     5
+
+ 
+
+
+     IEX-VMS-DRIVER, Version 4.2B                        SPD 26.30.07
+
+
+
+     Refer to the System Support Addendum (SSA 26.30.07-x) for avail-
+     ability and required versions of prerequisite software.
+
+
+     ORDERING INFORMATION
+
+     Software Licenses: QL-519A*-**
+     Software Media: QA-519A*-**
+     Software Documentation: QA-519AA-GZ
+
+     *  Denotes variant fields. For additional information on avail-
+        able licenses, services, and media, refer to the appropriate
+        price book.
+
+     SOFTWARE LICENSING
+
+     This software is furnished under the licensing provisions of
+     Digital Equipment Corporation's Standard Terms and Conditions.
+     For more information about Digital's licensing terms and poli-
+     cies, contact your local Digital office.
+
+     LICENSE MANAGEMENT FACILITY SUPPORT
+
+     This layered product supports the VMS License Management Facil-
+     ity.
+
+     License units for this product are allocated on a CPU-capacity
+     basis.
+
+     For more information on the License Management Facility, refer
+     to the VMS Operating System Software Product Description (SPD
+     25.01.xx) or the License Management Facility Manual of the VMS
+     Operating System documentation set.
+
+     For more information about Digital's licensing terms and poli-
+     cies, contact your local Digital office.
+
+
+
+                                     6
+
+ 
+
+
+     IEX-VMS-DRIVER, Version 4.2B                        SPD 26.30.07
+
+
+
+     SOFTWARE PRODUCT SERVICES
+
+     A variety of service options are available from Digital. For
+     more information, contact your local Digital office.
+
+     SOFTWARE WARRANTY
+
+     Warranty for this software product is provided by Digital with
+     the purchase of a license for the product as defined in the
+     Software Warranty Addendum of this SPD.
+
+     [TM] The DIGITAL Logo, CI, Q-bus, UNIBUS, VAX, MicroVAX, VAX BA-
+          SIC, VAX FORTRAN, VAX Pascal, VMS, MicroVMS, VAXserver and
+          VAXstation are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     7

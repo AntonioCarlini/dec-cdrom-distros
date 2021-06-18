@@ -1,0 +1,497 @@
+ 
+
+
+
+
+
+
+     Software
+     Product
+     Description
+
+     ________________________________________________________________
+
+     PRODUCT NAME:  DECmcc Director, Version 1.1         SPD 32.46.01
+
+     DESCRIPTION
+
+     The DECmcc software implements Digital's Enterprise Management
+     Architecture (EMA) director model, consistent with the ISO/OSI
+     management framework. The DECmcc Director software, initially
+     implemented under VMS Operating Systems, lets users control,
+     monitor, and test manageable objects (entities) in a network.
+
+     The EMA Director Model defines a management platform called a
+     director and cooperating but independent software components
+     named "management modules." The DECmcc Director is comprised of
+     a director and management modules of the following types:
+
+     o  Access Modules (AMs) provide access to and information about
+        different classes of entities.
+
+     o  Function Modules (FMs) provide high-level management func-
+        tions for managed entities.
+
+     o  Presentation Modules (PMs) provide a consistent user inter-
+        face for Function modules.
+
+     The core of the DECmcc software is the Executive which con-
+     sists of a management kernel and a set of "function modules."
+     The Executive also includes a Management Information Repository
+     (MIR) which defines a consistent structure for viewing manage-
+     ment data. Together they form DECmcc's operating environment for
+     co-existence and interoperation of management modules.
+
+     The DECmcc Director software allows a user to observe and con-
+     trol a selected group of DECnet-VAX Phase IV and many other
+     entities from a common command syntax and a consistent user in-
+     terface. The DECmcc command syntax is compliant with Digital's
+
+                                  DIGITAL                  March 1991
+
+                                                          AE-PC7JB-TE
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     Network Control Language (NCL), the command line syntax used for
+     network management commands. Other classes of entities may be
+     managed through additional access modules enrolled in the DECmcc
+     Director software.
+
+     The director supports the collection of network events.
+
+     With proper planning, deployment and use, DECmcc management
+     systems are scalable to the size of the network, ranging from
+     a small, homogeneous local area network to an enterprise-wide,
+     multivendor, distributed environment. DECmcc software supports
+     either, or both, centralized or distributed management styles.
+
+     The DECmcc Director is a single-license product consisting
+     of EMA-compliant DECmcc Executive and Management Modules. The
+     following is a list of the software components and modules that
+     comprise the DECmcc Director.
+
+     EXECUTIVE
+
+     The DECmcc EXECUTIVE provides the environment in which DECmcc
+     software management modules operate, allowing them to communi-
+     cate with each other and with management information stored in
+     the MIR. The DECmcc EXECUTIVE consists of the management kernel,
+     the Management Information Repository (MIR), and the Executive
+     function modules.
+
+     Among the features of the EXECUTIVE is that, in conjunction
+     with appropriate access modules, it provides the ability to
+     monitor managed entities. This can be done by polling or through
+     a combination of polling and acting as a collection point for
+     unsolicited entity event messages. Management Kernel
+
+     The management kernel provides the operating environment, and
+     dispatching services for "access" and "function" modules. The
+     operating environment consists of a multi-threaded processing
+     system, contained within VMS processes, along with a set of
+     callable procedures.
+
+     Management Information Repository (MIR)
+
+                                     2
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     The MIR is an integrated repository that contains definitions
+     of entity classes, entity instances, entity attributes, entity
+     events and private or miscellaneous data required by individual
+     management modules. The MIR provides storage and access routines
+     for maintaining management information within the DECmcc soft-
+     ware. Entity Model with is consistent with the ISO/OSI Structure
+     of Management Information (SDI).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     3
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     EXECUTIVE Function Modules
+
+     Control FM
+
+     The Control FM provides access to primitive directives for ob-
+     servation and control of managed entities. The Control FM sup-
+     ports a pre-defined list of basic directives, plus a small set
+     of generic directives that can be used for different purposes by
+     different AMs.
+
+     Registration FM
+
+     The Registration FM, in conjunction with the VAX Distributed
+     Name Server (VAXDNS) manages data identifying each entity in a
+     network. It also defines and manages a set of common reference
+     attributes for all entities. The Registration FM uses VAXDNS
+     as the DECmcc instance repository. This allows multiple DECmcc
+     systems to share the same view of entity configurations.
+
+     Domain FM
+
+     The Domain FM works in conjunction with the Registration FM to
+     enable users to define spheres of management interest. Domains
+     may contain other domains we well as reference other domains.
+     Users can set up hierarchical domains and navigate through the
+     managed network from a top-down view. Domains can be represented
+     on the Iconic Map PM, enabling users to select domains and
+     manage the entities that comprise them.
+
+     Access Modules
+
+     DECnet Phase IV AM
+
+     The DECnet Phase IV AM allows users to manage DECnet Phase IV
+     entities such as nodes, circuits, lines, and objects. The DECnet
+     Phase IV AM provides an access path to and information about
+     the entities it supports. The DECnet Phase IV AM supports one
+     global entity class, NODE4, and a number of child entity classes
+     such as lines and circuits. With the DECnet Phase IV AM, typical
+     management operations might include gathering counters from a
+
+                                     4
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     child entity (e.g., line) through its parent (e.g., a DECnet
+     Phase IV Node), or modifying parameters on a remote node.
+
+     Sample AM
+
+     A Sample Access Module is included as part of the DECmcc Di-
+     rector. The Sample AM implements a single management directive,
+     the SHOW directive, for the DECnet Phase IV node entity and as-
+     sociated line subentity. The SHOW directive displays various
+     Characteristic, Status and Counter attributes for each entity.
+     The Sample Access Module implements a SHOW and TEST management
+     directive to manage the Access Module itself to illustrate the
+     "management of management" concept. Including the Sample AM with
+     the DECmcc Director is intended to ensure proper end-user li-
+     censing of access modules developed using source code provided
+     in the DECmcc Toolkit (SPD 32.49.xx).
+
+     Presentation Modules
+
+     Presentation Modules included with the DECmcc Director are the
+     Iconic Map and the Forms and Command Line (FCL) PMs. The FCL
+     PM supports tow modes of operation, Command Line Mode and Forms
+     Interface Mode.
+
+     Iconic Map PM
+
+     The Iconic Map presentation module enables users to interact
+     with the DECmcc director using a mouse control. Commands as
+     well as management data can be accessed by selecting icons
+     representing managed domains and entities in a map window and
+     through the use of pull-down command windows.
+
+     FCL PM - Command-Line Mode
+
+     FCL Command-Line Mode is a terminal based user interface that
+     uses command-line input and output techniques. It is compliant
+     with Digital's NCL, the command line syntax used for DECnet
+     network management commands.
+
+                                     5
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     Command-Line Mode is available from and terminal or workstation
+     compatible with Digital's VT220 terminal. It supports command
+     line recall and editing, abbreviation support, on-line help,
+     symbol substitution, support of control key sequences, line
+     continuation, and typeahead.
+
+     The user interface structure also allows a VMS DCL process to be
+     "spawned."
+
+     FCL PM - Forms Interface Mode
+
+     The Forms Interface Mode is an extension of the command-line
+     interface that provides a screen based user interface, using
+     forms and list input and output techniques. It is available
+     from any terminal or workstation compatible with Digital's VT220
+     terminal.
+
+     The screen format contains two regions. One region is for enter-
+     ing data to input fields for issuing DECmcc commands or "direc-
+     tives." The other region is for viewing data or output resulting
+     from DECmcc directives. Arrow keys, Previous and Next screen
+     keys may be used for reviewing the data in the output region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     6
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     Utilities
+
+     Several utilities are included that enable on-site enrollment of
+     access modules not provided with the DECmcc Director. Documen-
+     tation required for such module enrollment is supplied by the
+     module developer. The utilities are:
+
+     o  Dictionary Access Program (DAP) Utility,
+
+     o  Parse Table Builder (PTB) Utility,
+
+     o  Test Bed Driver (TBD) Utility,
+
+     o  Help File Builder (HFB) Utility
+
+     The DECmcc Developer's Toolkit Reference manual (order number
+     AA-PD5MA-TE) describes each of the tools in detail.
+
+     On-Line HELP Information
+
+     DECmcc includes extensive online HELP information similar to VMS
+     HELP. Help information is provided in the following four cate-
+     gories: Entity information, Function information, Presentation
+     information, and Tutorial information.
+
+     HARDWARE REQUIREMENTS
+
+     VAX, MicroVAX, VAXstation or VAXserver configurations as speci-
+     fied in the System Support Addendum (SSA 32.46.01-x).
+
+     SOFTWARE REQUIREMENTS *
+
+     VMS Operating System
+
+     Layered Products:
+
+     DECnet-VAX
+     VAX Distributed Name Service (VAX DNS) - Server must be in-
+     stalled somewhere in network.
+
+     For Workstations Running DECwindows:
+
+     VMS Operating System (and necessary components of DECwindows)
+
+                                     7
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     Layered Products:
+
+     DECnet-VAX
+     VAX Distributed Name Service (VAX DNS) - Server must be in-
+     stalled somewhere in the network.
+
+     *  Please refer to the System Support Addendum (SSA 32.46.01-x)
+        for required versions of prerequisite/optional software.
+
+     ORDERING INFORMATION
+
+     Software Licenses: QL-VM9A9-AA
+     Software Media: QL-VM9AA-H5
+     Software Documentation: QL-VM9AA-GZ
+     Software Product Services: QT-VM9A*-**
+
+     o  Denotes variant fields. For additional information on avail-
+        able licenses, services and media, refer to the appropriate
+        price book.
+
+     SOFTWARE LICENSING
+
+     This software is furnished under the licensing provisions of
+     Digital Equipment Corporation's Standard Terms and Conditions.
+     For more information about Digital's licensing terms and poli-
+     cies, please contact your local Digital office.
+
+     LICENSE MANAGEMENT FACILITY
+
+     This layered product supports the VMS License Management Facil-
+     ity (LMF).
+
+     License units for this product are allocated at a flat price
+     basis, regardless of User/Activity or processor type.
+
+     For more information on the License Management Facility, refer
+     to the VMS Operating System Software Product Description (SPD
+     25.01.xx) or the License Management Facility manual of the VMS
+     Operating System documentation set.
+
+     For more information about Digital's licensing terms and poli-
+     cies, please contact your local Digital office.
+
+                                     8
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     SOFTWARE PRODUCT SERVICES
+
+     A variety of service options are available from Digital. For
+     more information, contact your local Digital office.
+
+     Other Network Management Services are also available. These
+     include, but are not restricted to, the following:
+
+     o  Network Management Operations Services
+
+     o  Network Management Planning and Design Services
+
+     o  Network Management Implementation Services
+
+     o  Network Management Training
+
+     For local availability, please contact your Digital Sales Of-
+     fice.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     9
+
+ 
+
+
+     DECmcc Director, Version 1.1                        SPD 32.46.01
+
+
+
+     SOFTWARE WARRANTY
+
+     Warranty for this software product is provided by Digital with
+     the purchase of a license for the product as defined in the
+     Software Warranty Addendum of this SPD.
+
+     [TM]  The DIGITAL Logo, VAX, MicroVAX, VAXstation, VAXserver,
+           VMS, DECmcc and DECnet are trademarks of Digital Equipment
+           Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    10

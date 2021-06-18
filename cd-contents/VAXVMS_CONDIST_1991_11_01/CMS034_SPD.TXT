@@ -1,0 +1,392 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ________________________________________________________________
+
+          PRODUCT NAME:  VAX DEC/CMS, Version 3.4             SPD 25.52.15
+
+          1  DESCRIPTION
+
+          VAX DEC/CMS (Code Management System) is a library system that
+          facilitates the development and maintenance of software sys-
+          tems. Software systems are divided into different functional
+          components that are, in turn, organized into sets of one or more
+          files. During development, one or more programmers continually
+          make changes to these files. VAX DEC/CMS helps manage the files
+          during development (and later during maintenance) by storing
+          the files in a project library, tracking changes, and monitoring
+          access to the library.
+
+          VAX DEC/CMS also supplies a means of manipulating different
+          combinations of files within a library. The ability to formalize
+          these combinations provides a focus for system design and a
+          means of organizing the files within a library.
+
+          VAX DEC/CMS supports the DECwindows software environment, and
+          provides either a DECwindows or command line user interface.
+
+          VAX DEC/CMS is included in the VAXset (SPD 27.07.xx) Software
+          Development Tools Package. This package provides simplified
+          ordering and maintenance of various tools. See the appropriate
+          Software Product Description for more information on VAXset.
+
+          Features
+
+          o  Provides a DECwindows interface in addition to its command-
+             line interface
+
+          o  Store ASCII and non-ASCII (e.g., .EXE, .OBJ, and ISAM) files
+             in a project library
+
+                                       DIGITAL              September 1990
+
+                                                               AE-M629R-TE
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          o  Support for multiple project libraries
+
+          o  Retrieve previous file generations
+
+          o  Delete, purge, or collapse generations
+
+          o  Obtain a report of file modifications, including when, why,
+             and by whom the modification was made
+
+          o  Determine the origin of each line of a file, either as an
+             annotated listing or as comments in the file
+
+          o  Manage concurrent modifications
+
+          o  Merge separately-developed modifications
+
+          o  Combine related files together as a "group"
+
+          o  Relate the generation of one element to the corresponding
+             generations of other elements for purposes of freezing base-
+             lines or releases and for organizing ongoing development
+
+          o  Interface via callable routines as well as DCL commands or
+             DECwindows functions
+
+          o  Through the use of CMS access control lists, fine tune VMS
+             security mechanisms applied to CMS Libraries and provide a
+             means of notification about Library events
+
+          Each CMS command may be invoked from VMS's command level to per-
+          form a specific function, such as reserving a file for modifi-
+          cation or obtaining a report of development status. The command
+          then returns to VMS's command level, where the user may edit,
+          compile, and test in the usual manner.
+
+          Since VAX DEC/CMS allows the user to work with sequential ASCII
+          files (among others), all of the standard editors and compilers
+          can still be used.
+
+          All text files for the project can be stored in a single or mul-
+          tiple project library which the user identifies at the beginning
+          of each session by means of the CMS SET LIBRARY command. In the
+          case of multiple project libraries, the user provides a search
+
+                                          2
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          list of directory specifications for the desired project li-
+          braries. ASCII and non-ASCII files can be stored in the project
+          library, including source programs, command files, documenta-
+          tion, and test data.
+
+          A project library is a collection of elements. Elements can
+          be created from ASCII and non-ASCII files and combined into
+          "groups". A user can specify an element for review prior to
+          acceptance. Commands operate on elements or groups, or they can
+          operate on wild card specifications as in VMS.
+
+          For each element, the library stores successive generations or
+          historical instances of the element's files. Once an element
+          generation exists in the library, it never changes. A modifica-
+          tion to a generation is stored as a new generation. Successive
+          generations, each a modification of the previous, form a line
+          of descent. Typically, each element generation will have one
+          successor, which is the main line of descent. VAX DEC/CMS allows
+          two or more successors to a generation, forming variant lines of
+          descent.
+
+          Generation expressions allow the user to retrieve a particular
+          generation or the latest in a particular line of descent. A
+          generation or line of descent can be identified by a generation
+          number, or by a user-defined class name. A class can denote a
+          base level, a release, the current stable version, a debugging
+          version, or any other characteristic agreed upon by the users
+          for their project.
+
+          Historical generations of source and other files are retained
+          efficiently by storing only their differences. VAX DEC/CMS
+          determines the differences, and this information enables it to
+          report the generation of origin for each line of a file, i.e.,
+          the generation in which the line was most recently inserted or
+          modified. This origin information can be optionally inserted as
+          "history" comments on each line of the file itself.
+
+
+
+                                          3
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          A history is kept of all file movements into and out of the
+          project library. In addition, a list of reservations is kept
+          for all modifications that are in progress at any time. A user
+          who wishes to reserve, for modification, an element that is
+          previously reserved by someone else, is informed and asked
+          permission to continue. If the user chooses to proceed, the
+          occurrence is recorded as an unusual event. The other users
+          involved will similarly be informed and queried, when they
+          attempt to put their modifications back into the library. Users
+          in general, can be notified through MAIL when any event occurs
+          in the project libraries. This notification is achieved by
+          processing the entries in the access control list (ACL).
+
+          Concurrent modifications are not lost; they are stored in the
+          library on different lines of descent. Modifications on differ-
+          ent lines of descent can be merged, and the result can be edited
+          to resolve any conflicting modifications.
+
+          Principal VAX DEC/CMS Subcommands
+
+          o  REVIEW commands - ACCEPT GENERATION, REJECT GENERATION, MARK
+             GENERATION, REVIEW GENERATION, CANCEL REVIEW, and the /REVIEW
+             qualifier on CREATE and MODIFY ELEMENT commands. These allow
+             a user to specify that a generation of an element must be
+             reviewed before becoming a "normal" part of the CMS library,
+             to monitor the review process, and to approve the generation
+             (or mark it as disapproved).
+
+          o  RESERVE - Places a copy of a generation in the user's working
+             directory and notes that the user is working on a modifi-
+             cation for it. The entire element may be reserved against
+             concurrent modification by another user. A user can have sev-
+             eral elements reserved at the same time. Multiple generations
+             of an element can be saved or the same generation of an ele-
+             ment can be saved multiple times. A remark can optionally be
+             inserted into each line to show the origin of the line (see
+             ANNOTATE). A qualifier allows another generation of the same
+             element to be merged into the copy supplied to the user.
+
+                                          4
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          o  FETCH - Similar to RESERVE, except that the element is not
+             reserved for modification. The copy placed in the working
+             directory cannot be used to create a new generation of the
+             same element.
+
+          o  REPLACE - Creates a new generation of an element that the
+             user has reserved. The files of the new generation are moved
+             to the project library from the user's working directory.
+
+          o  UNRESERVE - Cancels an existing reservation of an element.
+
+          o  ANNOTATE - Produces an annotated listing of any element
+             in the library. The annotations describe the element and
+             its ancestors, and indicate the origin of each line of the
+             element (i.e., the generation in which each line was inserted
+             or most recently modified).
+
+          o  SHOW - Displays information about any objects in the li-
+             brary: elements, element generations, groups, classes. For
+             any generation, the command can give the author, creation
+             data, creating command, and author's remark. This information
+             can also be obtained for a generation's ancestors or descen-
+             dants. The command can also list all elements of the library,
+             all that are reserved, or all that have a generation in a
+             given class. All or a portion of the project history can be
+             displayed by object name, user name, or command.
+
+          o  CREATE - Creates a new element, class, or group
+
+          o  INSERT - Puts an element into a group or an element genera-
+             tion into a class
+
+          o  SET LIBRARY - Identifies the user's project library or multi-
+             ple project libraries at the start of a session
+
+          o  SET ACL - Allows modification of the access control list on
+             various objects in the DEC/CMS library. Access control lists
+             can be used to control access to individual DEC/CMS commands.
+
+                                          5
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          o  VERIFY - Performs consistency checks on the library, and
+             recovers from a malfunction by voiding a partially-completed
+             transaction.
+
+          Performance Considerations
+
+          Response time performance might appear to be less than expected
+          because of the checking and processing done, for certain opera-
+          tions, ensuring the safety and accuracy of the user's file. It
+          is not appropriate to compare these CMS commands to the VMS COPY
+          command.
+
+          2  HARDWARE REQUIREMENTS
+
+          VAX, MicroVAX, VAXstation or VAXserver configuration as speci-
+          fied in the System Support Addendum (SSA 25.52.15-x).
+
+          3  SOFTWARE REQUIREMENTS*
+
+          For systems using terminals (no DECwindows interface):
+
+          o  VMS Operating System
+
+          For workstations running VWS (no DECwindows interface):
+
+          o  VMS Operating System
+
+          o  VMS Workstation Software
+
+          For workstations running DECwindows:
+
+          o  VMS Operating System (and necessary components of VMS DECwin-
+             dows)
+
+          *  Refer to the System Support Addendum (SSA 25.52.15-x) for
+             availability and required versions of prerequisite/optional
+             software and for information regarding components of VMS
+             DECwindows.
+
+                                          6
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          4  ORDERING INFORMATION
+
+          Software Licenses: QL-007A*-**
+          Software Media: QA-007A*-**
+          Software Documentation: QA-007AA-GZ
+          Software Product Services: QT-007A*-**
+
+          *  Denotes variant fields. For additional information on avail-
+             able licenses, services and media, refer to the appropriate
+             price book.
+
+          5  SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of
+          Digital Equipment Corporation's Standard Terms and Conditions.
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          6  LICENSE MANAGEMENT FACILITY SUPPORT
+
+          This layered product supports the VMS License Management Facil-
+          ity.
+
+          License units for this product are allocated on a CPU-capacity
+          basis. For more information on the License Management Facility,
+          refer to the VMS Operating System Software Product Description
+          (SPD 25.01.xx) or the License Management Facility manual of the
+          VMS Operating System documentation set.
+
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          7  SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available. For more information
+          on these or other services, please contact your local Digital
+          office.
+
+
+                                          7
+
+ 
+
+
+          VAX DEC/CMS, Version 3.4                            SPD 25.52.15
+
+
+
+          8  SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with
+          the purchase of a license for the product as defined in the
+          Software Warranty Addendum of this SPD.
+
+          [TM]  The DIGITAL Logo, VMS, DECwindows, VAX, MicroVAX, VAXs-
+                tation, VAXserver and VAXset are trademarks of Digital
+                Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          8

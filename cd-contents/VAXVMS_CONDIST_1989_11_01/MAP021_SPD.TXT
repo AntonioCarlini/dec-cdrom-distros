@@ -1,0 +1,421 @@
+
+PRODUCT NAME:  VAX DEC/MAP, Version 2.1            SPD 27.66.02
+
+DESCRIPTION
+
+VAX DEC/MAP software is an implementation of the Manufacturing Automation 
+Protocol (MAP) specification Version 2.1, which, when combined with 
+prerequisite hardware, as listed below, forms a complete seven layer MAP 
+system. 
+
+This MAP specification embodies the Manufacturing Automation Protocol 
+(MAP) Reference Specification draft, dated February 25, 1986.  It is an 
+implementation architecture based on the International Standards 
+Organization (ISO) Open Systems Interconnect (OSI) model as specified in 
+ISO/IS 7498. OSI has been developed to allow computer equipment made by 
+various manufacturers to communicate using well-defined, internationally
+accepted protocols.
+
+The MAP network architecture specifies the protocols and services for
+the Physical, Data link, Network, Transport, Session, Presentation and
+Application layers.
+
+VAX DEC/MAP V2.1 software implements the Session Layer up through the 
+Applications Layer, layers 5 through 7.  The Physical and Data link layers 
+are implemented in the requisite hardware, which is a fully integrated 
+communications option not requiring any additional or non-DIGITAL hardware.  
+The Layers 1 through 4 protocols are executed in the hardware.
+
+Layers 1 and 2, the Physical and Data Link Layers, are IEEE 802
+compatible (IEEE 802.4 Broadband, 802.4 Token Bus Media Access Control
+MAC) and 802.2 Logical Link Control (LLC Class 1) and are implemented
+in hardware.
+
+Refer to Table 1 to determine the Specifications and Standards for the
+Protocols that are implemented in this product, which complies to the
+MAP Version 2.1 Specification.
+
+The DEC/MAP software product includes an extensive Applications
+Interface for File Transfer and Program-to-Program communications, and
+a Network Management Control Program is provided to display and
+manipulate local and remote network management information.
+
+DEC/MAP Network Management includes facilities to modify, maintain,
+and monitor counters and events on nodes in the MAP network.  Each
+node in the MAP network must have a network management agent (NMA), but
+each node does not need a network manager.  DEC/MAP includes a network
+manager.
+
+DEC/MAP Layers, Formats And Protocols
+
+Network Management 
+
+DEC/MAP for Q-bus MicroVAX includes a MAP Control Program that enables an 
+individual network manager to perform the following
+functions:
+
+^ Read and Modify local and remote parameters
+
+  These parameters are accessed though DEC/MAP databases, which
+  are listed below:
+
+  -  Network Service Provider database (local only)
+
+  -  Transport Service Access Point (TSAP) database (local only)
+
+  -  Transport Layer database
+
+  -  Event Logging database (local only)
+
+  -  Internet database
+
+  -  Session Layer database
+
+  -  Application Layer database
+
+  -  Cache database (local only)
+
+  -  LLC database (local Q-bus systems only)
+
+  -  MAC database (local Q-bus systems only)
+
+  -  Physical database (local Q-bus systems only)
+
+The databases that are not listed as ``local only'' can be accessed from 
+any vendor's MAP Version 2.1 conformant node in the MAP network.  The ``local 
+only'' databases are added functionality which provide additional data 
+for monitoring DIGITAL's nodes on the MAP network.
+
+^ Event Logging - Refer to the VAX DEC/MAP Network Manager's Guide for the 
+  MAP event types and messages that DIGITAL has implemented and also the 
+  additional event logging that DIGITAL has added to enhance it's 
+  MAP implementation.
+
+^ Loopback Testing and System Verification DEC/MAP provides a test for 
+  looping data between two DEC/MAP nodes at the Transport Layer.  
+
+  Other loopbacks that are available which verifiy operability on the local 
+  host, using Network Manager commands are:
+
+  - VERIFY - Enables users to loop data through the Transport.
+
+  - SHOW COUNTER - Exercises software in Application, Session, and 
+    Transport Layers on local and remote nodes.
+
+^ Local Directory Cache Maintenance
+
+^ Event Log File Interpreter - Translates binary code in the event log 
+  files into ASCII and organizes the information for easy reading.
+
+DEC/MAP Application Layer 
+
+The DEC/MAP Application Layer provides the user interface to the
+communication services provided by the MAP network.  It consists of
+File Transfer, Access, and  Management (FTAM), Common Application
+Service Elements (CASE), Manufacturing Messaging Format Standard (MMFS), 
+and Directory Services/Client Services Agent (CSA).
+
+DEC/MAP FTAM
+
+DEC/MAP FTAM procedures allow local and remote VMS applications to
+establish a Virtual Circuit between their respective file stores.  It
+supports file Copy, Create, Open, Close, Delete and file Data Transfer
+operations.  File Transfers can be either text format, containing a
+maximum of 255 ASCII text characters delineated by <CR><LF> control
+characters or unstructured binary data.
+
+DEC/MAP CASE 
+
+DEC/MAP CASE provides for Program-to-Program, or peer-to-peer communications 
+between cooperating processes running in MAP network systems. DEC/MAP 
+CASE consists of two logically distinct parts, the DEC/MAP CASE Application 
+Interface and the DEC/MAP CASE Provider.  The Application Interface is a 
+VMS procedure for:
+
+^ Establishing a connection or association with a peer application program
+
+^ Accepting or rejecting an association request from a peer application 
+  program
+
+^ Exchanging data with peer application program
+
+^ Terminating or Aborting an association
+
+The DEC/MAP CASE Provider utilizes the services of Session layer and
+other lower layers and exchanges Application Protocol Data Units
+(ADPUs) with CASE peers.  In addition, the DEC/MAP CASE Provider uses
+services provided by the DEC/MAP Client Services Agent.  Both
+synchronous and asynchronous versions of the DEC/MAP CASE interface
+are supported.
+
+DEC/MAP MMFS
+
+MAP Architecture provides communications between factory devices in a
+MAP network using MMFS defined messages, which may be transmitted by
+using the facilities of CASE.  MMFS defines message vocabularies and
+specific message formats for communication among three types of factory
+devices; Programmable Controllers, Numeric Controllers and Robots.
+
+Message vocabularies and formats defined for each type of device are
+grouped into subsets called conformance classes.  MAP specifies four
+conformance classes, in which, only Class 0 is defined.  VAX DEC/MAP
+MMFS Encoder/Decoder provides for encoding and decoding conformance
+Class 0 messages only, and consists of two standard VMS procedures:
+
+^ The encoding procedure formats VMS application messages in  a
+  MMFS envelope which may be transmitted by utilizing the facilities 
+  of DEC/MAP CASE.
+
+^ The decoding procedure removes the MMFS envelope and passes the message 
+  to the VMS Application.
+
+Conformance testing for MAP Version 2.1 MMFS does not exist, and each vendor
+may implement a different subset of MMFS functionality.  It is
+therefore advisable that customers contact their local Software
+Services Personnel to assist them with their implementation.
+
+Directory Services/CSA 
+
+VAX DEC/MAP includes a directory services Client Services Agent (CSA)
+which provides a primitive name to address resolution. Address
+resolution is accomplished by a local cache file lookup performed by
+the CSA. CSA communication with a remote Directory Services Agent (DSA) 
+is not supported in this version of DEC/MAP.
+
+The local cache may be modified using the MAP Control Program (MAPCP/MAPQNACP).
+The local cache contains the User Element (UE) Name, Communication Services 
+(CS), and associated addresses, or Service Access Points (SAPs) needed 
+to associate with an Application Entity (part of an Application Program).  
+Entries must be defined  for all local applications wishing to receive 
+inbound associations and any remote applications that local applications 
+will initiate an association with.
+
+Presentation 
+
+The Presentation layer is not currently defined in the MAP Version 2.1
+Specification and is therefore a null layer.  The purpose of this
+layer will be to negotiate contexts and formats for the exchanging  of
+data, i.e., it will transform data from the local system representation 
+into the agreed upon MAP context and format for the interchange of data 
+on another vendors system.
+
+Session 
+
+Layer 5 implements the ISO Session Standard and is limited to the
+Kernel and Full-Duplex functional units.  Session supports an orderly
+dialog between application programs, using full-duplex functionality,
+check-pointing and resynchronizing capabilities.  DEC/MAP CASE and
+FTAM make use of DEC/MAP Session services.  DEC/MAP does not have an
+exposed Session-level programming interface.
+
+Transport 
+
+The DEC/MAP Transport Protocol provides reliable end-to-end transfer
+of data between cooperating user programs residing in separate host
+computers.
+
+The TRANSPORT layer provides a number of internal functions.  A sample
+of these functions include:
+
+^ Initiate and release transport connections.
+
+^ Mapping between transport addresses and network addresses.
+
+^ Multiplexing between transport connections and network connections.
+
+^ End-to-End flow control and data sequencing.
+
+  -  Transport Protocol Data Unit (TPDU) w/without Checksum
+
+  -  Expedited Data Transfer
+
+This protocol is executed in the requisite hardware thereby off-loading 
+the host CPU.
+
+Network 
+
+The function of this layer is to route and relay packets between MAP
+endnode systems across an arbitrary set of wide area and subnetworks.
+It provides the connectionless-mode network service.  DEC/MAP utilizes
+the Internet Protocol.
+
+Some Internet services are as follows:
+
+^ Header Format Analysis
+
+^ Route PDU Function
+
+^ PDU Lifetime Control
+
+^ Error Reporting
+
+^ PDU Header Error Detection
+
+An inactive or ``null'' network layer is a requirement of VAX DEC/MAP.
+When both the sending and receiving system reside on the same Local
+Area Network, the user-written application  program can address the
+remote system using its LAN address, causing the Transport Service to
+generate and recognize PDU's employing the Inactive or ``null'' Network
+Layer.  When communicating across subnetwork boundaries, users of the
+Transport Service can address the remote system using an Internet
+address, causing the Transport Service to generate and recognize PDUs
+using the Internet Protocol.  This is defined in the Header Format
+Analysis.
+
+The Network Layer has no exposed programmable interfaces.
+
+This protocol is executed in the requisite hardware thereby off-loading 
+the host CPU.
+
+Data Link And Physical Layer
+
+Implementation of these layers is provided by the requisite hardware 
+supplied by DIGITAL. 
+
+            Specifications and Standards Used for DEC/MAP
+
+                               Table 1
+
+DEC/MAP Component       Specifications and Standards            OSI Layer
+
+
+Network Management      Network Management Agent(NMA) only
+                        defined in the MAP V2.1 Spec.
+                        Network Manager
+Application                                                     Application
+                        
+NBS Phase I FTAM        Based on ISO FTAM DP2
+
+MAP CASE V2.1           ISO based and defined in Service
+                        Definition and Protocol Spec. July 1985,
+                        produced at General Motors Tech. Center
+
+MAP V2.1 MMFS           Conformance class 0
+                
+Directory Service/CSA   MAP V2.1
+                        
+Presentation            Undefined in MAP V2.1,                  Presentation
+                        therefore NULL layer    
+                                 
+Session                 ISO Session Standard                    Session
+                        (ISO/IS 8326, 8327)
+                        only Kernel and full-duplex is 
+                        implemented as required in MAP V2.1
+                        
+Transport               ISO Transport, Class 4                  Transport
+                        Service as specified
+                        in ISO/IS 8072, ISO/IS 8073.
+
+Network                 ISO Internet (ISO/DIS 8473)             Internet
+                                
+Data Link               IEEE 802.2 Class 1, Logic Link Control  Data Link
+                        IEEE 802.4 Token Bus, Media Access 
+                        Control
+                                
+Physical                IEEE 802.4 Broadband                    Physical
+                                 
+INSTALLATION
+
+Only experienced customers should attempt installation of this product.  
+DIGITAL recommends that all other customers purchase DIGITAL's Installation 
+Services. These services provide for installation of the software product 
+by an experienced DIGITAL Software Specialist.
+
+Customer Responsibilities 
+
+Before installation of the software, the customer must:
+
+^ Previously have installed all prerequisite software
+
+^ Obtain, install and demonstrate as operational any modems, and other 
+  equipment, and facilites necessary to interface to DIGITAL's communication 
+  equipment.
+
+^ If this is a second DIGITAL DEC/MAP installation, designate and provide
+  access to a DEC/MAP host that has previously been installed by DIGITAL
+  on this certified channel for subsequent verification of installation
+  and connectivity in a multi node network.
+
+Prior to the product being placed on a DEC Service contract the customer must
+ensure that a channel certification for the DIGITAL node has been completed.
+
+Delays caused by any failure to meet these  responsibilities  will  be
+charged at the then prevailing rate for time and materials.
+
+HARDWARE REQUIREMENTS
+
+MicroVAX configuration as specified in the System Support Addendum 
+(SSA 27.66.02-x).
+
+SOFTWARE REQUIREMENTS *
+
+VMS Operating System 
+
+* Refer to the System Support Addendum for availability and required
+  versions of prerequisite software (SSA 27.66.02-A).
+
+ORDERING INFORMATION
+
+Software Product: DTQNA-D*
+Software Documentation: QA-VFZAA-GZ
+Software Product Services: QT-VFZA*-**
+
+* Denotes variant fields.  For additional information on available 
+  licenses, services and media, refer to the appropriate price book.
+
+This software product is available only with the purchase of 
+the hardware.
+
+SOFTWARE LICENSING
+
+License for this software is included with purchase of the hardware.
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about
+DIGITAL's licensing terms and policies, contact your local DIGITAL
+office.
+
+LICENSE MANAGEMENT FACILITY 
+
+This layered product supports the VMS License Management Facility.  
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the 
+VMS Operating System Software Product Description (SPD 25.01.xx) or 
+the VMS Operating System documentation set.  
+
+For more information on DIGITAL's licensing policies, contact your 
+local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL. For more
+information contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+DIGITAL has produced this product as a MAP Version 2.1 variant and
+warrants the functionality and proper operation with other DIGITAL 
+VAX DEC/MAP systems.  DIGITAL warrants this product to conform to
+these Protocol and Service Specifications, as described above in the
+section, ``Product Description''. DIGITAL cannot assume responsibility
+for interworking problems due to:
+
+^ Other vendors' nonconformance to the above listed Specifications 
+  and Standards
+
+^ Ambiguities and flaws in the protocol design appearing in the
+  above listed Specifications and Standards
+
+^ Failure in Conformance Testing to detect incompatibilities
+
+Assistance requested of DIGITAL for problems resulting from any of the
+above  listed  limitations will result in all associated service calls
+being billed at the prevailing per call rates.
+
+Warranty for this software product is provided  by  DIGITAL  with  the
+purchase  of a license for the product as defined in the Software
+Warranty Addendum of this SPD.
+
+April 1989
+BH-JC15C-TE

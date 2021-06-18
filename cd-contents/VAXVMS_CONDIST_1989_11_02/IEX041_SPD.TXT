@@ -1,0 +1,234 @@
+IEX-VMS-Driver, Version 4.1                            SPD 26.30.05
+
+DESCRIPTION
+
+The IEX-VMS-Driver allows programs written in MACRO-32 and higher level 
+languages (such as VAX FORTRAN, VAX BASIC, VAX PASCAL) to communicate through 
+the IEU11-A or IEQ11-A with devices containing an IEC 625-1 or IEEE Std. 488 
+interface. This communication is implemented through a choice of direct QIO 
+calls or a set of subroutines callable from high level languages.
+
+Note:	In the following description the term IEX11 stands for the IEU11-A 
+        and/or IEQ11-A interface.  The IEU11-A supports the VMS UNIBUS 
+        machines and the IEQ11-A supports the MicroVMS Q-Bus machines.
+
+The IEX11-A interface is a bit-parallel byte-serial device which can 
+perform transfers in either program interrupt or DMA (Direct Memory Access) 
+mode. The former is used for transferring commands and addresses, while the 
+latter is used for transferring data. DMA significantly reduces processor 
+loading during the transfer of long data buffers.
+
+The IEX11-A interface contains two independent IEC/IEEE bus controllers, 
+also known as General Purpose Interface Buses (GPIB). These two controllers 
+may be connected to the same or to different IEC/IEEE buses. Up to 15 
+devices may be attached to each IEC/IEEE bus.
+
+The IEX11 is most commonly used as Controller-in-Charge, but it can also be 
+used when another device is Controller-in-Charge. The Controller-in-Charge 
+directs the sequence of information on the bus.
+
+When the IEX11 acts as Controller-in-Charge it may request status 
+information from other devices through serial and parallel polling. When 
+the IEX11 is not Controller-in-Charge, it can be polled in either fashion 
+to provide status information.
+
+Features
+
+The IEX-VMS-Driver supports the following IEC/IEEE hardware capabilities:
+
+oo   Controller (C1,C2,C3,C4,C5)
+
+oo   Talker and Extended Talker (T5,TE5)
+
+oo   Listener and Extended Listener (L3,LE3)
+
+oo   Automatic Source Handshake (SH1)
+
+oo   Automatic Acceptor Handshake (AH1)
+
+oo   Service Request (SR1)
+
+oo   Remote/Local (RL1)
+
+oo   Parallel Poll (PP1,PP2)
+
+oo   Device Clear (DC1)
+
+oo   Device Trigger (DT1)
+
+The IEX-VMS-Driver supports QIO requests to perform the following software 
+functions:
+
+oo   Initialize Unit
+
+oo   Write Data
+
+oo   Read Data
+
+oo   Send one IEC/IEEE bus command*
+
+oo   Send a string of IEC/IEEE bus commands*
+
+oo   Request Service**
+
+oo   Issue a Serial Poll*
+
+oo   Configure devices for Parallel Polls*
+
+oo   Load Parallel Poll Register**
+
+oo   Perform a Parallel Poll*
+
+oo   Go to Controller-Active-State (CACS)*
+
+oo   Go to Controller-Standby-State (CSBS)*
+
+oo   Pass Control*
+
+oo   Sense Mode
+
+oo   Set Mode
+
+oo   Enable Event Recognition
+
+oo   Recognize Events
+
+The event recognition facility allows the user's process to specify the 
+events on the IEC/IEEE instrument bus which the interface should detect. 
+The interface is capable of detecting the occurrence of the following 
+events:
+
+oo   Service Request*
+
+oo   Addressed as Listener**
+
+oo   Addressed as Talker**
+
+oo   Deaddressed**
+
+oo   Addressed as Extended Listener**
+
+oo   Addressed as Extended Talker**
+
+oo   Device Clear**
+
+oo   Device Trigger**
+
+oo   Remote/Local Change**
+
+oo   Parallel Poll Configure**
+
+oo   Parallel Poll Unconfigure**
+
+oo   Interface Clear
+
+*   Those functions that can only be used by the Controller-in-Charge
+
+**  Those functions used only by a device that is not Controller-in-Charge
+
+All IEC/IEEE bus commands are issued through a process request and all data 
+is transferred through the DMA mechanism. When the IEX-VMS-Driver is 
+processing a read data request, there are three ways in which it detects 
+the end of the data transfer:
+
+oo   Byte Count Overflow - Transfer terminates after the specified number of 
+    bytes have been read.
+
+oo   EOI Termination - Transfer terminates if, during the reception of a 
+    byte, the EOI line is true.
+
+oo   Match Character - Transfer terminates after the termination specified 
+    match character has been consecutively received the specified number of 
+    times.
+
+A device exerciser is provided to verify that the IEX-VMS-Driver is 
+correctly installed and to aid the user in testing his application. When 
+the two bus controllers are connected with a loop back cable (see the 
+IEU11-A/IEQ11-A User's Guide), the device exerciser can be run with command 
+files delivered with the exerciser. These command files demonstrate all 
+features of the driver and the IEC/IEEE bus interface functions. The device 
+exerciser can also be used in a dialogue mode by the user to test his 
+devices. The commands to the exerciser are directly converted into QIOs to 
+the driver. Using the exerciser in the dialogue mode, the user can quickly 
+determine the set of QIOs required for his application.
+
+The IEX-VMS-Driver may be programmed in two ways:
+
+oo   VMS and MicroVMS QIO System Service - The VMS QIO requests allow direct 
+    access to the driver. These requests can be issued in higher level 
+    languages (such as VAX FORTRAN, VAX BASIC, VAX PASCAL and MACRO-32). 
+    This is the most flexible way of programming the IEX11 device, but 
+    requires that the user be familiar with the QIO calling procedures.
+
+oo   Simplified User Interface - This is a package of subroutines which can 
+    be called from higher level languages (such as VAX FORTRAN and VAX 
+    BASIC) to perform the following functions:
+
+    IESTRT     -   Initialize an interface
+
+    IEPOLL     -   Setup for Serial polling
+
+    IESEND     -   Send data
+
+    IERECV     -   Receive data
+
+    IERQSV     -   Request service
+
+    IECMD      -   Perform a bus control function
+
+    IEWFE      -   Wait for IEC/IEEE bus event
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX or VAXstation  configuration as specified in the System 
+Support Addendum (SSA 26.30.05-x).
+
+SOFTWARE REQUIREMENTS
+
+VMS Operating System or MicroVMS Operating System
+
+Refer to the System Support Addendum for availability and required versions 
+of prerequisite/optional software.
+
+ORDERING INFORMATION
+
+Software Licenses: QL-519A*-**
+Software Media: QA-519A*-**
+Software Documentation: QA-519AA-GZ
+Software Product Services: QT-519A*-**
+
+*   Denotes variant fields.  For additional information on available 
+    licenses, services and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions. For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (SPD 25.01.xx) or the License 
+Management Manual of VMS Operating System documentation set.
+
+For more information about DIGITAL's Licensing terms and policies, contact 
+your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL. For more 
+information contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase 
+of a license for the product as defined in the Software Warranty Addendum 
+of this SPD.
+
+July 1989
+AE-BW75F-TE

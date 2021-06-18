@@ -1,0 +1,496 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ________________________________________________________________
+
+          PRODUCT NAME:  VMS Volume Shadowing, Version 5.4    SPD 27.29.07
+
+          DESCRIPTION
+
+          VMS Volume Shadowing is a System Integrated Product (SIP) avail-
+          able on VMS systems. VMS Volume Shadowing provides high data
+          availability by ensuring against data loss resulting from me-
+          dia deterioration or through controller or device failure. This
+          prevents storage subsystem component failures from interrupting
+          system or application operation.
+
+          Volume shadowing maintains multiple redundant copies of data on
+          a collection of disks called a shadow set. Shadow sets consist
+          of one, two, or three compatible disk volumes which are referred
+          to as shadow set members. This duplication of data provides
+          greater data availability. When data is recorded on more than
+          one disk volume, the data is accessible even when one volume is
+          unavailable. Disk input/output operations continue transparently
+          with the remaining members of the shadow set.
+
+          Because a shadow set is made up of multiple disks containing
+          the same data, the VMS Volume Shadowing software can read from
+          either disk device. The VMS Volume Shadowing software determines
+          which disk to read from, per read operation.
+
+          If sections of a volume become unreadable, systems with volume
+          shadowing can read the data from the duplicate and attempt to
+          repair the original by writing the data to good blocks.
+
+          VMS system disks and any Files-11 On-Disk Structure 2 (ODS2)
+          data disks can be volume shadowed.
+
+
+                                       DIGITAL              September 1990
+
+                                                               AE-HP37H-TE
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          For the purposes of this document, the term CPU is used to refer
+          to a single VAX computer. A CPU may be standalone or a member of
+          a VAXcluster.
+
+          VMS Volume Shadowing provides two modes of performing shadowing
+          operations on the VMS Operating System:
+
+          o  VAX Volume Shadowing Phase I
+
+             This is the original implementation of the VAX Volume Shad-
+             owing product. Phase I VMS Volume Shadowing provides for
+             centralized shadowing on VMS systems using Hierarchical Stor-
+             age Controllers (HSC). This mode of shadowing is limited to
+             disks connected to HSCs, either in a VAXcluster or single
+             CPU.
+
+          o  VMS Volume Shadowing Phase II
+
+             Phase II allows shadowing on the same configurations as Phase
+             I plus it supports VAXcluster wide shadowing of disks on a
+             single CPU or located anywhere in a VAXcluster system.
+
+             VMS Volume Shadowing Phase II supports VAXcluster wide shad-
+             owing of all Digital Storage Architecture (DSA) devices.
+             Phase II is not limited to HSC-controlled disks, but extends
+             volume shadowing capabilities to all DSA disks including
+             those on local adapters, all Digital Small Systems Interco-
+             nenct (the DSSI RF series) disk devices on any VAX computer,
+             and VMS MSCP served disks located anywhere in any supported
+             VAXcluster configuration.
+
+          It is possible to use both modes of shadowing on the same CPU or
+          VAXcluster system at the same time. Any given shadow set must be
+          either Phase I or Phase II; a shadow set cannot be a mixture of
+          the two modes of shadowing.
+
+          Characteristics
+
+          CPUs and Controllers
+
+                                          2
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          VMS Volume Shadowing requires a minimum of one VAX CPU, one
+          MSCP- compliant mass storage controller, and one Digital Storage
+          Architecture (DSA) disk drive and volume. Although only one disk
+          is required, there must be two or more disk drives and volumes
+          in order to "shadow" or maintain multiple copies of the same
+          data. This configuration provides protection against either
+          failure of a single disk drive or deterioration of a single
+          volume.
+
+          Using two controllers provides a further guarantee of data
+          availability in the event of a single controller failure. Using
+          a VAXcluster and multiple controllers provides the greatest data
+          availability.
+
+          Shadow Set Membership
+
+          A shadow set can have one, two, or three members. The ability
+          to have a shadow set with only a single member allows a two-
+          member shadow set to continue operation after the failure of one
+          member. It also allows a second member to be added at any time
+          with no disruption of the application.
+
+          All members of a shadow set must be of the same disk type, for
+          example, all RA90s or RF31s. See the Supported Hardware Devices
+          section for a list of those disk devices supported in shadow
+          sets.
+
+          Transparency to the End User
+
+          The shadow set acts as a single disk. The user makes no effort
+          to have the data propagated to all of the members of a shadow
+          set. It is a task of the volume shadowing software to replicate
+          the data on all shadow set members.
+
+          VMS Volume Shadowing is invisible to application programs and
+          users. All commands and program language features that address
+          data on non-shadowed disks may be used to address data on shad-
+          owed disks with no changes.
+
+                                          3
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          Individual disks may be added to or removed from the shadow set
+          without affecting either the end user or any application.
+
+          Shadow Set Operation
+
+          A disk can be removed from the shadow set by operator command
+          or automatically. A failed disk is removed from the shadow set
+          automatically; no operator intervention is required.
+
+          A disk is only added to the shadow set on command. Within a
+          reasonable period of time, the newly added shadow set member is
+          made identical to the other member(s). Full read/write access to
+          the shadow set continues while the new member is being added.
+
+          System Disk Shadow Sets
+
+          System disk(s), like any other Files-11 ODS2 disks, can be
+          shadowed.
+
+          Restrictions
+
+          A quorum disk cannot be shadowed in a VAXcluster system.
+
+          Disks cannot have hardware write protection enabled. Hardware
+          write protection stops volume shadowing software from maintain-
+          ing identical volumes.
+
+          In a VAXcluster with more than one Star Coupler, Phase I shadow-
+          ing is limited by the following restrictions:
+
+          o  If a VAX is to directly access a Phase I shadow set on an
+             HSC, the VAX must have a direct CI path to that HSC (be
+             connected to the same Star Coupler).
+
+          o  Phase I shadow sets may be MSCP served over the CI. To do
+             this, the VAXs must be on the same Star Coupler as the HSC(s)
+             with the shadow set. These VAXs can then MSCP serve the
+             shadow set to other VAXs connected to other Star Couplers.
+             If a VAX is accessing a Phase I shadow set via another VAX's
+             MSCP Server, it cannot directly access any Phase I shadow
+             set on any local HSC. Essentially, a CPU must access all its
+
+                                          4
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+             Phase I shadow sets either locally or via a served path. It
+             cannot do both.
+
+          o  VAXs accessing Phase I shadow sets via an MSCP served path
+             (over the CI or Ethernet) cannot add or remove members of the
+             shadow set, they have data access only.
+
+          o  Phase II shadow sets are not subject to any of the above
+             restrictions involving multiple star couplers.
+
+          Phase I supports a maximum of 16 shadowed disks per HSC or HSC
+          pair (for dual pathed disks).
+
+          Phase I supports a maximum of 8 shadow sets per HSC or HSC pair
+          (for dual pathed disks).
+
+          For additional information about restrictions, refer to the VMS
+          Operating System Software Product Description (SPD 25.01.xx) and
+          the VAXcluster Software Product Description (SPD 29.78.xx).
+
+          HARDWARE REQUIREMENTS - PHASE I
+
+          Refer to the VMS Operating System Software Product Description
+          (SPD 25.01.xx) and VAXcluster Software Product Description
+          (SPD 29.78.xx) for information about hardware requirements and
+          supported CPUs.
+
+          At least one HSC series controller is required.
+
+          Shadow sets must be made of identical types of disks (for exam-
+          ple, all RA90s) connected to the same HSC. If the disks are dual
+          pathed between two HSCs, all members of the shadow set must be
+          dual pathed between the same pair of HSCs, and both HSCs must be
+          connected to the same Star Coupler.
+
+
+
+
+
+                                          5
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          HARDWARE REQUIREMENTS - PHASE II
+
+          VMS Volume Shadowing Phase II does not depend on specific hard-
+          ware in order to operate. All shadowing functions can be per-
+          formed on any supported VAX CPU by the VMS Operating System.
+          Shadowing capabilities are supported on all disks and con-
+          trollers listed in the Supported Hardware Devices section of
+          this SPD.
+
+          All members of a shadow set must be the same type of disk (for
+          example, all RA90s or all RF71s). Members of a shadow set may be
+          located on a single CPU or anywhere in a VAXcluster. There are
+          no requirements on the location of shadow set members beyond the
+          valid disk configurations defined in the VMS Operating System
+          Software Product Description (SPD 25.01.xx) and VAXcluster
+          Software Product Description (SPD 29.78.xx).
+
+          Supported Hardware Devices
+
+          VMS Volume Shadowing supports the following devices and con-
+          trollers for both Phase I and Phase II shadowing, unless other-
+          wise specified. These devices may be components of Storage Array
+          (SAxxx) products.
+
+                            Disk Controllers and Adaptors
+
+          All HSCs supported by the VMS Operating System
+
+          Controllers Supported by Phase II Shadowing Only:
+
+          o  KDA50
+
+          o  KDB50
+
+          o  KDM70
+
+          o  KFQSA
+
+          o  RQDX3
+
+          o  RQDX2
+
+                                          6
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          o  UDA50
+
+          Disks Supported by Volume Shadowing:
+
+          o  RA60
+
+          o  RA70
+
+          o  RA80
+
+          o  RA81
+
+          o  RA82
+
+          o  RA90
+
+          o  RA92
+
+          o  ESE20
+
+          o  RF30 (Phase II only)
+
+          o  RF31 (Phase II only)
+
+          o  RF71 (Phase II only)
+
+          o  RD51 when connected to RQDX controller
+             (Phase II only)
+
+          o  RD52 when connected to RQDX controller
+             (Phase II only)
+
+          o  RD53 when connected to RQDX controller
+             (Phase II only)
+
+          o  RD54 when connected to RQDX controller
+             (Phase II only)
+
+          CLUSTER ENVIRONMENT
+
+          PHASE I and PHASE II
+
+          VMS Volume Shadowing is fully supported when installed on any
+          valid and licensed VAXcluster configuration without restric-
+          tions. The  HARDWARE REQUIREMENTS section of this product's
+          Software Product Description and the VMS Operating System
+
+                                          7
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          Software Product Description (SPD 25.01.xx) list any special
+          hardware required by this product.
+
+          VAXcluster configurations are fully described in the VAXcluster
+          Software Product Description (SPD 29.78.xx).
+
+          If VMS V5.3 and V5.4 are both present in a VAXcluster, members
+          of the VAXcluster that are running VMS V5.3 can only access
+          Phase I shadow sets. Members of the VAXcluster running VMS V5.4
+          can access either Phase I or Phase II shadow sets.
+
+          SOFTWARE REQUIREMENTS
+
+          PHASE I and PHASE II
+
+          o  VMS Operating System V5.4
+
+          o  HSC Software V3.9
+
+          Refer to the VAXcluster Software Product Description (SPD
+          29.78.xx) for information about rolling upgrade restrictions.
+
+          VMS Tailoring
+
+          PHASE I and PHASE II
+
+          For VMS V5.x, the following VMS class is required for full
+          functionality of this layered product.
+
+          o  VMS Required Saveset
+
+          For more information about VMS classes and tailoring, refer
+          to the VMS Operating System Software Product Description (SPD
+          25.01.xx).
+
+          OPTIONAL SOFTWARE
+
+          None
+
+                                          8
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future ver-
+          sion of this product may be different from the requirements for
+          the current version.
+
+          ORDERING INFORMATION
+
+          Software Licenses: QL-AB2A*-**
+          Software Documentation: QA-AB2AA-GZ
+          Software Product Services: QT-AB2A*-**
+
+          *  Denotes variant fields. For additional information on avail-
+             able licenses, services and media, refer to the appropriate
+             price book.
+
+          The above information is valid at the time of release. Please
+          contact your local Digital office for the most up-to-date infor-
+          mation.
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of
+          Digital Equipment Corporation's Standard Terms and Conditions.
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          LICENSE MANAGEMENT FACILITY
+
+          VMS Volume Shadowing supports the VMS License Management Facil-
+          ity ( LMF).
+
+          License units for this product are allocated on a CPU-capacity
+          basis.
+
+          Every CPU in a VAXcluster that mounts a shadow set must have a
+          VMS Volume Shadowing License installed.
+
+
+                                          9
+
+ 
+
+
+          VMS Volume Shadowing, Version 5.4                   SPD 27.29.07
+
+
+
+          For more information about the License Management Facility,
+          refer to the VMS Operating System Software Product Description
+          (SPD 25.01.xx) or the License Management Utility Manual of the
+          VMS Operating System documentation set.
+
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available from Digital. For
+          more information, contact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with
+          the purchase of a license for the product as defined in the
+          Software Warranty Addendum of this SPD.
+
+          [TM] The DIGITAL Logo, HSC, RA, RD, VAX, VAXcluster and VMS are
+               trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         10

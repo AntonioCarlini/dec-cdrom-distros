@@ -1,0 +1,413 @@
+VAXcluster Software, Version 5.2                             SPD 29.78.02
+
+DESCRIPTION
+
+VAXcluster Software is a System Integrated Product (SIP). It provides a 
+highly integrated VMS computing environment distributed over multiple VAX 
+and/or MicroVAX CPUs. This environment is called a VAXcluster system.
+
+CPUs in a VAXcluster system can share processing, mass storage, and other 
+resources under a single VMS security and management domain. Within this 
+highly integrated environment, CPUs retain their independence because they 
+use local, memory-resident copies of the VMS Operating System. Thus, 
+clustered CPUs can boot and fail independently while benefiting from common 
+resources.
+
+Applications running on one or more CPUs in a VAXcluster system access 
+shared resources in a coordinated manner. VAXcluster Software components 
+synchronize access to shared resources, preventing two or more processes 
+from interfering with each other when updating data. This coordination 
+ensures data integrity during multiple, concurrent update transactions.
+
+Because resources are shared, VAXcluster systems offer higher availability 
+than standalone CPUs. When one CPU in a cluster fails, users can log on to 
+another CPU to create a new process and continue working. Applications can 
+be designed to survive the failure of one or more CPUs.
+
+All VAXcluster systems have the following software features in common:
+
+oo   Shared mass storage. The VMS file system allows all CPUs in a 
+    VAXcluster system to share mass storage, whether the storage devices 
+    are connected to a Hierarchical Storage Controller (HSC) subsystem or 
+    to a CPU.
+
+oo   Shared batch and print queues, accessible to any CPU in the VAXcluster 
+    system. The VMS job controller manages clusterwide batch and print 
+    queues, which can be accessed by any CPU. Jobs submitted to clusterwide 
+    queues are routed to the least loaded CPU, so that the batch load is 
+    evenly distributed.
+
+oo   Access capability to all disks in the cluster by all CPUs.
+
+oo   Process information and control available clusterwide to application 
+    programs and system utilities.
+
+oo   Automated configuration command procedure to assist in adding and 
+    removing CPUs and in modifying their configuration characteristics.
+
+oo   Dynamic Show Cluster Utility to display the status of cluster hardware 
+    components and cluster communication links.
+
+oo   Cluster-wide standard VMS system and security features.
+
+VAXcluster System Configurations
+
+VAXcluster Software operates in the following VAXcluster system 
+configurations:
+
+oo   CI-based VAXcluster systems, utilizing the Computer Interconnect (CI) 
+    for cluster communications.
+
+oo   Local area (Ethernet-based) VAXcluster systems, utilizing the Ethernet 
+    for cluster communications.
+
+oo   Mixed-interconnect VAXcluster systems, utilizing both the CI and the 
+    Ethernet for cluster communications.
+
+The optimal VAXcluster system for any computing environment is based on 
+tradeoffs of cost, functionality, and performance. Performance is 
+influenced by the following factors:
+
+oo   Applications in use
+
+oo   Number and model of CPUs
+
+oo   Interconnect (CI and/or Ethernet) and adapter types
+
+oo   Disk I/O capacity and access time
+
+oo   Number of disks being served
+
+oo   Ethernet utilization
+
+Configuration Rules
+
+In local area and mixed-interconnect VAXcluster systems, some CPUs perform 
+specialized functions. The following terms are used to refer to those CPUs:
+
+oo   Disk server - A disk server is a CPU that makes disks available to the 
+    VAXcluster system. Disks can be served by any CPU running MSCP server 
+    software.
+
+oo   Boot server - A boot server is a disk server that down-line loads the 
+    VMS operating system to satellites.
+
+oo   Satellite - A satellite is an Ethernet-connected CPU without its own 
+    local VMS system disk. A boot server down-line loads the VMS operating 
+    system to the satellite over the Ethernet. Only the CPUs listed in the 
+    MicroVAX and VAXstation categories in the HARDWARE REQUIREMENTS section 
+    may operate as satellites.
+
+The following general configuration rules apply to VAXcluster systems:
+
+oo   The maximum number of CPUs supported in a VAXcluster system is 96. In 
+    CI-based and mixed-interconnect VAXcluster systems, the maximum number 
+    of CI-connected CPUs is 16.
+
+oo   If the Ethernet is used for cluster communications in any VAXcluster 
+    system, all CPUs must be connected to the same extended Ethernet local 
+    area network.
+
+oo   A VAXcluster system may include only one Star Coupler, and all 
+    CI-connected CPUs and HSC subsystems must be connected to it.
+
+oo   A Computer Interconnect Star Coupler Expander (CISCE) may be added to a 
+    Star Coupler in a CI-based or mixed-interconnect VAXcluster system to 
+    increase the total combined number of CI-connected CPUs and HSC 
+    subsystems to 24. The maximum number of CI-connected VAX CPUs is 16. 
+    (See OPTIONAL HARDWARE section.)
+
+oo   All VAX 6xxx, 85xx, 86xx, 87xx, and 88xx series CPUs participating in a 
+    mixed-interconnect VAXcluster system must be connected to the CI.
+
+oo   DIGITAL Storage Architecture (DSA) disk drives may be dual pathed 
+    between pairs of HSC subsystems or between pairs of local controllers. 
+    TA-series tape drives may be dual pathed between pairs of HSC 
+    subsystems with HSC microcode revision level V3.9 or later. Such 
+    dual-pathing provides both enhanced data availability and failover 
+    capability. Failover occurs when one controller or cable malfunctions 
+    and breaks one path. When the path breaks, the device using that path 
+    automatically fails over to the other path. The failover process is 
+    transparent to applications.
+
+oo   In Dual-Host configurations,(1) the DIGITAL Small Storage Interconnect 
+    (DSSI) bus must be connected either between the SII interface on both 
+    CPUs or between KFQSA adapters on both CPUs. It may not be connected 
+    between a KFQSA adapter on one CPU and the SII interface on the other.
+
+The following rules apply specifically to local area (Ethernet-based) 
+VAXcluster systems:
+
+oo   CPUs use the Ethernet for cluster communications and may concurrently 
+    use it for other network protocols that conform to the applicable 
+    Ethernet standards, such as Ethernet V2.0, IEEE 802.2 and IEEE 802.3.
+
+oo   A low-latency data path providing approximately 10 megabits per second 
+    throughput must link all clustered CPUs.
+
+oo   Ethernet bridges may be used to localize VAXcluster system traffic 
+    should the overall network traffic be of concern.
+
+oo   An Ethernet-based VAXcluster system may include a maximum of one of the 
+    following CPUs:
+
+    	 -   VAX 6xxx
+
+    	 -   VAX 85xx
+
+    	 -   VAX 86xx
+
+    	 -   VAX 87xx
+
+    	 -   VAX 88xx
+
+Recommendations
+
+DIGITAL recommends VAXcluster system configurations based on its experience 
+with the VAXcluster Software Product. The customer should evaluate specific 
+application dependencies and performance requirements to determine an 
+appropriate configuration for the desired computing environment.  The 
+requirements and recommendations are applicable at the time of release, but 
+may change over time. When planning a VAXcluster system, consider the 
+following recommendations:
+
+oo   While VAXcluster systems may include any number of system disks, 
+    performance and disk space should be considered in determining their 
+    number. It is important to recognize that system management efforts 
+    increase in proportion to the number of system disks.
+
+oo   VAXcluster systems can provide enhanced availability by taking 
+    advantage of redundant components.
+
+oo   If possible, local area and mixed-interconnect VAXcluster systems 
+    should include multiple boot and disk servers to enhance availability. 
+    When a server fails in configurations that include multiple servers, 
+    satellite access to disks fails over to another server. Boot and disk 
+    servers should be the most powerful CPUs in the cluster and should use 
+    the highest-bandwidth Ethernet adapters available in the cluster.
+
+oo   In CI-based and mixed-interconnect VAXcluster systems, dual-pathing of 
+    DSA disks between HSC subsystems or between local storage adapters 
+    enhances availability. In local area VAXcluster systems, DSA disks can 
+    be dual pathed between local storage adapters, and RF-series disks can 
+    be dual pathed between CPUs in Dual-Host configurations.
+
+oo   In CI-based and mixed-interconnect VAXcluster systems that include HSC 
+    subsystems, the optional VAX Volume Shadowing System Integrated Product 
+    provides the following advantages:
+
+       -   Increased data availability
+
+       -   Enhanced read performance with multiple system and data disks
+
+       For more information on the VAX Volume Shadowing Product, refer to 
+       the VAX Volume Shadowing Software SPD 27.29.xx.
+
+oo   Dual-Host configurations utilizing RF-series disk drives offer failover 
+    and increased availability:
+
+       -  CPUs have concurrent access to any disk on the DSSI bus.
+
+       -  A single disk is accessed through two paths and can be served to 
+          all satellites by either CPU.
+
+       -  If either CPU fails, satellites can access their disks through 
+          the remaining one.
+
+HARDWARE REQUIREMENTS
+
+Supported CPUs:
+
+VAX:	VAX 6210, VAX 6220, VAX 6230, VAX 6240, VAX 6310, VAX 6320, VAX 
+        6330, VAX 6340, VAX 6350, VAX 6360, VAX 8200, VAX 8250, VAX 8300, 
+        VAX 8350, VAX 8500, VAX 8530, VAX 8550, VAX 8600, VAX 8650, VAX 
+        8700, VAX 8800, VAX 8810, VAX 8820, VAX 8830, VAX 8840
+
+	VAX-11/750, VAX-11/780, VAX-11/785
+
+MicroVAX:	MicroVAX II, MicroVAX 2000, MicroVAX 3300, MicroVAX 3400, 
+                MicroVAX 3500, MicroVAX 3600, MicroVAX 3800, MicroVAX 3900
+
+VAXstation:	VAXstation II, VAXstation 2000, VAXstation 3100, VAXstation 
+                3200, VAXstation 3500, VAXstation 3520, VAXstation 3540, 
+                VAXstation 8000
+
+VAXserver:	VAXserver 3300, VAXserver 3400, VAXserver 3500, VAXserver 
+                3600, VAXserver 3602, VAXserver 3800, VAXserver 3900, 
+                VAXserver 6210, VAXserver 6220, VAXserver 6310, VAXserver 
+                6320
+ 
+Unsupported CPUs:
+
+VAX:	VAX-11/725, VAX-11/730, VAX-11/782
+
+MicroVAX:      MicroVAX I
+
+VAXstation:	 VAXstation I
+
+Supported Preconfigured VAXcluster Systems:
+
+VAX:	      VAX 6312, VAX 6333, VAX 8842, VAX 8974, VAX 8978
+
+Supported CI Components:
+
+CI-based and mixed-interconnect VAXcluster systems require Computer 
+Interconnect cables, adapter ports in each CPU, and a Star Coupler device.  
+There is a maximum of one CI port adapter per VAX CPU.
+
+The following CI port adapters are supported:
+
+oo   CIBCI
+
+oo   CIBCA-A
+
+oo   CIBCA-B
+
+oo   CI750
+
+oo   CI780
+
+Supported Ethernet Adapters:
+
+oo   DEBNA
+
+oo   DELQA
+
+oo   DELUA
+
+oo   DEQNA (2)
+
+oo   DESQA
+
+oo   DESVA
+
+oo   DEUNA
+
+System Disk and Memory Requirements:
+
+oo   The smallest supported boot server system disks are the RD54, the RF30, 
+    and the RZ23.
+
+oo   All VAXcluster system CPUs must have a minimum of 4 megabytes of 
+    physical memory.
+
+
+OPTIONAL HARDWARE
+
+This section describes the Computer Interconnect Star Coupler Expander 
+(CISCE) and Hierarchical Storage Controller (HSC) Subsystems.
+
+CISCE
+
+A CISCE may be added to a Star Coupler in a CI-based or mixed-interconnect 
+VAXcluster System to increase the total combined number of CI-connected VAX 
+CPUs and HSC subsystems to 24. The maximum number of CI-connected VAX CPUs 
+is 16.
+
+HSC Subsystems
+
+CI-based and mixed-interconnect VAXcluster systems may include HSC40, 
+HSC50, and HSC70 intelligent mass storage controllers. These controllers 
+offload disk management functions from host CPUs and provide several 
+additional benefits:
+
+oo   Increased I/O throughput
+
+oo   Multiple-CPU access to storage
+
+oo   Support for VAX Volume Shadowing Software
+
+The following rules apply for HSC subsystems:
+
+oo   Each HSC40 supports a maximum of three channels for disks and/or tapes.
+
+oo   Each HSC50 supports a maximum of six channels for disks and/or tapes.
+
+oo   Each HSC70 supports a maximum of eight channels for disks and/or tapes.
+
+oo   Each disk channel supports a maximum of four disk drives, and each tape 
+    channel supports a maximum of four tape subsystems (with four tape 
+    drives each). The VMS operating system supports a maximum of 12 tape 
+    drives per HSC subsystem.
+
+SOFTWARE REQUIREMENTS
+
+The following are software requirements for VAXcluster systems:
+
+oo   VMS Operating System
+
+    Versions 5.1-n and 5.2 of the VMS Operating System may coexist in a 
+    VAXcluster. However, only one version of VMS may exist on a specific 
+    system disk.  During a rolling upgrade, a separate system disk is 
+    required for each version. However, DIGITAL recommends that all VAX 
+    systems in a VAXcluster run the latest release of VMS.
+
+oo   DECnet-VAX Software
+
+    All VAXcluster CPUs require either an End Node or Full Function 
+    DECnet-VAX license.
+
+    Refer to the DECnet-VAX Software Product Description document (SPD 
+    25.03.xx) for further information.
+
+OPTIONAL SOFTWARE
+
+For information on VAXcluster support for optional software products, refer 
+to the VAXcluster Support section of the Software Product Description (SPD) 
+documents for those products.
+
+Optional products that are particularly useful in VAXcluster systems 
+include VAX Volume Shadowing Software (SPD 27.29.xx), VAX Performance 
+Advisor (SPD 27.71.xx) and VAXcluster Console System (SPD 27.46.xx).
+
+ORDERING INFORMATION
+
+Software License: QL-VBRA*-AA
+Software Product Services: QT-VBRA*-**
+
+*   Denotes variant fields.  For additional information on available 
+    licenses, services and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+License Options
+
+A VAXcluster Software license is required for each CPU in a VAXcluster 
+system.
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions. For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+The VAXcluster Software product supports the VMS License Management 
+Facility.
+
+For more information about the License Management Facility, refer to the 
+VMS Operating System Software Product Description (SPD 25.01.xx) or the 
+License Management Facility Manual in the VMS Operating System 
+documentation set.
+
+For more information about DIGITAL's licensing terms and policies, contact 
+your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL. For more 
+information contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase 
+of a license for the product as defined in the Software Warranty Addendum 
+of this SPD.
+
+(1) Pairs of MicroVAX CPUs connected to the same DIGITAL Small Storage
+interconnect (DSSI) bus.
+For the MicroVAX 3500 and MicroVAx 3600, the console ROMS must be Revision
+Level V5.1 or later.
+
+June 1989
+AE-LS19C-TE
+

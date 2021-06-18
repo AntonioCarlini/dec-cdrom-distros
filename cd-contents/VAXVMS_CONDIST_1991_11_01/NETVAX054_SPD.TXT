@@ -1,0 +1,2032 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ________________________________________________________________
+
+          PRODUCT NAME:  DECnet-VAX, Version 5.4              SPD 25.03.28
+
+          DESCRIPTION
+
+          DECnet-VAX allows a suitably configured VMS system to partici-
+          pate as a routing or end node in DECnet computer networks. With
+          proper network planning, DECnet-VAX, Version 5.4 networks can
+          contain up to 1023 nodes per network area and up to 63 areas per
+          network. DECnet-VAX interfaces are standard components of VMS
+          for use on a local standalone system.
+
+          DECnet-VAX end node and full function products are licensed sep-
+          arately for VMS. The DECnet-VAX License Product Authorization
+          Key (PAK), when registered on a VMS system, enables communi-
+          cation between different networked systems that use the same
+          protocols.
+
+          DECnet-VAX is a Phase IV network product and is warranted only
+          for use with Phase III and Phase IV products supported by Digi-
+          tal Equipment Corporation.
+
+          DECnet-VAX offers task-to-task communications, file management,
+          downline system and task loading, network command terminals,
+          and network resource sharing capabilities using the Digital
+          Network Architecture (DNA) protocols. DECnet-VAX communicates
+          with adjacent and non-adjacent Phase III and Phase IV nodes
+          (adjacent nodes are connected by a single communications line).
+
+          VMS programs written in VAX MACRO and native mode high-level
+          languages can use DECnet-VAX capabilities, but programs execut-
+          ing in PDP-11 compatibility mode cannot use DECnet-VAX.
+
+
+                                       DIGITAL                   July 1990
+
+                                                               AE-NJ32C-TE
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          The network functions available to a DECnet-VAX user depend,
+          in part, on the configuration of the rest of the network. Each
+          DECnet product offers its own subset of Digital Network Archi-
+          tecture (DNA) functions and its own set of features to the user.
+          Networks consisting entirely of DECnet-VAX Phase IV nodes have
+          all the functions described in this Software Product Description
+          (SPD). Networks that combine different DECnet implementations
+          may limit the functions available to the DECnet-VAX user on
+          non-DECnet-VAX nodes since other DECnet implementations may
+          not implement certain functions. Similarly, a user of another
+          DECnet implementation may not be able to access all DECnet-VAX
+          functions.
+
+          The functions available to users on mixed networks can be de-
+          termined by a comparison of the SPDs for the appropriate DECnet
+          products.
+
+          Routing
+
+          A Full Function DECnet-VAX License PAK must be registered on a
+          node in order for that node to operate as a routing node. For a
+          node to operate as an end node, either the Full Function or the
+          End Node DECnet-VAX License PAK must be registered on that node.
+          Full Function DECnet-VAX software allows a node to be set up as
+          either a routing node or as an end node.
+
+          A DECnet-VAX node must function as a routing node whenever mul-
+          tiple circuits are used by that node. Routing nodes maintain
+          information on the paths to other nodes in the network. DECnet-
+          VAX end nodes provide all the capabilities of DECnet-VAX routing
+          nodes with the exception that end nodes cannot route messages
+          on behalf of other nodes in the network. Since end nodes do not
+          route messages, they do not need to maintain routing informa-
+          tion. Consequently, end nodes initiate less overhead message
+          traffic than routing nodes and, therefore, consume less process-
+          ing power than routing nodes.
+
+
+
+                                          2
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          Adaptive Routing is the mechanism which routing nodes use to
+          ``adapt'' or choose other physical paths if the physical path
+          the routing nodes are using fail or change line cost.
+
+          In addition to adaptive routing, which all DECnet Phase IV
+          implementations use, DECnet-VAX supports area routing. Area
+          routing is a method by which DECnet can send and route mes-
+          sages between the nodes in different areas of the network. Up
+          to 63 areas with up to 1023 nodes per area are allowed. The
+          network manager has the option of separating a network into
+          areas. Area-based DECnet networks are hierarchical networks
+          and some restrictions apply to communications from nodes in
+          one area to nodes in another area. However, it is not required
+          that all nodes in the network be DECnet-VAX or even Phase IV
+          nodes. Proper network planning is essential when using area
+          routing or configuring large networks. Valid topologies are the
+          responsibility of the customer.
+
+          Note: Only 32 routers are supported on an extended LAN.
+
+          A DECnet-VAX node has the ability to communicate with a remote
+          node over multiple circuits simultaneously, as long as those
+          circuits are all of equal cost AND provide the lowest cost path.
+          DECnet-VAX routing nodes will split transmission of a packet
+          load to a destination node via multiple paths if those paths are
+          of equal lowest cost. This capability is called Equal Cost Path
+          Splitting. This feature can increase throughput of data by using
+          all the best available paths. In order to take full advantage
+          of this capability, all intermediate routing nodes should also
+          support this feature and all destination nodes must support
+          out-of-order packet caching.
+
+          Standard DECnet-VAX Capabilities
+
+          Task-to-Task Communication
+
+
+
+
+                                          3
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          For most applications, task-to-task communication can be pro-
+          grammed in a transparent manner where the remote task is treated
+          as a full duplex, record-oriented device. Transparent operation
+          is provided via the following interfaces: System Service calls,
+          RMS calls (OPEN, GET, PUT, and CLOSE) and high-level language
+          I/O statements (which are mapped to RMS calls). A nontransparent
+          mode of task-to-task communication is offered by means of the
+          System Service interface that extends the capabilities provided
+          by the transparent mode. These capabilities include support for
+          interrupt messages and multiple inbound connect requests.
+
+          Using DECnet-VAX, a VMS program written in VAX MACRO or a native
+          mode high-level language can exchange messages with other user
+          programs. The two user programs can be on the same node, on
+          adjacent Phase III or Phase IV nodes, or on any two non-adjacent
+          Phase III or Phase IV nodes in the same network connected by
+          Phase III or Phase IV routing nodes. DECnet-VAX imposes no
+          special data formatting requirements on the user.
+
+          Network Resource Access
+
+          File Access - File access is supported to and from remote DECnet
+          systems transparent to VAX MACRO and native mode high-level
+          language programs using RMS. User programs can sequentially
+          read, create and delete files on a remote node.
+
+          Record Access - User programs can perform record level oper-
+          ations such as GET, PUT, UPDATE, DELETE, FIND, and REWIND to
+          access and modify files residing on a remote VMS node. In ad-
+          dition to sequential access to a file, several other access
+          methods are supported through RMS using DECnet-VAX. These meth-
+          ods include random access by relative record number, random
+          access by key value, random access by Record File Address (RFA),
+          and block I/O access by virtual block number.
+
+          Proxy Access
+
+          Remote users can have access up to 15 proxy accounts on a spe-
+          cific remote system. One proxy account should be designated as
+          the default proxy account on the remote system.
+
+                                          4
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          Command Language File Management
+
+          Most VMS Digital Command Language (DCL) commands can be used
+          to perform network file operations. These commands include:
+          ANALYZE, APPEND, BACKUP, CLOSE, CONVERT, COPY, CREATE, DELETE,
+          DIFFERENCES, DIRECTORY, DUMP, OPEN, PRINT, PURGE, READ, SEARCH,
+          SUBMIT, TYPE, and WRITE. The operation of these commands is
+          transparent except for commands which invoke processing on a
+          specific system (i.e., SUBMIT/REMOTE and PRINT/REMOTE). Only a
+          node name added to a file specification is required to invoke
+          the network capabilities via one of these commands.
+
+          Using the COPY command, a user can transfer sequential, rel-
+          ative, and indexed-sequential (ISAM) files between DECnet
+          nodes which support compatible file structures and record for-
+          mats. Sequential or relative files with fixed length, variable
+          length, or variable length with fixed control field records
+          can be transferred between two VMS systems. Similarly, multi-
+          keyed indexed files with variable or fixed length records are
+          supported.
+
+          The SUBMIT command allows command files residing on a remote
+          node to be submitted for execution at the remote node. The com-
+          mand file must be in the format expected by the node responsible
+          for execution. Conversely, DECnet-VAX allows VMS command files
+          to be received from other systems and executed.
+
+          A new DCL command, EXCHANGE/NETWORK which allows for the trans-
+          fer of files to or from heterogeneous systems is now available.
+          This new command gives users the option to transfer file types
+          between MS-DOS [R] or ULTRIX systems and VMS systems regard-
+          less of record semantics. Unlike the COPY command which pre-
+          serves file and record organization during a file transfer, this
+          command enables the user to modify file and record attributes
+          during file transfer.
+
+          Downline System Loading
+
+          ___________________
+
+        [R] MS-DOS is registered trademark of Microsoft Corporation.
+
+                                          5
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          DECnet-VAX allows for the loading of an unattended system using
+          the services provided by the Maintenance Operations Module
+          (MOM). MOM provides a set of maintenance operations over various
+          types of circuits by using the Maintenance Operations Protocol
+          (MOP). A loadable system is a system which has a load device
+          enabled for MOP service functions and for which a properly
+          formatted load file is supplied. Downline loading involves
+          transferring a copy of the properly formatted load file image
+          of a remote node's operating system from a VMS node to the
+          unattended target node. For example, DECnet-VAX permits the
+          user to load an RSX-11S Operating System file image from the VMS
+          node downline to the target node. Load requests can come from
+          the local DECnet-VAX operator or from the target node. Downline
+          Loading is supported for Digital server products. However,
+          this facility is not supported over asynchronous DECnet-VAX
+          connections.
+
+          Downline Task Loading
+
+          Initial task images for loadable systems can be stored on VMS
+          file system devices and loaded into remote nodes. Programs al-
+          ready executing on loadable RSX-11S systems can be checkpointed
+          to the host VMS file system and later restored to main memory in
+          the RSX-11S node running DECnet-RSX. Overlays for RSX-11S tasks
+          can also be stored on VMS file system devices. These features
+          simplify the operation of network systems that do not have mass
+          storage devices.
+
+          This facility is not supported over asynchronous DECnet-VAX
+          connections.
+
+          Upline Dumping
+
+          Memory images of adjacent RSX-11S nodes connected by DECnet can
+          be written or dumped into a file on a VMS system. This facility
+          helps a programmer understand what can cause the RSX-11S system
+          to crash. This facility is also supported for Digital server
+          products.
+
+                                          6
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          This facility is not supported over asynchronous DECnet-VAX
+          connections.
+
+          Network Command Terminal
+
+          The DCL command, SET HOST, allows a terminal user on one DECnet-
+          VAX node to establish a logical connection to another DECnet-VAX
+          node or other types of DECnet nodes that utilize the Hetero-
+          geneous Command Terminal Protocol (consult the appropriate
+          SPDs). This connection makes the terminal appear physically
+          connected to the remote system and the operator can use all the
+          standard system and network utilities supported by that remote
+          node. This capability is particularly useful for doing remote
+          program development, and allows the terminal users on smaller
+          application-oriented systems to utilize the resources of larger
+          development-oriented systems.
+
+          VMS MAIL Utility
+
+          VMS MAIL allows transmission of text messages between users of a
+          stand-alone VAX system. The DECnet-VAX software allows users to
+          send and receive VMS MAIL to or from users of other VMS systems
+          that operate within the same DECnet network.
+
+          VMS PHONE Utility
+
+          The VMS PHONE Utility allows users to send and receive data
+          interactively from one user's terminal to another user's ter-
+          minal. DECnet-VAX increases the scope of PHONE to allow active
+          users on different VMS systems in the same network to exchange
+          information.
+
+          VAXcluster Alias
+
+          DECnet-VAX supports the ability to access some or all nodes in a
+          VAXcluster using a separate alias node address, while retaining
+          the ability to address each node in the cluster individually.
+          Not all network objects may be accessed using this mechanism.
+          More than 64 nodes may operate within a cluster, but the maximum
+          number of nodes allowed to participate in the VAXcluster Alias
+
+                                          7
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          are 64. Refer to the VAXcluster Software Product Description
+          (SPD 29.78.xx) for relevant restrictions.
+
+          At least one node in the VAXcluster must be configured as a
+          router in order to use this feature.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          8
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          Network Management
+
+          The Network Control Program (NCP) performs three primary func-
+          tions: displaying statistical and error information, controlling
+          network components, and testing network operation. These func-
+          tions can be performed locally or executed at remote Phase III
+          or Phase IV nodes that support these functions. The NCP facility
+          allows for planning, building, tuning, and controlling DECnet
+          networks. NCP can be used to create and manage networks in-
+          cluding local node operation, remote node operation, circuits,
+          lines, and objects.
+
+          An operator can display the status of DECnet activity at any
+          Phase III or Phase IV node in the network. The user can choose
+          to display statistics related to the node itself or the communi-
+          cation lines attached to that node, including traffic and error
+          data. The local operator can also perform many network control
+          functions such as starting and stopping lines, activating the
+          local node, and downline loading systems.
+
+          DECnet-VAX provides network event logging to a terminal device
+          or disk file. Any logged event can be used to monitor, diagnose,
+          and tune a network. The NCP utility can be used to enable and
+          disable the event logging facility.
+
+          NCP can also be used to test components of the network. NCP
+          enables transmission and reception of test messages over indi-
+          vidual lines either between nodes or through other controller
+          loopback arrangements. The messages can then be compared for
+          possible errors. NCP allows performance of a logical series of
+          tests that will aid in isolating network problems.
+
+          Integrated Interfaces
+
+          DECnet-VAX interfaces are standard parts of the VMS Operating
+          System for use on local, standalone systems. Users can develop
+          programs and procedures based upon these interfaces for such
+          functions as file access and task-to-task communication on indi-
+          vidual systems. Since the DECnet-VAX interfaces stay the same,
+
+                                          9
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          the programs and procedures developed on an individual system
+          can be used in a network environment without being modified.
+
+          Communications Options
+
+          DECnet-VAX uses synchronous, asynchronous, Ethernet, and CI
+          communications controllers to interface with other network
+          nodes. Synchronous controllers use DDCMP, either when directly
+          connected or when connected via modems, to provide full or half
+          duplex communications over point-to-point lines, or full duplex
+          over multipoint lines. Asynchronous controllers use DDCMP,
+          either when directly connected or when connected via modems,
+          to provide only full duplex communications over point-to-point
+          lines.
+
+          Note: Error Correcting and data suppression modems are not
+          supported. Refer to HARDWARE REQUIREMENT section for a short
+          description of controllers.
+
+          Asynchronous lines are supported only to other systems running
+          DECnet-VAX, DECnet-RSX, PRO/DECnet, DECnet-Rainbow, DECnet-
+          VAXmate and DECnet-DOS.
+
+          DDCMP operation is not supported in cases where an asynchronous
+          physical communication line is emulated by lower level protocols
+          or communication subsystems. Examples of this include X.29
+          virtual terminals, asynchronous connections as emulated by
+          terminal servers, and connections via data switches.
+
+          The Ethernet controllers allow DECnet-VAX to use Ethernet as its
+          datalink transmission medium.
+
+          The CIBCI, CIBCA, CI780 and CI750 employ unique protocols to
+          provide services similar to those of DDCMP.
+
+          VAX Packetnet System Interface (VAX P.S.I.) is the software
+          product that provides an interface to X.25 Packet Switching
+          Data Networks (PSDNs). When DECnet-VAX is used in conjunction
+          with VAX P.S.I., DECnet-VAX can utilize a virtual circuit (SVC
+
+                                         10
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          or PVC) of the PSDN as though it were a standard datalink to
+          transmit messages between DECnet nodes.
+
+          Note: Up to 128 X.25 virtual circuits are currently supported
+          for Data Link Mapping (DLM), depending on CPU loading and ca-
+          pability. Refer to the VAX P.S.I. Software Product Description
+          (SPD 25.40.xx) for more detailed information.
+
+          A VMS system can be used as either a control or a tributary node
+          in a multipoint environment. DECnet-VAX supports a maximum of
+          32 tributaries controlled by one or more DMP11 or DMV11 control
+          stations on a single node; a maximum of 8 tributaries can be
+          controlled on one DMV11 multipoint line: a maximum of 16 tribu-
+          taries can be controlled on one DMP11 multipoint line. The DMF32
+          may also be used with any UNIBUS VAX system as a tributary node.
+          The DMP11 can be used in point-to-point communications configu-
+          rations in DMC11 compatibility mode. The DMR11 is program com-
+          patible with the DMC11 and is supported in DMC11 compatibility
+          mode as well DMR11 mode.
+
+          The maximum throughput for a specific tributary node is equal to
+          the maximum aggregate data rate for the control node divided by
+          the sum of the number of active tributaries plus one.
+
+          When configuring your system with specific devices, please refer
+          to the DECnet-VAX Load Unit Tables (included in this SPD) for
+          calculating configuration loads and for support information.
+
+
+
+
+
+
+
+
+
+
+
+
+                                         11
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          DECnet-VAX Operation
+
+          DECnet-VAX is implemented under VMS as an Ancillary Control
+          Process (ACP) and a network device driver with Digital-supplied
+          executive-level components and user-level programs.
+
+          The normal VMS protection has been incorporated in the operation
+          of DECnet-VAX. For example, incoming connects including file
+          access and file transfer requests are protected by the normal
+          VMS login and file protection mechanisms. Outgoing connects
+          including file access and file transfer requests can include
+          user password information that is implicitly specified via NCP,
+          or explicitly specified by the user for verification on the
+          remote node.
+
+          DECnet-VAX Configuration and Performance
+
+          The process of configuring a DECnet-VAX node is based primarily
+          on trade-offs of cost, performance, and functionality while sat-
+          isfying the user's application requirements. It can be expected
+          that network applications will range from low-speed, low-cost
+          situations to those of relatively high performance and function-
+          ality. The performance of a given DECnet-VAX node is a function
+          not only of the expected network traffic and resultant process-
+          ing, but also of the amount of concurrent processing specific
+          to that node. Thus, node performance depends on many factors
+          including:
+
+          o  CPU type
+
+          o  Number and type of devices attached to the particular CPU
+
+          o  Number of device interrupts per unit time
+
+          o  Communication line(s) characteristics
+
+          o  Number and size of buffers
+
+          o  Message size and frequency of transmission
+
+          o  Applications in use
+
+                                         12
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          o  Size and frequency of route-through traffic (routing nodes
+             only)
+
+          It is important to note that the rate at which user data can
+          be transmitted (throughput) over a communications line can
+          sometimes approach, but will never exceed, the actual line
+          speed. The reason is that the actual throughput is a function
+          of many factors including the line quality, protocol overhead,
+          topology and network application(s), as well as the factors
+          cited in this section.
+
+          Refer to the DECnet-VAX Load Unit Tables for maximum system
+          configuration information.
+
+          HARDWARE REQUIREMENTS
+
+          Notes: 1.   If a device is not listed, that device is not sup-
+                      ported by DECnet-VAX.
+
+                 2.   An * by a device description indicates that the
+                      particular device is no longer offered as an option.
+
+          Refer to the VMS Operating System Software Product Description
+          (SPD 25.01.xx) for hardware requirements and processor support.
+          Reference can be made to the configuration charts listed in
+          the VMS Operating System SPD. For general device or controller
+          descriptions, please refer to the Networks and Communications
+          Buyers Guide.
+
+          One of the following communication devices is required:
+
+          DEUNA-AA       Ethernet controller interface.
+
+          DELUA          Ethernet controller interface, minimum revision
+                         level F1 required.
+
+
+
+
+                                         13
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DEBNA          Ethernet 802.3-to-VAXBI Port Controller interface
+                         replacement for DEBNT. Concurrent use with DEBNT
+                         is not supported. The TK50/Ethernet port option
+                         is supported for concurrent TK50/Ethernet opera-
+                         tion on packaged 8000 class workstation systems
+                         only.
+
+          DEBNI          Ethernet 802.3-to-VAXBI Port Controller inter-
+                         face. Similar to DEBNA in configuration, with
+                         increased performance, TK70 tape option disabled.
+
+          DEMNA          Ethernet/802.3-to-XMI high-performance Port Con-
+                         troller interface. Smaller footprint than DEBNI
+                         in configuration, with increased performance over
+                         the DEBNI.
+
+          DMC11-AR,      Remote synchronous point-to-point interface, sup-
+          -DA*           ports V.24/EIA RS-232-C, maximum speed 19.2 kilo-
+                         bits/second, full or half duplex. Not supported
+                         on DWBUA Adaptors.
+
+          DMC11-AL,      High speed local point-to-point synchronous
+          -MD*           interface, speed at 56 kilobits/second via coax,
+                         full or half duplex. Not supported on DWBUA
+                         Adaptors.
+
+          DMC11-AL,      High speed local point-to-point synchronous
+          -MA*           interface, speed at 1000 kilobits/second via
+                         coax, full or half duplex. Not supported on DWBUA
+                         Adaptors.
+
+          DMC11-AR,      Remote CCITT V.35 point-to-point synchronous
+          -FA*           interface, speed up to 56 kilobits/second via
+                         modems (up to 250 kilobits/second via coax), full
+                         or half duplex Not supported on DWBUA Adaptors.
+
+
+
+                                         14
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DMR11-AA       Remote point-to-point synchronous interface,
+                         supports RS-423-A up 56 to kilobits/second or
+                         RS-232-C up to 19.2 kilobits/second, half or full
+                         duplex.
+
+          DMR11-AC       High speed local synchronous interface with
+                         integral modem for local connection, point-to-
+                         point, half or full duplex.
+
+          DMR11-AB       Remote CCITT V.35 synchronous interface, speed
+                         up to 56 kilobits/second via modems (up to 1000
+                         kilobits/second via local coax), point-to-point,
+                         half or full duplex.
+
+          DMR11-AE       EIA RS-422 synchronous interface, speed up to
+                         1,000 kilobits/second (modem switch selectable
+                         speeds: 56, 250, 500, 1000 kilobits/second),
+                         point-to-point, half or full duplex.
+
+          DMP11-AA*      EIA RS-232-C up to 19.2 kilobits/second or RS-
+                         423-A (up to 56 kilobits/second) synchronous
+                         communication interface; can be used as multi-
+                         point control or tributary station; half or full
+                         duplex; configuration limitations based on number
+                         of tributaries.
+
+          DMP11-AB*      CCITT V.35 synchronous communication interface.
+                         Maximum data rate 56 kilobits/second; can be used
+                         as multipoint control or tributary station; half
+                         or full duplex; configuration limitations based
+                         on number of tributaries.
+
+
+
+
+
+
+
+                                         15
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DMP11-AC*      Local synchronous communication interface with
+                         integral modem (switch selectable speeds: 56,
+                         250, 500 or 1000 kilobits/second; Maximum data
+                         rate 500 kilobits/second FDX or 1000 kilo-
+                         bits/second HDX; can be used as multipoint
+                         control or tributary station; configuration
+                         limitations based on number of tributaries.)
+
+          DMP11-AE*      RS-422-A remote synchronous communication in-
+                         terface. The maximum data rate is 1000 kilo-
+                         bits/second; can be used as multipoint control
+                         or tributary station; half or full duplex;
+                         configuration limitations based on number of
+                         tributaries.
+
+          DMF32-LP       Synchronous point-to-point or multipoint (tribu-
+                         tary only) line support for RS-232-C or RS-423-A
+                         interface up to 19.2 kilobits/second, half or
+                         full duplex. Asynchronous point-to-point only
+                         line support for RS-232-C or RS-423-A interface
+                         up to 9.6 kilobits/second, half or full duplex.
+                         Supported on DWBUA adaptors.
+
+          DSB32          Synchronous, 2-line, half or full duplex point-
+                         to-point VAXBI communication interface supporting
+                         DDCMP (1 or 2 lines up to 64 kilobits/second)
+                         with full modem control.
+
+
+
+
+
+
+
+
+
+
+
+                                         16
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DMB32          VAX BI controller interface: T1012/H3033
+                         half or full duplex synchronous point-to-
+                         point only ports are compliant with RS232-C,
+                         RS422A/RS449, V.11, X.27, and V.35 and are com-
+                         patible with RS423A/RS440, V.28/V.24, V.10 and
+                         X.26. T1012/H3033 asynchronous point-to-point
+                         only ports are compliant with EIA RS232-C and
+                         compatible with V.28/V.24. T1012 also compliant
+                         with RS423-A, V.10, and X.26, but H3033 distri-
+                         bution panel is not because of pin limitation on
+                         the 25 pin D-type connector.
+
+          DHB32          Asynchronous 16 line terminal multiplexer support
+                         for EIA RS-232-C or RS-423-A for BI based system
+                         terminal connections. A maximum line speed of up
+                         to 19.2 kilobits/second with limited or no modem
+                         control for speeds above 9.6 kilobits/second and
+                         for the RS-423-A interface is supported.
+
+          DHU11          Asynchronous 16 line RS-232-C controller inter-
+                         face, speed up to 9.6 kilobits/second, full modem
+                         control.
+
+          DZ11           Asynchronous 16 line support for EIA RS-232-C
+                         or RS-423-A interface up to 9.6 kilobits/second,
+                         partial modem control.
+
+          DZ32           Asynchronous 8 line support for EIA RS-232-C or
+                         RS-423-A interface up to 9.6 kilobits/second,
+                         partial modem control.
+
+          DMZ32          Asynchronous 24 line support for EIA RS-232-C
+                         or RS-423-A interface up to 9.6 kilobits/second.
+                         Modem support dependent on configuration.
+
+
+
+
+                                         17
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          CI750-AA,      Interconnect for VAX-11/750 systems within a
+          -AB            maximum distance of 90 meters. The effective
+                         maximum data rate of the CI750 using DECnet-VAX
+                         is limited to 1000 kilobits/second between any
+                         pair of nodes.
+
+          CI780-AA,      Interconnect for VAX-11/750, VAX-11/780, VAX-
+          -AB            11/782, VAX-11/785, VAX 8600, and VAX 8650 sys-
+                         tems within a maximum distance of 90 meters. The
+                         effective maximum data rate of the CI780 using
+                         DECnet-VAX is limited to 1000 kilobits/second
+                         between any pair of nodes.
+
+          CIBCA          CI to BI interface Adaptor. The CIBCA-A ships
+                         on 82x0, 83x0, 85x0, 8700, 88x0 and 62x0 and is
+                         usable on those systems plus the 63x0 series. The
+                         CIBCA-B ships on the 8700, 88x0, 62x0 and 63x0,
+                         and is usable on those systems plus 82x0, 83x0.
+
+          CIBCA          CI to BI interface Adaptor. The CIBCI ships on
+                         82x0, 83x0, 85x0, 87x0 and 8800, and is usable on
+                         all the above plus the 8810 and 8820N.
+
+          MicroVAX and VAXstation system configurations ** require one of
+          the following communication devices:
+
+          Note:
+
+          ** For VAXstation 2000 systems, only one on-board asynchronous
+             data/modem RS-232C serial line is supported up to 9600 baud.
+
+             For MicroVAX 2000 systems, up to 4 asynchronous data/modem
+             RS-232C serial lines are supported up to 9600 baud. The
+             asynchronous ports on the MicroVAX 3100 and VAXstation 3100
+             are supported up to 9.6 kilobits/second with full modem
+             control.
+
+
+                                         18
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DEQNA*      Ethernet Controller Interface - Minimum revision
+                      level required is K3.
+
+          DELQA       ETHERNET Controller Interface - replacement for DE-
+                      QNA. Minimum revision level required is C3. DELQA
+                      high performance ROM option (DEQTA) is also sup-
+                      ported.
+
+          DESVA       Ethernet controller interface for VAXstation 2000
+                      and MicroVAX 2000 Systems.
+
+          DESQA       Ethernet Controller Interface for MicroVAX
+                      3300/3400/3500/ 3600/3800/3900 series, VAXserver
+                      3300/3400/3500/3600 series, and VAXstation
+                      3300/3400/3500 series systems. High performance
+                      option (similar to DELQA ROM option) is supported.
+
+          DSV11       Synchronous, 2-line, half or full duplex point-to-
+                      point communication interface supporting DDCMP (1 or
+                      2 lines up to 64 kilobits/second, or 1 line up to
+                      256 kilobits/second).
+
+          DIV32       Synchronous, full duplex point-to-point ISDN Basic
+                      Rate Access (2B+D) communication interface support-
+                      ing DDCMP (1 or 2 'lines' ie. ISDN B-Chanels at 64
+                      kilobits/second multiplexed over the ISDN BRA inter-
+                      face). The 16 kilobits/second ISDN D-channel also
+                      supported by the DIV32 is reserved for Digital use.
+
+          DSF32       DEC WANcontrollor 620 - Two line synchronous com-
+                      mumications controller designed specifically for
+                      the VAXft 3000 processors supporting DDCMP. DDCMP
+                      is supported at speeds up to 64 kilobits/second per
+                      line for a two-line operation.
+
+
+
+
+                                         19
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DMV11-AA    Point-to-point or multipoint (control or tributary
+                      station) synchronous line support for EIA RS-232-C
+                      up to 19.2 kilobits/second or RS-423-A (up to 56
+                      kilobits/second) synchronous communication inter-
+                      face; half or full duplex; multipoint configuration
+                      limitations based on number of tributaries.
+
+          DMV11-AF    Point-to-point or Multipoint (control or tributary
+                      station) synchronous line support for RS-423-A/449
+                      interface up to 56 kilobits/second; half or full
+                      duplex; multipoint configuration limitations based
+                      on number of tributaries.
+
+          DMV11-AC    Point-to-point or Multipoint (control or tributary
+                      station) synchronous line support used with integral
+                      modem for local connection up to 56 kilobits/second,
+                      half or full duplex; multipoint configuration limi-
+                      tations based on number of tributaries.
+
+          DMV11-AB    Remote point-to-point or multipoint (control or
+                      tributary station) CCITT V.35 synchronous line
+                      support up to 56 kilobits/second; half or full
+                      duplex; multipoint configuration limitations based
+                      on number of tributaries.
+
+          DSH32       DEC TERMINAL/WAN CONTROLLER 581 - Combines DST32 and
+                      DHT32 functionality. Asynchronous 8 line EIA RS-232-
+                      C or RS-422/3-A interface up to 9.6 kilobits/second,
+                      no modem control; and 1 line synch non-DMA DDCMP
+                      support up to 9.6 kilobits per second, DEC and Bell
+                      200 modem compatible for bit- and byte-oriented
+                      protocols. Expansion adaptor required for MicroVAX
+                      2000 systems. Concurrent use with DHT32 or DST32 is
+                      not supported.
+
+
+
+
+                                         20
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          DHV11       Asynchronous 8 line support for EIA RS-232-C or
+                      RS-423-A interface up to 9.6 kilobits/second, full
+                      modem control.
+
+          DHQ11       Asynchronous 8 line support for EIA RS-232-C or RS-
+                      423-A interface up to 19.2 kilobits/second, with
+                      limited or no modem control for speeds above 9.6
+                      kilobits/second and for the RS-423-A interface.
+
+          DHT32       Asynchronous 8 line support for EIA RS-423-A inter-
+                      face up to 9.6 kilobits/second, no modem control.
+                      Concurrent use with DST32 is not supported.
+
+          DST32       Synchronous single line support for DDCMP up to
+                      9.6 kilobits/second, full duplex for MicroVAX 2000
+                      systems. Concurrent use with DHT32 is not supported.
+                      The DST32 is not supported on the VAXstation 2000.
+
+          CXY08       Asynchronous 8 line support for EIA RS-232-C inter-
+                      face up to 19.2 kilobits/second, full modem control,
+                      for VAX 3000 series systems.
+
+          DZQ11       Asynchronous 4 line support for EIA RS-232-C or RS-
+                      423-A interface up to 9.6 kilobits/second, partial
+                      modem control.
+
+          DZV11       Asynchronous 4 line support for EIA RS-232-C or RS-
+                      423-A interface up to 9.6 kilobits/second, partial
+                      modem control.
+
+          Note: The following RS-422/423 signals are not supported by the
+          DECnet-VAX or VMS software:
+
+             NS - New Signal
+             SR - Signaling Rate Selector
+             LL - Local Loopback
+             RL - Remote Loopback
+
+                                         21
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+             SS - Select Standby
+
+          CLUSTER ENVIRONMENT
+
+          DECnet-VAX is fully supported when installed on any valid and
+          licensed VAXcluster* configuration without restrictions. The
+          HARDWARE REQUIREMENTS sections of the DECnet-VAX Software Prod-
+          uct Description (SPD 25.03.xx) and the VMS Operating System
+          Software Product Description (SPD 25.01.xx), detail any special
+          hardware required or not supported by this product.
+
+          VAXcluster software provides a distributed computing envi-
+          ronment across a highly integrated set of VAX and/or MicroVAX
+          systems that operate as a single environment. VAXcluster mem-
+          bers can share many resources such as, disk and tape storage,
+          CPU resources, and system management operations. Within this
+          highly integrated environment, systems retain their independence
+          because they use local, memory-resident copies of VMS. Thus,
+          members can boot and fail independently while benefiting from
+          common resources.
+
+          *  VAXcluster configurations are fully described in the VAXclus-
+             ter Software Product Description (29.78.xx) and include CI,
+             Ethernet and Mixed Interconnect configurations.
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future ver-
+          sion of this product may be different from the requirements for
+          the current version.
+
+          OPTIONAL HARDWARE
+
+          Communication devices may be added from the device class list up
+          to, but not to exceed, the maximum defined by the DECnet-VAX SPD
+          Load Unit Tables or the limits imposed by a bounded CPU system
+          as mentioned in the VMS Operating System SPD (25.01.xx).
+
+
+                                         22
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          SOFTWARE REQUIREMENTS
+
+          o  VMS Operating System, V5.4
+             Only the Base VMS Kit component is required.
+
+          OPTIONAL SOFTWARE
+
+          o  VAX Packetnet System Interface (P.S.I) V4.2
+
+          o  VAX Packetnet System Interface Access V4.2
+
+          o  VAX Wide Area Network Device Drivers V1.1 Kit is required for
+             any synchronous device operation.
+
+          The VMS/ULTRIX Connection Software (UCX) can be installed to
+          provide a TCP/IP environment on a VMS system. UCX includes
+          capabilities such as file transfer (FTP), TELNET (X.25), Virtual
+          Terminal support, and more. By purchasing and installing UCX,
+          the TCP transport can be used without a PAK under a DECwindows
+          environment. To use the FTP and TELNET applications, the UCX
+          PAK must be installed in the License Management Facility (LMF).
+          Refer to the VMS/ULTRIX Connection Software Product Description
+          (SPD 25.A4.xx) for more information.
+
+          VMS Tailoring
+
+          For VMS V5.x systems, the following VMS class is required for
+          full functionality of this system integrated product:
+
+          o  VMS Required Saveset
+
+          For more information on VMS classes and tailoring, refer to
+          the VMS Operating System Software Product Description (SPD
+          25.01.xx).
+
+
+
+
+
+                                         23
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          INSTALLATION
+
+          Only experienced customers should attempt installation of this
+          product. Digital recommends that all other customers purchase
+          Digital's Installation Services. These services provide for
+          installation of the software product by an experienced Digital
+          Software Specialist.
+
+          Courtesy Installation Service
+
+          This software product will be installed by Digital at no ad-
+          ditional charge if you purchase it concurrent with a Startup
+          Service Package that includes installation service. Both the
+          host operating system and this product must be installed concur-
+          rently.
+
+          Customer Responsibilities
+
+          Before Digital can install the software, the customer must:
+
+          o  Ensure that system meets the minimum hardware and software
+             requirements (as specified in the relevant SPDs).
+
+          o  Prior to installing Digital hardware or software, obtain,
+             install, and demonstrate as operational any modems and other
+             necessary customer equipment or facilities to which Digital's
+             communication hardware or software will connect.
+
+          o  Designate one adjacent node to verify installation/connectivity.
+
+          o  Make available, for a reasonable period of time, as mutually
+             agreed upon by Digital and the customer, all hardware commu-
+             nication facilities and terminals that are to be used during
+             installation.
+
+          Delays caused by any failure to meet these responsibilities will
+          be charged at the prevailing rate for time and materials.
+
+          Installation for DECnet-VAX will consist of the following:
+
+          o  Verification that all components of DECnet-VAX have been
+             received.
+
+                                         24
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          o  Verification that the necessary versions of the VMS software
+             and documentation are available.
+
+          o  Verification of the appropriate SYSGEN parameters.
+
+             Note: Should a software specialist be required to modify the
+             previously installed operating system parameters, a time and
+             materials charge will apply.
+
+          o  Create any necessary DECnet-VAX accounts and directories.
+
+          o  Enable software via License Product Authorization Key (PAK)
+             registration.
+
+          o  Define and create a local node DECnet database.
+
+          o  Modify the system's startup command procedure to include
+             start up of the DECnet-VAX network.
+
+          o  Verify the proper installation of DECnet-VAX by running a
+             series of tests to show connectivity to a designated node.
+
+          Connectivity to all other nodes within the network is the re-
+          sponsibility of the customer. Digital recommends the use of the
+          NCP facility to help verify connectivity.
+
+          ORDERING INFORMATION
+
+          DECnet-VAX software is shipped on the VMS Kit for all processors
+          including MicroVAX-based processors.
+
+          This software product supports the VMS License Management Facil-
+          ity and will be enabled by a License Product Authorization Key
+          (PAK) which is included as part of the purchase of a Single-Use
+          License. License units for this product are allocated on a per
+          CPU basis and not dependent on CPU Capacity or User/Activity.
+
+          For more information on the License Management Facility, refer
+          to the VMS Operating System Software Product Description (SPD
+          25.01.xx) or the License Management Utility Manual included in
+          the VMS Operating System documentation set.
+
+                                         25
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          DECnet-VAX licenses also include the right to use VMS Services
+          for PCs. VMS Services for PCs has separate documentation, me-
+          dia kits, and service products. Refer to the VMS Services for
+          PCs Software Product Description (SPD 30.50.xx) for further
+          information.
+
+          You will need a separate license PAK for each CPU on which
+          you will be using the software product (except as otherwise
+          specified by Digital). Then Materials and Service Options are
+          selected to utilize the product more effectively. THE LICENSE
+          OPTIONS ARE DESCRIBED BELOW. IF YOU ARE NOT FAMILIAR WITH THE
+          SERVICE OPTIONS, YOU MAY OBTAIN THE APPROPRIATE SOFTWARE PRODUCT
+          SERVICE DESCRIPTION(S) FROM YOUR LOCAL DIGITAL OFFICE.
+
+          Base License Option Numbers for DECnet-VAX are:
+
+          End Node      QL-D04A*-AA
+
+          Full          QL-D05A*-AA
+          Function
+
+          Migration     QL-D09A*-AA
+          Option
+
+          *  Denotes processor variant. Migration indicates an upgrade
+             from End Node (EN) to Full Function (FF). Contact your local
+             Digital Sales Office for Rental License Option availability.
+
+
+
+
+
+
+
+
+
+
+
+
+                                         26
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          LICENSE OPTIONS
+
+          Single-Use License Option
+
+          The Single-Use License is your right to use the software product
+          on a single CPU. Single-Use licensed software is furnished under
+          the licensing provisions of Digital Equipment Corporation's
+          Standard Terms and Conditions.
+
+          For the first installation of this software product the user
+          must purchase as a minimum:
+
+          o  Single-Use License Option, and
+
+          o  One VMS Extended Documentation Option
+             (Includes full DECnet-VAX Documentation)
+
+          The license gives you the right to use the software on a sin-
+          gle CPU and includes the delivery of a License Product Autho-
+          rization Key (PAK) to enable the DECnet-VAX software. The VMS
+          Distribution and Extended Documentation Options provides the
+          machine-readable software and related documentation.
+
+          To use this software product on additional CPUs, you must pur-
+          chase a Single-Use License Option for each CPU.
+
+          The one-time right to copy the software is no longer included
+          with your Single-Use License Option. For additional CPUs, since
+          DECnet-VAX software is included on the VMS Distribution media,
+          you only need the one-time right to copy license for VMS. The
+          VMS Extended or the VMS Base Documentation Options are are not
+          required, but the VMS Base Documentation is recommended for
+          additional CPUs. Note that the VMS Base Documentation does
+          not include the full set of DECnet-VAX documentation, but is
+          sufficient for those users who need to get started using the
+          basic capabilities of DECnet-VAX.
+
+
+                                         27
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          Migration Option - DECnet-VAX End Node to Full Function
+
+          Current licensed users of DECnet-VAX End Node software are
+          eligible for the Migration option to upgrade a system from End
+          Node capability to Full Function capability. This is a Single-
+          Use License offered at a reduced price and provides all of the
+          License rights described above under a full function license.
+
+          For each CPU running DECnet-VAX End Node that is to be upgraded
+          to Full Function, you must purchase, as a minimum:
+
+          o  Migration Option Single-Use License
+
+          Documentation Option
+
+          You will receive DECnet-VAX documentation as part of either
+          the VMS Extended or VMS Base Documentation options. Note that
+          the VMS Extended Set contains the full DECnet-VAX Networking
+          Documentation while the Base set contains a subset of this
+          information for users who need only to get started using DECnet-
+          VAX. You do not need to order any license option to obtain
+          documentation; you need only order those manuals or sets which
+          are appropriate for your needs.
+
+          It is suggested that the VMS Extended Documentation Option
+          be purchased as system management becomes more important to
+          you; however, you only need the VMS Base Documentation Option
+          to use the DECnet-VAX software to get started. When revised
+          versions of this software product become available, you may
+          obtain additional copies of the documentation by purchasing
+
+                                         28
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          either VMS option again or by purchasing individual manuals. For
+          your convenience, a separate DECnet-VAX Documentation-only Kit
+          is available (QA-001AN-GZ).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         29
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of
+          Digital Equipment Corporation's Standard Terms and Conditions.
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          LICENSE MANAGEMENT FACILITY SUPPORT
+
+          This System Integrated Product (SIP) supports the VMS License
+          Management Facility.
+
+          License units for this product are allocated on a per CPU basis
+          and are not dependent on CPU Capacity or User/Activity.
+
+          For more information on the License Management Facility, refer
+          to the VMS Operating System Software Product Description (SPD
+          25.01.xx) or the License Management Facility manual of the VMS
+          Operating System documentation set.
+
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available. For more informa-
+          tion, please contact your local Digital office.
+
+          Note: If a device is not listed, that device is not supported by
+          DECnet-VAX.
+
+          The following tables describe the physical hardware configu-
+          rations supported by DECnet-VAX in terms of CPU type and com-
+          munication interface. The numbers given in the tables are load
+          units.
+
+          Load units are incurred when a device is in active operation at
+          the indicated speed. An idle device incurs no load. However, in
+          general, systems should be configured so they can sustain peak
+          load rates.
+
+                                         30
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          Configuration limits such as power supply, air conditioning,
+          and backplane space requirements are not considered in the
+          following tables. Please verify system configurations with
+          your Digital representative. In addition, please note that
+          each device requires its own memory space for buffering and
+          link control. Particular consideration should be taken when
+          configuring eight or more DECnet-VAX links on a single CPU; if
+          in doubt, please contact your Digital representative.
+
+          Instructions for using the following tables:
+
+          Each communications device belongs to one of the following three
+          classes:
+
+          Class    -     DMA devices with firmware datalink protocol
+          I
+
+          Class    -     DMA devices with datalink protocol in handling
+          II             software
+
+          Class    -     Low end non-DMA devices with software-handling
+          III            datalink protocol and primarily per-character
+                         interrupts
+
+          Listed below are the communications devices and the class in
+          which each belongs.
+
+          Each device class and line speed combination is associated with
+          the following load units:
+
+                      Load Units by Line Speed and Device Class
+
+                            Line Speed (kilobits/second)
+
+                        9.6   19.2  56    >56
+
+          Class I       8     16    45    100
+
+
+                                         31
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          Class II      10    20    52    115
+
+          Class III     13    26    n/a   n/a
+
+          Note:  For speeds under 9.6 kilobits/second ( 9600 baud), load
+                 units are proportional. Thus a 2400 baud Class III (e.g.
+                 a DZV11) line would represent about 3 units.
+
+          Each CPU can support a given number of load units. In general,
+          the faster the CPU the greater the number of load units it can
+          support. The load units that can be supported by each CPU are:
+
+                               Load Units by CPU Type
+
+          ________________________________________________________________
+                                         Main
+          CPU______________Load_Units____BUS_Type_________________________
+
+          VAX 9xxx-xxx     5400          XMI/BI
+
+          VAX              1500          BI
+          8810,20,30,40
+
+          VAX 8800/VAX     1350          BI
+          8700
+
+          VAX 6000-4xx     1300          XMI/BI
+
+          VAX 8650         1200          UNIBUS
+
+          VAX 8550         1200          BI
+
+          VAX 6000-3xx     945           XMI/BI
+                           (formerly
+                           63xx)
+
+
+
+                                         32
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+                                         Main
+          CPU______________Load_Units____BUS_Type_________________________
+
+
+          VAX 8530         940           BI
+
+          MicroVAX         865           Q-bus
+          3800/3900
+
+          VAX 8600         790           UNIBUS
+
+          VAX 8500         790           BI
+
+          VAX 6000-2xx     655           XMI/BI
+                           (formerly
+                           62xx)
+
+          VAX 4xxx         640           Native/Q-bus
+
+          MicroVAX         640           Native
+          3100,
+          VAXstation
+          3100
+
+          VAXstation       640           Native/Q-bus
+          3200
+
+          MicroVAX         640           Native/Q-bus
+          3300,
+          VAXstation
+          3300
+
+          MicroVAX         640           Native/Q-bus
+          3400,
+          VAXstation
+          3400
+
+
+
+                                         33
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+                                         Main
+          CPU______________Load_Units____BUS_Type_________________________
+
+
+          MicroVAX         640           Native/Q-bus
+          3500,
+          VAXstation
+          3500
+
+          VAXstation       640           Native/Q-bus
+          3520/3540
+
+          MicroVAX         640           Native
+          3600,
+          VAXstation
+          3600
+
+          VAX FT3xxx       560           Q-bus
+
+          VAX-11/785       360           UNIBUS
+
+          MicroVAX II,     280           Q-bus
+          VAXstation II
+
+          VAX-11/782       240           UNIBUS
+
+          VAX-11/780       240           UNIBUS
+
+          VAXstation       240           BI
+          8000
+
+          VAX 8250,        240           BI
+          VAX 8350
+
+          VAX 8200,        200           BI
+          VAX 8300
+
+
+
+                                         34
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+                                         Main
+          CPU______________Load_Units____BUS_Type_________________________
+
+
+          VAX-11/750       170           UNIBUS
+
+          MicroVAX         170 1         Q-bus/Native
+
+          2000/
+          VAXstation
+          2000
+
+          MicroVAX I,      100 2         Q-bus
+
+          VAXstation I
+
+          VAX-11/725,      100 2         UNIBUS
+
+          VAX-11/730______________________________________________________
+
+          Notes: 1    For VAXstation 2000 systems, only one asynchronous
+
+                      data/modem RS-232C serial line is supported up
+                      to 9600 baud. For MicroVAX 2000 systems, up to 4
+                      asynchronous data/modem RS-232C serial lines are
+                      supported up to 9600 baud.
+
+                 2    The following CPUs are no longer offered:
+
+                        VAX: VAX-11/725, VAX-11/730, VAX-11/782
+                        MicroVAX: MicroVAX I
+                        VAXstation: VAXstation I
+
+          The maximum system configuration, with a mix of device types,
+          is computed by adding the load costs (in load units) for each
+          device up to the limit for a given processor type. For general
+          information on possible supported configurations, see the con-
+          figuration charts in the VMS Operating System Software Product
+          Description (SPD 25.01.xx).
+
+          Example:
+
+                                         35
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          For a VAX-11/750 used to route messages in a DECnet network:
+
+          Assume that the system uses a DMR11 (Class I device) at
+          500 kilobits/second, a DMR11 (Class I device) at 19.2 kilo-
+          bits/second and the synchronous line of a DMF32 (Class I device)
+          at 19.2 kilobits/second When the network is heavily used, the
+          processor loading totals 136 load units. Adding a device with a
+          load of greater than 34 load units (e.g., another DMR11 at 56
+          kilobits/second) would mean that the VAX-11/750 may not be able
+          to sustain heavy demand.
+
+                                   Device Classes
+
+          ________________________________________________________________
+          Device_Type__________________Class______________________________
+
+          DELUA 1                      I
+
+          DEUNA 1                      I
+
+          DEBNA 1                      I
+
+          DEBNI 1                      I
+
+          DEMNA 1                      I
+
+          DHU11 2                      II
+
+          DMC11                        I
+
+          DMR11                        I
+
+          DMP11                        I
+
+          DMF32 (synch)                II
+
+
+
+
+                                         36
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+          Device_Type__________________Class______________________________
+
+          DMF32 2 (asynch)             II
+
+
+          DSB32                        II
+
+          DMB32 (synch)                II
+
+          DMB32 2 (asynch)             II
+
+          DSV11                        II
+
+          DIV32                        II
+
+          DSF32                        II
+
+          DMV11 3                      I
+
+          DSH32 (synch)                II
+
+          DSH32 2 (asynch)             II
+
+          DZ11 2                       III
+
+          DZ32 2                       III
+
+          DMZ32 2                      III
+
+          CXY08                        II
+
+          CI780 4                      I
+
+          CI750 4                      I
+
+          CIBCA                        I
+
+
+
+                                         37
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+          Device_Type__________________Class______________________________
+
+          DEQNA 1                      I
+
+          DELQA 1                      I
+
+          DESQA 1                      I
+
+          DESVA 1                      I
+
+          DHV11 2                      II
+
+          DHQ11 2                      II
+
+          DHT32 2                      II
+
+          DST32 2                      II
+
+
+          DHB32                        II
+
+          DZV11 2                      III
+
+          DZQ11 2                      III
+          ________________________________________________________________
+
+          1    When two or more Ethernet controllers are used on a single
+
+               CPU, each controller must be connected to a different
+               Ethernet cable. These cables must not be joined by a bridge
+               or a repeater, although they may be joined by another
+               DECnet router.
+
+          2    Load costs are for each line of a device at 9600 baud.
+
+               Higher data rates are not supported.
+
+
+
+                                         38
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+
+          3    Load costs are for each line at 56 kilobits/second. Higher
+
+               data rates are not supported.
+
+          4    DECnet-VAX supports up to 16 VAX systems connected to one
+
+               SC008 star coupler via CI780/750 interfaces. The effective
+               maximum data rate through the CI780/750 using DECnet-VAX is
+               limited to 1000 kilobits/second at each node.
+
+          Support for Multiple Ethernet Adapters on Different Bus types
+
+          VMS support for multiple, Digital supplied, Ethernet adapters on
+          different bus types allows for:
+
+          1.   The added capability to Digital's existing multi-rail
+               support
+
+               and
+
+          2.   The additional throughput capability of newer, faster
+               devices while maintaining customer investment in supported
+               older devices
+
+          The following combinations are possible:
+
+          ________________________________________________________________
+          Bus_Type______Adapter_______CPUs_Affected_______________________
+
+          XMI and       DEMNA         VAX 6xxx,
+          BI            DEBNA,        VAX 9xxx
+                        DEBNI
+
+
+
+
+
+
+                                         39
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+          Bus_Type______Adapter_______CPUs_Affected_______________________
+
+
+          Q-bus         DELQA/DEQTA   MicroVAX 3xxx
+          and
+          Integrated    (DELQA-
+          Ethernet      Plus
+          Controller    or DESQA)
+                        DESVA
+
+
+
+          Q-bus         DELQA/DEQTA   VAX 34xx,
+          and           (DELQA-       VAX 4xxx
+          Integrated    Plus
+          Ethernet      or DESQA)
+          Controller____SGEC______________________________________________
+
+          The following table indicates supported configurations:
+
+          ________________________________________________________________
+                        DECnet-
+                        VAX
+                        Load         Combination
+          CPU_Type______Units________Bus_Support__________________________
+
+          VAX 6000-     1300         Any combination of
+          4xx           945          XMI or BI adapters
+          VAX 6000-     655          up to a maximum of 6 adapters
+          3xx
+          VAX 6000-
+          2xx
+
+
+
+
+
+
+
+                                         40
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+          ________________________________________________________________
+                        DECnet-
+                        VAX
+                        Load         Combination
+          CPU_Type______Units________Bus_Support__________________________
+
+
+          MicroVAX      640          2 Q-bus adapters maximum
+          and                        1 Native adapter maximum or
+          VAXstation                 a combination up to
+          3xxx                       2 adapters of Native and Q-bus
+
+          VAX 4xxx      640          2 Q-bus adapters maximum
+          and                        1 Native adapter maximim or
+          VAX 34xx                   a combination up to
+          ___________________________2_adapters_of_Native_and_Q-bus_______
+
+          Restrictions
+
+          Note: If the configuration is not listed here, that configura-
+          tion is not currently supported by DECnet-VAX.
+
+          1. UNIBUS support does not change. DELUA and DEUNAs are still
+             supported at current levels. No combinations beyond existing
+             support are supported.
+
+          2. The Q-bus environment is limited to 2 adapters on the same
+             bus type.
+
+          3. Failover of adapters is limited to DECnet protocol traffic
+             ONLY. SCA VAXcluster traffic is not supported on multiple
+             adapters on the same CPU for example.
+
+
+
+
+
+
+
+
+                                         41
+
+ 
+
+
+          DECnet-VAX, Version 5.4                             SPD 25.03.28
+
+
+
+          4. No more than TWO different bus types with Ethernet adapters
+             are supported per any CPU.
+
+          5. Multiples of different adapters are supported ONLY for Digi-
+             tal Ethernet Adapter hardware.
+
+          6. Should average Ethernet utilization exceed 15% on average
+             then failover is not guaranteed from a higher performance
+             device to a lower performance device.
+
+          In order to achieve a viable configuration the user and/or a
+          Digital software specialist must perform a level of application
+          analysis which addresses the factors stated.
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software is provided by Digital with the
+          purchase of a license for the product as defined in the Software
+          Warranty Addendum of this SPD.
+
+          [TM] The DIGITAL Logo, DECnet, DECnet-VAX, Q-bus MicroVAX, Rain-
+               bow, VAX, VAXmate, VAXstation and VAXserver are trademarks
+               of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         42
