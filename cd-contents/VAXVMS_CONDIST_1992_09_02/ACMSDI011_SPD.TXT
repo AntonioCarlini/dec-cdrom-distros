@@ -1,0 +1,828 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECtp Desktop for ACMS, Version 1.1     SPD 34.81.01
+
+ DESCRIPTION
+
+ DECtp Desktop for ACMS (Desktop ACMS) is a layered software product
+ that allows application programs running in DOS, Macintosh[R], SCO[TM]
+ UNIX[R], ULTRIX, and VMS Operating System environments to access VMS-
+ based ACMS transaction processing applications through a desktop pro-
+ gramming interface.
+
+ Three Network Application Support components are included in the prod-
+ uct:
+
+ o  Desktop ACMS Portable Client for DOS, ULTRIX, SCO UNIX, and VMS
+
+ o  Desktop ACMS Client for Macintosh
+
+ o  Desktop ACMS Server for VMS
+
+ The desktop server software component resides on the host VMS system.
+ The desktop client components reside on the desktop operating systems
+ and provide an application programming interface for customer-written
+ desktop client programs. Digital Equipment Corporation's PATHWORKS and
+ VMS/ULTRIX Connection products or Novell[R] NetWare[R] product supply the
+ software networking connection between the client and server systems.
+
+ Product Family
+
+ The DECtp product set implements commercial information systems us-
+ ing Digital's Distributed Transaction Architecture (DECdta). This fam-
+ ily of software products includes:
+
+ o  ACMS - a software system that assists in the overall development,
+    execution, and maintenance of industrial-strength commercial IS ap-
+    plications. ACMS contains a Task Definition Language that defines
+
+                               DIGITAL                    April 1992
+
+                                                         AE-PG9JB-TE
+
+ 
+
+    application functionality. ACMS facilities, working in conjunction
+    with other DECtp components, provide very high levels of database
+    performance, application availability, and system security.
+
+ o  Rdb/VMS - a full-function, distributable, SQL-based relational database
+    management system that supports distributed transaction management
+    (DECdtm). Rdb/VMS is supported by: the RdbAccess product set, which
+    provides access to other Digital, IBM[R], and third-party databases
+    using standard SQL statements; RdbExpert, an expert system database
+    tuning tool; and DECtrace, a performance collection tool.
+
+ o  DECforms - a set of development tools and a run-time environment
+    for implementing powerful, user-friendly forms interfaces.
+
+ o  CDD/Repostitory for VMS - an active, distributable repository sys-
+    tem that provides a single logical repository for data definitions
+    (metadata) and descriptions shared by programming languages, tools,
+    and information management products.
+
+ o  VAXset - a set of application development tools for the implemen-
+    tation, testing, and maintenance of applications. Includes a language-
+    sensitive editor and source code analyzer, performance and cover-
+    age analyzer, code and module managers, and test manager.
+
+ Features
+
+ Desktop ACMS features are described according to the following areas:
+
+ o  Development Environment
+
+ o  Run-time System
+
+ o  Network Support
+
+ o  Management and Control
+
+ o  Documentation
+
+ o  Sample Application
+
+                                  2
+
+ 
+
+ Included in this product release are one or more UNSUPPORTED software
+ components, which are marked clearly in this Software Product Descrip-
+ tion. These software components are included because they may be use-
+ ful for the user; however, they are NOT supported by Digital Customer
+ Service Centers. Inclusion of these software components does not con-
+ stitute a commitment from Digital that they will continue to be pro-
+ vided in this product.
+
+ Certain non-Digital (third-party) products can be used in conjunction
+ with this product, and are mentioned in this SPD. Third-party prod-
+ ucts such as those listed are not provided by this product, nor are
+ they directly supported by this product.
+
+ In general, use of any specific third-party products with Desktop ACMS
+ is not directly supported by Digital. However, appropriate versions
+ of certain third-party products have been tested and certified to be
+ appropriate for use with this version of Desktop ACMS. These products,
+ including Microsoft[R] Windows[TM] and Apple[R] Computer's HyperCard[R], are
+ listed in the OPTIONAL SOFTWARE section (SSA 34.81.01-x).
+
+ Development Environment
+
+ Desktop ACMS provides a set of application programming interfaces, along
+ with support libraries, that allow software programs to interact with
+ ACMS applications as authenticated clients. These interfaces allow pro-
+ grammers to write ACMS client programs without requiring extensive pro-
+ gramming knowledge of network communications or the ACMS Task Defi-
+ nition Language.
+
+ Desktop ACMS Clients:
+
+ Desktop ACMS provides application programming interfaces for the DOS,
+ ULTRIX, SCO UNIX, VMS, and Macintosh Operating Systems. These client
+ services allow the desktop programmer to develop programs that:
+
+ o  Sign into ACMS as an ACMS submitter
+
+ o  Select ACMS tasks for execution under the control of the ACMS Ex-
+    ecution Controller
+
+                                  3
+
+ 
+
+ o  Respond to callbacks from the ACMS system as part of ACMS task ex-
+    change steps (forms processing)
+
+    Note: Currently, the exchange step feature is not available with the
+    Desktop ACMS Client for Macintosh. The exchange step feature is UN-
+    SUPPORTED for dynamic link libraries for DOS.
+
+ o  Sign out of ACMS
+
+ Supports Use of Native Windowing and Forms Packages:
+
+ Appropriate customer-provided display software can be used on each desk-
+ top. For instance, on the Macintosh Operating System, HyperCard may
+ be used; on DOS, Microsoft Windows may be used. Any such packages must
+ include facilities to call and be called by source code modules which
+ would include the Desktop ACMS Client services.
+
+ Non-blocking Execution:
+
+ Desktop ACMS Clients support non-blocking programs. For event-driven
+ processing environments such as Windows, programs may be structured
+ to include an event-dispatching mechanism and a collection of proce-
+ dures that are invoked by this dispatching mechanism as a result of
+ an event. Ideally, these procedures are written to complete quickly
+ so other events may be dispatched without delay.
+
+ Desktop ACMS Client services allow an application to release control
+ to the event-dispatching mechanism without waiting for a response from
+ the Desktop ACMS Server. This is important where there are network traf-
+ fic delays and/or a large amount of processing being performed by the
+ ACMS application system.
+
+ Note: Non-blocking execution is SUPPORTED for dynamic link libraries
+ for DOS.
+
+ Desktop ACMS Portable Client:
+
+
+
+
+                                  4
+
+ 
+
+ The portable client interface provides support for two models of ap-
+ plication development:
+
+ o  Synchronous (blocking) command-line interface for in-line proce-
+    dural implementation using, for example, Microsoft COBOL on DOS.
+
+ o  Asynchronous (non-blocking) event-driven interface to accommodate
+    such non-blocking tools as Motif[TM] or Microsoft Windows.
+
+ The services provided by the Desktop ACMS portable client for DOS, UL-
+ TRIX, SCO UNIX, and VMS are:
+
+ o  acmsdi_call_task - execute an ACMS task, passing task arguments spec-
+    ified for read, write, or modify access.
+
+ o  acmsdi_complete_pp - complete an outstanding exchange step (non-
+    blocking only)
+
+ o  acmsdi_dispatch_message - check for Desktop Server messages (non-
+    blocking only)
+
+ o  acmsdi_sign_in - sign a user into ACMS
+
+ o  acmsdi_sign_out - sign a user out of ACMS
+
+ Presentation procedure routines are called automatically by the Desk-
+ top ACMS Portable Client to display forms for the desktop user. These
+ routines, which support blocking or non-blocking execution, are as fol-
+ lows:
+
+ o  acmsdi_disable - shut down forms sessions on the desktop in response
+    to an acmsdi_sign_out service call
+
+ o  acmsdi_enable - initialize data structures that are used by a num-
+    ber of presentation procedures (invoked when a user calls an ACMS
+    task that includes a form name that has not been previously ref-
+    erenced)
+
+ o  acmsdi_receive - execute forms operations in response to a RECEIVE
+    in a called ACMS task
+
+ o  acmsdi_request - execute forms operations in response to a REQUEST
+    in a called ACMS task
+
+                                  5
+
+ 
+
+ o  acmsdi_send - execute forms operations in response to a SEND in a
+    called ACMS task
+
+ o  acmsdi_transceive - execute forms operations in response to a TRANSCEIVE
+    in a called ACMS task
+
+ DOS Memory Extensions, Models, and Modes:
+
+ Applications using Desktop ACMS can make use of PC conventional mem-
+ ory, Expanded Memory Specification (EMS), Version 4.0, High Memory Area
+ (HMA) loading, and Extended Memory Specification (XMS), Version2.06,
+ as supported by PATHWORKS for DOS, Version 4.0 and V4.1. Refer to the
+ PATHWORKS for DOS Software Product Description (SPD 55.07.xx) for more
+ details.
+
+ For applications using DOS but not using Microsoft Windows, all mem-
+ ory models (Small, Medium, and Large) are supported.
+
+ For applications using Microsoft Windows, Enhanced Windows Operating
+ Mode is supported. All memory models are supported for applications
+ using Desktop ACMS Dynamic Link Library. Large models are only sup-
+ ported for applications that link the Desktop ACMS objects for win-
+ dows.
+
+ Desktop ACMS Client for Macintosh:
+
+ This application programming interface supports the Data Access Man-
+ ager (DAM) facility of the Macintosh Operating System. A special DAM
+ device driver (DDEV) provides the following services for client ex-
+ ecution:
+
+ o  DBEnd - sign a user out of ACMS
+
+ o  DBExec - execute an ACMS task
+
+ o  DBGetConnInfo - returns information about the current state of a
+    given session (there is no equivalent service available for DOS or
+    ULTRIX clients)
+
+ o  DBGetErr - retrieve detailed error information
+
+                                  6
+
+ 
+
+ o  DBGetSessNum - returns the session number for a given session iden-
+    tifier
+
+ o  DBGetItem - retrieve task completion status and returned workspaces
+
+ o  DBInit - optionally select AppleTalk[R]-DECnet Gateway and sign a user
+    into ACMS
+
+ o  DBSend - prepares elements of a start-task message for transmis-
+    sion to the ACMS system
+
+ o  DBSendItem - prepares elements of a start-task message, including
+    task arguments specified for read, write, or modify access, for trans-
+    mission to the ACMS system
+
+ o  DBState - check for task execution completion
+
+ o  InitDBPack - load the Data Access Manager
+
+ Currently, the Desktop ACMS Client for Macintosh does not support call-
+ ing ACMS tasks that include exchange steps.
+
+ These services are synchronous; program control returns only when ser-
+ vice execution is complete. Non-blocking task execution is supported
+ because the DBExec service completes as soon as the task is submit-
+ ted for execution to ACMS. The DBState service is used to poll for task
+ completion.
+
+ Asynchronous parameter block can not be used with these services.
+
+ Run-time System
+
+ Desktop Client Run-time Libraries:
+
+ Run-time libraries are provided for the client operating systems to
+ support the execution of client programs that use the Desktop ACMS Clients.
+ The Desktop ACMS Client for Microsoft Windows includes both static and
+ dynamic link libraries. The Desktop ACMS Client for Macintosh includes
+ a run-time driver and Init file that allows the Data Access Manager
+ component to execute on Macintosh Operating System, Version 6.0.7 and
+ later systems.
+
+ Desktop ACMS Server for VMS:
+
+                                  7
+
+ 
+
+ The Desktop ACMS Server is an asynchronous, multi-threaded run-time
+ component residing on any VMS node, regardless of the location of ACMS
+ applications being called by desktop clients. There is one Desktop Server
+ on any VMS node. The Desktop ACMS Server is an ACMS agent that per-
+ forms the following functions:
+
+ o  Authenticates desktop clients (ACMS submitters)
+
+ o  Calls tasks for users; this can include local and remote ACMS task
+    selection
+
+ o  Communicates with the desktop client program as part of ACMS task
+    exchange step (desktop presentation procedure) execution
+
+ o  Provides information to the ACMS system manager concerning Desk-
+    top ACMS submitters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  8
+
+ 
+
+ Network Support
+
+ The following network connectivity software is supported for desktop
+ nodes connected to a Local Area Network (LAN) or Wide Area Network (WAN).
+
+ Desktop ACMS Client for DOS:
+
+ DECnet-DOS is supported. DECnet-DOS software is provided by PATHWORKS
+ for DOS.
+
+ Novell NetWare is supported for communications between DOS clients and
+ Desktop ACMS servers on VMS. As prerequisite software for NetWare sup-
+ port, the NetWare IPX stack must be installed on the VMS server sys-
+ tem; this is available as embedded software in any of the following
+ software products from Interconnections, Inc.[TM]:
+
+ o  Terminal Emulation Software[TM] (TES[TM])
+
+ o  Network Print Services[TM] (NPS[TM])
+
+ o  DECnet/IPX Portal[TM]
+
+ Specific information on required software versions can be found in the
+ SOFTWARE REQUIREMENTS section of this product's Software Support Ad-
+ dendum (SSA 34.81.01-x).
+
+ Desktop ACMS Client for Macintosh:
+
+ DECnet for Macintosh is supported. The DECnet Tool is executed on the
+ Macintosh by specifying "DECnet Tool" on the DBInit service that ini-
+ tiates a Data Access Manager session. DECnet for Macintosh and the DEC-
+ net Tool are provided by PATHWORKS for Macintosh. Use of the DECnet
+ Tool requires PATHWORKS for Macintosh, Version 1.1.
+
+ AppleTalk is also supported through AppleTalk-DECnet Gateway. The AppleTalk-
+ DECnet Tool is executed on the Macintosh by specifying "AppleTalk-DECnet
+ Tool" on the DBInit service that initiates a Data Access Manager ses-
+ sion. The AppleTalk-DECnet Tool is provided by PATHWORKS for Macin-
+ tosh.
+
+ Desktop Client for ULTRIX:
+
+                                  9
+
+ 
+
+ DECnet and TCP/IP are supported.
+
+ For TCP/IP network support, VMS/ULTRIX Connection must be installed
+ on the VMS server node.
+
+ Desktop Client for SCO UNIX:
+
+ DECnet and TCP/IP are supported.
+
+ VMS/ULTRIX Connection must be installed on the VMS server node.
+
+ Desktop Client for VMS:
+
+ DECnet-VMS is supported.
+
+ Communication modules are provided for test purposes for TCP/IP and
+ Novell NetWare but are UNSUPPORTED.
+
+ Desktop ACMS Server for VMS:
+
+ DECnet-VMS is supported.
+
+ For NetWare support, the Interconnection's NetWare IPX stack is re-
+ quired.
+
+ For TCP/IP support, VMS/ULTRIX Connection is required.
+
+ For AppleTalk support, the AppleTalk/DECnet Gateway (VMS software) is
+ utilized. This software is provided by PATHWORKS for Macintosh.
+
+ Management and Control
+
+ Support Features:
+
+ The following features are provided as part of the Desktop ACMS sys-
+ tem:
+
+ o  The Desktop ACMS Client services report errors from ACMS back to
+    the desktop client program for local error handling.
+
+ o  The Desktop ACMS Client services also (optionally) log error mes-
+    sages to a local desktop device file (available on DOS, ULTRIX, SCO
+    UNIX, and VMS).
+
+                                 10
+
+ 
+
+ o  The Desktop ACMS Server reports ACMS and desktop client errors to
+    the ACMS Software Event Logger.
+
+ o  System Managers can control desktop client access to ACMS and re-
+    move desktop clients from the ACMS system, using standard ACMS util-
+    ities.
+
+ o  Desktop ACMS provides support, through DECtrace, for the display
+    of server event information.
+
+ Programming Services:
+
+ The following services are provided to assist in system management ac-
+ tivities:
+
+ o  cmsdi$get_submitter_info - return information regarding active Desk-
+    top Server clients (available on VMS).
+
+    A sample program that uses this service to display all current Desk-
+    top ACMS submitters is provided. This sample program is an UNSUP-
+    PORTED software component.
+
+ o  acmsdi_check_version - optional customer-supplied routine that is
+    called by the Desktop ACMS Clients to check a version string from
+    the Desktop ACMS Server against the client program version (avail-
+    able on DOS, ULTRIX, SCO UNIX, and VMS).
+
+ o  acmsdi_get_version - optional customer-supplied routine that is called
+    by the Desktop ACMS Server to return a version string to the desk-
+    top program clients (available on VMS).
+
+ Documentation
+
+ Programming Guide
+
+ This document describes how to develop and test client programs that
+ use Desktop ACMS. It includes detailed information on Desktop ACMS com-
+ ponents and functions, design and development guidelines, system man-
+ agement, and interface reference information.
+
+ Installation Guide
+
+                                 11
+
+ 
+
+ This document describes the VMS installation process, provides instruc-
+ tions for copying and installing client software to desktop systems,
+ and provides directions for running the product's Installation Ver-
+ ification Procedure (IVP).
+
+ Release Notes
+
+ This document (available online as part of the media kit) contains in-
+ formation specific to this Desktop ACMS release and information added
+ after the production date for the other product documents.
+
+ Training Guide and Training Cassettes
+
+ This document and set of audio cassettes provides a self-paced instruc-
+ tion course for Desktop ACMS programmers. The course covers all as-
+ pects of the Desktop ACMS system and utilizes the online sample ap-
+ plication to reinforce system concepts and build programming skills.
+
+ Sample Application
+
+ A complete sample application is provided, including desktop client
+ programs and ACMS application modules. This application implements a
+ small part of a car rental system, and is called "AVERTZ." The sam-
+ ple application includes all necessary product executable images as
+ well as source code modules. Inclusion of the source code allows the
+ sample to be used as a template for customer-developed desktop client
+ programs.
+
+ The sample application includes the following components:
+
+ o  DOS client using Microsoft COBOL and Microsoft C
+
+ o  DOS client using Microsoft Windows and Microsoft C
+
+ o  Portable client using Motif V1.1, for VMS, SCO UNIX, VAX ULTRIX,
+    and MIPS ULTRIX systems.
+
+ o  Macintosh Operating System client using HyperCard and specialized
+    HyperCard XFCNs, which are implemented in HyperTalk[R] and Macintosh
+    Programmer's Workstation (MPW[TM]) C
+
+                                 12
+
+ 
+
+ o  Macintosh Operating System client using MPW C and Data Access Man-
+    ager services
+
+ o  Macintosh Operating System HyperCard application, which provides
+    a learning tool for Desktop ACMS concepts
+
+ o  VMS-based ACMS application modules using the ACMS Task Definition
+    Language, DECforms forms, and procedure server modules implemented
+    in VAX COBOL and VAX SQL
+
+ The entire sample application is a set of UNSUPPORTED software com-
+ ponents.
+
+ HARDWARE REQUIREMENTS
+
+ Desktop ACMS Client for DOS:
+
+ 100-percent IBM-compatible Intel[TM] PC systems as specified in the
+ System Support Addendum (SSA 34.81.01-x).
+
+ Desktop ACMS Client for Macintosh:
+
+ Macintosh systems as specified in the System Support Addendum (SSA 34.81.01-
+ x).
+
+ Desktop ACMS Client for ULTRIX:
+
+ VAX and RISC ULTRIX systems as specified in the System Support Adden-
+ dum (SSA 34.81.01-x).
+
+ Desktop ACMS Client for SCO UNIX:
+
+ Intel PC systems as specified in the System Support Addendum (SSA 34.81.01-
+ x).
+
+ Desktop ACMS Client for VMS and Desktop ACMS Server for VMS:
+
+ VAX, VAXft, MicroVAX, VAXstation, or VAXserver systems as specified
+ in the System Support Addendum (SSA 34.81.01-x).
+
+                                 13
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ The following are the software requirements for a Desktop ACMS run-
+ time environment.
+
+ Desktop ACMS Server:
+
+ The following are general software requirements for the Desktop ACMS
+ Server:
+
+ o  VMS Operating System (SPD 25.01.xx).
+
+ o  VAX ACMS, VAX ACMS Remote Application Access, or VAX ACMS Run-time
+    (SPD 25.50.xx). Refer to the VAX ACMS SPD for information on other
+    required VMS layered software products.
+
+ o  Network Support:
+
+    -  If using DECnet, DECnet-VAX (SPD 25.03.xx).
+
+    -  If using TCP/IP, VMS/ULTRIX Connection (SPD 25.A4.xx)
+
+    -  If using NetWare, an IPX stack must be installed on the Desk-
+       top ACMS Server system; this is available as embedded software
+       in any of the following software products from Interconnections,
+       Inc.[TM]:
+
+       o  Terminal Emulation Software (TES)
+
+       o  Network Print Services (NPS)
+
+       o  DECnet/IPX Portal
+
+ o  Desktop ACMS Client for Macintosh:
+
+    -  PATHWORKS for Macintosh (SPD 31.53.xx)
+
+ Desktop ACMS Client for DOS:
+
+ o  Operating System Support:
+
+    -  COMPAQ[R] DOS
+
+    -  DECstation DOS
+
+    -  IBM DOS
+
+                                 14
+
+ 
+
+    -  Olivetti[R] DOS
+
+    -  Tandy[R] DOS
+
+    -  Toshiba[R] DOS
+
+    -  Zenith[R] DOS
+
+       The base systems previously listed are supported only when us-
+       ing the operating system software supplied by the same vendor
+       as the system unit itself.
+
+ o  Network Support:
+
+    -  If using DECnet, PATHWORKS for DOS (SPD 55.07.xx).
+
+    -  If using NetWare, one of the following Novell NetWare products:
+ 
+              NetWare 386
+              Advanced NetWare
+              NetWare
+              NetWare for VMS
+
+       Note: These product contains only client software.
+
+ Desktop ACMS Client for Macintosh:
+
+ o  Macintosh Operating System
+
+ o  PATHWORKS for Macintosh (SPD 31.53.xx).
+
+ Desktop ACMS Client for ULTRIX:
+
+ o  Either The ULTRIX Operating System (SPD 26.40.xx) or ULTRIX Worksys-
+    tem Software (SPD 28.22.xx)
+
+ o  If using DECnet, DECnet-ULTRIX (SPD 26.83.xx)
+
+ Desktop ACMS Client for SCO UNIX:
+
+ o  Either SCO UNIX System V[TM]/386 (SPD 32.56.XX)
+    or
+    Open Desktop (SPD 32.57.xx)
+
+                                 15
+
+ 
+
+ o  Network Support:
+
+    -  If using TCP/IP with SCO UNIX, SCO TCP/IP (SPD 32.56.xx)
+
+    -  If using DECnet, DECnet for SCO UNIX (SPD 34.21.xx)
+
+ Desktop ACMS Client for VMS:
+
+ o  VMS Operating System (SPD 25.01.xx)
+
+ o  DECnet-VAX (SPD 25.03.xx)
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-GZGA*-**
+ Software Media and Documentation: QA-GZGAA-H*
+ Software Documentation: QA-GZGAA-GZ
+ Self-Paced Training: QA-GZGAB-GZ
+ Software Product Services: QT-GZGA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the VMS License Management Facility.
+
+ License units for this product are allocated on an Unlimited Use Ba-
+ sic, plus Concurrent Use Basis. Each Concurrent Use license allows any
+ one individual at a time to use the layered product.
+
+
+
+                                 16
+
+ 
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx) or
+ the License Management Facility manual of the VMS Operating System doc-
+ umentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+ [R]  Apple, AppleTalk, HyperCard, HyperTalk, Macintosh, and MPW are
+     registered trademarks of Apple Computer, Inc.
+
+ [R]  COMPAQ is a registered trademark of COMPAQ Corporation.
+
+ [R]  Dialog is a registered trademark of Micro Focus, Ltd.
+
+ [R]  IBM is a registered trademark of International Business Ma-
+      chines Corporation.
+
+ [R]  JAM is a registered trademark of JYACC.
+
+ [R]  Microsoft, CodeView, and Visual Basic are registered trademarks
+      of Microsoft Corporation.
+
+ [R]  Novell and NetWare are registered trademarks of Novell, Inc.
+
+ [R]  Olivetti is a registered trademark of Ing. C. Olivetti.
+
+ [R]  Symantec is a registered trademark of Symantec Corporation.
+
+ [R]  Tandy is a registered trademark of Tandy Corporation.
+
+ [R]  Toshiba is a registered trademark of Kabushiki Kaisha Toshiba.
+
+                                 17
+
+ 
+
+
+ [R]  UNIX is a registered trademark of UNIX Systems Laboratories,
+      Inc.
+
+ [R]  Vermont Views is a registered trademark of Vermont Creative
+      Software.
+
+ [R]  Zenith is a registered trademark of Zenith Electronic Corpora-
+      tion.
+
+ [TM]Intel is a trademark of Intel Corporation.
+
+ [TM]Interconnections, Inc., Terminal Emulation Services, TES, Net-
+     work Print Services, NPS, and DECnet/IPX Portal are trademarks
+     of Interconnections, Inc.
+
+ [TM]Motif, OSF and OSF/Motif are trademarks of Open Software Foun-
+     dation, Inc.
+
+ [TM]Open Desktop and SCO are trademarks of The Santa Cruz Opera-
+     tion, Inc.
+
+ [TM]Open Interface is a trademark of Neuron Data, Inc.
+
+ [TM]System V is a trademark of American Telephone and Telegraph
+     Company.
+
+ [TM]Windows is a trademark of Microsoft Corporation.
+
+ [TM]The DIGITAL Logo, ACMS, CDD/Repository, CI, DEC, DECdtm, DEC-
+     forms, DECnet, DECnet-DOS, DECstation, DECtp, DECtrace, DE-
+     PCA, DECwindows, DEPCA, MicroVAX, PATHWORKS, Rdb/VMS, ULTRIX,
+     VAX, VAXset, VAXcluster, VAXft, VAXserver, VAXstation, VAX C,
+     VAX DBMS, VAX SQL, and VMS are trademarks of Digital Equipment
+     Corporation.
+
+
+
+
+
+                                 18

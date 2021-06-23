@@ -1,0 +1,759 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECmcc Basic Management System, Version 1.2      SPD
+ 32.48.02
+
+ DESCRIPTION
+
+ The DECmcc Basic Management System (BMS) is a complete, prepackaged
+ DECmcc Product Family management system for multivendor, multi-protocol
+ networks. It provides access to, and management functions for, Dig-
+ ital Equipment Corporation's ADVANTAGE-NETWORKS (DECnet Phase IV, DEC-
+ net/OSI, and TCP/IP) and open network environments. The DECmcc BMS is
+ a modular software product that can be extended through the addition
+ of other DECmcc products, third party, or user-developed software mod-
+ ules.
+
+ Available on the VMS and ULTRIX Operating Systems, the DECmcc BMS pro-
+ vides both generic and device-specific management functions includ-
+ ing:
+
+ o  Graphic and Command Line User Interfaces that provide consistent
+    views and interactions with the management system regardless of the
+    objects managed or the protocols used to manage them.
+
+ o  Configuration Management functions that include automated discov-
+    ery and device registration, topology mapping, and user-defined man-
+    agement domains.
+
+ o  Generic Notification and Alarm functions that enable users to de-
+    fine alarm rules and set up notification and automated procedures
+    to locate existing and potential network problems or events.
+
+ o  Generic Historical Data Recording and Data Export functions that
+    allow users to define, collect, timestamp, and re-use historical
+    network data and export DECmcc management information to an exter-
+    nal relational database.
+
+                               DIGITAL                     July 1992
+
+                                                         AE-PC86C-TE
+
+ 
+
+ o  Device-specific Performance Statistics functions for DECnet Phase
+    IV and DECnet/OSI nodes, Digital LAN Bridges, and TCP/IP hosts.
+
+ Consistent with the EMA Director Model, of which it is an implemen-
+ tation, the DECmcc BMS consists of a set of layered Management Mod-
+ ules supported by an open Applications Programming Interface (API),
+ an Executive or operating system-like set of module support functions,
+ and an object oriented Management Information Repository (MIR) pro-
+ viding data structure and storage functions.
+
+ o  Management Modules provide services to users and one another. There
+    are three types of Management Modules:
+
+    -  Access Modules (AMs) provide remote protocol support for, and
+       management information about, different classes of managed ob-
+       jects.
+
+    -  Function Modules (FMs) provide services such as object regis-
+       tration, statistics generation, fault detection, and notifica-
+       tion to users and to one another.
+
+    -  Presentation Modules (PMs) provide a consistent user interface
+       for the direct manipulation of managed objects (through AMs) and
+       user access to management operations (through FMs).
+
+ o  The Executive provides system services that enable Management Mod-
+    ules to be installed and used independently or in combination.
+
+ o  The Applications Programming Interface defines how Management Mod-
+    ules invoke each other's services. The DECmcc API is open and doc-
+    umented to support Digital, third party, or user-developed modules.
+
+ o  The Management Information Repository (MIR) provides a means to struc-
+    ture and store management information.
+
+ DECmcc BMS Access Modules
+
+ DECmcc BMS AMs provide access to network and system objects in Dig-
+ ital's ADVANTAGE-NETWORKS and other mixed, multivendor network envi-
+ ronments that use the following management protocols: DECnet NICE, DEC-
+ net/OSI CMIP, SNMP, and IEEE 802.2/Ethernet/MOP.
+
+                                  2
+
+ 
+
+ o  The DECnet Phase IV AM enables users to manage DECnet Phase IV ob-
+    jects such as nodes, circuits, lines, and adjacencies. With the DEC-
+    net Phase IV AM, users can modify DECnet parameters, set charac-
+    teristics, collect DECnet events, and poll for management data such
+    as counters or status.
+
+ o  The DECnet/OSI CMIP AM provides management access to DECnet devices
+    that use Digital's implementation of the standard Common Manage-
+    ment Information Protocol (CMIP). This version of CMIP, implemented
+    on DECnet/OSI devices, provides management operations and data gath-
+    ering functions for DECnet/OSI networks including the ability to
+    sink DECnet events to the DECmcc system.
+
+ o  The TCP/IP SNMP AM includes support for the following Internet Ad-
+    visory Board (IAB) Simple Network Management Protocol (SNMP) RFCs:
+    1155, 1156, 1157, 1212, and 1213. This includes full MIB II sup-
+    port in addition to support for on-site enrollment of vendor-specific
+    Enterprise MIBs including:
+
+    -  A MIB translation utility that automatically checks the syntax
+       of the ASN.1 Concise MIB definition (providing error messages
+       to help identify syntax problems) and translates the data for
+       loading the information into the DECmcc Director's Management
+       Information Repository (MIR).
+
+    -  An event-logging sink for collecting SNMP generic traps (unso-
+       licited TCP/IP event messages) including: coldStart, warmStart,
+       linkDown, linkUp, egpNeighborLoss, authentificationFailure, and
+       enterpriseSpecific.
+
+    -  Ability to perform GET and SET operations on devices supported
+       by SNMP agents.
+
+    -  ICMP ECHO_REQUEST (ping) support for verifying the reachabil-
+       ity of an SNMP managed object at the IP level.
+
+       Note: DEC TCP/IP Services for VMS is required for using the TCP
+       /IP SNMP AM on VMS systems.
+
+
+                                  3
+
+ 
+
+    -  The IEEE 802.3/Ethernet Station AM enables users to manage at
+       the network interface level any 802.3/Ethernet LAN device that
+       supports MOP REQID, MOP SYSID, MOP Counters, Ethernet V2 Loop-
+       back, IEEE 802.2 XID, or IEEE 802.2 Test.
+
+    -  Circuit AM works as a client of management protocol modules to
+       provide management of circuits connecting endpoints compliant
+       with the Network Management Forum (NMF) definitions. Compliant
+       endpoints include DECnet Phase IV and DECnet OSI nodes, and TCP
+       /IP hosts. Tying together circuit, line, link, and other end-
+       point data, this AM can gather status data and store reference
+       information about simple, point-to-point circuits or complex multi-
+       channel circuits.
+
+ DECmcc BMS Function Modules
+
+ The DECmcc BMS includes generic and device-specific FMs that provide
+ a variety of management services to end users and, in combination, to
+ one another. These services include configuration management functions,
+ fault management functions including alarm and notification services,
+ historical data recording and data export functions, and performance
+ statistics functions.
+
+ Generic FM services are support for devices accessible through the BMS
+ AMs, other Digital-developed AMs, or AMs developed and supported by
+ third parties and users.
+
+ Configuration Management Functions
+
+ DECmcc BMS Configuration Management functions include both manual and
+ automatic registration of managed objects, and support for user-defined
+ domains (groups of managed objects). These functions are provided by
+ the following DECmcc BMS FMs and services.
+
+ The Registration FM is a generic FM that enables users to enter and
+ manage data, identifying each managed object in a network environment.
+ Such information includes object-instance data such as network names
+ and addresses, and reference information such as device location, soft-
+ ware revision levels, and contact names.
+
+                                  4
+
+ 
+
+ With the Registration FM, users have the option of selecting a local
+ system-level repository or setting up a network-wide, globally-available
+ naming service using Digital's Distributed Name Service (DECdns). With
+ DECdns, users and applications can assign names to resources (such as
+ nodes, bridges, files, domain names, etc.) and then use those resources
+ without having to keep track of physical location or network address.
+ The DECdns option also enables multiple DECmcc systems to share the
+ same view of managed objects.
+
+ The Domain FM is a generic FM that enables users to assign managed ob-
+ jects into groups called domains. Domains are subsets of the managed
+ object configuration that provide user-defined groups that can be based
+ on equipment type (all DECnet nodes, all TCP/IP hosts, all LAN Bridges,
+ etc.), geography (all objects within a LAN, building, campus, or sub-
+ net), personnel levels, or any other user-defined object group. Do-
+ mains can contain or refer to other domains and can be hierarchical
+ or overlapping. Individual managed objects can be contained within mul-
+ tiple domains.
+
+ Autoconfiguration services automatically locate, register, and map man-
+ aged objects by class. Supported classes include DECnet Phase IV nodes,
+ TCP/IP hosts, and Digital FDDI devices and LAN Bridges. Users can de-
+ fine domains for each class, and set network boundaries. The autocon-
+ figuration functions can request network instance data from DECnet routers,
+ IP gateways, and Bridge spanning trees. As devices are located and man-
+ agement information gathered, the functions automatically map them in
+ the appropriate user-defined domains and register management data in
+ the MIR.
+
+ Note: This function requires that the appropriate DECmcc Access Mod-
+ ules be installed on the BMS system to register objects. The DECnet
+ Phase IV, DECnet/OSI, and TCP/IP SNMP AMs are included in DECmcc BMS.
+ DECmcc ELM Access Modules must be purchased separately to support LAN
+ Bridge and FDDI autoconfiguration topology mapping. Refer to the DECmcc
+ ELM SPDs (VMS: SPD 31.33.xx or ULTRIX: SPD 38.67.xx) for more infor-
+ mation about the DECmcc ELM products.
+
+ Alarm and Notification Services
+
+
+                                  5
+
+ 
+
+ DECmcc BMS alarm and notification services are provided by a combi-
+ nation of Management Modules. These modules enable users to create alarm
+ rules that can detect existing or potential network problems, and no-
+ tification mechanisms for informing users when such problems occur or
+ network events happen.
+
+ The Alarms FM provides facilities for users to write rule-based ex-
+ pressions (alarm rules) that use polled data or unsolicited event mes-
+ sages to trigger alarms. Alarm rules can be written for any managed
+ object or entity class for which there is corresponding Access Mod-
+ ule protocol support (DECnet Phase IV NICE, SNMP, etc.). Alarm rules
+ can be based on state changes, simple arithmetic expressions, or oc-
+ currences (unsolicited event messages received through the appropri-
+ ate Access Module). Alarm rules can be written for individual managed
+ objects or wildcarding can be used to apply rules to all objects in
+ a domain for a given object class.
+
+ In addition to the standard DECmcc BMS notification functions described
+ below, the Alarms FM allows for the execution of user-written command
+ procedures. Such command procedures can be used to generate terminal
+ broadcast or electronic mail messages, or automated procedures that
+ a network manager or operator might implement when a particular alarm
+ condition occurs.
+
+ In combination with the Performance Analysis FM described below, the
+ alarm functions can be used to create threshold alarms based on per-
+ formance statistics for DECnet Nodes, TCP/IP hosts, or Digital LAN Bridges.
+ In this way, alarm rules allow users to detect potential problems be-
+ fore they become major network faults.
+
+ The Notification FM and PM enable users to define the mechanisms used
+ to alert operators when a particular network or system event has oc-
+ curred. The functions recognize two types of events: configuration events,
+ which are reported by an managed object or DECmcc Management Module;
+ and alarm events, which are generated by the Alarms FM whenever a rule
+ fires or encounters an error (i.e., an exception to the rule).
+
+
+
+
+                                  6
+
+ 
+
+ When an event occurs, the DECwindow/Iconic Map PM displays a color change
+ on the appropriate object icon and a message in the Notification win-
+ dow. Users can define the severity levels and select colors appropri-
+ ate to the problem level. DECmcc Notification also enables users to
+ customize event collection and storage in the following ways:
+
+ o  Logging: Logging can be used to store received events to disk. Log
+    files are automatically created and purged based on user-definable
+    arguments.
+
+ o  Filter: Users can filter received events based on the following cri-
+    teria: managed object, domain, severity level, message text, or event
+    /alarm type.
+
+ o  Target: Notifications (icon color changes) can be redirected from
+    the object that generates the event to the object that is the sub-
+    ject of the event.
+
+ o  Search: Users can search received notifications based on the fol-
+    lowing criteria: any field, severity level, notification identi-
+    fier, name or address, text description, time stamp, or domain name.
+
+ o  View: Users can display a Real-time Graph of the number of noti-
+    fications being displayed, collected and filtered; histogram of all
+    notifications grouped by severity level; and the maximum notifi-
+    cation buffer size.
+
+ o  Change default start-up: Users can assign customized colors to the
+    six notification severity levels.
+
+ The Data Collector AM enables users to collect events from objects not
+ directly managed by DECmcc. Users can create customized icons for any
+ object not directly managed by DECmcc and include it in the Iconic Map.
+
+ The Data Collector AM provides a programming interface and a command
+ script interface. The programming interface allows users to include
+ code in any application program to send events to DECmcc for display
+ in the Iconic Map or Notification window. The command script inter-
+ face enables users to use VMS DCL command procedures or ULTRIX shell
+ scripts to send events to DECmcc for display in the Iconic Map or No-
+ tification window.
+
+                                  7
+
+ 
+
+ Historical Data Collection and Data Export
+
+ Historical Data Collection and Data Export functions are provided by
+ the Historian and Export FMs. These generic FMs enable users to col-
+ lect, time stamp, and store network data for use by other DECmcc FMs,
+ such as the Performance Analyzer FM, and export data to external re-
+ lational databases for addition processing and report writing.
+
+ o  The Historian FM enables users to define the type of data to be col-
+    lected, the managed objects or management applications from which
+    the data is to be collected, and the collection interval.
+
+ o  The Export FM, when used with a separate, external relational database
+    and report writing tools, can be used to create customized network
+    usage reports. The historical data recording and data export func-
+    tions can also be used in combination with other DECmcc FMs to gather
+    statistics, status, and configuration data.
+
+ Note: Use of the Export FM requires that Rdb Runtime for VMS systems
+ or ULTRIX/SQL for RISC/ULTRIX systems be installed on the target system-
+ the system to which the data is to be exported.
+
+ Performance Statistics Functions
+
+ DECmcc BMS performance statistics are provided by the Performance Anal-
+ ysis FM. It enables users to access real-time or historical perfor-
+ mance statistics and reports on DECnet, Digital LAN Bridge, and TCP
+ /IP objects. Sample error, traffic, and statistics reports are also
+ provided.
+
+ The Performance Analyzer FM provides data normalization and statis-
+ tical functions for DECnet nodes, TCP/IP hosts, and Digital LAN Bridges.
+
+ Note: LAN Bridge statistics require that the DECmcc ELM Access Modules
+ be installed on DECmcc BMS. Counters for DECnet node and TCP/IP hosts
+ are gathered by the DECnet AMs and TCP/IP SNMP AM respectively, which
+ are included with DECmcc BMS.
+
+
+
+                                  8
+
+ 
+
+ Assuming that the appropriate Access Modules are installed, the Per-
+ formance Analyzer FM supports the following objects/devices:
+
+ o  DECnet Phase IV lines (DDCMP, Ethernet, X.25), circuits (DDCMP, Eth-
+    ernet, X.25), and nodes (local and remote)
+
+ o  DECnet/OSI end systems, datalinks (DDCMP, CSMACD, and HDLC), in-
+    termediate systems (routing systems), routing ports, and routing
+    circuits
+
+ o  Bridge lines (LAN100, LAN150, LAN200, DECbridge 500, and DECbridge
+    600)
+
+ o  TCP/IP Simple Network Management Protocol (SNMP), Exterior Gate-
+    way Protocol (EGP), Internet Control Message Protocol (ICMP), IN-
+    TERFACE (the network interface such as Ethernet), Internet Proto-
+    col (IP), Transmission Control Protocol (TCP), User Datagram Pro-
+    tocol (UDP), EGP Neighbor table, and SNMP child entity.
+
+ The Performance Analyzer FM supports the following classes of network
+ statistics:
+
+ o  Throughput - the amount of data that is sent between two points in
+    a specified unit of time
+
+ o  Averages - such as Average Outbound Block Size and Average Outbound
+    Message Size
+
+ o  Overhead - the amount of control overhead present for circuits and
+    lines
+
+ o  Percents - percent of total traffic or resource availability
+
+ o  Rates - the counts over a specified period of time
+
+ o  Utilization - ratio of real or rated throughput to the actual through-
+    put expressed as a percentage, such as Outbound Utilization and Sin-
+    gle Destination Utilization
+
+ o  Counts - the normalized value of counters
+
+                                  9
+
+ 
+
+ These statistics, like all other numeric attributes collected or gen-
+ erated by DECmcc software, can be displayed as graphs or histograms
+ in the Graphic Window that is part of the DECwindows/Iconic Map in-
+ terface available with the DECmcc Director, BMS, and EMS products.
+
+ Sample Reports are included with DECmcc BMS and are based on counters
+ and statistics generated by the Performance Analyzer FM.
+
+ Note: Data used for creating the sample reports must be exported to an
+ external relational database using the Export FM. In addition, gen-
+ erating and setting up the sample reports requires the following soft-
+ ware products:
+
+ o  For VMS: CDD/Plus, DATATRIEVE, and DECgraph
+
+ o  For ULTRIX: INGRES[TM] Tools for SQL including: INGRES Base Tools
+    (with Report-Writer[TM]) and INGRES/Visual-Graphics-Editor (VIGRAPH[TM]).
+
+ The sample reports include: traffic, error, traffic summary, error sum-
+ mary, and bandwidth utilization for DECnet Phase IV, DECnet/OSI and
+ TCP/IP SNMP.
+
+ DECmcc BMS Presentation Modules
+
+ The DECmcc BMS includes two Presentation Modules. The DECwindows/Iconic
+ Map PM provides a graphic interface with pull-down command and mon-
+ itor windows that consistently present all managed objects and oper-
+ ations. Consistent access is also provided by the Forms and Command
+ Line PM.
+
+ The Iconic Map PM with a DECwindows interface uses the common features
+ of any DECwindows application. Capabilities specific to this presen-
+ tation style include:
+
+ o  Map windows that display the contents of a managed environment (for
+    example, a domain) using icons to represent managed objects and their
+    subordinate or child objects. Users can select icons representing
+    managed objects and initiate management operations from a map win-
+    dow. Several map windows can be displayed at one time, each dis-
+    playing different views of domains of a managed environment.
+
+                                 10
+
+ 
+
+ o  A Navigation box and ViewPort window that enable users to view an
+    entire network configuration map at one time. With the ViewPort fea-
+    ture, users can navigate to, and select a particular portion of,
+    the total network environment to display in detail in the Map win-
+    dow.
+
+ o  Management windows that enable users to select, perform, and view
+    the results of management operations. Like map windows, several dif-
+    ferent management windows can be displayed simultaneously.
+
+ o  Graph windows that enable users to select and display real-time or
+    historical numeric attributes, such as counters, graphs or histograms.
+
+ o  A Toolbox window and other customization features that provide users
+    with the ability to create, modify, or delete map icons, connect-
+    ing lines, text, or other items in a map window. Users can create
+    map icons, add geographic maps or other backdrops, and add customized
+    icons to the Toolbox for retrieval and re-use.
+
+ Forms and Command Line PM provides character cell access to DECmcc Di-
+ rector function and access capabilities. The interface supports two
+ modes, Command Line mode and Forms mode.
+
+ Note: The Forms mode is not available on ULTRIX.
+
+ The Command Line mode enables users to create names or mnemonics and
+ use special symbols to reduce data entry and eliminate input errors.
+ It supports command line recall and editing, abbreviation, online help,
+ symbol substitution, use of control key sequences, line continuation,
+ and the type-ahead function.
+
+ Command Line mode also supports the use of scripts to automate fre-
+ quently used DECmcc command sequences. Users can set up initializa-
+ tion files through the Command Line mode for establishing defaults and
+ executing startup directives. In addition, users can log any command
+ to an output file for storage and review.
+
+
+
+
+                                 11
+
+ 
+
+ The Forms mode provides the basic features of the Command Line mode
+ in addition to a scroll feature that enables users to save up to 500
+ lines of output from management directives, scroll through the saved
+ output, and create new directives based on previous input. The Forms
+ mode also allows printing and logging of entries made to the output
+ region.
+
+ Both the Forms mode and the Command Line mode, as well as the Iconic
+ Map interface, provide online, context-sensitive help.
+
+ DECmcc BMS Extensibility
+
+ DECmcc BMS is an extensible management platform to which other DECmcc
+ software modules, optional packages, third party, or user-developed
+ Management Modules can be added. For a list of Digital Management Mod-
+ ules that can be added to the DECmcc BMS, refer to the Optional Soft-
+ ware list below.
+
+ Third parties and users can develop software modules for DECmcc Fam-
+ ily Products to provide access to, and management functions for, any
+ manageable object. Software and documentation for the development of
+ integrated DECmcc modules are available as part of the DECmcc Devel-
+ oper's Toolkit. For more information about the Developer's Toolkit,
+ refer to SPD 32.49.xx.
+
+ DECmcc BMS includes several utilities that enable on-site enrollment
+ of Management Modules. Documentation required for third party module
+ enrollment must be supplied by the module developer.
+
+ HARDWARE REQUIREMENTS
+
+ o  VAX, MicroVAX, VAXstation, VAXserver, DECsystem, or DECstation con-
+    figuration with an Ethernet controller as specified in the System
+    Support Addendum (SSA 32.48.00-x).
+
+ o  Appropriate Ethernet Controller for the System on which DECmcc BMS
+    is installed.
+
+
+
+                                 12
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ For VMS:
+
+ For Systems Using Terminals (no DECwindows interface):
+
+ o  VMS Operating System
+
+ For Workstations Running DECwindows:
+
+ o  VMS Operating System (and necessary components of DECwindows)
+
+ Layered Products:
+
+ o  Rdb/VMS Runtime must be installed on the target system to which data
+    is exported using the Export FM
+
+ o  CDD/Plus, DATATRIEVE, and DECgraph are required to access and print
+    the sample Performance Analyzer FM reports
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 13
+
+ 
+
+ For ULTRIX:
+
+ For Systems Using Terminals (no DECwindows interface):
+
+ o  ULTRIX Operating System
+
+ For Workstations (both with and without DECwindows):
+
+ o  ULTRIX Worksystem Software
+
+ Layered Products:
+
+ o  ULTRIX/SQL must be installed on the system to which data is exported
+    using the Export FM
+
+ o  INGRES Tools for ULTRIX/SQL: INGRES Base Tools (including ReportWriter)
+    and INGRES/Visual Graphics Editor (VIGRAPH) are required to access
+    and print the Performance Analyzer FM sample reports
+
+ Please refer to the System Support Addendum (SSA 32.48.02-x) for re-
+ quired versions of prerequisite/optional software.
+
+ OPTIONAL SOFTWARE
+
+ For VMS:
+
+ o  DECnet VAX: if the Digital Distributed Name Service (DEDdns) is used,
+    or if DECnet Phase IV or DECnet/OSI nodes are to be managed
+
+ o  A Digital Distributed Name Service (DECdns) Server must be installed
+    somewhere on the network to implement a global naming repository
+    in place of the DECmcc local system naming repository.
+
+ o  DEC TCP/IP Run-Time for VMS to support SNMP access
+
+ o  DECmcc Extended LAN Manager (ELM) Access Modules
+
+ o  DECmcc Fault Diagnostic Package
+
+ o  DECmcc Terminal Server Access Module
+
+                                 14
+
+ 
+
+ For ULTRIX:
+
+ o  DECnet ULTRIX: if the Digital Distributed Name Service for ULTRIX
+    (DECdns for ULTRIX) is used, or if DECnet Phase IV or DECnet/OSI
+    nodes are to be managed. DECnet/OSI is required for DECdns.
+
+ o  A Digital Distributed Name Service (DECdns) Server on either VMS
+    or ULTRIX must be installed somewhere on the network to implement
+    a global naming repository in place of the DECmcc local system nam-
+    ing repository
+
+ o  DECmcc Extended LAN Manager (ELM) Access Modules
+
+ o  DECmcc Fault Diagnostic Package
+
+ ORDERING INFORMATION
+
+ For VMS:
+ Software Licenses: QL-YSUA*-**
+ Software Media: QA-YSUA*-**
+ Software Documentation: QA-YSUA*-GZ
+ Software Product Services: QT-YSUA*-**
+
+ For ULTRIX:
+ Software Licenses: QL-GU5A*-**
+ Software Media: QA-GU5A*-**
+ Software Documentation: QA-GU5A*-GZ
+ Software Product Services: QT-GU5A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support:
+
+                                 15
+
+ 
+
+ This layered product supports the VMS and ULTRIX License Management
+ Facilities.
+
+ License units for this product are allocated on an Unlimited System
+ use basis.
+
+ Note: To use DECmcc BMS in a Diskless Management Services (DMS) envi-
+ ronment, the DMS server must be a supported DECmcc BMS configuration,
+ including a comparable DECmcc BMS license.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx), UL-
+ TRIX Operating System (SPD 26.40.xx), or the License Management Fa-
+ cility manual of the VMS or ULTRIX Operating System documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ Network Management Services are also available. These include, but are
+ not restricted to, the following:
+
+ o  Network Management Operations Services
+
+ o  Network Management Planning and Design Services
+
+ o  Network Management Implementation Services
+
+ o  Network Management Training
+
+ For local availability, please contact your Digital Sales Office.
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+
+ [TM]INGRES, ReportWriter, and VIGRAPH are trademarks of INGRES
+    Corporation.
+
+                                 16
+
+ 
+
+
+ [TM]The DIGITAL Logo, CI, DEC, DECstation, DECsystem, DECmcc, DEC-
+    net, ULTRIX, ADVANTAGE-NETWORKS, Rdb/VMS, DECwindows, CDD/Plus,
+    DATATRIEVE, DECgraph, TK, DDCMP, DECbridge, MicroVAX, VAX, VAX-
+    cluster, VAXft, VAXserver, VAXstation, and VMS are trademarks
+    of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 17

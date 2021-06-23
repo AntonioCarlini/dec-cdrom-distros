@@ -1,0 +1,737 @@
+ 
+
+ SOFTWARE
+ PRODUCT
+ DESCRIPTION 
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC WANrouter 150/250, Version 1.0      SPD 36.24.00
+
+ DESCRIPTION
+
+ The DEC WANrouter 150/250 software provides a Wide Area Network (WAN)
+ routing service for nodes on a Local Area Network (LAN). It runs on
+ either the DEC WANserver 150 (DSRVJ) or DECrouter 250 (DSRVR) hard-
+ ware units. The combination of these software/hardware packages are
+ known as the DEC WANrouter 150 when running on a DSRVJ, and DEC WAN-
+ router 250 when running on a DSRVR.
+
+ Overview
+
+ The DEC WANrouter 150/250 software provides a network routing service
+ for:
+
+ o  TCP/IP hosts
+
+ o  OSI-compatible systems
+
+ o  DECnet/OSI Phase V nodes
+
+ o  DECnet Phase IV nodes
+
+ These nodes and hosts can be connected to the DEC WANrouter 150 or 250
+ via:
+
+ o  The same Local Area Network as the DEC
+    WANrouter 150 or 250 using Ethernet or IEEE 802.3 protocols
+
+ o  The serial communications ports of the router using DDCMP (asyn-
+    chronous/synchronous), or HDLC (synchronous only) data link pro-
+    tocols
+
+ Connections to the serial communication ports may be made:
+
+ o  Locally - Using dedicated null modem wiring, or modem eliminators
+
+ o  Remotely - Using modem connections over leased lines or dial-in Pub-
+    lic Switched Telephone Network (PSTN) lines
+
+                               DIGITAL                      May 1992
+
+                                                         AE-PJM9A-TE
+
+ 
+
+ The DEC WANrouter 150/250 software image is installed and configured
+ on a VMS, VAX/ULTRIX, or RISC/ULTRIX system (termed a load host). The
+ configured files are then down-line loaded from the host to the tar-
+ get DSRVJ or DSRVR hardware over the LAN. Serial-line down loading is
+ not supported in this release.
+
+ The DEC WANrouter 150/250 software can be managed from any VMS or UL-
+ TRIX end system using the DECnet Network Command Language (NCL), or
+ the DEC Management Control Center (DECmcc). Monitoring of the Inter-
+ net functions of the software can also be performed from a system sup-
+ porting the Simple Network Management Protocol (SNMP/MIB II).
+
+ DECnet Routing
+
+ The DEC WANrouter 150/250 software implements IS-IS (link state rout-
+ ing) as the DECnet/OSI Phase V routing protocol. Note that the DEC-
+ net/OSI Phase V routing protocol also supports DECnet Phase IV endsys-
+ tems.
+
+ For backward compatibility, the DEC WANrouter 150/250 software also
+ implements DECnet Phase IV routing (router vector routing).
+
+ The DEC WANrouter 150/250 software supports both intra-area routing
+ (Level 1) and inter-area routing (Level 2). The router can run either
+ the Phase IV or Phase V routing algorithm in either combination at each
+ level.
+
+ Routers within the same DECnet area must use the same routing algo-
+ rithms, either DECnet Phase IV or DECnet/OSI Phase V, but not both.
+
+ Communication with other DECnet end systems or routers over the se-
+ rial connections can use either DDCMP (synchronous or asynchronous),
+ or HDLC (synchronous only) datalink circuits.
+
+ If the routing circuit costs are set appropriately, the DEC WANrouter
+ 150/250 software performs path splitting across two (DSRVJ) and four
+ (DSRVR) paths of equal cost. Note that routing cost is an arbitrary
+ network management parameter set by the network manager to control net-
+ work traffic flow. If the cost between the router and the destination
+
+                                  2
+
+ 
+
+ node is the same on multiple circuits, then the DEC WANrouter 150/250
+ software splits the traffic across the circuits.
+
+ Internet Routing
+
+ The WANrouter 150/250 software provides support for the following IP
+ routing protocols:
+
+ o  RIP (Routing Information Protocol) for routing in pure TCP/IP en-
+    vironments, as specified in RFC 1058. (Note that in DECnet Phase
+    IV areas, where DECnet Phase IV routing algorithms are used, RIP
+    should be used instead of integrated IS-IS.)
+
+ o  Exterior Gateway Protocols (EGPs) as specified in RFCs 827, 888,
+    and 904.
+
+ o  Integrated Intermediate System to Intermediate System (IS-IS) pro-
+    tocol for routing in pure TCP/IP and dual environments, as spec-
+    ified in RFC 1195.
+
+ RFC 1195 is the OSI IS-IS Intra-Domain routing, with additions to sup-
+ port IP routing as defined in RFC 1195. IP routers which do not sup-
+ port IS-IS, RIP, or EGP can also be supported by manually configured
+ IP Reachable Addresses (static routes) over serial or CSMA/CD circuits.
+
+ When using Integrated IS-IS, the DEC WANrouter 150/250 software sup-
+ ports equal-cost path splitting of IP data over equal-cost paths. Vari-
+ able, but contiguous, IP subnet masks are also supported.
+
+ IP hosts and gateways on the same CSMA/CD circuit as the DEC WANrouter
+ 150 or 250 are identified by the Address Resolution Protocol (ARP) as
+ described in RFC 826. Proxy ARP (RFC 1027) is also supported.
+
+ The DEC WANrouter 150 and 250 can communicate directly with IP hosts
+ or gateways over CSMA/CD circuits. They inter-operate with other IP
+ gateways using RIP or EGP on these circuits.
+
+ IP datagrams can be forwarded over:
+
+ o  CSMA/CD circuits using Ethernet format packets
+
+ o  Serial synchronous circuits using HDLC or DDCMP data links
+
+                                  3
+
+ 
+
+ o  Serial asynchronous circuits using DDCMP data links
+
+ OSI Routing
+
+ The DEC WANrouter 150/250 software fully implements the requirements
+ of an OSI Intermediate System. The DEC WANrouter 150/250 exchanges in-
+ formation about reachability of end systems using the OSI Intermedi-
+ ate System to Intermediate System (IS-IS) Intra-Domain Routing Exchange
+ Protocol as specified in ISO/IEC 10589.
+
+ OSI-compatible end systems on the same Local Area Network can exchange
+ information with the DEC WANrouter 150/250 using the OSI End System
+ to Intermediate System (ES-IS) Routing Exchange Protocol as specified
+ in ISO 9542.
+
+ The DEC WANrouter 150/250 software uses the OSI Connectionless Net-
+ work Protocol (CLNP) as specified in ISO 8473 to communicate with OSI-
+ compatible systems over an ISO 8802/3 or IEEE 802.3 Local Area Net-
+ work. Communication over the serial links uses the synchronous HDLC
+ data link protocol or the synchronous/asynchronous DDCMP data link pro-
+ tocol.
+
+ Installation and Configuration
+
+ The minimum requirement is for one host to load the DSRVJ or DSRVR tar-
+ get hardware. However, DEC WANrouter 150/250 software can be installed
+ on a number of load hosts. This helps to protect against loss of ser-
+ vice if a single load host is unavailable, or unable to load the sys-
+ tem for any other reason.
+
+ Installation is performed using VMSINSTAL (on VMS) or setld (on UL-
+ TRIX). The router software must be configured using configuration pro-
+ grams supplied with the product. These configuration programs allow
+ the network manager to set up the downline load database, to define
+ the required DEC WANrouter 150/250 entities, and produce an initial-
+ ization script file. Once configured, the software image and initial-
+ ization script file are down-line loaded to the target DSRVJ or DSRVR
+ hardware unit.
+
+
+                                  4
+
+ 
+
+ The DSRVJ and DSRVR must be loaded using the Maintenance Operation Pro-
+ tocol (MOP) via the IEEE802.3/Ethernet connection.
+
+ The load host must be located on the same LAN or extended LAN as the
+ DSRVJ or DSRVR hardware unit.
+
+ Management
+
+ The DEC WANrouter 150/250 software conforms to both the Digital En-
+ terprise Management Architecture (EMA) and the Internet Structure of
+ Management Information. Access to the manageable entities is supported
+ using either the OSI Control Management Information Protocol (CMIP)
+ or the Simple Network Management Protocol (SNMP).
+
+ Permanent changes to the configuration of the DEC WANrouter 150/250
+ software can be made by using the configuration utilities to create
+ a script file and then downline loading these to the DSRVJ or DSRVR
+ hardware unit. Temporary changes to the configuration of the DEC WAN-
+ router 150/250 software can be made by using any EMA-compliant Direc-
+ tor such as NCL or DECmcc from any available and supported end sys-
+ tem. These temporary changes are lost when the hardware unit is re-
+ loaded with the original script file.
+
+ Other management tasks can also be be performed using NCL, allowing
+ the network manager to:
+
+ o  Manage specific connections (for example, set up the datalinks, en-
+    able and disable circuits)
+
+ o  Monitor network traffic (for example, enable event logging, dis-
+    play counters)
+
+ o  Resolve problems (for example, test circuit availability, perform
+    loopback tests)
+
+ Information about MIB II objects held on the DEC WANrouter 150/250 can
+ also be accessed by Network Management systems using the Simple Net-
+ work Management Protocol (SNMP). The DEC WANrouter 150/250 implements
+ the Management Information Base (MIB-II) variables which can be read
+ by a SNMP management station. Note that support is not provided for
+ modifying these variables from an SNMP management station.
+
+                                  5
+
+ 
+
+ Physical Line Support
+
+ The DSRVR and DSRVJ hardware units contain an Ethernet interface port
+ (IEEE 802.3 compatible). The DSRVR has eight synchronous/asynchronous
+ serial communications ports. Six of these are 25-pin low-speed ports,
+ and two are 50-pin multi-standard high-speed ports. The DSRVJ has two
+ synchronous/asynchronous communications ports, one 25-pin low-speed,
+ and one 50-pin multi-standard high-speed port.
+
+ All 25-pin low-speed ports (up to 19.2Kbps maximum) only support the
+ V.24/V.28 (EIA-232-D) ISO 2110, electrical and physical interface stan-
+ dards.
+
+ The 50-pin multi-standard high-speed (up to 64Kbps maximum) ports re-
+ quire use of an appropriate adapter cable to support one of the fol-
+ lowing electrical and physical interface standards:
+
+ o  CCITT V.28/V.24 (EIA-RS232-C/D) - ISO 2110
+
+ o  CCITT V.36/V.11 (EIA-RS422/449) - ISO 4902
+
+ o  CCITT V.35 - ISO 2593
+
+ o  CCITT V.10 (EIA-RS423/449) - ISO 4902
+
+ o  CCITT V.11 - ISO 4903 (for British Telecom 64K Kilostream service
+    only)
+
+ Refer to the System Support Addendum (SSA 36.24.00-x) for details of
+ the adapter cables.
+
+ The number of lines and speeds supported simultaneously are shown in
+ Table 1.
+
+ 
+
+
+
+
+
+                                  6
+
+ 
+
+ ___________________________________________________________________
+
+ Table_1:_Line_Support______________________________________________
+
+            _______________Line_Configurations_(Kbps)______________
+
+ Device_____Config_1.____Config_2.________Config_3._________________
+
+ DSRVR      8 x 19.2     1 x 64 and 4 x   2 x 64
+                         9.6
+
+ DSRVJ      2 x 19.2     1 x 64 and 1 x
+ ________________________9.6________________________________________
+
+ Note that when any port is configured for V.28/V.24 (EIA-232-D/C) or
+ asynchronous mode the speed is restricted to 19.2Kbps maximum.
+
+ All serial ports operate in full-duplex mode and support full modem
+ control for manually dialed, and auto answer modems conforming to Bell
+ standards and CCITT recommendations, including V.22, V.22bis and V.32.
+ These ports can operate as synchronous or asynchronous DDCMP point-
+ to-point, or synchronous HDLC point-to-point links.
+
+ Network Size and Supported Circuits
+
+ DECnet Phase IV networks are hierarchical networks that can be seg-
+ mented into up to 63 areas, each containing up to 1023 nodes. Note that
+ these are maximum values permitted by the Digital Network Architec-
+ ture, and that satisfactory operation in large networks requires proper
+ network planning.
+
+ DECnet/OSI Phase V Domains can be virtually unlimited. However, the
+ actual size of a Domain is limited by the product's memory size and
+ processor power. Table 2 lists the values of the parameters used to
+ determine the size of the supported network for the DEC WANrouter 150
+ (DSRVJ) and DEC WANrouter 250 (DSRVR).
+
+ Note that these figures are given as a guide only. Actual sizes ex-
+ perienced will depend on a number of factors including the topolog-
+ ical characteristics of the network, the mix of protocols and data link
+ interfaces, and the amount of routing control traffic generated by the
+
+                                  7
+
+ 
+
+ network. Consult your local Digital Sales office for more details and
+ for assistance with network sizing and planning.
+
+ 
+
+ ___________________________________________________________________
+
+ Table_2:_Network_Sizes_____________________________________________
+
+                       Maximum Number
+
+ Attribute_____________DSRVR_______DSRVJ____________________________
+
+ Total Areas in        200         63
+ Domain¹
+
+ Routing Addresses in  3200        1024
+ Area
+
+ Level 1 Routers in    100         36
+ Area
+
+ Level 2 Routers in    400         63
+ Domain
+
+ OSI Reachable Ad-     100         10
+ dresses¹
+
+ Local IP Interface    15          10
+ Addresses
+
+ IP Nets per Domain    500         10
+
+ IP Reachable Ad-      100         32
+ dresses
+
+ ___________________________________________________________________
+
+ Notes:
+
+ 1. The total number of areas plus OSI reachable addresses cannot ex-
+    ceed 200 for the DSRVR and 127 for the DSRVJ. If not all OSI reach-
+    able addresses are used, then more areas can be supported up to the
+    maximum stated above.
+
+ Attribute definition
+
+                                  8
+
+ 
+
+ 
+
+ Total    Number of area addresses in the routing Domain. This
+ Areas    value, plus the number of OSI reachable addresses, is the
+ in       total number of addresses which can be forwarded to using
+ Domain   Level 2 forwarding.
+ :
+
+ Routing  Total number of addresses (IDs) which can be forwarded
+ Ad-      to using Level 1 forwarding. Each router may have one or
+ dresses  two addresses, each endsystem has one or more addresses
+ in Area  (e.g., a Phase IV and a Phase V address, each one counts
+ :        as a separate address).
+
+ Level 1  Number of Level 1 Routers in the Area.
+ Routers:
+
+ Level 2  Number of Level 2 Routers in the Routing Domain.
+ Routers
+ :
+
+ OSI      Number of OSI reachable addresses which may be manually
+ Reach-   configured on the local router (when the local router is
+ able     being used as a level 2 router)
+ Ad-
+ dresses:
+
+ Local    Total number of IP addresses which can be configured for
+ IP In-   the local interface ports.
+ terface
+ Ad-
+ dresses:
+
+ IP Nets  Number of unique nets/subnets reachable within the local
+ per      routing Domain at level 2. This number is the summation
+ Domain:  of IP subnets propagated from Level 1 IS-IS, IP subnets
+          propagated from RIP and EGP, and IP Reachable Address
+          Prefixes defined at Level 2
+
+
+                                  9
+
+ 
+
+
+ IP       Number of manually configured IP nets/subnets
+ Reach-
+ able
+ Ad-
+ dresses:
+
+ 
+
+ ___________________________________________________________________
+
+ Table_3:_Local_Router_Adjacency_Attributes_________________________
+
+                       Maximum Number
+
+ Attribute_____________DSRVR_______DSRVJ____________________________
+
+ LAN L1 Router Adja-   32          32
+ cencies
+
+ LAN L2 Router Adja-   32          8
+ cencies
+
+ LAN Endsystem Adja-   1024        256
+ cencies
+
+ Manual Endsystem      2           4
+ Adjacencies
+
+ Endsystem_Addresses___2080________524______________________________
+
+ Attribute definition
+
+ 
+
+ LAN L1   Number of Level 1 Routers on the LAN (not including the
+ Router   local node). If a Level 1 Router has more than one con-
+ Adja-    nection to the LAN, each connection counts as a LAN L1
+ cen-     Router Adjacency. If a Level 2 Router has any Level 1
+ cies:    connections to the LAN, then each connection counts as a
+          LAN Level 1 Router Adjacency.
+
+                                 10
+
+ 
+
+
+ LAN L2   Number of Level 2 Routers on the LAN (not including the
+ Router   local node). If a Level 2 Router has more than one Level
+ Adja-    2 connection to the LAN, each such connection counts as a
+ cen-     LAN L2 Router Adjacency.
+ cies:
+
+ LAN      Number of Endsystems on the LAN. If an Endsystem has more
+ Endsys-  than one connection to the LAN, each connection counts as
+ tem      one LAN Endsystem Adjacency.
+ Adja-
+ cen-
+ cies:
+
+ Manual   Number of non-autoconfiguring Endsystems which may be
+ Endsys-  manually created on a broadcast circuit.
+ tem
+ Adja-
+ cen-
+ cies:
+
+ Endsystem Total number of addresses (IDs) of all Endsystems adja-
+ Ad-      cently connected to the router. These include Endsystems
+ dresses: on the LAN, manual Endsystem Adjacencies, and Endsystems
+          connected to the serial ports over a single point-to-
+          point link.
+
+ Conformance to Standards
+
+ The DEC WANrouter 150/250 software conforms to the following CCITT rec-
+ ommendations, international standards, and Internet RFCs:
+
+ o  ISO 3309-High-level Datalink Control (HDLC) Frame Structure
+
+ o  ISO 8348/Addendum 2 (Network Layer Addressing)
+
+ o  ISO 8473-Specification of Protocol to Provide the Connectionless-
+    mode Network Service
+
+ o  ISO 9542-End System to Intermediate System (ES-IS) Routing Exchange
+    Protocol for Use in Conjunction with ISO 8473
+
+                                 11
+
+ 
+
+ o  ISO/IEC 10589-Intermediate System to Intermediate System (IS-IS)
+    Intra Domain Routing Exchange Protocol for Use in Conjunction with
+    ISO 8473
+
+ o  ISO 8802/2-Local Area Networks/Part 2: Logical Link Control
+
+ o  ISO 8802/3-Local Area Networks/Part 3: CSMA/CD Access Method and
+    Physical Layer Specification
+
+ o  RFC 768-User Datagram Protocol (UDP)
+
+ o  RFC 791-Internet Protocol (IP)
+
+ o  RFC 792-Internet Control Message Protocol (ICMP)
+
+ o  RFC 826-Address Resolution Protocol (ARP)
+
+ o  RFC 827, 888 & 904-Exterior Gateway Protocol (EGP)
+
+ o  RFC 922-Broadcasting Internet Datagrams in the Presence of Subnets
+
+ o  RFC 950-Internet Standard Subnetting Procedure
+
+ o  RFC 1009-Requirements for Internet Gateways (Applicable Sections)
+
+ o  RFC Draft - Requirements for IP Routers
+
+ o  RFC 1027-Using ARP to Implement Transparent Subnet Gateways
+
+ o  RFC 1058-Routing Information Protocol (RIP)
+
+ o  RFC 1155-Structure and Identification of Management Information for
+    TCP/IP-based Internets
+
+ o  RFC 1157-A Simple Network Management Protocol (SNMP)
+
+ o  RFC 1158-Management Information Base for Network Management of TCP
+    /IP-based Internets
+    (MIB-II)
+
+ o  RFC 1195-Use of OSI IS-IS for Routing in TCP/IP and Dual Environ-
+    ment
+
+ Performance
+
+                                 12
+
+ 
+
+ The DEC WANrouter 150/250 products can saturate the band width of all
+ serial lines at the speeds shown in Table 1 with packet sizes of 128
+ bytes or greater. The actual performance of packets forwarded by any
+ given DEC WANrouter 150/250 depends on many protocol and network topol-
+ ogy considerations. Some of these considerations are:
+
+ o  Mix of protocol types
+
+ o  Type of traffic (routing updates or data packets) and data rates
+
+ o  Communications line characteristics
+
+ o  Frequency and type of errors on the synchronous or asynchronous links
+
+ o  Network topology stability
+
+ o  Protocol overhead
+
+ PREREQUISITE SUPPORT
+
+ A Network Profile and DECnet Customer Support Plan covering all in-
+ tended network nodes and their support may be required by your Dig-
+ ital office.
+
+ HARDWARE REQUIREMENTS
+
+ The following hardware is required:
+
+ o  Processor and/or hardware configurations as specified in the Sys-
+    tem Support Addendum (SSA 36.24.00-x).
+
+ o  DECrouter 250 (DSRVR) or DEC WANserver 150 (DSRVJ) as specified in
+    the System Support Addendum (SSA 36.24.00-x)
+
+ o  Cables and modem equipment supporting the required physical inter-
+    face standards and line speeds
+
+
+
+
+                                 13
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ The DEC WANrouter 150/250 requires at least one local system to act
+ as a load host. That system needs to be a VAX-based system running the
+ VMS or ULTRIX Operating System, or a RISC-based system running the UL-
+ TRIX Operating System.
+
+ Each VMS system acting as a load host or dump receiver requires:
+
+ o  VMS Operating System
+
+ o  DECnet-VAX (DECnet-VAX Extension kit must be installed when using
+    DECnet-VAX V5.4)
+
+ Each VAX/ULTRIX system acting as a load host or dump receiver requires:
+
+ o  ULTRIX Operating System
+
+ o  DECnet/OSI for ULTRIX
+
+ Each DECstation or DECsystem acting as a load host or dump receiver
+ requires:
+
+ o  ULTRIX Operating System
+
+ o  DECnet/OSI for ULTRIX
+
+ Refer to the System Support Addendum (SSA 36.24.00-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ o  Software Licenses:
+
+    o  DEC WANrouter 150/250 License: QL-GZZA9-AA
+
+    o  DEC WANrouter 150/250 Migration
+       License: QL-GZXA9-AA
+
+
+                                 14
+
+ 
+
+ o  Software Media:
+ 
+
+    ________________________________________________________________
+    Operating
+    System______Order_Code__________________________________________
+
+    VMS:        QA-GZZAA-H*
+
+    VAX/ULTRIX: QA-GZZAB-H*
+
+    RISC        QA-GZZAC-H*
+    /ULTRIX:________________________________________________________
+
+ o  Software Documentation:
+ 
+
+    ________________________________________________________________
+    Operating
+    System______Order_Code__________________________________________
+
+    VMS:        QA-GZZAA-GZ
+
+    VAX/ULTRIX: QA-GZZAB-GZ
+
+    RISC        QA-GZZAC-GZ
+    /ULTRIX:________________________________________________________
+
+ o  Software Product Services: QT-GZZA*-**
+
+ * Denotes variant fields. For additional information on available li-
+ censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ A separate DEC WANrouter 150/250 license is needed for each DSRVJ or
+ DSRVR hardware unit on which the software product is used.
+
+ A software migration license is available to allow customers holding
+ DECrouter 250 software licenses to purchase, install, and run the DEC
+ WANrouter 150/250 media kit.
+
+                                 15
+
+ 
+
+ The licensing provisions of Digital's Standard Terms and Conditions
+ specify that the software and any part thereof (but excluding those
+ parts specific to the load hosts) may be used only on the single DEC
+ WANserver 150 or DECrouter 250 hardware unit on which the software is
+ operated, but may be copied, in whole or in part (with the proper in-
+ clusion of Digital's copyright notice and any proprietary notices on
+ the software) between multiple load hosts on the same LAN.
+
+ This software is furnished under the licensing provisions of Digital's
+ Standard Terms and Conditions. For more information about Digital's
+ licensing terms and policies, contact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available. For more information, please
+ contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ The DEC WANrouter 150/250 software is warranted for use only with sup-
+ ported DECnet and TCP/IP products supplied by Digital. Any system con-
+ nected to one of the DEC WANrouter 150 or 250 serial link(s) must run
+ a current version of a DECnet product using any supported synchronous
+ or asynchronous interface.
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ 
+
+ [TM]The DIGITAL Logo, DDCMP, DEC, DECmcc, DECnet, DECrouter, DEC-
+    station, DECsystem, MicroVAX, TK, ULTRIX, VAX, VAXcluster, and
+    VMS are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+                                 16

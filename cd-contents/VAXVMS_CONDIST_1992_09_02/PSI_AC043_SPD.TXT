@@ -1,0 +1,543 @@
+
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ________________________________________________________________
+
+          PRODUCT NAME:  VAX Packetnet System Interface     SPD 27.78.02
+                         Access, Version  4.3
+
+          DESCRIPTION
+
+          The VAX Packetnet System Interface Access (VAX P.S.I. Access)
+          product allows a suitably configured DECnet-VAX system in a DEC-
+          net environment to make logical connections to Packet Switching
+          Data Networks (PSDNs) by using one or more connector node(s).
+          VAX P.S.I. Access, with the connector node providing physical
+          connection(s) to a PSDN(s), enables process-to-process and ter-
+          minal communications between the Access system and the remote
+          Data Terminal Equipment (DTE).
+
+          The connector node may be any of the following:
+
+          o  An X25router 2000 product (refer to X25router 2000 Software
+             Product Description SPD 28.86.xx ).
+
+          o  VAX P.S.I.  configured in Multi-host mode (refer to VAX 
+             Packetnet System Interface P.S.I. Software Product Description
+             SPD 25.40.xx).
+
+          DECnet logical links are established by VMS to connect the VAX
+          P.S.I. Access node to the connector node. These links may use
+          any supported DECnet communications path between the VAX P.S.I.
+          Access node and the connector node, provided they themselves do
+          not use an X.25 connection. VAX P.S.I. Access uses these links
+          to transmit X.25 or X.29 messages between the connector node and
+          the VAX P.S.I. Access host.
+
+
+
+                                       DIGITAL                   July 1990
+
+                                                               AE-KK33C-TE
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          Note that successful use of an X.29 connection, either for in-
+          coming X.29 calls or by means of the host-based PAD utility
+          supplied with VAX P.S.I. Access, depends on the DECnet circuit
+          between the Access and connector nodes having a low response
+          time. This requires high-speed DECnet connections and few inter-
+          mediate routing nodes.
+
+          A single VAX P.S.I. Access host can connect to one or more
+          connector nodes concurrently, and hence access all PSDN(s)
+          accessible from those connector nodes. When VAX P.S.I. Access is
+          installed, one of these connector nodes/PSDN combinations must
+          be established as the default gateway for outbound and inbound
+          traffic.
+
+          Features
+
+          VAX P.S.I. Access is a VMS layered product and can be used in
+          the following ways:
+
+          o  Process-to-process (X.25) communication
+
+          o  Process-to-terminal (X.29) communication
+
+          o  Terminal-to-Process (X.29) communication
+
+          o  Open System Interconnection
+
+          Process-to-process (X.25) Communication
+
+          VAX P.S.I. Access supports access for VMS user programs written
+          in VAX MACRO and native mode high-level languages such as VAX
+          FORTRAN. Programs executing in PDP-11 compatibility mode cannot
+          use VAX P.S.I. Access.
+
+          The VAX P.S.I. Access programming interface allows application
+          programs to access the service interface to the packet level via
+          the standard VMS QIO interface. Functions include the setting
+          up and breaking of network connections, data transmission and
+          reception, sending and receiving of interrupt messages, and re-
+          setting of virtual circuits. The interface also allows splitting
+
+                                          2
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          and recombining of messages which are longer than the packet
+          size selected for the circuit.
+
+          The programming interface enables an application program using
+          VMS System Services to communicate with complementary software
+          on other systems (Digital or non-Digital DTEs) accessible via
+          the X.25 connection.
+
+          Process-to-terminal and Terminal-to-process (X.29) Communica-
+          tion
+
+          VAX P.S.I. Access supports terminal communications according to
+          CCITT recommendations X.3, X.28, and X.29 for:
+
+          o  Outgoing terminal traffic
+
+             VAX P.S.I. Access host users may make outgoing calls to
+             other Digital or non-Digital CPUs, or suitable network PADs
+             accessible via a PSDN, using the X.29 programming interface
+             or by using the host-based Packet Assembly/Disassembly (PAD)
+             supplied with VAX P.S.I. Access. The PAD facility accepts
+             DCL-style commands or CCITT X.28 commands.
+
+          o  Incoming terminal traffic
+
+             The X.29 Interactive Terminal Interface allows remote asyn-
+             chronous terminals (character-mode DTEs) connected to the
+             network to communicate with the VAX P.S.I. Access host in a
+             manner similar to local terminals. Dissimilarities may appear
+             as a result of delays caused by the PSDN(s) and the various
+             PAD parameter settings chosen by the user or peculiar to the
+             PSDN(s). In this case, the remote PAD must perform code con-
+             versions between ASCII and the code the terminal uses. Note
+             that there may be some restrictions imposed by the PSDN(s).
+
+          Terminal parameters defined in the X.3 recommendation are ex-
+          plicitly supported. Network-specific enhancements or extensions
+          to the X.3 parameters are available at both the X.29 programming
+          interface and the host-based PAD user interface. Terminal pro-
+          cesses that depend on these extensions may cause problems when
+
+                                          3
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          used on other PSDNs or when accessing one PSDN via another (for
+          example, international access).
+
+          The X.29 terminal interface is compatible with the local termi-
+          nal interface, except for those facilities where the PSDN does
+          not provide adequate support. The X.29 interface includes sup-
+          port for specific X.29 signaling. For example, the break key
+          can be used to disable output, and the interrupt message can be
+          mapped directly to the VMS interrupt character.
+
+          The host-based PAD employs a DCL-style command syntax offering
+          the ability to reference the CCITT PAD parameters symbolically,
+          as well as an interface that conforms to the standard CCITT
+          command signals. The host-based PAD also offers the capability
+          of running multiple X.29 sessions using the VMS SPAWN and ATTACH
+          commands. The host-based PAD supports reception of reselection
+          messages to allow X.29 calls to be redirected to another DTE.
+
+          The X.29 programming interface is similar to the X.25 interface
+          and allows a VMS process to control the virtual circuit (for
+          example, to modify PAD parameters or clear a call). The X.29
+          programming interface can also be used to make an outgoing call
+          to a remote PAD. The programming interface allows generation of
+          PAD reselection messages.
+
+          The maximum number of terminals supported (both local and remote
+          X.29) must not exceed the number supported by VMS. The use
+          of PVCs for X.29 connections is not defined by the 1980 and
+          1984 CCITT recommendations and is not available with VAX P.S.I.
+          Access.
+
+          Open System Interconnection
+
+          VAX P.S.I. Access may be used for Open System Interconnection
+          (OSI) communication using the OSI Applications Kernel prod-
+          uct (OSAK). Refer to the VAX OSI Applications Kernel Software
+          Product Description (SPD 27.47.xx).
+
+
+                                          4
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          VAX P.S.I. Access may also be used with VAX FTAM for managing
+          files on open systems (refer to VAX FTAM Software Product
+          Description SPD 29.86.xx), and with the VAX Message Router
+          X.400 Gateway to enable message exchange with other X.400 sys-
+          tems in X.400 public or private networks. Refer to the VAX Mes-
+          sage Router X.400 Gateway Software Product Description (SPD
+          27.50.xx).
+
+          VAX P.S.I. Access also provides features of X.25 which permit a
+          Connection Oriented Network Service (CONS) over X.25, according
+          to ISO 8348.
+
+          Virtual Circuits
+
+          VAX P.S.I. Access supports both Permanent Virtual Circuits
+          (PVCs) and Switched Virtual Circuits (SVCs) from the connector
+          node, and supports up to 512 virtual circuits in total per host
+          machine. One virtual circuit is used for each:
+
+          o  Incoming or outgoing X.29 terminal connection
+
+          o  X.25 call, using either an SVC or PVC
+
+          VAX P.S.I. and VAX P.S.I. Access Running on the Same System
+
+          In a network consisting of more than one connector node in-
+          volving one or more VAX P.S.I. Multi-host nodes, users on a
+          Multi-host node may need to gain access to PSDN(s) connected to
+          another connector node. This is accomplished by installing both
+          VAX P.S.I. and VAX P.S.I. Access on the same node in combination
+          mode.
+
+          Configuration
+
+          VAX P.S.I. Access provides a configuration procedure to con-
+          figure a VAX P.S.I. Access system locally. This allows network
+          managers to create a configuration after initial installation,
+          or subsequently when reconfiguration is necessary.
+
+
+
+                                          5
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          Network Management
+
+          VMS provides a Network Control Program (NCP) for management
+          of both DECnet-VAX and VAX P.S.I. This program allows network
+          managers to define the line(s) and PSDN(s) to which the system
+          is connected, select the mode (DTE or DCE) of each, specify
+          destinations for incoming calls, access counters, and perform
+          other maintenance functions.
+
+          Problem Solving
+
+          The TRACE utility assists problem solving by tracing and analyz-
+          ing information at various stages as it passes between the PSDN,
+          the connector node and the VAX P.S.I. Access node. Event logging
+          is available by means of normal VMS mechanisms.
+
+          P.S.I. Accounting
+
+          The P.S.I. Accounting utility enables the system manager to
+          obtain information on VAX P.S.I. Access and network usage. The
+          P.S.I. Accounting utility can extract the information collected
+          and display the information directly on a terminal or write the
+          information to a file. Information can be extracted for selected
+          records or a summary produced. The P.S.I. Accounting utility is
+          compatible with the VMS Accounting utility.
+
+          In the case of incoming X.29 calls, no information can be stored
+          relating to the process/account on which a user is logged; this
+          can be obtained through correlation with VMS accounting records.
+
+          On a VAX P.S.I. Access node, the P.S.I. Accounting utility
+          records details of calls to and from the Access node only. Refer
+          to the appropriate SPD for the connector node for  details of
+          the accounting features available.
+
+          If the connector node is a VAX P.S.I. Multi-host node, P.S.I.
+          Accounting should also be used at the Multi-host node to gather
+          comprehensive accounting data. Refer to the VAX P.S.I. SPD
+          (25.40.xx) for more information about the available accounting
+          features.
+
+                                          6
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          P.S.I. Security
+
+          The P.S.I. Security utility allows control of both remote DTE
+          access to VAX P.S.I. Access, and access to the PSDN(s) by VMS
+          processes. The Security utility allows for access control on the
+          basis of:
+
+          o  The remote DTE numbers involved, either on the basis of
+             individual DTE numbers or groups of DTE numbers with common
+             leading digits
+
+          o  The process making the outgoing call or the application
+             handling the incoming call
+
+          o  Whether or not the call is normally or reverse charged
+
+          On a VAX P.S.I. Access node, the P.S.I. Security utility per-
+          forms security checks for calls to and from the Access node
+          only. Refer to the appropriate SPD for the connector node for
+          details of the security features available.
+
+          If the connector node is a VAX P.S.I. Multi-host node, P.S.I.
+          Security should also be used at the Multi-host node to provide
+          comprehensive security. P.S.I. Security on a VAX P.S.I. Multi-
+          host node checks both incoming and outgoing calls for the right
+          to communicate with the VAX P.S.I. Access node. Refer to the
+          VAX P.S.I. Software Product Description (SPD 25.40.xx) for more
+          information about the available security features.
+
+          P.S.I. Mail
+
+          The P.S.I. Mail utility allows communication across a PSDN via
+          electronic mail between two VMS systems running VAX P.S.I. or 
+          VAX P.S.I. Access, using the VMS Mail facility even in the absence
+          of any DECnet communications between the two DTEs. Refer to the 
+          VMS Operating System Software Product Description (SPD 25.01.xx)
+          for more  information about VMS Mail.
+
+          Conformance to Standards
+
+                                          7
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          Please refer to appropriate SPD for the connector node for
+          details of the standards and protocol options supported.
+
+          PREREQUISITE SUPPORT
+
+          The customer and Digital must jointly prepare a Network Profile
+          and Customer Support Plan covering all the intended network
+          nodes, their usage of SVCs, PVCs and other network facilities,
+          and their support. Without this Network Profile and Customer
+          Support Plan, Digital cannot support the network connections.
+
+          Support services for VAX P.S.I. Access require that a corre-
+          sponding or a greater level of service are obtained for the
+          connector node(s) used.
+
+          INSTALLATION
+
+          Digital requires that a customer's first purchase of this soft-
+          ware product include Digital Installation Services. These ser-
+          vices provide for installation of the software product by an
+          experienced Digital Software Specialist.
+
+          Only customers experienced with Digital's X.25 products should
+          attempt second or subsequent installations. Digital recommends
+          that all other customers purchase Digital's Installation Ser-
+          vices.
+
+          Customer Responsibilities
+
+          Before installation of the software, the customer must:
+
+          o  Previously have installed all required software and hardware,
+             including terminals.
+
+          o  Obtain, install and demonstrate that both the connection from
+             the connector node to the PSDN and the DECnet connection to
+             the connector node are operational.
+
+          o  Check the requirements for the connector node installation
+             from the appropriate connector node SPD.
+
+                                          8
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          o  Make available for a reasonable period of time, as mutually
+             agreed by Digital and the customer, all hardware, communi-
+             cation facilities and terminals that are to be used during
+             installation.
+
+          Delays caused by any failure to meet the responsibilities will
+          be charged, at the then prevailing rate, for time and materials.
+
+          Courtesy Installation Service
+
+          This software product will be installed by Digital at no addi-
+          tional charge if purchased concurrently with a Startup Service
+          Package that includes installation service. Both the operating
+          system and this product must be installed concurrently. This
+          service may not be available in all countries.
+
+          HARDWARE REQUIREMENTS
+
+          VAX, MicroVAX, VAXstation, or VAXserver configuration as speci-
+          fied in the System Support Addendum (SSA 27.78.02-x).
+
+          SOFTWARE REQUIREMENTS *
+
+             VMS Operating System
+
+             DECnet-VAX (either end-node or full-function)
+
+          *  Refer to the System Support Addendum (SSA 27.78.02-x) for
+             availability and required versions of prerequisite software.
+
+          ORDERING INFORMATION
+
+          Software Licenses: QL-061A*-**
+          Software Media: QA-061A*-**
+          Software Documentation: QA-061AA-GZ
+          Software Product Services: QT-061A*-**
+
+          *  Denotes variant fields. For additional information on avail-
+             able licenses, services and media, refer to the appropriate
+             price book.
+
+                                          9
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of
+          Digital's Standard Terms and Conditions. For more information
+          about Digital's licensing terms and policies, please contact
+          your local Digital office.
+
+
+
+          LICENSE MANAGEMENT FACILITY
+
+          This layered product support the License Management Facility.
+          License units for this product are allocated on a CPU-capacity
+          basis.
+
+          For more information on the License Management Facility, refer
+          to the VMS Operating System Software Product Description (SPD
+          25.01.xx) or the VMS documentation set.
+
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available. For more informa-
+          tion, please contact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with
+          the purchase of a license for the product as defined in the
+          Software Warranty Addendum of this SPD.
+
+          Use of the VAX P.S.I. Access software in conjunction with a
+          connector node for which Digital support has not been purchased
+          and/or is not available invalidates any warranty or support
+          offered in this SPD.
+
+
+                                         10
+
+ 
+
+
+          VAX Packetnet System Interface Access, Version 4.3  SPD 27.78.02
+
+
+
+          Use of the VAX P.S.I. Access software and a connector node with
+          a PSDN which Digital has not tested invalidates any warranty or
+          support offered in this SPD. This software warranty applies only
+          to those PSDN(s) which are fully supported by the connector node
+          software.
+
+
+          [R]  The DIGITAL Logo is a registered trademark of Digital
+               Equipment Corporation.
+
+          [TM] DECnet, MicroVAX, VAX, VAXserver, and VAXstation are trade-
+               marks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         11

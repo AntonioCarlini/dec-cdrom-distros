@@ -1,0 +1,917 @@
+ 
+
+
+
+
+
+
+           Software
+           Product
+           Description
+
+           _________________________________________________________
+
+           PRODUCT NAME:  DEC WANrouter 100/500,        SPD 32.98.00
+                          Version 1.0 
+
+
+           DESCRIPTION
+
+           The DEC WANrouter 100/500 provides a Wide Area Network (WAN)
+           routing service for nodes on a Local Area Network (LAN). It
+           runs on either the DEC MicroServer-SP (DEMSB) or DEC MicroServer
+           (DEMSA) hardware units. These combination software/hardware
+           packages are known as the DEC WANrouter 100 when running on
+           a DEC MicroServer-SP (DEMSB) and DEC WANrouter 500 when run-
+           ning on a DEC MicroServer (DEMSA).
+
+           Overview
+
+           The DEC WANrouter 100/500 software provides a network rout-
+           ing service for:
+
+           o  DECnet/OSI Phase V nodes
+
+           o  DECnet Phase IV nodes
+
+           o  TCP/IP hosts
+
+           o  OSI-compatible end systems
+
+           These nodes and hosts can be co-located on the same Local
+           Area Network as the router or connected to the synchronous
+           communications ports of the router. Connections to other routers
+           or end-systems can be made:
+
+           o  Locally over the Local Area Network using Ethernet or IEEE
+              802.3 protocols
+
+           o  Remotely using modem connections over leased lines us-
+              ing either DDCMP or HDLC data link protocols
+
+                                    DIGITAL                June 1991
+
+                                                         AE-PDVCA-TE
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           o  Remotely across a Packet Switched Data Network (PSDN) us-
+              ing X.25 protocols
+
+           o  Remotely across a Frame Relay network
+
+           The DEC WANrouter 100/500 software image is installed and
+           configured on a VAX/VMS, VAX/ULTRIX or RISC/ULTRIX system
+           (termed a load host) on the same LAN as the DEC MicroServer
+           or DEC MicroServer-SP. This software image is then down-line
+           loaded to the hardware unit from the load host.
+
+           The DEC WANrouter 100/500 software can be managed from any
+           VMS or ULTRIX end system using the DECnet Network Command
+           Language (NCL). Management of the INTERNET functions of the
+           software can be performed from any end system supporting the
+           Simple Network Management Protocol (SNMP). A separate data
+           tracing utility, available on VMS end systems, assists prob-
+           lem solving by tracing data packets as routed by the DEC WAN-
+           router 100/500 software.
+
+           DECnet Routing
+
+           The DEC WANrouter 100/500 software implements both the DEC-
+           net Phase IV routing algorithms (vector routing) and the DEC-
+           net/OSI Phase V routing algorithm (link-state routing) The
+           DEC WANrouter 100/500 software supports both intra-area rout-
+           ing (Level 1) and inter-area routing (Level 2). The router
+           can run either the Phase IV or Phase V routing algorithm in
+           either combination at each level.
+
+           Communication with other DECnet end systems or routers over
+           the synchronous connections can use either DDCMP, HDLC, X.25
+           or Frame Relay data link circuits.
+
+           If the routing circuit costs are set appropriately, the DEC
+           WANrouter 100/500 software performs path splitting. Note that
+           routing cost is an arbitrary network management parameter
+           set by the network manager to control network traffic flow.
+           If the cost between the router and the destination node is
+
+
+                                       2
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           the same on multiple synchronous circuits, then the DEC WAN-
+           router 100/500 software splits the traffic across the cir-
+           cuits.
+
+           INTERNET Routing
+
+           The DEC WANrouter 100/500 software provides routing support
+           for TCP/IP hosts on the same LAN as the router. IP datagrams
+           can be forwarded to remote TCP/IP hosts within the same IN-
+           TERNET domain, or to other INTERNET domains connected by an
+           INTERNET gateway.
+
+           Routing of IP datagrams through the network uses the Dual
+           IS-IS routing protocol as specified in RFC 1195 to commu-
+           nicate reachability of TCP/IP hosts.
+
+           Note: All routers on the path between the TCP/IP hosts must
+           support IP routing using the Dual IS-IS protocol. Within an
+           area, all routers on all paths (including alternate paths)
+           must support the Dual IS-IS routing protocol. Between ar-
+           eas, the same restriction applies but only to the Level 2
+           routers.
+
+           IP hosts on the same Ethernet Local Area Network as the router
+           are identified by the Address Resolution Protocol (ARP) as
+           described in RFC 826. IP datagrams can be forwarded over CSRA
+           /CD (using Ethernet format packets), DDCMP, HDLC, X.25 data
+           link or Frame Relay circuits. In addition, IP Reachable Ad-
+           dresses can also be manually configured over these synchronous
+           data link circuits. When using X.25 data links, only stat-
+           ically assigned circuits are supported; forwarding of IP data-
+           grams over X.25 Dynamically Assigned (DA) circuits is not
+           supported.
+
+           Forwarding of IP datagrams to and from other IP routing do-
+           mains through other IP routers is supported only on the same
+           LAN. Routing information is exchanged with other IP routers
+           on the LAN using the Routing Information Protocol (RIP) as
+           described in RFC 1058. IP routers which do not support RIP
+           can also be supported by making use of manually configured
+
+                                       3
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           IP Reachable Addresses. The use of RIP over the synchronous
+           data link circuits is not supported.
+
+           OSI Routing
+
+           The DEC WANrouter 100/500 software fully implements the re-
+           quirements of an OSI Intermediate System. The DEC WANrouter
+           100/500 exchanges information about reachability of end sys-
+           tems using the OSI Intermediate System to Intermediate Sys-
+           tem (IS-IS) Intra-Domain Routing Exchange Protocol as spec-
+           ified in ISO DIS 10589. OSI-compatible end systems on the
+           same Local Area Network can exchange information with the
+           router using the OSI End System to Intermediate System (ES-
+           IS) Routing Exchange Protocol as specified in ISO 9542.
+
+           The DEC WANrouter 100/500 software uses the OSI Connection-
+           less Network Protocol (CLNP) as specified in ISO 8473 to com-
+           municate with OSI-compatible systems over an ISO 8802/3 or
+           IEEE 802.3 Local Area Network. Communication over the syn-
+           chronous links uses either the HDLC or the X.25 packet-level
+           protocols. X.25 Routing Circuits
+
+           The DEC WANrouter 100/500 software supports the use of stat-
+           ically and dynamically assigned X.25 routing circuits. Static
+           circuits are established when the routing circuit is enabled
+           and remain set up until the routing circuit is disabled. Dy-
+           namically assigned circuits are established only when there
+           is information to send over the routing circuit. They are
+           disconnected when there is no further information to send.
+
+           When running on the DEC WANrouter 500, the software supports
+           more than one connection to an X.25 PSDN, although each con-
+           nection must have a unique DTE address. The router can share
+           outgoing calls between all the DTEs connected to a PSDN. The
+           DEC WANrouter 100/500 software supports routing over either
+           Permanent Virtual Circuits (PVC[R]s) or Switched Virtual Cir-
+           cuits (SVCs).
+
+           Frame Relay Networks
+
+
+                                       4
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           The DEC WANrouter 100/500 software supports connections over
+           Frame Relay data links as specified in the Frame Relay Spec-
+           ification jointly developed by Digital Equipment Corpora-
+           tion, Stratacom[R], Inc., Northern Telecom NT[R], and Cisco Sys-
+           tems Inc. Multiple virtual circuits can be multiplexed over
+           a single Frame Relay link using the Data Link Control Iden-
+           tifier (DLCI) field of the Frame Relay header. For details
+           of the Frame Relay options implemented, refer to the Sys-
+           tem Support Addendum (SSA 32.98.00-x)
+
+           When configured to operate with Frame Relay data links, the
+           DEC WANrouter 100/500 software cannot make use of any other
+           data links such as DDCMP, HDLC or X.25. A separate media and
+           documentation kit is required to allow operation with Frame
+           Relay data links.
+
+           Installation and Configuration
+
+           The minimum configuration requires one host to load the DEC
+           MicroServer or DEC MicroServer-SP, although the DEC WANrouter
+           100/500 software can be installed on a number of load hosts.
+           This helps users to protect against loss of service if a sin-
+           gle load host is unavailable, or unable to load the system
+           for any other reason. Each load host must be on the same LAN
+           as the router.
+
+           Installation is performed using VMSINSTAL (on VMS) or setld
+           (on ULTRIX). The software must be configured using two con-
+           figuration programs supplied with the product. These con-
+           figuration programs allow the network manager to set up the
+           down-line load database and to define the routing circuits.
+           Management
+
+           Permanent changes to the configuration of the DEC WANrouter
+           100/500 software can be made by using the configuration util-
+           ities to create a script file and then rebooting the hard-
+           ware unit. Temporary changes to the configuration of the DEC
+           WANrouter 100/500 software can be made by using the DECnet
+
+
+
+                                       5
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           Network Command Language (NCL) from any available end sys-
+           tem. These temporary changes are lost when the hardware unit
+           is rebooted.
+
+           Other management tasks can also be be performed using NCL,
+           allowing the network manager to:
+
+           o  Manage specific connections (for example: set up the data
+              links, enable and disable circuits)
+
+           o  Monitor network traffic (for example: enable event log-
+              ging, display counters)
+
+           o  Resolve problems (for example: test circuit availabil-
+              ity, perform loopback tests, dump memory contents)
+
+           An additional utility called Common Tracing Facility (CTF)
+           is available on the VMS load host to assist with problem solv-
+           ing by tracing data packets at various stages in its path
+           through the router.
+
+           Information about IP variables held on the DEC WANrouter 100
+           /500 can also be accessed by Network Management systems us-
+           ing the Simple Network Management Protocol (SNMP). DEC WAN-
+           router 100/500 implements the Management Information Base
+           (MIB-I) variables which can be read by any SNMP agent.
+
+           Note: Support is not provided for modifying these variables
+           from an SNMP agent.
+
+           Physical Line Support
+
+           The DEC MicroServer (DEMSA) and DEC MicroServer-SP (DEMSB)
+           hardware units contain an Ethernet interface port (IEEE 802.3
+           compatible) and one or four synchronous communications ports.
+           The DEC MicroServer has four synchronous communications ports
+           and the DEC MicroServer-SP has a single synchronous commu-
+           nications port. Both hardware units are supplied as table-
+           top units, but also can be wall- or rack-mounted in a stan-
+           dard 19-inch rack.
+
+                                       6
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           Communication over the synchronous lines is full- or half-
+           duplex, and full modem control is supplied on all synchronous
+           line(s). The synchronous port(s) can operate as DDCMP point-
+           to-point or multipoint links, HDLC point-to-point links, X.25
+           LAPB/LAPBE links or Frame Relay LAPD data links. On DDCMP
+           multipoint links, the DEC WANrouter 100/500 can act only as
+           a tributary station.
+
+           The product supports V.24 interchange circuits with the fol-
+           lowing electrical interfaces: V.28 (RS232-D), RS232-C, V.36
+           /V.11 (RS449/RS422), V.10 (RS449/RS423), and V.35. It also
+           supports CCITT (1980) X.21 for leased line services only.
+           The number of lines supported depends on the hardware unit,
+           the electrical interface type, and the maximum line speed
+           in use (see Table 1).
+
+
+
+                                       7
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           _________________________________________________________
+
+           Table_1:__Line_Support___________________________________
+
+           _____________________Maximum_Line_Speed_(Kbits/s)________
+
+           Interface    19.2 64    256  384   2048
+           Type
+
+           _________________________________________________________
+
+           DEC_MicroServer_(DEMSA)__________________________________
+
+           V.28/V.24    4    -     -    -     -
+           (RS232-C
+           /D)
+
+           V.36/V.11    4    4     3    2     1
+           (RS422
+           /RS449)
+
+           V.10         4    4     -    -     -
+           (RS423)
+
+           V.35         4    4     3    2     1
+
+           X.21         4    4     3    2     1
+           leased
+           line
+
+           _________________________________________________________
+
+           DEC_MicroServer-SP_(DEMSB)_______________________________
+
+           V.28/V.24    1    -     -    -     -
+           (RS232-C
+           /D)
+
+           V.36/V.11    1    1     -    -     -
+           (RS422
+           /RS449)
+
+           V.10         1    1     -    -     -
+           (RS423)
+
+           V.35         1    1     -    -     -
+
+           X.21         1    1     -    -     -
+           leased
+           line_____________________________________________________
+
+                                       8
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           Actual line utilization is dependent on many factors such
+           as average packet size and protocol overhead. See the Per-
+           formance section of this SPD for guidelines on expected line
+           utilization at the above speeds.
+
+           Adapter cables provide the necessary interchange circuits
+           for each synchronous line. Refer to the System Support Ad-
+           dendum (SSA 32.98.00-x) for further information on the re-
+           quired adapter cables.
+
+           The DEC MicroServer-SP and DEC MicroServer always require
+           an external clock source (such as a modem).
+
+           When used with T1 or G.703 lines, the additional require-
+           ments for operation of the DEC MicroServer are as follows:
+
+           o  The DEC MicroServer supports only clear channel inter-
+              faces. Connection to a T1 or G.703 line requires a V.35
+              /RS422 to T1/G.703 DSU/CSU converter to provide framing
+              to meet CCITT G.704. The DEC MicroServer does not pro-
+              vide either T1 framing pulses or separate channels for
+              64 Kbits/s control data for G.703.
+
+           o  The DEC MicroServer does not guarantee line density. T1
+              links can offer only 1.536 Mbits/s or 1.344 Mbits/s rates.
+              1.536 Mbits/s rates require the DSU/CSU converter to of-
+              fer B8ZS and the line to accept bipolar violations. 1.334
+              Mbits/s rates require the DSU/CSU converter to offer B7.
+
+           o  Transmit clocking should be provided by the DCE, CCITT
+              114. The DEC MicroServer uses CCITT 114 to clock data out
+              of the DTE, and will source a CCITT 113 transmit clock.
+              CCITT 113 should be used by the DCE to receive the trans-
+              mit data. The DEC MicroServer implements CCITT 113 as a
+              buffered version of CCITT 114. This clocking scheme en-
+              sures both network synchronization and minimized skew be-
+              tween the clock and data for a range of cable lengths and
+              parameters.
+
+
+
+                                       9
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           If the above transmit clocking mechanism is not provided by
+           the DCE, this DCE must provide a method of adjusting the phase
+           of the clock used to sample the data with respect to that
+           supplied to the DTE. This requires that the DCE provide test
+           points to allow analysis of the clock and data waveforms and
+           that this adjustment is performed on installation, and af-
+           ter any subsequent alteration of the connection cable. This
+           alternative method is also required for DCEs utilizing the
+           X.21 interface.
+
+           A list of CSU/DSU converters supported by the DEC MicroServer
+           and availax.
+
+           Network Size and Supported Circuits
+
+           DECnet Phase IV networks are hierarchical networks that can
+           be segmented into up to 63 areas, each containing up to 1023
+           nodes.
+
+           Note: These are maximum values permitted by the Digital Net-
+           work Architecture, satisfactory operation in large networks
+           requires proper network planning.
+
+           DECnet/OSI Phase V domains can be virtually unlimited. How-
+           ever, the actual size of a domain is limited by the prod-
+           uct's memory size and processor power. Table 2 lists the val-
+           ues of the parameters used to determine the size of the sup-
+           ported network.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      10
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           _________________________________________________________
+
+           Table_2:__Network_Sizes__________________________________
+
+           Attribute______________Maximum_Number____________________
+
+           End system connections 3000
+
+           Level 1 routers        100
+
+           Areas                  200
+
+           Level 2 routers        400
+
+           DECnet/OSI Reachable   100
+           addresses
+
+           IP Reachable ad-       100 per area
+           dresses
+
+                                  500 per domain
+
+           X.25 circuits          16 (DEMSA)
+                                  4 (DEMSB)
+
+           Frame Relay circuits   31 (DEMSA)
+           _______________________7_(DEMSB)_________________________
+
+           The WANrouter 100/500 software supports 3000 end systems 
+           connections.  Some end systems may have more than one connection 
+           to the router, in which case, the number of end systems 
+           supported in an area will be less than 3000.        
+   
+           Public Networks Supported
+
+           Refer to the System Support Addendum (SSA 32.98.00-x) for
+           a list of the public networks that are supported by the DEC
+           WANrouter 100/500 software. Connections to public networks
+           not listed in the SSA are not supported by Digital at the
+           time of publication of this SPD. Contact your local Digi-
+           tal office for information concerning other public networks.
+
+           In addition to the public X.25 PSDNs listed in the SSA, cer-
+           tain private PSDNs are supported by the DEC WANrouter 100
+           /500 software, and the appropriate profiles are included in
+           these products.
+
+           Conformance to Standards
+
+                                      11
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           The DEC WANrouter 100/500 software conforms to the follow-
+           ing CCITT recommendations, international standards and IN-
+           TERNET RFCs:
+
+           o  CCITT recommendation X.25 (1978, 1980, or 1984) using the
+              LAPB or LAPBE variants of the data link and X.25 packet
+              protocol
+
+           o  ISO 3309 - High-level Data Link Control (HDLC) Frame Struc-
+              ture
+
+           o  ISO 8473 - Specification of Protocol to Provide the Connectionless-
+              mode Network Service
+
+           o  ISO 9542 - End System to Intermediate System (ES-IS) Rout-
+              ing Exchange Protocol for Use in Conjunction with ISO 8473
+
+           o  ISO DIS 10589 - Intermediate System to Intermediate Sys-
+              tem (IS-IS) Intra Domain Routing Exchange Protocol for
+              Use in Conjunction with ISO 8473
+
+           o  ISO 7776 - High-level Data Link Control (HDLC) Procedures:
+              X.25 LAPB-compatible DTE Data Link Procedures
+
+           o  ISO 8208 - X.25 Packet Level Protocol for Data Terminal
+              Equipment
+
+           o  ISO 8802/2 - Local Area Networks/Part 2: Logical Link Con-
+              trol
+
+           o  ISO 8802/3 - Local Area Networks/Part 3: CSRA/CD Access
+              Method and Physical Layer Specification
+
+           o  RFC 768 - User Datagram Protocol (UDP)
+
+           o  RFC 791 - INTERNET Protocol (IP)
+
+           o  RFC 792 - INTERNET Control Message Protocol (ICMP)
+
+           o  RFC 826 - Address Resolution Protocol (ARP)
+
+           o  RFC 1058 - Routing Information Protocol (RIP)
+
+           o  RFC 1098 - Simple Network Management Protocol (SNMP)
+
+                                      12
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           o  RFC 1065 - Structure and Identification of Management In-
+              formation for TCP/IP-based INTERNETs
+
+           o  RFC 1066 - Management Information Base for Network Man-
+              agement of TCP/IP-based INTERNETs
+
+           o  RFC 1195 - Use of OSI IS-IS for Routing in TCP/IP and Dual
+              Environment
+
+           Performance
+
+           The actual packet rate will be less than indicated by the
+           aggregate synchronous line speed, and is determined by such
+           factors as:
+
+           o  Type of traffic (routing updates or data packets) and data
+              rates
+
+           o  Proportion of leased line to X.25 traffic
+
+           o  The path of messages passing through the product (synchronous-
+              to-synchronous, synchronous-to-LAN, or LAN-to-LAN)
+
+           o  Communications line characteristics
+
+           o  Frequency and type of errors on the synchronous links
+
+           o  Network topology
+
+           o  Protocol overhead
+
+           When using line speeds above 384 Kbps, full line saturation
+           is achievable with average packet sizes above 512 bytes. The
+           minimum, average packet size required to achieve full line
+           saturation with full duplex operation is given in Table 3.
+
+
+
+
+
+
+                                      13
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           _________________________________________________________
+
+           Table_3:_________________________________________________
+
+           Line_Speeds_______Minimum_average_packet_size_(bytes)____
+
+           4 @ 64 Kbps       128
+
+           3 @ 256 Kbps      384
+
+           2 @ 384 Kbps      384
+
+           1 @ 1.536 Kbps    768
+
+           1_@_2.048_Kbps____1024___________________________________
+
+           PREREQUISITE SUPPORT
+
+           A Network Profile and DECnet Customer Support Plan cover-
+           ing all intended network nodes and their support may be re-
+           quired by your Digital office.
+
+           INSTALLATION
+
+           If the DEC WANrouter 100/500 is to be used for connection
+           to a public X.25 or Frame Relay network, Digital requires
+           that a customer's first purchase of the product includes Dig-
+           ital Installation Services. These services provide instal-
+           lation of the software product by an experienced Digital soft-
+           ware specialist.
+
+           Only customers experienced with Digital's Wide Area Network
+           communications products should attempt second or subsequent
+           installations. Digital recommends that all other customers
+           purchase Digital's Installation Services.
+
+           HARDWARE REQUIREMENTS
+
+           o  VAX, MicroVAX, VAXstation, VAXserver, DECstation, or DEC-
+              system configuration as specified in the System Support
+              Addendum (SSA 32.98.00-x)
+
+           o  DEC MicroServer or DEC MicroServer-SP as specified in the
+              System Support Addendum (SSA 32.98.00-x)
+
+                                      14
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           o  VT220-compatible terminal for running the configuration
+              utility
+
+           o  Cables and modem equipment supporting the required phys-
+              ical interface standards and line speeds
+
+           SOFTWARE REQUIREMENTS
+
+           Each VMS system acting as a load host or dump receiver re-
+           quires the following:
+
+           o  VMS Operating System
+
+           o  DECnet-VAX (DECnet-VAX Extension kit must be installed)
+
+           Each VAX/ULTRIX system acting as a load host or dump receiver
+           requires the following:
+
+           o  ULTRIX Operating System
+
+           o  DECnet/OSI for ULTRIX
+
+           Each DECstation or DECsystem acting as a load host or dump
+           receiver requires the following:
+
+           o  ULTRIX Operating System
+
+           o  DECnet/OSI for ULTRIX
+
+           Refer to the System Support Addendum for availability and
+           required versions of prerequisite/optional software (SSA 32.98.00-
+           x).
+
+           ORDERING INFORMATION
+
+           The software license allows unrestricted use of the soft-
+           ware on the DEC MicroServer or DEC MicroServer-SP where the
+           product is used. A separate media and documentation kit must
+           be ordered when connection to Frame Relay Networks is re-
+           quired.
+
+           o  Software Licenses:
+
+                 QL-YT7A9-AA - DEC WANrouter 100/500
+
+                                      15
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+                 Software License
+
+                 QL-GZ9A9-AA - DEC WANrouter 100/500
+                 Migration License
+
+           o  Software Media:
+
+              ______________________________________________________
+                                         Circuit Type
+
+                           HDLC,
+              Operating    DDCMP       Frame
+
+              System_______and_X.25____Relay________________________
+
+              VMS:         QA-YT7AA-   QA-YT7AA-H*
+                           H*
+
+              VAX/ULTRIX:  QA-YT7AB-   QA-YT7AE-H*
+                           H*
+
+              RISC         QA-YT7AC-   QA-YT7AF-H*
+              /ULTRIX:_____H*_______________________________________
+
+           o  Software documentation for VMS:
+
+                 QA-YT7AA-GZ - for use with HDLC, DDCMP and X.25 data
+                 links
+
+                 QA-YT7AD-GZ - for use with Frame Relay data links
+
+           o  Software documentation for ULTRIX:
+
+                 QA-YT7AB-GZ - for use with HDLC, DDCMP and X.25 data
+                 links
+
+                 QA-YT7AE-GZ - for use with Frame Relay data links
+
+           o  Software Product Services: QT-YT7**-**
+
+           * Denotes variant fields. For additional information on avail-
+           able licenses, services, and media, refer to the appropri-
+           ate price book.
+
+           SOFTWARE LICENSING
+
+                                      16
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           A separate license is needed for each DEC MicroServer or DEC
+           MicroServer-SP unit where the software product is used (ex-
+           cept as otherwise specified by Digital).
+
+           A software migration license is available to allow customers
+           holding DECrouter 2000 or X.25 router 2000 software licenses
+           to purchase and install and run the DEC WANrouter 100/500
+           media kit.
+
+           The licensing provisions of Digital's Standard Terms and Con-
+           ditions specify that the software and any part thereof (but
+           excluding those parts specific to the load hosts) may be used
+           only on the single DEC MicroServer hardware unit on which
+           the software is operated, but may be copied, in whole or in
+           part (with the proper inclusion of Digital's copyright no-
+           tice and any proprietary notices on the software) between
+           multiple load hosts on the same LAN.
+
+           This software is furnished under the licensing provisions
+           of Digital Equipment Corporation's Standard Terms and Con-
+           ditions. For more information about Digital's licensing terms
+           and policies, contact your local Digital office.
+
+           SOFTWARE PRODUCT SERVICES
+
+           A variety of service options are available. For more infor-
+           mation, contact your local Digital office.
+
+           SOFTWARE WARRANTY
+
+           Warranty for this software product is provided by Digital
+           with the purchase of a license for the product as defined
+           in the Software Warranty Addendum.
+
+           The DEC WANrouter 100/500 software is warranted for use only
+           with supported DECnet and TCP/IP products supplied by Dig-
+           ital. Any system connected to one of the DEC WANrouter's syn-
+           chronous link(s) or creating a DECnet circuit over a PSDN
+           must run a current version of a DECnet product using any sup-
+           ported synchronous interface.
+
+                                      17
+
+ 
+
+
+
+           DEC WANrouter 100/500, Version 1.0          SPD 32.98.00
+
+
+           Digital has designed or adapted the X.25 portion of this prod-
+           uct to operate with equipment conforming to the standards
+           as listed in this SPD, to the public PSDNs as listed in the
+           SSA, and to certain private PSDNs, for which Digital has in-
+           cluded specific PSDN profiles in this product.
+
+           Digital cannot offer its standard warranty for this prod-
+           uct unless it has been configured appropriately for the PSDN.
+           If the product has not been configured appropriately, the
+           product will not be supported by Digital.
+
+           Each PSDN listed in the SSA indicates Digital's commitment
+           to supporting the DEC WANrouter 100/500 software for that
+           public service. However, it does not imply that the appro-
+           priate networking authority has granted network certifica-
+           tion for either of the products. Please contact your Dig-
+           ital sales office for up-to-date information on certifica-
+           tion status.
+
+           [R] Telenet is a registered trademark of GTE Telenet
+               Communication Corporation.
+
+           [R] CompuServe is is registered trademark of CompuServe,
+               Inc.
+
+           [R] TYMNET is a registered trademark of British Telecom-
+               munications PLC.
+
+           [R] PVC is a registered trademark of Galen, Robert S.
+               M.D.
+
+           [R] Northern Telecom NT is a registered trademark of
+               Northern Telecom, Ltd.
+
+           [R] Stratacom is a registered trademark of Stratacom,
+               Inc.
+
+           [TM]The DIGITAL Logo, DEC, DECnet, DECstation, DECsystem,
+               DDCMP, INTERNET, VT220, VAX, MicroVAX, VAXstation,
+               VAXserver, VMS and ULTRIX are trademarks of Digital
+               Equipment Corporation.
+
+                                      18

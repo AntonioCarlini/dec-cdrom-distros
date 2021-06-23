@@ -1,0 +1,545 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECmessageQ for VMS, Version 2.0        SPD 34.07.01
+
+ DESCRIPTION
+
+ DECmessageQ for VMS is the VMS Operating System implementation of a
+ generic software message queuing bus that provides easy-to-use, ef-
+ ficient task-to-task communications among processes using DECmessageQ
+ on VMS, ULTRIX/RISC, ULTRIX/VAX, MS[R]-DOS[R], OS/2[R], Macintosh[R], HP[R]-UX,
+ SYSTEM V/88[R], and Sun[R].
+
+ A common call interface allows messages to be delivered via high-speed
+ global sections for some intra-CPU applications, or via DECnet-VAX and
+ Transmission Control Protocol/INTERNET Protocol (TCP/IP) for inter-
+ CPU applications. Applications can be designed so client applications
+ can be redeployed easily anywhere within the DECmessageQ network con-
+ figuration, whether in a standalone node, a Local Area Network (LAN),
+ or a Wide Area Network (WAN).
+
+ The DECmessageQ communication implementation is designed for ease-of-
+ use, expandability, and efficiency.
+
+ Features
+
+ o  High speed local message delivery using Global Sections
+
+ o  Remote message delivery via DECnet for MS-DOS, Macintosh, OS/2, and
+    VMS connections; and via TCP/IP for UNIX[R]/ULTRIX and VMS connec-
+    tions.
+
+ o  Fully asynchronous and synchronous receipt of messages
+
+ o  Message sizes up to 32,000 bytes
+
+ o  Priority queuing of messages
+
+ o  Message recovery using Message Recovery Services (MRS)
+
+                               DIGITAL                     June 1992
+
+                                                         AE-PF5FB-TE
+
+ 
+
+ o  Message broadcasting using Selective Broadcast Services (SBS)
+
+ o  Selective reception of messages according to certain fields within
+    the DECmessageQ header and within the data portion of the message
+
+ o  Shared input queues using Multi-Reader Queues (MRQ)
+
+ o  Use of intra-CPU naming through high-speed global sections, and inter-
+    CPU naming through VAX Distributed Name Service
+
+ o  Message simulation facility for use in application testing
+
+ o  Set of message delivery options
+
+ o  Selectable tracing of Messages and calls to DECmessageQ
+
+ o  A maximum of 999 queues per DECmessageQ Group
+
+ o  A maximum of 32,000 DECmessageQ Groups
+
+ o  Integration of VMS timers
+
+ o  Support for languages adhering to the VAX Common Language standard
+
+ o  Utilities for monitoring the network configuration and flow of mes-
+    sages
+
+ o  Dynamic addition of message queues and CPUs to the communication
+    network
+
+ o  Message interface for retrieving DECmessageQ configuration infor-
+    mation on-line
+
+ o  Portable call interface
+
+ o  Connectivity to DECmessageQ implementations on VMS, ULTRIX/RISC,
+    ULTRIX/VAX, OS/2, MS-DOS, Macintosh, HP-UX, SYSTEM V/88, and Sun
+
+ DECmessageQ for VMS can also be used as an integration tool to merge
+ many external events with the Message Queuing Bus. In addition to in-
+ tegrating messages from local processes and remote processes, DECmessageQ
+ also provides facilities for the integration of other events such as:
+
+                                  2
+
+ 
+
+    Timer settings
+    Simulated messages
+    LU6.2 conversations
+    Other external events such as special hardware I/O
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  3
+
+ 
+
+ DECmessageQ Queues
+
+ DECmessageQ for VMS provides three types of queues. A queue is a mem-
+ ory storage location for DECmessageQ messages. Any process can insert
+ a message into any queue. These queues are accessed directly by DECmes-
+ sageQ procedures. These procedures are called by user-written appli-
+ cations. DECmessageQ queue types are:
+
+ o  Primary Queue (PQ) - Each process that attaches to the message queu-
+    ing bus is assigned a Primary Queue. This queue is used to receive
+    messages from processes using DECmessageQ.
+
+ o  Secondary Queue (SQ) - Any process may attach to one or more sec-
+    ondary queues. These queues can also be used to receive messages.
+    The order in which queues are scanned for messages is defined by
+    the DECmessageQ selection rules.
+
+ o  Multi-Reader Queue (MRQ) - A Multi-Reader Queue is a single shared
+    queue that can be shared by multiple processes.
+
+ Message Recovery Services (MRS)
+
+ Message Recovery Services for the DECmessageQ Message Queuing Bus ex-
+ tend data recovery to the level of pending messages. Using Message Re-
+ covery Services, the sender is relieved of the responsibility of track-
+ ing the progress of a message through its next level of processing.
+ This functionality can be used both at the client and server sides of
+ the application.
+
+ Message Recovery Services increase the robustness of DECmessageQ by
+ providing applications with the ability to recover from message de-
+ livery failures due to:
+
+    Application program abort
+    Communication line failure
+    System crash
+
+ Some of the applications requirements addressed by MRS are:
+
+ o  Sender wishes to insure delivery of messages when the receiving pro-
+    cess is available but does not wish to monitor the delivery.
+
+                                  4
+
+ 
+
+ o  Sender wishes to know that a message is recoverable to avoid the
+    cost of reconstructing it but does not care when it is finally de-
+    livered.
+
+ o  Receiver wishes to maintain a journal of all messages received by
+    it for audit trail or reprocessing.
+
+ Message Recovery Services are primarily implemented by an MRS server,
+ a non-privileged program attached to the DECmessageQ Message Bus. MRS
+ actions are invoked by standard DECmessageQ send and receive message
+ calls.
+
+ MRS is oriented toward messages, not processes; not all messages sent
+ from or directed to a particular process need to be processed by MRS.
+ This allows applications to selectively incur the additional process-
+ ing imposed by MRS for just those messages that are not easily recov-
+ ered. Message recovery characteristics are set by the sending process.
+
+ Selective Broadcast Services (SBS)
+
+ There are two important application requirements handled by this ser-
+ vice. The first requirement is the ability to send a message to many
+ targets without going through multiple application DECmessageQ send
+ message requests. The second requirement is the ability to generate
+ broadcast messages without the originator knowing the quantity or lo-
+ cation of the target process(es).
+
+ Selective Broadcast Services provide a conceptual broadcast stream of
+ data. In this broadcast stream any process can insert a message. Any
+ process can select messages from this broadcast stream for delivery.
+ Messages may be selected using a set of rules that provide relational
+ comparisons against DECmessageQ header information or user's message
+ data information. The Selective Broadcast Services operate in a sin-
+ gle server environment or between cooperating DECmessageQ servers. When
+ the SBS is operating between nodes, it can operate using DECnet or TCP
+ /IP services, or using direct Ethernet operations. In the direct Eth-
+ ernet operations, the SBS will optimize message traffic by using Eth-
+ ernet's multi-casting capabilities.
+
+ Delivery Options
+
+                                  5
+
+ 
+
+ DECmessageQ for VMS provides the following set of delivery options:
+
+ o  Datagram - A non-recoverable attempt is made to deliver a message.
+    If the message cannot be delivered to a target, then, an error is
+    logged.
+
+ o  Wait for enqueue - The sending process will block until the mes-
+    sage is written to the target queue. A return status will indicate
+    if the message successfully enqueued to the queue.
+
+ o  Blocking and non-blocking message Store-and-Forward - The sending
+    process will send messages stored in a disk file locally, before
+    they are sent over any communication link(s).
+
+ o  Blocking and non-blocking message disk queuing - The sending pro-
+    cess will send messages that will be delivered to the target's disk
+    queue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  6
+
+ 
+
+ DECmessageQ Scripts Facility
+
+ The DECmessageQ scripts facility provides a general capability to per-
+ form message capture, simulation, and replay.
+
+ o  Capture - DECmessageQ scripts can be used to capture messages sent
+    or received from a process. These messages can be displayed on the
+    output device or collected in a disk file. The messages are dis-
+    played in an ASCII file using the DECmessageQ scripts syntax.
+
+ o  Simulation - A disk file containing DECmessageQ scripts commands
+    can be used to simulate message traffic to a process. The commands
+    use the DECmessageQ scripts syntax. The process will receive these
+    messages after any DECmessageQ queue is scanned for receivable mes-
+    sages.
+
+ o  Replay - A replay is the simulation of messages previously captured.
+
+ DECmessageQ LU6.2 Services (License Option)
+
+ DECmessageQ LU6.2 Services for VMS systems allows user programs at-
+ tached to a DECmessageQ Message Queuing Bus to request, accept, and
+ conduct APPC (Advanced Program-to-Program Communications) conversa-
+ tions with programs running under CICS/VS, IMS/VS, and other IBM[R] en-
+ vironments over SNA LU6.2 sessions.
+
+ Note: Refer to the DECnet/SNA VMS APPC/LU6.2 Software Product Descrip-
+ tion (SPD 26.88.xx) for currently supported environments.
+
+ DECmessageQ LU6.2 Services allows users unfamiliar with SNA communi-
+ cations to develop, quickly and easily, applications that operate with
+ IBM-based APPC applications. Users are insulated from the details of
+ both SNA and APPC. DECmessageQ provides additional insulation between
+ the two environments by translating transaction program names known
+ to DECmessageQ user programs to names known to the IBM system(s) and
+ vice versa.
+
+
+
+
+                                  7
+
+ 
+
+ DECmessageQ LU6.2 Services for VMS consists of:
+
+ o  An LU6.2 Server image ("Port Server") that provides connection man-
+    agement facilities, isolating the end user from details of SNA-APPC
+    communications
+
+ o  A library of predefined DECmessageQ message structures for ease of
+    program development
+
+ o  Utilities for managing the LU6.2 Server
+
+ o  Tools for developing user-written LU6.2 Servers
+
+ DECmessageQ LU6.2 Services Limits
+
+ DECmessageQ LU6.2 Services for VMS has the following limits:
+ 
+
+ Maximum user message  31,982 bytes
+ size:
+
+ Maximum number of     256 per Port Server
+ active LUs:
+
+ Maximum number of     512 per DECmessageQ LU6.2 Server (user-
+ remote                written servers: unlimited)
+ Transaction Pro-
+ grams:
+
+ DECmessageQ LU6.2 Services Utilities
+
+ DECmessageQ LU6.2 Services for VMS includes a management utility that
+ allows a suitably privileged user to start, stop, and configure DECmes-
+ sageQ LU6.2 servers and observe their activity (through an event mon-
+ itoring facility).
+
+ Users can develop specialized LU6.2 servers by using the DECmessageQ
+ LU6.2 Server tool kit. The tool kit consists of a DECmessageQ/VMS User
+ Callback (a "user callback" is a special User Exit module) and 21 pre-
+ defined DECmessageQ message structures.
+
+                                  8
+
+ 
+
+ The LU6.2 Server tool kit gives the user a finer degree of control over
+ the APPC environment than the standard DECmessageQ LU6.2 Server. Func-
+ tions supported via the tool kit are:
+
+ o  DEFINE_LU
+
+ o  DEFINE_TP
+
+ o  DELETE_LU
+
+ o  ALLOCATE_CONVERSATION
+
+ o  DEALLOCATE_CONVERSATION
+
+ o  REQUEST_CONFIRMATION
+
+ o  ISSUE_CONFIRMATION
+
+ o  ISSUE_ERROR
+
+ o  REQUEST_TO_SEND
+
+ o  SEND
+
+ o  RECEIVE
+
+ HARDWARE REQUIREMENTS
+
+ Processors and/or hardware configurations as specified in the System
+ Support Addendum (SSA 34.07.01-x).
+
+ SOFTWARE REQUIREMENTS
+
+ For Systems Using Terminals (No Decwindows Interface):
+
+ o  VMS Operating System
+
+ o  VMS/ULTRIX Connection
+
+    or
+    DEC TCP/IP Services for VMS
+
+ o  DECnet/SNA VMS APPC/LU6.2 Programming Interface (for LU6.2 Services
+    option only)
+
+                                  9
+
+ 
+
+ Refer to the System Support Addendum (SSA 34.07.01-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ Development Option
+
+ The DECmessageQ for VMS/Development Option includes the base message
+ queuing software, language compiler binding libraries, and configu-
+ ration definition utilities.
+
+ Run-Time Only Option
+
+ The Run-Time Only Option provides all the facilities of the develop-
+ ment version of DECmessageQ for VMS except the language compiler bind-
+ ing libraries and the configuration definition utilities. The purpose
+ of the Run-Time Only version is to support the execution of previously
+ developed applications on a target machine. Program development is not
+ supported under the Run-Time Only Option.
+
+ LU6.2 Services Option
+
+ The DECmessageQ for VMS/LU6.2 Services option supports conversations
+ with programs running under CICS/VS, IMS/VS, and other IBM environ-
+ ments over SNA LU6.2 sessions.
+
+ Software Licenses
+
+ DECmessageQ for VMS Development: QL-GKPA9-J*
+ DECmessageQ for VMS Run-Time Only: QL-GHVA9-J*
+ DECmessageQ for VMS/LU6.2 Services:
+    QL-GKQA9-J*
+
+ Software Media
+
+ DECmessageQ for VMS Development: QA-GKPAA-H*
+ DECmessageQ for VMS Run-Time Only:
+    QA-GKPAA-H*
+ DECmessageQ for VMS/LU6.2 Services:
+    QA-GKPAA-H*
+
+                                 10
+
+ 
+
+ Software Documentation
+
+ DECmessageQ for VMS Development: QA-GKPAA-GZ
+ DECmessageQ for VMS Run-Time Only:
+    QA-GKPAA-GZ
+ DECmessageQ for VMS/LU6.2 Services:
+    QA-GKPAA-GZ
+
+ Software Product Services
+
+ DECmessageQ for VMS Development: QT-GKPA*-**
+ DECmessageQ for VMS Run-Time Only: QT-GHVA*-**
+ DECmessageQ for VMS/LU6.2 Services: QT-GKQA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the VMS License Management Facility.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx) or
+ the License Management Facility manual of the VMS Operating System doc-
+ umentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+
+                                 11
+
+ 
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+
+ [R]  IBM and OS/2 are registered trademarks of International Busi-
+    ness Machines Corporation.
+
+ [R]  HP is a registered trademark of Hewlett-Packard Corporation.
+
+ [R]  Macintosh is a registered trademark of Apple Computer, Inc.
+
+ [R]  MS and MS-DOS are registered trademarks of Microsoft Corpora-
+    tion.
+
+ [R]  SYSTEM V/88 is a registered trademark of Motorola Corporation.
+
+ [R]  Sun is a registered trademark of Sun Microsystem Corporation.
+
+ [R]  UNIX is a registered trademark of UNIX System Laboratories,
+    Inc.
+
+ [TM]The DIGITAL Logo, CI, DECmessageQ, DECwindows, DECnet,
+    DECnet-VAX, INTERNET, MicroVAX, ULTRIX, VAX, VAXcluster, VAXft,
+    VAXserver, VAXstation, and VMS are trademarks of Digital Equip-
+    ment Corporation.
+
+
+
+
+
+
+
+                                 12

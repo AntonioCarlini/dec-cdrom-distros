@@ -1,0 +1,752 @@
+ 
+
+
+
+
+
+
+          Ohjelmistotuotekuvaus
+
+          ________________________________________________________________
+
+          TUOTTEEN NIMI:  VMS DECwindows Motif[R]/Suomi versio 1.0     SPD
+          27.F4.01
+
+          1  KUVAUS[*]
+
+          DECwindows-työpöytäohjelmisto on VMS-käyttöjärjestelmän
+          graafinen käyttöliittymä. DECwindows-sovellusten pohjana
+          käytetään Open Software Foundationin Motif-käyttöliittymää.
+          OSF[R]/Motif[R] on graafinen käyttöliittymä, joka on saavuttanut
+          teollisuusstandardin aseman. Käyttöliittymän ansiosta käyttäjä
+          voi toteuttaa VMS-käyttöjärjestelmän toimintoja tehokkaalla os-
+          oitus ja painallus -menetelmällä. DECwindowsiin kuuluu joukko
+          integroituja työpöytäsovelluksia, joiden käyttö perustuu edellä
+          mainittuun periaatteeseen. Nämä sovellukset muodostavat VMS-
+          käyttäjän perustyökalut.
+
+          VMS DECwindows Motif -käyttöliittymä perustuu MIT:n X Window
+          -järjestelmän määritykseen (versio 11, release 4). Ohjelmis-
+          toon kuuluvat seuraavat OSF/Motif V1.1.1.[*] X Window -
+          järjestelmästandardit: X11-verkkoprotokolla, perustyöasemakir-
+          jasimet, C-kielinen yhteys Xlib-ohjelmointikirjastoon ja C-
+          kielinen yhteys Xtoolkit-kirjastoon. Työasemakäyttäjiä varten
+          DECwindowsiin kuuluu X11-protokollaan integroitu Adobe Display
+          PostScript[R] -järjestelmän tuki.
+          ___________________
+        [*] DECwindows-ohjelmisto tukee X Window System -järjestelmän
+            asiakas-palvelin-periaatetta.  Tämän periaatteen avulla X Win-
+            dow -ohjelmia voidaan toteuttaa yhdessä koneessa ja niiden
+            tulos voidaan näyttää jossain toisessa koneessa käyttämällä
+            jotain tietojen siirtokäytäntöä koneiden välillä.  DECwin-
+            dowsiin kuuluu kolme siirtoliittymää, paikallinen yhteis-
+            muisti, DECnet ja TCP/IP (käytettäessä Digitalin VMS/ULTRIX
+            Connection (UCX) -ohjelmistoa).  Käyttäjät voivat myös käyttää
+	    muita siirtoalijärjestelmiä ja siirtoliittymiä.
+        [*] OSF:n toimittama ohjelmisto ei ehkä ole yhteensopiva DECwindowsin
+	    tulevien versioiden kanssa.
+
+                                       DIGITAL              Tammikuun 1992
+
+                                                               AE-PHW7B-TE
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          X11-verkkoprotokollan tuki asiakaskirjastossa ja näyttöpalve-
+          limessa antavat VMS-käyttöjärjestelmälle mahdollisuuden toimia
+          hajautetusti yhdessä muiden X11-yhteensopivien järjestelmien
+          kanssa.
+
+          Lisenssin haltija sitoutuu käyttämään Display PostScript -
+          ohjelmaa vain niissä Digitalin laitteistoissa, jotka tässä
+          ohjelmistotuotekuvauksessa on määritetty lisensioiduiksi lait-
+          teistoiksi. Lisäksi lisenssin haltija sitoutuu olemaan käyt-
+          tämättä ohjelmistoa, joko suoraan tai epäsuorasti, tulostaakseen
+          bittikarttakuvia, joiden erotuskyky on suurempi kuin 150 DPI,
+          tai tuottaakseen kirjasimia, joita käytetään jossain muussa kuin
+          Digitalin laitteistoissa.
+
+          Lisätietoja siitä, voiko erikseen tilattava DECwindows- tai X-
+          sovellus toimia VMS DECwindows Motif -järjestelmän alaisuudessa
+          tai voiko sovellus olla yhteydessä DECwindows-ohjelmistoon, saa
+          sovelluksen ohjelmistokuvauksesta.
+
+          VMS DECwindows Motif -käyttöliittymäohjelmisto koostuu neljästä
+          perusosasta:
+
+          1. Istunnon hallinta toimii ylimmän tason käyttöliittymänä
+             DECwindows-työasemaan. Sen avulla voidaan aloittaa muita
+             sovelluksia, muuttaa ja hallita koko istuntoa ja määrittää
+             tietoturva-asetuksia. Istunnon hallinnan avulla voidaan myös
+             määrittää käyttöliittymän kieli tuetuille DECwindows-sovel-
+             luksille, jos järjestelmään on asennettu vastaavankielinen
+             VMS DECwindows Motif -käyttöliittymäohjelmisto ja sille on
+             asianmukainen lisenssi. Lisätietoja tuetuista muunkieli-
+             sistä käyttöliittymistä on tämän ohjelmistotuotekuvauksen ko-
+             hdassa Käyttöliittymän kielen tuki. Lisätietoja käännetyistä
+             sovelluksista ja laitteisto- ja ohjelmistotuesta muunkieli-
+             sissä käyttöliittymissä saa vastaavankielisen käyttöliittymän
+             Järjestelmätuki-käsikirjasta.
+
+
+
+
+                                          2
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          2. Ikkunan hallinnan avulla käyttäjä voi hallita näytössä
+             näkyviä ikkunoita. Oletusikkunan hallintasovelluksena on
+             OSF/Motif Ikkunan hallinta. Käytettävissä on myös DECwindows
+             X User Interface (XUI) Ikkunan hallinta. Tällöin käyttäjä voi
+             valita haluamansa ikkunan hallintasovelluksen.
+
+          3. Tiedostojen hallinta on VMS-tiedostojen hallinnan graafinen
+             käyttöliittymä, jonka avulla käyttäjä voi siirtyä VMS-
+             tiedostojärjestelmässä ja käsitellä siellä olevia tiedostoja.
+
+          4. DECterm-pääte-emulointiohjelman avulla käyttäjällä on
+             käytössään perinteinen merkkipohjainen liittymä vanhoja
+             VMS-toimintoja ja -sovelluksia varten. Ohjelma emuloi VT320-
+             päätettä ja tukee ReGIS- ja Sixel-ominaisuuksia, mutta ei
+             kuitenkaan ole täysin yhteensopiva VT340-päätteen kanssa.
+             VT52-, VT100-, VT220- ja VT320-sarjan päätteitä varten kir-
+             joitetut ohjelmat, jotka käyttävät VMS-pääteajuria, toimivat
+             tässä pääteikkunassa ilman muutoksia. DECterm-sovellukseen
+             kuuluu myös työasemapohjaisia ominaisuuksia, kuten kohdis-
+             timen siirto hiiren avulla, muuttuva näytön koko ja tek-
+             stin siirto muiden pääte-emulointisovellusten ja muiden
+             DECwindows-sovellusten välillä. Useat ohjelmat voivat käyttää
+             myös näitä ominaisuuksia ilman muutoksia.
+
+          Sovellukset
+
+          DECwindows-käyttöliittymän mukana toimitetaan joukko inte-
+          groituja työpöytäsovelluksia. Nämä sovellukset hyödyntävät
+          yhtenäistä DECwindows-mallia. Lisäksi niistä on käyttäjälle
+          monenlaista hyötyä.
+
+          Seuraavat sovellukset on muutettu OSF/Motif-käyttöliittymää
+          varten ja ne kuuluvat VMS DECwindows Motif -ohjelmiston tähän
+          versioon:
+
+          o  Kirjasto - järjestelmään asennettujen käsikirjojen näyt-
+             tösovellus.
+
+          o  Laskin - tieteellinen peruslaskin.
+
+          o  Kalenteri - henkilökohtainen ajanhallintajärjestelmä.
+
+                                          3
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          o  Kortisto - hierarkkinen tietojen talletussovellus, joka vas-
+             taa tietokoneen avulla toteutettua osoite- ja puhelinmuis-
+             tiota.
+
+          o  Kello - Analogisen tai digitaalisen kellon ja päiväyksen
+             näyttö sekä aikamerkkien asetus.
+
+          o  CDA-asiakirjojen näyttö - sovellus, jonka avulla työasemassa
+             tai päätteessä voidaan tarkastella tekstiä, grafiikkaa ja
+             kuvatietoja sisältäviä asiakirjoja.
+
+          o  Tietokonepohjainen opetusohjelma - opetusohjelma aloit-
+             televille Motif-käyttäjille. Ohjelmassa opetetaan hiiren
+             käyttöä ja muita yksinkertaisia toimintoja.
+
+          o  Yhteyksien hallinta - sovellus, jonka avulla luodaan ja
+             hallitaan erilaisten tietojen välisiä yhteyksiä (esimerkiksi
+             sanomien, kortiston korttien tai järjestelmään asennettujen
+             kirjojen aiheiden välillä).
+
+          o  Sähköposti - DECwindows-käyttöliittymä VMS-käyttöjärjestelmän
+             sähköpostiohjelmaan.
+
+          o  Viesti-ikkuna - ikkuna järjestelmän viestien (esimerkiksi
+             uusien sanomien saapumisilmoitusten ja virheilmoitusten)
+             näyttöä varten.
+
+          o  Piirto-ohjelma - yksinkertainen bittikarttaan perustuva
+             grafiikkamuokkain.
+
+          o  Näytön tulostus - sovellus koko näytön tai näytön osan
+             tiedoston kopioimista ja tiedoston tulostamista varten.
+
+          o  Numeropeli - peli, jossa järjestetään joukko numeroituja
+             ruutuja numerojärjestykseen.
+
+          DECwindows-työasemien käyttäjät voivat tarkastella Post-
+          Script-tiedostoja näytön ja minkä tahansa Digitalin PostScript-
+          kirjoittimen välisen WYSIWYG-yhteensopivuuden ansiosta. Display
+          PostScript -toiminto on käytettävissä CDA-asiakirjojen näyttö-
+          ja Sähköposti-sovelluksessa.
+
+          Käyttöliittymän kielen tuki
+
+                                          4
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          Lisätietoja vaihtoehdoista ja tuetuista monikielisistä kokoon-
+          panoista saa ottamalla yhteyden lähimpään Digitalin toimis-
+          toon. Lisätietoja muunkielisistä käyttöliittymistä on vastaavan
+          ohjelmiston ohjelmistotuotekuvauksessa ja Järjestelmätuki-
+          vihkosessa. Lisätietoja on myös tämän ohjelmistotuotekuvauksen
+          kohdissa TILAUSTIEDOT ja OHJELMISTOLISENSSIT.
+
+          Ohjelmointituki
+
+          VMS DECwindows Motif -ympäristöön kuuluu laaja valikoima ohjel-
+          mointikirjastoja ja -työkaluja, joita voidaan käyttää uusien
+          sovellusten kehityksessä.
+
+          Ohjelmistoon kuuluvat kirjastot voidaan jakaa neljään luokkaan:
+          X Window -järjestelmän vakiokirjastot, kuten Xlib ja Intrinsics,
+          vanhojen XUI-sovellusten käyttöä varten tarvittavat kirjas-
+          tot, OSF/Motif-käyttöliittymän kirjastot, joiden avulla voidaan
+          kehittää Motif-käyttöliittymää käyttäviä sovelluksia sekä
+          Digitalin laajennuskirjastot, joiden avulla käyttäjät saavat
+          lisäominaisuuksia.
+
+          VMS DECwindows Motif -ohjelmistoon kuuluu seuraavat kahdeksan
+          kirjastoa:
+
+          o  X Window System -ohjelmointikirjaston (Xlib) tuki.
+
+          o  X Window System Intrinsics -tuki (Xtoolkit).
+
+          o  OSF/Motif User Interface -tuki.
+
+          o  Digitalin laajennukset OSF/Motif-kirjastoon.
+
+          o  X User Interface (XUI) -tuki.
+
+          o  Työkalut, joiden avulla XUI-sovellus voidaan muuttaa OSF
+             /Motif-sovellukseksi.
+
+          o  CDA-asiakirjojen (Compound Document Architecture) tuki.
+
+          o  DPS-tuki (Display PostScript).
+
+                                          5
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          Näihin kirjastoihin kuuluvia komponentteja voidaan käyttää
+          yhdessä tai erikseen, ja näin saavuttaa sovellusta varten
+          tarvittavat ominaisuudet. Eri komponentit voivat myös käyttää
+          eri ohjelmointikieliin kuuluvia työkaluja. Ohjelmointikirjastoi-
+          hin kuuluu VMS-kutsukäytännön, MIT C -ohjelmointikielikäytännön
+          tai molempien mukaiset proseduuripohjaiset ohjelmointikieliliit-
+          tymät.
+
+          Motif-ohjelmointikieliliittymiä on seuraavia ohjelmointikieliä
+          varten:
+
+             VAX Ada
+             VAX FORTRAN
+             VAX C
+             VAX Pascal.
+
+          XUI-ohjelmointikieliliittymiä on seuraavia ohjelmointikieliä
+          varten:
+
+             VAX Ada
+             VAX FORTRAN
+             VAX BLISS-32 Implementation Language
+             VAX Pascal
+             VAX BASIC
+             VAX MACRO
+             VAX C (VAX-kutsukäytäntö tai MIT-käytäntö)
+             VAX PL/I.
+
+          Kahdeksan ohjelmointikirjastoa on kuvattu yksityiskohtaisemmin
+          seuraavassa.
+
+          X Window System (X) -ohjelmointituki
+
+          VMS DECwindows Motif -ympäristöön kuuluvaan X Window Sys-
+          tem -yhteensopivaan X-ohjelmointikirjastoon (Xlib) kuuluvat
+          resurssien hallinnan peruspalvelut (ikkunointi, värikartat,
+          syöttölaitteet) ja bittikarttagrafiikan palvelut. Kirjasto
+          määrittää X-verkkoprotokollan proseduurikirjastossa.
+
+          X Window System Intrinsics -tuki
+
+                                          6
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          VMS DECwindows Motif -ohjelmistoon kuuluu kirjasto, joka
+          sisältää sekä MIT Release 3 (R3) ja MIT Release 4 (R4) Intrin-
+          sics (Xtoolkit). Xtoolkit-kirjasto sisältää rutiinit, joiden
+          avulla luodaan widget-nimiset käyttöliittymän osat. Release 3
+          -rutiinit on sisällytetty kirjastoon, jotta VMS DECwindowsin
+          edellisten versioiden avulla luodut ohjelmat olisivat yhteen-
+          sopivia.
+
+          Huomautus: Kaikissa VMS DECwindows Motif -ohjelmiston mukana
+          toimitetuissa kirjastoissa ja kaikissa sovelluksissa, jotka
+          linkitetään uudelleen, käytetään uuden version rutiineja.
+
+          OSF/Motif-käyttöliittymän ohjelmointituki
+
+          OSF/Motif on Digitalin ja muiden ohjelmistotoimittajien käyt-
+          tämä käyttöliittymä, joka on mukautettu DECwindows-ympäristöä
+          varten. OSF/Motif määrittää DECwindows-työasemassa käytettävien
+          sovellusten tyylin ja käytännöt. Sovellukset käyttävät Motifin
+          osia luodessaan käyttöliittymiä, jotka näyttävät ja toimivat
+          samalla tavoin kuin muut Digital-tietojenkäsittely-ympäristön
+          osat. OSF/Motifiin kuuluu myös tehokkaampia käyttöliittymän
+          osia, gadgetteja.
+
+          OSF/Motif Style Guide -käsikirjassa, joka kuuluu VMS DECwindows
+          Motif Programming Kit -käsikirjasarjaan, kuvataan yhtenäisten
+          ja hyvin integroitujen OSF/Motif-sovellusten kirjoittamisessa
+          käytettävät periaatteet, käytännöt ja komponentit. Lisäksi VMS
+          DECwindows Motifiin kuuluu DECwindows Companion to the OSF
+          /Motif Style Guide -käsikirja. Tässä kirjassa on lisätietoja
+          OSF/Motif-käyttöliittymissä käytettävästä tyylistä. Lisäksi
+          käsikirjassa on tietoja Digitalin laajennusominaisuuksista,
+          jotka kuuluvat VMS DECwindows Motif -ohjelmistoon, ja luettelo
+          Digitalin suosittelemista termeistä useilla eri kielillä OSF
+          /Motif-sovellusten kehittämistä varten.
+
+          OSF/Motif-tyyliseikat on määritetty OSF/Motif Toolkit -
+          kirjastossa. OSF/Motif Toolkit käyttää MIT Xtoolkit -kirjastoa,
+          johon kuuluu kolme osaa:
+
+                                          7
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          o  OSF/Motif-rutiinit tavallisimpia käyttöliittymän osia, kuten
+             vieritysjanoja, valikoita ja painikkeita varten.
+
+          o  Apurutiineja, joiden avulla sovellukset voivat toteuttaa
+             vakiotoimintoja, kuten leikkaus ja lisäys.
+
+          o  Resurssien hallintarutiineja tehtävää käyttöliittymän määri-
+             tystiedostojen latausta ja widget- ja gadget-ohjelmien lu-
+             omista varten määritystiedoston tietojen perusteella.
+
+          OSF/Motif Toolkit -kirjastoa käytetään yhdessä
+          OSF/Motif User Interface Language (UIL) -kääntäjän kanssa. Kään-
+          täjän tuottamat käyttöliittymän määritystiedostot sisältävät
+          tietoja, jotka kuvaavat DECwindows-sovelluksen muotoa. Lisäksi
+          määritystiedoston avulla sovelluksen osat, kuten valikoiden
+          vaihtoehdot, voidaan tallettaa erillään kirjastosta ja varsi-
+          naisesta ohjelman koodista. Tämän ominaisuuden avulla sovel-
+          luskehittäjät voivat tehdä prototyyppikäyttöliittymiä ja muokata
+          niitä helposti, erottaa ohjelman ulkoasun varsinaisesta koodista
+          sekä tuottaa sovelluksia, joiden kääntäminen eri kielille ei
+          vaadi lähdetiedostojen uudelleenkääntämistä.
+
+          Digitalin laajennukset OSF/Motif-kirjastoon
+
+          Digital on tehnyt laajennuksia vakio-OSF/Motif-kirjastoon.
+          Näihin toimitettaviin laajennuksiin kuuluu joukko Digitalin
+          kehittämiä ohjelmia ja ajon aikaisia rutiineja, joita ei ole
+          saatavissa OSF:stä. Näiden laajennusrutiinien avulla muo-
+          dostetaan joidenkin DECwindowsin yleistoimintojen yhtenäiset
+          käyttöliittymät. Näitä toimintoja ovat:
+
+          o  Värin sekoitus -widget, jonka avulla käyttäjät voivat valita
+             ja sekoittaa värejä käyttämällä erilaisia värimalleja.
+
+          o  Merkkiyhdelmäwidget, johon kuuluu kansainvälisten oikealta-
+             vasemmalle -merkistöjen sekä vasemmalta-oikealle-
+	     kirjoituskäytäntöjen tuki.
+
+          o  Opastus-widget, jonka avulla kaikkien sovellusten opastus-
+             näytöt saadaan kuvaruutuun ja näkymään yhtenäisellä tavalla.
+
+                                          8
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          o  Tulostus-widget, jonka avulla kaikki sovellukset tulostavat
+             tietoja yhtenäisellä tavalla.
+
+          o  SVN-widget (Structured Visual Navigation), jonka avulla
+             sovellukset voivat näyttää hierarkkisia tietoja.
+
+          Ajon aikaisiin rutiineihin kuuluu:
+
+          o  Kolme DECwindowsin opastusjärjestelmän kutsua, joiden avulla
+             käyttäjät voivat tarkastella järjestelmään asennettuja
+             käsikirjoja Kirjasto-sovelluksen avulla.
+
+          o  Yhteyspalvelut, joiden avulla sovellukset voivat käyttää
+             Yhteyksien hallintaympäristön ominaisuuksia. Näihin palvelui-
+             hin kuuluu yhtenäinen käyttöliittymä ja yhtenäiset ti-
+             etoalkioiden käsittelyominaisuudet. Yhteyspalveluiden avulla
+             sovellus voi:
+
+             -  Täydentää käyttöliittymäänsä lisäämällä siihen yhteyksien
+                hallintaominaisuuksia.
+
+             -  Luoda, kopioida ja poistaa yhteysolioita.
+
+             -  Asettaa ja palauttaa yhteysolioiden ominaisuuksien arvoja.
+                Ominaisuuksilla voi olla yksi tai useita erityyppisiä
+                arvoja (kokonaisluku, boolen luku, liukuluku, päiväys,
+                merkkijono, DDIF-merkkijono tai LWK-olio).
+
+             -  Toteuttaa ominaisuuksien arvoihin perustuvia kyselyitä
+                yhteysverkkoon sisältyviin yhteyksiin tai sijaisiin, tai
+                polkuihin sisältyviin vaiheisiin tai sijaisiin.
+
+             -  Tallettaa ja palauttaa yhteystietokannoissa olevia
+                yhteysolioita (jatkuva talletus)
+
+          o  DECimagen ajon aikainen tuki sovelluksille, jotka on
+             kehitetty käyttämällä DECimage Application Services -
+             palveluita. Tähän tukeen kuuluvat Image Services Library
+             -kirjasto, Image Display Services -palvelut ja X Image Exten-
+             sions -laajennus.
+
+          X User Interface (XUI) -ohjelmointituki
+
+                                          9
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          VMS DECwindows Motif -ohjelmistoon kuuluu myös XUI Toolkit
+          -ohjelma. XUI Toolkit ohjelma perustuu MIT R4 Xtoolkit -
+          määrityksiin. Tässä ohjelmassa käytetään XUI-käyttöliittymämallia,
+          johon VMS DECwindowsin aiemmat versiot perustuvat. Uudet sovel-
+          lukset on kuitenkin syytä kirjoittaa OSF/Motif-käyttöliittymän
+          mukaisesti, koska Motif on useiden ohjelmatoimittajien käyttämä
+          vakiokäyttöliittymä.
+
+          Ohjelmien muuntotyökalut
+
+          Digital toimittaa ohjelmiston mukana työkalut, joiden avulla
+          ohjelmoijat voivat muuntaa XUI-sovelluksen Motif-käyttöliittymää
+          varten. Nämä työkalut korvaavat lähdetiedostossa olevat XUI-
+          nimet vastaavilla Motif-nimillä.
+
+          CDA-ohjelmointituki (Compound Document Architecture)
+
+          CDA Toolkit -ohjelmaan kuuluu rutiineja, joiden avulla sovel-
+          lukset voivat luoda, lukea ja tallettaa tiedostoja, jotka
+          sisältävät tekstiä, grafiikkaa ja kuvatietoja (yhtenäisasiakir-
+          jat). Näiden tiedostojen avulla tiedot voidaan tallettaa levyyn
+          ja niitä voidaan siirtää sovelluksesta toiseen. Lisäksi tiedos-
+          toista voidaan tulostusta varten muodostaa suuren erotuskyvyn
+          grafiikkatietoja.
+
+          Enhanced X Windows Display PostScript (XDPS)
+
+          VMS DECwindows Motif -ohjelmistoon kuuluu Display PostScript
+          -järjestelmä, joka laajentaa tavallista X-graafista ohjel-
+          mointiympäristöä. Tämä laajennus on käytössä, jos käytetään
+          XDPS-laajennusta tukevia työasemia.
+
+          X Display PostScript -järjestelmä lisää seuraavat ominaisuudet
+          X11-vakioympäristöön:
+
+          o  Kaikki DECwindows-kirjasimet voidaan näyttää minkä tahansa
+             kokoisina ja missä tahansa kiertokulmassa.
+
+          o  XDPS-grafiikka määritetään käyttäjän määrittämässä koordi-
+             naatistossa, joka ei riipu käytettävän näytön erotuskyvystä.
+
+                                         10
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          o  Värien tai harmaasävyjen tulkintaa muokataan automaattisesti
+             näytön tyypin mukaisesti joko suoranäytön, värien rasteroin-
+             nin tai puolisävytyksen avulla.
+
+          o  DPS Display -rutiinit voidaan ladata palvelimeen ja toteuttaa
+             komentojen avulla.
+
+          o  Näytössä voidaan näyttää monipuolisia graafisia elementtejä,
+             kuten tarkasti määritettyjä Bezier-käyriä.
+
+          o  Kaikkien näyttöjen kokoa voidaan muuttaa ja niitä voidaan
+             kiertää mielivaltaisesti.
+
+          XDPS-ohjelmointi tapahtuu Abode Client Library -kirjaston väli-
+          tyksellä. Lisäksi käyttäjät voivat muuntaa PostScript-tiedostoja
+          C-kielisiksi ohjelmiksi pswrap-muuntimen avulla. Tämän jäl-
+          keen näitä C-ohjelmia voidaan kutsua muilla ohjelmointikielillä
+          tehdyistä ohjelmista.
+
+          Display Server Extension -tuki
+
+          VMS DECwindows Motif Display Server tukee seuraavia laajennuk-
+          sia:
+
+          o  Display PostScript: Adobe Systems, Icorporatedin ja Digitalin
+             yhdessä määrittämä ja MIT X -ryhmän rekisteröimä "Adobe-
+             DPS-Extension", jonka avulla näyttöpalvelin voi toteuttaa
+             PostScript-komentoja ja tukea XDPS-ohjelmointiympäristöä.
+
+          o  Phigs Extension to X: MIT X -ryhmän määrittämä "X3D_PEX",
+             jonka avulla näyttöpalvelimessa on kolmiulotteisen lait-
+             teiston tuki DEC PHIGS -järjestelmää varten (Programmer's
+             Hierarchical Interactive Graphics System).
+
+          o  X Imaging Extension: MIT X -ryhmän määrittämä "Xie", jonka
+             avulla näyttöpalvelimessa on laitteisto- ja ohjelmistotuki
+             ISL-kirjastoa varten (image services library).
+
+          o  XTRAP: Digitalin määrittämä ja MIT X -ryhmän rekisteröi-
+             mä "DEC-XTRAP", jonka avulla näyttöpalvelimessa on tuki
+             itsenäisiä testiohjelmia, kuten DTM-ohjelmaa, varten (DEC
+             Test Manager).
+
+                                         11
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          o  Multi-Buffering: MIT X -ryhmän määrittämä "Multi-Buffering",
+             jonka avulla näyttöpalvelimessa on tuki monipuskuroituja
+             kuvia varten.
+
+          LAITTEISTOVAATIMUKSET
+
+          Järjestelmätuki-liitteessä (SSA 27.F4.01-A) määritetty VAX-,
+          MicroVAX-, VAXstation- tai VAXserver-kokoonpano.
+
+          VMS DECwindows Motif -ohjelmaa voi ajaa missä tahansa tuetussa
+          prosessorissa, mutta ohjelman näyttöä varten tarvitaan työasema,
+          DOS-käyttöjärjestelmää käyttävä PC, Macintosh[R] tai X-pääte.
+          Käytettävässä näyttölaitteessa on oltava X-Window-järjestelmän
+          (versio 11, release 4) kanssa yhteensopiva näyttöpalvelin.
+
+          TARVITTAVA OHJELMISTO
+
+          VMS-käyttöjärjestelmä
+
+          * Lisätietoja tarvittavien ja valinnaisten ohjelmien saatavuu-
+          desta ja tarvittavista versioista sekä VMS DECwindows -ohjelmis-
+          ton osista on Järjestelmätuki-liitteessä (SSA 27.F4.01-A).
+
+          TILAUSTIEDOT
+
+          Ohjelmistolisenssit: QP-LBFF*-AA
+          Ohjelmiston tietovälineet: QA-XA1FA-H*
+
+          Tilaustiedot muunkielisiä käyttöliittymiä varten:
+
+          Ohjelmistolisenssit: QL-XDD**-**
+          Ohjelmiston tietoväline: QA-XDD**-**
+          Ohjelmiston käsikirjasarja: QA-XDD**-GZ
+          Ohjelmistotuotepalvelut: QT-XDD**-**
+
+          * Merkitsee muuttuvia tietoja. Lisätietoja saatavilla olevista
+          lisensseistä, palveluista ja tietovälineistä on voimassa ol-
+          evassa hintakirjassa.
+
+          OHJELMISTON KÄYTTÖOIKEUS
+
+                                         12
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          Tämä ohjelmistotuote toimitetaan asiakkaalle soveltaen Digi-
+          talin yleisiä toimitusehtoja. Lisätietoja näistä ehdoista on
+          saatavissa paikallisesta Digitalin toimistosta.
+
+          Tähän ohjelmistotuotteeseen kuuluu henkilökohtainen käyt-
+          tölisenssi. Jokainen henkilökohtainen käyttölisenssi antaa
+          ohjelmistotuotteen käyttöoikeuden yhdelle nimetylle henkilölle.
+
+          Niiden asiakkaiden, jotka haluavat käyttää DECwindows-
+          ohjelmistoa TCP/IP-verkon välityksellä, on hankittava ain-
+          oastaan VMS/ULTRIX Connection -tuote ja käsikirjasarja. TCP
+          /IP-verkon käyttöoikeus DECwindows-ympäristössä sisältyy VMS-
+          käyttöjärjestelmän lisenssiin. Niiden asiakkaiden, jotka halu-
+          avat käyttää kaikkia VMS:n/ULTRIXin tietoliikenneominaisuuksia
+          (FTP, NFS, TELNET), on hankittava erillinen lisenssi. Lisätie-
+          toja on VMS/ULTRIX Connection -tuotteen Järjestelmätuki-liit-
+          teessä (SSA 25.A4.xx-x).
+
+          Lisätietoja Adobe-lisenssistä on liitteessä A.
+
+          VAXstation-käyttäjiä varten jokaiseen hankittavaan VAXstation-
+          järjestelmään kuuluu VMS DECwindows Motif -ohjelmiston työase-
+          malisenssi.
+
+          Muunkielisten käyttöliittymien käyttöoikeus
+
+          VMS DECwindows Motif -ohjelmiston lisenssi on saatavissa joko
+          yksi- ja kaksikielisenä. Yksikieliseen lisenssiin (QL-XA1A*-
+          **) sisältyy VMS DECwindows Motif -ohjelmiston sekä amerika-
+          nenglanninkielisen käyttöliittymän käyttöoikeus. Kaksikieliseen
+          lisenssiin (QP-LBF**-**) sisältyy lisäksi käyttöoikeus jonkin
+          muun kieliseen käyttöliittymään. Kaksikielinen lisenssi on
+          vakiona muualla kuin Yhdysvalloissa toimitetuissa ohjelmis-
+          toissa.
+
+          VMS DECwindows Motif -ohjelmiston tuetut käyttöliittymäkielet
+          ovat:
+
+
+                                         13
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          Espanja, hollanti, italia, japani, kiina (mandariinikiina ja
+          kantoninkiina), korea, norja, portugali, ranska, ruotsi, saksa,
+          suomi ja tanska.
+
+          Jos halutaan käyttää ylimääräisiä kieliä edellä mainitun kak-
+          sikielisen ohjelmiston lisäksi, jokaista itsenäistä muunkielistä
+          käyttöliittymää varten tarvitaan erillinen lisenssi (QL-XDD**-
+          **). Lisäksi tarvitaan vastaava ohjelmistopaketti. Saatavissa
+          on kaikki tuetut kielet, mutta joitakin kieliä ei voi käyttää
+          samanaikaisesti. Lisätietoja tuetuista kieliyhdistelmistä on
+          vastaavien ohjelmistojen Järjestelmätuki-liitteessä.
+
+          VMS DECwindows Motif -ohjelmiston muunkielisillä käyttöliit-
+          tymillä on tuki yleensä vain maissa, joissa kyseinen kieli on
+          virallinen kieli. Joissakin maissa tämä kuitenkin vaihtelee.
+          Lisätietoja muun kielisten käyttöliittymien tuesta saa vastaa-
+          van ohjelmiston Järjestelmätuki-liitteestä tai paikallisesta
+          Digitalin toimistosta.
+
+          LISENSSIENHALLINTAOHJELMISTO
+
+          Tämä ohjelmistotuote tukee VMS:n lisenssienhallintaohjelmistoa
+          (VMS License Management Facility).
+
+          Ohjelmiston lisenssit määräytyvät keskusyksikön kapasiteetin
+          mukaisesti.
+
+          Lisätietoja lisenssienhallintaohjelmistosta on VMS-käyttö-
+          järjestelmän ohjelmistotuotekuvauksessa (SPD 25.01.xx) ja VMS-
+          käyttöjärjestelmän käsikirjoissa.
+
+          OHJELMISTOPALVELUT
+
+          Digitalista on saatavissa erilaisia ohjelmistopalveluja. Lisä-
+          tietoja saa paikallisesta Digitalin toimistosta.
+
+          OHJELMISTOTAKUU
+
+          Digital antaa tälle ohjelmistotuotteelle takuun käyttöoikeuden
+          hankinnan yhteydessä tämän ohjelmistotuotekuvauksen liitteessä
+          Ohjelmistotakuu olevien ehtojen mukaisesti.
+
+                                         14
+
+ 
+
+
+          VMS DECwindows Motif[R]/Suomi versio 1.0            SPD 27.F4.01
+
+
+
+          [R] Motif, OSF ja OSF/Motif ovat Open Software Foundation, Inc:n
+          tavaramerkkejä.
+
+          [R] PostScript on Adobe Systems, Incorporatedin tavaramerkki.
+
+          [R] Macintosh on Apple Computer, Inc:n tavaramerkki.
+
+          [R] MS-DOS on Microsoft Corporationin tavaramerkki.
+
+          [TM] Intel on Intel Corporationin tavaramerkki.
+
+          [TM] DIGITALin logo, CI, DEC, DECimage, DECnet, DECterm, DEC
+          VUIT, DECwindows, Linkworks, MicroVAX, ReGIS, TK, ULTRIX, VAX,
+          VAX Ada, VAX BASIC, VAX FORTRAN, VAX Pascal, VAX MACRO, VAX C,
+          VAXcluster, VAXft, VAXserver, VAXstation, VMS, VT ja XUI ovat
+          Digital Equipment Corporationin tavaramerkkejä.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         15

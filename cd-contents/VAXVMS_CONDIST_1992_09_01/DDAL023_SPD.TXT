@@ -1,0 +1,406 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  VAX Data Distributor, Version 2.3       SPD 27.76.06
+
+ DESCRIPTION
+
+ VAX Data Distributor manages the distribution of relational data. Op-
+ erations called transfers define what data and data definitions are
+ to be moved (the source) and where they are to be moved to (the tar-
+ get). The target need not be on the same system as the source.
+
+ Distributing data in this way has several benefits, particularly when
+ the target is on a different system from the source:
+
+ o  Users can query a database local to them rather than having to ac-
+    cess a remote database. This provides faster and more regular ac-
+    cess.
+
+ o  Congestion on the source database is reduced as a result of the use
+    of the target.
+
+ Methods of Data Distribution
+
+ There are three transfer types: extraction, extraction rollup, and repli-
+ cation. For each type of transfer, the source can be all the table def-
+ initions and data within the source database or databases, or a sub-
+ set of those definitions and data.
+
+ Extraction
+
+ The source database can be a VAX Rdb/VMS database or one from another
+ database management system, such as DB2[TM], accessed using one of Dig-
+ ital's interoperability products, such as VIDA for DB2.
+
+ The target can be a VAX Rdb/VMS database or a set of tables created
+ by VAX Data Distributor in an existing VAX Rdb/VMS database. If it is
+ a database, a new version is created every time the transfer executes.
+
+                               DIGITAL                     July 1992
+
+                                                         AE-JA33H-TE
+
+ 
+
+ If it is a set of tables, the data in the tables are deleted and new
+ data, from the source, are inserted every time the transfer executes.
+
+ Users can update the target. However, their updates are not reflected
+ in the new version of the target created when the transfer next ex-
+ ecutes.
+
+ Extraction Rollup
+
+ The same range of source databases is available for extraction rollup
+ as for extraction. However, an extraction rollup has more than one source
+ database. The source databases can be of different types, for exam-
+ ple, one VAX Rdb/VMS database and one DB2 database.
+
+ The target must be a VAX Rdb/VMS database. A new version is created
+ every time the transfer executes. As for extractions, it can be up-
+ dated by users, but updates will not be reflected in the new database
+ created when the transfer next executes.
+
+ Replication
+
+ The source database must be a VAX Rdb/VMS database.
+
+ The target can be a VAX Rdb/VMS database or a set of tables created
+ by VAX Data Distributor in an existing VAX Rdb/VMS database. The tar-
+ get is created when the transfer first executes (is initialized). Sub-
+ sequent executions of the transfer apply the updates that have been
+ applied to the source since the last transfer to the target.
+
+ Hence, the difference between replication and the other two styles of
+ transfer is that replication makes the data at the target identical
+ to that at the source by updating it rather than rebuilding it. How-
+ ever, if necessary, the transfer can be reinitialized and, in this case,
+ the target is rebuilt.
+
+ Users must not update the target. However, if the target is a set of
+ tables within an existing database, other tables in the database can
+ be updated (unless they are the target of other replication transfers).
+
+ Other Features
+
+                                  2
+
+ 
+
+ Schedules
+
+ For every transfer, a schedule can be defined, specifying when the trans-
+ fer is to execute. The transfer can also be executed by the transfer
+ definer at a time when it is not scheduled.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  3
+
+ 
+
+ Pre- and Post-Transfer Command Procedures
+
+ A transfer can have associated with it DCL command procedures that ex-
+ ecute before and/or after a transfer executes. Potential uses of such
+ procedures include:
+
+ o  Making the network between the source and target systems available.
+
+ o  Notifying users by VAXmail that the transfer has completed and re-
+    porting on completion status.
+
+ o  Creating indexes on tables in the target database.
+
+ Multiple Transfers
+
+ A database can be the source for more than one transfer. For example,
+ a VAX Rdb/VMS database could be the source for a replication of some
+ tables, an extraction of some columns from other tables, and also one
+ of the source databases for an extraction rollup including yet another
+ subset of the data.
+
+ Since the target of an extraction or replication can be a set of ta-
+ bles in an existing database, such a database can be the target of more
+ than one transfer. However, it cannot be the target of an extraction
+ rollup, and no table within the database can be the target of more than
+ one transfer.
+
+ A database can be both a source and a target database. For example,
+ a database may be the target of a replication transfer, and may also
+ be the source of other replications.
+
+ Centralized Storage of VAX Data Distributor Information
+
+ Transfer and schedule definitions and the status of every transfer are
+ consolidated in a VAX Rdb/VMS database known as the transfer database.
+ This database services a VAX or a VAXcluster.
+
+ Syntax
+
+
+                                  4
+
+ 
+
+ The interactive SQL and RDO utilities of VAX Rdb/VMS include VAX Data
+ Distributor statements, such as:
+
+ o  CREATE TRANSFER, in which the source and target are specified. Spec-
+    ification of the source includes selecting the tables, and the rows
+    and columns of those tables, to be transferred.
+
+ o  CREATE SCHEDULE, in which the frequency of execution is specified.
+
+ o  SHOW TRANSFER, which displays the definition of the transfer and
+    that of the associated schedule if there is one, and the status of
+    the transfer, including the date and time at which it last executed.
+
+ Security
+
+ To create a transfer, it is necessary to have SELECT access to the source
+ database and to the tables transferred. To create a replication, it
+ is also necessary to have CREATETAB privilege on the source database.
+
+ If the target database is created by VAX Data Distributor, it is cre-
+ ated with the VAX Rdb/VMS default protection. If it is necessary to
+ be more restrictive for an extraction or replication, the database can
+ be created in advance and the target specified as tables within it.
+ Tables are always created with the VAX Rdb/VMS default protection. This
+ can be altered in a post-transfer DCL command procedure.
+
+ The data in the transfer database are protected from direct access by
+ users lacking the required privileges.
+
+ Relationships with Other Products
+
+ VAX Data Distributor requires VAX Rdb/VMS. It can be used with any one
+ of the three VAX Rdb/VMS packaging options. Sites needing to tailor
+ targets (for example, creating indexes) can use either the interac-
+ tive SQL utility or the RDO utility, both of which are supplied with
+ the Interactive and Full Development options of VAX Rdb/VMS.
+
+ Since these utilities can perform operations on remote as well as lo-
+ cal databases, the operations can be performed from another node on
+ the network provided that the VAX Rdb/VMS Run-Time Only option is in-
+ stalled on the target VAX.
+
+                                  5
+
+ 
+
+ If CDD/Plus is present on the target system, data definitions from tar-
+ get databases can be placed in the dictionary by using the INTEGRATE
+ statement of the VAX Rdb/VMS SQL or RDO utility.
+
+ In addition to VAX Rdb/VMS, source databases for extractions and ex-
+ traction rollups can be databases accessed via VIDA for DB2 or DEC Rd-
+ bAccess for ORACLE® on VMS, or RMS or VSAM files accessed by DEC Rd-
+ bAccess for VAX RMS on VMS.
+
+ Where to Install VAX Data Distributor
+
+ It is not necessary to install VAX Data Distributor on every system
+ involved in a transfer. It must be installed:
+
+ o  On the source system of a replication.
+
+ o  On either the source or the target system, or both, of an extrac-
+    tion or extraction rollup.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  6
+
+ 
+
+ Limitations
+
+ The syntax to specify a set of tables within an existing database as
+ the target is not available in RDO, but is available in Interactive
+ SQL.
+
+ Since VAX Data Distributor uses a cluster-wide transfer database, only
+ one version of VAX Data Distributor is allowed in a cluster.
+
+ Record selection, conditional and value expressions available in a trans-
+ fer definition are a subset of those supported by the source database
+ management system.
+
+ Indexes, constraints, triggers, collating sequences, and ACLs are not
+ copied to target databases.
+
+ VAX Data Distributor does not provide commit-time replication of changes.
+ That is, updates to the source are transferred to the target when a
+ replication transfer executes, not whenever an update transaction is
+ committed on the source database.
+
+ VAX Data Distributor does not support DEC SERdb for Security-Enhanced
+ VMS, Digital's Rdb/VMS compliant database with B1 security restric-
+ tions.
+
+ HARDWARE REQUIREMENTS
+
+ System, components, and peripherals as specified in the System Sup-
+ port Addendum (SSA 27.76.06-x).
+
+ SOFTWARE REQUIREMENTS
+
+ VAX Rdb/VMS Full Development Option
+
+ or
+
+ VAX Rdb/VMS Interactive Option
+
+ or
+
+ VAX Rdb/VMS Run-Time Option
+
+ VMS Operating System
+
+                                  7
+
+ 
+
+ Refer to the System Support Addendum (SSA 27.76.06-x) for availabil-
+ ity and required versions of prerequisite/optional software and for
+ information regarding components of VMS DECwindows.
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-VDRA*-**
+ Software Media: QA-VDRA*-**
+ Software Documentation: QA-VDRAA-GZ
+ Software Product Services: QT-VDRA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the VMS License Management Facility.
+
+ License units for this product are allocated on an Unlimited Use ba-
+ sis.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx) or
+ the License Management Facility manual of the VMS Operating System doc-
+ umentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+                                  8
+
+ 
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+
+ [TM] DB2 is a trademark of International Business Machines Corpora-
+     tion.
+
+ ®   ORACLE is a registered trademark of Oracle Corporation.
+
+ [TM] The DIGITAL Logo, CDD/Plus, CI, DEC, DECnet, DECwindows, Mi-
+     croVAX, Rdb/VMS, TK, VAX, VAX RMS, VAXcluster, VAXft, VAXmail,
+     VAXserver, VAXstation, VIDA, and VMS are trademarks of Digital
+     Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  9

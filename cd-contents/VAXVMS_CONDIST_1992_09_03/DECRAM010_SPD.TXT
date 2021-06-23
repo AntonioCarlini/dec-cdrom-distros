@@ -1,0 +1,201 @@
+ 
+
+
+
+
+
+
+           Software
+           Product
+           Description
+
+           _________________________________________________________
+
+           PRODUCT NAME:  DECram for VMS, Version 1.0   SPD 34.26.00
+
+           DESCRIPTION
+
+           DECram for VMS is a disk device driver that allows a VMS sys-
+           tem manager to create pseudo disks (RAMdisks) that reside
+           in VAX main memory for the purpose of improving I/O perfor-
+           mance. Frequently accessed data can be accessed much faster
+           from a DECram device than from a physical disk device. These
+           RAMdisks can be accessed through the VMS file system just
+           as physical disks are accessed, requiring no change to ap-
+           plication and/or system software.
+
+           The number of DECram units used will most often be quite small
+           (usually one, but sometimes two or more).
+
+           Since VAX main memory is allocated for the DECram device,
+           a substantial amount of extra memory is generally required.
+           The amount of memory dedicated is selectable. The VMS sys-
+           tem manager designates the amount of memory dedicated to the
+           DECram device(s) and the files that will be stored on it.
+           The maximum size of a DECram device is 524,280 blocks.
+
+           User Interface
+
+           The user interface to a DECram device is the same as other
+           disk class devices. Note that the response to a SHOW DEVICE
+           /FULL command will indicate "device type unknown" in cur-
+           rent VMS releases. The device type DT$_RAM_DISK is not known
+           by the SHOW DEVICE command in current VMS releases.
+
+           Management Interface
+
+
+                                    DIGITAL                July 1991
+
+                                                         AE-PFM1A-TE
+
+ 
+
+
+
+           DECram for VMS, Version 1.0                 SPD 34.26.00
+
+
+           A DECram device is managed using the same tools used to man-
+           age any other VMS supported disk, i.e, SYSGEN, INITIALIZE,
+           MOUNT, etc. The standard utilities are used differently to
+           set up a DECram device, however.
+
+           System Analysis
+
+           Before creating a DECram device, the VMS system manager must
+           determine its size. Each disk block allocated to a DECram
+           device will mean one less page of VAX memory available. The
+           system manager should also assess the need for multiple DE-
+           Cram units.
+
+           System Generation
+
+           System startup must be modified, in most cases, to set up
+           the device and to copy any required files to the DECram de-
+           vice. Creating a disk of any useful size will require in-
+           creasing the SYSGEN parameter SPTREQ by
+           ((total size of all DECram devices +127)/128)
+           +(128 * number of DECram units).
+
+           In addition, the VMS system manager must reassess the val-
+           ues for the SYSGEN parameters that control Paging and Swap-
+           ping behavior.
+
+           Autogen/Reboot
+
+           It will not be possible to use the DECram device without a
+           system reboot, unless the system manager has already defined
+           SPTREQ to be large enough.
+
+           Restrictions
+
+           DECram for VMS V1.0 currently has the following restrictions:
+
+           o  Data in a DECram device is volatile.
+
+           o  DECram devices cannot be served in a VAXcluster.
+
+           o  DECram devices cannot be members of a Shadow Set.
+
+                                       2
+
+ 
+
+
+
+           DECram for VMS, Version 1.0                 SPD 34.26.00
+
+
+           o  DECram device cannot exceed 524,280 blocks.
+
+           DECram for VMS will not support long term data storage since
+           data in a DECram device is volatile. In the case of a sys-
+           tem or hardware failure, data stored in the DECram device
+           is lost and must be recreated.
+
+           HARDWARE REQUIREMENTS
+
+           VAX, MicroVAX, VAXstation, or VAXserver configuration as spec-
+           ified in the System Support Addendum (SSA 34.26.00-x).
+
+
+           SOFTWARE REQUIREMENTS
+
+           VMS Operating System
+
+           Refer to the System Support Addendum (SSA 34.26.00-x) for
+           availability and required versions of prerequisite/optional
+           software.
+
+           ORDERING INFORMATION
+
+           Software Licenses: QL-GJ9A*-**
+           Software Media: QA-GJ9A*-**
+           Software Product Services: QT-GJ9A*-**
+
+           DECram for VMS documentation is available on the media kit
+           only in text and PostScript® formats.
+
+           *  Denotes variant fields. For additional information on avail-
+              able licenses, services, and media, refer to the appro-
+              priate price book.
+
+
+
+
+
+
+
+
+                                       3
+
+ 
+
+
+
+           DECram for VMS, Version 1.0                 SPD 34.26.00
+
+
+           SOFTWARE LICENSING
+
+           This software is furnished under the licensing provisions
+           of Digital Equipment Corporation's Standard Terms and Con-
+           ditions. For more information about Digital's licensing terms
+           and policies, contact your local Digital office.
+
+           LICENSE MANAGEMENT FACILITY SUPPORT
+
+           This layered product supports the VMS License Management Fa-
+           cility.
+
+           License units for this product are allocated on a CPU-capacity
+           basis.
+
+           For more information on the License Management Facility, re-
+           fer to the VMS Operating System Software Product Descrip-
+           tion (SPD 25.01.xx) or the License Management Facility man-
+           ual of the VMS Operating System documentation set.
+
+           SOFTWARE PRODUCT SERVICES
+
+           A variety of service options are available from Digital. For
+           more information, contact your local Digital office.
+
+           SOFTWARE WARRANTY
+
+           Warranty for this software product is provided by Digital
+           with the purchase of a license for the product as defined
+           in the Software Warranty Addendum of this SPD.
+
+           ®   PostScript is a registered trademark of Adobe Sys-
+               tems, Incoporated.
+
+           [TM]The DIGITAL Logo, DEC, MicroVAX, TK, VAX, VAXcluster,
+               VAXft, VAXserver, VAXstation, and VMS are trademarks
+               of Digital Equipment Corporation.
+
+
+
+
+                                       4

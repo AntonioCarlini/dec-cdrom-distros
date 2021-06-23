@@ -1,0 +1,799 @@
+
+
+          Software
+          Product
+          Description
+
+          ________________________________________________________________
+
+          PRODUCT NAME:  VAX Packetnet System Interface      SPD 25.40.15
+                         (P.S.I.), Version 4.3
+
+          DESCRIPTION
+
+          The VAX Packetnet System Interface (VAX P.S.I.) product allows
+          suitably configured VAX systems to connect to Packet Switch-
+          ing Data Networks (PSDNs) conforming to CCITT recommendation
+          X.25 (1978, 1980 or 1984) and/or to International Standards
+          (ISO) 7776 and 8208. VAX P.S.I. allows a VAX system to function
+          as Data Terminal Equipment (DTE) or Data Circuit Terminating
+          Equipment (DCE) as follows:
+
+          o  A packet-mode DTE connected to a supported PSDN
+
+          o  A packet-mode DTE connected to a DCE conforming to ISO 7776
+             and 8208
+
+          o  A packet-mode DCE connected to a DTE conforming to ISO 7776
+             and 8208
+
+          o  A combination of the above modes chosen on a per-line basis
+
+          In this SPD, descriptions referring to PSDNs also apply to sup-
+          ported ISO point-to-point connections unless otherwise stated.
+
+          VAX P.S.I. can be configured for either Native or Multi-host
+          mode operation:
+
+          o  VAX P.S.I. Native mode supports direct connections from a VAX
+             system to one or more PSDNs, each of which may have one or
+             more DTEs.
+
+                                       DIGITAL                   July 1990
+
+                                                               AE-L066P-TE
+
+ 
+
+
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+          o  VAX P.S.I. Multi-host mode provides the features offered by
+             VAX P.S.I. Native and also allows VAX P.S.I. Access systems
+             to connect to a PSDN as though directly connected.
+
+          Features
+
+          VAX P.S.I. is a VMS layered product and can be used in the
+          following ways:
+
+          o  Process-to-process (X.25) communication
+
+          o  Process-to-terminal (X.29) communication
+
+          o  Terminal-to-Process (X.29) communication
+
+          o  DECnet communications
+
+          o  Open System Interconnection
+
+          Process-to-process (X.25) Communication
+
+          VAX P.S.I. supports access for VMS user programs written in VAX
+          MACRO and high-level languages such as VAX FORTRAN. Programs
+          executing in PDP-11 compatibility mode cannot use VAX P.S.I.
+
+          The VAX P.S.I. programming interface allows application pro-
+          grams to access the service interface to the packet level via
+          the standard VMS QIO interface. Functions include the setting
+          up and breaking of network connections, data transmission and
+          reception, sending and receiving of interrupt messages, and re-
+          setting of virtual circuits. The interface also allows splitting
+          and recombining of messages which are longer than the packet
+          size selected for the circuit.
+
+          The programming interface enables an application program using
+          VMS System Services to communicate with complementary software
+          on other systems (Digital or non-Digital DTEs) accessible via
+          the X.25 connection.
+
+          Process-to-terminal and Terminal-to-process (X.29) Communica-
+          tion
+
+                                          2
+
+ 
+
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          VAX P.S.I. supports terminal communications according to CCITT
+          recommendations X.3, X.28, and X.29 for:
+
+          o  Outgoing terminal traffic
+
+             VAX P.S.I. host users may make outgoing calls to other Digi-
+             tal or non-Digital CPUs, or suitable network PADs accessible
+             via a PSDN, using the X.29 programming interface or by using
+             the host-based Packet Assembly/Disassembly (PAD) supplied
+             with VAX P.S.I. The PAD facility accepts DCL-style commands
+             or CCITT X.28 commands.
+
+          o  Incoming terminal traffic
+
+             The X.29 Interactive Terminal Interface allows remote asyn-
+             chronous terminals (character-mode DTEs) connected to the
+             network to communicate with the VAX P.S.I. host in a manner
+             similar to local terminals. Dissimilarities may appear as a
+             result of delays caused by the PSDN(s) and various PAD param-
+             eter settings chosen by the user or peculiar to the PSDN(s).
+             In this case, the remote PAD must perform code conversions
+             between ASCII and the code the terminal uses. Note that there
+             may be some restrictions imposed by the PSDN(s).
+
+          Terminal parameters defined in the X.3 recommendation are ex-
+          plicitly supported. Network-specific enhancements or extensions
+          to the X.3 parameters are available at both the X.29 programming
+          interface and the host-based PAD user interface. Terminal pro-
+          cesses that depend on these extensions may cause problems when
+          used on other PSDNs or when accessing one PSDN via another (for
+          example, international access).
+
+          The X.29 terminal interface is compatible with the local termi-
+          nal interface except for the facilities where the PSDN does not
+          provide adequate support. The X.29 interface includes support
+          for specific X.29 signaling. For example, the break key can be
+          used to disable output and the interrupt message can be mapped
+          directly to the VMS interrupt character.
+
+                                          3
+
+ 
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          The host-based PAD employs a DCL-style command syntax offering
+          the ability to reference the CCITT PAD parameters symbolically,
+          as well as an interface that conforms to the standard CCITT
+          command signals. The host-based PAD also offers the capability
+          of running multiple X.29 sessions using the VMS SPAWN and ATTACH
+          commands. The host-based PAD supports reception of reselection
+          messages to allow X.29 calls to be redirected to another DTE.
+
+          The X.29 programming interface is similar to the X.25 program-
+          ming interface and allows a VMS process to control the virtual
+          circuit (for example, to modify PAD parameters or clear a call).
+          The X.29 programming interface can also be used to make an out-
+          going call to a remote PAD. The programming interface allows
+          generation of PAD reselection messages.
+
+          The maximum number of terminals supported (both local and remote
+          X.29) must not exceed the number supported by VMS. The use of
+          PVCs for X.29 connections is not defined by the 1980 and 1984
+          CCITT recommendations, and is not available with VAX P.S.I.
+
+
+
+
+          DECnet Communication
+
+          VAX P.S.I. allows the use of DECnet-VAX facilities over X.25
+          circuits. This technique is known as Data Link Mapping (DLM). A
+          DECnet-VAX license is required to communicate with other DECnet
+          nodes via a PSDN(s). For details, refer to DECnet-VAX Software
+          Product Description (SPD 25.03.xx).
+
+          Open System Interconnection
+
+          VAX P.S.I. may be used for Open System Interconnection (OSI)
+          communication using the OSI Applications Kernel product (OSAK).
+          Refer to the VAX OSI Applications Kernel Software Product De-
+          scription (SPD 27.47.xx).
+
+
+                                          4
+
+ 
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          VAX P.S.I may be used with VAX FTAM for managing files on open
+          systems (refer to VAX FTAM Software Product Description SPD
+          29.86.xx), and with VAX Message Router X.400 Gateway to enable
+          message exchange with other X.400 systems in X.400 public or
+          private networks (refer to the VAX Message Router X.400 Software
+          Product Description SPD 27.50.xx).
+
+          VAX P.S.I. also provides features of X.25 which permit a Connec-
+          tion Oriented Network Service (CONS) over X.25 according to ISO
+          8348.
+
+          Virtual Circuits
+
+          VAX P.S.I. (in Native or Multi-host mode) supports both Per-
+          manent Virtual Circuits (PVCs) and Switched Virtual Circuits
+          (SVCs), and supports up to 512 virtual circuits in total per
+          host machine. One virtual circuit is used for each:
+
+          o  Incoming or outgoing X.29 terminal connection
+
+          o  X.25 call using either a SVC or PVC
+
+          o  Active Data Link Mapping (DLM) circuit
+
+          Configuration
+
+          VAX P.S.I. provides a configuration procedure to configure a VAX
+          P.S.I. system locally. This allows network managers to create a
+          configuration after initial installation or subsequently when
+          reconfiguration is necessary.
+
+          Network Management
+
+          VMS provides a Network Control Program (NCP) for management
+          of both DECnet-VAX and VAX P.S.I. This program allows network
+          managers to define the line(s) and PSDN(s) to which the system
+          is connected, select the mode (DTE or DCE) of each, specify
+          destinations for incoming calls, access counters, and perform
+          other maintenance functions.
+
+                                          5
+
+ 
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          Problem Solving
+
+          The TRACE utility assists problem solving by tracing and analyz-
+          ing information at various stages as it passes between the PSDN
+          and the VAX P.S.I. node. Event logging is available by means of
+          normal VMS mechanisms.
+
+          P.S.I. Accounting
+
+          The P.S.I. Accounting utility enables the system manager to
+          obtain information on VAX P.S.I. and network usage. The P.S.I.
+          Accounting utility can extract the information collected and
+          display the information directly on a terminal, or write the
+          information to a file. Information can be extracted for selected
+          records or a summary produced. The P.S.I. Accounting utility
+          product is compatible with the VMS Accounting utility.
+
+          In the case of incoming X.29 calls, no information can be stored
+          relating to the process/account on which a user is logged; this
+          may be obtained through correlation with VMS accounting records.
+
+          P.S.I. Security
+
+          The P.S.I. Security utility allows control of both remote DTE
+          access to VAX P.S.I. and access to the PSDN(s) by VMS processes.
+          The Security utility allows for access control on the basis of:
+
+          o  The remote DTE numbers involved either on the basis of in-
+             dividual DTE numbers or groups of DTE numbers with common
+             leading digits.
+
+          o  The process making the outgoing call or the application
+             handling the incoming call.
+
+          o  Whether or not the call is normally or reverse charged.
+
+          In addition, when configured in Multi-host mode, VAX P.S.I. can
+          apply security checks to both incoming calls to and outgoing
+          calls from any suitably configured VAX P.S.I. Access node.
+          Security on both the VAX P.S.I. and the VAX P.S.I. Access node
+          is required for comprehensive protection.
+
+                                          6
+
+ 
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          P.S.I. Mail
+
+          The P.S.I. Mail utility allows communication across a PSDN via
+          electronic mail between two VMS systems running VAX P.S.I. or
+          VAX P.S.I. Access, using the VMS Mail facility even in the absence
+          of any DECnet communications between the two DTEs. Refer to the 
+          VMS Operating System Software Product Description (SPD 25.01.xx)
+          for more information about VMS Mail.
+
+
+          Conformance to Standards
+
+          VAX P.S.I. conforms to the following standards:
+
+          o  CCITT Recommendation X.25 (1978, 1980, or 1984) and ISO 8208
+             and 7776 using the LAPB or LAPBE variants of the data link
+             level and X.25 packet level protocols.
+
+          o  ISO 3309 - Frame generation and recognition (not protocol)
+             using High-Level Data Link Control (HDLC). Bisynchronous
+             (BSC) framing is not supported.
+
+          Table 1 (Optional Facility Support) describes the particular
+          aspects of the CCITT X.25 recommendation supported by VAX P.S.I.
+          Note that actual support for any given feature depends on the
+          PSDN used.
+
+          Line Interface
+
+          The electrical line interface used for PSDN communications
+          depends on the hardware device used. VAX P.S.I. provides only
+          the electrical interface of a DTE rather than a DCE and does
+          not provide clock signals. Therefore, an external clock source
+          (e.g., a modem) is required.
+
+
+                                          7
+
+ 
+
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          The range of supported devices cover V.24, V.35, V.10, RS232,
+          RS422 and RS423 over point-to-point, 4-wire, synchronous, full-
+          duplex lines at transmission rates up to 256K bits per second,
+          as well as ISDN Basic Rate Access at transmission rates up to
+          64K bits per second.
+
+          Synchronous Communications Devices
+
+          The communications devices supported by VAX P.S.I. are dif-
+          ferent, particularly in the amount of CPUs used. For optimum
+          performance, customers are recommended to use a DMA device. Re-
+          fer to the VAX P.S.I. System Support Addendum (25.40.15-x) for
+          details of the hardware configurations supported by VAX P.S.I.,
+          supported line-speeds, and information about the supported syn-
+          chronous driver products.
+
+          Prerequisite Support
+
+          For new PSDNs, the customer and Digital must jointly prepare
+          a Network Profile and Customer Support Plan covering all the
+          intended network nodes, their usage of SVCs, PVCs, and other
+          network facilities, and their support. Without this Network
+          Profile and Customer Support Plan, Digital cannot support the
+          network connections.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                          8
+
+ 
+
+
+
+
+          INSTALLATION
+
+          Digital requires that a customer's first purchase of this soft-
+          ware product include Digital Installation Services. These ser-
+          vices provide for installation of the software product by an
+          experienced Digital Software Specialist.
+
+          Only customers experienced with Digital's X.25 products should
+          attempt second or subsequent installations. Digital recommends
+          that all other customers purchase Digital's Installation Ser-
+          vices.
+
+          Customer Responsibilities
+
+          In some cases, the PSDN supplier (or PTT) may impose restric-
+          tions, limitations, or requirements on the proposed Digital
+          network configuration. The customer must ensure that they under-
+          stand and adhere to these controls for each and every network.
+
+          Before installation of the software, the customer must:
+
+          o  Previously have installed all required software and hardware
+             including terminals.
+
+          o  Obtain, install and demonstrate that any modems and other
+             equipment and facilities necessary to interface to Digital's
+             communication equipment are operational.
+
+          o  Demonstrate equivalence of operation for modems other than
+             Bell[TM] 208A, 208B, 209, 212A synchronous modems, or in
+             Europe, PTT approved modems.
+
+          o  Demonstrate that, where necessary, modems used meet the
+             appropriate interface standards.
+
+          o  Subscribe to the Open User Group and to at least two SVCs
+             to complete the product's installation checkout (this tests
+             loops information from the VAX P.S.I. system to the PSDN
+             and back to VAX P.S.I. system). Systems that use PVCs or
+             Closed User Groups only, or where the PSDN does not support
+             calls to the same DTE address, require specially negotiated
+             arrangements for Digital installation of the product.
+
+                                          9
+
+ 
+
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          o  Make available, for a reasonable period of time, as mutually
+             agreed by Digital and the customer, all hardware, communi-
+             cation facilities and terminals that are to be used during
+             installation.
+
+          Delays caused by any failure to meet the responsibilities will
+          be charged, at the then prevailing rate, for time and materials.
+
+          Courtesy Installation Service
+
+          This software product will be installed by Digital at no addi-
+          tional charge if purchased concurrently with a Startup Service
+          Package that includes installation service. This service may not
+          be available in all countries.
+
+          This service is available for those configurations which comply
+          with the restrictions described under the SOFTWARE WARRANTY
+          section. Consult the System Support Addendum (SSA 25.40.15-x)
+          for a list of countries and networks where this service is
+          available.
+
+          HARDWARE REQUIREMENTS
+
+          VAX, MicroVAX, VAXstation or VAXserver configuration as speci-
+          fied in the System Support Addendum (SSA 25.40.15-x).
+
+          SOFTWARE REQUIREMENTS *
+
+          VMS Operating System
+
+          For use with the synchronous communications interfaces, the
+          appropriate device driver in the VAX Wide Area Network Device
+          Drivers software is required. Refer to the VAX Wide Area Network
+          Device Drivers Software Product Description SPD 29.64.xx.
+
+          For use with the ISDN Basic Rate Access communications device,
+          VAX ISDN software and hardware is required. Refer to the VAX
+          ISDN Software Product Description SPD 31.23.xx.
+
+          ORDERING INFORMATION
+
+                                         10
+
+ 
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          Software Licenses: QL-071A*-**
+          Software Media: QA-071A*-**
+          Software Documentation: QA-071AA-GZ
+          Software Product Services: QT-071A*-**
+
+          *  Denotes variant fields. For additional information on avail-
+             able licenses, services and media, refer to the appropriate
+             price book.
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of
+          Digital Equipment Corporation's Standard Terms and Conditions.
+          For more information about Digital's licensing terms and poli-
+          cies, please contact your local Digital office.
+
+          LICENSE MANAGEMENT FACILITY
+
+          This layered product supports the VMS License Management Facil-
+          ity.
+
+          License units for this product are allocated on a CPU-capacity
+          basis.
+
+          For more information on the License Management Facility, refer
+          to the VMS Operating System Software Product Description (SPD
+          25.01.xx) or the VMS Operating System documentation set.
+
+          For more information about Digital's licensing terms and poli-
+          cies, contact your local Digital office.
+
+
+
+
+
+
+
+
+
+                                         11
+
+ 
+
+
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available. For more informa-
+          tion, please contact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with
+          the purchase of a license for the product as defined in the
+          Software Warranty Addendum of this SPD.
+
+          Digital has designed or adapted this software product to operate
+          with equipment conforming to ISO 7776/8208 with the public
+          networks in the countries listed in the System Support Addendum
+          (SSA 25.40.15-x), and with certain private PSDNs that have been
+          approved by Digital.
+
+          Optional Facility Support
+
+          VAX P.S.I. support for any given CCITT X.25 facility depends on
+          support for it in the appropriate supported PSDN. Generally, VAX
+          P.S.I. is designed to disallow use of facilities that the PSDN
+          will not support. Table 1 shows what VAX P.S.I. is capable of
+          doing, rather than what it will do when used on any particular
+          PSDN. The product documentation describes specific facility
+          availability for the supported public PSDNs.
+
+          Note: Not all optional facilities are supported for use with
+          VAX P.S.I. Mail, DECnet Data Link Mapping (DLM) and VAX OSI
+          Transport (VOTS).
+
+
+
+
+
+
+
+
+
+                                         12
+
+ 
+
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+          ________________________________________________________________
+
+                                  Table 1: 
+                         Optional Facility Support
+
+                                                       Paragraph
+                                                       Number
+                                                       in CCITT X.25  VAX P.S.I.
+          Number  Description of the Option              (1984)       Support
+
+          1.      Extended packet sequence numbering     6.2             Yes
+
+          2.      Non-standard default window size       6.10            Yes
+
+          3.      Default throughput classes assign-     6.11            N/A
+                  ment
+
+          4.      Packet re-transmission                 6.4         See Note 1
+
+          5.      Incoming calls barred                  6.5             N/A
+
+          6.      Outgoing calls barred                  6.6             N/A
+
+          7.      One-way logical channel outgoing       6.7             N/A
+
+          8.      One-way logical channel incoming       6.8             Yes
+
+          9.      Closed User Group                      6.14.1          Yes
+
+          10.     CUG with outgoing access               6.14.2          Yes
+
+          11.     CUG with incoming access               6.14.3          Yes
+
+          12.     Incoming Calls barred within CUG       6.14.4          Yes
+
+          13.     Outgoing Calls barred within CUG       6.14.5          Yes
+
+          14.     CUG selection                          6.14.6          Yes
+
+
+                                         13
+
+ 
+
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+                              Table 1: (Cont.) 
+                         Optional Facility Support
+
+
+                                                       Paragraph
+                                                       Number
+                                                       in CCITT X.25  VAX P.S.I.
+          Number  Description of the Option              (1984)       Support
+
+          15.     CUG with outgoing access selection     6.14.7         No
+
+          16.     Absence of both CUG selection          6.14.8         Yes
+                  facilities
+
+          17.     Bilateral CUG                          6.15.1         Yes
+
+          18.     Bilateral CUG with outgoing access     6.15.2         Yes
+
+          19.     Bilateral CUG selection                6.15.3         Yes
+
+          20.     Reverse charging                       6.18           Yes
+
+          21.     Reverse charging acceptance            6.19           Yes
+
+          22.     Local charge prevention                6.20           N/A
+
+          23.     Network User identification            6.21           Yes
+
+          24.     Charging information                   6.22           Yes
+
+          25.     RPOA selection                         6.23           Yes
+
+          26.     Hunt group                             6.24        See Note 2
+
+          27.     Call redirection                       6.25            N/A
+
+
+
+
+
+                                         14
+
+                              Table 1: (Cont.) 
+                         Optional Facility Support
+
+ 
+                                                       Paragraph
+                                                       Number
+                                                       in CCITT X.25  VAX P.S.I.
+          Number  Description of the Option              (1984)       Support
+
+          28.     Called line address modified noti-     6.26          Yes
+                  fication
+
+          29.     Call redirection notification          6.27          Yes
+
+          30.     Transit delay selection and indi-      6.28          Yes
+                  cation
+
+          31.     On-line facility registration          6.1            No
+
+          32.     Non-standard packet size               6.9            Yes
+
+          33.     Flow control parameter negotiation     6.12           Yes
+
+          34.     Throughput class negotiation           6.13           Yes
+
+          35.     Fast select                            6.16           Yes
+
+          36.     Fast select acceptance                 6.17           Yes
+
+          37.     D-bit modification                     6.3            No
+
+          38.     Abbreviated address                    -              N/A
+
+          39.     Datagram queue length selection ex     -              No
+
+          40.     Datagram service signal logical        -              No
+                  channel
+
+
+
+                                         15
+
+                               Table 1: (Cont.) 
+                         Optional Facility Support
+
+
+                                                       Paragraph
+                                                       Number
+                                                       in CCITT X.25  VAX P.S.I.
+          Number  Description of the Option              (1984)       Support
+
+          41.     Datagram non-delivery indication       -              No
+
+          42.     Datagram delivery confirmation         -              No
+
+          43.     Call statistics (non-X.25)             -          See Note 3
+
+          Notes:
+
+          1.    This is not applicable to a DTE. VAX P.S.I. does not
+                support receiving a level 3 Reject packet and will not
+                generate one.
+
+          2.    The individual DTEs must be assigned their own addresses
+                independent of the hunt group address. VAX P.S.I. can then
+                ignore the hunt group. Alternatively, each line on the
+                same CPU can be configured as if connected to a separate
+                PSDN; each with the same DTE address.
+
+          3.    VAX P.S.I. does not generate these statistics, however,
+                incoming statistics supplied by the PSDN are available in
+                the accounting records and at the programming interface.
+
+          4.    VAX P.S.I. does not support the following items of the
+                CCITT X.25 recommendation:
+
+                o  Multi-link protocol
+
+                o  Use of the D-bit in outgoing packets
+
+
+
+                                         16
+
+ 
+          VAX Packetnet System Interface                 SPD 25.40.15
+          (P.S.I), Version 4.3  
+
+
+
+
+
+          [TM] Bell is a trademark of Bell Telephone Companies
+
+          [R]  The DIGITAL Logo is a registered trademark of Digital
+               Equipment Corporation.
+
+          [TM] DECnet-VAX, VAX, MicroVAX, VAXstation, and VAXserver are
+               trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         17

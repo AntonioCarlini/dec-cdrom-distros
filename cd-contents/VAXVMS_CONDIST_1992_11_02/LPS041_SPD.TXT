@@ -1,0 +1,563 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC PrintServer Supporting Host         SPD 27.68.08
+                Software for VMS[*], Version 4.1
+
+ DESCRIPTION
+
+ The DEC PrintServer Supporting Host Software for VMS is a VMS layered
+ product that enables suitably configured VMS systems within an Eth-
+ ernet local area network to boot and provide support functions for the
+ PrintServer 20, turbo PrintServer 20, PrintServer 32, PrintServer 40,
+ and PrintServer 40 Plus.
+
+ The Supporting Host software consists of the following components:
+
+ o  A primary boot image which is downline loaded into the PrintServer
+    upon receipt of a boot request. It continues the boot process and
+    becomes the "loader" for the remaining components.
+
+ o  A management component which includes support via DECnet for PrintServer
+    configuration files, downline loading of secondary boot files, and
+    remote storage of event log and accounting files.
+
+ o  A console component which allows management and monitoring of a printer
+    from a terminal on the supporting host system or from the local con-
+    sole terminal for a PrintServer 40 or PrintServer 40 Plus.
+
+ o  A PrintServer component which is downline loaded into the PrintServer.
+    It includes DECnet and Internet distribution services, remote con-
+    sole services (also local console client for the PrintServer 40 and
+    PrintServer 40 Plus and local panel services for the PrintServer
+    20, turbo PrintServer 20, and PrintServer 32), and the PostScript®
+    interpreter. The interpreter processes PostScript commands and gen-
+    erates imaging data for the printer controller.
+
+ ____________________
+
+ The   terms OpenVMS and VMS refer to the OpenVMS operating system.
+
+                               DIGITAL                September 1992
+
+                                                         AE-HL89J-TE
+
+ 
+
+ If multiple PrintServers reside within the local area network, the same
+ number of Supporting Hosts may be used to load and manage them. Al-
+ ternatively, the load and management operations can be consolidated
+ onto any number of suitably configured supporting hosts which would
+ perform these operations for all PrintServers on the local area net-
+ work.
+
+ In a VMS environment, DECprint Printing Services for VMS (SPD 32.41.xx)
+ is the companion product. In an ULTRIX environment, the ULTRIX Oper-
+ ating System includes the PrintServer Client functionality. Refer to
+ the System Support Addendum (SSA 27.68.07-x) for availability and re-
+ quired versions of prerequisite/optional software.
+
+ The client software must reside on each system that either wants to
+ print directly to the PrintServer or provide distributed printing ser-
+ vices for other systems printing indirectly or spooling. A system run-
+ ning the client software can transmit print requests to any suitably
+ configured PrintServer on the network that is defined in its network
+ database. The maximum number of print clients that can simultaneously
+ be connected to a PrintServer 20, turbo PrintServer 20, PrintServer
+ 32, or PrintServer 40 Plus is sixteen; on the PrintServer 40, the max-
+ imum is twelve.
+
+ Features
+
+ PostScript
+
+ The PostScript language's page description capabilities include the
+ following features, which may be used in any combination:
+
+ o  Arbitrary shapes constructed from straight lines, arcs, and cubic
+    curves; such shapes may self-intersect and contain disconnected sec-
+    tions and holes.
+
+ o  Painting primitives that permit a shape to be outlined with lines
+    of any thickness, filled with any gray shade, or used as a clip-
+    ping path to crop any other graphics.
+
+ o  Text fully integrated with graphics. Text characters are treated
+    as graphical shapes that may be operated on by any PostScript graph-
+    ics operator.
+
+                                  2
+
+ 
+
+ o  Sampled images derived from natural sources or generated synthet-
+    ically. The PostScript graphics model allows sampled images at any
+    resolution and with a variety of dynamic ranges, and it provides
+    a number of facilities to control the rendering of images on the
+    PrintServer.
+
+ o  A general coordinate system facility that supports all combinations
+    of linear transformations including translation, scaling, rotation,
+    reflection, and skewing. These transformations apply uniformly to
+    all elements of a page description, including text, graphical shapes,
+    and sampled images.
+
+ o  A rendering algorithm, DECimage, which enhances the quality of nat-
+    ural (halftone) images when printed on laser printers.
+
+ PrintServer Console Clients
+
+ PrintServer console clients are available for all PrintServers through
+ a command-line interface at terminals on the Supporting Host or at the
+ local PrintServer consoles for the PrintServer 40 and PrintServer 40
+ Plus. The console services enable the system manager to monitor the
+ status of the PrintServer. There are two types of console functions,
+ privileged and unprivileged. To access the privileged functions, a pass-
+ word must be entered.
+
+ Unprivileged console functions include:
+ 
+
+ ___________________________________________________________________
+ Command__Operation_________________________________________________
+
+ configuradisplays PrintServer configuration
+
+ exit     exits to system command line
+
+ help     provides help on commands
+
+ jobs     shows jobs currently queued at the PrintServer
+
+ netstat  shows current status of the Internet subsystem
+
+ permissioshows current network access control restrictions
+
+                                  3
+
+ 
+
+
+ ___________________________________________________________________
+
+ privs    prompts user for password and enters privileged mode
+
+ showq    same operation as "jobs"
+
+ status   shows status of different components of PrintServer
+
+ versions displays version number of each component
+
+ ?        displays list of commands available in current console
+ _________mode______________________________________________________
+
+ Privileged console functions include:
+ 
+
+ ___________________________________________________________________
+ Command__Operation_________________________________________________
+
+ abort    aborts the specified job
+
+ accept   enables job acceptance
+
+ continuouscontinually prints jobs
+
+ exit     exits privileged mode
+
+ newfile  creates a new accounting or event log file or both
+
+ next     causes next job to print if in single job mode
+
+ reconfigucauses the PrintServer to re-read its configuration and
+          defaults files
+
+ reject   disables job acceptance
+
+ repeat   repeats the next operation
+
+ single   enables single job mode causing the PrintServer to pause
+ _________between_print_jobs________________________________________
+
+ In addition, the PrintServer 20, turbo PrintServer 20, and PrintServer
+ 32 have a front panel with a 2x24 LED display which provides PrintServer
+ information. The front panel status messages can be displayed in En-
+ glish, French, German, Dutch, Swedish, Portuguese, Spanish, Italian,
+ or Norwegian.
+
+ Centralized Event Logging
+
+                                  4
+
+ 
+
+ The types of events that are logged by the PrintServer range from suc-
+ cessful completion of jobs to fatal errors. These events can option-
+ ally be displayed on remote console terminals and are always displayed
+ on the local console of the PrintServer 40 and PrintServer 40 Plus;
+ a small subset of similar event messages are displayed on the front
+ panel of the PrintServer 20, turbo PrintServer 20, and PrintServer 32.
+ Events can also be recorded in an event log file on the Supporting Host.
+ A separate event log file is maintained for each PrintServer managed
+ by the Supporting Host software. The PrintServer communicates with the
+ management client component running on the supporting host, which in
+ turn, writes to the event log. Each PrintServer can send the logging
+ data to multiple supporting hosts that request this data.
+
+ Centralized Accounting
+
+ The PrintServer's accounting utility provides the system manager with
+ a convenient way to monitor all access of a PrintServer and to bill
+ for printer usage. As with event logging data, accounting information
+ can be sent to multiple Supporting Host systems on the network.
+
+ The accounting utility is provided to prepare each PrintServer's us-
+ age report on a per-user basis. Information captured includes user-
+ name (including client system), total number of sheets/sides printed,
+ accounting by tray, and PostScript CPU time used (in seconds). In ad-
+ dition, the system manager can specify cost (per sheet, per side, and
+ /or per seconds of CPU time); the utility also allows for accounting
+ to begin from a specific date.
+
+ Controlled Access to a PrintServer
+
+ The PrintServer's client access feature provides the system manager
+ with a convenient way to control all access to a PrintServer. Print-
+ ing restrictions to a PrintServer are specified by either "allowing"
+ or "denying" access to a PrintServer. The allow command adds DECnet
+ area numbers or node addresses and Internet addresses, networks, or
+ subnet numbers to the list of nodes or areas that are allowed to com-
+ municate with the PrintServer system. The deny command adds DECnet area
+
+
+
+                                  5
+
+ 
+
+ numbers or node addresses and Internet addresses, networks, or sub-
+ net numbers to the list of nodes or areas that are not allowed to com-
+ municate with the PrintServer system. Access restriction applies not
+ only to print clients, but to management and console clients as well.
+
+ Downline Loading the PrintServer Image
+
+ The Supporting Host Software downline loads the PrintServer primary
+ image upon receipt of a load request from a PrintServer. In the event
+ multiple systems on the Ethernet are running the Supporting Host Soft-
+ ware (and are enabled to service boot requests), the first system to
+ respond to a PrintServer's load request will downline load the PrintServer
+ primary image. The management client provides configuration and ad-
+ ministrative services as well as secondary image loading.
+
+ For users requiring DECnet or DECnet and Internet access, the MOP boot-
+ ing protocol is required from either the VMS or ULTRIX supporting host.
+
+ PrintServer Component
+
+ The PrintServer Component is the software that is downline loaded to
+ and runs in the PrintServer.
+
+ This software consists of the following parts:
+
+ o  Distribution Software accepts print and control data from DECnet
+    or Internet print client systems or a supporting host on the net-
+    work and passes the data to the imaging software (PostScript in-
+    terpreter). The distribution software also passes system messages
+    from the imaging software to the appropriate print client or man-
+    agement client and provides console client services.
+
+ o  Imaging Software which interprets data from the Distribution Soft-
+    ware, builds the corresponding bitmaps, and sends those bitmaps to
+    the print engine to be converted to printed output.
+
+    The Imaging Software also passes any system messages from the print
+    engine or interpreter to the Distribution Software, which passes
+    the information to the appropriate print, console, and/or manage-
+    ment client running on a Supporting Host system.
+
+                                  6
+
+ 
+
+    The Imaging Software includes an interpreter based on Adobe®'s PostScript
+    Page Description Language and twenty-nine resident typefaces. The
+    twenty-nine resident typefaces are:
+
+    -  Courier
+
+    -  Courier Oblique
+
+    -  Courier Bold
+
+    -  Courier Bold Oblique
+
+    -  Times® Roman
+
+    -  Times Bold
+
+    -  Times Italic
+
+    -  Times Bold Italic
+
+    -  Helvetica®
+
+    -  Helvetica Oblique
+
+    -  Helvetica Bold
+
+    -  Helvetica Bold Oblique
+
+    -  ITC Avant Garde Gothic® Book
+
+    -  ITC Avant Garde Gothic Book Oblique
+
+    -  ITC Avant Garde Gothic Demi
+
+    -  ITC Avant Garde Gothic Demi Oblique
+
+    -  New Century Schoolbook
+
+    -  New Century Schoolbook Italic
+
+    -  New Century Schoolbook Bold
+
+    -  New Century Schoolbook Bold Italic
+
+    -  ITC Lubalin Graph® Book
+
+    -  ITC Lubalin Graph Book Oblique
+
+    -  ITC Lubalin Graph Demi
+
+                                  7
+
+ 
+
+    -  ITC Lubalin Graph Demi Oblique
+
+    -  ITC Souvenir® Light
+
+    -  ITC Souvenir Light Italic
+
+    -  ITC Souvenir Demi
+
+    -  ITC Souvenir Demi Italic
+
+    -  Symbol/Math
+
+ OPTIONAL SOFTWARE
+
+ ALL-IN-1 Scripts
+
+ This unsupported option provides a collection of ALL-IN-1 Scripts and
+ a WPS-PLUS Printer Table file that enhance compatibility between ALL-IN-1,
+ WPS-PLUS, and Digital PostScript printers. ALL-IN-1/WPS-PLUS users can
+ access the many unique features of these printers; these include sup-
+ port for duplex printing, number_up, landscape page orientation, print-
+ ing of multiple paper sizes, and sheet_count. PrintServer performance
+ is greatly improved for ALL-IN-1 multiple selection and print oper-
+ ations. Support for LN03 font cartridge emulation (via DECprint Print-
+ ing Services for VMS or Third Party) is also included.
+
+ ANSI Device Control (Set-Up) Module
+
+ SYS$EXAMPLES includes an unsupported sample ANSI device control li-
+ brary that can be installed on the system and will allow system users
+ to control the features of DEClaser and LN03 printers from the print
+ command. This feature allows users to select simplex/duplex, landscape
+ /portrait, paper sizes, envelopes, and input trays by location.
+
+ PostScript Compatibility Module
+
+ SYS$EXAMPLES includes an unsupported sample PostScript setup file for
+ emulating many PostScript extensions. The use of this file allows the
+ correct emulation and printing of PostScript extensions found in other
+ PostScript devices (e.g., Apple® LaserWriter®).
+
+                                  8
+
+ 
+
+ INSTALLATION
+
+ Only experienced customers should attempt installation of this soft-
+ ware product. Digital recommends that all other customers purchase Dig-
+ ital's Installation Services. These services provide for the instal-
+ lation of the software product and PrintServer hardware by an expe-
+ rienced Digital representative.
+
+ If Digital's Installation Services are purchased, the customer's re-
+ sponsibilities (before installation of the software) include:
+
+ o  Previously have installed all prerequisite software and hardware,
+    as described in the System Support Addendum (SSA 27.68.07-x)
+
+ o  Obtain, install, and demonstrate as operational any equipment and
+    facilities necessary to interface to Digital's communication equip-
+    ment
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    upon by Digital and the customer, all hardware, communication fa-
+    cilities, and terminals that are to be used during installation
+
+ o  Supply to Digital all of the information necessary for installa-
+    tion of the software as described in the PrintServer Site Prepa-
+    ration Guide (e.g., for the PrintServer 40 and PrintServer 40 Plus)
+
+ Installation of PrintServer Supporting Host software will consist of
+ the following:
+
+ o  Verification that the PrintServer hardware installation is complete
+
+ o  Verification that a complete set of PrintServer Supporting Host Soft-
+    ware media and documentation has been received
+
+ o  Verification that all hardware and software prerequisites have been
+    met and the equipment is operational
+
+ o  Installation of the PrintServer Supporting Host Software on one sys-
+    tem
+
+ o  Perform all post-installation requirements as documented
+
+ o  Downline loading of the PrintServer software to the PrintServer
+
+                                  9
+
+ 
+
+ o  Use the remote console utility to monitor the second phase of the
+    boot process
+
+ Note: Should a Digital Specialist be required to modify the previously
+ installed software parameters, a time and materials charge will ap-
+ ply.
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations as specified in the System
+ Support Addendum (SSA 27.68.07-x).
+
+ SOFTWARE REQUIREMENTS
+
+ o  VMS Operating System
+
+ o  DECnet-VAX
+
+ Refer to the System Support Addendum (SSA 27.68.07-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ Licenses for this product do not have to be separately ordered because
+ a license to use the PrintServer Supporting Host Software for VMS, V4.1
+ is included with each PrintServer printer.
+
+ Software Media: QA-798AA-**
+ Software Documentation: QA-798A*-GZ
+ Software Product Services: QT-798A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+
+
+
+
+
+
+                                 10
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ Binary Licenses
+
+ A Single Use license for the Supporting Host software is included with
+ each PrintServer. The license gives you the right to install the PrintServer
+ Component software on a single CPU or equipment configuration. To pro-
+ vide redundancy and flexibility in managing the PrintServer system,
+ the license also provides the right to copy the software on one ad-
+ ditional CPU within the local area network. There is an unlimited right
+ to copy the Remote Console image within your local area network.
+
+ License Management Facility Non-Support
+
+ The PrintServer Supporting Host Software for VMS software license ap-
+ plies to PrintServer printers on which the software runs, not to ser-
+ vice host node machines in the network.
+
+ This product does not provide support for the VMS License Management
+ Facility. A Product Authorization Kit (PAK) is not required for in-
+ stallation or use of this version of the product.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available. For more information on
+ these or other services, please contact your local Digital office.
+
+
+
+
+
+
+
+
+
+                                 11
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+
+ ®  Adobe and PostScript are registered trademarks of Adobe Systems
+    Incorporated.
+
+ ®  Apple and LaserWriter are registered trademarks of Apple Com-
+    puter, Inc.
+
+ ®  Helvetica and Times are registered trademarks of Allied Corpo-
+    ration.
+
+ ®  ITC Avant Garde Gothic, ITC Lubalin Graph, and ITC Souvenir are
+    registered trademarks of International Typeface Corporation.
+
+ [TM]The Digital Logo, ALL-IN-1, CI, DEC, DECimage, DEClaser, DEC-
+    net, DECprint, DELNI, DEQNA, DESTA, Digital, LN03, MicroVAX,
+    OpenVMS, PrintServer, RZ, ThinWire, TK, ULTRIX, VAX, VAX-
+    cluster, VAXft, VAXserver, VAXstation, VMS and WPS-PLUS are
+    trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 12

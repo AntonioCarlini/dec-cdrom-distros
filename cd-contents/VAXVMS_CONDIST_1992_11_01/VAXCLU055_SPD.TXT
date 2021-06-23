@@ -1,0 +1,824 @@
+ 
+
+
+
+
+
+
+           Software
+           Product
+           Description
+
+           _________________________________________________________
+
+           PRODUCT NAME:  VAXcluster Software, Version 5.5       SPD
+           29.78.05
+
+           DESCRIPTION
+
+           VAXcluster Software is a VMS System Integrated Product (SIP).
+           It provides a highly integrated VMS computing environment
+           distributed over multiple VAX, VAX Workstation, and MicroVAX CPUs.
+           This environment is called a VAXcluster system.
+
+           CPUs in a VAXcluster system can share processing, mass stor-
+           age, and other resources under a single VMS security and man-
+           agement domain. Within this highly integrated environment,
+           CPUs retain their independence because they use local, memory-
+           resident copies of the VMS Operating System. Thus, VAXclus-
+           ter CPUs can boot and shut down independently while bene-
+           fiting from common resources.
+
+           Applications running on one or more CPUs in a VAXcluster sys-
+           tem access shared resources in a coordinated manner. VAX-
+           cluster Software components synchronize access to shared re-
+           sources, preventing multiple processes on any CPU in the VAX-
+           cluster from interfering with each other when updating data.
+           This coordination ensures data integrity during multiple con-
+           current update transactions.
+
+           Because resources are shared, VAXcluster systems offer higher
+           availability than standalone CPUs. Properly configured VAX-
+           cluster systems can withstand the shut down or failure of
+           various components. For example, if one CPU in a VAXclus-
+           ter is shut down, users can log on to another CPU to cre-
+           ate a new process and continue working; since mass storage
+
+
+                                    DIGITAL            November 1991
+
+                                                         AE-LS19F-TE
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           is shared VAXcluster-wide, the new process is able to ac-
+           cess the original data. Applications can be designed to sur-
+           vive these events automatically.
+
+           All VAXcluster systems have the following software features
+           in common:
+
+           o  Shared file system - The VMS Operating System and VAX-
+              cluster software allows all CPUs to share read and write
+              access to disk files in a fully coordinated environment.
+              Application programs can specify the level of VAXcluster-
+              wide file sharing that is required; access is then co-
+              ordinated by the VMS Extended QIO Processor (XQP) and Record
+              Management Services (RMS).
+
+           o  Shared batch and print queues are accessible from any CPU
+              in the VAXcluster system. The VMS queue manager controls
+              VAXcluster-wide batch and print queues, which can be ac-
+              cessed by any CPU. Batch jobs submitted to VAXcluster-
+              wide queues are routed to any available CPU so the batch
+              load is shared.
+
+           o  The VMS Lock Manager System Services operate in a VAXcluster-
+              wide manner. These services enable reliable coordinated
+              access to any resource and provide signaling mechanisms,
+              at the system and process level, across the whole VAX-
+              cluster system.
+
+           o  All disks and TMSCP tapes in a VAXcluster system can be
+              made accessible to all CPUs.
+
+           o  Process information and control services are available
+              VAXcluster-wide to application programs and system util-
+              ities.
+
+           o  An automated configuration command procedure assists in
+              adding and removing CPUs and in modifying their config-
+              uration characteristics.
+
+           o  The dynamic Show Cluster Utility displays the status of
+              VAXcluster hardware components and communication links.
+
+                                       2
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  Standard VMS system and security features work in a VAXcluster-
+              wide manner such that the entire VAXcluster system op-
+              erates as a single security domain.
+
+           o  The VAXcluster software dynamically balances the inter-
+              connect I/O load in VAXcluster configurations that in-
+              clude multiple interconnects.
+
+           o  Multiple VAXcluster systems can be configured on a sin-
+              gle Local Area Network (LAN).
+
+           Definitions:
+
+           The following terms are used throughout this SPD:
+
+           o  CPU (Central Processing Unit) - A VAX-family computer that
+              includes one or more processors. A CPU operates as a VAX-
+              cluster node. A VAXcluster node can be referred to as VAX-
+              cluster member.
+
+           o  Disk server - A CPU that makes disks to which it has di-
+              rect access available to other CPUs in the VAXcluster sys-
+              tem, using the VMS MSCP Server.
+
+           o  Maintenance Operations Protocol (MOP) server - A CPU that
+              services satellite boot requests, using DECnet-VAX soft-
+              ware, to provide the initial Local Area Network (LAN) down-
+              line load sequence of the VMS Operating System and VAX-
+              cluster software. At the end of the initial down-line load
+              sequence, the satellite uses a disk server to perform the
+              remainder of the VMS booting process.
+
+           o  Satellite - A CPU that is booted over a LAN using a MOP
+              server and disk server.
+
+           o  Tape server - A CPU that makes TMSCP tapes to which it
+              has direct access available to other CPUs in the VAXclus-
+              ter system, using the VMS TMSCP Server.
+
+
+
+                                       3
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  Mixed Interconnect VAXcluster System - A VAXcluster sys-
+              tem that uses more than one type of interconnect for VAX-
+              cluster communication.
+
+           Interconnects:
+
+           VAXcluster systems are configured by connecting multiple CPUs
+           with a communication media, referred to as an interconnect.
+           VAXcluster nodes communicate with each other using the most
+           appropriate interconnect available. Whenever possible, in
+           the event of interconnect failure, VAXcluster software will
+           automatically use an alternate interconnect. VAXcluster Soft-
+           ware supports any combination of the following interconnects:
+
+           o  Computer Interconnect (CI)
+
+           o  Ethernet (NI)
+
+           o  Digital Storage System Interconnect (DSSI)[*]
+
+           o  Fiber Distributed Data Interface (FDDI)
+
+           Ethernet and FDDI are industry-standard general purpose com-
+           munications interconnects that can be used to implement a
+           Local Area Network (LAN). Except where noted, VAXcluster sup-
+           port for both of these LAN types is identical.
+
+           Configuration Rules:
+
+           The following configuration rules apply to VAXcluster sys-
+           tems:
+
+           o  The maximum number of CPUs supported in a VAXcluster sys-
+              tem is 96.
+
+           o  Every VAXcluster node must have a direct communication
+              path to every other VAXcluster node via any of the sup-
+              ported interconnects.
+
+           _________________
+         [*] The DSSI is not used as a VAXcluster interconnect when ac-
+             cessed via a KFQSA Q-bus adapter.  The KFQSA adapter only
+
+             supports access to DSSI mass storage devices.
+
+                                       4
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  VAX 11/7xx, 6000, 8xxx, and 9000-series CPUs require a
+              system disk that is accessed via a local controller or
+              through a local CI or DSSI connection. VAXcluster satel-
+              lite booting is not supported for these systems.
+
+           o  A Star Coupler is a common connection point for CI con-
+              nected CPUs and HSC subsystems. All CPUs connected to a
+              Star Coupler must be configured as VAXcluster members.
+              A VAXcluster system can include any number of Star Cou-
+              plers. The number of CI adapters supported by different
+              CPUs can be found in Table 2 in this SPD; the number of
+              Star Couplers that a CPU can be connected to is limited
+              by the number of adapters it is configured with.
+
+           o  The maximum number of CPUs that can be connected to a Star
+              Coupler is 16, regardless of Star Coupler size.
+
+           o  The RA-series disks and TA-series tapes can be dual pathed
+              between pairs of HSC subsystems on the same Star Coupler,
+              or between two local controllers. Such dual pathing pro-
+              vides enhanced data availability using a VMS automatic
+              recovery capability called failover. Failover is the abil-
+              ity to use an alternate hardware path from a CPU to a stor-
+              age device when a failure occurs on the current path. The
+              failover process is transparent to applications. Dual pathing
+              between an HSC and a local controller is not permitted.
+              When two local controllers are used for dual pathing, each
+              controller must be located on a separate CPU.
+
+           o  When multiple CPUs are connected to a common DSSI they
+              must all be configured as VAXcluster members. Since the
+              KFQSA Q-bus-to-DSSI adapter does not support VAXcluster
+              communication to other CPUs on the DSSI, CPUs using this
+              adapter must include another interconnect for VAXclus-
+              ter communication.
+
+
+
+
+
+
+                                       5
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  VAX 6000-series CPUs can be connected to a DSSI bus us-
+              ing the KFMSA XMI-DSSI adapter. Any mix of VAX 6000-series
+              and VAX 4000-series systems (excluding the VAX 4000 Model
+              200) can be configured on a common DSSI bus, up to a max-
+              imum of three CPUs.
+
+           o  A maximum of three VAX 4000 series, Q-bus-based MicroVAX
+              3000 series, and MicroVAX II systems can be configured
+              on a common DSSI bus. In triple CPU configurations, the
+              middle CPU must be a VAX 4000 Model 300, or higher, sys-
+              tem.
+
+           o  VAXcluster systems support 4 LAN adapters per CPU for VAX-
+              cluster communications. LAN segments can be bridged to
+              form an extended LAN.
+
+           o  CPUs that use an Ethernet for VAXcluster communications
+              can concurrently use it for other network protocols that
+              conform to the applicable Ethernet standards, such as Eth-
+              ernet V2.0, IEEE 802.2, and IEEE 802.3.
+
+           o  CPUs that use an FDDI for VAXcluster communications can
+              concurrently use it for other network protocols that con-
+              form to the applicable FDDI standards, such as ANSI X3.139-
+              1987, ANSI X3.148-1988, and ANSI X3.166-1990
+
+           o  All LAN bridges must provide a low-latency data path, with
+              approximately 10 megabits per second throughput for Eth-
+              ernet and 100 megabits per second throughput for FDDI.
+              Translating bridges must be used when connecting VAXclus-
+              ter nodes on an Ethernet to those on an FDDI.
+
+           o  The maximum number of VAXcluster members that can be di-
+              rectly connected to the FDDI, via the DEC FDDIcontroller
+              400 (DEMFA), is 16.
+
+           o  A DECnet-VAX communication path must exist between all
+              nodes in a VAXcluster system.
+
+           o  A single time zone setting must be used by all CPUs in
+              a VAXcluster system.
+
+                                       6
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  A VAXcluster system can be configured with a maximum of
+              one Quorum Disk. A Quorum Disk cannot be a member of a
+              shadow, volume, or stripe set.
+
+           Recommendations:
+
+           The optimal VAXcluster system configuration for any comput-
+           ing environment is based on requirements of cost, function-
+           ality, performance, capacity, and availability. Factors that
+           impact these requirements include:
+
+           o  Applications in use
+
+           o  Number of users
+
+           o  Number and model of CPUs
+
+           o  Interconnects and adapter types
+
+           o  Disk and tape I/O capacity and access time
+
+           o  Number of disks and tapes being served
+
+           o  Interconnect utilization
+
+           Digital recommends VAXcluster system configurations based
+           on its experience with the VAXcluster Software Product. The
+           customer should evaluate specific application dependencies
+           and performance requirements to determine an appropriate con-
+           figuration for the desired computing environment.
+
+           When planning a VAXcluster system, consider the following
+           recommendations:
+
+           o  While VAXcluster systems can include any number of sys-
+              tem disks, performance and disk space should be consid-
+              ered in determining their number and location. It is im-
+              portant to recognize that system management efforts in-
+              crease in proportion to the number of system disks.
+
+
+                                       7
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  VAXcluster CPUs should be configured using interconnects
+              that provide appropriate performance for the required sys-
+              tem usage. In general, use the highest performance in-
+              terconnect possible. CI, DSSI, and FDDI are the preferred
+              interconnects between powerful VAX CPUs.
+
+           o  Data availability and I/O performance is enhanced when
+              multiple VAXcluster nodes have direct access to shared
+              storage; whenever possible, configure systems to allow
+              direct access to shared storage in favor of VMS MSCP Served
+              access. Multi-access DSSI- and HSC-based storage provide
+              higher data availability and I/O performance than singly
+              accessed, local controller-based storage. Additionally,
+              dual pathing of DSA disks between local or HSC storage
+              controllers enhances data availability in the event of
+              controller failure.
+
+           o  VAXcluster systems can provide enhanced availability by
+              utilizing redundant components. For example, additional
+              CPUs, storage controllers, and disks and tapes can be con-
+              figured. Extra peripheral options such as printers and
+              terminals can be included to further enhance availabil-
+              ity. Multiple instances of all the VAXcluster intercon-
+              nects (CI, DSSI, Ethernet, and FDDI) are supported.
+
+           o  If possible, LAN-based and Mixed Interconnect VAXclus-
+              ter systems should include multiple MOP and disk servers
+              to enhance availability. When a server fails in config-
+              urations that include multiple servers, satellite access
+              to disks fails over to another server. Disk servers should
+              be the most powerful CPUs in the VAXcluster and should
+              use the highest bandwidth LAN adapters available.
+
+           o  When a LAN-based VAXcluster system is configured with high
+              performance nodes, multiple LAN adapters and intercon-
+              nects can be used to increase total communication band-
+              width.
+
+
+
+
+                                       8
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  Maintenance of complex LAN-based VAXcluster configura-
+              tions can be simplified with the aid of the VMS LAVC$FAILURE_
+              ANALYSIS program, which is available in the SYS$EXAMPLES
+              directory.
+
+           o  VAXclusters are sensitive to the LAN traffic levels. The
+              average LAN segment utilization should not exceed 60 per-
+              cent for any 10 second interval. Nodes can leave the clus-
+              ter if they cannot properly exchange the HELLO messages
+              every three seconds. LAN bridges can be used to local-
+              ize VAXcluster system traffic should the overall level
+              of network traffic be a concern. Also, it is possible for
+              VAXcluster nodes to exist on both sides of a LAN bridge.
+
+           o  The performance of an FDDI LAN will vary with each con-
+              figuration. When an FDDI is used for VAXcluster commu-
+              nications, the ring latency when the FDDI ring is idle
+              should not exceed 400 microseconds.
+
+           o  When under heavy network load, bridges are subject to packet
+              loss and retransmission, due to congestion. This is es-
+              pecially true of Ethernet to FDDI bridges. In a VAXclus-
+              ter environment, heavy network loads can result when many
+              satellite nodes are booted simultaneously. It may be nec-
+              essary to minimize simultaneous booting, or limit the num-
+              ber of nodes that utilize these LAN bridges.
+
+           o  The VAXcluster Multi-Datacenter Facility is specifically
+              designed to allow successful implementation and manage-
+              ment of disaster-tolerant configurations and to deliver
+              predictable recovery from site failures.
+
+              For more information, refer to the VAXcluster Multi-Datacenter
+              Facility Software Product Description (SPD 35.05.xx).
+
+           o  The optional VMS Volume Shadowing System Integrated Prod-
+              uct provides the following advantages:
+
+              -  Enhanced data availability in the event of disk fail-
+                 ure
+
+                                       9
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+              -  Enhanced read performance with multiple system and data
+                 disks
+
+              For more information, refer to the VMS Volume Shadowing
+              Software Product Description (SPD 27.29.xx.).
+
+           HARDWARE SUPPORT
+
+           Supported CPUs:
+
+           Any VAX, VAXstation, or MicroVAX CPU, as documented in the
+           VMS SPD, can be used in a VAXcluster, with the exception of
+           the VAX-11/730, VAX-11/782, and VAXstation 8000 CPUs.
+
+           Any CPU can be configured as a VAXcluster satellite node,
+           with the exception of VAX 11/7xx, 6000, 8xxx, and 9000-series
+           CPUs.
+
+           For MicroVAX 3500 and MicroVAX 3600 CPUs configured with KFQSA
+           DSSI adapters, the console ROMs must be at Revision Level
+           V5.1, at a minimum.
+
+           Supported CI Adapters:
+
+           VAXcluster nodes can be configured with multiple CI adapters.
+           Table 1 shows the types of adapters that are supported by
+           each CPU. There can only be one type of adapter configured
+           on a CPU; the maximum quantity of each type is noted in the
+           table. The CI adapters in a CPU can connect to the same, or
+           different, Star Couplers.
+
+           Note: The CIBCA-A and CIBCA-B are different.
+
+
+
+
+
+
+
+
+
+                                      10
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           _________________________________________________________
+
+           Table_1:_________________________________________________
+
+           CPU                    CIBCA-   CIBCA-
+           Type______CI750CI780CIBCIA______B________CIXCD___________
+
+           11/750    1   -    -   -        -        -
+
+           11/780    -   1    -   -        -        -
+
+           11/785    -   1    -   -        -        -
+
+           6000-     -   -    -   1        4        4
+           xxx
+
+           82xx      -   -    1   1        1        -
+
+           83xx      -   -    1   1        1        -
+
+           85xx      -   -    1   1        2        -
+
+           86xx      -   2    -   -        -        -
+
+           8700      -   -    1   1        2        -
+
+           88xx      -   -    1   1        2        -
+
+           9000-     -   -    -   -        -        6
+           xxx______________________________________________________
+
+           Supported LAN Adapters:
+
+           Table 2shows the types of Local Area Network (LAN) adapters
+           supported by VAXcluster software.
+
+           _________________________________________________________
+
+           Table_2:_________________________________________________
+
+           Bus__________Ethernet___________FDDI_____________________
+
+           XMI          DEMNA              DEMFA
+
+           BI           DEBNI,DEBNA
+
+           Q-bus        DELQA,DESQA
+
+           Q-bus        DEQTA (DELQA-YM)
+
+           UNIBUS       DEUNA,DELUA
+
+           Integral_____LANCE,SGEC__________________________________
+
+                                      11
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           Supported Peripheral Options:
+
+           VAXcluster systems can use all peripheral options supported
+           by the VMS SPD. Refer to the VMS Software Product Descrip-
+           tion (SPD 25.01.xx) for further information.
+
+           Memory Requirements:
+
+           All VAXcluster CPUs must have a minimum of 4 megabytes of
+           physical memory.
+
+           Star Coupler Expander:
+
+           A Computer Interconnect Star Coupler Expander (CISCE) can
+           be added to any Star Coupler to increase its connection ca-
+           pacity to 32 ports. The maximum number of CPUs that can be
+           connected to a Star Coupler is 16, regardless of size.
+
+           HSC Subsystems:
+
+           VAXcluster software supports all models of the HSC family
+           of intelligent mass storage controllers. These controllers
+           include many features:
+
+           o  The ability to provide high data throughput and I/O rates
+
+           o  Implementation of many mass storage performance optimiza-
+              tion techniques
+
+           o  Multi-CPU access to disk and tape units
+
+           o  The ability to configure multiple disk and tape units
+
+           o  Optional HSC-based disk caching (for the HSC60 and HSC90)
+
+           o  HSC resident maintenance and backup facilities
+
+           The following rules apply for HSC subsystems:
+
+           o  HSC Software, Version 6.0, at a minimum, is required for
+              the HSC40, HSC60, HSC70, and HSC90. HSC Software, Ver-
+              sion 4.1, at a minimum, is required for the HSC50.
+
+           o  Each HSC40 supports a maximum of 12 ports.
+
+                                      12
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           o  Each HSC50 supports a maximum of 24 ports.
+
+           o  Each HSC60 supports a maximum of 20 ports.
+
+           o  Each HSC70 supports a maximum of 32 ports.
+
+           o  Each HSC90 supports a maximum of 48 ports.
+
+           o  All ports can be used for disk storage. The maximum num-
+              ber of ports that can be used for tapes is 24 for the HSC70
+              and HSC90, and 12 for the HSC40, HSC50, and HSC60.
+
+           SOFTWARE REQUIREMENTS
+
+           o  VMS Operating System
+
+              VAXcluster Software, Version 5.5 is a VMS System Inte-
+              grated Product that requires VMS, Version 5.5.
+
+              Refer to the VMS Software Product Description (SPD 25.01.xx)
+              for further information.
+
+              VMS, Version 5.4, and all its sub-versions (for example
+              V5.4-1, and V5.4-2), can coexist in a VAXcluster with VMS,
+              Version 5.5 (and all its sub-versions). Only one version
+              of VMS can exist on each system disk. In configurations
+              with multiple system disks, a rolling upgrade can be per-
+              formed so that continuous VAXcluster system operation is
+              maintained during the upgrade process. During a rolling
+              upgrade, a separate system disk is required for each ver-
+              sion. Rolling upgrades occur in a series of phases dur-
+              ing which all VAXcluster nodes are brought up to the lat-
+              est VMS version.
+
+              During a rolling upgrade from Version 5.4 to Version 5.5,
+              V5.4 Batch and Print functionality is maintained. Once
+              the VAXcluster system is fully upgraded to Version 5.5,
+              the new V5.5 Batch and Print functionality becomes avail-
+              able. Once the new V5.5 Batch and Print facility is op-
+              erational, booting V5.4 CPUs into the VAXcluster system
+              is only permitted if they do not use any Batch and Print
+
+                                      13
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+              operations (i.e., START/QUEUE/MANAGER). Coexistence of
+              the V5.4 and V5.5 Batch and Print facilities is not sup-
+              ported.
+
+              Digital recommends that all VAX systems in a VAXcluster
+              run the latest version of VMS.
+
+           o  DECnet-VAX Software
+
+              All VAXcluster CPUs require either an End Node or Full
+              Function DECnet-VAX license.
+
+              Refer to the DECnet-VAX Software Product Description (SPD
+              25.03.xx) for further information.
+
+           OPTIONAL SOFTWARE
+
+           For information on VAXcluster support for optional software
+           products, refer to the VAXcluster Support section of the Soft-
+           ware Product Description (SPD) documents for those products.
+
+           Optional products that are particularly useful in VAXclus-
+           ter systems include:
+
+           o  VMS Volume Shadowing (SPD 27.29.xx)
+
+           o  VAX Performance Advisor (SPD 27.71.xx)
+
+           o  VAXcluster Console System (SPD 27.46.xx)
+
+           o  VAXcluster Multi-Datacenter Facility (SPD 35.05.xx)
+
+           o  VAX Disk Striping (SPD 31.66.xx)
+
+           GROWTH CONSIDERATIONS
+
+           The minimum hardware/software requirements for any future
+           version of this product may be different from the require-
+           ments for the current version.
+
+
+                                      14
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           ORDERING INFORMATION
+
+           Software Licenses: QL-VBRA*-AA
+           Software Product Services: QT-VBRA*-**
+
+           *  Denotes variant fields. For additional information on avail-
+              able licenses, services, and media, refer to the appro-
+              priate price book.
+
+           The above information is valid at time of release. Please
+           contact your local Digital office for the most up-to-date
+           information.
+
+           SOFTWARE LICENSING
+
+           A VAXcluster Software license is required for each CPU in
+           a VAXcluster system.
+
+           This software is furnished under the licensing provisions
+           of Digital Equipment Corporation's Standard Terms and Con-
+           ditions. For more information about Digital's licensing terms
+           and policies, contact your local Digital office.
+
+           A VAXcluster Multi-Datacenter Facility license is required
+           when using VAXcluster software for implementing disaster tol-
+           erance. Disaster tolerance is the ability to recover from
+           major site failure within a brief recovery period when us-
+           ing a single VAXcluster system that spans multiple build-
+           ings.
+
+           License Management Facility Support:
+
+           The VAXcluster Software product supports the VMS License Man-
+           agement Facility (LMF).
+
+           License units for this product are allocated on an Unlim-
+           ited System Use basis.
+
+
+
+
+                                      15
+
+ 
+
+
+
+           VAXcluster Software, Version 5.5            SPD 29.78.05
+
+
+           For more information about the License Management Facility,
+           refer to the VMS Operating System Software Product Descrip-
+           tion (SPD 25.01.xx) or the License Management Facility Man-
+           ual of the VMS Operating System documentation set.
+
+           For more information about Digital's licensing terms and poli-
+           cies, contact your local Digital office.
+
+           SOFTWARE PRODUCT SERVICES
+
+           A variety of service options are available from Digital. For
+           more information, contact your local Digital office.
+
+           SOFTWARE WARRANTY
+
+           Warranty for this software product is provided by Digital
+           with the purchase of a license for the product as defined
+           in the Software Warranty Addendum of this SPD.
+
+           [TM]The DIGITAL Logo, BI, CI, DECnet-VAX, DELUA, DEUNA,
+               HSC, HSC40, HSC50, HSC60, HSC70, HSC90, MicroVAX,
+               Q-bus, RA, TA, UNIBUS, VAX, VAXstation, VAXcluster,
+               VMS, and XMI are trademarks of Digital Equipment
+               Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      16

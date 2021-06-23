@@ -1,0 +1,2381 @@
+%!PS-Adobe-2.0
+%%Creator: VAX DOCUMENT V2.0
+%%+Copyright 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.  
+%%+All Rights Reserved.
+%%DocumentFonts: (atend)
+%%Pages: (atend)
+%%EndComments
+/DEC_DVC$dict where {					%FIND DICTIONARY
+  pop
+}{ %else
+  /DEC_DVC$dict 300 dict def
+} ifelse 
+/BeginDVC$PSDoc {					%BEGIN DOCUMENT
+  vmstatus pop pop 0 eq {
+    DEC_DVC$dict begin  InitializeState
+  }{ %else
+    /DVC$PSJob save def  DEC_DVC$dict begin  InitializeState
+    /DVC$PSFonts save def
+  } ifelse
+} def
+/EndDVC$PSDoc {						%END DOCUMENT
+% --- Preserving current page count ---
+  vmstatus pop pop 0 eq {
+    end
+  }{ %else
+    DVC$PSFonts restore  end  DVC$PSJob restore
+  } ifelse
+} def
+%
+DEC_DVC$dict begin
+%
+mark		% CREATE ISOLatin1Encoding if not there already
+/ISOLatin1Encoding
+  8#000 1 8#054 {StandardEncoding exch get} for 
+  /minus
+  8#056 1 8#217 {StandardEncoding exch get} for 
+  /dotlessi 
+  8#301 1 8#317 {StandardEncoding exch get} for 
+  /space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+  /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen 
+  /registered /macron /degree /plusminus /twosuperior /threesuperior /acute 
+  /mu /paragraph /periodcentered /cedilla /onesuperior /ordmasculine 
+  /guillemotright /onequarter /onehalf /threequarters /questiondown /Agrave 
+  /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla /Egrave /Eacute 
+  /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde 
+  /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave 
+  /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute 
+  /acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute 
+  /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth /ntilde
+  /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash /ugrave 
+  /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+  /ISOLatin1Encoding where not {256 array astore def} if 
+cleartomark
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def 
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/reencodedict 10 dict def			%Local storage for "ReENCODE"
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+} def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+/BP {							% BEGIN PAGE
+  /Magnification exch def
+  /Colorsused 0 def
+  /processcolor false def
+  /RVmatrix matrix def
+  /DVC$PSPage save def
+} def
+%
+/EP {DVC$PSPage restore} def				% END PAGE
+%
+/XP {				% EXIT PAGE (TEMPORARILY) TO ADD FONTS/CHARS
+  % SAVE CURRENT POINT AND COLOR INFORMATION SO IT CAN BE RESET LATER
+  matrix currentmatrix aload pop currentrgbcolor Colorsused processcolor
+  /Xpos where {pop Xpos} {0} ifelse
+  /Ypos where {pop Ypos} {0} ifelse
+  /currentpoint cvx stopped {0 0 moveto currentpoint} if 
+  /DVC$PSPage where {pop DVC$PSPage restore} if
+  moveto
+  /Ypos exch def  /Xpos exch def
+  /processcolor exch def /Colorsused exch def setrgbcolor
+  matrix astore setmatrix
+} def
+%
+/RP {/DVC$PSPage save def} def		% RESUME PAGE
+%
+/PF {GlobalMode  LocalMode} def			% PURGE FONTS TO RECLAIM MEMORY
+%
+/GlobalMode {		% SWITCH TO BASE SAVE/RESTORE LEVEL, SAVING STATE
+  /DEC$EDMS_SEPARATE_COLORS where{pop DEC$EDMS_SEPARATE_COLORS}{9999}ifelse
+  RVmatrix aload pop processcolor
+  PortraitMode  PaperWidth  PaperHeight  PxlResolution  Resolution 
+  Magnification Ymax        Xorigin      Yorigin        RasterScaleFactor
+  % SAVE CURRENTPOINT INFORMATION TO RESET LATER
+  /currentpoint cvx stopped {0 0 moveto currentpoint} if 
+  /DVC$PSPage where {pop DVC$PSPage restore} if
+  DVC$PSFonts restore  RecoverState
+} def
+%
+/RecoverState {					% PRESERVE STATE AT BASE LEVEL
+  20 copy
+  /Ypos exch def           /Xpos exch def        /RasterScaleFactor exch def
+  /Yorigin exch def        /Xorigin exch def     /Ymax exch def
+  /Magnification exch def  /Resolution exch def  /PxlResolution exch def
+  /PaperHeight exch def    /PaperWidth exch def  /PortraitMode exch def
+  /processcolor exch def    matrix astore /RVmatrix exch def
+  dup 9999 ne{/DEC$EDMS_SEPARATE_COLORS exch def}{pop}ifelse
+  DoInitialScaling
+  RVmatrix concat
+  PortraitMode not {PaperWidth 0 SetupLandscape} if
+  Xpos Ypos moveto
+} def
+%
+/InitializeState {		% INITIALIZE STATE VARIABLES TO DEFAULT VALUES
+  /Resolution 3600 def  /PxlResolution 300 def
+  /RasterScaleFactor PxlResolution Resolution div def
+  /PortraitMode true def
+  /Magnification 1000 def  /Xorigin 0 def  /Yorigin 0 def
+  /Xpos 0 def  /Ypos 0 def  /InitialMatrix matrix currentmatrix def
+  /Colorsused 0 def  /processcolor false def  /RVmatrix matrix def
+} def
+%
+/LocalMode {		% SWITCH FROM BASE SAVE/RESTORE LEVEL, RESTORING STATE
+  /Ypos exch def  /Xpos exch def  /RasterScaleFactor exch def
+  /Yorigin exch def  /Xorigin exch def  /Ymax exch def
+  /Magnification exch def  /Resolution exch def  /PxlResolution exch def
+  /PaperHeight exch def  /PaperWidth exch def  /PortraitMode exch def
+  /processcolor exch def  matrix astore /RVmatrix exch def
+  dup 9999 ne{/DEC$EDMS_SEPARATE_COLORS exch def}{pop}ifelse
+  DoInitialScaling
+  RVmatrix concat
+  PortraitMode not {PaperWidth 0 SetupLandscape} if
+  Xpos Ypos moveto
+  /DVC$PSFonts save def  /DVC$PSPage save def
+} def
+%							% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+/Yadjust {Ymax exch sub} def
+%
+/SXY {		% (x,y) POSITION ABSOLUTE, JUST SET Xpos & Ypos, DON'T MOVE
+  Yadjust  /Ypos exch def /Xpos exch def
+} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust  2 copy /Ypos exch def /Xpos exch def  moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop   2 copy /Ypos exch def /Xpos exch def  moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust  2 copy
+  /Ypos exch def /Xpos exch def  moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/R {						% DRAW A RULE
+  /ht exch def  /wd exch def   gsave
+% 0 setgray
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill  grestore  wd 0 rmoveto
+  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/RES {		% <PXL-file resolution(pix/inch)> <resolution(pix/inch)> RES
+  /Resolution exch def  /PxlResolution exch def
+  /RasterScaleFactor PxlResolution Resolution div def
+  DoInitialScaling
+} def
+%
+/DoInitialScaling {					% DO INITIAL SCALING
+  InitialMatrix setmatrix  72 Resolution div dup scale
+} def
+%
+/PM {		% <paper-height(pix)> <paper-width(pix)> PM
+  XP
+    /PaperWidth exch def  /PaperHeight exch def
+    /Ymax PaperHeight def /PortraitMode true def
+    DoInitialScaling
+  RP
+} def  
+%
+/SetupLandscape {translate  90 rotate} def
+/LM {		% <paper-height(pix)> <paper-width(pix)> LM 
+  XP
+    /PaperWidth exch def  /PaperHeight exch def
+    /Ymax PaperWidth def  /PortraitMode false def
+    DoInitialScaling PaperWidth 0 SetupLandscape
+  RP
+} def  
+%
+/MAG {						% CHANGE MAGNIFICATION SETTING
+  XP  /Magnification exch def  RP
+} def
+%
+/SPB {		%  <xoffset><yoffset>SPB - BEGIN "\SPECIAL" MODE
+  Yadjust /Yorigin exch def /Xorigin exch def
+  currentrgbcolor Colorsused
+  GlobalMode Xorigin Yorigin translate
+  Resolution 72 div dup scale			% RESTORE DEFAULT SCALING
+  Magnification 1000 div dup scale		% ADJUST FOR ANY MAGNIFICATION
+  /Xpos Xpos 72 Resolution div mul 1000 Magnification div mul def
+  /Ypos Ypos 72 Resolution div mul 1000 Magnification div mul def
+  /spsavobj save def	%SAVE STATE & STACK DEPTH FOR CLEANUP AFTER FIGURE
+  /showpage {} def	%DISABLE DURING FIGURE; `RESTORE' WILL BLOW DEF AWAY
+
+  /DEC$EDMS_SEPARATE_COLORS where       % if separating colors
+  {                                     % then
+    pop processcolor                    %   if using process colors
+    {                                   %   then
+      DEC$EDMS_SEPARATE_COLORS 0 ge     %     if on color pass .ge. 0
+      {                                 %     then
+        { pop 1 } settransfer           %       write only white
+      }{                                %     else
+
+        /DEC$EDMS_TRAP_SWELL where
+        { pop DEC$EDMS_SEPARATE_COLORS -4 eq
+          { /EDMS_setlinewidth /setlinewidth load def
+            /setlinewidth { DEC$EDMS_TRAP_SWELL mul EDMS_setlinewidth } def
+          } if
+        } if
+
+        /EDMS_setrgbcolor               %       set up for a redefine
+          /setrgbcolor load def         %       of the setrgbcolor operator
+
+        currentscreen                   % get the current screen parameters
+        /DEC$EDMS_SCREEN_ANGLE where    % if changing the screen angle
+        {                               % then
+          pop exch pop                  %   replace the old angle
+          DEC$EDMS_SCREEN_ANGLE exch    %   with the new one
+        } if
+        /DEC$EDMS_SCREEN_FREQ where     % if changing the screen frequency
+        {                               % then
+          pop 3 -1 roll pop             %   replace the old frequency
+          DEC$EDMS_SCREEN_FREQ 3 1 roll %   with the new one
+        } if
+          setscreen                     % Set the new parameters
+
+        /setrgbcolor {
+          /b exch def
+          /g exch def
+          /r exch def
+          /c3 1 r sub def
+          /m3 1 g sub def
+          /y3 1 b sub def
+          /k c3 m3 2 copy gt { exch } if pop y3 2 copy gt { exch } if pop def
+          /ik 1 k sub def
+          ik 0 ne
+          { /c4 c3 k sub ik div def
+            /m4 m3 k sub ik div def
+            /y4 y3 k sub ik div def
+          }
+          { /c4 /DEC$EDMS_BLACK_GEN where
+            { pop DEC$EDMS_BLACK_GEN } { 0 } ifelse def
+            /m4 c4 def
+            /y4 c4 def
+          } ifelse
+          1 [ c4 m4 y4 k ]              % pick the separation for this color
+          DEC$EDMS_SEPARATE_COLORS      % pass ( -1 = Cyan, -2 = Magenta,
+          neg 1 sub get sub setgray     % -3 = Yellow, -4 = Black )
+        } def
+      } ifelse                          %     endif
+    }{                                  %   else (if not using process colors)
+      DEC$EDMS_SEPARATE_COLORS 0 ne     %     if not on color pass 0
+      {                                 %     then
+        { pop 1 } settransfer           %       write only white
+      } if                              %     endif
+    } ifelse                            %   endif
+  } if                                  % endif
+  mark
+} def
+%
+/SPE {		% SPE - END "\SPECIAL" MODE
+  cleartomark
+  spsavobj restore 
+  1000 Magnification div dup scale	% UN-ADJUST FOR ANY MAGNIFICATION
+  72 Resolution div dup scale		% RESTORE DEFAULT INTERNAL SCALING
+  LocalMode
+  /Colorsused exch def setrgbcolor
+} def
+%
+/PP
+%
+% If DEC$EDMS_MAKE_FILM is defined, it will add the crop & alignment marks,
+% and the document name, page number, & ink color identifiers to the page.
+%
+% Formal Arguments:	None
+%
+% Referenced Variables: DocumentName
+%			Colorsused
+%			Currentpagecount
+% 			DEC$EDMS_MAKE_FILM
+%
+% Referenced Procedures: AlignMark
+%
+% Side Effects: Leaves the current font as Helvetica 8 point.
+%		Creates the variable "junkstr".
+%
+{ /PageNumber exch def
+  /DEC$EDMS_MAKE_FILM where			% if making film...
+  { pop
+    /DEC$EDMS_SUPPRESS_COLOR where		% if color suppression is on
+    { pop /DEC$EDMS_SEPARATE_COLORS 0 def	% then default to color 0
+      /Colorsused 1 def } if			% ...for everything
+    2 DEC$EDMS_SEPARATE_COLORS exp cvi Colorsused and 0 ne %if correct separatn
+    DEC$EDMS_SEPARATE_COLORS 0 lt or		% ...or if a process color
+    { /Helvetica findfont 400 scalefont setfont
+      20 setlinewidth 0 setgray
+      gsave
+      PaperWidth 1000 add 200 translate 90 rotate 0 0 moveto
+      (Ink: ) show				% show the ink color
+      DEC$EDMS_SEPARATE_COLORS 0 ge
+      { DEC$EDMS_COLOR_NAMES DEC$EDMS_SEPARATE_COLORS get }
+      { (Process ) show [ (Cyan) (Magenta) (Yellow) (Black) ]
+        DEC$EDMS_SEPARATE_COLORS neg 1 sub get } ifelse show
+      /DEC$EDMS_SUPPRESS_COLOR where		% if color suppression is on
+      { pop ( (Color Suppression enabled)) show } if	% tell them about it
+       1800 0 rmoveto
+      (Page: ) show				% show the page number
+      /junkstr 4 string def PageNumber junkstr cvs show
+      ( of ) show DEC$EDMS_TOTAL_PAGES junkstr cvs show
+
+      DEC$EDMS_SEPARATE_COLORS -4 eq
+      { 1800 0 rmoveto (Trap Swell Factor: )show
+        /DEC$EDMS_TRAP_SWELL where	% if trap swell factor is supplied
+        { pop DEC$EDMS_TRAP_SWELL 6 string cvs }
+        { (1 (default)) } ifelse show
+      } if
+
+      DEC$EDMS_SEPARATE_COLORS 0 lt		% if a process color
+      {
+        PaperHeight 2 div 600 add 0 moveto (Screen Angle: ) show
+        /DEC$EDMS_SCREEN_ANGLE where
+            { pop DEC$EDMS_SCREEN_ANGLE junkstr cvs }	% if defined
+            { ((default)) } ifelse show			% if not defined
+         1800 0 rmoveto (Screen Frequency: ) show
+        /DEC$EDMS_SCREEN_FREQ where
+            { pop DEC$EDMS_SCREEN_FREQ junkstr cvs }	% if defined
+            { ((default)) } ifelse show			% if not defined
+      } if
+      grestore
+      gsave
+      -600 200 translate 90 rotate 0 0 moveto
+      (Document: ) show DEC$EDMS_DOCUMENT_ID show	% show document name
+      PaperHeight 2 div 600 add 0 moveto
+      (This film is the property of Digital Equipment Corporation) show
+      grestore
+
+      /mask 15					% all crop marks on by default
+      /DEC$EDMS_SUPPRESS_CROPMARKS where   % if def'd, xor in suppression mask
+          { pop DEC$EDMS_SUPPRESS_CROPMARKS xor } if def
+
+      mask 1 and 1 eq
+        { PaperWidth PaperHeight moveto		% Upper Right
+          450 0 rmoveto 900 0 rlineto -1350 1350 rmoveto 0 -900 rlineto } if
+
+      mask 2 and 2 eq
+        { PaperWidth 0 moveto			% Lower Right
+          450 0 rmoveto 900 0 rlineto -1350 -1350 rmoveto 0 900 rlineto } if
+
+      mask 4 and 4 eq
+        { 0 0 moveto				% Lower Left
+          -450 0 rmoveto -900 0 rlineto 1350 -1350 rmoveto 0 900 rlineto } if
+
+      mask 8 and 8 eq
+        { 0 PaperHeight moveto			% Upper Left
+          -450 0 rmoveto -900 0 rlineto 1350 1350 rmoveto 0 -900 rlineto } if
+      stroke
+
+      /mask 15				 % all registratn marks on by default
+      /DEC$EDMS_SUPPRESS_REGMARKS where	 % if defined, xor in suppression mask
+          { pop DEC$EDMS_SUPPRESS_REGMARKS xor } if def
+
+      mask 1 and 1 eq				% Top Center
+         { gsave PaperWidth 2 div PaperHeight 900 add
+	   /DEC$EDMS_POSITION_REGMARKS where
+	     { pop DEC$EDMS_POSITION_REGMARKS -50 mul add } if
+	   translate AlignMark grestore } if
+
+      mask 2 and 2 eq				% Right Center
+        { gsave PaperWidth 900 add
+	 /DEC$EDMS_POSITION_REGMARKS where
+	  { pop DEC$EDMS_POSITION_REGMARKS -50 mul add } if
+	  PaperHeight 2 div translate AlignMark grestore } if
+
+      mask 4 and 4 eq				% Bottom Center
+        { gsave PaperWidth 2 div -900
+	 /DEC$EDMS_POSITION_REGMARKS where
+	  { pop DEC$EDMS_POSITION_REGMARKS 50 mul add } if
+	 translate AlignMark grestore } if
+
+      mask 8 and 8 eq				% Left Center
+        { gsave -900
+	 /DEC$EDMS_POSITION_REGMARKS where
+	  { pop DEC$EDMS_POSITION_REGMARKS 50 mul add } if
+	 PaperHeight 2 div translate AlignMark grestore } if
+      showpage
+    }
+    { % disabled the 'erasepage ' that was here!
+    } ifelse
+  }
+  { showpage } ifelse
+} def
+/CLRP { % disabled the 'erasepage' that was here!
+  } def
+%
+/DMF {		%  /font-name <point-size(pix)> DMF
+  /psz exch def  /nam exch def  nam findfont psz scalefont setfont
+} def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+} def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+} def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+} def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+} def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+} def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+} def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+} def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+} def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div} def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+} def
+/RunLengthToRasters {
+  % none yet
+} def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+} def
+%
+/int-dict-name {int (-dict) concatnam} def
+/int-dict {int (-dict) concatnam cvx load} def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      } def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+} def 
+/PXLF { true  DefinePXLFont} def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont} def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+} def
+%
+/CKSZ {abs 127 le and} def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if} def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+} def
+%
+/AlignMark
+%
+% This procedure draws an alignment mark centered on the coordinate system
+% origin. If the variable DEC$EDMS_SEPARATE_COLORS = 0 then a "positive"
+% alignment mark is drawn. If DEC$EDMS_SEPARATE_COLORS <> 0 then a "negative"
+% alignment mark is drawn. 
+%
+% Formal Arguments: NONE
+%
+% Referenced Variables: DEC$EDMS_SEPARATE_COLORS
+%
+% Referenced Procedures: NONE
+%
+% Side Effects: NONE
+%
+{ DEC$EDMS_SEPARATE_COLORS 0 eq
+  { 0 0 300 0 360 arc
+    0 -450 moveto 0 450 lineto -450 0 moveto 450 0 lineto stroke }
+  { 0 0 450 0 360 arc fill 1 setgray 0 0 300 0 360 arc 
+    0 -450 moveto 0 450 lineto -450 0 moveto 450 0 lineto stroke 0 setgray }
+  ifelse
+} def
+
+
+/SC
+% If not making film, the following procedure sets the current color using the
+% RGB color model. If making film, the procedure notes the "color pass" and,
+% if the specified color index matches the color pass, subsequent marks are
+% written in black. If the specified color index does not match the color pass,
+% marks are written in white. Use of colors on individual pages is also tracked
+% to allow pages that don't use a particular color to be suppressed on that
+% color pass (by the code in the /PP routine).
+%
+% Formal Arguments: color index (on stack)
+%
+% Referenced Variables: Colorsused
+%			DEC$EDMS_SEPARATE_COLORS
+%			DEC$EDMS_SUPPRESS_COLOR
+%
+% Referenced Procedures: NONE
+%
+% Side Effects: Modifies the variable Colorsused to record use of the color.
+%               Tracks use of color in the variables 'ci' and 'processcolor'.
+%
+{ /ci exch def ci 0 lt			% if the color index is lt 0
+  { /processcolor true def }		% then set 'processcolor' to 'true'.
+  { ci /processcolor false def		% else set 'processcolor' to 'false'.
+    /DEC$EDMS_SUPPRESS_COLOR where	% if suppressing color
+    { pop 0 setgray pop }		% then set "color" to Black
+    { /DEC$EDMS_SEPARATE_COLORS where	% else if separating colors
+      { pop dup DEC$EDMS_SEPARATE_COLORS eq	% then if on this color pass
+        { 0 setgray /Colorsused Colorsused	% then write black (do write)
+          2 3 index exp cvi or def }		% ..and note use of the "color"
+        { 1 setgray } ifelse pop }		% else write white (don't write)
+      { dup (  ) cvs dup length 15 add string	% else if using the color index,
+        /tstr exch def				% ..build up the name of the
+        tstr 0 (DEC$EDMS_COLOR_) putinterval	% ..potential external color
+        tstr exch 15 exch putinterval		% ..name procedure
+        tstr cvn where				% ..and see if it is defined
+          { pop pop tstr cvn cvx exec }		% execute it if it is
+          { DEC$EDMS_COLOR_ARRAY exch get exec	% else exec internal color proc
+        } ifelse
+      } ifelse
+    } ifelse
+  } ifelse
+} def
+
+/RV					% .. gross recto/verso translate
+{ /DEC$EDMS_ENABLE_RECTOVERSO where
+      { pop
+	/RVmatrix DEC$EDMS_ENABLE_RECTOVERSO 50 mul 0 matrix translate def
+	RVmatrix concat
+      } if
+} def
+
+%
+%  Procedures for implementing the "rotate <theta>" special:
+%  <theta> ROTB -
+%        - ROTE -
+ 
+/ROTB {
+  XP
+  gsave
+  Xpos Ypos translate
+  rotate % using <theta> from the stack
+  Xpos neg Ypos neg translate
+  RP
+  } def
+ 
+/ROTE {XP grestore RP} def
+
+end  %DEC_DVC$dict
+%%EndProlog
+%%BeginSetup
+/DEC$EDMS_MAKE_FILM where	% if we are making film...
+ { pop			% ..clean up the stack
+   54 dup translate		% ..make room for the film info
+ } if
+BeginDVC$PSDoc
+/PaperWidth 8.500 Resolution mul def
+/PaperHeight 11.000 Resolution mul def
+/Ymax PaperHeight def
+CLRP 300 3600 RES
+%>  Postamble of file PR1:<DIAMOND.SE.SPD>SV_SPD.DVI_PS.
+% DefineFont:F207 Category:15 Pointsize:24
+% DownloadPSFont
+%!PS-Adobe-2.0
+%%Title: PostScript Digital Logo Font, v1.1
+%%Creator: Ned Batchelder
+%%CreationDate: 9-Nov-87
+%%DocumentFonts: Symbol
+%%DocumentSuppliedFonts: DigitalLogo
+%%EndComments
+%
+%		    DIGITAL INTERNAL USE ONLY
+% 
+% INTRODUCTION:
+% This rendition of the Digital logo was prepared by Ned Batchelder using 
+% Adobe Illustrator and hand manipulation of the resulting PostScript code.
+% Photographic masters of the logo were obtained from David Comberg in the
+% Graphic Design Group. Additional consultation was provided by Elliot
+% Hendrickson, one of the original designers of the logo.
+% 
+% USE:
+% This file defines a new PostScript font, called /DigitalLogo. It consists
+% of three characters. (d) is the entire Digital logo, (t) is a small
+% trademark symbol, and (T) is a large trademark symbol. The font is designed
+% so that the argument to scalefont is the height of the logo. There is no
+% extra white space around the logo at all. The trademarks are designed to be
+% shown right after the logo, and they align themselves. The only correct
+% strings to show with this font are (d), (dt), and (dT). There is an entry
+% (named GapWidth) in the font dictionary which gives the unscaled width of
+% the gap between the blocks. This distance is given because it is used as a
+% unit to determine how much space to leave around the logo.
+% 
+% HISTORY:
+% The logo was designed in 1957 by Elliot Hendrickson, who was then working
+% as an independent designer. He was contracted by DEC to do a brochure, and
+% DEC wanted a logo to accompany it. The logo up to then had been the letters
+% DEC in blocks the shape of the plug-in cards that DEC had been producing.
+% Elliot re-worked the logo, incorporating letters which were hand-drawn for 
+% the purpose by Arthur Hover(?). The logo has been maintained since then in 
+% conventional technology, ie, film masters. There was at least one reworking 
+% of the logo at some point.
+% 
+% The masters I received had a number of interesting features. The boxes were
+% not all the same width, and there seemed to be no logic to which boxes were
+% wider. The 'g' was the narrowest, and the 'i' and 'l' were second widest.
+% Also, the two 'i's were not exactly the same shape. On ten-inch masters,
+% (one box to an 8½x11 sheet), the boxes were not rectangles, but were very
+% slightly tapered in wierd ways. I assume that the tapering is the result of
+% too many reproductions, but the difference in widths may have been
+% deliberate at some time. Elliot reports that when he drew it, all boxes
+% were the same width. I have retained the different widths in my version,
+% since the experts I had at hand did not seem to think I should make them
+% uniform.
+% 
+% Please feel free to use this logo, but keep in mind the following:
+% 
+% 1. This code is for INTERNAL USE ONLY.
+% 2. I am not entirely happy with the final shapes of the letters, and am
+% hoping to improve them. Please allow for future updates to this code.
+% 3. Only use this logo within the guidelines of the Corporate Identity
+% program. If you use this font precisely as is, you can't get in much
+% trouble. Don't take the shapes and do strange things with them. 
+% In particular, the Identity states that the logo is a one-color logo: The
+% letters are actually holes in the blocks, through which the background can
+% be seen. Do not modify this code so that the letters are always white.
+% 
+% Edit history:
+% 
+% 21-Sep-87 nmb	    Created as a standalone file with demo.
+%  6-Nov-87 nmb	    Converted to font form.
+%  9-Nov-87 nmb	    Removed // uses for compatibility with LW Classics
+%
+
+%%BeginFont: DigitalLogo
+10 dict begin
+
+/FontInfo 3 dict def
+FontInfo begin
+    /Notice
+(The Digital logo is a registered trademark of Digital Equipment Corporation.)
+    def
+    /FullName (Digital logo) def
+    /version (1.1) def
+    end
+
+/FontType 3 def				% This is a user-defined font
+/FontMatrix matrix def			% Use an identity transform
+/FontBBox [ 0 0 3.383 1 ] def		% Logo itself is biggest
+/GapWidth .070 def			% The width of the gap between boxes
+
+/Encoding 256 array def
+0 1 255 { Encoding exch /.notdef put } bind for
+
+Encoding
+dup (d) 0 get /DEC-logo put		% (d) gives logo
+dup (t) 0 get /smalltrademark put	% (t) gives small trademark
+    (T) 0 get /largetrademark put	% (T) gives large trademark
+
+/Work 15 dict def			% for doing work in font.
+
+/BuildChar {
+    exch begin				% Use the font dictionary
+	Work begin
+	    Encoding exch get		% Look up the character name
+	    load			% Pull out the procedure
+	    exec			% Run it.
+	    end				% Work
+	end				% fontdict
+    } bind def
+
+Work begin
+
+/.notdef {} def
+
+%
+% - `DEC-logo' -
+%
+% Images a DEC logo with the lower left corner at the current origin, with a
+% height of one unit, in the current color.
+% 
+
+/m /moveto load def
+/l /lineto load def
+/c /curveto load def
+
+/DEC-logo {
+    3.383 0 0 0 3.383 1 setcachedevice
+    {	% D
+	% d counter
+	.2930 .3513 m
+	.2932 .3217 .2587 .2758 .2167 .2757 c
+	.1719 .2759 .1280 .3165 .1280 .3977 c
+	.1280 .4801 .1718 .5225 .2153 .5227 c
+	.2587 .5225 .2932 .4760 .2930 .4407 c
+	closepath
+	% d outside
+	.2953 .5787 m
+	.2953 .7600 l
+	.3843 .7600 l
+	.3843 .1960 l
+	.2923 .1960 l
+	.2923 .2220 l
+	.2848 .2144 .2531 .1813 .1990 .1813 c
+	.1426 .1812 .0417 .2282 .0417 .3977 c
+	.0417 .5414 .1171 .6157 .2067 .6157 c
+	.2399 .6157 .2725 .6039 .2953 .5787 c
+	closepath
+	% d box
+	.432 0.0 m
+	.432 1.0 l
+	.000 1.0 l
+	.000 0.0 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	.927 0.0 m
+	.927 1.0 l
+	.502 1.0 l
+	.502 0.0 l
+	closepath
+	% i body
+	.6695 .196 m
+	.6695 .600 l
+	.7595 .600 l
+	.7595 .196 l
+	closepath
+	% i dot
+	.6695 .655 m
+	.6695 .755 l
+	.7595 .755 l
+	.7595 .655 l
+	closepath
+	} exec
+    {	% G
+	% g counter
+	1.2813 .4478 m
+	1.2813 .4837 1.2409 .5208 1.2035 .5208 c
+	1.1713 .5208 1.1215 .5003 1.1215 .4084 c
+	1.1215 .3105 1.1827 .2962 1.2030 .2962 c
+	1.2433 .2962 1.2813 .3239 1.2813 .3667 c
+	closepath
+	% g box
+	0.997 1.0 m
+	1.415 1.0 l
+	1.415 0.0 l
+	0.997 0.0 l
+	closepath
+	% g outside
+	1.2822 .5609 m
+	1.2729 .5742 1.2424 .6044 1.1988 .6044 c
+	1.1311 .6043 1.0367 .5652 1.0367 .3955 c
+	1.0368 .2617 1.1437 .2168 1.1876 .2168 c
+	1.2350 .2167 1.2702 .2443 1.2798 .2547 c
+	1.2798 .2126 l
+	1.2798 .1815 1.2479 .1511 1.1945 .1511 c
+	1.1485 .1512 1.1437 .1807 1.1437 .1953 c
+	1.0497 .1953 l
+	1.0497 .1486 1.0798 .0804 1.1888 .0803 c
+	1.2864 .0803 1.3186 .1176 1.3325 .1316 c
+	1.3442 .1434 1.3617 .1758 1.3617 .2017 c
+	1.3617 .6 l
+	1.2823 .6 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	1.910 0.0 m
+	1.910 1.0 l
+	1.485 1.0 l
+	1.485 0.0 l
+	closepath
+	% i body
+	1.6525 .196 m
+	1.6525 .6 l
+	1.7425 .6 l
+	1.7425 .196 l
+	closepath
+	% i dot
+	1.6525 .655 m
+	1.6525 .755 l
+	1.7425 .755 l
+	1.7425 .655 l
+	closepath
+	} exec
+    {	% T
+	% t
+	2.2128 .7525 m
+	2.1305 .7525 l
+	2.1305 .6071 l
+	2.0874 .6071 l
+	2.0874 .5396 l
+	2.1305 .5396 l
+	2.1305 .2852 l
+	2.1305 .2367 2.1554 .1986 2.2248 .1987 c
+	2.2573 .1987 2.2560 .1985 2.2842 .2034 c
+	2.2842 .2874 l
+	2.2658 .2842 2.2601 .2829 2.2511 .2832 c
+	2.2338 .2837 2.2128 .2898 2.2128 .3206 c
+	2.2128 .5395 l
+	2.2780 .5395 l
+	2.2780 .6071 l
+	2.2128 .6071 l
+	closepath
+	% t box
+	2.404 0.0 m
+	1.980 0.0 l
+	1.980 1.0 l
+	2.404 1.0 l
+	closepath
+	} exec
+    {	% A
+	% a box
+	2.474 0.0 m
+	2.474 1.0 l
+	2.888 1.0 l
+	2.888 0.0 l
+	closepath
+	% a outside
+	2.5439 .4728 m
+	2.6210 .4728 l
+	2.6210 .5138 2.6422 .5353 2.6826 .5353 c
+	2.7470 .5354 2.7449 .5067 2.7448 .4708 c
+	2.7050 .4553 2.7087 .4557 2.6480 .4419 c
+	2.5709 .4241 2.5237 .3911 2.5236 .3112 c
+	2.5237 .2331 2.5793 .1914 2.6420 .1915 c
+	2.7048 .1914 2.7178 .2117 2.7438 .2290 c
+	2.7438 .1978 l
+	2.8422 .1978 l
+	2.8190 .2352 2.8251 .2425 2.8249 .2706 c
+	2.8250 .2926 2.8249 .5080 2.8249 .5080 c
+	2.8250 .5507 2.8028 .5768 2.7883 .5855 c
+	2.7521 .6071 2.7074 .6097 2.6826 .6098 c
+	2.5945 .6096 2.5438 .5653 2.5439 .4728 c
+	closepath
+	% a counter
+	2.7448 .3946 m
+	2.7448 .3401 l
+	2.7448 .3152 2.7145 .2670 2.6550 .2669 c
+	2.6260 .2668 2.6098 .2883 2.6097 .3162 c
+	2.6098 .3442 2.6335 .3657 2.6536 .3697 c
+	2.6745 .3739 2.7226 .3862 2.7448 .3946 c
+	closepath
+	} exec
+    {	% L
+	% l box
+	3.383 0.0 m
+	3.383 1.0 l
+	2.958 1.0 l
+	2.958 0.0 l
+	closepath
+	% l
+	3.1255 .196 m
+	3.1255 .765 l
+	3.2155 .765 l
+	3.2155 .196 l
+	closepath
+	} exec
+    fill
+    } bind def
+
+%
+% % pct `trademark' --
+%
+% Borrow the sans-serif trademark symbol from /Symbol. AFM file says:
+%	C 228 ; WX 786 ; N trademarksans ; B 5 293 725 673 ;
+% We scale it down to pct percent of the height of the logo and superscript 
+% it some, and voila!
+%
+
+/trademark {
+    /s exch .380 div def
+    /w s .725 mul .070 add def
+    /u 1 .673 s mul sub def
+    w 0 0 u w 1 setcachedevice
+    /Symbol findfont s scalefont setfont
+    .070 u m					% Superscript it
+    (\344) show
+    } bind def
+
+% 
+% These are two different trademarks (just different sizes).
+%
+
+/smalltrademark { .15 trademark } def
+/largetrademark { .25 trademark } def
+
+end						% Work dictionary
+
+currentdict					% Get the font dict
+end						% Close it up
+/DigitalLogo exch definefont pop		% Define the font.
+
+%%EndFont
+% EndDownloadPSFont
+/F207 1200.0 /DigitalLogo DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F39 Category:10 Pointsize:9
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F39 450.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F38 Category:10 Pointsize:9
+/F38 450.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+%%BeginDEC$EDMSInfo
+/DEC$EDMS_DOCUMENT_ID () def
+/DEC$EDMS_COLOR_NAMES [ (0_BLACK) ] def
+/DEC$EDMS_COLOR_ARRAY [
+%%RGBCustomColor 0.000 0.000 0.000 0_BLACK
+  { 0.000 0.000 0.000 setrgbcolor } %  0_BLACK DOC$COLOR_INIT
+] def
+/DEC$EDMS_TOTAL_PAGES 0 def
+%%EndDEC$EDMSInfo
+/DEC$EDMS_MAKE_FILM where
+{ pop /DEC$EDMS_SEPARATE_COLORS where
+  { pop }
+  { (ERROR - DEC$EDMS_MAKE_FILM requires DEC$EDMS_SEPARATE_COLORS be defined) = quit } ifelse
+} if
+/DEC$EDMS_SEPARATE_COLORS where
+{ pop /DEC$EDMS_SUPPRESS_COLOR where
+  { pop (ERROR - DEC$EDMS_SEPARATE_COLORS and DEC$EDMS_SUPPRESS_COLOR are mutually exclusive) = quit } if
+} if
+/DVC$PSFonts save def
+%%EndSetup
+%
+%%Page: 1 1
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 5443 XY F16(Software)S 3600 6688 XY(Produ)S 2 x(ct)S 3600 7934 XY
+(Description)S 3600 X 747 y 23316 204 R 3600 9455 XY F36(PRODUK)S -2 x
+(TNAMN:)S 597 x(ALL\203IN\2031/SV)S 2 x(ENSKA)S 165 x(Integrated)S 167 x
+(Of\211ce)S 166 x(System)S 166 x(Server)S 23701 X(SPD)S 166 x(25.B0.04)S
+8320 X 631 y(for)S 166 x(VMS,)S 167 x(V)S -27 x(ersion)S 167 x(3.0)S
+3600 11873 XY F40(ALLM\304N)S 149 x(BESKRIVN)S -2 x(ING)S 3600 X 896 y
+F38(ALL\203IN\2031)S 246 x(Integrated)S 247 x(Of)S -9 x(\211ce)S 246 x
+(System)S 247 x(\(IOS\))S 245 x(Server)S 247 x(for)S 3600 X 548 y(VMS)S
+258 x(\344r)S 259 x(en)S 258 x(anpass)S 2 x(ningsbar)S -24 x(,)S 285 x
+(menystyrd)S 259 x(prog)S 2 x(ramvara)S 3600 X 548 y(som)S 355 x(samor)S
+2 x(dnar)S 355 x(kontorstill\344mpningar)S 355 x(och)S 355 x(integrerar)S
+3600 X 548 y(olika)S 178 x(af)S -8 x(f\344rsinriktade)S 179 x(till)S
+-2 x(\344mpn)S 2 x(ingar)S -24 x(.)S 286 x(ALL\203IN\2031)S 179 x(IOS)S
+178 x(f\366re-)S 3600 X 548 y(nar)S 150 x(dessa)S 150 x(til)S -2 x(l\344mpninga)S
+2 x(r)S 149 x(i)S 148 x(ett)S 149 x(l\344ttanv\344nt,)S 148 x(menys)S
+2 x(tyrt)S 148 x(infor-)S 3600 X 548 y(mationssystem)S 150 x(och)S 150 x
+(erbjuder)S 150 x(funktioner)S 149 x(som)S 150 x(underl\344ttar)S 3600 X
+548 y(grupps)S 2 x(amarbete)S 204 x(och)S 203 x(delning)S 203 x(av)S
+203 x(dokum)S 2 x(ent)S 203 x(mellan)S 203 x(an-)S 3600 X 548 y(v\344ndar)S
+2 x(e.)S 3600 X 897 y(Genom)S 121 x(den)S 120 x(elektroniska)S 120 x
+(posten)S 121 x(och)S 120 x(genom)S 121 x(m\366jligheten)S 3600 X 548 y
+(att)S 112 x(koppla)S 113 x(ihop)S 112 x(terminaler)S 113 x(och)S 113 x
+(system)S 113 x(i)S 112 x(datorn\344t,)S 120 x(kan)S 113 x(an-)S 3600 X
+548 y(v\344ndar)S 2 x(e)S 114 x(av)S 115 x(ALL\203IN\2031)S 115 x(IOS)S
+114 x(s\344nda)S 116 x(och)S 115 x(ta)S 115 x(emot)S 115 x(dokume)S
+2 x(nt)S 3600 X 548 y(som)S 181 x(har)S 180 x(skapats)S 181 x(p\345)S
+180 x(avdelningen)S 2 x(s,)S 187 x(f\366retagets)S 180 x(eller)S 180 x
+(an-)S 3600 X 547 y(v\344ndar)S 2 x(ens)S 150 x(eget)S 150 x(system.)S
+3600 X 897 y(ALL\203IN\2031)S 150 x(IOS)S 149 x(best\345r)S 150 x(av:)S
+3600 X 897 y(\201)S 441 x(ALL\203IN\2031)S 150 x(kontorstill\344mpningar)S
+3600 X 797 y(\201)S 441 x(V)S -33 x(AX)S 149 x(FMS)S 130 x(\(omfattar)S
+130 x(b\345de)S 131 x(FMS)S 130 x(och)S 130 x(Forms)S 130 x(Langu)S
+2 x(age)S 4198 X 548 y(T)S -17 x(ranslator\))S 3600 X 797 y(\201)S 441 x
+(Message)S 130 x(Router)S 128 x(VMS)S 129 x(Gateway)S 128 x(\(omfattar)S
+129 x(b\345de)S 129 x(Mes-)S 4198 X 548 y(sage)S 150 x(Router)S 150 x
+(och)S 150 x(Gateway)S 150 x(til)S -2 x(l)S 149 x(VMS)S 150 x(Persona)S
+2 x(l)S 149 x(Mail\))S 3600 X 797 y(\201)S 441 x(CDA)S 134 x(Converter)S
+136 x(Library)S 136 x(for)S 135 x(VMS)S 136 x(\(kr\344vs)S 136 x(f\366r)S
+135 x(underst\366d)S 4198 X 548 y(av)S 150 x(CDA\))S 3600 X 797 y(\201)S
+441 x(ALL\203IN\2031)S 150 x(CDA)S 149 x(Interoperability)S 149 x(kit)S
+3600 X 797 y(\201)S 441 x(V)S -33 x(AX)S 149 x(Notes)S 100 x(och)S 100 x
+(ALL\203IN\2031-gr)S 2 x(\344nssnittet)S 99 x(mot)S 100 x(V)S -33 x
+(AX)S 149 x(Notes)S 4198 X 548 y(\(ALL\203IN\2031)S 150 x(Forum\))S
+3600 X 797 y(\201)S 441 x(ALL\203IN\2031)S 174 x(DESKtop)S 174 x(Server)S
+175 x(for)S 174 x(VMS)S 174 x(\(endas)S 2 x(t)S 173 x(licens;)S 4198 X
+548 y(media)S 150 x(s\344ljs)S 149 x(separa)S 2 x(t\))S 3600 X 896 y
+(I)S 205 x(ALL\203IN\2031)S 207 x(IOS)S 205 x(n\345r)S 207 x(anv\344ndar)S
+2 x(en)S 206 x(de)S 206 x(olika)S 206 x(til)S -2 x(l\344mpning-)S 3600 X
+548 y(arna)S 164 x(p\345)S 163 x(ett)S 162 x(logiskt)S 163 x(s\344tt.)S
+238 x(Anv\344nda)S 2 x(rens)S 163 x(dokum)S 2 x(ent)S 163 x(lagras)S
+3600 X 548 y(i)S 188 x(mapp)S 2 x(ar)S 189 x(i)S 188 x(ett)S 188 x(perso)S
+2 x(nligt)S 188 x(arkiv)S -33 x(,)S 198 x(och)S 190 x(kan)S 189 x(sedan)S
+190 x(n\345s)S 190 x(via)S 3600 X 548 y(kontorstill\344mpningarna)S
+2 x(.)S 3600 X 897 y(Kontorstill\344mpningarna)S 218 x(bygge)S 2 x(r)S
+217 x(p\345)S 217 x(bassys)S 2 x(temets)S 217 x(funk-)S 3600 X 548 y
+(tioner)S -24 x(.)S 363 x(Dessa)S 205 x(funktioner)S 205 x(\344r)S 205 x
+(\344ven)S 205 x(till)S -2 x(g\344ngliga)S 205 x(n\344r)S 206 x(man)S
+3600 X 548 y(kundanp)S 2 x(assar)S 318 x(systemet)S 317 x(eller)S 317 x
+(utvecklar)S 317 x(till\344mpningar)S 3600 X 548 y(som)S 150 x(skall)S
+149 x(\211nnas)S 151 x(i)S 149 x(ALL\203IN\2031)S 150 x(IOS.)S 15854 11781 XY
+(Kontorstill\344mpningar:)S 15854 12726 XY F39(Arkivhantering)S 15854 13671 XY
+F38(Arkivet)S 180 x(i)S 180 x(ALL\203IN\2031)S 181 x(IOS)S 180 x(p\345minner)S
+181 x(om)S 181 x(ett)S 180 x(vanligt)S 180 x(arkiv-)S 15854 X 548 y
+(sk\345p:)S 294 x(d\344r)S 198 x(\211nns)S 197 x(l\345dor)S 198 x(med)S
+197 x(dokum)S 2 x(ent)S 196 x(i)S 197 x(mappar)S -23 x(.)S 340 x(Map-)S
+15854 X 548 y(parna)S 129 x(ligger)S 127 x(i)S 126 x(alfabetisk)S 127 x
+(ordning)S 129 x(och)S 127 x(dokum)S 2 x(enten)S 128 x(i)S 126 x(map-)S
+15854 X 548 y(parna)S 163 x(ligger)S 161 x(i)S 161 x(krono)S 2 x(logisk)S
+161 x(ordning)S 163 x(med)S 162 x(det)S 162 x(senast)S 162 x(ska-)S
+15854 X 548 y(pade)S 171 x(dokumentet)S 170 x(f\366rst,)S 174 x(f\366rutom)S
+171 x(i)S 169 x(inkorgen,)S 175 x(d\344r)S 170 x(det)S 170 x(se-)S 15854 X
+548 y(nast)S 150 x(inkomna)S 150 x(medd)S 2 x(elandet)S 150 x(l\344ggs)S
+150 x(sist.)S 15854 17356 XY(Alla)S 358 x(mapp)S 2 x(ar)S 359 x(som)S
+360 x(skapats)S 360 x(i)S 359 x(tidigare)S 359 x(versioner)S 360 x(av)S
+15854 X 548 y(ALL\203IN\2031)S 120 x(placera)S 2 x(s)S 119 x(vid)S 120 x
+(uppgra)S 2 x(deringen)S 121 x(i)S 119 x(l\345dan)S 121 x(HUVUD)S -2 x
+(-)S 15854 X 548 y(L\305DA,)S 209 x(d\344r)S 210 x(ocks\345)S 211 x
+(mappar)S 2 x(na)S 209 x(f\366r)S 210 x(elektronisk)S 210 x(post)S 210 x
+(\211nns)S 15854 X 548 y(\(INKORG,)S 191 x(S\304NDA,)S 191 x(SKAP)S
+-33 x(ADE)S 191 x(och)S 193 x(L\304ST)S -33 x(A\).)S 192 x(Anv\344nda-)S
+15854 X 548 y(ren)S 140 x(kan)S 140 x(skapa)S 141 x(egna)S 140 x(l\345dor)S
+-24 x(,)S 141 x(som)S 140 x(kan)S 140 x(vara)S 140 x(geme)S 2 x(nsamma)S
+15854 X 548 y(eller)S 149 x(privata.)S 15854 21041 XY(Information)S
+240 x(om)S 239 x(varje)S 240 x(dokumen)S 2 x(ts)S 239 x(tit)S -2 x(el,)S
+261 x(till)S -2 x(komstda)S 2 x(tum,)S 15854 X 548 y(dokume)S 2 x(ntnummer)S
+-23 x(,)S 169 x(f\366rfattare,)S 168 x(nyckelor)S 2 x(d)S 165 x(och)S
+166 x(dokumen)S 2 x(t-)S 15854 X 548 y(typ)S 149 x(f\366rvaras)S 151 x
+(i)S 148 x(arkivet.)S 199 x(Anv\344nda)S 2 x(ren)S 149 x(kan)S 150 x
+(skriva)S 150 x(ut)S 149 x(eller)S 149 x(ta)S 15854 X 548 y(bort)S 199 x
+(\212era)S 200 x(dokumen)S 2 x(t)S 198 x(\345t)S 199 x(g\345ngen)S 200 x
+(och)S 199 x(v\344lja)S 198 x(ut)S 199 x(dokume)S 2 x(nt)S 15854 X 548 y
+(utifr\345n)S 149 x(egna)S 151 x(urvalskriterier)S -24 x(.)S 15854 24178 XY
+(Ett)S 167 x(eller)S 168 x(\212era)S 169 x(dokumen)S 2 x(t)S 167 x(\345t)S
+168 x(g\345ngen)S 169 x(kan)S 168 x(\212yttas,)S 173 x(l\344ggas)S 168 x
+(i)S 15854 X 548 y(\212era)S 156 x(mappar)S 156 x(och)S 155 x(kopieras.)S
+216 x(Information)S 155 x(s\345som)S 156 x(titel)S 153 x(och)S 15854 X
+548 y(nyckelord)S 159 x(kan)S 158 x(\344ndras.)S 224 x(N\344r)S 157 x
+(anv\344nd)S 2 x(aren)S 158 x(v\344ljer)S 157 x(att)S 157 x(l\344gga)S
+15854 X 548 y(ett)S 186 x(dokume)S 2 x(nt)S 186 x(i)S 185 x(\212era)S
+188 x(mappar)S 188 x(inneb\344r)S 187 x(det)S 187 x(att)S 185 x(dokum)S
+2 x(en-)S 15854 X 548 y(tet)S 171 x(f\345r)S 172 x(referenser)S 173 x
+(i)S 171 x(de)S 172 x(nya)S 172 x(mappa)S 2 x(rna)S 172 x(och)S 172 x
+(kan)S 172 x(n\345s)S 172 x(fr\345n)S 15854 X 548 y(dessa.)S 273 x(Fortfarande)S
+176 x(\211nns)S 174 x(dock)S 175 x(endast)S 175 x(en)S 174 x(kopia)S
+174 x(av)S 175 x(do-)S 15854 X 548 y(kumentet.)S 15854 28411 XY(Dokument)S
+207 x(som)S 207 x(anv\344ndar)S 2 x(en)S 206 x(tar)S 206 x(bort)S 206 x
+(sparas)S 207 x(i)S 206 x(mappen)S 15854 X 548 y(P)S -33 x(APPERSKORG)S
+148 x(tills)S 148 x(denna)S 151 x(t\366ms.)S 15854 29904 XY(Delar)S
+143 x(av)S 143 x(dokume)S 2 x(nt)S 142 x(eller)S 143 x(inneh\345llet)S
+143 x(p\345)S 143 x(en)S 143 x(sk\344rm)S 2 x(bild)S 142 x(kan)S 15854 X
+548 y(till)S -2 x(f\344lligt)S 201 x(placeras)S 203 x(i)S 201 x(anteckningsbo)S
+2 x(ken.)S 357 x(Inneh\345llet)S 201 x(i)S 202 x(an-)S 15854 X 548 y
+(teckningsboke)S 2 x(n)S 156 x(kan)S 156 x(infogas)S 157 x(i)S 155 x
+(ett)S 155 x(dokum)S 2 x(ent)S 156 x(och)S 156 x(redige-)S 15854 X 548 y
+(ras,)S 139 x(skrivas)S 137 x(ut,)S 138 x(l\344sas)S 136 x(eller)S 136 x
+(s\344ndas)S 137 x(med)S 137 x(elektronisk)S 137 x(post.)S 15854 32493 XY
+(I)S 108 x(arkivet)S 109 x(kan)S 109 x(anv\344nda)S 2 x(ren)S 109 x
+(spara)S 110 x(och)S 109 x(komma)S 110 x(\345t)S 108 x(dokume)S 2 x
+(nt)S 15854 X 548 y(oavsett)S 126 x(deras)S 126 x(textformat.)S 191 x
+(Som)S 126 x(standard)S 127 x(unders)S 2 x(t\366ds)S 125 x(for-)S 15854 X
+548 y(maten)S 150 x(ASCII,)S 148 x(DX)S 150 x(och)S 150 x(WPS\203PLUS.)S
+15854 34534 XY(I)S 121 x(ALL\203IN\2031)S 123 x(IOS)S 121 x(\211nns)S
+122 x(en)S 122 x(funktion)S 122 x(som)S 122 x(g\366r)S 123 x(det)S 122 x
+(m\366jligt)S 120 x(f\366r)S 15854 X 548 y(anv\344nd)S 2 x(aren)S 164 x
+(och)S 164 x(den)S 164 x(systeman)S 2 x(svarige)S 164 x(att)S 163 x
+(l\345ngtidslagra)S 15854 X 548 y(dokume)S 2 x(nt)S 138 x(som)S 139 x
+(\211nns)S 139 x(p\345)S 138 x(enskilda)S 139 x(anv\344nda)S 2 x(res)S
+139 x(konton)S 138 x(el-)S 15854 X 548 y(ler)S 150 x(p\345)S 150 x(gemensam)S
+2 x(ma)S 150 x(areor)S -23 x(.)S 23449 38446 XY F40(September)S 151 x
+(1992)S 23973 X 548 y(AE-GF42H-TE)S 13021 X -126 y F207(dt)S
+%%EndCustomColor
+1 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique DigitalLogo
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 2 2
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY RV 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3600 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4835 XY F38(\201)S 441 x(Gemensam)S 2 x(t)S 149 x(arkiv)S
+4198 X 812 y(Anv\344ndar)S 2 x(en)S 211 x(kan)S 212 x(skapa)S 212 x
+(gemen)S 2 x(samma)S 212 x(l\345dor)S 212 x(f\366r)S 211 x(att)S 4198 X
+548 y(ge)S 174 x(andra)S 175 x(anv\344nd)S 2 x(are)S 174 x(m\366jlighet)S
+174 x(att)S 173 x(l\344sa)S 174 x(och)S 174 x(redigera)S 4198 X 548 y
+(gemensa)S 2 x(mma)S 178 x(dokumen)S 2 x(t.)S 281 x(L\345dans)S 178 x
+(\344gare)S 179 x(har)S 177 x(full)S 176 x(\345t-)S 4198 X 547 y(komstkontroll)S
+270 x(och)S 270 x(styr)S 270 x(vilka)S 269 x(anv\344nda)S 2 x(re)S 270 x
+(som)S 270 x(skall)S 4198 X 548 y(komma)S 185 x(\345t)S 183 x(l\345dan)S
+184 x(och)S 184 x(vilka)S 183 x(funktioner)S 183 x(dessa)S 185 x(skall)S
+183 x(f\345)S 4198 X 548 y(utf\366ra)S 199 x(p\345)S 199 x(dokume)S
+2 x(nten.)S 347 x(N\344r)S 199 x(anv\344nda)S 2 x(ren)S 199 x(skall)S
+198 x(g\366ra)S 4198 X 548 y(\344ndringar)S 174 x(i)S 173 x(ett)S 172 x
+(geme)S 2 x(nsamt)S 173 x(dokum)S 2 x(ent,)S 178 x(kan)S 174 x(han)S
+174 x(eller)S 4198 X 548 y(hon)S 120 x(l\345sa)S 119 x(det)S 119 x(s\345)S
+120 x(att)S 118 x(ingen)S 120 x(annan)S 120 x(komme)S 2 x(r)S 119 x
+(\345t)S 119 x(det)S 119 x(under)S 4198 X 548 y(tiden.)S 197 x(Den)S
+145 x(som)S 146 x(d\345)S 145 x(f\366rs\366ker)S 147 x(redigera)S 146 x
+(dokume)S 2 x(ntet)S 144 x(f\345r)S 4198 X 548 y(meddeland)S 2 x(e)S
+158 x(om)S 159 x(att)S 158 x(det)S 159 x(anv\344nds)S 160 x(samt)S 158 x
+(om)S 159 x(vem)S 160 x(som)S 4198 X 548 y(har)S 150 x(l\345st)S 149 x
+(det.)S 4198 X 812 y(Arkiv)S 105 x(p\345)S 107 x(skilda)S 105 x(system)S
+106 x(kopplas)S 107 x(samman)S 107 x(med)S 107 x(hj\344lp)S 105 x(av)S
+4198 X 548 y(program)S 2 x(varan)S 137 x(ALL\203IN\2031)S 137 x(Distributed)S
+135 x(Sharing)S 137 x(Option.)S 4198 X 548 y(Se)S 184 x(denna)S 185 x
+(program)S 2 x(varas)S 185 x(Software)S 183 x(Produc)S 2 x(t)S 183 x
+(Descrip-)S 4198 X 547 y(tion)S 149 x(\(SPD)S 149 x(36.79.xx\))S 151 x
+(f\366r)S 149 x(mer)S 151 x(information.)S 3600 X 812 y(\201)S 441 x
+(Grupper)S 4198 X 812 y(En)S 231 x(anv\344ndar)S 2 x(e)S 230 x(kan)S
+232 x(l\345ta)S 230 x(ett)S 230 x(antal)S 230 x(andra)S 232 x(anv\344nd)S
+2 x(are)S 4198 X 547 y(utg\366ra)S 290 x(en)S 289 x(grupp)S 2 x(.)S
+617 x(Flera)S 290 x(grupper)S 291 x(kan)S 289 x(de\211niera)S 2 x(s,)S
+4198 X 548 y(och)S 162 x(grupper)S 2 x(na)S 161 x(kan)S 162 x(f\345)S
+161 x(\345tkomstbeh)S 2 x(\366righet)S 161 x(till)S 160 x(gemen-)S 4198 X
+548 y(samma)S 188 x(dokume)S 2 x(nt)S 186 x(eller)S 186 x(l\345dor)S
+-24 x(.)S 310 x(Medlemm)S 2 x(ar)S 187 x(kan)S 187 x(l\344g-)S 4198 X
+548 y(gas)S 125 x(til)S -2 x(l)S 124 x(och)S 125 x(tas)S 124 x(bort)S
+125 x(fr\345n)S 124 x(en)S 125 x(grupp)S 125 x(och)S 125 x(deras)S 126 x
+(\345tkomst-)S 4198 X 548 y(beh\366righet)S 151 x(regleras)S 150 x(d\344rvid)S
+150 x(automa)S 2 x(tiskt.)S 3600 X 812 y(\201)S 441 x(SFCP-konvertering)S
+4198 X 811 y(Ett)S 159 x(progra)S 2 x(m)S 160 x(\211nns)S 160 x(f\366r)S
+160 x(konve)S 2 x(rtering)S 160 x(av)S 160 x(SFCP-arkiv)S 160 x(till)S
+4198 X 548 y(den)S 150 x(nya)S 150 x(typen)S 150 x(av)S 150 x(arkiv)S
+150 x(med)S 150 x(geme)S 2 x(nsamma)S 151 x(l\345dor)S -24 x(.)S 3600 21026 XY
+F39(Elektronisk)S 150 x(post)S 3600 21938 XY F38(Undersystem)S 2 x(et)S
+181 x(Elektronisk)S 181 x(post)S 181 x(g\366r)S 182 x(det)S 181 x(m\366jligt)S
+180 x(f\366r)S 182 x(an-)S 3600 X 547 y(v\344ndar)S 2 x(e)S 284 x(att)S
+283 x(utbyta)S 284 x(medde)S 2 x(landen.)S 603 x(Anv\344ndare)S 2 x
+(n)S 284 x(kan)S 3600 X 548 y(skapa,)S 229 x(redigera,)S 229 x(skriva)S
+212 x(ut,)S 228 x(l\344sa,)S 228 x(ta)S 212 x(bort,)S 228 x(ta)S 212 x
+(emot)S 213 x(och)S 3600 X 548 y(s\344nda)S 170 x(meddelande)S 2 x(n.)S
+255 x(\304ven)S 169 x(brevh)S 2 x(uvudet)S 169 x(\(som)S 169 x(bl)S
+168 x(a)S 169 x(har)S 3600 X 548 y(uppgifter)S 188 x(om)S 189 x(mottagare)S
+190 x(och)S 188 x(\344rend)S 2 x(e\))S 188 x(kan)S 189 x(redigeras)S
+189 x(in-)S 3600 X 548 y(nan)S 150 x(medde)S 2 x(landet)S 149 x(s\344nds)S
+2 x(.)S 3600 25588 XY(N\344r)S 124 x(anv\344nd)S 2 x(aren)S 124 x(skapa)S
+2 x(r)S 124 x(ett)S 123 x(medde)S 2 x(lande)S 124 x(anger)S 125 x(han)S
+125 x(vilka)S 3600 X 548 y(mottagare)S 168 x(det)S 168 x(ska)S 167 x
+(s\344nda)S 2 x(s)S 167 x(till)S -2 x(,)S 171 x(och)S 168 x(eventuellt)S
+167 x(vilka)S 167 x(som)S 3600 X 548 y(skall)S 253 x(f\345)S 254 x(kopior)S
+-24 x(.)S 512 x(F\366r)S 254 x(att)S 253 x(spara)S 255 x(tid)S 253 x
+(vid)S 254 x(adresse)S 2 x(ringen)S 3600 X 548 y(kan)S 193 x(anv\344nd)S
+2 x(aren)S 193 x(skapa)S 194 x(kortnamn)S 2 x(,)S 202 x(som)S 194 x
+(bara)S 193 x(anv\344n)S 2 x(da-)S 3600 X 548 y(ren)S 150 x(sj\344lv)S
+149 x(kan)S 150 x(se,)S 150 x(eller)S 149 x(distributionslistor)S -25 x
+(.)S 3600 28691 XY(Inkomna)S 225 x(och)S 223 x(l\344sta)S 224 x(meddelande)S
+2 x(n)S 223 x(kan)S 224 x(vidarebefor)S 2 x(dras)S 3600 X 548 y(och/eller)S
+165 x(besvaras)S 2 x(.)S 244 x(Svaren)S 165 x(kan)S 165 x(s\344nda)S
+2 x(s)S 164 x(till)S 163 x(avs\344nda)S 2 x(ren)S 3600 X 548 y(enbart)S
+159 x(eller)S 158 x(till)S 157 x(alla)S 157 x(mottagare)S 2 x(.)S 225 x
+(A)S -8 x(vs\344ndare)S 2 x(n)S 158 x(kan)S 159 x(beg\344ra)S 3600 X
+548 y(kvittens)S 121 x(p\345)S 122 x(att)S 121 x(mottagaren)S 123 x
+(har)S 122 x(f\345tt)S 120 x(och/eller)S 122 x(l\344st)S 120 x(ett)S
+121 x(med-)S 3600 X 548 y(delande.)S 310 x(Medde)S 2 x(landena)S 187 x
+(ges)S 187 x(en)S 187 x(av)S 186 x(f\366ljande)S 186 x(prioritets-)S
+3600 X 548 y(grader)S 2 x(:)S 224 x(express,)S 166 x(f\366rsta)S 163 x
+(klass)S 162 x(eller)S 162 x(andra)S 163 x(klass.)S 237 x(A)S -8 x(vs\344n-)S
+3600 X 548 y(daren)S 156 x(kan)S 156 x(sj\344lv)S 155 x(ange)S 156 x
+(en)S 155 x(tidpunkt)S 156 x(d\345)S 155 x(medde)S 2 x(landet)S 155 x
+(skall)S 3600 X 548 y(s\344ndas.)S 3600 33438 XY(Medde)S 2 x(landen)S
+106 x(ser)S 107 x(ut)S 106 x(som)S 107 x(vanliga)S 106 x(dokum)S 2 x
+(ent)S 106 x(och)S 107 x(behand-)S 3600 X 548 y(las)S 161 x(som)S 163 x
+(s\345dana)S 163 x(av)S 161 x(anv\344n)S 2 x(daren.)S 236 x(I)S 161 x
+(ALL\203IN\2031)S 162 x(IOS)S 161 x(\211nns)S 3600 X 548 y(mappa)S 2 x
+(r)S 260 x(f\366r)S 260 x(inkommand)S 2 x(e,)S 287 x(l\344sta,)S 287 x
+(skapad)S 2 x(e)S 260 x(och)S 260 x(s\344nda)S 3600 X 548 y(medde)S
+2 x(landen.)S 185 x(N\344r)S 105 x(ett)S 105 x(medde)S 2 x(lande)S 106 x
+(har)S 106 x(s\344nts)S 106 x(har)S 106 x(avs\344n-)S 3600 X 548 y(dare)S
+184 x(och)S 184 x(mottagare)S 185 x(oftast)S 183 x(til)S -2 x(lg\345ng)S
+184 x(till)S 182 x(samma)S 184 x(kopia)S 184 x(av)S 3600 X 548 y(medde)S
+2 x(landet)S 149 x(om)S 149 x(de)S 149 x(arbe)S 2 x(tar)S 149 x(p\345)S
+149 x(samma)S 150 x(system.)S 200 x(Denna)S 15854 4821 XY(kopia)S 149 x
+(kan)S 150 x(inte)S 148 x(redigera)S 2 x(s.)S 198 x(Medd)S 2 x(elanden)S
+150 x(kan)S 149 x(\212yttas)S 149 x(eller)S 15854 X 548 y(l\344ggas)S
+163 x(i)S 162 x(\212era)S 163 x(mapp)S 2 x(ar)S 162 x(i)S 162 x(anv\344n)S
+2 x(darens)S 163 x(arkiv)S -32 x(.)S 237 x(\304ven)S 163 x(doku-)S 15854 X
+548 y(ment)S 150 x(fr\345n)S 150 x(arkivet)S 150 x(kan)S 150 x(s\344ndas)S
+151 x(til)S -2 x(l)S 149 x(andra)S 151 x(anv\344nd)S 2 x(are.)S 15854 6905 XY
+(Anv\344nda)S 2 x(ren)S 213 x(kan)S 214 x(v\344lja)S 213 x(att)S 212 x
+(l\345ta)S 213 x(alla)S 212 x(inkomma)S 2 x(nde)S 213 x(med-)S 15854 X
+548 y(delanden)S 167 x(vidarebefordr)S 2 x(as)S 165 x(automa)S 2 x(tiskt)S
+164 x(till)S 163 x(en)S 166 x(annan)S 167 x(an-)S 15854 X 548 y(v\344ndar)S
+2 x(e.)S 328 x(Dessutom)S 193 x(kan)S 194 x(anv\344ndar)S 2 x(en)S 193 x
+(skapa)S 193 x(ett)S 192 x(svars-)S 15854 X 548 y(medde)S 2 x(lande)S
+195 x(som)S 196 x(automa)S 2 x(tiskt)S 194 x(s\344nds)S 196 x(som)S
+196 x(svar)S 196 x(p\345)S 196 x(alla)S 15854 X 548 y(inkomman)S 2 x
+(de)S 209 x(meddelande)S 2 x(n)S 208 x(t)S 209 x(ex)S 208 x(under)S
+210 x(semester)S 2 x(perio-)S 15854 X 548 y(den.)S -872 x 10632 Y(Det)S
+190 x(gemen)S 2 x(samma)S 192 x(arkivet)S 191 x(i)S 190 x(undersystem)S
+2 x(et)S 190 x(f\366r)S 191 x(elektro-)S 15854 X 548 y(nisk)S 177 x
+(post)S 177 x(g\366r)S 177 x(att)S 177 x(funktionerna)S 177 x(utf\366rs)S
+177 x(korrek)S 2 x(t)S 176 x(\344ven)S 178 x(i)S 176 x(ge-)S 15854 X
+548 y(mensam)S 2 x(ma)S 217 x(och)S 218 x(distribuerade)S 217 x(milj\366er)S
+-24 x(.)S 400 x(Funktionerna)S 218 x(i)S 15854 X 548 y(elektronisk)S
+150 x(post)S 150 x(utf\366rs)S 149 x(alltid)S 149 x(i)S 149 x(l\345dan)S
+150 x(HUVUD)S -2 x(L\305DA.)S 15854 13264 XY(En)S 167 x(f\366rteckning)S
+167 x(\366ver)S 168 x(ett)S 166 x(medde)S 2 x(landes)S 167 x(bilagor)S
+167 x(kan)S 167 x(visas)S 15854 X 548 y(och)S 196 x(bilagorna)S 195 x
+(kan)S 196 x(t)S 194 x(ex)S 196 x(skrivas)S 195 x(ut)S 195 x(eller)S
+195 x(l\344sas.)S 335 x(De)S 195 x(kan)S 15854 X 548 y(\344ven)S 104 x
+(sparas)S 104 x(som)S 103 x(redigerb)S 2 x(ar)S 103 x(text)S 102 x(eller)S
+103 x(som)S 103 x(medde)S 2 x(landen)S 15854 X 548 y(som)S 150 x(kan)S
+150 x(besva)S 2 x(ras)S 150 x(eller)S 149 x(vidarebefor)S 2 x(dras.)S
+15854 15896 XY(Med)S 171 x(menyva)S 2 x(let)S 169 x(Arbeta)S 171 x(med)S
+171 x(n\345gon)S 172 x(annans)S 171 x(post)S 171 x(\(AAP\))S 15854 X
+548 y(kan)S 209 x(en)S 208 x(anv\344nd)S 2 x(are)S 208 x(sk\366ta)S
+209 x(posten)S 208 x(f\366r)S 208 x(en)S 209 x(annan)S 209 x(anv\344n-)S
+15854 X 548 y(dare,)S 111 x(t)S 99 x(ex)S 100 x(en)S 101 x(sektreterare)S
+102 x(f\366r)S 100 x(en)S 100 x(chef.)S 183 x(Menyvalet)S 101 x(Best\344m)S
+15854 X 548 y(\345tkomst)S 128 x(til)S -2 x(l)S 127 x(elektronisk)S
+127 x(post)S 128 x(\(B\305E\))S 127 x(g\366r)S 128 x(det)S 127 x(m\366jligt)S
+127 x(f\366r)S 127 x(an-)S 15854 X 548 y(v\344ndar)S 2 x(en)S 191 x
+(att)S 190 x(ange)S 191 x(vilka)S 191 x(som)S 191 x(skall)S 190 x(f\345)S
+191 x(\345tkomst)S 191 x(till)S 189 x(hans)S 15854 X 548 y(eller)S 151 x
+(henne)S 2 x(s)S 151 x(post.)S 206 x(N\344r)S 151 x(n\345gon)S 153 x
+(annan)S 153 x(\344n)S 152 x(\344garen)S 153 x(skickar)S 15854 X 548 y
+(ett)S 172 x(medde)S 2 x(lande,)S 178 x(visas)S 173 x(b\345de)S 173 x
+(\344gar)S 2 x(ens)S 173 x(och)S 173 x(avs\344nda)S 2 x(rens)S 15854 X
+547 y(namn)S 151 x(i)S 149 x(brevhuvu)S 2 x(det.)S 15854 20719 XY(Flera)S
+204 x(f\366rb\344ttringar)S 204 x(har)S 205 x(gjorts)S 203 x(i)S 203 x
+(adress)S 2 x(eringsfunktionen,)S 15854 X 548 y(t)S 149 x(ex)S 143 x
+(f\366rb\344ttrat)S 143 x(gr\344nss)S 2 x(nitt)S 141 x(och)S 144 x(m\366jlighet)S
+142 x(att)S 142 x(skapa)S 144 x(en)S 143 x(dis-)S 15854 X 548 y(tributionslista)S
+247 x(av)S 249 x(adress)S 2 x(aterna)S 249 x(i)S 248 x(ett)S 248 x(mottaget)S
+249 x(medde-)S 15854 X 548 y(lande.)S 254 x(Hanteringen)S 168 x(av)S
+168 x(kortnam)S 2 x(n)S 168 x(har)S 168 x(ocks\345)S 169 x(f\366rb\344ttrats:)S
+15854 X 548 y(kortnamn)S 163 x(kan)S 161 x(skapas)S 163 x(av)S 161 x
+(bl)S 161 x(a)S 161 x(l\345nga)S 162 x(adresser)S -23 x(,)S 164 x(adresser)S
+15854 X 548 y(till)S 119 x(andra)S 123 x(system)S 122 x(f\366r)S 121 x
+(elektronisk)S 121 x(post)S 122 x(samt)S 121 x(ett)S 121 x(meddelan-)S
+15854 X 548 y(des)S 150 x(avs\344nd)S 2 x(are.)S 15854 24995 XY(Genom)S
+189 x(Messag)S 2 x(e)S 188 x(Router)S 188 x(for)S 189 x(VMS)S 188 x
+(kan)S 189 x(anv\344nda)S 2 x(ren)S 188 x(ut-)S 15854 X 548 y(byta)S
+211 x(medde)S 2 x(landen)S 211 x(med)S 212 x(anv\344nd)S 2 x(are)S 211 x
+(av)S 212 x(ALL\203IN\2031)S 211 x(IOS)S 15854 X 548 y(p\345)S 242 x
+(andra)S 243 x(system)S 242 x(i)S 242 x(datorn\344t)S 242 x(som)S 242 x
+(komm)S 2 x(unicerar)S 243 x(med)S 15854 X 548 y(DECnet)S(.)S 263 x
+(Message)S 173 x(Router)S 171 x(VMSmail)S 171 x(Gateway)S 171 x(l\345ter)S
+171 x(an-)S 15854 X 548 y(v\344ndar)S 2 x(en)S 128 x(utbyta)S 128 x
+(meddelan)S 2 x(den)S 128 x(med)S 129 x(anv\344nda)S 2 x(re)S 128 x
+(som)S 129 x(har)S 15854 X 548 y(VMS)S 269 x(Personal)S 269 x(Mail.)S
+555 x(Se)S 268 x(Messag)S 2 x(e)S 268 x(Router)S 269 x(for)S 268 x(VMS)S
+15854 X 548 y(\(SPD)S 150 x(26.33.xx\).)S 15854 29271 XY F39(T)S -41 x
+(extbehandling)S 15854 30258 XY F38(I)S 262 x(textbehandlingen)S 263 x
+(kan)S 263 x(anv\344n)S 2 x(daren)S 263 x(skapa,)S 292 x(redigera,)S
+15854 X 548 y(skriva)S 237 x(ut,)S 258 x(l\344sa)S 237 x(och)S 237 x
+(ta)S 237 x(bort)S 237 x(dokument.)S 461 x(F\366ljande)S 237 x(edi-)S
+15854 X 548 y(torer)S 239 x(medf\366ljer)S 238 x(ALL\203IN\2031)S 239 x
+(IOS:)S 237 x(EDT)S -50 x(,)S 237 x(TPU,)S 238 x(WPS)S 238 x(och)S 15854 X
+548 y(WPS\203PLUS.)S 199 x(Anv\344ndar)S 2 x(en)S 199 x(v\344ljer)S
+199 x(sj\344lv)S 198 x(editor)S 199 x(p\345)S 199 x(formu-)S 15854 X
+548 y(l\344ret)S 149 x(Arbetsinform)S 2 x(ation.)S 15854 33438 XY(EDT)S
+184 x(och)S 185 x(TPU)S 184 x(\344r)S 185 x(ASCII-editorer)S -24 x(.)S
+304 x(T)S -50 x(angentkon)S 2 x(ventioner)S 15854 X 548 y(och)S 155 x
+(terminologi)S 155 x(i)S 155 x(EDT)S 154 x(och)S 155 x(TPU)S 155 x(g\366r)S
+155 x(dessa)S 156 x(editorer)S 156 x(mer)S 15854 X 548 y(l\344mpade)S
+142 x(f\366r)S 141 x(en)S 142 x(tekniskt)S 141 x(inriktad)S 141 x(anv\344ndar)S
+2 x(e.)S 196 x(WPS)S 141 x(d\344re-)S 15854 X 548 y(mot)S 128 x(har)S
+129 x(tangentkon)S 2 x(ventioner)S 129 x(och)S 128 x(terminologi)S 129 x
+(som)S 129 x(liknar)S 15854 X 548 y(WPS\203PLUS,)S 110 x(men)S 111 x
+(ger)S 111 x(ASCII-dokument)S 110 x(i)S 110 x(st\344llet)S 109 x(f\366r)S
+110 x(WPL-)S 15854 X 548 y(dokume)S 2 x(nt)S 149 x(som)S 150 x(resultat.)S
+15132 38868 XY F40(2)S
+%%EndCustomColor
+2 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 3 3
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3600 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4835 XY F38(WPS\203PLUS)S 253 x(f\366r)S 253 x(ALL\203IN\2031)S
+253 x(IOS)S 252 x(\344r)S 254 x(Digit)S -2 x(als)S 253 x(kompletta)S
+3600 X 548 y(textbehandlingssys)S 2 x(tem.)S 368 x(I)S 205 x(denna)S
+207 x(version)S 207 x(\344r)S 206 x(funktiona-)S 3600 X 548 y(liteten)S
+204 x(v\344sentligt)S 205 x(ut\366kad)S 205 x(med)S 206 x(bl)S 205 x
+(a)S 205 x(f\366ljande:)S 310 x(propo)S 2 x(rtio-)S 3600 X 548 y(nell)S
+219 x(utskrift,)S 236 x(m\366jlighet)S 219 x(att)S 219 x(v\344lja)S
+219 x(font,)S 236 x(underst\366d)S 221 x(f\366r)S 219 x(ut-)S 3600 X
+548 y(skrift)S 232 x(i)S 233 x(PostScript\206,)S 254 x(redigering)S
+234 x(i)S 232 x(\212era)S 234 x(spalter)S 233 x(\(upp)S 234 x(till)S
+3600 X 548 y(25)S 205 x(h\366ger)S 2 x(/v\344nstermargina)S 2 x(ler)S
+204 x(p\345)S 205 x(en)S 206 x(linj)S -2 x(al\),)S 219 x(m\366jlighet)S
+204 x(att)S 3600 X 548 y(skapa)S 157 x(och/eller)S 156 x(redigera)S
+158 x(upp)S 157 x(til)S -2 x(l)S 156 x(10)S 156 x(dokum)S 2 x(ent)S
+156 x(parallellt.)S 3600 X 548 y(Bland)S 118 x(\366vriga)S 119 x(f\366rb\344ttringar)S
+119 x(f\366r)S 118 x(anv\344ndar)S 2 x(en)S 118 x(m\344rks)S 119 x(t)S
+118 x(ex)S 118 x(f\366l-)S 3600 X 548 y(jande:)S 183 x(statusrade)S
+2 x(n)S 117 x(\344r)S 118 x(mer)S 118 x(informativ)S 117 x(och)S 118 x
+(markeringa)S 2 x(rna)S 3600 X 548 y(ST)S -33 x(AR)S -9 x(T)S 188 x
+(KOMMANDO)S 187 x(och)S 188 x(SLUT)S 187 x(KOMMANDO)S 187 x(infogas)S
+3600 X 548 y(samtidigt)S 149 x(med)S 151 x(en)S 150 x(och)S 150 x(samma)S
+151 x(tangenttryckning.)S 3600 11302 XY(I)S 149 x(WPS\203PLUS)S 150 x
+(\211nns)S 150 x(bl)S 150 x(a)S 149 x(f\366ljande)S 150 x(funktioner:)S
+3600 12289 XY(\201)S 441 x(infognings-)S 150 x(och)S 150 x(\366verskr)S
+2 x(ivningsl\344ge)S 3600 X 887 y(\201)S 441 x(m\366jlighet)S 173 x
+(f\366r)S 174 x(anv\344nd)S 2 x(aren)S 174 x(att)S 174 x(reglera)S 175 x
+(marginaler)S 175 x(och)S 4198 X 548 y(tabulatorstopp,)S 362 x(inklusive)S
+319 x(v\344nsterjusterad)S 2 x(e,)S 361 x(h\366ger-)S 4198 X 548 y(justerade)S
+150 x(och)S 150 x(decimaljusterade)S 151 x(tabulatorstopp)S 3600 X 887 y
+(\201)S 441 x(automatisk)S 105 x(centrering,)S 114 x(understry)S 2 x
+(kning,)S 113 x(fetstil)S -2 x(,)S 113 x(dubbe)S 2 x(l-)S 4198 X 548 y
+(understryk)S 2 x(ning,)S 109 x(\344ndringsm)S 2 x(arkeringar)S 101 x
+(samt)S 100 x(bakgr)S 2 x(unds-)S 4198 X 548 y(markering)S 3600 X 887 y
+(\201)S 441 x(teknisk)S 217 x(teckenupps\344)S 2 x(ttning)S 216 x(och)S
+218 x(vetenskapliga)S 217 x(ekva-)S 4198 X 548 y(tioner)S 3600 X 888 y
+(\201)S 441 x(m\366jlighet)S 229 x(att)S 230 x(skapa)S 231 x(dokume)S
+2 x(nt)S 229 x(som)S 231 x(\344r)S 231 x(upp)S 231 x(til)S -2 x(l)S
+230 x(256)S 4198 X 548 y(tecken)S 150 x(breda)S 3600 X 887 y(\201)S
+441 x(fotnotsnumrering,)S 185 x(avsnittsnumrering)S 178 x(i)S 177 x
+(upp)S 177 x(till)S 176 x(nio)S 176 x(ni-)S 4198 X 548 y(v\345er)S -24 x
+(,)S 273 x(m\366jlighet)S 248 x(att)S 248 x(automatiskt)S 248 x(skapa)S
+250 x(inneh\345llsf\366r-)S 4198 X 548 y(teckning,)S 149 x(k\344llf\366rteckning)S
+150 x(och)S 150 x(sakreg)S 2 x(ister)S 3600 X 887 y(\201)S 441 x(kontroll)S
+111 x(av)S 112 x(enstaka)S 113 x(rader)S 113 x(\366verst)S 112 x(och)S
+113 x(nederst)S 112 x(p\345)S 112 x(sidor;)S 4198 X 548 y(m\366jlighet)S
+190 x(att)S 190 x(de\211niera)S 191 x(omr\345)S 2 x(den)S 191 x(d\344r)S
+191 x(sidbrytning)S 191 x(inte)S 4198 X 548 y(f\345r)S 149 x(g\366ras)S
+3600 X 887 y(\201)S 441 x(m\366jlighet)S 149 x(att)S 149 x(klippa)S
+149 x(ut)S 150 x(och)S 150 x(klistra)S 149 x(in)S 149 x(kolumner)S 3600 X
+888 y(\201)S 441 x(listbehandling)S 128 x(och)S 130 x(sortering)S 130 x
+(f\366r)S 128 x(standar)S 2 x(diserade)S 130 x(brev)S 4198 X 548 y(och)S
+199 x(underh)S 2 x(\345ll)S 197 x(av)S 199 x(brevlistor)S 199 x(-)S
+199 x(bakgrun)S 2 x(dsbearbe)S 2 x(tning)S 4198 X 548 y(underst\366ds)S
+3600 X 887 y(\201)S 441 x(frasminnes-)S 151 x(och)S 150 x(standardd)S
+2 x(okument)S 3600 X 887 y(\201)S 441 x(tv\345dimensionell)S 150 x(gra\211k)S
+150 x(f\366r)S 150 x(diagram)S 151 x(och)S 150 x(ekvationer)S 3600 28724 XY
+F39(T)S -4 x(idsplanering)S 3600 29711 XY F38(I)S 151 x(unders)S 2 x
+(ystemet)S 152 x(T)S -17 x(idsplanering)S 152 x(\211nns)S 153 x(en)S
+152 x(kalender)S 153 x(best\345-)S 3600 X 548 y(ende)S 165 x(av)S 164 x
+(bokninga)S 2 x(r)S 164 x(och)S 164 x(uppgifter)S -24 x(.)S 242 x(Genom)S
+165 x(att)S 164 x(v\344lja)S 164 x(me-)S 3600 X 548 y(nyalternativet)S
+219 x(Bokningar)S -23 x(,)S 235 x(\366versiktskalend)S 2 x(er)S 219 x
+(f\345r)S 219 x(anv\344n-)S 3600 X 548 y(daren)S 136 x(fram)S 135 x
+(en)S 135 x(redigerings)S 2 x(bar)S 135 x(bild)S 134 x(av)S 135 x(dagens)S
+136 x(bokningar)S -23 x(,)S 3600 X 548 y(vilket)S 151 x(g\366r)S 152 x
+(det)S 151 x(l\344tt)S 150 x(att)S 151 x(snabb)S 2 x(t)S 150 x(g\366ra)S
+153 x(\344ndringar)S -23 x(.)S 204 x(P\345)S 152 x(samma)S 3600 X 548 y
+(s\344tt)S 196 x(ger)S 198 x(menyvalet)S 198 x(Uppgifter)S -25 x(,)S
+208 x(\366versiktskalender)S 198 x(en)S 198 x(re-)S 3600 X 548 y(digeringsbar)S
+163 x(bild)S 161 x(av)S 162 x(dagens)S 163 x(uppgifter)S -25 x(.)S 235 x
+(\326versikten)S 162 x(Bok-)S 3600 X 548 y(ningar)S 207 x(och)S 206 x
+(uppgifter)S 206 x(komb)S 2 x(inerar)S 206 x(dessa)S 207 x(bilder)S
+206 x(och)S 207 x(g\366r)S 3600 X 548 y(det)S 199 x(m\366jligt)S 198 x
+(att)S 198 x(v\344lja)S 198 x(alla)S 198 x(tidsplaneringsfunktioner)S
+200 x(direkt)S 3600 X 548 y(fr\345n)S 150 x(\366versikten.)S 3600 35630 XY
+(Anv\344nda)S 2 x(ren)S 105 x(kan)S 105 x(skr\344dd)S 2 x(arsy)S 105 x
+(tidsplaneringsfunktionen)S 106 x(s\345)S 3600 X 548 y(att)S 149 x(endast)S
+150 x(sk\344rm)S 2 x(bilder)S 149 x(och)S 150 x(menyv)S 2 x(al)S 149 x
+(av)S 150 x(intresse)S 150 x(visas.)S 15854 4821 XY(Bokningar)S 117 x
+(kallas)S 116 x(de)S 116 x(aktiviteter)S 116 x(som)S 116 x(\344r)S 117 x
+(bundna)S 117 x(till)S 114 x(en)S 117 x(viss)S 15854 X 548 y(dag)S 178 x
+(och)S 178 x(tid.)S 282 x(Det)S 177 x(kan)S 178 x(t)S 177 x(ex)S 177 x
+(g\344lla)S 178 x(ett)S 176 x(m\366te,)S 185 x(dit)S 177 x(deltagare)S
+15854 X 548 y(kallas.)S 372 x(M\366teska)S 2 x(llel)S -2 x(ser)S 208 x
+(och)S 208 x(svar)S 209 x(p\345)S 207 x(dessa)S 209 x(skickas)S 208 x
+(via)S 15854 X 548 y(elektronisk)S 166 x(post.)S 248 x(Anv\344nda)S
+2 x(ren)S 166 x(kan)S 166 x(i)S 165 x(sin)S 166 x(kalender)S 167 x(reser-)S
+15854 X 548 y(vera)S 142 x(tid)S 140 x(d\345)S 142 x(han)S 142 x(inte)S
+140 x(\344r)S 142 x(til)S -2 x(lg\344nglig)S 141 x(f\366r)S 141 x(m\366ten.)S
+197 x(En)S 142 x(bokning)S 15854 X 548 y(kan)S 153 x(marke)S 2 x(ras)S
+153 x(som)S 153 x(kon\211den)S 2 x(tiell)S -2 x(,)S 153 x(vilket)S 152 x
+(medf\366r)S 153 x(att)S 152 x(andra)S 15854 X 548 y(anv\344nd)S 2 x
+(are)S 207 x(inte)S 206 x(kan)S 208 x(l\344sa)S 207 x(beskrivningen)S
+208 x(av)S 207 x(bokninge)S 2 x(n.)S 15854 X 548 y(En)S 213 x(anv\344nd)S
+2 x(are)S 213 x(kan)S 214 x(f\366ra)S 213 x(in)S 213 x(\345terkomm)S
+2 x(ande)S 214 x(bokningar)S 214 x(i)S 15854 X 548 y(sin)S 149 x(kalender)S
+-23 x(.)S 15854 10174 XY(Uppgifter)S 102 x(kallas)S 102 x(s\345dan)S
+2 x(a)S 102 x(aktiviteter)S 102 x(som)S 103 x(inte)S 102 x(\344r)S 103 x
+(bundna)S 103 x(till)S 15854 X 548 y(n\345gon)S 123 x(speciell)S 121 x
+(tid)S 122 x(eller)S 121 x(dag.)S 191 x(Aktuella)S 121 x(uppgifter)S
+122 x(kan)S 122 x(visas)S 15854 X 548 y(p\345)S 169 x(det)S 168 x(s\344tt)S
+168 x(anv\344nd)S 2 x(aren)S 169 x(v\344ljer:)S 237 x(utifr\345n)S 168 x
+(ett)S 168 x(antal)S 168 x(startda-)S 15854 X 548 y(tum,)S 216 x(utifr\345n)S
+203 x(planerade)S 204 x(slutdatum,)S 216 x(p\345g\345e)S 2 x(nde)S 203 x
+(uppgifter)S -24 x(,)S 15854 X 548 y(avslutade)S 150 x(uppgifter)S -24 x
+(,)S 149 x(etc.)S 15854 13335 XY(I)S 220 x(tidsplaneringen)S 221 x(kan)S
+220 x(man)S 222 x(s\366ka)S 220 x(p\345)S 221 x(\212era)S 221 x(datorsystem)S
+15854 X 548 y(efter)S 249 x(ledig)S 248 x(tid)S 248 x(hos)S 250 x(de)S
+249 x(m\366tesdeltagare)S 250 x(man)S 250 x(vill)S 247 x(kalla.)S 15854 X
+548 y(S\366kningen)S 163 x(resulterar)S 162 x(i)S 161 x(ett)S 161 x
+(diagram)S 162 x(\366ver)S 163 x(m\366tesdeltagar-)S 15854 X 548 y(nas)S
+185 x(lediga)S 184 x(tid,)S 191 x(det)S 185 x(aktuella)S 183 x(m\366tet)S
+185 x(or\344knat.)S 303 x(Omedelbar)S 15854 X 548 y(s\366kning)S 170 x
+(utf\366rs)S 170 x(genom)S 171 x(kalendrar)S 171 x(s\345v\344l)S 170 x
+(p\345)S 170 x(anv\344nda)S 2 x(rens)S 15854 X 548 y(system)S 150 x
+(som)S 151 x(p\345)S 150 x(andra)S 150 x(system.)S 15854 17045 XY F39
+(ALL\203IN\2031)S 150 x(Forum)S 15854 18014 XY F38(Med)S 304 x(ALL\203IN\2031)S
+304 x(IOS)S 302 x(f\366ljer)S 303 x(undersys)S 2 x(temet)S 303 x(ALL\203IN\2031)S
+15854 X 548 y(Forum)S(,)S 130 x(som)S 126 x(\344r)S 125 x(ett)S 124 x
+(ALL\203IN\2031-gr\344)S 2 x(nssnitt)S 124 x(mot)S 125 x(V)S -34 x(AX)S
+150 x(Notes)S(.)S 15854 19532 XY(I)S 159 x(ALL\203IN\2031)S 160 x(Forum)S
+161 x(kan)S 160 x(m\345ng)S 2 x(a)S 159 x(anv\344n)S 2 x(dare)S 160 x
+(samtidigt)S 159 x(ut-)S 15854 X 548 y(byta)S 253 x(information)S 252 x
+(och)S 253 x(id\351er)S -24 x(,)S 278 x(i)S 252 x(ALL\203IN\2031s)S
+253 x(l\344ttanv\344nda)S 15854 X 548 y(meny-)S 171 x(och)S 170 x(formul\344rsy)S
+2 x(stem,)S 174 x(obero)S 2 x(ende)S 170 x(av)S 170 x(tid)S 169 x(och)S
+170 x(geo-)S 15854 X 548 y(gra\211skt)S 150 x(avst\345nd.)S 15854 22145 XY
+F39(Underst\366d)S 120 x(f\366r)S 119 x(Compoun)S 2 x(d)S 119 x(Document)S
+120 x(Architecture)S 120 x(\(CDA\))S 15854 23115 XY F38(I)S 149 x(ALL\203IN\2031)S
+150 x(IOS)S 149 x(unders)S 2 x(t\366ds)S 149 x(f\366ljande)S 150 x(nya)S
+150 x(format:)S 15854 24084 XY(\201)S 441 x(DDIF)S 148 x(\202)S 150 x
+(standardfor)S 2 x(mat)S 149 x(f\366r)S 150 x(kodning)S 150 x(i)S 149 x
+(CDA)S 15854 X 870 y(\201)S 441 x(DOTS)S 123 x(\202)S 125 x(format)S
+125 x(f\366r)S 124 x(packning)S 125 x(och)S 125 x(\366verf\366r)S 2 x
+(ing)S 124 x(av)S 124 x(sam-)S 16452 X 548 y(mansatta)S 150 x(dokum)S
+2 x(ent,)S 149 x(dvs)S 150 x(CDA-dokument)S 15854 X 870 y(\201)S 441 x
+(DTIF)S 148 x(\202)S 150 x(kodforma)S 2 x(t)S 149 x(f\366r)S 149 x(tabeller)S
+150 x(i)S 149 x(CDA)S 15854 X 870 y(\201)S 441 x(PS)S 148 x(\202)S 148 x
+(PostScript\206,)S 149 x(formatet)S 148 x(f\366r)S 148 x(slutdokume)S
+2 x(nt)S 148 x(i)S 147 x(CDA)S 15854 28211 XY(Anv\344nda)S 2 x(ren)S
+168 x(kan)S 168 x(s\344nda)S 169 x(och)S 168 x(ta)S 167 x(emot)S 168 x
+(dessa)S 169 x(dokume)S 2 x(nt)S 167 x(i)S 15854 X 548 y(elektronisk)S
+179 x(post,)S 185 x(spara)S 179 x(dem)S 179 x(i)S 178 x(sitt)S 177 x
+(arkiv)S -33 x(,)S 185 x(l\344sa,)S 185 x(skriva)S 179 x(ut,)S 15854 X
+548 y(kopiera)S 151 x(och)S 150 x(konvertera)S 151 x(dem.)S 15854 30277 XY
+(Alla)S 104 x(de)S 104 x(nya)S 105 x(formaten)S 105 x(kan)S 105 x(l\344sas)S
+105 x(i)S 103 x(ALL\203IN\2031)S 105 x(IOS,)S 104 x(med)S 105 x(un-)S
+15854 X 548 y(dantag)S 106 x(f\366r)S 106 x(PostScript\206.)S 184 x
+(Kvaliteten)S 105 x(p\345)S 106 x(formateringen)S 107 x(hos)S 15854 X
+548 y(de)S 140 x(data)S 139 x(som)S 140 x(visas)S 140 x(beror)S 140 x
+(p\345)S 140 x(vilken)S 139 x(version)S 140 x(av)S 140 x(VMS)S 140 x
+(som)S 15854 X 548 y(\211nns)S 126 x(p\345)S 126 x(systemet.)S 191 x
+(I)S 125 x(ALL\203IN\2031)S 126 x(IOS)S 124 x(anv\344nd)S 2 x(s)S 125 x
+(CDAs)S 125 x(text-)S 15854 X 548 y(formaterar)S 2 x(e)S 136 x(som)S
+137 x(ger)S 137 x(ett)S 136 x(b\344ttre)S 137 x(resultat,)S 139 x(med)S
+137 x(korrekt)S 137 x(for-)S 15854 X 548 y(matering)S 172 x(och)S 171 x
+(externa)S 172 x(referense)S 2 x(r)S -25 x(.)S 263 x(ALL\203IN\2031)S
+171 x(IOS)S 171 x(v\344ljer)S 15854 X 547 y(automatiskt)S 178 x(r\344tt)S
+178 x(metod)S 179 x(utifr\345n)S 178 x(vilken)S 178 x(VMS-vers)S 2 x
+(ion)S 178 x(som)S 15854 X 548 y(anv\344nd)S 2 x(s.)S 15854 35082 XY
+(CDA-dokumen)S 2 x(t)S 201 x(skrivs)S 203 x(ut)S 201 x(i)S 202 x(PostScript\206-forma)S
+2 x(t)S 201 x(om)S 203 x(den)S 15854 X 548 y(aktuella)S 180 x(skrivaren)S
+180 x(klarar)S 181 x(detta;)S 194 x(annars)S 181 x(konver)S 2 x(teras)S
+180 x(do-)S 15854 X 548 y(kumentet)S 150 x(f\366re)S 150 x(utskrift.)S
+15132 38868 XY F40(3)S
+%%EndCustomColor
+3 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 4 4
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY RV 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3600 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4835 XY F38(Konvertering)S 2 x(sfunktionen)S 189 x
+(i)S 188 x(CDA)S 188 x(anv\344nds)S 190 x(f\366r)S 189 x(konverter-)S
+3600 X 548 y(ing)S 149 x(till)S 148 x(och)S 150 x(fr\345n)S 150 x(de)S
+150 x(nya)S 150 x(formaten.)S 3600 6351 XY(Om)S 149 x(en)S 149 x(anv\344n)S
+2 x(dare)S 150 x(f\366rs\366ker)S 150 x(redigera)S 150 x(ett)S 148 x
+(CDA-dokume)S 2 x(nt)S 3600 X 548 y(med)S 119 x(en)S 118 x(av)S 118 x
+(standard)S 2 x(editorerna)S 119 x(i)S 117 x(ALL\203IN\2031)S 118 x
+(IOS,)S 117 x(visas)S 118 x(ett)S 3600 X 548 y(medde)S 2 x(lande)S 183 x
+(om)S 184 x(att)S 183 x(dokum)S 2 x(entformatet)S 184 x(inte)S 183 x
+(underst\366ds)S 3600 X 548 y(av)S 140 x(editorn.)S 196 x(Anv\344ndare)S
+2 x(n)S 139 x(kan)S 140 x(dock)S 140 x(konver)S 2 x(tera)S 139 x(dokum)S
+2 x(en-)S 3600 X 548 y(tet)S 201 x(till)S 201 x(ett)S 201 x(l\344mpligt)S
+201 x(format)S 203 x(f\366re)S 202 x(redigeringe)S 2 x(n)S 202 x(och)S
+202 x(sedan)S 3600 X 548 y(anv\344nda)S 201 x(den)S 201 x(\366nskade)S
+201 x(editorn.)S 350 x(V)S -8 x(id)S 199 x(konve)S 2 x(rtering)S 200 x
+(\211nns)S 3600 X 548 y(det)S 150 x(risk)S 149 x(att)S 149 x(formateringsa)S
+2 x(ttributen)S 149 x(f\366rsvinner)S -24 x(.)S 3600 10607 XY(CDA)S
+113 x(Base)S 114 x(Services)S 114 x(underst\366d)S 2 x(er)S 114 x(arkivet)S
+113 x(i)S 113 x(ALL\203IN\2031)S 114 x(IOS)S 3600 X 548 y(och)S 175 x
+(g\366r)S 174 x(det)S 174 x(m\366jligt)S 174 x(att)S 173 x(arbeta)S
+175 x(med)S 175 x(dokume)S 2 x(nt)S 173 x(som)S 175 x(l\344n-)S 3600 X
+548 y(kats)S 160 x(fr\345n)S 160 x(en)S 160 x(CDA-til)S -2 x(l\344mpning.)S
+231 x(Sammans)S 2 x(atta)S 159 x(dokume)S 2 x(nt)S 3600 X 548 y(kan)S
+150 x(\344ven)S 151 x(separera)S 2 x(s)S 149 x(i)S 149 x(arkivet.)S
+3600 13219 XY(T)S -17 x(ill\344mpningsprogr)S 2 x(ammera)S 2 x(re)S
+111 x(har)S 111 x(til)S -2 x(lg\345ng)S 111 x(till)S 109 x(de)S 111 x
+(nya)S 111 x(CDA-)S 3600 X 548 y(verktygen)S 350 x(genom)S 349 x(de)S
+349 x(nya)S 349 x(funktionerna)S 349 x(f\366r)S 348 x(till)S -2 x(\344mp-)S
+3600 X 548 y(ningsprog)S 2 x(rammer)S 2 x(are.)S 3600 15283 XY F39(Kommun)S
+2 x(ikation)S 3600 16251 XY F38(Genom)S 118 x(under)S 2 x(systemet)S
+118 x(Kommunikation)S 118 x(kan)S 118 x(anv\344nda)S 2 x(ren)S 3600 X
+548 y(n\345)S 140 x(andra)S 141 x(datorsystem)S 141 x(utan)S 140 x(att)S
+140 x(vara)S 140 x(insatt)S 139 x(i)S 139 x(komm)S 2 x(unika-)S 3600 X
+548 y(tionsteknologi.)S 3600 18315 XY(Mer)S 104 x(erfarna)S 105 x(anv\344ndar)S
+2 x(e)S 103 x(kan)S 104 x(automatisera)S 104 x(hela)S 104 x(kommun)S
+2 x(i-)S 3600 X 548 y(kationsf\366rfarande)S 2 x(t)S 116 x(genom)S 119 x
+(att)S 116 x(anv\344n)S 2 x(da)S 117 x(kontrolldokume)S 2 x(nt)S 3600 X
+548 y(\(vanliga)S 239 x(ALL\203IN\2031-dok)S 2 x(ument)S 239 x(som)S
+239 x(inneh\345ller)S 239 x(en)S 238 x(upp-)S 3600 X 548 y(s\344ttning)S
+206 x(speciella)S 206 x(kommand)S 2 x(on\).)S 368 x(Kopplingen)S 207 x
+(till)S 204 x(andra)S 3600 X 547 y(datorsystem)S 126 x(kan)S 124 x(g\366ras)S
+125 x(helt)S 124 x(automatiskt)S 124 x(f\366rutsatt)S 124 x(att)S 124 x
+(mo-)S 3600 X 548 y(dem)S 150 x(med)S 149 x(automa)S 2 x(tuppringning)S
+149 x(eller)S 149 x(fasta)S 149 x(linjer)S 148 x(anv\344nds)S 3600 X
+548 y(och)S 146 x(att)S 145 x(det)S 145 x(andra)S 147 x(systemet)S 146 x
+(underst\366d)S 2 x(er)S 145 x(terminaler)S 147 x(med)S 3600 X 548 y
+(terminalportar)S 151 x(som)S 150 x(underst\366d)S 2 x(er)S 150 x(RS232.)S
+3600 23118 XY(Det)S 323 x(\211nns)S 324 x(ocks\345)S 325 x(m\366jlighet)S
+323 x(att)S 323 x(\366verf\366ra)S 325 x(\211ler)S 323 x(mellan)S 3600 X
+548 y(\345)S 302 x(ena)S 302 x(sidan)S 303 x(DECmate)S 301 x(II,)S 301 x
+(DECmate)S 301 x(III,)S 301 x(VMS)S 302 x(eller)S 3600 X 548 y(WPS\203PLUS/DOS)S
+113 x(p\345)S 114 x(personda)S 2 x(tor)S 113 x(och)S 114 x(\345)S 113 x
+(andr)S 2 x(a)S 113 x(sidan)S 114 x(an-)S 3600 X 548 y(v\344ndar)S 2 x
+(ens)S 150 x(arkiv)S 149 x(i)S 149 x(ALL\203IN\2031)S 151 x(IOS.)S 3600 25730 XY
+F39(Minir\344knare)S 3600 26698 XY F38(Med)S 199 x(minir\344knar)S 2 x
+(en)S 199 x(kan)S 199 x(anv\344ndar)S 2 x(en)S 199 x(utf\366ra)S 198 x
+(ber\344k)S 2 x(ningar)S 3600 X 548 y(under)S 189 x(arbetets)S 189 x
+(g\345ng)S 189 x(och)S 188 x(infoga)S 188 x(resultatet)S 188 x(i)S 187 x
+(dokum)S 2 x(ent.)S 3600 X 548 y(Minir\344knare)S 2 x(n)S 145 x(kan)S
+146 x(anv\344n)S 2 x(das)S 146 x(dels)S 145 x(som)S 147 x(en)S 146 x
+(vanlig)S 145 x(\211ckr\344k-)S 3600 X 548 y(nare)S 188 x(f\366r)S 187 x
+(enkla)S 187 x(aritmetiska)S 187 x(ber\344kninga)S 2 x(r)S -25 x(,)S
+196 x(dels)S 187 x(f\366r)S 187 x(ber\344k-)S 3600 X 548 y(ning)S 207 x
+(av)S 208 x(komplicerade)S 209 x(formler)S 208 x(d\344r)S 207 x(trigonome)S
+2 x(triska)S 207 x(och)S 3600 X 548 y(aritmetiska)S 171 x(funktioner)S
+170 x(komb)S 2 x(ineras.)S 262 x(Det)S 170 x(numer)S 2 x(iska)S 170 x
+(tan-)S 3600 X 548 y(gentbord)S 2 x(et)S 149 x(anv\344nds)S 151 x(som)S
+150 x(en)S 150 x(vanlig)S 150 x(minir\344knare.)S 3600 30954 XY F39
+(Register)S 3600 31922 XY F38(I)S 219 x(undersy)S 2 x(stemet)S 219 x
+(Register)S 220 x(n\345r)S 220 x(anv\344nda)S 2 x(ren)S 220 x(de)S 220 x
+(register)S 3600 X 548 y(han)S 111 x(har)S 111 x(til)S -2 x(ltr\344de)S
+111 x(till)S -2 x(.)S 186 x(Anv\344ndar)S 2 x(en)S 110 x(kan)S 111 x
+(l\344sa)S 110 x(poster)S 111 x(i)S 110 x(f\366reta-)S 3600 X 548 y
+(gets)S 154 x(telefonregister)S -24 x(,)S 154 x(som)S 154 x(inneh\345ller)S
+154 x(telefonnummer)S 155 x(och)S 3600 X 548 y(adresse)S 2 x(r)S 171 x
+(och)S 171 x(under)S 2 x(h\345lls)S 170 x(av)S 171 x(den)S 172 x(systemansva)S
+2 x(rige.)S 263 x(Det)S 3600 X 548 y(\211nns)S 118 x(\344ven)S 117 x
+(ett)S 117 x(register)S 117 x(\366ver)S 118 x(alla)S 116 x(ALL\203IN\2031-anv)S
+2 x(\344ndare)S 118 x(p\345)S 3600 X 548 y(det)S 150 x(aktuella)S 149 x
+(systemet.)S 3600 35630 XY(Anv\344nda)S 2 x(ren)S 170 x(kan)S 170 x
+(skapa)S 170 x(och)S 170 x(underh)S 2 x(\345lla)S 168 x(egna)S 171 x
+(telefonre-)S 3600 X 548 y(gister)S -25 x(,)S 150 x(kortnamn)S 151 x
+(och)S 150 x(distributionslist)S -2 x(or)S -24 x(.)S 15854 4835 XY(Om)S
+145 x(Distributed)S 145 x(Directory)S 145 x(Service)S 146 x(\(DDS\))S
+145 x(har)S 146 x(installerats)S 15854 X 548 y(kan)S 142 x(anv\344n)S
+2 x(daren)S 143 x(s\366ka)S 142 x(i)S 142 x(olika)S 141 x(adressd)S
+2 x(atabaser)S 143 x(utifr\345n)S 141 x(till)S 15854 X 548 y(exempe)S
+2 x(l)S 166 x(anst\344llningsnumm)S 2 x(er)S -25 x(,)S 171 x(namn)S
+2 x(,)S 170 x(avdelning)S 168 x(och)S 167 x(te-)S 15854 X 548 y(lefonnumme)S
+2 x(r)S 149 x(hem)S 151 x(eller)S 149 x(till)S 148 x(arbetet.)S 15854 8074 XY
+F40(Funktioner)S 150 x(i)S 149 x(bassyst)S 2 x(emet)S 15854 9071 XY
+F39(Menyhier)S 2 x(arki)S 15854 10067 XY F38(T)S -17 x(ill\344mpningarna)S
+158 x(n\345s)S 157 x(genom)S 158 x(en)S 157 x(hierarki)S 157 x(av)S
+157 x(menyer)S -23 x(.)S 220 x(Er-)S 15854 X 548 y(farna)S 158 x(anv\344nda)S
+2 x(re)S 157 x(kan)S 158 x(p\345)S 158 x(ett)S 157 x(enkelt)S 157 x
+(s\344tt)S 157 x(g\345)S 158 x(f\366rbi)S 157 x(menyer)S 15854 X 548 y
+(och)S 150 x(komma)S 151 x(direkt)S 150 x(til)S -2 x(l)S 149 x(\366nska)S
+2 x(d)S 149 x(till)S -2 x(\344mpn)S 2 x(ing.)S 15854 12160 XY(Anv\344nda)S
+2 x(ren)S 155 x(kan)S 156 x(avbryta)S 156 x(arbetet)S 156 x(till)S -2 x
+(f\344lligt)S 154 x(f\366r)S 155 x(att)S 155 x(via)S 155 x(den)S 15854 X
+548 y(s\345)S 225 x(kallade)S 225 x(avbrottsmenyn)S 226 x(l\344sa)S
+225 x(nya)S 225 x(meddelan)S 2 x(den,)S 243 x(se)S 15854 X 548 y(vad)S
+219 x(klockan)S 219 x(\344r)S 219 x(eller)S 218 x(g\345)S 219 x(in)S
+218 x(i)S 217 x(n\345got)S 219 x(av)S 219 x(undersy)S 2 x(stemen)S 15854 X
+548 y(T)S -17 x(idsplanering,)S 182 x(Register)S -25 x(,)S 181 x(Minir\344knare)S
+176 x(eller)S 174 x(Antecknings-)S 15854 X 548 y(bok.)S -847 x 15349 Y
+(Den)S 199 x(som)S 200 x(\344r)S 199 x(van)S 200 x(att)S 198 x(anv\344nd)S
+2 x(a)S 199 x(komman)S 2 x(don)S 199 x(i)S 199 x(VMS)S 199 x(kan)S 15854 X
+548 y(komma)S 135 x(\345t)S 133 x(dessa)S 134 x(utan)S 134 x(att)S 133 x
+(beh\366va)S 135 x(l\344mna)S 134 x(ALL\203IN\2031)S 133 x(IOS.)S 15854 16894 XY
+(Det)S 99 x(\211nns)S 101 x(tv\345)S 99 x(typer)S 101 x(av)S 100 x(anv\344ndar)S
+2 x(gr\344nssnitt)S 100 x(i)S 99 x(ALL\203IN\2031)S 150 x(IOS.)S 15854 X
+548 y(I)S 109 x(det)S 109 x(ena,)S 118 x(menyl\344ge,)S 118 x(anv\344n)S
+2 x(ds)S 109 x(menye)S 2 x(r)S -25 x(.)S 186 x(Det)S 108 x(andr)S 2 x
+(a)S 109 x(gr\344ns-)S 15854 X 548 y(snittet,)S 210 x(kommand)S 2 x
+(ol\344ge,)S 211 x(\344r)S 199 x(snabbar)S 2 x(e)S 198 x(och)S 200 x
+(anv\344nds)S 200 x(hu-)S 15854 X 548 y(vudsakligen)S 171 x(n\344r)S
+171 x(man)S 172 x(arbetar)S 171 x(\366ver)S 171 x(telefonn\344tet)S
+170 x(via)S 171 x(mo-)S 15854 X 548 y(dem.)S 242 x(I)S 164 x(detta)S
+163 x(arbetss\344)S 2 x(tt)S 162 x(visas)S 164 x(inga)S 164 x(menye)S
+2 x(r)S -25 x(,)S 167 x(utan)S 164 x(meny-)S 15854 X 547 y(alternativen)S
+150 x(visas)S 150 x(som)S 150 x(textstr\344ngar)S -24 x(.)S 15854 20630 XY
+F39(Hj\344lp)S 15854 21627 XY F38(Anv\344nda)S 2 x(ren)S 205 x(kan)S
+206 x(f\345)S 205 x(hj\344lp)S 205 x(\366verallt)S 204 x(i)S 205 x(ALL\203IN\2031)S
+205 x(IOS)S 205 x(ge-)S 15854 X 548 y(nom)S 137 x(att)S 136 x(trycka)S
+136 x(p\345)S 137 x(tangenten)S 137 x -383 y 1488 24 R 21593 X 495 y
+24 492 R 21717 22155 XY F42(HJ\304LP)S 104 x 132 y 24 492 R 21593 X
+19 y 1488 24 R 23081 22175 XY F38(.)S 195 x(I)S 136 x(hj\344lptexten)S
+136 x(\211nns)S 15854 X 548 y(grundl\344gg)S 2 x(ande)S 150 x(information)S
+150 x(om)S 150 x(funktionerna.)S 15854 23720 XY F39(Datorst\366dd)S
+150 x(utbildning)S 15854 24717 XY F38(Anv\344nda)S 2 x(ren)S 193 x(kan)S
+193 x(l\344ra)S 193 x(sig)S 192 x(ALL\203IN\2031)S 193 x(IOS)S 192 x
+(med)S 194 x(hj\344lp)S 192 x(av)S 15854 X 548 y(den)S 178 x(datorst\366dda)S
+178 x(utbildningen.)S 282 x(I)S 176 x(interaktiva)S 177 x(kurser)S 178 x
+(leds)S 15854 X 548 y(anv\344nd)S 2 x(aren)S 150 x(genom)S 151 x(de)S
+150 x(olika)S 149 x(under)S 2 x(systemen.)S 15854 26810 XY F39(Anv\344nda)S
+2 x(rde\211nierade)S 151 x(funktioner)S 15854 27807 XY F38(Med)S 168 x
+(anv\344nd)S 2 x(arde\211niera)S 2 x(de)S 167 x(funktioner)S 168 x(\(ADFer\))S
+168 x(automati-)S 15854 X 548 y(seras)S 131 x(tangentsekve)S 2 x(nser)S
+130 x(som)S 131 x(anv\344nd)S 2 x(s)S 130 x(ofta.)S 192 x(Antalet)S
+129 x(tan-)S 15854 X 548 y(genttryckningar)S 104 x(som)S 103 x(kan)S
+103 x(sparas)S 104 x(i)S 102 x(en)S 102 x(ADF)S 102 x(\344r)S 103 x
+(obegr\344)S 2 x(nsat.)S 15854 X 548 y(En)S 150 x(ADF)S 149 x(kan)S
+150 x(\344ven)S 150 x(anrop)S 2 x(a)S 149 x(en)S 150 x(annan)S 151 x
+(ADF)S -50 x(.)S 15854 30447 XY F39(Dokumentha)S 2 x(ntering)S 15854 31444 XY
+F38(Om)S 174 x(ett)S 173 x(dokum)S 2 x(ent)S 174 x(\344r)S 174 x(gemens)S
+2 x(amt)S 174 x(kan)S 174 x(anv\344nd)S 2 x(aren)S 174 x(l\345sa)S 15854 X
+548 y(det)S 134 x(f\366r)S 134 x(att)S 134 x(ingen)S 134 x(anna)S 2 x
+(n)S 134 x(skall)S 133 x(kunna)S 136 x(komma)S 135 x(\345t)S 134 x(det)S
+134 x(under)S 15854 X 548 y(redigeringe)S 2 x(n.)S 15854 33537 XY(I)S
+167 x(ALL\203IN\2031)S 169 x(IOS)S 167 x(g\366rs)S 169 x(en)S 168 x
+(klar)S 168 x(\345tskillnad)S 167 x(mellan)S 168 x(rediger-)S 15854 X
+548 y(bara)S 172 x(och)S 171 x(icke)S 171 x(redigerb)S 2 x(ara)S 171 x
+(dokum)S 2 x(ent.)S 263 x(Formatering)S 172 x(och)S 15854 X 548 y(utskrift)S
+149 x(\344r)S 150 x(klart)S 149 x(separe)S 2 x(rade,)S 150 x(och)S 150 x
+(kan)S 150 x(utf\366ras)S 150 x(var)S 150 x(f\366r)S 150 x(sig.)S 15854 35630 XY
+(CDA-formatering)S 118 x(kan)S 118 x(utf\366ras)S 117 x(s\345v\344l)S
+118 x(interaktivt)S 116 x(som)S 118 x(i)S 117 x(bak-)S 15854 X 548 y
+(grunde)S 2 x(n.)S 15132 38868 XY F40(4)S
+%%EndCustomColor
+4 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 5 5
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3600 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4835 XY F38(V)S -8 x(id)S 122 x(utskrift)S 122 x(kontrolleras)S
+123 x(dokum)S 2 x(entets)S 122 x(format.)S 191 x(Om)S 122 x(forma-)S
+3600 X 548 y(tet)S 107 x(inte)S 107 x(underst\366ds)S 109 x(av)S 107 x
+(skrivaren)S 109 x(konvertera)S 2 x(s)S 107 x(dokume)S 2 x(ntet)S 3600 X
+548 y(om)S 170 x(m\366jligt)S 168 x(till)S 167 x(ett)S 169 x(format)S
+170 x(som)S 169 x(unde)S 2 x(rst\366ds.)S 258 x(Annars)S 170 x(h\344n-)S
+3600 X 548 y(visas)S 150 x(anv\344ndar)S 2 x(en)S 150 x(til)S -2 x(l)S
+149 x(en)S 150 x(annan)S 151 x(skrivartyp.)S 3600 X 897 y F39(Utskrift)S
+3600 X 896 y F38(V)S -8 x(id)S 162 x(utskrift)S 162 x(av)S 162 x(dokum)S
+2 x(ent)S 162 x(kan)S 163 x(anv\344n)S 2 x(daren)S 163 x(ange)S 164 x
+(var)S 163 x(do-)S 3600 X 548 y(kumentet)S 174 x(skall)S 173 x(skrivas)S
+174 x(ut,)S 178 x(antal)S 173 x(kopior)S 174 x(samt)S 174 x(utskriftens)S
+3600 X 548 y(format.)S 219 x(Utskriften)S 155 x(kan)S 157 x(g\366ras)S
+157 x(p\345)S 157 x(en)S 156 x(skrivare)S 157 x(som)S 157 x(\344r)S
+157 x(an-)S 3600 X 548 y(sluten)S 205 x(til)S -2 x(l)S 204 x(ALL\203IN\2031-s)S
+2 x(ystemet,)S 218 x(till)S 203 x(ett)S 204 x(annat)S 205 x(dokum)S
+2 x(ent,)S 3600 X 548 y(till)S 131 x(en)S 134 x(VMS-\211l)S 134 x(eller)S
+133 x(p\345)S 134 x(anv\344nda)S 2 x(rens)S 134 x(terminal.)S 194 x
+(Dokument)S 3600 X 548 y(f\366r)S 107 x(vilka)S 106 x(Runof)S -8 x(f)S
+106 x(angetts)S 107 x(som)S 107 x(format)S 107 x(behandlas)S 108 x(med)S
+107 x(DSR)S 3600 X 548 y(\(Digital)S 140 x(Standard)S 142 x(Runof)S
+-8 x(f\))S 141 x(f\366re)S 141 x(utskriften.)S 196 x(Utskriften)S 141 x
+(g\366rs)S 3600 X 548 y(i)S 116 x(en)S 118 x(bakgrun)S 2 x(dsproces)S
+2 x(s)S 117 x(p\345)S 117 x(en)S 118 x(serverk\366)S 2 x(,)S 123 x(utom)S
+117 x(n\344r)S 118 x(anv\344n-)S 3600 X 548 y(daren)S 185 x(har)S 183 x
+(\344ndr)S 2 x(at)S 183 x(utskriftsinst\344l)S -2 x(lningarna.)S 301 x
+(Detta)S 183 x(g\366r)S 184 x(att)S 3600 X 548 y(terminalen)S 150 x
+(blir)S 149 x(fri)S 149 x(f\366r)S 150 x(andra)S 151 x(uppgifter)S -25 x
+(.)S 3600 X 896 y(V)S -8 x(id)S 299 x(utskrift)S 299 x(kontrolleras)S
+301 x(att)S 299 x(dokum)S 2 x(entets)S 300 x(format)S 300 x(un-)S 3600 X
+548 y(derst\366ds)S 151 x(av)S 150 x(skrivaren.)S 3600 X 897 y(Dokument)S
+178 x(kan)S 179 x(skrivas)S 178 x(ut)S 177 x(p\345)S 178 x(LPS-skrivar)S
+2 x(e)S 177 x(\(LPS20)S 179 x(och)S 3600 X 548 y(LPS40\).)S 434 x(Utskriftspro\211ler)S
+-24 x(,)S 246 x(d\344r)S 228 x(en)S 229 x(viss)S 227 x(upps\344ttning)S
+228 x(ut-)S 3600 X 548 y(skriftsinst\344ll)S -2 x(ningar)S 202 x(spara)S
+2 x(s,)S 213 x(kan)S 202 x(de\211nieras)S 202 x(av)S 201 x(anv\344n)S
+2 x(da-)S 3600 X 548 y(ren)S 126 x(sj\344lv)S 125 x(eller)S 125 x(f\366r)S
+125 x(ett)S 125 x(helt)S 125 x(system.)S 191 x(Prestanda)S 2 x(n)S 125 x
+(vid)S 125 x(utskrift)S 3600 X 548 y(av)S 150 x(\212era)S 150 x(dokum)S
+2 x(ent)S 149 x(har)S 151 x(f\366rb\344ttrats.)S 3600 X 896 y F39(Jobb)S
+150 x(och)S 151 x(k\366er)S 3600 X 897 y F38(I)S 227 x(ALL\203IN\2031)S
+227 x(IOS)S 227 x(har)S 228 x(anv\344ndar)S 2 x(en)S 227 x(m\366jlighet)S
+227 x(att)S 227 x(arbeta)S 3600 X 548 y(med)S 187 x(jobb)S 187 x(som)S
+188 x(\344r)S 187 x(placerade)S 188 x(i)S 186 x(utskrifts-)S 186 x(och)S
+187 x(server)S 2 x(k\366er)S 3600 X 548 y(samt)S 177 x(k\366er)S 178 x
+(f\366r)S 176 x(satsvis)S 177 x(bearbetning.)S 281 x(Med)S 178 x(hj\344lp)S
+176 x(av)S 177 x(alter-)S 3600 X 548 y(nativen)S 153 x(p\345)S 153 x
+(meny)S 2 x(erna)S 153 x(f\366r)S 153 x(f\366rteckningar)S 154 x(kan)S
+154 x(anv\344nda)S 2 x(ren)S 3600 X 548 y(f\345)S 190 x(information)S
+190 x(om)S 191 x(jobb,)S 200 x(ta)S 190 x(bort)S 190 x(jobb,)S 200 x
+(redigera)S 192 x(jobbens)S 3600 X 548 y(attribut)S 149 x(och)S 150 x
+(starta)S 150 x(om)S 150 x(jobb)S 150 x(som)S 150 x(utf\366rs.)S 3600 X
+896 y(K\366er)S 136 x(och)S 136 x(jobb)S 135 x(kan)S 136 x(sk\366tas)S
+136 x(fr\345n)S 135 x(ALL\203IN\2031)S 136 x(IOS.)S 134 x(Den)S 136 x
+(sys-)S 3600 X 548 y(temansvar)S 2 x(iga)S 136 x(kan)S 137 x(l\345ta)S
+136 x(en)S 137 x(eller)S 137 x(\212era)S 137 x(anv\344nda)S 2 x(re)S
+137 x(ha)S 136 x(hand)S 3600 X 548 y(om)S 150 x(k\366er)S 151 x(som)S
+150 x(n\345s)S 150 x(fr\345n)S 150 x(systemet.)S 3600 X 897 y F39(Anv\344nda)S
+2 x(rpro\211l)S 3600 X 897 y F38(Anv\344nda)S 2 x(rpro\211len)S 204 x
+(inneh\345ller)S 204 x(information)S 204 x(om)S 204 x(en)S 204 x(anv\344n-)S
+3600 X 547 y(dare.)S 441 x(Delar)S 230 x(av)S 230 x(anv\344nd)S 2 x
+(arpro\211len)S 231 x(kan)S 231 x(anv\344ndar)S 2 x(en)S 230 x(se)S
+3600 X 548 y(och)S 168 x(\344ndra)S 2 x(.)S 253 x(P\345)S 168 x(formul\344ret)S
+168 x(Personu)S 2 x(ppgifter)S 167 x(kan)S 169 x(alterna-)S 3600 X 548 y
+(tiva)S 168 x(stavningar)S 169 x(av)S 168 x(namne)S 2 x(t,)S 171 x(adres)S
+2 x(s,)S 172 x(telefonnumme)S 2 x(r)S 168 x(och)S 3600 X 548 y(titel)S
+207 x(\344ndras.)S 376 x(P\345)S 209 x(formul\344ret)S 209 x(Arbetsinformation)S
+209 x(kan)S 209 x(an-)S 3600 X 548 y(v\344ndar)S 2 x(en)S 170 x(\344ndra)S
+170 x(uppgifter)S 170 x(om)S 171 x(til)S -2 x(l)S 169 x(exemp)S 2 x
+(el)S 169 x(arbetsveck)S 2 x(a,)S 3600 X 548 y(arbetstider)S -24 x(,)S
+146 x(editor)S 146 x(och)S 146 x(typ)S 145 x(av)S 146 x(elektronisk)S
+146 x(post.)S 198 x(H\344r)S 146 x(g\366rs)S 3600 X 548 y(ocks\345)S
+150 x(inst\344llningar)S 148 x(f\366r)S 149 x(under)S 2 x(r\344ttelse)S
+149 x(om)S 149 x(nya)S 150 x(meddelan-)S 3600 X 548 y(den)S 150 x(och)S
+150 x(l\344skvittens.)S 3600 X 897 y(Endast)S 220 x(den)S 220 x(systemansv)S
+2 x(arige)S 220 x(kan)S 220 x(\344ndra)S 220 x(uppgifter)S 220 x(om)S
+3600 X 548 y(fullst\344ndigt)S 175 x(namn,)S 183 x(privilegier)S -25 x
+(,)S 182 x(standar)S 2 x(d\211lkatalog)S 176 x(och)S 176 x(\345t-)S
+3600 X 548 y(komst)S 150 x(till)S 148 x(formul\344rbibliotek.)S 15854 4835 XY
+F39(Inneh\345llsf\366rteckning)S 15854 5761 XY F38(Anv\344nda)S 2 x
+(ren)S 149 x(kan)S 150 x(skapa)S 150 x(en)S 149 x(urvalslista)S 149 x
+(fr\345n)S 149 x(en)S 149 x(inneh\345lls-)S 15854 X 548 y(f\366rteckning)S
+192 x(genom)S 193 x(att)S 191 x(v\344lja)S 191 x(ut)S 191 x(poster)S
+192 x(i)S 191 x(den.)S 326 x(Felaktiga)S 15854 X 547 y(val)S 154 x(kan)S
+154 x(\345terst\344llas.)S 212 x(Funktioner)S 154 x(som)S 155 x(t)S
+153 x(ex)S 154 x(utskrift)S 153 x(och)S 155 x(ar-)S 15854 X 548 y(kivering)S
+126 x(kan)S 125 x(utf\366ras)S 126 x(p\345)S 126 x(alla)S 124 x(utvalda)S
+126 x(poster)S 126 x(samtidigt.)S 190 x(P\345)S 15854 X 548 y(Meny)S
+162 x(f\366r)S 162 x(inneh\345llsf\366rteckningar)S 163 x(\211nns)S
+162 x(de)S 162 x(alternativ)S 161 x(som)S 15854 X 548 y(\344r)S 229 x
+(till)S -2 x(g\344ngliga)S 229 x(f\366r)S 228 x(den)S 229 x(aktuella)S
+229 x(inneh\345llsf\366rteckningen.)S 15854 X 548 y(Det)S 160 x(g\345r)S
+161 x(att)S 159 x(bl\344ddra)S 162 x(s\345v\344l)S 160 x(fram\345t)S
+161 x(som)S 161 x(bak\345t)S 161 x(i)S 159 x(inneh\345lls-)S 15854 X
+548 y(f\366rteckningen.)S 15854 10522 XY F39(Flera)S 150 x(spr\345k)S
+15854 11447 XY F38(ALL\203IN\2031)S 216 x(IOS)S 215 x(\344r)S 216 x
+(utformat)S 216 x(s\345)S 216 x(att)S 215 x(\212era)S 216 x(spr\345k)S
+217 x(kan)S 216 x(an-)S 15854 X 548 y(v\344ndas)S 185 x(samtidigt.)S
+299 x(ALL\203IN\2031)S 184 x(IOS)S 182 x(kan)S 184 x(allts\345)S 183 x
+(anv\344ndas)S 15854 X 548 y(i)S 194 x(\212erspr\345)S 2 x(kiga)S 194 x
+(datorn\344t)S 195 x(och)S 195 x(under)S 2 x(st\366dja)S 194 x(operationer)S
+196 x(p\345)S 15854 X 548 y(\212era)S 217 x(spr\345k)S 216 x(p\345)S
+216 x(samm)S 2 x(a)S 215 x(system,)S 233 x(f\366rutsatt)S 215 x(att)S
+215 x(alla)S 215 x(spr\345-)S 15854 X 548 y(ken)S 235 x(anv\344nde)S
+2 x(r)S 234 x(samm)S 2 x(a)S 234 x(version)S 235 x(av)S 235 x(ALL\203IN\2031)S
+235 x(IOS.)S 233 x(Se)S 15854 X 548 y(dock)S 254 x(System)S 253 x(Support)S
+253 x(Adden)S 2 x(dum)S 253 x(f\366r)S 253 x(information)S 253 x(om)S
+15854 X 548 y(vilka)S 149 x(spr\345k)S 151 x(som)S 150 x(unders)S 2 x
+(t\366ds.)S 15854 15660 XY F39(Systemund)S 2 x(erh\345ll)S 15854 16586 XY
+F38(Funktionerna)S 183 x(f\366r)S 182 x(den)S 183 x(systeman)S 2 x(svarige)S
+182 x(anv\344n)S 2 x(ds)S 182 x(f\366r)S 182 x(att)S 15854 X 548 y(utf\366ra)S
+117 x(underh)S 2 x(\345ll)S 116 x(av)S 117 x(ALL\203IN\2031)S 117 x
+(IOS,)S 116 x(s\345som)S 118 x(planering)S 118 x(och)S 15854 X 548 y
+(\344ndring)S 103 x(av)S 103 x(st\344drutiner)S 103 x(\(t)S 102 x(ex)S
+103 x(funktionerna)S 103 x(File)S 102 x(Cabinet)S 102 x(V)S -25 x(e-)S
+15854 X 547 y(rify)S 175 x(and)S 176 x(Repair)S 176 x(och)S 176 x(Empty)S
+176 x(W)S -17 x(astebaske)S 2 x(t\),)S 181 x(underh)S 2 x(\345ll)S 174 x
+(av)S 15854 X 548 y(skrivare,)S 141 x(unde)S 2 x(rh\345ll)S 138 x(av)S
+139 x(n\344tverkspr)S 2 x(o\211ler)S 139 x(och)S 139 x(DDS-pro\211ler)S
+-24 x(,)S 15854 X 548 y(prestanda)S 2 x(m\344tning,)S 261 x(kontroll)S
+239 x(av)S 239 x(det)S 239 x(geme)S 2 x(nsamma)S 240 x(lag-)S 15854 X
+548 y(ringsomr)S 2 x(\345det.)S 319 x(Den)S 190 x(systemansva)S 2 x
+(rige)S 189 x(kan)S 191 x(v\344lja)S 189 x(att)S 189 x(l\345ta)S 15854 X
+548 y(en)S 139 x(systemadm)S 2 x(inistrat\366r)S 138 x(utan)S 139 x
+(privilegier)S 138 x(i)S 138 x(VMS)S 139 x(sk\366ta)S 139 x(an-)S 15854 X
+548 y(v\344ndar)S 2 x(konton)S 142 x(\(skapa)S 2 x(,)S 143 x(ta)S 141 x
+(bort,)S 144 x(\212ytta,)S 143 x(d\366pa)S 143 x(om,)S 143 x(\344ndra)S
+143 x(l\366-)S 15854 X 548 y(senord)S 2 x(\),)S 162 x(lagring)S 160 x
+(av)S 160 x(dokume)S 2 x(nt,)S 162 x(systemdistributionslistor)S -25 x
+(,)S 15854 X 548 y(st\344drutiner)S -24 x(,)S 144 x(kontroll)S 144 x
+(av)S 144 x(undantags-)S 145 x(och)S 144 x(informationsrap-)S 15854 X
+548 y(porter)S 150 x(i)S 149 x(ALL\203IN\2031)S 151 x(samt)S 150 x(avst\344ngning)S
+150 x(av)S 150 x(ALL\203IN\2031.)S 15854 23538 XY(I)S 148 x(ALL\203IN\2031)S
+150 x(IOS)S 148 x(\211nns)S 149 x(en)S 150 x(funktion)S 148 x(f\366r)S
+149 x(prestand)S 2 x(am\344tning)S 15854 X 548 y(med)S 154 x(vilken)S
+152 x(den)S 153 x(systeman)S 2 x(svarige)S 153 x(och)S 153 x(de)S 153 x
+(som)S 154 x(utvecklar)S 15854 X 548 y(till)S -2 x(\344mpn)S 2 x(ingar)S
+185 x(i)S 184 x(ALL\203IN\2031)S 185 x(IOS)S 183 x(kan)S 186 x(de\211niera)S
+185 x(och)S 185 x(skapa)S 15854 X 548 y(egna)S 112 x(prestandam)S 2 x
+(\344tare,)S 118 x(dock)S 111 x(h\366gst)S 111 x(128)S 112 x(st.)S 185 x
+(Om)S 111 x(man)S 111 x(sl\345r)S 15854 X 548 y(p\345)S 141 x(m\344tningsfunktionen)S
+142 x(f\366r)S 141 x(en)S 141 x(til)S -2 x(l\344mpning)S 142 x(visas)S
+141 x(informa-)S 15854 X 548 y(tion)S 119 x(om)S 120 x(hur)S 120 x(m\345ng)S
+2 x(a)S 119 x(g\345nge)S 2 x(r)S 119 x(m\344tningen)S 121 x(anropa)S
+2 x(s,)S 125 x(anv\344nd-)S 15854 X 548 y(ning)S 150 x(av)S 150 x(CPUn,)S
+148 x(Direct)S 149 x(I/0,)S 149 x(Buf)S -8 x(fered)S 150 x(I/0,)S 149 x
+(Page)S 150 x(Faults.)S 15854 27752 XY F39(Anpassning)S 151 x(och)S
+150 x(progra)S 2 x(mutveckling)S 15854 28677 XY F38(ALL\203IN\2031)S
+235 x(IOS)S 234 x(bygger)S 236 x(p\345)S 234 x(formul\344r)S 236 x(som)S
+235 x(skapas)S 236 x(med)S 15854 X 548 y(V)S -33 x(AX)S 149 x(FMS)S
+176 x(\(Forms)S 176 x(Mana)S 2 x(gement)S 176 x(System\).)S 277 x(Se)S
+176 x(Software)S 15854 X 548 y(Product)S 123 x(Description)S 122 x(f\366r)S
+122 x(V)S -34 x(AX)S 150 x(FMS)S 122 x(\(SPD)S 122 x(26.10.xx\))S 123 x
+(f\366r)S 121 x(yt-)S 15854 X 548 y(terligare)S 150 x(information.)S
+15854 31246 XY(I)S 238 x(unders)S 2 x(ystemet)S 238 x(f\366r)S 239 x
+(progra)S 2 x(mutveckling)S 239 x(kan)S 239 x(\344ndringar)S 15854 X
+548 y(g\366ras)S 140 x(i)S 138 x(systemet)S 140 x(med)S 139 x(hj\344lp)S
+139 x(av)S 139 x(V)S -33 x(AX)S 149 x(FMS)S 139 x(och)S 140 x(V)S -33 x
+(AX)S 149 x(FMS)S 15854 X 548 y(Form)S 255 x(Languag)S 2 x(e)S 254 x
+(T)S -17 x(ranslator)S -24 x(.)S 512 x(ALL\203IN\2031)S 254 x(IOS)S
+253 x(kan)S 255 x(an-)S 15854 X 548 y(passas)S 345 x(enligt)S 344 x
+(kundens)S 345 x(speci\211ka)S 345 x(krav)S 345 x(och)S 344 x(erbjuda)S
+15854 X 548 y(en)S 334 x(plattform)S 333 x(f\366r)S 333 x(progra)S 2 x
+(mutveckling)S 333 x(och)S 334 x(integrering.)S 15854 X 548 y(ALL\203IN\2031)S
+150 x(IOS)S 260 x(har)S 262 x(ett)S 260 x(program)S 2 x(meringsgr)S
+2 x(\344nssnitt)S 260 x(mot)S 15854 X 548 y(gemen)S 2 x(samma)S 265 x
+(funktioner)S 264 x(och)S 264 x(mekanisme)S 2 x(r)S 263 x(med)S 265 x
+(vilka)S 15854 X 548 y(kontrollen)S 199 x(kan)S 200 x(\212yttas)S 198 x
+(fr\345n)S 200 x(en)S 199 x(til)S -2 x(l\344mpning)S 200 x(eller)S 199 x
+(funktion)S 15854 X 548 y(till)S 158 x(en)S 161 x(annan)S 161 x(\()S
+(t)S 150 x(ex)S 160 x(\212\366desk)S 2 x(ontroll\).)S 230 x(Dessa)S
+161 x(funktioner)S 161 x(har)S 15854 X 548 y(f\366rb\344ttrats)S 150 x
+(i)S 149 x(ALL\203IN\2031)S 150 x(IOS.)S 15132 38868 XY F40(5)S
+%%EndCustomColor
+5 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 6 6
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY RV 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3899 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4835 XY F38(Undersystem)S 2 x(et)S 223 x(f\366r)S 224 x
+(anpassning)S 225 x(av)S 224 x(ALL\203IN\2031)S 224 x(IOS)S 223 x(ger)S
+3600 X 548 y(unders)S 2 x(t\366d)S 166 x(f\366r)S 167 x(ytterligare)S
+167 x(kompone)S 2 x(nttyper)S -24 x(.)S 250 x(Alla)S 166 x(anpass-)S
+3600 X 548 y(ningsbara)S 101 x(kompo)S 2 x(nenttyper)S 100 x(som)S 101 x
+(medf\366ljer)S 100 x(ALL\203IN\2031)S 150 x(IOS)S 3600 X 548 y(unders)S
+2 x(t\366ds.)S 197 x(Kunden)S 145 x(kan)S 144 x(\344ven)S 145 x(skapa)S
+145 x(egna)S 144 x(komp)S 2 x(onent-)S 3600 X 548 y(typer)S -24 x(.)S
+3600 8027 XY(Installati)S -2 x(on)S 229 x(och)S 229 x(under)S 2 x(h\345ll)S
+227 x(av)S 229 x(anpassa)S 2 x(de)S 228 x(till\344mpningar)S 3600 X
+548 y(unders)S 2 x(t\366ds)S 114 x(genom)S 115 x(inf\366randet)S 115 x
+(av)S 114 x(till)S -2 x(\344mpn)S 2 x(ingsareor)S -23 x(.)S 187 x(Det-)S
+3600 X 548 y(samma)S 246 x(g\344ller)S 244 x(f\366retagets)S 246 x(andra)S
+245 x(system)S 245 x(med)S 246 x(anpass-)S 3600 X 548 y(ningar)S -24 x
+(.)S 293 x(Dessutom)S 182 x(kan)S 182 x(anpassninga)S 2 x(r)S 181 x
+(och)S 181 x(till\344mpningar)S 3600 X 548 y(\366verf\366ras)S 151 x
+(fr\345n)S 150 x(ett)S 149 x(system)S 150 x(till)S 148 x(ett)S 149 x
+(annat.)S 3600 11220 XY(Samman)S 2 x(hangsber)S 2 x(oende)S 221 x(menyval)S
+221 x(\211nns,)S 238 x(vilket)S 219 x(g\366r)S 220 x(det)S 3600 X 548 y
+(m\366jligt)S 140 x(att)S 140 x(endast)S 142 x(visa)S 141 x(och)S 141 x
+(anv\344nda)S 142 x(de)S 142 x(menyval)S 141 x(som)S 142 x(\344r)S 3600 X
+548 y(relevanta)S 150 x(f\366r)S 150 x(en)S 150 x(viss)S 149 x(komp)S
+2 x(onent.)S 3600 13316 XY(I)S 141 x(under)S 2 x(systemet)S 142 x(f\366r)S
+142 x(anpassning)S 143 x(av)S 142 x(ALL\203IN\2031)S 143 x(IOS)S 141 x
+(\211nns)S 3600 X 548 y(ut\366kad)S 160 x(funktionalit)S -2 x(et)S 159 x
+(f\366r)S 159 x(progra)S 2 x(mmerar)S 2 x(e)S 159 x(och)S 159 x(systeman-)S
+3600 X 548 y(svariga,)S 133 x(s\345som)S 129 x(f\366rb\344ttrad)S 128 x
+(rappo)S 2 x(rtering)S 128 x(och)S 128 x(medd)S 2 x(elande)S 3600 X
+548 y(till)S 205 x(systeman)S 2 x(svarig)S 208 x(om)S 207 x(status)S
+208 x(p\345)S 207 x(utf\366rda)S 208 x(funktioner)S -24 x(.)S 372 x
+(I)S 3600 X 548 y(ALL\203IN\2031)S 116 x(IOS)S 115 x(inf\366rs)S 116 x
+(ocks\345)S 116 x(begre)S 2 x(ppet)S 116 x(Application)S 115 x(Main-)S
+3600 X 548 y(tainer)S 192 x(\(till)S -2 x(\344mpn)S 2 x(ingsansvarig\),)S
+203 x(s\345)S 192 x(att)S 191 x(den)S 192 x(systeman)S 2 x(sva-)S 3600 X
+548 y(riga)S 199 x(inte)S 198 x(beh\366v)S 2 x(er)S 199 x(vara)S 200 x
+(den)S 199 x(enda)S 200 x(ansvariga)S 200 x(f\366r)S 199 x(under-)S
+3600 X 548 y(h\345llet)S 149 x(av)S 150 x(nya)S 150 x(eller)S 149 x
+(\344ndra)S 2 x(de)S 150 x(til)S -2 x(l\344mpningar)S -23 x(.)S 3600 18152 XY
+(Undersystem)S 2 x(et)S 223 x(f\366r)S 224 x(anpassning)S 225 x(av)S
+224 x(ALL\203IN\2031)S 224 x(IOS)S 223 x(ger)S 3600 X 548 y(systemans)S
+2 x(variga)S 215 x(och)S 216 x(till)S -2 x(\344mpn)S 2 x(ingsprogra)S
+2 x(mmerar)S 2 x(e)S 215 x(m\366j-)S 3600 X 548 y(lighet)S 203 x(att)S
+203 x(anpassa)S 205 x(sitt)S 202 x(system)S 204 x(p\345)S 204 x(ett)S
+203 x(ordna)S 2 x(t)S 203 x(s\344tt.)S 360 x(Det)S 3600 X 548 y(\211nns)S
+166 x(m\366jlighet)S 166 x(att)S 165 x(skapa,)S 170 x(\344ndra,)S 170 x
+(f\366rteckna)S 167 x(och)S 166 x(kontrol-)S 3600 X 548 y(lera)S 203 x
+(anpassninga)S 2 x(r)S 202 x(samt)S 203 x(skapa)S 203 x(en)S 203 x(lista)S
+202 x(med)S 203 x(\344ndrings-)S 3600 X 548 y(historik)S 149 x(f\366r)S
+150 x(varje)S 150 x(anpassning)S 2 x(.)S 3600 21893 XY F39(Server)S
+151 x(f\366r)S 149 x(ALL\203IN\2031-klienter)S 3600 22893 XY F38(ALL\203IN\2031)S
+374 x(IOS)S 372 x(har)S 373 x(server)S 2 x(underst\366d)S 374 x(f\366r)S
+373 x(person)S 2 x(da-)S 3600 X 548 y(torer)S 415 x(genom)S 416 x(klient/servertekniken.)S
+11927 X(Licensen)S 415 x(f\366r)S 3600 X 548 y(ALL\203IN\2031)S 150 x
+(IOS)S 99 x(till)S -2 x(\345ter)S 100 x(anv\344n)S 2 x(dning)S 100 x
+(av)S 100 x(ALL\203IN\2031)S 100 x(DESKtop)S 3600 X 548 y(Server)S 160 x
+(for)S 158 x(VMS.)S 159 x(Media)S 159 x(f\366r)S 159 x(servern)S 160 x
+(m\345ste)S 159 x(best\344llas)S 159 x(se-)S 3600 X 548 y(parat.)S 194 x
+(F\366r)S 134 x(mer)S 134 x(information)S 134 x(om)S 134 x(server)S
+2 x(ns)S 133 x(m\366jligheter)S 134 x(och)S 3600 X 548 y(om)S 109 x
+(till)S -2 x(g\344ng)S 2 x(liga)S 108 x(klienter)S -25 x(,)S 116 x(se)S
+109 x(SPDn)S 109 x(f\366r)S 108 x(ALL\203IN\2031)S 110 x(DESKtop)S 3600 X
+548 y(Server)S 151 x(for)S 149 x(VMS)S 150 x(\(SPD)S 150 x(31.71.xx\).)S
+3600 27181 XY F39(St\366d)S 150 x(f\366r)S 149 x(IBM\206)S 150 x(3270-)S
+2 x(terminaler)S 3600 28182 XY F38(ALL\203IN\2031)S 381 x(IOS)S 379 x
+(kan)S 381 x(anv\344nda)S 2 x(s)S 380 x(p\345)S 381 x(f\366ljande)S
+380 x(IBM\206-)S 3600 X 548 y(tangentbord)S 130 x(p\345)S 128 x(terminaler)S
+129 x(med)S 129 x(CUT)S -25 x(-inst\344llning)S 128 x(som)S 129 x(un-)S
+3600 X 548 y(derst\366ds)S 196 x(vid)S 196 x(anv\344ndning)S 196 x(av)S
+196 x(till)S -2 x(\344ggsko)S 2 x(rtet)S 195 x(CMX04)S 195 x(i)S 195 x
+(en)S 3600 X 548 y(DECserver)S 150 x(550:)S 3600 30826 XY(\201)S 441 x
+(122/104)S 150 x(tangenter)S 151 x(\(emulerings)S 2 x(l\344ge\))S 3600 31727 XY
+(\201)S 441 x(102)S 150 x(tangenter)S 3600 32628 XY(\201)S 441 x(87)S
+150 x(tangenter)S 3600 33629 XY F39(Dokumentation)S 3600 34629 XY F38
+(F\366ljande)S 157 x(dokum)S 2 x(entation)S 157 x(f\366ljer)S 156 x
+(med)S 158 x(ALL\203IN\2031)S 158 x(IOS)S 157 x(som)S 3600 X 548 y(standard:)S
+3600 36178 XY(\201)S 441 x F39(Read)S 150 x(Me)S 150 x(First)S 15854 4835 XY
+F38(\201)S 441 x(B\366cker)S 150 x(f\366r)S 150 x(systemans)S 2 x(variga,)S
+149 x(p\345)S 150 x(engelska)S 16452 X 805 y(\202)S 150 x F39(Release)S
+149 x(Notes)S 150 x(\(on-line\))S 16452 X 806 y F38(\202)S 150 x F39
+(ALL\203IN\2031)S 150 x(Installati)S -2 x(on)S 150 x(Guide)S 16452 X
+805 y F38(\202)S 150 x F39(Dif)S -2 x(ference)S 2 x(s)S 258 x(from)S
+258 x(ALL\203IN\2031)S 259 x(V2.4)S 258 x(\(on-line,)S 286 x(som)S 17050 X
+548 y(en)S 176 x(del)S 177 x(av)S 176 x(Con\212ict)S 176 x(Checking)S
+177 x(and)S 177 x(Resolution)S 176 x(T)S -41 x(ool)S 17050 X 548 y(\(CAR)S
+-9 x(T\)\))S 16452 X 806 y F38(\202)S 150 x F39(Managem)S 2 x(ent)S
+149 x(Guide)S 16452 X 805 y F38(\202)S 150 x F39(Mail)S 149 x(Manage)S
+2 x(ment)S 150 x(Guide)S 16452 X 805 y F38(\202)S 150 x F39(CDA)S 148 x
+(Converter)S 151 x(Library)S 150 x(Docume)S 2 x(ntation)S 16452 X 806 y
+F38(\202)S 150 x F39(Message)S 151 x(Router)S 150 x(Documentation)S
+16452 X 805 y F38(\202)S 150 x F39(VMSmail)S 149 x(Gateway)S 150 x(Documentation)S
+16452 X 805 y F38(\202)S 150 x F39(V)S -25 x(AX)S 149 x(FMS)S 150 x
+(V2.4)S 150 x(Installati)S -2 x(on)S 150 x(Guide)S 16452 X 806 y F38
+(\202)S 150 x F39(V)S -25 x(AX)S 149 x(Notes)S 150 x(Installati)S -2 x
+(on)S 150 x(Guide)S 15854 X 805 y F38(\201)S 441 x(B\366cker)S 134 x
+(f\366r)S 134 x(til)S -2 x(l\344mpningsp)S 2 x(rogramm)S 2 x(erare,)S
+137 x(p\345)S 134 x(engelska)S 16452 X 806 y(\202)S 150 x F39(Application)S
+149 x(Program)S 2 x(ming:)S 199 x(Getting)S 149 x(Started)S 16452 X
+805 y F38(\202)S 150 x F39(Application)S 149 x(Program)S 2 x(ming:)S
+199 x(Guide)S 16452 X 805 y F38(\202)S 150 x F39(Application)S 242 x
+(Programm)S 2 x(ing:)S 384 x(Using)S 242 x(Customization)S 17050 X 548 y
+(Managem)S 2 x(ent)S 16452 X 806 y F38(\202)S 150 x F39(Application)S
+117 x(Program)S 2 x(ming:)S 183 x(Reference)S 119 x(V)S -16 x(olume)S
+118 x(1,)S 124 x(2)S 16452 X 805 y F38(\202)S 150 x F39(Application)S
+149 x(Program)S 2 x(ming:)S 199 x(FMS)S 150 x(Reference)S 16452 X 805 y
+F38(\202)S 150 x F39(Application)S 238 x(Program)S 2 x(ming:)S 377 x
+(User)S 239 x(Interface)S 239 x(Stan-)S 17050 X 548 y(dards)S 16452 X
+806 y F38(\202)S 150 x F39(Application)S 149 x(Program)S 2 x(ming:)S
+199 x(Mini)S 149 x(Reference)S 16452 X 805 y F38(\202)S 150 x F39(Application)S
+149 x(Program)S 2 x(ming:)S 199 x(Index)S 15854 X 805 y F38(\201)S 441 x
+(Snabbguider)S 151 x(f\366r)S 150 x(anv\344nda)S 2 x(re)S 16452 X 806 y
+(\202)S 150 x F39(ALL\203IN\2031)S 150 x(Snabbguide)S 16452 X 805 y
+F38(\202)S 150 x F39(ALL\203IN\2031)S 150 x(WPS\203PLUS)S 150 x(Snabbguide)S
+15854 X 806 y F38(\201)S 441 x(Referenshand)S 2 x(b\366cker)S 151 x
+(f\366r)S 149 x(erfarna)S 151 x(anv\344nda)S 2 x(re)S 16452 X 805 y
+(\202)S 150 x F39(ALL\203IN\2031)S 150 x(Anv\344ndarh)S 2 x(andbok)S
+16452 X 805 y F38(\202)S 150 x F39(ALL\203IN\2031)S 150 x(WPS\203PLUS)S
+150 x(Anv\344ndarh)S 2 x(andbok)S 16452 X 806 y F38(\202)S 150 x F39
+(ALL\203IN\2031)S 150 x(Administration)S 149 x(Guide)S 150 x(\(p\345)S
+150 x(engelska\))S 16452 X 805 y F38(\202)S 150 x F39(ALL\203IN\2031)S
+124 x(WPS\203PLUS)S 124 x(Printer)S 125 x(Characteristics)S 124 x(\(p\345)S
+17050 X 548 y(engelska\))S 16452 X 805 y F38(\202)S 150 x F39(T)S -42 x
+(angen)S 2 x(tbords\366vers)S 2 x(ikter)S 15854 31030 XY F38(Ytterligare)S
+149 x(exem)S 2 x(plar)S 149 x(av)S 150 x(b\366cker)S 2 x(na)S 150 x
+(kan)S 150 x(k\366pas)S 150 x(separ)S 2 x(at.)S 15854 32533 XY F40(K\304LLKOD)S
+-2 x(SINFORMA)S -34 x(TION)S 15854 33438 XY F38(P\345)S 166 x(til)S
+-2 x(lg\344ngliga)S 166 x(distributionsmedia)S 166 x(\211nns)S 166 x
+(ett)S 165 x(mindre)S 167 x(antal)S 15854 X 548 y(k\344llkodsmodu)S
+2 x(ler)S 108 x(f\366r)S 109 x(denna)S 110 x(produkt,)S 117 x(f\366r)S
+109 x(att)S 108 x(en)S 109 x(kodm\344s)S 2 x(sig)S 15854 X 548 y(kundan)S
+2 x(passning)S 199 x(av)S 199 x(ALL\203IN\2031)S 199 x(IOS)S 198 x(skall)S
+198 x(kunna)S 200 x(g\366ras.)S 15854 X 548 y(Denna)S 185 x(k\344llkod)S
+185 x(levereras)S 186 x(i)S 184 x(be\211ntligt)S 184 x(skick)S 185 x
+(och)S 185 x(omfattas)S 15854 X 548 y(d\344rf\366r)S 183 x(inte)S 182 x
+(av)S 183 x(n\345gon)S 183 x(garan)S 2 x(ti.)S 296 x(Kontakta)S 183 x
+(n\344rmaste)S 183 x(Digi-)S 15854 X 548 y(talkontor)S 150 x(f\366r)S
+149 x(ytterligare)S 150 x(information.)S 15132 38868 XY F40(6)S
+%%EndCustomColor
+6 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 7 7
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3600 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4835 XY(Observer)S 2 x(a:)S 299 x F38(V)S -33 x(AX)S
+154 x(BLISS-32)S 155 x(kr\344vs)S 156 x(om)S 155 x(n\345gon)S 155 x
+(av)S 155 x(modu-)S 3600 X 548 y(lerna)S 216 x(.B32,)S 232 x(.BLI)S
+215 x(eller)S 215 x(.REQ)S 215 x(skall)S 215 x(anv\344ndas)S 217 x(vid)S
+215 x(kund-)S 3600 X 548 y(anpassn)S 2 x(ingen)S 175 x(av)S 175 x(ALL\203IN\2031)S
+176 x(IOS.)S 174 x(V)S -33 x(AX)S 175 x(BLISS-32)S 175 x(kr\344vs)S
+3600 X 548 y(dock)S 150 x(inte)S 149 x(f\366r)S 150 x(att)S 149 x(skapa)S
+151 x(kundspeci\211ka)S 151 x(funktioner)S -24 x(.)S 3600 7973 XY F40
+(INST)S -34 x(ALLA)S -34 x(TION)S 3600 X 897 y F38(Endast)S 132 x(erfarna)S
+132 x(kunder)S 132 x(b\366r)S 132 x(f\366rs\366ka)S 132 x(installera)S
+131 x(denna)S 132 x(pro-)S 3600 X 548 y(gramva)S 2 x(ra.)S 465 x(Digit)S
+-2 x(al)S 238 x(rekom)S 2 x(mender)S 2 x(ar)S 238 x(alla)S 238 x(andra)S
+239 x(kunder)S 3600 X 548 y(att)S 270 x(k\366pa)S 271 x(Digit)S -2 x
+(als)S 270 x(installati)S -2 x(onsse)S 2 x(rvice.)S 561 x(D\345)S 270 x
+(installeras)S 3600 X 548 y(progra)S 2 x(mvaran)S 145 x(av)S 144 x(en)S
+145 x(erfaren)S 145 x(program)S 2 x(varuspec)S 2 x(iali)S -2 x(st)S
+144 x(fr\345n)S 3600 X 548 y(Digital)S -2 x(.)S 3600 X 896 y F39(CAR)S
+-9 x(T)S 150 x(\(Con\212ict)S 149 x(Checking)S 150 x(and)S 150 x(Resolution)S
+150 x(T)S -42 x(ool\))S 3600 X 897 y F38(Detta)S 284 x(verktyg)S 285 x
+(ing\345r)S 285 x(som)S 285 x(en)S 284 x(del)S 285 x(av)S 284 x(installationspro-)S
+3600 X 548 y(cedure)S 2 x(n,)S 442 x(men)S 385 x(b\366r)S 385 x(k\366ras)S
+385 x(f\366re)S 384 x(uppgr)S 2 x(aderingen)S 385 x(till)S 3600 X 548 y
+(ALL\203IN\2031)S 150 x(IOS.)S 353 x(V)S -25 x(erktyget)S 355 x(unders\366)S
+2 x(ker)S 354 x(vilka)S 354 x(anpass-)S 3600 X 548 y(ningar)S 116 x
+(som)S 115 x(\211nns)S 116 x(p\345)S 115 x(det)S 114 x(existerand)S
+2 x(e)S 114 x(systeme)S 2 x(t)S 114 x(och)S 115 x(anger)S 3600 X 548 y
+(vilka)S 159 x(\344ndringa)S 2 x(r)S 160 x(som)S 160 x(beh\366ve)S 2 x
+(r)S 160 x(g\366ras)S 160 x(f\366r)S 160 x(att)S 159 x(till\344mpningar)S
+3600 X 548 y(och)S 160 x(anpassn)S 2 x(ingar)S 160 x(skall)S 158 x(kunna)S
+161 x(uppgra)S 2 x(deras.)S 229 x(CAR)S -8 x(T)S 159 x(be-)S 3600 X
+548 y(st\345r)S 215 x(av)S 214 x(ett)S 214 x(antal)S 215 x(procedur)S
+2 x(er)S 215 x(som)S 215 x(s\366ker)S 215 x(efter)S 215 x(\344ndrade)S
+3600 X 548 y(medde)S 2 x(landen)S 149 x(och)S 149 x(obligatoriska)S
+149 x(\344ndring)S 2 x(ar)S 149 x(samt)S 149 x(kontrol-)S 3600 X 548 y
+(lerar)S 139 x(mot)S 138 x(en)S 139 x(checklista)S 139 x(som)S 139 x
+(skapats)S 139 x(utifr\345n)S 138 x(dokume)S 2 x(ntet)S 3600 X 548 y
+(Dif)S -9 x(ferences.)S 301 x(Detta)S 183 x(dokumen)S 2 x(t)S 182 x
+(kan)S 184 x(\344ven)S 184 x(skrivas)S 184 x(ut)S 183 x(f\366re)S 3600 X
+547 y(uppgra)S 2 x(deringen)S 150 x(till)S 148 x(ALL\203IN\2031)S 150 x
+(IOS.)S 3600 X 897 y F39(Samexisteran)S 2 x(de)S 150 x(system)S 3600 X
+897 y F38(ALL\203IN\2031)S 143 x(IOS)S 143 x(kan)S 143 x(installeras)S
+143 x(p\345)S 143 x(ett)S 142 x(system)S 144 x(som)S 143 x(redan)S 3600 X
+548 y(har)S 175 x(ALL\203IN\2031)S 174 x(V2.3)S 174 x(eller)S 174 x
+(V2.4.)S 272 x(P\345)S 175 x(s\345)S 174 x(s\344tt)S 173 x(kan)S 175 x
+(kunden)S 3600 X 548 y(studera)S 191 x(den)S 191 x(nya)S 191 x(funktionaliteten)S
+190 x(och)S 190 x(planera)S 192 x(\366ver\212ytt-)S 3600 X 548 y(ningen)S
+126 x(av)S 125 x(sina)S 126 x(be\211ntliga)S 125 x(til)S -2 x(l\344mpninga)S
+2 x(r)S -25 x(.)S 191 x(Ingen)S 126 x(delning)S 125 x(av)S 3600 X 548 y
+(data)S 116 x(\344ger)S 117 x(rum,)S 123 x(men)S 117 x(ALL\203IN\2031)S
+116 x(IOS)S 116 x(fungerar)S 117 x(fullst\344ndigt.)S 3600 23316 XY
+F40(Observer)S 2 x(a:)S 299 x F38(Samexisteran)S 2 x(de)S 205 x(system)S
+205 x(kan)S 206 x(inte)S 204 x(samk\366-)S 3600 X 548 y(ras)S 126 x
+(utan)S 125 x(installeras)S 125 x(helt)S 125 x(separa)S 2 x(t.)S 190 x
+(I)S 125 x(ALL\203IN\2031)S 126 x(Installat)S -2 x(ion)S 3600 X 548 y
+(Guide)S 150 x(beskrivs)S 150 x(hur)S 150 x(anpass)S 2 x(ningar)S 150 x
+(\366verf\366rs.)S 3600 X 896 y(Se)S 240 x(System)S 241 x(Suppor)S 2 x
+(t)S 239 x(Adden)S 2 x(dum)S 241 x(\(SSA)S 240 x(25.B0.xx-x\))S 241 x
+(f\366r)S 3600 X 548 y(information)S 224 x(om)S 224 x(progr)S 2 x(amvarukr)S
+2 x(av)S 224 x(och)S 224 x(till)S -2 x(\344ggspr)S 2 x(ogram-)S 3600 X
+548 y(vara.)S 3600 27899 XY F40(MASKINV)S -34 x(ARUKR)S -2 x(A)S -33 x
+(V)S 3600 X 896 y F38(Maskiner)S 190 x(och/eller)S 189 x(kon\211gura)S
+2 x(tioner)S 189 x(enligt)S 188 x(speci\211kation)S 189 x(i)S 3600 X
+548 y(System)S 150 x(Suppor)S 2 x(t)S 149 x(Addendum)S 151 x(\(SSA)S
+150 x(25.B0.xx-x\).)S 3600 30838 XY F40(PROGRAMV)S -34 x(ARUKR)S -2 x
+(A)S -33 x(V)S 3600 32083 XY F38(\201)S 441 x(Operativsystemet)S 150 x
+(V)S -45 x(AX/VMS)S 3600 X 797 y(\201)S 441 x(Slutnod)S 149 x(av)S 150 x
+(typ)S 150 x(DECnet\203V)S -34 x(AX)S 3600 X 797 y(\201)S 441 x(V)S
+-33 x(AX)S 149 x(FMS)S 150 x(\(medf\366ljer)S 150 x(ALL\203IN\2031)S
+150 x(som)S 151 x(standard\))S 3600 34673 XY F40(Observer)S 2 x(a:)S
+299 x F38(ALL\203IN\2031)S 228 x(och)S 228 x(ALL\203IN\2031)S 228 x
+(ST)S -34 x(AR)S -8 x(TER)S 227 x(kan)S 3600 X 548 y(inte)S 149 x(anv\344nd)S
+2 x(as)S 149 x(p\345)S 150 x(samm)S 2 x(a)S 149 x(system.)S 15854 4834 XY
+F40(Speci\211k)S 150 x(programvara)S 151 x(f\366r)S 150 x(Sverige)S
+15854 5801 XY F38(Se)S 135 x(System)S 135 x(Suppor)S 2 x(t)S 134 x(Addendu)S
+2 x(m)S 135 x(\(SSA)S 135 x(25.B0.xx-x\))S 136 x(f\366r)S 134 x(in-)S
+15854 X 548 y(formation)S 175 x(om)S 174 x(exakt)S 175 x(vad)S 175 x
+(som)S 175 x(ing\345r)S 174 x(i)S 174 x(den)S 175 x(svenska)S 175 x
+(vari-)S 15854 X 548 y(anten)S 150 x(av)S 150 x(denna)S 151 x(produkt.)S
+15854 8462 XY F40(ORDERIN)S -2 x(FORMA)S -33 x(TION)S 15854 9428 XY
+F38(Program)S 2 x(varulicenser:)S 200 x(QL-AAAM*-)S 2 x(**)S 15854 X
+618 y(Program)S 2 x(varume)S 2 x(dia:)S 199 x(QA-AAAMA-H*)S 15854 X
+619 y(Program)S 2 x(varudok)S 2 x(umentation:)S 199 x(QA-AAAMA-GZ)S
+15854 X 618 y(Program)S 2 x(varuser)S 2 x(vice:)S 199 x(QT)S -25 x(-AAAM*-*)S
+2 x(*)S 15854 12250 XY F39(Ytterligare)S 149 x(dokum)S 2 x(entation)S
+15854 13216 XY F38(ALL\203IN\2031)S 150 x(Snabbg)S 2 x(uider)S 150 x
+(f\366r)S 149 x(anv\344nd)S 2 x(are:)S 16452 X 618 y(Dokumentationssats:)S
+200 x(QA-AAAMM-GZ)S 15854 14801 XY(ALL\203IN\2031)S 150 x(Referensha)S
+2 x(ndb\366cker)S 151 x(f\366r)S 150 x(erfarna)S 150 x(anv\344nd)S 2 x
+(are:)S 16452 X 618 y(Dokumentationssats:)S 200 x(QA-AABMA-GZ)S 15854 16386 XY
+(ALL\203IN\2031/US)S 150 x(Managem)S 2 x(ent)S 149 x(Documen)S 2 x(tation:)S
+16452 X 618 y(QA-AAAAB-GZ)S 15854 17971 XY(ALL\203IN\2031/US)S 150 x
+(AP&I)S 149 x(Documentation)S 150 x(Kit:)S 16452 X 618 y(QA-AAAAC-GZ)S
+15854 19556 XY(ALL\203IN\2031)S 150 x(File)S 149 x(Cabinet)S 149 x(Server)S
+151 x(API)S 149 x(Documentation)S 150 x(Kit:)S 16452 X 618 y(Documentation)S
+150 x(Kit:)S 198 x(QA-AAAAL-GZ)S 15854 21141 XY(*)S 424 x(Asterisken)S
+143 x(beteckna)S 2 x(r)S 143 x(varierande)S 145 x(enheter)S -24 x(.)S
+197 x(F\366r)S 143 x(ytterli-)S 16452 X 548 y(gare)S 170 x(information)S
+169 x(om)S 169 x(tillg\344ngliga)S 168 x(licenser)S -24 x(,)S 173 x
+(media)S 170 x(och)S 16452 X 548 y(service,)S 150 x(se)S 150 x(g\344llande)S
+150 x(prislista.)S 15854 23802 XY F40(LICENSVILLK)S -2 x(OR)S 15854 24768 XY
+F38(Denna)S 284 x(progr)S 2 x(amvara)S 285 x(levereras)S 285 x(under)S
+284 x(de)S 284 x(licensvillkor)S 15854 X 548 y(som)S 189 x(anges)S 189 x
+(i)S 188 x(Digit)S -2 x(als)S 188 x(Allm\344nna)S 189 x(leveransvillkor)S
+-24 x(.)S 314 x(F\366r)S 188 x(yt-)S 15854 X 548 y(terligare)S 206 x
+(information)S 207 x(om)S 206 x(Digitals)S 205 x(licensvill)S -2 x(kor)S
+-24 x(,)S 220 x(kontakta)S 15854 X 548 y(n\344rma)S 2 x(ste)S 149 x
+(Digitalkontor)S -25 x(.)S 15854 27379 XY F39(Underst\366d)S 151 x(f\366r)S
+149 x(License)S 151 x(Managem)S 2 x(ent)S 149 x(Facility)S 15854 28346 XY
+F38(Denna)S 204 x(progr)S 2 x(amvara)S 205 x(underst\366d)S 2 x(er)S
+204 x(VMS)S 204 x(License)S 204 x(Mana-)S 15854 X 548 y(gemen)S 2 x
+(t)S 149 x(Facilit)S -2 x(y)S -33 x(.)S 15854 29861 XY(Licensenhe)S
+2 x(ter)S 145 x(f\366r)S 146 x(denna)S 146 x(produ)S 2 x(kt)S 145 x
+(k\366ps)S 146 x(per)S 146 x(person)S 146 x(\(Per-)S 15854 X 548 y(sonal)S
+135 x(Use)S 135 x(License\))S 135 x(eller)S 135 x(f\366r)S 135 x(obegr\344ns)S
+2 x(ad)S 135 x(anv\344ndning)S 136 x(p\345)S 15854 X 548 y(ett)S 149 x
+(system.)S 15854 31923 XY(F\366r)S 216 x(denna)S 216 x(progr)S 2 x(amvara)S
+217 x(erbjuds)S 216 x(en)S 216 x(personba)S 2 x(serad)S 216 x(li-)S
+15854 X 548 y(cens)S 135 x(\(Perso)S 2 x(nal)S 134 x(Use)S 135 x(License\).)S
+195 x(V)S -33 x(arje)S 135 x(s\345dan)S 135 x(licens)S 135 x(till)S
+-2 x(\345ter)S 15854 X 548 y(en)S 150 x(speci\211cera)S 2 x(d)S 149 x
+(person)S 151 x(att)S 149 x(anv\344nd)S 2 x(a)S 149 x(progr)S 2 x(amvaran)S
+2 x(.)S 15854 33986 XY(Dessutom)S 164 x(\211nns)S 164 x(i)S 163 x(ALL\203IN\2031)S
+164 x(IOS)S 162 x(verktyget)S 164 x(Person)S 2 x(al)S 162 x(Li-)S 15854 X
+548 y(censing)S 107 x(Reporting,)S 115 x(med)S 107 x(vilket)S 105 x
+(systemansv)S 2 x(ariga)S 106 x(och)S 107 x(sys-)S 15854 X 548 y(temadministrat\366rer)S
+142 x(p\345)S 142 x(ett)S 140 x(enkelt)S 141 x(s\344tt)S 140 x(kan)S
+141 x(ta)S 141 x(reda)S 142 x(p\345)S 141 x(n\344r)S 15854 X 548 y(en)S
+118 x(beviljad)S 116 x(\(k\366pt\))S 118 x(anv\344nd)S 2 x(arlicens)S
+117 x(n\345r)S 118 x(maximalt)S 117 x(antal)S 117 x(an-)S 15854 X 548 y
+(v\344ndar)S 2 x(e)S 149 x(eller)S 150 x(upph\366r)S 151 x(att)S 149 x
+(g\344lla.)S 15132 38868 XY F40(7)S
+%%EndCustomColor
+7 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 8 8
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY RV 
+%%BeginCustomColor: 0_BLACK
+0 SC 3600 3002 XY F40(ALL\203IN\2031/SVENSKA)S 148 x(Integrated)S 150 x
+(Of\211ce)S 150 x(Syste)S 2 x(m)S 149 x(Server)S 23873 X(SPD)S 149 x
+(25.B0.04)S 3600 X 548 y(for)S 150 x(VMS,)S 150 x(V)S -25 x(ersion)S
+150 x(3.0)S 3600 4821 XY F38(F\366r)S 188 x(mer)S 189 x(information)S
+188 x(om)S 189 x(License)S 188 x(Manag)S 2 x(ement)S 188 x(Facility)S
+-34 x(,)S 3600 X 548 y(se)S 107 x(SPDn)S 107 x(f\366r)S 106 x(opera)S
+2 x(tivsystemet)S 106 x(V)S -45 x(AX/VMS)S 107 x(\(SPD)S 107 x(25.01.xx\))S
+3600 X 548 y(eller)S 149 x(dokum)S 2 x(entationen)S 150 x(til)S -2 x
+(l)S 149 x(oper)S 2 x(ativsystemet)S 149 x(V)S -45 x(AX/VMS)S(.)S 3600 X
+897 y(Kontakta)S 164 x(Digital)S 162 x(f\366r)S 163 x(mer)S 165 x(information)S
+163 x(om)S 164 x(Digitals)S 162 x(licens-)S 3600 X 547 y(villkor)S -25 x
+(.)S 3600 8856 XY F40(PROGRAMV)S -34 x(ARUSER)S -9 x(VICE)S 3600 X 897 y
+F38(Ett)S 169 x(\212ertal)S 170 x(servicealternativ)S 170 x(\211nns)S
+171 x(til)S -2 x(lg\344ngliga)S 170 x(hos)S 170 x(Digital.)S 3600 X
+547 y(Kontakta)S 150 x(Digital)S 148 x(f\366r)S 149 x(n\344rm)S 2 x
+(are)S 150 x(information.)S 3600 11795 XY F40(PROGRAMV)S -34 x(ARUGAR)S
+-2 x(ANTI)S 3600 X 896 y F38(Denna)S 166 x(progra)S 2 x(mvarupr)S 2 x
+(odukt)S 166 x(omfattas)S 165 x(av)S 166 x(en)S 166 x(garanti)S 166 x
+(en-)S 3600 X 548 y(ligt)S 145 x(vad)S 147 x(som)S 147 x(anges)S 148 x
+(i)S 145 x(gara)S 2 x(ntibil)S -2 x(agan)S 148 x(til)S -2 x(l)S 146 x
+(denna)S 148 x(SPD.)S 145 x(Ga-)S 3600 X 548 y(rantin)S 132 x(l\344mnas)S
+133 x(av)S 132 x(Digit)S -2 x(al)S 132 x(vid)S 131 x(k\366p)S 133 x
+(av)S 132 x(en)S 132 x(licens)S 132 x(f\366r)S 132 x(produk-)S 3600 X
+548 y(ten.)S -748 x 897 y F42(\206)S 603 x(PostScript)S 133 x(\344r)S
+133 x(ett)S 133 x(registrera)S -2 x(t)S 134 x(varum\344r)S -2 x(ke)S
+134 x(som)S 134 x(tillh\366r)S 134 x(Adobe)S 4497 X 498 y(Systems)S
+132 x(Inc.)S 3600 X 697 y(\206)S 603 x(IBM)S 145 x(och)S 146 x(ProPrint)S
+-2 x(er)S 146 x(\344r)S 145 x(registrera)S -2 x(de)S 146 x(varum\344)S
+-2 x(rken)S 145 x(som)S 4497 X 499 y(tillh\366r)S 132 x(Intern)S -2 x
+(ational)S 132 x(Business)S 133 x(Machines)S 132 x(Corp)S -2 x(oration.)S
+3600 X 697 y(\206)S 603 x(T)S -44 x(oshiba)S 125 x(\344r)S 125 x(ett)S
+126 x(registre)S -2 x(rat)S 126 x(varum\344)S -2 x(rke)S 126 x(som)S
+126 x(tillh\366r)S 126 x(Kabush)S -2 x(iki)S 4497 X 498 y(Kaisha)S 132 x
+(T)S -44 x(oshiba.)S 3600 X 698 y(\206)S 603 x(HP)S -52 x(,)S 141 x
+(DeskJet)S 140 x(och)S 141 x(LaserJet)S 140 x(\344r)S 140 x(registrera)S
+-2 x(de)S 141 x(varum\344)S -2 x(rken)S 4497 X 498 y(som)S 132 x(tillh\366r)S
+133 x(Hewlett-)S -2 x(Packard)S 132 x(Corpo)S -2 x(ration.)S 3600 X
+697 y(\207)S 498 x(Digitals)S 139 x(logotyp,)S 140 x(ACMS,)S 139 x(ALL\203)S
+-2 x(IN\2031,)S 140 x(CDA,)S 138 x(CI,)S 139 x(Compa)S -2 x(c-)S 4497 X
+498 y(T)S -44 x(ape,)S 132 x(DEC,)S 132 x(DECcha)S -2 x(rt,)S 133 x
+(DECdx,)S 132 x(DECdx/R)S -2 x(STS,)S 133 x(DEClaser)S -23 x(,)S 4497 X
+498 y(DECma)S -2 x(te,)S 135 x(DECn)S -2 x(et,)S 135 x(DECp)S -2 x(age,)S
+134 x(DECne)S -2 x(t\203V)S -30 x(AX)S(,)S 134 x(DECtrace,)S 4497 X
+498 y(DECta)S -2 x(lk,)S 140 x(DECterm,)S 138 x(DECwrite)S -2 x(,)S
+140 x(DECserve)S -2 x(r)S -22 x(,)S 140 x(DECstat)S -2 x(ion,)S 4497 X
+499 y(DECwind)S -2 x(ows,)S 153 x(DDIF)S -45 x(,)S 149 x(DX,)S 148 x
+(EDT)S -44 x(,)S 149 x(LA50)S -2 x(,)S 153 x(LA75,)S 152 x(LJ250)S -2 x
+(,)S 4497 X 498 y(LN0)S -2 x(3,)S 138 x(LN03)S 131 x(PLUS)S(,)S 137 x
+(LN03R,)S 136 x(LQP02)S -2 x(,)S 138 x(LQP03,)S 137 x(MicroV)S -30 x
+(AX,)S 4497 X 498 y(PrintSe)S -2 x(rver)S -22 x(,)S 134 x(Prof)S -2 x
+(essional,)S 134 x(Rainbow)S -24 x(,)S 134 x(RSX,)S 133 x(T)S -6 x(OPS\2032)S
+-2 x(0)S(,)S 134 x(TK,)S 4497 X 498 y(V)S -30 x(AX,)S 139 x(V)S -30 x
+(AXcluster)S -23 x(,)S 141 x(V)S -29 x(AXft,)S 140 x(V)S -30 x(AXmate,)S
+140 x(V)S -30 x(AX)S 132 x(DA)S -30 x(T)S -29 x(A)S -29 x(TRIEVE)S(,)S
+4497 X 498 y(V)S -30 x(AX)S 132 x(FMS)S(,)S 143 x(V)S -30 x(AX)S 132 x
+(Notes)S(,)S 141 x(V)S -29 x(AX)S 132 x(RALL)S -31 x(Y)S(,)S 142 x(V)S
+-29 x(AX)S 140 x(TEAMDA)S -30 x(T)S -29 x(A,)S 4497 X 498 y(V)S -30 x
+(AX)S 132 x(VTX)S(,)S 142 x(V)S -30 x(AXstation,)S 140 x(V)S -30 x(AXserver)S
+-23 x(,)S 141 x(VMS,)S 139 x(VT)S -44 x(,)S 140 x(WPS)S 139 x(och)S
+4497 X 498 y(WPS\203PL)S -2 x(US)S 133 x(\344r)S 132 x(varum\344rken)S
+131 x(som)S 133 x(tillh\366r)S 133 x(Digital)S 133 x(Equipment)S 4497 X
+498 y(Corp)S -2 x(oration)S -2 x(.)S 15132 38868 XY F40(8)S
+%%EndCustomColor
+8 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageCustomColors: 0_BLACK
+%
+%%Trailer
+EndDVC$PSDoc
+/DEC$EDMS_MAKE_FILM where	% if we are making film...
+ { pop				% ..clean up the stack
+   -54 dup translate		% ..undo the film translation
+ } if
+%%Pages: 8
+%%DocumentFonts: DigitalLogo Helvetica
+%%+ Helvetica-Bold Helvetica-Oblique
+%%DocumentCustomColors: 0_BLACK

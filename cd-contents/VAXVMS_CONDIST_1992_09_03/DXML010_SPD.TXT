@@ -1,0 +1,358 @@
+ 
+
+
+
+
+
+
+     Software
+     Product
+     Description
+
+     ________________________________________________________________
+
+     PRODUCT NAME:  Digital Extended Math Library for VMS,   SPD 31.67.00
+                    Version  1.0
+
+     DESCRIPTION
+
+     Digital Extended Math Library (DXML) is a set of mathematical
+     subroutines drawn from public domain and proprietary libraries
+     that are optimized for the VAX vector architecture. It includes
+     the Basic Linear Algebra Subprograms (BLAS) Level 2 and BLAS
+     Level 3 available from the Argonne National Labs. Also included
+     are Digital proprietary subprograms for BLAS Level 1 Extensions
+     and signal processing including one and two dimensional Fast
+     Fourier Transforms (FFTs), Convolution, Correlation, and Digital
+     Filters. These subprograms are highly optimized for the VAX
+     Vector Architecture, but also support VAX scalar processing.
+     Since DXML routines can be called from all languages that are
+     supported by the VAX calling standards, the library permits
+     access to VAX vector processing for applications written in
+     other languages as well as FORTRAN or VAX MACRO.
+
+     DXML contains both a scalar library and a vector library. The
+     scalar library is provided for development and testing of appli-
+     cation programs. The vector library can be used for vectoriza-
+     tion and optimization of scientific and engineering programs, as
+     well as for mathematical software libraries.
+
+     Where appropriate, all routines are available in both real and
+     complex versions, as well as in both single and double precision
+     (D and G format).
+
+
+
+
+                                  DIGITAL                October 1990
+
+                                                          AE-PBLLA-TE
+
+ 
+
+
+
+
+
+
+     The vector library uses advanced algorithms tailored to specific
+     operational characteristics of the VAX Vector Architecture. Some
+     key computational modules are written in assembler language,
+     making use of the vector instruction set. Optimization tech-
+     niques include chaining and overlapping of the vector functional
+     units, as well as efficient management of the hierarchical mem-
+     ory system, using techniques such as the following:
+
+     o  Use of unity stride wherever possible
+
+     o  Reuse of data within the vector registers to minimize memory
+        accessing
+
+     o  Efficient cache management
+
+     o  Use of algorithms that minimize translation buffer misses and
+        unnecessary paging
+
+     BLAS Contents
+
+     Linear algebra operations are fundamental to vectorized math-
+     ematical applications; many libraries of linear algebra sub-
+     routines exist throughout the computer industry. The DXML BLAS
+     library contains the most widely used public domain math li-
+     braries in the industry, as well as "added value" libraries that
+     are proprietary to Digital.
+
+     The DXML linear algebra library contains routines at three
+     levels:
+
+     o  Basic Linear Algebra Subroutines (BLAS) Level 1 extensions
+
+     o  BLAS Level 2
+
+     o  BLAS Level 3
+
+     BLAS Level 1 Extensions (Vector-Vector Operations)
+
+     When developing mathematical algorithms using the BLAS Level
+     1, scientists and engineers found several additional con-
+     structs were used on a regular basis. These constructs are known
+     throughout the computer industry as BLAS Level 1 extensions.
+
+                                     2
+
+ 
+
+
+
+
+
+
+     DXML contains 13 BLAS Level 1 extension operations:
+
+     o  Index of element having the minimum absolute value
+
+     o  Index of element having the maximum value
+
+     o  Index of element having the minimum value
+
+     o  Largest value of the elements of a vector
+
+     o  Smallest value of the elements of a vector
+
+     o  Largest absolute value of the elements of a vector
+
+     o  Smallest absolute value of the elements of a vector
+
+     o  Sum of the values of the elements of a vector
+
+     o  Set all elements of a vector equal to a scalar
+
+     o  Constant times a vector set to another vector (y = a*x)
+
+     o  Euclidean norm with no intermediate scaling
+
+     o  Sum of the squares of the elements of a vector
+
+     o  Constant times a vector plus a vector set to another vector
+        (z = a*x + y)
+
+     BLAS Level 2 (Matrix/Vector Operations)
+
+     The BLAS 2 codes make effective utilization of the data in the
+     vector registers, reducing the number of vector loads and stores
+     required. In addition, loop unrolling techniques are used to
+     minimize cache misses and page faults.
+
+     o  Matrix/vector products
+
+     o  Rank-1 and rank-2 matrix updates
+
+     o  Solutions of triangular systems of equations
+
+     Six types of matrices are supported by these BLAS Level 2 rou-
+     tines:
+
+     o  General
+
+                                     3
+
+ 
+
+
+
+
+
+
+     o  General Band
+
+     o  Symmetric/Hermitian
+
+     o  Symmetric/Hermitian Band
+
+     o  Triangular
+
+     o  Triangular Band
+
+     BLAS Level 3 (Matrix/Matrix Operations)
+
+     DXML partitions matrices into blocks and computes matrix/matrix
+     operations on each block. This approach avoids excessive memory
+     accesses by providing full reuse of data while each block is in
+     the cache or the registers. BLAS Level 3 routines provide this
+     kind of blocking for three basic types of operations:
+
+     o  Matrix/matrix products
+
+     o  Rank-k and rank-2k updates of a symmetric matrix
+
+     o  Solving triangular systems of equations with multiple right-
+        hand sides
+
+     Three types of matrices are supported by these BLAS Level 3
+     routines:
+
+     o  General
+
+     o  Symmetric/Hermitian
+
+     o  Triangular
+
+     Signal Processing Subroutines
+
+     The DXML signal processing package contains a set of Digital
+     proprietary subroutines. Routines are provided in three basic
+     areas:
+
+     o  Fast Fourier Transforms
+
+     o  Convolution and Correlation
+
+                                     4
+
+ 
+
+
+
+
+
+
+     o  Digital Filters
+
+     Fast Fourier Transforms (FFTs)
+
+     DXML provides both 1- and 2-dimensional FFT routines. Each
+     routine is supplied in two forms:
+
+     o  The first form computes the transform in one unit operation.
+        This is convenient for programs requiring speed on only one
+        or a few FFT operations.
+
+     o  The second form is provided for programs requiring speed
+        on repeated FFT operations. With this form, each routine
+        is subdivided into three routines. One routine builds the
+        rotation factors, a second routine applies them to the data
+        to perform the FFT, and a third routine deallocates any
+        virtual memory allocated in the first routine. Thus, for
+        repeated operations, the rotation factors need to be built
+        only once.
+
+     Convolution and Correlation
+
+     DXML provides routines for computing 1-dimensional discrete
+     convolutions and correlations. These routines can process both
+     periodic and nonperiodic data.
+
+     Digital Filters
+
+     DXML provides support for 1-dimensional, nonrecursive digital
+     filtering. Based on the Kaisers Sinh-Bessel algorithm, these
+     routines allow programming of bandpass, bandstop, low-pass, and
+     high-pass filters.
+
+     HARDWARE REQUIREMENTS
+
+     VAX, MicroVAX, VAXstation or VAXserver configuration as speci-
+     fied in the System Support Addendum (SSA 31.67.00-x).
+
+     SOFTWARE REQUIREMENTS*
+
+                                     5
+
+ 
+
+
+
+
+
+
+     For systems using terminals: (No DECwindows interface)
+
+     o  VMS Operating System
+
+     For workstations running VWS:
+
+     o  VMS Operating System
+
+     o  VMS Workstation Software
+
+     *  Refer to the System Support Addendum (SSA 31.67.00-x) for
+        availability and required versions of prerequisite/optional
+        software.
+
+     ORDERING INFORMATION
+
+     Software Licenses: QL-YEZ99-J*
+     Software Media: QA-YEZAA-**
+     Software Documentation: QA-YEZAA-GZ
+     Software Product Services: QT-YEZA*-**
+
+     *  Denotes variant fields. For additional information on avail-
+        able licenses, services and media, refer to the appropriate
+        price book.
+
+     SOFTWARE LICENSING
+
+     This software is furnished under the licensing provisions of
+     Digital Equipment Corporation's Standard Terms and Conditions.
+     For more information about Digital's licensing terms and poli-
+     cies, contact your local Digital office.
+
+     LICENSE MANAGEMENT FACILITY SUPPORT
+
+     This layered product supports the VMS License Management Fa-
+     cility. License units for this product are allocated on a
+     CPU-capacity basis.
+
+     For more information on the License Management Facility, refer
+     to the VMS Operating System Software Product Description (SPD
+     25.01.xx) or the VMS Operating System documentation set.
+
+                                     6
+
+ 
+
+
+
+
+
+
+     For more information about Digital's licensing terms and poli-
+     cies, contact your local Digital office.
+
+     SOFTWARE PRODUCT SERVICES
+
+     A variety of service options are available. For more informa-
+     tion, please contact your local Digital office.
+
+     SOFTWARE WARRANTY
+
+     Warranty for this software product is provided by Digital with
+     the purchase of a license for the product as defined in the
+     Software Warranty Addendum.
+
+     [TM] The DIGITAL Logo, DECwindows, VAX, MicroVAX, VAXstation and
+          VAXserver are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     7

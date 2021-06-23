@@ -1,0 +1,981 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECnet/SNA[R] Data Transfer Facility, Version 3.1  SPD 27.85.04
+
+ DESCRIPTION
+
+ The DECnet/SNA Data Transfer Facility (DTF) is a layered software prod-
+ uct that provides data transfer capabilities between IBM[R] MVS and IBM
+ VM systems in a Systems Network Architecture (SNA) environment and Dig-
+ ital DECnet nodes in a DECnet network. DTF supports the following DEC-
+ net nodes: VMS systems running DECnet-VAX, RSX-11M-PLUS systems run-
+ ning DECnet-11M-PLUS, ULTRIX systems running DECnet-ULTRIX, MS-DOS[R]
+ systems running PATHWORKS for DOS, and OS/2[R] systems running PATHWORKS
+ for OS/2. Access between the cooperating Digital and IBM environments
+ is provided by a DECnet/SNA Gateway or by VMS/SNA software.
+
+ The following briefly highlights the features of DTF. More detailed
+ information is given in the Features section. Unless otherwise men-
+ tioned, these features are supported on both MVS and VM systems.
+
+ Client/Server-Style Operation
+
+ The DTF product provides a client/server style of operation. The VMS
+ /DTF server can support file operations between IBM MVS and VM clients
+ and DECnet VMS, ULTRIX, RSX-11M-PLUS, MS-DOS, and OS/2 clients. No ad-
+ ditional software besides DECnet software is required on the DECnet
+ clients (except for VMS recoverable copy operations). Refer to the Con-
+ figuration section for more information.
+
+ Ease of Use
+
+ DTF provides a familiar user interface for both Digital (VMS, MS-DOS,
+ OS/2, ULTRIX, and RSX-11M-PLUS DECnet nodes) and IBM users. This fea-
+ ture supports easy application development and reduces staff train-
+ ing.
+
+                               DIGITAL                 February 1992
+
+                                                         AE-KL24E-TE
+
+ 
+
+ Comprehensive, Bidirectional Access from All Supported Clients
+
+ The DTF product enables bidirectional file transfer between all DTF-
+ supported DECnet nodes and IBM MVS and VM systems.
+
+ Checkpoint and Recovery
+
+ DTF provides VMS and IBM users with checkpoint and recovery support
+ in the event of a system or network failure. This feature allows DTF
+ to resume an interrupted recoverable copy operation when the network
+ returns to a normal state. This saves significant time and system re-
+ sources when large files are transferred.
+
+ File Backup
+
+ DTF allows VMS and ULTRIX users to target IBM disks and tapes for backup
+ and restore operations. In large co-resident Digital and IBM sites,
+ this capability optimizes system resource usage. Users have the abil-
+ ity to include an allocation space qualifier when backing up files to
+ target IBM disks to insure proper disk space availability.
+
+ Remote Job Submission
+
+ DTF users can submit jobs remotely from all DECnet clients (VMS, RSX-11M-PLUS,
+ MS-DOS, OS/2, and ULTRIX).
+
+ Post-Processing
+
+ Using DTF, VMS, and IBM, users can provide a post-processing file to
+ be executed after a file transfer is completed. This feature allows
+ VMS and IBM users to logically connect the running of a batch job to
+ the successful completion of a DTF file transfer. This makes the im-
+ plementation of distributed processing functions significantly eas-
+ ier to synchronize between IBM applications and VAX DECnet-based ap-
+ plications.
+
+ Record-Level Access
+
+ DTF supports record-level access from VMS systems to IBM MVS and VM
+ systems.
+
+ Supported File Types
+
+                                  2
+
+ 
+
+ DTF supports multiple file types (RMS, VSAM, BSAM, and CMS), allow-
+ ing easy applications development. DTF also supports mixed case IBM
+ file specifications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  3
+
+ 
+
+ FTAM/OSI Support
+
+ Users in an Open Systems Interconnection (OSI) network can transfer
+ files to and from an IBM system by using VAX FTAM in conjunction with
+ DTF software. IBM users can also transfer files to and from systems
+ in an OSI network by using DTF software and the DAP-FTAM Gateway.
+
+ HSM Support
+
+ DTF supports IBM's Hierarchical Storage Management (HSM) facility. This
+ is a DTF for MVS only feature.
+
+ IBM Enterprise Architecture and SMS Support
+
+ DTF runs in compliance with IBM's Enterprise Architecture and will sup-
+ port SMS-managed data sets (refer to the Supported IBM Configurations
+ section). This is a DTF for MVS only feature.
+
+ Data Translation Using Load Balancing and Performance Tuning
+
+ DTF supports text translation from DMCS (Digital Multinational Char-
+ acter Set, a superset of ASCII) to EBCDIC and vice versa on a record-
+ by-record basis. DTF supports load balancing and performance tuning
+ between the IBM system and the VMS/DTF server node by allowing users
+ to select which system performs the text translation. Enhanced per-
+ formance of the VMS/DTF server often results when this translation is
+ performed on the IBM system. DTF also supports, through the VAX Common
+ Data Dictionary (CDD) product, field-level translation.
+
+ Data Security
+
+ Security is enhanced by the use of Proxies. IBM users are not required
+ to specify a DECnet password; DTF will initiate the access on the VMS
+ systems with a user ID derived from the IBM User ID.
+
+ DTF controls access and protects valuable data with superior security
+ capabilities. DTF supports the following industry-standard security
+ interfaces that run on IBM machines: RACF, CA-ACF2[TM], SAF, and VMSECURE[TM].
+
+ Server Management
+
+                                  4
+
+ 
+
+ The DTF product includes a management utility to manage the VMS/DTF
+ server.
+
+ Event Logging
+
+ DTF for IBM logs events which can be used for historical inquiry or
+ accounting. System programmers can easily write specialized account-
+ ing and bill-back reports using DTF's logs.
+
+ Components
+
+ There are four components to the DECnet/SNA Data Transfer Facility prod-
+ uct:
+
+ o  Data Transfer Facility server (VMS/DTF server) software
+
+ o  Data Transfer Facility utilities (VMS/DTF utilities) software
+
+ o  Data Transfer Facility for IBM MVS system (DTF for MVS) software
+
+ o  Data Transfer Facility for IBM VM system (DTF for VM) software
+
+ VMS/DTF Server Software
+
+ The VMS/DTF server software can be installed on any VMS system in a
+ DECnet network containing a DECnet/SNA Gateway or on any VMS system
+ running VMS/SNA. The node that is running the VMS/DTF server software
+ is referred to as the server node. All DTF file requests go through
+ this server node which communicates with the appropriate DTF for IBM
+ system by using a DECnet/SNA Gateway or by using VMS/SNA software. The
+ server software also performs text translation (DMCS/EBCDIC). However,
+ this can be done optionally by the DTF for IBM software. The VAX Common
+ Data Dictionary product is required on the VMS/DTF server node for the
+ translation of data types other than DMCS/EBCDIC. The VMS/DTF server
+ software includes the VMS/DTF utilities software described in the next
+ section.
+
+ VMS/DTF Utilities Software
+
+
+                                  5
+
+ 
+
+ The VMS/DTF utilities software is an optional component that can be
+ installed on any VMS system where users wish to transfer files using
+ the recoverable copy feature. The utilities software should also be
+ installed if IBM users will be requesting recoverable copies involv-
+ ing that VMS node. The utilities software consists of a server man-
+ agement utility and a checkpoint/recovery utility (TRANSFER/DTF). The
+ VMS/DTF utilities software communicates with the VMS/DTF server soft-
+ ware to accomplish the data transfer. It is not necessary to install
+ the VMS/DTF utilities software on the server node since these util-
+ ities are included in the VMS/DTF server software package.
+
+ DTF for MVS Software
+
+ The DTF for MVS software can be installed on any IBM S/370-class ma-
+ chine system running the MVS Operating System. DTF for MVS accepts file
+ operation commands from the VMS/DTF server software and maps them into
+ MVS file commands to perform the operation. It also provides inter-
+ faces so TSO users can issue recoverable and non-recoverable copy com-
+ mands in interactive or batch mode. DTF for MVS software consists of
+ two parts: a VTAM application program that controls the communications
+ with the VMS/DTF server nodes for the purpose of transferring files,
+ and user interfaces. The three user interfaces are: a TSO command pro-
+ cessor, a single-line command interface (REXX required), and an ISPF
+ dialog.
+
+ DTF for VM Software
+
+ The DTF for IBM VM software can be installed on any IBM S /370-class
+ machine system running the VM Operating System. DTF for VM accepts file
+ operation commands from the VMS/DTF server software and maps them into
+ VM file commands to perform the operation. It also provides interfaces
+ so CMS users can issue recoverable and non-recoverable copy commands
+ in interactive or batch mode. DTF for VM software consists of three
+ parts: a VTAM application program that controls the communications with
+ the VMS/DTF server, a CMS application for the purpose of transferring
+ files, and user interfaces. The three user interfaces are: a DTF com-
+ mand processor, a single-line command interface (REXX required), and
+ an ISPF dialog.
+
+
+                                  6
+
+ 
+
+ Configuration
+
+ A DTF for IBM component must be installed on each IBM system with which
+ users want to communicate. The DECnet network requires one VMS/DTF server
+ component installed on a VMS system, and may require multiple server
+ component installations depending on the amount of use of DTF. All other
+ nodes in the DECnet network, including VMS, ULTRIX, MS-DOS, OS/2, and
+ RSX, do not require any additional software since DTF allows users to
+ use standard DECnet file transfer commands to access IBM files. The
+ VMS/DTF utilities software is required only if a particular VMS sys-
+ tem's users need the recoverable copy feature or if IBM users desire
+ recoverable copy operations to that VMS system. Recoverable copy works
+ only to VMS nodes with the VMS/DTF server software or the VMS/DTF util-
+ ities software installed.
+
+ Features
+
+ Ease of Use
+
+ The DTF product uses a variety of familiar user interfaces to make users
+ more productive. Users do not have to learn new commands and proce-
+ dures.
+
+ Users in the VMS environment can issue standard DCL commands, like COPY,
+ TYPE, DIRECTORY, and so on. Alternatively, they can use the Record Man-
+ agement System (RMS) programming interface or the TRANSFER/DTF util-
+ ity for data exchange between DECnet and IBM systems.
+
+ IBM MVS users can access and transfer data by using the TSO DTF com-
+ mand processor, the TSO ISPF panels, or the single-line interface. IBM
+ VM users can use the CMS DTF command processor, the CMS ISPF panels
+ or the single-line interface. The TSO and CMS command processors can
+ also be invoked in batch mode.
+
+ ULTRIX users access files by using the standard DECnet-ULTRIX file trans-
+ fer commands. MS-DOS and OS/2 users simply issue the standard PATH-
+ WORKS for DOS or PATHWORKS for OS/2 NFT commands. RSX-11M-PLUS users
+ can use DCL commands or DECnet-11M-PLUS NFT and FTS commands.
+
+
+                                  7
+
+ 
+
+ DTF Access from VMS Clients
+
+ VMS DTF users can initiate non-recoverable or recoverable, bidirec-
+ tional file transfers between IBM DTF clients and themselves. DTF sup-
+ ports the following VMS DCL commands.
+
+ Note: Some of the qualifiers associated with these DCL commands are sub-
+ ject to restrictions when used with DTF.
+ 
+ APPEND      DELETE       SEARCH
+
+ BACKUP      DIFFERENCES  REMOTE
+             SUBMIT
+
+ CLOSE       DIRECTORY    TYPE
+
+ CONVERT     EXCHANGE     WRITE
+             /NETWORK
+
+ COPY        OPEN
+
+ CREATE      READ
+
+ DTF Access from RSX-11M-PLUS Clients
+
+ RSX-11M-PLUS DTF users can initiate non-recoverable, bidirectional file
+ transfers between IBM clients and themselves. RSX-11M-PLUS users can
+ use all three network file transfer interfaces provided by DECnet-11M-PLUS
+ (NFT, DCL, FTS). DTF supports the following DECnet-11M-PLUS DCL com-
+ mands.
+
+ Note: Some of these commands are subject to restrictions when used with
+ DTF.
+ 
+ APPEND      DELETE       SUBMIT/REMOTE
+
+ COPY        DIRECTORY    TYPE
+
+ DTF Access from MS-DOS and OS/2 Clients
+
+                                  8
+
+ 
+
+ MS-DOS and OS/2 DTF users can initiate non-recoverable, bidirectional
+ file transfers between IBM DTF clients and themselves. IBM-initiated
+ file transfers are supported by MS-DOS and OS/2 systems when the PATH-
+ WORKS for DOS or PATHWORKS for OS/2 File Access Listener (FAL) is run-
+ ning. DTF supports the following PATHWORKS for DOS and PATHWORKS for
+ OS/2 NFT commands.
+
+ Note: Some of these commands are subject to restrictions when used with
+ DTF.
+
+ 
+ APPEND      DELETE       SUBMIT
+
+ COPY        DIRECTORY    TYPE
+
+ DTF Access from ULTRIX Clients
+
+ ULTRIX DTF users can initiate non-recoverable, bidirectional file trans-
+ fers between DTF for IBM systems and themselves. DTF supports the fol-
+ lowing DECnet-ULTRIX commands.
+
+ Note: Some of these commands are subject to restrictions when used with
+ DTF.
+ 
+ dcat    dcp      dls      drm
+
+ DTF Access from IBM Clients
+
+ IBM DTF users can initiate non-recoverable or recoverable, bidirec-
+ tional file transfers between VMS DTF clients running the VMS/DTF util-
+ ities software and themselves. In addition, they can initiate non-recoverable,
+ bidirectional file transfer between all other DTF clients (including
+ other IBM systems) and themselves. MVS TSO users and VM CMS users have
+ the following commands available to transfer files to or from other
+ DTF clients.
+ 
+ DTFSEND     DTFRECV      DTFRESUM
+
+                                  9
+
+ 
+
+
+ DTF com-    DTF ISPF     DTF non-ISPF panels
+ mand        panels
+ processor
+
+ Checkpoint and Recovery
+
+ Checkpoint and recovery capabilities assure that data remains accu-
+ rate and intact, even in the event of system or network failure. When
+ VMS users transfer files using the TRANSFER/DTF utility, it automat-
+ ically resumes an interrupted file transfer process with no loss of
+ data when communications between sending and receiving systems are re-
+ established. Checkpoint and recovery is supported for non-VSAM and CMS
+ files that are disk- or tape-resident. Checkpoint and recovery is not
+ supported on VSAM files.
+
+ IBM users have a similar checkpoint and recovery feature. A recover-
+ able copy operation performed from an IBM system sets environment vari-
+ ables (CLIST in MVS, REXX in VM). If the transfer terminates with a
+ network error, these variables contain information to allow the user
+ to resume the transfer.
+
+ File Backup
+
+ DTF allows VMS users to back up and restore their disks directly to
+ IBM tapes or disks using the VMS BACKUP command. ULTRIX users can also
+ back up and restore disks to IBM tapes or disks. Users have the abil-
+ ity to include an allocation space qualifier when backing up files to
+ target IBM disks to insure proper disk space availability.
+
+ Remote Job Submission
+
+ VMS, ULTRIX, DOS, OS/2, and RSX-11M-PLUS users can submit JCL or REXX
+ files on the IBM system to be executed by JES or by a batch machine.
+ These users can use the standard DECnet file operation commands to ini-
+ tiate the job submission. For example, VMS users use SUBMIT/REMOTE and
+ ULTRIX users use dcp -S. Users will not get the status of the job com-
+ pletion. IBM DTF users can submit jobs by using the post-processing
+ feature described in the next section.
+
+                                 10
+
+ 
+
+ Post-Processing
+
+ Post-processing is the ability to submit a DCL command procedure or
+ MVS JCL or VM REXX procedure after a file transfer is completed. IBM
+ users can use the post-processing feature from either the command pro-
+ cessor or the panel interface. VMS users can use the post-processing
+ feature only through the TRANSFER/DTF utility.
+
+ Record-Level Access
+
+ DTF allows a VMS user record-level access to IBM files by means of an
+ RMS application, DCL commands, or DATATRIEVE. DTF does not support record-
+ level access initiated from IBM to VMS RMS files.
+
+ Supported File Types
+
+ All VMS file types, RSX-11M-PLUS sequential files, and ULTRIX, MS-DOS,
+ and OS/2 stream files are supported. MS-DOS and OS/2 support only stream
+ files. Therefore, all files copied to MS-DOS or OS/2 systems result
+ in stream files. All files copied from MS-DOS and OS/2 systems result
+ in sequential data sets on IBM systems.
+
+ For IBM MVS systems, supported non-VSAM file types are those with the
+ physical sequential data set organization. This includes normal se-
+ quential files as well as partitioned data set members. Both disk-resident
+ and tape-resident non-VSAM files are supported. Supported VSAM file
+ types include entry-sequenced data sets (ESDS), relative-record data
+ sets (RRDS), and key-sequenced data sets (KSDS).
+
+ For IBM VM systems, supported CMS file types are those with the phys-
+ ical sequential data set organization. This includes normal sequen-
+ tial files as well as MACLIB members. Both disk-resident and tape-resident
+ files are supported and can be transferred. Supported DOS/VSE VSAM file
+ types include entry-sequenced data sets (ESDS), relative-record data
+ sets (RRDS), and key-sequenced data sets (KSDS). VM does not support
+ creating empty files or creating null records in a file.
+
+
+
+
+                                 11
+
+ 
+
+ DTF provides an option for users to overcome the null record restric-
+ tion by substituting a record containing a character or value chosen
+ by the user. A mixed case option supports applications on the IBM side
+ that create file specifications that are case sensitive. The case qual-
+ ifier supports file specifications that contain lower case characters.
+
+ FTAM/OSI Support
+
+ Users in an OSI network can transfer files defined by FTAM/OSI stan-
+ dard file types to IBM MVS or VM systems using VAX FTAM and DTF soft-
+ ware. IBM TSO or CMS users can also transfer files to and from sys-
+ tems in an OSI network using DTF and DAP-FTAM Gateway software. For
+ more information on VAX FTAM and DAP-FTAM Gateway software refer to:
+ VAX FTAM Software Product Description (SPD 29.86.xx).
+
+ VAX VMS users will access the VAX FTAM user facilities to perform FTAM
+ tasks. Users on other operating systems will use an initiator on their
+ systems to access FTAM on VMS through the VAX FTAM responder. VAX FTAM
+ responder then in turn accesses DTF to perform the tasks on the IBM
+ system.
+
+ VMS FTAM users can initiate non-recoverable, bidirectional file trans-
+ fer between IBM clients and either themselves or remote OSI FTAM re-
+ sponders.
+
+ DTF supports the following VMS FTAM DCL commands.
+
+ Note: Some of the qualifiers associated with these DCL commands are sub-
+ ject to restrictions when used with DTF.
+ 
+ APPEND      COPY         DELETE       DIRECTORY
+
+ DTF supports the following FTAM document type files.
+
+ o  FTAM-2 String Significant of None
+
+ o  FTAM-1 String Significant of Fixed
+
+ The following FTAM document type files are supported with these re-
+ strictions:
+
+                                 12
+
+ 
+
+ o  FTAM-1 String Significance of Variable. Files can be copied to the
+    IBM system but will loose the FTAM-1 file type definition. The file
+    is translated as an FTAM-2 NOT significant file when the file is
+    pulled back. File contents are not altered.
+
+ o  FTAM-3 String Significance of Fixed. Files can be copied to the IBM
+    system but will loose the attributes when the file is pulled back.
+    The FTAM-3 file type changes to an FTAM-1 String Significance of
+    FIXED when the file is pulled back. File contents are not altered.
+
+ DTF does not support any other FTAM document type files or NBS-9 di-
+ rectories.
+
+ HSM Support
+
+ DTF for MVS supports the Hierarchical Storage Management (HSM) facil-
+ ity and allows users to recall migrated data sets. IBM system program-
+ mers can tailor the number of concurrent outstanding HSM requests as
+ well as device recall capability.
+
+ SMS Support
+
+ DTF for MVS supports the MVS Storage Management Subsystem (SMS) fa-
+ cility.
+
+ Data Translation
+
+ DTF provides three options for data translation: no data translation
+ at all, DMCS (Digital Multinational Character Set, a superset of ASCII)
+ to EBCDIC and vice versa, and field-level translation.
+
+ o  Users can specify that DTF should perform no data translation dur-
+    ing a file transfer. This option is useful for transferring image
+    files.
+
+ o  By default, DTF performs data translation from DMCS to EBCDIC and
+    vice versa on a record-by-record basis. This is the option normally
+    used to transfer text files.
+
+
+                                 13
+
+ 
+
+ o  Users can specify that DTF use alternate field-level translation.
+    In this case, the VMS/DTF server software translates data types such
+    as binary, integer, floating point, packed decimal, and numeric strings
+    using VAX Common Data Dictionary (CDD/Plus) record definitions sup-
+    plied by the user. The semantics of data in the file is maintained
+    across a file transfer. The CDD/Plus product is required on the VMS
+    /DTF server node for alternate field-level data translation.
+
+ By default, data translation is performed on the VMS/DTF server node.
+ To decrease the load on the VMS/DTF server, the server manager can op-
+ tionally specify that data translation (DMCS /EBCDIC) occur on the IBM
+ DTF client.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ Data Security
+
+ Files on the IBM system are accessible only to Digital users who know
+ the valid access control information. DTF for IBM provides interfaces
+ into the CA-ACF2, RACF, and VMSECURE security systems and a standard
+ user exit for other security mechanisms (such as CA-TOPSECRET[TM]) through
+ the System Authorization Facility (SAF) interface. For Digital sys-
+ tems, security is maintained by using the standard file protection mech-
+ anism provided by the base operating system.
+
+ DTF also allows DECnet-style proxy information to be stored on the IBM
+ system using standard IBM system security packages (CA-ACF2, RACF).
+ DTF for VM supports Proxy access in the VMSECURE environment as well.
+
+ For ease of use, DTF for IBM allows users to perform file transfers
+ without having to provide passwords for their files located on their
+ own IBM system.
+
+ Server Management
+
+ VMS/DTF provides a management utility to manage the server account database,
+ the file definition database, and the DTF proxy databases on the VMS
+ /DTF server. The server account database allows the server to support
+ file transfer requests to many different IBM DTF clients. The file def-
+ inition database allows users to store the IBM file specifications for
+ frequently accessed files. The proxy database allows the server man-
+ ager to set up mappings that allow users to enter requests without spec-
+ ifying their IBM passwords. Refer to the Data Security section for more
+ information.
+
+ Event Logging
+
+ DTF for IBM logs events which can be used for historical inquiry or
+ for accounting usage. Historical logging can be used to characterize
+ the use of DTF for IBM. Such information is necessary for decisions
+ involving operating hours, performance tuning, and load analysis of
+ the network and operating system. Account logging allows users of DTF
+ for IBM functions to be recorded along with the resources they con-
+ sume. The granularity of the information is sufficient to provide a
+
+                                 15
+
+ 
+
+ bill-back capability. Implementation of the accounting and billing ca-
+ pability is handled with a user exit and can be customized on a per-
+ site basis.
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations as specified in the System
+ Support Addendum (SSA 27.85.04-x).
+
+ SOFTWARE REQUIREMENTS
+
+ For VMS/DTF Server and VMS/DTF Utilities:
+
+ o  VMS Operating System
+
+ o  DECnet-VAX
+
+ o  VMS/DTF Server
+
+ The DECnet/SNA Data Transfer Facility software requires one of the fol-
+ lowing products. Refer to the appropriate SPD for prerequisite hard-
+ ware and software.
+
+ o  VMS/SNA (SPD 27.01.xx)
+
+ o  DECnet/SNA Gateway-ST (SPD 25.C6.xx)
+
+ o  DECnet/SNA Gateway-CT (SPD 29.76.xx)
+
+ For VMS Clients:
+
+ o  DECnet-VAX
+
+ For ULTRIX Clients:
+
+ o  ULTRIX Operating System
+
+ o  DECnet-ULTRIX
+
+ For MS-DOS Clients:
+
+ o  PATHWORKS for DOS
+
+                                 16
+
+ 
+
+ For OS/2 Clients:
+
+ o  PATHWORKS for OS/2
+
+ For RSX-llM-PLUS Clients:
+
+ o  DECnet-11M-PLUS
+
+ For specific MS-DOS, OS/2, and RSX-11M-PLUS Operating System Versions,
+ refer to the PATHWORKS for DOS SPD (55.07.xx), PATHWORKS for OS/2 SPD
+ (55.24.xx), and DECnet-11M-PLUS SPD (10.66.xx).
+
+ For IBM MVS Clients:
+
+ o  VTAM
+
+ o  MVS/ESA or MVS/XA
+
+ o  DFP/ESA or DFP/XA
+
+ o  SMP/E
+
+ o  Assembler H
+
+ o  DTF for MVS
+
+ For IBM VM Clients:
+
+ o  VTAM
+
+ o  VM/SP5, VM/SP6, or VM/XA
+
+ o  DTF for VM
+
+ Refer to the System Support Addendum (SSA 27.85.04-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ Prerequisite Support
+
+ A Network Profile and a DECnet Customer Support Plan (where applica-
+ ble) covering all intended VMS nodes that will access the IBM MVS or
+ VM environment must be prepared jointly by Digital and the customer.
+
+ For DTF to be Digital supported, the customer must have a Digital sup-
+ ported DECnet/SNA Gateway or VMS/SNA configuration.
+
+                                 17
+
+ 
+
+ INSTALLATION
+
+ To have a Digital supported DECnet/SNA Gateway configuration, Digi-
+ tal requires that a customer's first purchase of this software prod-
+ uct include Gateway Orientation/Installation Service.
+
+ To have a Digital supported VMS/SNA configuration, Digital requires
+ that a customer's first purchase of this software product include VMS
+ /SNA Orientation/Installation Service, or equivalent thereof.
+
+ These services provide for installation of the software product by an
+ experienced Digital Software Specialist.
+
+ Before installation of the VMS/DTF server software, the customer must:
+
+ o  Previously have installed all requisite software and hardware, in-
+    cluding terminals.
+
+ o  Generate, to Digital's satisfaction, any necessary IBM host soft-
+    ware, including DTF for IBM software that will be communicating with
+    the VMS/DTF server software by using either the DECnet/SNA Gate-
+    way or VMS/SNA.
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during installation.
+
+ o  Be prepared to work with both Digital and IBM systems personnel to
+    coordinate the pre-installation activities.
+
+ o  Be capable of modifying IBM component generation parameters to sup-
+    port the VMS/DTF server software and either the DECnet/SNA Gate-
+    way or VMS/SNA.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the then prevailing rate for time and materials.
+
+
+
+
+                                 18
+
+ 
+
+ ORDERING INFORMATION
+
+ VMS/DTF Software
+
+ For VMS/DTF Server:
+
+ Software Licenses: QL-VEBA*-**
+ Software Media: QL-VEBA*-**
+ Software Documentation: QL-VEBA*-GZ
+ Software Product Services: QT-VEBA*-**
+
+ For VMS/DTF Utilities:
+
+ Software Licenses: QL-VEKA*-**
+ Software Media: QA-VEKA*-**
+ Software Documentation: QA-VEKA*-GZ
+ Software Product Services: QT-VEKA*-**
+
+ DTF for IBM Software
+
+ DTF for MVS:
+
+ Software License: QL-1GQA9-AA
+ Software Media: QA-1GQAA-**
+ Software Documentation: QA-1GQAA-GZ
+ Software Product Services: QT-1GQA*-**
+
+ DTF for VM:
+
+ Software License: QL-GUYA9-AA
+ Software Media: QA-GUYAA-**
+ Software Documentation: QA-GUYAA-GZ
+ Software Product Services: QT-GUYA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+
+
+
+                                 19
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ DTF for IBM MVS and DTF for IBM VM Software License is by IBM Model
+ Number regardless of the CPUs incorporated in a given IBM Model Num-
+ ber. For example, IBM Model 3090-600S.
+
+ License Management Facility Support
+
+ The VMS portions of this software product support the VMS License Man-
+ agement Facility.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx) or
+ the License Management Facility manual of the VMS Operating System doc-
+ umentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ The DTF for IBM software described in this SPD has been written in ac-
+ cordance with the following IBM System Integrity Standards:
+
+ o  MVS System Integrity Standard as defined in IBM Programming Announce-
+    ment P81-174 dated October 21, 1981.
+
+                                 20
+
+ 
+
+ o  VM System Integrity Standard as defined in IBM Programming Announce-
+    ment 283-185 dated June 21, 1983.
+
+ o  VM/XA System Integrity Standard as defined in IBM Programming An-
+    nouncement 287-241 dated June 11, 1987.
+
+ Warranty Limitations
+
+ Supported IBM Configurations:
+
+ This software has been tested and is warranted against IBM System/370
+ (includes 30xx and 43xx series) class processor systems. While this
+ software may function correctly with other IBM software and with equip-
+ ment and software other than that supported by IBM, Digital cannot of-
+ fer its standard warranty for this software unless it has been tested
+ with such equipment and software configurations.
+
+ The DECnet/SNA Data Transfer Facility, Version 3.1 product has been
+ tested and warranted against the following IBM software configurations:
+
+ IBM MVS Software Configuration
+
+ MVS/SP V1.3
+ MVS/SP (MVS/XA) V2.0
+ MVS/SP (MVS/ESA) V3.1
+ VTAM V3.1, V3.2, V3.3
+ DFP/XA V2.2, V2.2, V2.3
+ DFP/ESA V3.1, V3.2
+ SMP/E V1.4, V1.5
+ Assembler H V2.1, V2.2
+ ISPF V3.1, V3.2
+ TSO/E V2.1
+ CA-ACF2 V4.1, V5.2
+ RACF V1.8, V1.9
+
+ IBM VM Software Configuration
+
+
+
+
+                                 21
+
+ 
+
+ VM/SP Release 5, Release 6
+ VM/XA V2.1
+ VTAM V3.1, V3.2
+ Assembler H V2.1
+ ISPF V2.2
+ CA-ACF2 V1.3.2
+ RACF V1.8.2, V1.9
+ VMSECURE Release 4.2, 4.4A
+ Dirmaint V1.3
+ VSE/VSAM V1.3
+ 
+ [R]  IBM, OS/2, and SNA are registered trademarks of International
+      Business Machines Corporation
+ 
+ [R]  MS-DOS is a registered trademark of Microsoft Corporation
+
+ [TM] CA-ACF2 and CA-TOPSECRET are trademarks of Computer Associates
+      International, Inc.
+
+ [TM] VMSECURE is a trademark of The Systems Center
+
+ [TM]The DIGITAL Logo, CI, DATATRIEVE, DEC, DECnet, DECnet-DOS,
+     MicroVAX, PATHWORKS, RSX-11M-PLUS, TK, ULTRIX, VAX, VAX CCD,
+     CDD/Plus, VAXcluster, VAXft, VAXserver, VAXstation, and VMS are
+     trademarks of Digital Equipment Corporation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 22

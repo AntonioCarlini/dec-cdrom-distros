@@ -1,0 +1,499 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECmcc Director, Version 1.2            SPD 32.46.02
+
+ INTRODUCTION
+
+ The DECmcc Director is an entry-level DECmcc Family Product manage-
+ ment system for multi-vendor, multi-protocol networks. It provides ac-
+ cess to, and management functions for, Digital Equipment Corporation's
+ ADVANTAGE-NETWORK (DECnet Phase IV, DECnet/OSI, and TCP/IP) and open
+ network environments. In addition, the Director is an extensible frame-
+ work on which user-developed management modules, third-party products,
+ or other DECmcc products can be added.
+
+ The DECmcc Director includes an integrated command set, object-oriented
+ Management Information Repository (MIR), and graphic and command-line
+ user interfaces. It enables network operators/managers to perform ba-
+ sic monitoring and control tasks on network or system managed objects
+ that support DECnet Phase IV NICE, DECnet/OSI CMIP, SNMP, or IEEE 802.2
+ / Ethernet/MOP management protocols.
+
+ The DECmcc Director software is one of a family of DECmcc products based
+ on Digital's Enterprise Management Architecture (EMA). For an overview
+ of EMA and DECmcc, refer to the DECmcc Product Family Overview Soft-
+ ware Product Description (SPD 37.19.xx).
+
+ DESCRIPTION
+
+ The DECmcc Director software provides an entry-level set of monitor
+ and control functions for multi-vendor, multi-protocol LAN (Local Area
+ Network), Extended LAN, and WAN (Wide Area Network) networks. Avail-
+ able on the VMS[*] and ULTRIX Operating Systems, the DECmcc Director
+ provides generic management functions, including:
+ ____________________
+
+ The   terms VMS and OpenVMS refer to the Open VMS operating system.
+
+                               DIGITAL                   August 1992
+
+                                                         AE-PC7JC-TE
+
+ 
+
+ o  Graphic and Command Line User Interfaces that provide consistent
+    views and interactions with the management system regardless of the
+    objects managed or the protocols used to manage them.
+
+ o  Generic Notification and Alarm functions that enable users to de-
+    fine alarm rules and set up notification and automated procedures
+    to locate existing and potential network problems or events.
+
+ o  Generic Historical Data Recording and Data Export functions that
+    allow users to define, collect, timestamp, and re-use historical
+    network data and export DECmcc management information to an exter-
+    nal relational data base.
+
+ Consistent with the EMA Director Model, of which it is an implemen-
+ tation, the DECmcc BMS consists of a set of layered Management Mod-
+ ules supported by an open Applications Program Interface (API), an Ex-
+ ecutive or operating system-like set of module support functions, and
+ an object-oriented Management Information Repository providing data
+ structure and storage functions.
+
+ o  Management Modules provide services to users and one another. There
+    are three types of Management Modules:
+
+    -  Access Modules (AMs) provide remote protocol support for, and
+       management information about, different classes of managed ob-
+       jects.
+
+    -  Function Modules (FMs) provide services such as object regis-
+       tration, statistics generation, fault detection, and notifica-
+       tion to users and to one another.
+
+    -  Presentation Modules (PMs) provide a consistent user interface
+       for the direct manipulation of managed objects (through AMs) and
+       user access to management operations (through FMs).
+
+ o  The Executive provides system services that enable Management Mod-
+    ules to be installed and used independently or in combination.
+
+ o  The Applications Programming Interface (API) defines how Manage-
+    ment Modules invoke each other's services. The DECmcc API is open
+    and documented to support Digital, third-party, or user-developed
+    modules.
+
+                                  2
+
+ 
+
+ o  The Management Information Repository (MIR) provides a means to struc-
+    ture and store management information.
+
+ DECmcc Director Access Modules (AMs)
+
+ DECmcc Director AMs provide access to network and system objects in
+ Digital's ADVANTAGE-NETWORK and other mixed, multi-vendor network en-
+ vironments that use the following management protocols: SNMP, DECnet
+ /OSI CMIP, DECnet NICE, and IEEE 802.2/Ethernet/MOP.
+
+ o  The DECnet Phase IV AM enables users to manage DECnet Phase IV ob-
+    jects such as nodes, circuits, lines, and adjacencies. With the DEC-
+    net Phase IV AM, users can modify DECnet parameters, set charac-
+    teristics, collect DECnet events, and poll for management data such
+    as counters or status.
+
+ o  The DECnet/OSI CMIP AM provides management access to DECnet devices
+    that use Digital's implementation of the standard Common Manage-
+    ment Information Protocol (CMIP). This version of CMIP, implemented
+    on DECnet/OSI devices, provides management operations and data gath-
+    ering functions for DECnet/OSI networks including the ability to
+    sink DECnet events to the DECmcc system.
+
+ o  The TCP/IP SNMP AM includes support for the following Internet Ad-
+    visory Board (IAB) Simple Network Management Protocol (SNMP) RFCs:
+    1155, 1156, 1157, 1212, and 1213. This includes full MIB II sup-
+    port in addition to support for on-site enrollment of vendor-specific
+    Enterprise MIBs, including:
+
+    o  A MIB translation utility that automatically checks the syntax
+       of the ASN.1 Concise MIB definition (providing error messages
+       to help identify syntax problems) and translates the data for
+       loading the information into the DECmcc Director's Management
+       Information Repository (MIR).
+
+    o  An event-logging sink for collecting SNMP generic traps (unso-
+       licited TCP/IP event messages) including: coldStart, warmStart,
+       linkDown, linkUp, egpNeighborLoss, authentificationFailure, and
+       enterpriseSpecific.
+
+                                  3
+
+ 
+
+    o  Ability to perform GET and SET operations on devices supported
+       by SNMP agents.
+
+    o  ICMP ECHO_REQUEST (ping) support for verifying the reachabil-
+       ity of an SNMP managed object at the IP level.
+    Note: DEC TCP/IP Services for VMS is required for using the TCP
+    /IP SNMP AM on VMS systems.
+
+ o  The IEEE 802.3/Ethernet Station AM enables users to manage, at the
+    network interface level, any 802.3/Ethernet LAN device that sup-
+    ports MOP REQID, MOP SYSID, MOP Counters, Ethernet V2 Loopback, IEEE
+    802.2 XID, or IEEE 802.2 Test.
+
+ o  Circuit AM works as a client of management protocol modules to pro-
+    vide management of circuits connecting endpoints compliant with the
+    Network Management Forum (NMF) definitions. Compliant endpoints in-
+    clude DECnet Phase IV and DECnet OSI nodes, and TCP/IP hosts. Ty-
+    ing together circuit, line, link, and other end-point data, this
+    AM can gather status data and store reference information about sim-
+    ple, point-to-point circuits or complex multi-channel circuits.
+
+ DECmcc Director Function Modules (FMs)
+
+ The DECmcc Director provides FMs for registering and organizing man-
+ aged objects regardless of the management protocol used or object type.
+ This includes support for devices accessible through the Director AMs,
+ other Digital-developed AMs, or AMs developed and supported by third
+ parties and users.
+
+ o  The Registration FM is a generic FM that enables users to enter and
+    manage data identifying each managed object in a network environ-
+    ment. Such information includes object instance data such as net-
+    work names and addresses, and reference information such as device
+    location, software revision levels, and contact names.
+
+    With the Registration FM, users have the option of selecting a lo-
+    cal system-level repository or setting up a network-wide, globally-
+    available naming service using Digital's Distributed Name Service
+    (DECdns). With DECdns, users and applications can assign names to
+    resources (such as nodes, bridges, files, domain names, etc.) and
+    then use those resources without having to keep track of physical
+
+                                  4
+
+ 
+
+    location or network address. The DECdns option also enables mul-
+    tiple DECmcc systems to share the same view of managed objects.
+
+ o  The Domain FM is a generic FM that enables users to assign managed
+    objects into groups called domains. Domains are subsets of the man-
+    aged object configuration that provide user-defined groups, which
+    can be based on equipment type (all DECnet nodes, all TCP/IP hosts,
+    all LAN Bridges, etc.), geography (all objects within a LAN, build-
+    ing, campus, or subnet), personnel levels, or any other user-defined
+    object group. Domains can contain or refer to other domains and can
+    be hierarchical or overlapping. Individual managed objects can be
+    contained within multiple domains.
+
+ DECmcc Director Presentation Modules (PMs)
+
+ The DECmcc Director includes two PMs. The DECwindows/Iconic Map PM pro-
+ vides a graphic interface with pull-down command and monitor windows
+ that consistently present all managed objects and operations. Consis-
+ tent access is also provided by the Forms and Command Line PM.
+
+ The Iconic Map PM with a DECwindows Interface uses the common features
+ of any DECwindows application. Capabilities specific to this presen-
+ tation style include:
+
+ o  Map windows that display the contents of a managed environment (for
+    example, a domain) using icons to represent managed objects and their
+    subordinate or child objects. Users can select icons representing
+    managed objects and initiate management operations from a map win-
+    dow. Several map windows can be displayed at one time, each dis-
+    playing different views of domains of a managed environment.
+
+ o  A Navigation box and ViewPort window that enable users to view an
+    entire network configuration map at one time. With the ViewPort fea-
+    ture, users can navigate to, and select a particular portion of,
+    the total network environment to display in detail in the map win-
+    dow.
+
+ o  Management windows that enable users to select, perform, and view
+    the results of management operations. Like map windows, several dif-
+    ferent management windows can be displayed simultaneously.
+
+                                  5
+
+ 
+
+ o  Graph windows that enable users to select and display real-time or
+    historical numeric attributes, such as counters, graphs, or his-
+    tograms.
+
+ o  A Toolbox window and other customization features that provide users
+    with the ability to create, modify, or delete map icons, connect-
+    ing lines, text, or other items in a map window. Users can create
+    map icons, add geographic maps or other backdrops, and add customized
+    icons to the Toolbox for retrieval and re-use.
+
+ Forms and Command Line PM provides character cell access to DECmcc Di-
+ rector function and access capabilities. The interface supports two
+ modes, Command Line Mode and Forms Mode.
+
+ Note: The Forms mode is available on VMS only.
+
+ The Command Line mode enables users to create names or mnemonics and
+ use special symbols to reduce data entry and eliminate input errors.
+ It supports command line recall and editing, abbreviation, online Help,
+ symbol substitution, use of control key sequences, line continuation,
+ and the typeahead function.
+
+ Command Line mode also supports the use of scripts to automate fre-
+ quently used DECmcc command sequences. Users can set up initializa-
+ tion files through the Command Line mode for establishing defaults and
+ executing startup directives. In addition, users can log any command
+ to an output file for storage and review.
+
+ The Forms mode provides the basic features of the Command Line mode
+ in addition to a scroll feature that enables users to save up to 500
+ lines of output from management directives, scroll through the saved
+ output, and create new directives based on previous input. The Forms
+ mode also allows printing and logging of entries made to the output
+ region.
+
+ Both the Forms mode and the Command Line mode, as well as the Iconic
+ Map interface, provide online, context-sensitive Help.
+
+ Director Extensibility
+
+                                  6
+
+ 
+
+ In addition to providing basic monitoring and control functions as stan-
+ dalone product, the DECmcc Director is an extensible management plat-
+ form to which other DECmcc software modules, optional packages, third-
+ party, or user-developed Management Modules can be added. Optional pack-
+ ages include generic functional capabilities such as Alarming and No-
+ tification and object-specific functions and access modules that sup-
+ port device-specific management protocols.
+
+ The DECmcc Director management access and functions are also the ba-
+ sis for other DECmcc Director Family products such as the DECmcc Ba-
+ sic Management System (BMS) and the DECmcc Enterprise Management Sta-
+ tion (EMS). Refer to the list of optional software below, and the DECmcc
+ Director Product Family Overview SPD (SPD 37.19.xx), and the specific
+ SPD for the appropriate DECmcc Director Family product.
+
+ Third parties and users can develop software modules for DECmcc Fam-
+ ily Products to provide access to, and management functions for, any
+ manageable object. Software and documentation for the development of
+ integrated DECmcc modules are available as part of the DECmcc Devel-
+ oper's Toolkit. For more information about the DECmcc Developer's Toolkit,
+ refer to SPD 32.49.xx.
+
+ DECmcc BMS includes several utilities that enable on-site enrollment
+ of Management Modules. Documentation required for third-party module
+ enrollment must be supplied by the module developer.
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations with an Ethernet controller
+ as specified in the System Support Addendum (SSA 32.46.02-x).
+
+ SOFTWARE REQUIREMENTS
+
+ For VMS:
+
+ o  For Systems Using Terminals (No DECwindows
+    Interface): VMS Operating System
+
+
+
+                                  7
+
+ 
+
+ o  For Workstations Running DECwindows:
+    VMS Operating System
+    (and necessary components of DECwindows)
+
+ For ULTRIX:
+
+ o  For Systems Using Terminals (No DECwindows
+    Interface): ULTRIX Operating System
+
+ o  For Workstations (both with and without
+    DECwindows): ULTRIX Worksystem Software
+
+ Refer to the System Support Addendum (SSA 32.46.02-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ OPTIONAL SOFTWARE
+
+ For VMS:
+
+ o  DECnet-VAX - If the Digital Distributed Name Service (DECdns) is
+    used or if DECnet Phase IV or DECnet/OSI nodes are to be managed
+
+ o  A Digital Distributed Name Service (DECdns) Server must be installed
+    somewhere on the network to implement a global naming repository
+    in place of the DECmcc local system naming repository
+
+ o  DEC TCP/IP Run-Time for VMS to support SNMP access
+
+ o  DECmcc Notification Package
+
+ o  DECmcc Performance Statistics Package
+
+ o  DECmcc Historical Data Services Package
+
+ o  DECmcc Configuration Package
+
+ o  DECmcc Fault Diagnostic Package
+
+ o  DECmcc ELM (AM/FM) for VMS
+
+ o  Terminal Server Access Module
+
+                                  8
+
+ 
+
+ For ULTRIX:
+
+ o  DECnet-ULTRIX - If the Digital Distributed Name Service for ULTRIX
+    (DECdns for ULTRIX) is used, or if DECnet Phase IV or DECnet/OSI
+    nodes are to be managed. Note that the DNS Clerk for ULTRIX is avail-
+    able only with DECnet/OSI.
+
+ o  A Digital Distributed Name Service (DECdns) Server must be installed
+    somewhere on the network to implement a global naming repository
+    in place of the DECmcc local system naming repository
+
+ o  DECmcc Notification Package
+
+ o  DECmcc Performance Statistics Package
+
+ o  DECmcc Historical Data Services Package
+
+ o  DECmcc Configuration Package
+
+ o  DECmcc Fault Diagnostic Package
+
+ o  DECmcc ELM (AM/FM) for ULTRIX
+
+ ORDERING INFORMATION
+
+ For VMS:
+
+ Software Licenses: QL-VM9A9-AA
+ Software Media: QA-VM9AA-H5
+ Software Documentation: QA-VM9AA-GZ
+ Software Product Services: QT-VM9A*-**
+
+ For ULTRIX:
+
+ Software Licenses: QL-GU3A8-AA
+ Software Media: QA-GU3AA-H5
+ Software Documentation: QA-GU3AA-GZ
+ Software Product Services: QT-GU3A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+                                  9
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, please con-
+ tact your local Digital office.
+
+ License Management Facility
+
+ This layered product supports the VMS and ULTRIX RISC License Manage-
+ ment Facility (LMF).
+
+ License units for this product are allocated on an Unlimited Use ba-
+ sis.
+
+ Note: To use the DECmcc Director in a Diskless Management System (DMS)
+ environment, the DMS server must be a supported DECmcc Director con-
+ figuration, including a comparable DECmcc Director license.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx), the
+ ULTRIX Operating System Software Product Description (SPD 26.40.xx),
+ or the License Management Facility manual of the VMS or ULTRIX Oper-
+ ating System documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ Other Network Management Services are also available. These include,
+ but are not restricted to, the following:
+
+ o  Network Management Operations Services
+
+ o  Network Management Planning and Design Services
+
+ o  Network Management Implementation Services
+
+ o  Network Management Training
+
+ For local availability, please contact your Digital Sales Office.
+
+                                 10
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ 
+
+ [TM]The DIGITAL Logo, ADVANTAGE-NETWORK, CI, DECmcc, DECnet, DEC-
+    station, DECsystem, DECwindows, DMS, MicroVAX, OpenVMS, ULTRIX,
+    VAX, VAXserver, VAXstation, and VMS are trademarks of Digital
+    Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 11

@@ -1,0 +1,632 @@
+ 
+
+
+
+           Software
+           Product
+           Description
+           _________________________________________________________
+
+           PRODUCT NAME:  DEC High Availability Management    SPD 31.86.01
+                          Software for VMS, Version 1.2
+
+           DESCRIPTION
+
+           System Overview
+
+           MIRA AS systems are High Availability systems based on a dual
+           host architecture plus watchdog modules installed in each
+           computer and communicating via a dedicated link.
+
+           DEC High Availability Management Software (DEC HAMS) con-
+           trols MIRA AS systems, handling the following main tasks:
+
+           o  Error detection at system level as well as at device level
+              provided that device errors are logged/recorded by their
+              associated driver
+
+           o  Application failover and recovery initiation upon error
+              detection and in accordance with user-configured action
+              templates
+
+           The complete application recovery (regain the lost process
+           context) must be accomplished by the application itself. Pro-
+           cess/context shadowing is not a feature of DEC HAMS.
+
+           Before running an application, the user must configure the
+           system environment and error recovery strategy. This should
+           be done on both computers and consists of filling in tem-
+           plates associating the devices dedicated to the application,
+           and the actions to be taken in the event of device failure.
+
+           The two computers of a MIRA AS system operate independently.
+           DEC HAMS is installed on each computer and handles connected
+           applications so a complete failover is decided only if ab-
+           solutely necessary, thus increasing the system availabil-
+           ity.
+
+                                    DIGITAL              August 1991
+
+                                                         AE-PBFYB-TE
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           When detecting a device failure which does not impact the
+           whole functionality of one computer and provided the user
+           has filled in the action tables accordingly, DEC HAMS is able
+           to decide the failover of only those applications associ-
+           ated with this failed device. The unaffected applications
+           are kept running on the current computer.
+
+           MIRA AS systems provide a hardware and software environment
+           required to create high availability applications, which can
+           recover from failure without operator intervention.
+
+           MIRA AS systems are suited to dedicated control applications,
+           allowing very short breaks of system availability which do
+           not affect its overall integrity during the service/maintenance
+           /replacement of the failed component.
+
+           Terminology
+
+           LOCAL System - System currently operating or executing com-
+           mands.
+
+           REMOTE System - System at the other end of the watchdog link.
+
+           MASTER Application - Application running on any of the two
+           computers with a backup application declared in STANDBY mode
+           on the other computer.
+
+           MASTER BACKUP Application - Application, formerly in STANDBY
+           mode which became MASTER after the failure of its partner
+           on the remote system.
+
+           SYSTEM Failure - Failure affecting the integrity of the whole
+           system which is not recoverable by the application result-
+           ing in a SYSTEM FAILOVER.
+
+           NON-SYSTEM Failure - Failure affecting a specific device and
+           /or its associated application(s). Recovery depends on cus-
+           tomer needs and may result in APPLICATION FAILOVER (all or
+           part).
+
+           Failure Detection Process
+
+                                       2
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           DEC HAMS is installed on each computer and exchanges sta-
+           tus messages via the dedicated watchdog link.
+
+           o  System Failure
+
+              If the software on either computer is unable to exchange
+              messages within a user-specified period or detects a sys-
+              tem failure, a system failover occurs on the computer still
+              in operation.
+
+           o  Non-System Failure
+
+              Once a device error threshold has been reached or when-
+              ever a MIRA AS application fails, a non-system error is
+              generated. If the software on either computer sends a mes-
+              sage with application or application device failure state,
+              application failover or system failover occurs on the re-
+              mote computer.
+
+           Failover Operation
+
+           In the event of system failover, the following automatically
+           occurs on the computer still operating:
+
+           o  All the applications in STANDBY mode acquire the MASTER
+              BACKUP state, thus initiating application(s) recovery.
+
+           o  All the applications in MASTER mode keep the MASTER state.
+
+           The following automatically occurs on the failed computer:
+
+           o  If the feature known as "DCLOW" is enabled, a power fail
+              is simulated thus speeding up the release of the dual-
+              port disks mounted so they can be mounted on the other
+              system (e.g., RA type disks).
+
+           In the event of application failover, the local application
+           is aborted. The partner application on the remote computer,
+           in STANDBY mode, acquires the MASTER BACKUP state, thus ini-
+           tiating the application recovery.
+
+                                       3
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           application failover => recovery initiation => recovery com-
+           pletion
+
+                              |
+
+               --------->     |   <---------
+
+               HAMS driven    |   Application driven
+
+           DEC HAMS can perform failover, plus application recovery ini-
+           tialization, in less than a few seconds on normally loaded
+           systems.
+
+           On-line Testing
+
+           On-line tests can be invoked by the operator to test the spe-
+           cific MIRA AS hardware on a system. Tests can be used with-
+           out disturbing the applications running on either computer.
+
+           Diagnostics
+
+           MDM Diagnostics must be run on the faulty computer. In case
+           of partial system failure, the user has to provoke a com-
+           plete system failover by using an operator command. Diag-
+           nostics and repair can then be done normally on the faulty
+           system without affecting the applications running on the com-
+           puter still in operation.
+
+           Re-start
+
+           Once a failed computer is repaired and restarted:
+
+           o  Local applications having a remote partner application
+              in master backup state acquire the master state.
+
+           o  The remote partner application in master backup mode ac-
+              quires the standby state.
+
+           o  The local application having a remote partner applica-
+              tion in master state acquires the standby state.
+
+           o  The remote application in master state keeps the master
+              state.
+
+                                       4
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           Thus, the user-configured load sharing mode will be re-established.
+
+           Swap Operation
+
+           A user application or the operator can command SYSTEM or AP-
+           PLICATION SWAP. This operation can be disabled by an appli-
+           cation. It is only valid from a local application in mas-
+           ter state and with a remote partner application in standby
+           state.
+
+           In the event of SYSTEM SWAP, on both computers:
+
+           o  All the applications in standby state acquire the mas-
+              ter state.
+
+           o  All the applications in master state acquire the standby
+              state.
+
+           o  All the applications in master backup state keep this state.
+
+           In the event of APPLICATION SWAP:
+
+           o  The local application in master/standby state acquires
+              the standby/master state.
+
+           o  The remote partner application in standby/master state
+              acquires the master/standby state.
+
+           APPLICATION SWAP gives load sharing possibilities and al-
+           lows use of 100 percent of the available CPU resource of the
+           MIRA AS system.
+
+
+
+
+
+
+
+
+
+
+                                       5
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           Failover Summary
+
+           _________________________________________________________
+                           Application State BEFORE
+
+                        Computer 1     Computer 2
+
+           FAILOVER     MASTER         STANDBY
+           of           MASTER         Unknown
+           Application  MASTER BACKUP  Unknown
+           on Com-      STANDBY        MASTER
+           puter 1
+
+           FAILOVER     MASTER         STANDBY
+           of           STANDBY        MASTER
+           Application  Unknown        MASTER
+           on Com-      Unknown        MASTER BACKUP
+           puter2
+           _________________________________________________________
+                           Application State AFTER
+
+                        Computer 1     Computer 2
+
+           FAILOVER     Unknown        MASTER BACKUP
+           of           Unknown        Unknown
+           Application  Unknown        Unknown
+           on Com-      Unknown        MASTER
+           puter 1
+
+
+
+
+
+
+
+                                       6
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+           _________________________________________________________
+                           Application State AFTER
+
+                        Computer 1     Computer 2
+
+           FAILOVER     MASTER         Unknown
+           of           MASTER BACKUP  Unknown
+           Application                 Unknown
+           on Com-      Unknown        Unknown
+           puter 2      Unknown
+
+           Swap Summary
+
+           _________________________________________________________
+                           Application State BEFORE
+
+                        Computer 1    Computer 2
+
+           SWAP of      MASTER         STANDBY
+           Application  STANDBY        MASTER
+           on Com-      MASTER         Unknown
+           puter 1      MASTER BACKUP  Unknown
+
+           SWAP of      MASTER         STANDBY
+           Application  STANDBY        MASTER
+           on Com-      Unknown        MASTER
+           puter 2      Unknown        MASTER BACKUP
+
+
+
+
+
+                                       7
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           _________________________________________________________
+                           Application State AFTER
+
+                        Computer 1    Computer 2
+
+           SWAP of      STANDBY        MASTER
+           Application  STANDBY        MASTER
+           on Com-      MASTER         Unknown
+           puter 1      MASTER BACKUP  Unknown
+           
+
+           SWAP of      MASTER         STANDBY
+           Application  MASTER         STANDBY
+           on Com-      Unknown        MASTER
+           puter 2      Unknown        MASTER BACKUP
+
+           Operator Commands
+
+           The following set of operator commands enables the opera-
+           tor to control the system:
+
+           _________________________________________________________
+           ____________________General_Commands_____________________
+
+           HELP              Displays information on commands
+
+           EXIT              Exits to DCL
+
+           START             Starts MIRA AS operation
+
+           STOP              Stops MIRA AS operation
+
+           SHOW SYSTEM       Displays local/remote system states
+
+                                       8
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           _________________________________________________________
+           ____________________General_Commands_____________________
+
+           TEST              Tests local/remote watchdog link
+
+           SET LOG_FILE      Creates new log files
+
+           SET SYSTEM        Associates system or system device
+                             failure with an action
+
+           CLEAR SYSTEM      Cancels effect of set system
+
+           _________________________________________________________
+           _____________Application_Management_Commands_____________
+
+           SWAP              Forces swap of application states
+
+           FAILOVER          Forces failover of application/system
+
+           RUN               Starts local and remote application
+
+           SHOW APPLICA-     Displays information about particular
+           TION              application
+
+           SET APPLICATION   Adds entry in application action table
+
+           CLEAR APPLICA-    Removes entry from application action
+           TION              table
+
+           SHOW CONNEC-      Displays informations about the running
+           TIONS             applications
+
+           _________________________________________________________
+           ________________Error_Management_Commands________________
+
+           SHOW DEVICE       Displays device/application action
+                             tables
+
+           SET DEVICE        Adds entry in device action table
+
+           CLEAR_DEVICE______Removes_entry_from_device_action_table_
+
+                                       9
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           User Application Interface
+
+           The User Application Interface provides a set of user-callable
+           subroutines allowing exchange of information via DEC HAMS.
+           DEC HAMS must be active on each computer.
+
+           These subroutines comply with the VMS Standard for Proce-
+           dure Calling and Condition Handling and are supported for
+           VAX Pascal, VAX MACRO, VAX Ada, VAX BASIC, VAX COBOL, VAX
+           BLISS-32, VAX PL/1, VAX C and VAX FORTRAN and include the
+           following functions:
+
+           HAMS$CONNECT      Connects the user application (maximum
+                             16 simultaneous connections supported)
+
+           HAMS$DISCONNECT   Disconnects the user application
+
+           HAMS$SWAP         Swaps MASTER and STANDBY applications
+
+           HAMS$FAILOVER     Forces application failover
+
+           HAMS$DISABLE_     Disables Application Swap Operations
+           SWAP
+
+           HAMS$ENABLE_      Enables Application Swap Operations
+           SWAP
+
+           HAMS$GET_EVENT    Gets DEC HAMS event status
+
+           If requested, the user applications can also be notified of
+           changes in application status and invoke the necessary re-
+           covery procedures.
+
+           Clock Synchronization
+
+           The two computer clocks can be synchronized within a few mil-
+           liseconds. This optional feature may be managed automati-
+           cally by DEC HAMS.
+
+
+
+                                      10
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           SOURCE CODE
+
+           The following source code modules are provided with Single-
+           Use License, binary options on TK50 distribution media:
+
+           o  Ada Application Interface routines
+
+           INSTALLATION
+
+           Digital recommends that a customer's first purchase of this
+           software product include Digital Installation Services. These
+           services provide for installation of the software product
+           by an experienced Digital Software Specialist.
+
+           For subsequent purchases of this product only experienced
+           customers should attempt installation. Digital recommends
+           that all other customers purchase Digital's Installation Ser-
+           vices.
+
+           Customer Responsibilities
+
+           Before installation of the software, the customer must:
+
+           o  Previously have installed all requisite software and hard-
+              ware including terminals.
+
+           o  Make available for a reasonable period of time, as mu-
+              tually agreed by Digital and the customer, all hardware,
+              communication facilities and terminals that are to be used
+              during installation.
+
+           Delays caused by any failure to meet these responsibilities
+           will be charged at the then prevailing rate for time and ma-
+           terials.
+
+           HARDWARE REQUIREMENTS
+
+           VAX and VAXserver configuration as specified in the System
+           Support Addendum (SSA 31.86.01-x).
+
+
+                                      11
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           SOFTWARE REQUIREMENTS
+
+           o  VMS Operating System
+
+           o  VAX Ada (if this product is to be accessed from appli-
+              cations in an ADA environment)
+
+           Refer to the Systems Support Addendum (SSA 31.86.01-x) for
+           availability and required versions of prerequisite/optional
+           software.
+
+           ORDERING INFORMATION
+
+           Software Licenses: QL-YHMA*-**
+           Software Media: QA-YHMAA-**
+           Software Documentation: QA-YHMAA-GZ
+           Software Product Services: QT-YHMA*-**
+
+           *  Denotes variant fields. For additional information on avail-
+              able licenses, services, and media, refer to the appro-
+              priate price book.
+
+           SOFTWARE LICENSING
+
+           This software is furnished under the licensing provisions
+           of Digital Equipment Corporation's Standard Terms and Con-
+           ditions. For more information about Digital's licensing terms
+           and policies, contact your local Digital office.
+
+           LICENSE MANAGEMENT FACILITY SUPPORT
+
+           This layered product supports the VMS License Management Fa-
+           cility.
+
+           License units for this product are allocated on a CPU-capacity
+           basis.
+
+
+
+
+
+                                      12
+
+ 
+
+
+
+           DEC High Availability Management            SPD 31.86.01
+           Software for VMS, Version 1.2
+
+           For more information on the License Management Facility, re-
+           fer to the VMS Operating System Software Product Descrip-
+           tion (25.01.xx) or the VMS Operating System documentation
+           set.
+
+
+           SOFTWARE PRODUCT SERVICES
+
+           A variety of service options are available from Digital. For
+           more information, contact your local Digital office.
+
+           SOFTWARE WARRANTY
+
+           Warranty for this product is provided by Digital with the
+           purchase of a license for the product as defined in the Soft-
+           ware Warranty Addendum of this SPD.
+
+           [TM] The DIGITAL Logo, CI, DEC, VAXft, VAX Ada, VAX BASIC,
+                VAX C, VAX COBOL, VAX FORTRAN, VAX MACRO, VAX Pascal,
+                VAX, VAXcluster, VAXserver, VAXstation and VMS are
+                trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      13

@@ -1,0 +1,164 @@
+
+PRODUCT NAME: VAX DECscan VMS and ELN Bitbus Drivers,       SPD 27.98.02
+              Version 2.0
+
+DESCRIPTION
+
+The DECscan Product set provides a hardware and software link between the 
+Q-bus series of MicroVAX processors (MicroVAX II, IVAX, MicroVAX 3000) and
+the Intel Bitbus.  It allows for communication between users in a MicroVAX 
+host and multi-dropped devices and software tasks running on those devices
+(nodes) adhering to Bitbus protocol. 
+
+The DECscan software consists of the following:
+
+1. A MicroVAX VMS driver, along with a user-interface program, allowing the
+   user  to  access  a  Bitbus  system  either  through  a  program  or 
+   interactively, when using VMS as the operating system.
+   The MicroVAX VMS user-interface provides the user with the ability to 
+   configure the system and test its responses for calibration purposes.  
+   With this functionality, VAX DECscan allows the user to obtain and 
+   monitor real-time data.
+
+2. A VAXELN driver, allowing the user the ability to build finished VAXELN
+   systems, on any VMS Host system, using the VAXELN toolkit.
+   The finished VAXELN system is then down-line loaded to MicroVAX target 
+   systems, where it runs without the presence of another operating system. 
+   VAXELN is especially suited to creating real-time applications in which
+   the system response speed and predictability to external events
+   is critical.
+
+   The ELN target systems may be diskless and down-line loaded via Ethernet
+   using DECnet services and protocols or permanently resident in the ELN
+   target systems using erasable, programmable,read-only memories (EPROMs).
+
+3. An 8044 cross-assembler and support utilities, allowing the user to
+   develop application tasks, on the VMS Host system, to run on 8044-
+   based Bitbus Nodes. When using the DECscan MicroVAX VMS Driver, these
+   Remote node tasks are down-line loaded directly to and run on the Bitbus
+   nodes.  When using the DECscan ELN driver, these remote tasks are
+   included in the finished VAXELN system which is down-line loaded to the
+   MicroVAX target system. The finished VAXELN system then down-line loads
+   the remote Bitbus tasks to run on the Bitbus nodes.
+
+All communication with the IBQ01 Bitbus Controller (Refer to Hardware 
+Requirements) is done via driver calls. The DECscan MicroVAX VMS and the 
+DECscan ELN drivers provide the standard operating system interface to the 
+IBQ01 Bitbus Controller. All driver communications to Bitbus nodes remain 
+active until a reply is received by the IBQ01 controller or a user-specified 
+timeout condition is reached.
+
+Both drivers and the IBQ01 controller support the BITBUS capability of
+multiple concurrently active communication paths (serialized by the BITBUS
+protocol).  Communication requests can be active to multiple BITBUS nodes
+and multiple tasks within a BITBUS node at the same time, and will complete
+asynchronously, independent of each other.  Multiple requests to the same
+node/task pair will have only one active at a time on the BITBUS, the rest
+being queued in the IBQ01 controller.
+
+Each Bitbus node supports up to eight active tasks. 
+
+Under the DECscan MicroVAX VMS driver, the user issues QIO calls directly or 
+through the user-interface.  The QIO call invokes the DECscan MicroVAX VMS 
+driver, which sends commands to the IBQ01 controller, followed by an interrupt.
+
+Under the DECscan VAXELN driver, the user issues driver calls through the
+subroutines provided. The VAXELN subroutines complete upon initiating the 
+transfer. An asynchronous return mechanism is provided to inform the caller 
+when the actual transfer has been completed.
+
+Depending upon the nature of the command, the IBQ01 either responds
+directly or transfers this command, via the Bitbus, to a node running
+Bitbus protocol.  In the latter case, the node response is application
+dependent.  When the command has been processed by either the node or the 
+IBQ01, the IBQ01 sends response data to the host followed by an interrupt.  
+The drivers check the response data against what was sent for consistency
+and reports either success or the reason for failure.
+
+By using the asynchronous driver completion mechanisms provided (e.g. QIO
+in VMS) and writing custom tasks for certain third party BITBUS nodes,
+users can potentially distribute much processing and reduce the load on
+the MicroVAX.  For instance, I/O to multiple nodes may be simultaneously
+pending.  The various tasks on these nodes might be set up to only respond
+to the pending I/O when the results of special processing or alarms are
+available.  The MicroVAX process in this case could merely wait for event
+flags indicating the node/task response had occurred.  Routine data processing
+and control could be handled in the nodes' tasks.
+
+The DECscan VMS driver and the DECscan ELN driver will support up to eight
+IBQ01 controllers per MicroVAX system.
+
+INSTALLATION
+
+Only experienced customers should attempt installation of this product.
+DIGITAL recommends that all other customers purchase DIGITAL's Installation
+Services.  These services provide for installation of the software product
+by an experienced DIGITAL Software Specialist.
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX, or VAXstation configuration as specified in the System Support
+Addendum (SSA 27.98.02-x).
+
+SOFTWARE REQUIREMENTS *
+
+VMS Operating System or MicroVMS Operating System
+
+VAXELN Toolkit
+
+For VAXELN Driver
+
+The VAXELN Toolkit, V3.0 must be installed on the host which is to 
+receive the DECscan VAXELN driver.  Refer to VAXELN Toolkit (SPD 
+28.02.xx).
+
+OPTIONAL SOFTWARE *
+
+VAX DECscan VMS Software Tool Kit
+
+* Refer to the System Support Addendum for availability and required versions of
+  prerequisite/optional software (SSA 27.98.02-x).
+
+ORDERING INFORMATION
+
+Software License:  QL-VCJA*-**
+Software Media: QA-VCJA*-**
+Software Documentation: QA-VCJAA-GZ
+Software Product Services: QT-VCJA*-**
+
+* Denotes variant fields.  For additional information on available 
+  licenses, services and media refer to the appropriate price book.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum of
+this SPD. 
+                                                                  
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions.  For more information about DIGITAL's
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY
+  
+This layered product supports the VMS License Management Facility.
+License units for this product are allocated on a CPU-capacity basis.
+  
+For more information on the License Management Facility, refer
+to the VMS Operating System Software Product Description
+ (SPD 25.01.xx) or the VMS Operating System documentation set.
+  
+For more information on DIGITAL's licensing  policies, contact your 
+local DIGITAL office.
+  
+SOFTWARE PRODUCT SERVICES 
+
+A variety of service options are available. For more information on these or
+other services, please contact your local DIGITAL office. 
+
+
+August 1988
+AE-KN30C-TE
+

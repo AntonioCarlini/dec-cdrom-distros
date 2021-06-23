@@ -1,0 +1,555 @@
+ 
+
+
+
+
+
+
+           Software
+           Product
+           Description
+
+           _________________________________________________________
+
+           PRODUCT NAME:  VAX Message Router/S Gateway,    SPD 29.24.02
+			  Version, 1.2
+
+           DESCRIPTION
+
+           VAX Message Router/S Gateway (MRS) is a network server lay-
+           ered software product that resides on VAX/VMS systems pro-
+           viding interconnection between MAILbus, Digital Equipment
+           Corporation's Message Router based electronic message trans-
+           fer service, and IBM[R]'s Systems Network Architecture Dis-
+           tribution Services (SNADS). Through MRS, users of Digital
+           office automation systems such as ALL-IN-1 MAIL Server or
+           ALL-IN-1 Integrated Office System can send and receive mes-
+           sages, documents, notes, and binary files (for example, MS-DOS[R]
+           files) to and from users of IBM office systems, such as Per-
+           sonal Services/370.
+
+           VAX Message Router/S Gateway provides both address and con-
+           tent conversion for messages and documents passed between
+           the Digital and IBM office networks. In this way, users are
+           not required to learn new commands or procedures except the
+           new addresses representing the users of the other network(s)
+           with whom they can now communicate by means of MRS. MRS con-
+           nects to an IBM DISOSS system, which contains the host im-
+           plementation of SNADS. Other SNADS nodes have access to the
+           Digital network through their SNA connections to that IBM
+           host. No Digital software is required to be installed on the
+           IBM system to accomplish these transfers. With some restric-
+           tions, MRS allows users of those IBM office systems to com-
+           municate through MAILbus to other networks including pub-
+           lic messaging services.
+
+
+
+                                    DIGITAL            November 1991
+
+                                                         AE-KX36C-TE
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           Message address conversion is accomplished through the Di-
+           rectory Service (DDS) function of Message Router. Each Dig-
+           ital user sending and receiving mail to and from IBM users
+           must be registered in DDS and assigned an "alias" or vir-
+           tual address for the SNADS network. Limited one way message
+           transfer from MAILbus to IBM is possible without user reg-
+           istration in DDS. The recipient (addressee) list of a sin-
+           gle message and stored distribution lists can include both
+           Digital and IBM users. Delivery Confirmation and Non-Delivery
+           Notification messages are supported.
+
+           During MRS configuration, a number of options for message
+           content conversion may be chosen on a per-gateway basis. To
+           preserve maximum revisable content, messages and documents
+           from the Digital network can be converted to IBM's DCA Re-
+           visable Format. Where users of IBM systems only have access
+           to simple text editors, conversions can be made to IBM's DCA
+           Final Format or to DISOSS Note format. Digital text messages
+           with one or more attached text documents are concatenated
+           into a single document for transfer to the SNADS network.
+           Not all attachments to mixed contents messages will be sent
+           to SNADS.
+
+           Binary non-text file types, identified in the Digital net-
+           work as DECbodypart 7 (FOREIGN) or DECbodypart 11 (MS-DOS),
+           will be transferred unconverted to the IBM SNADS network.
+           Such files, sent from a Digital to an IBM SNADS network, will
+           lose their Digital RMS attributes. Binary file transfer is
+           primarily intended for the transfer of MS-DOS files between
+           the Digital and IBM networks. Files tagged as DCA files (for
+           example, a document produced on a PC word processing sys-
+           tem) can be identified in the SNADS network as a DCA doc-
+           ument. Not all Digital User Agents and Gateways can append
+           these tags to DECbodypart 7 or DECbodypart 11 files. Only
+           one binary file may be passed to the IBM environment at a
+           time; any attachments to these files will be lost. These con-
+           version options are chosen during MRS configuration.
+
+
+
+
+                                       2
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           Content and identity conversion for Digital to IBM trans-
+           fers are summarized in the following table:
+
+           _________________________________________________________
+
+           Table_1:_________________________________________________
+
+           Digital
+           Message           Default          Optional
+           Format____________Conversion_______Conversions___________
+
+           Simple Mail       DCA FFT Docu-    DCA RFT Document or
+           Messages          ment             DISOSS Note
+           (ASCII,
+           WPS-PLUS,
+           DECdx)
+
+           Documents         DCA RFT Docu-    DCA FFT Document or
+           (ASCII,           ment             DISOSS Note
+           WPS-PLUS, DECdx
+           DDIF Text)
+
+           Binary Files      DCA RFT Docu-
+           with RFT Tag      ment
+           (DECbodypart 7
+           or 11)
+
+           Binary File       DCA FFT Docu-
+           with FFT Tag      ment
+           (DECbodypart 7
+           or 11)
+
+           Other Binary      SNADS Binary
+           File (DEC-        (OOOE)
+           bodypart 7 or 11)
+           ___________________________________________________________
+
+           Messages, DISOSS Notes and documents from the IBM SNADS net-
+           work in DCA RFT or FFT Format may be converted to DECdx for-
+           mat or remain in DCA Format as a DECbodypart 7 with an RFT
+           or FFT tag respectively. Not all versions of Digital User
+           Agents and Gateways support this tagging scheme. Other files
+
+                                       3
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           are passed through unconverted and identified as DECbody-
+           part 7 files and are assigned RMS fixed length 512 byte records.
+           Binary file transfer from SNADS may be disabled during MRS
+           configuration.
+
+           Content and identity conversion for IBM to DEC transfers are
+           summarized in the following table:
+
+           _________________________________________________________
+
+           Table_2:_________________________________________________
+
+           IBM
+           Message           Default          Optional
+           Format____________Conversion_______Conversions___________
+
+           DISOSS Message    ASCII
+
+           DISOSS Note       DECdx            Binary File with FFT
+                                              Tag (DECbodypart 7)
+
+           DCA FFT           DECdx            Binary File with FFT
+                                              Tag (DECbodypart 7)
+
+           DCA RFT           DECdx            Binary File with RFT
+                                              Tag (DECbodypart 7)
+
+           SNADS Binary      Binary File      Binary File (DECbody-
+           File (000E)       (DECbodypart 7)  part 11) or Rejected,
+                                              Non-Delivery Notice
+                                              returned to Sender
+
+           Other files       Rejected, Non-
+                             Delivery Notice
+                             returned to
+           __________________Sender_________________________________
+
+           ALL-IN-1 Integrated Office System can automatically convert
+           DECdx format to WPS-PLUS format. Other Digital user agents
+           and MAILbus Gateways can convert DECdx format to a format
+           appropriate to their function. Since the capabilities of each
+           vendor's word processing systems are not identical, and since
+           some control information is not transmitted, not all attributes
+
+                                       4
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           and functions are converted. The MRS product documentation
+           lists the restrictions. Users are responsible for understand-
+           ing the capabilities of destination systems when sending bi-
+           nary files. Binary file transfer should not be used with ALL-IN-1
+           Integrated Office System, Version 2.2 or earlier or VMSmail
+           Personal Mail Utility of the VMS Operating System, Version
+           5.1 or earlier.
+
+           A single MRS installation will support messaging services
+           between a SNADS network of IBM office systems and a MAIL-
+           bus network of Digital VMS systems and between the SNADS net-
+           work and any other messaging network connected to that MAIL-
+           bus. Service levels obtained in the latter case will depend
+           on the characteristics of this other network.
+
+           To provide connection to MAILbus, the VAX Message Router soft-
+           ware is required by and included with the software license
+           and media kit for VAX Message Router/S Gateway.
+
+           INSTALLATION
+
+           MRS forms only one part of a distributed multi-vendor elec-
+           tronic messaging application. Important activities, such as
+           coordination with other messaging components, modification
+           of the IBM system parameters and the creation or update of
+           subscriber entries in the directory service, must precede
+           the installation of this product. Digital offers a number
+           of services to assist customers with these tasks. Refer to
+           the SOFTWARE PRODUCT SERVICES section of this SPD for more
+           information.
+
+           Only experienced customers should attempt installation of
+           this product. Digital recommends that all other customers
+           purchase Digital's Installation Services. These services pro-
+           vide for installation of the software product by an expe-
+           rienced Digital Software Specialist.
+
+           Digital's Installation Services can be purchased as a sep-
+           arate service.
+
+
+                                       5
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           Customer Responsibilities
+
+           Before Digital installation of the software the customer must:
+
+           o  Previously have installed all prerequisite hardware in-
+              cluding terminals.
+
+           o  Obtain, install and demonstrate as operational any modems
+              and other equipment and facilities necessary to inter-
+              face to Digital's communications equipment.
+
+           o  Demonstrate equivalency of operation for modems other than
+              Bell System 201C, 208A or 209A type modems, or, in Eu-
+              rope, PTT approved modems.
+
+           o  Have generated, to Digital's satisfaction, any necessary
+              IBM host software that will be communicating with the DEC-
+              net/SNA Gateway or VMS/SNA and VAX Message Router/S.
+
+           o  Make available for a reasonable period of time, as mu-
+              tually agreed by Digital and the customer, all hardware,
+              communications facilities, and terminals that are to be
+              used during the installation.
+
+           Delays caused by any failure to meet these responsibilities
+           will be charged at the prevailing rates for time and mate-
+           rials.
+
+           Successful use of this product requires:
+
+           o  The customer must be prepared to work with both Digital
+              and IBM systems personnel to coordinate the installation
+              activities.
+
+           o  The customer should be capable of modifying IBM compo-
+              nent generation parameters to support the DECnet/SNA Gate-
+              way or VMS/SNA and VAX Message Router/S Gateway.
+
+
+
+
+                                       6
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           HARDWARE REQUIREMENTS
+
+           Processors and/or hardware configuration as specified in the
+           System Support Addendum (SSA 29.24.02-x).
+
+           Either a DECnet/SNA Gateway system and VAX/VMS Load Host sys-
+           tem in a DECnet Ethernet local area network or, for single
+           VAX system connection to IBM, communications interfaces ap-
+           propriate to the VAX processor used, as specified in the Other
+           Hardware Required section of the System Support Addendum (SSA
+           29.24.02-x).
+
+           SOFTWARE REQUIREMENTS
+
+           VMS Operating System
+
+           DECnet-VAX
+
+           DECnet/SNA VMS APPC/LU6.2 Programming Interface
+
+           VAX Message Router (included in the software license and me-
+           dia kit for VAX Message Router/S Gateway)
+
+           For DECnet Ethernet Local Area Networks:
+
+           DECnet/SNA Gateway for Channel Transport, or
+
+           DECnet/SNA Gateway for Synchronous Transport
+
+           For Single VAX System Connection to IBM:
+
+           VMS/SNA and
+
+           VAX WAN Device Drivers Kit
+
+           Refer to the System Support Addendum (SSA 29.24.02-X) for
+           availability and required versions of prerequisite/optional
+           software.
+
+
+
+                                       7
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           ORDERING INFORMATION
+
+           Software Licenses: QL-VDUA*-**
+           Software Media: QA-VDUA*-**
+           Software Documentation: QA-VDUA*-GZ
+           Software Product Services: QT-VDUA*-**
+
+           *  Denotes variant fields. For additional information on avail-
+              able licenses, services, and media, refer to the appro-
+              priate price book.
+
+           VAX Message Router/S Gateway software license and media kit
+           include the software license and media kit for the required
+           VAX Message Router software.
+
+           SOFTWARE LICENSING
+
+           This software is furnished under the licensing provisions
+           of Digital Equipment Corporation's Standard Terms and Con-
+           ditions. For more information about Digital's licensing terms
+           and policies, contact your local Digital office.
+
+           License Management Facility Support
+
+           This layered product supports the VMS License Management Fa-
+           cility.
+
+           License units for this product are allocated on an Unlim-
+           ited System Use basis.
+
+           For more information on the License Management Facility, re-
+           fer to the VMS Operating System Software Product Descrip-
+           tion (SPD 25.01.xx) or the License Management Facility man-
+           ual of the VMS Operating System documentation set.
+
+
+
+
+
+
+
+                                       8
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           SOFTWARE PRODUCT SERVICES
+
+           MAILbus products are components of larger distributed mes-
+           saging applications, which may involve multiple vendors' sys-
+           tems in multiple locations. Digital offers a number of con-
+           sulting services to assist customers in the planning, in-
+           stallation and management of these messaging applications
+           and related directory services, integration of PC-based mes-
+           saging systems and the provision of network wide directory
+           services.
+
+           A variety of service options are available from Digital. For
+           more information, contact your local Digital office.
+
+           SOFTWARE WARRANTY
+
+           Warranty for this software product is provided by Digital
+           with the purchase of a license for the product as defined
+           in the Software Warranty Addendum of this SPD.
+
+           Warranty Limitations
+
+           Digital has designed this product in accordance with the in-
+           formation provided in the following IBM standards publica-
+           tions:
+
+           1. Document Interchange Architecture: Concepts and Struc-
+              tures (SC23-0759-0)
+
+           2. Document Interchange Architecture: Interchange Document
+              Profile Reference (SC23-0764-0)
+
+           3. Document Content Architecture: Final Form Text (SC23-0757-
+              1)
+
+           4. Document Content Architecture: Revisable Form Text (SC23-
+              0758-1)
+
+           5. Systems Network Architecture: Format and Protocol Ref-
+              erence Manual: Distribution Services (SC30-3098-2)
+
+                                       9
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           IBM Supported Configurations
+
+           This software has been tested and is warranted against IBM
+           System/370 (includes 30XX and 43XX series) class processor
+           systems configured to support the versions and releases of
+           the DISOSS program product shown below. While this software
+           may function correctly with other equipment and software,
+           Digital cannot offer its standard warranty and support ser-
+           vices for this software unless it has been tested by Dig-
+           ital with such equipment and software configurations.
+
+           VAX Message Router/S Gateway, Version 1.2 has been tested
+           and certified against the following IBM software configu-
+           rations:
+
+           _________________________________________________________
+
+           Table_3:_________________________________________________
+
+           Software Product      MVS/ESA             MVS/XA
+
+           _______________Version Release    Version Release_______
+
+           MVS/ESA            3      1
+
+           MVS/XA SP                           2      2.3
+
+           DISOSS/370         3      4         3      4
+
+           CICS/VS            2      1.1       2      1.1
+                              3      1.1
+
+           PS/CICS            1      3.1       1      3.1
+
+           DISPLAYWRITE/370___1______2.1_____  1______2.1_____________
+
+           Since the introduction of this software, other configura-
+           tions may have been tested. Please contact your local Dig-
+           ital office for up-to-date information regarding listed con-
+           figurations.
+
+                                      10
+
+ 
+
+
+
+           VAX Message Router/S Gateway, Version 1.2   SPD 29.24.02
+
+
+           Absolute fidelity between an original document and the re-
+           sulting document as printed or displayed by the receiving
+           system is not guaranteed. The differences between vendors'
+           approaches to word processing systems, the transformations
+           required for the transfer and printing of a document and the
+           types of printers used may all affect the resulting printed
+           document.
+
+           [R] IBM and PROFS are registered trademarks of Interna-
+               tional Business Machines Corporation.
+
+           [R] MS-DOS is a registered trademark of Microsoft Corpo-
+               ration.
+
+           [TM]The DIGITAL Logo, ALL-IN-1, CI, DEC, DECdx, DEC-
+               net, MicroVAX, VAX, VAXcluster, VAXft, VAXserver,
+               VAXstation, RA, RL, ULTRIX, VMS, and WPS-PLUS are
+               trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      11

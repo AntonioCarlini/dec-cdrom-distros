@@ -1,0 +1,283 @@
+DECnet/SNA VMS Printer Emulator, V1.2                         SPD 26.70.05
+
+DESCRIPTION
+
+DECnet/SNA VMS Printer Emulator (PrE) is a VMS layered software product 
+that allows suitably configured VMS systems within a DECnet network or 
+running VMS/SNA software to receive printable data from IBM (R) host-based 
+applications. These applications will originally have been developed to 
+produce output for an IBM 3287 printer in system mode that is connected to 
+an IBM 3274 cluster controller in a Systems Network Architecture (SNA) 
+networking environment. Access from the IBM system to VMS systems is via a 
+DECnet/SNA Gateway or VMS/SNA software. 
+
+In an actual IBM 3287 environment, data transfer is one way in nature (from 
+host to printer) and generates hard copy. The PrE Access software will 
+allow VMS users to direct the received output either to be printed via the 
+VMS Print Symbiont or spooled to a disk file.
+
+Features
+
+The following is a summary of functions provided by PrE:
+
+oo   PrE is configured and controlled via a DIGITAL Command Language (DCL) 
+    style interface for ease of use.
+
+oo   PrE can accept data in SNA Character String (SCS) format (LU Type 1) 
+    and 3270 Data Stream format (LU Type 3).
+
+oo   PrE recognizes the following 3270 Data Stream orders:
+
+    CR 	- Carriage Return
+    DUP	- Duplicate (converted to a semicolon)
+    EM	- End Message
+    EUA	- Erase Unprotected to Address
+    FF	- Formfeed
+    FM	- Field Mark (converted to an asterisk)
+    GE	- Graphics Escape (converted to a hyphen)
+    NL	- Newline
+    PT	- Program Tab
+    RA	- Repeat to Address
+    SBA	- Set Buffer Address
+    SF	- Start Fields
+
+oo   PrE supports the following 3270 Data Stream commands:
+
+    WRITE
+    ERASE/WRITE
+    ERASE/WRITE ALTERNATE
+    ERASE ALL UNPROTECTED
+
+oo   PrE will recognize the following SNA Character String orders:
+
+    BS	- Backspace
+    CR	- Carriage Return
+    FF	- Formfeed
+    GE	- Graphics Escape (converted to a hyphen)
+    HT	- Horizontal Tab
+    IRS	- Inter Record Separator
+    LF	- Linefeed
+    NL	- Newline
+    SHF	- Set Horizontal Format
+    SVF	- Set Vertical Format
+    TRN	- Transparency
+    VCS	- Vertical Channel Select
+    VT	- Vertical Tab
+
+oo   PrE accepts but ignores the following SNA Character String orders:
+
+    BEL	- Bell
+    ENP	- Enable Presentation
+    INP	- Inhibit Presentation
+    SLD	- Set Line Density
+
+oo   PrE supports the 3287 printer Program Attention (PA1 and PA2) keys and 
+    the CANCEL PRINT key using commands entered at the user interface.
+
+oo   PrE does not support the Printer Authorization Matrix feature, and it 
+    does not emulate the 3287's REPRINT key function.
+
+oo   PrE supports 1-255 copies of the print job to be printed.
+
+oo   PrE supports a maximum of 128 sessions simultaneously.
+
+oo   PrE supports the ability to submit a print job for another user. The 
+    print job will run exactly as if that user submitted the request. 
+    Accounting information is logged to that user's account. The user name 
+    string can be 1 to 12 characters in length and should be a valid 
+    username on the system.
+
+oo   PrE supports multiple form types.  The form type is specified by using 
+    either a numeric value or a form name.  These form types can refer to 
+    the print image width,   length or type of paper.  Codes for these form 
+    types are   installation-defined.
+
+oo   PrE supports the ability to change queue name, forms, number, number of 
+    copies, user name and choice of deleting the output stream files 
+    without stopping the session.
+
+oo   PrE supports the deletion of output files that are spooled to printers 
+    as a user-selectable setting.
+
+oo   PrE provides an option to send an INIT SELF request to the IBM 
+    application.
+
+oo   PrE supports LU security through the ability to specify a password for 
+    providing additional security to access the LU.  This feature is 
+    supported in the DECnet/SNA Gateway-ST, DECnet/SNA Gateway-CT, and 
+    VMS/SNA V2.0.
+
+INSTALLATION
+
+For PrE to be DIGITAL supported, the customer must have a DIGITAL supported 
+DECnet/SNA Gateway or VMS/SNA configuration.  To have a DIGITAL supported 
+DECnet/SNA Gateway configuration, purchase of the Gateway 
+Installation/Orientation Service is REQUIRED in conjunction with the 
+customer's first purchase of the DECnet/SNA Gateway. Refer to the 
+DECnet/SNA Gateway SPDs (SPD 30.15.xx, SPD 29.C6.xx, SPD 29.76.xx) for 
+further details.
+
+To have a DIGITAL supported VMS/SNA configuration, purchase of the VMS/SNA 
+Installation/Orientation Service is REQUIRED in conjunction with the 
+customer's first purchase of VMS/SNA. Refer to the VMS/SNA Software Product 
+Description (SPD 27.01.xx) for further details.
+
+Only experienced customers should attempt installation of this product. 
+DIGITAL recommends that all other customers purchase DIGITAL's Installation 
+Services.  These services provide for installation of the software product 
+by an experienced DIGITAL Software Specialist.
+
+Customer Responsibilities
+
+Before DIGITAL installation of the software the customer must:
+
+oo   Have previously installed all requisite hardware including terminals.
+
+oo   Obtain, install, and demonstrate as operational any modems and other 
+    equipment and facilities necessary to interface to DIGITAL's 
+    communications equipment.
+
+oo   Demonstrate equivalency of operation for modems other than Bell System 
+    201C, 208A or 209A, AT&T 2596 or 2556, Dataphone II (2096A, DIGITAL 
+    2500, or equivalent) type modems or, in Europe, PTT approved modems.
+
+oo   Have generated, to DIGITAL's satisfaction, any necessary IBM host 
+    software that will be communicating with the DECnet/SNA Gateway or 
+    VMS/SNA and Printer Emulator.
+
+oo   Make available for a reasonable period of time, as mutually agreed by 
+    DIGITAL and the customer, all hardware, communications facilities, and 
+    terminals that are to be used during installation.
+
+Delays caused by any failure to meet these responsibilities will be charged 
+at the prevailing rate for time and materials.
+
+Successful use of this product requires that:
+
+oo   The customer must be prepared to work with both DIGITAL and IBM systems 
+    personnel to coordinate the pre-installation activities.
+
+oo   The customer should be capable of modifying IBM component generation 
+    parameters to support either the DECnet/SNA Gateway or VMS/SNA and the 
+    Printer Emulator software.
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX or VAXstation configuration as specified in the System 
+Support Addendum (SSA 26.70.05-x).
+
+SOFTWARE REQUIREMENTS*
+
+In a DECnet/SNA Gateway Environment
+
+oo   VMS Operating System
+
+oo   DECnet-VAX
+
+In a VMS/SNA Environment
+
+oo   VMS Operating System
+
+oo   VMS/SNA
+
+The DECnet/SNA VMS Printer Emulator software requires one of the following 
+products:
+
+oo   DECnet/SNA Gateway-CT
+
+oo   DECnet/SNA Gateway-ST
+
+oo   DECnet/SNA Gateway
+
+oo   VMS/SNA
+
+*   Refer to the System Support Addendum for availability and required 
+    versions of required software (SSA 26.70.05-x).
+
+ORDERING INFORMATION
+
+Software Licenses: QL-044A*-**
+Software Media: QA-044A*-**
+Software Documentation QA-044AA-GZ
+Software Product Services: QT-044A*-**
+
+*   Denotes variant fields. For additional information on available 
+    licenses, services and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's 
+Standard Terms and Conditions. For more information about DIGITAL's 
+licensing terms and policies, contact your local DIGITAL office.
+
+LICENSE MANAGEMENT FACILITY
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on a CPU-capacity basis.
+
+For more information on the License Management Facility, refer to the VMS 
+Operating System Software Product Description (SPD 25.01.xx) or the License 
+Management Facility manual of the VMS Operating System documentation set.
+
+For more information about DIGITAL's licensing terms and policies, contact 
+your local DIGITAL office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from DIGITAL.  For more 
+information contact your local DIGITAL office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by DIGITAL with the purchase 
+of a license for the product as defined in the Software Warranty Addendum 
+of this SPD.
+
+WARRANTY LIMITATIONS
+
+IBM Supported Configurations
+
+This software has been tested and is warranted against IBM System/370 
+(includes 30xx and 43xx series) class processor systems configured with the 
+following IBM software.  While this software may function correctly with 
+other IBM software and equipment, and with software other than that 
+supported by IBM, DIGITAL cannot offer its standard warranty for this 
+software unless it has been tested with such equipment and software 
+configurations.
+
+The following list shows the configurations with which the software has 
+been tested and is warranted.
+
+--------------------------------------------------
+ Software Product       Version	  Release
+--------------------------------------------------
+
+ IBM MVS/SP:		  	    
+
+   CICS/OS/VS		  1	    6.1
+   			  1	    7.0
+   DSPRINT		  	    2.0
+
+   JES328X		  2	    1.0
+
+    IMS/VS		  2	    2.0
+--------------------------------------------------
+
+ IBM VM/SP:
+
+   RSCS			  2	    1.0
+--------------------------------------------------
+
+IBM VSE/SP:
+
+   CICS/DOS/VS		  1	    6.0
+
+   VSE/ICCF		  2	    1.0
+--------------------------------------------------
+
+Refer to the DECnet/SNA Gateway Software Product Description (SPD 30.15.xx, 
+27.76.xx, or 29.C6.xx) or the VMS/SNA Software Product Description (SPD 
+27.01.xx) for additional information on supported IBM operating systems, 
+access methods and communications front end software.
+

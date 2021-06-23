@@ -1,0 +1,366 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECscheduler for OpenVMS[1], Version 2.0         SPD
+ 32.19.02
+
+ DESCRIPTION
+
+ DECscheduler for OpenVMS is a distributed scheduling application that
+ automates the execution of repetitive production jobs on VMS and re-
+ mote ULTRIX RISC systems. A job is a DCL command file or an operat-
+ ing system command string. DECscheduler separates information that spec-
+ ifies how jobs should be run from the jobs themselves. It automati-
+ cally takes care of the job rescheduling calculation and completion
+ notification. A scheduled job can run when constraints on its execu-
+ tion are met. There are two types of constraints: the time must be LATER
+ than the job's scheduled time, and all jobs that the job "depends on"
+ must be completed with a successful status later than the last time
+ the job completed. A job can depend on up to 16 other jobs, within a
+ VAXcluster or on remote nodes of a DECnet wide area network (WAN).
+
+ Job database information can be easily accessed through DCL commands.
+ Most commands can also work remotely over the network, allowing cen-
+ tralized control of distributed applications.
+
+ DECscheduler provides customizable special day classes. Special day
+ classes:
+
+ o  Contain a list of absolute days
+
+ o  Are shareable among different users
+
+ o  SYSPRV or OPER privilege is needed to create classes
+
+ o  Are available to ALL users on the system
+
+ ____________________
+
+ The   terms OpenVMS and VMS refer to the Open VMS operating system.
+
+                               DIGITAL                     July 1992
+
+                                                         AE-PBJ7D-TE
+
+ 
+
+ o  Work in conjunction with the job's schedule interval and allow the
+    scheduling of jobs on a non-regular basis. Jobs can be set to RUN
+    ON or NOT RUN ON the specified days.
+
+ DECscheduler now offers VMS Batch as an optional execution engine, al-
+ lowing the choice of either a detached process or VMS Batch for job
+ execution. (Jobs default to using a detached process.) This feature
+ uses the VAX/VMS lock manager to ensure reliable job tracking.
+
+ DECscheduler provides job execution on ULTRIX RISC systems; job schedul-
+ ing takes place on a VMS system. Job information resides on a VMS sys-
+ tem. The ULTRIX command is sent to the ULTRIX system and is executed
+ on that system. Completion status is sent back to the VAX/VMS system.
+
+ DECscheduler for OpenVMS has full VAXcluster failover capabilities.
+ Jobs can be divided into steps. Interrupted jobs can be restarted au-
+ tomatically at the current step on another node in the VAXcluster. Jobs
+ can be run on any node in a cluster or restricted to a single node.
+ An installation modifiable load-balancing procedure can be invoked at
+ execution time to select the VAXcluster node for job execution.
+
+ DECscheduler includes an event logging/reporting facility which can
+ be used to produce job reports.
+
+ Features
+
+ o  Choice of four user interfaces - DCL, DECwindows, menu-driven, or
+    callable.
+
+ o  Customizable special days and fiscal calendars. Allows jobs to run
+    only on specified days and/or prohibits jobs from running on spec-
+    ified days. Works in conjunction with schedule interval. Day classes
+    can be shared among different users.
+
+ o  EXECUTE access to jobs is a security feature that allows specified
+    users to affect only HOW a job runs, but not WHAT it does.
+
+ o  Identifier-based access to jobs provides control over job access
+    through identifiers. Each DECscheduler job can have a READ, a WRITE,
+    and an EXECUTE identifier. This allows access control to individ-
+    ual DECscheduler jobs on a user by user basis, and eliminates the
+
+                                  2
+
+ 
+
+    need for privileges for operations personnel. It also removes the
+    need for privileged proxy accounts for remote control of privileged
+    jobs.
+
+ o  Job execution on ULTRIX RISC allows centralized control in a mixed
+    operating system environment.
+
+ o  VMS Batch is supported as an execution engine. Jobs may be run in
+    batch OR as a detached process. Use of VMS locks provides reliable
+    job tracking.
+
+ o  DECscheduler provides the ability to automatically send an OPCOM
+    message upon job completion. This is controlled from the DCL in-
+    terface via the qualifier /OPCOM, and from the DECwindows inter-
+    face in the CREATE and EDIT windows. Additional notification meth-
+    ods include mail and terminal broadcast.
+
+ o  Automated error recovery can be achieved by specifying a DECsched-
+    uler job to be executed automatically in the event of a /STALL or
+    /MAX_TIME condition.
+
+ o  Ability to predict future run schedules and resource usage, based
+    on historical run data.
+
+ o  Modifiable VAXcluster load balancing.
+
+ o  Executes repetitive jobs without the need for command files.
+
+ o  Jobs can be synchronized with up to 16 other DECscheduler jobs within
+    the wide area network. The user interface shows which job depen-
+    dencies have been satisfied and which are still pending.
+
+ o  Provides date/time (calendar and fiscal) and node/ cluster run spec-
+    ifications for jobs. Jobs run automatically at regular intervals
+    or are restricted to run on certain days of the week.
+
+ o  Provides a job recovery/restart mechanism. Interrupted jobs can be
+    automatically restarted at the current step on the same node or an-
+    other node in the VAXcluster (the user interface displays the step
+    currently executing).
+
+                                  3
+
+ 
+
+ o  Capability to schedule jobs remotely via the LAN (Local Area Net-
+    work) or the Wide Area Network (WAN). Most commands work remotely
+    over the network.
+
+ o  Sets time limits for jobs. Notifies user when a job has exceeded
+    the designated execution time. It can also notify the user if a job
+    failed to start by a deadline, after the scheduled time. Under these
+    conditions, it can also run another specified job.
+
+ o  Commands can operate on multiple jobs. Jobs can be specified by Group
+    and Type as well as by name. Jobname, Group, and Type are strings
+    up to 40 characters in length. The user interface supports the use
+    of wildcards. For example, the DCL command:
+
+    $ SCHED RUN A*/GROUP=%O*/TYPE=*BACK/CONFIRM
+
+    would prompt for the running of all jobs in the local VAXcluster
+    with names that begin with the letter "A", a type that ends in "BACK",
+    and a group with "O" in the second character position.
+
+ o  Prefunctions and postfunctions can automatically run before and af-
+    ter the job.
+
+ o  Ability to specify parameters or override job defaults (node, out-
+    put file) on the run command, etc.
+
+ o  Three levels of job status display - from a one line summary to full
+    display.
+
+ o  Job reporting facility.
+
+ o  Customizable log file for each DECscheduler node that provides DEC-
+    scheduler event logging, diagnostics, full VMS accounting records,
+    and seven additional activity records.
+
+ Restrictions
+
+ Existing command procedures may need to be modified slightly. Some places
+ where the command procedures may need to be changed include removal
+ of existing scheduling code, since often procedures may be set to re-
+ submit themselves to batch. This is not required with DECscheduler.
+ Existing jobs may also need to have operator notification code removed
+
+                                  4
+
+ 
+
+ from them, since DECscheduler handles this. It is also possible that
+ error recovery may have to be updated. DECscheduler assumes the sta-
+ tus of the job to be the status of the last command executed, so if
+ the job has its own special error handling inside the code, it may have
+ to be modified to assure exit with the proper status. Jobs that do not
+ exit with success prevent other jobs that are dependent on them from
+ running.
+
+ In the event that a job is to be run as a detached job (which is the
+ DECscheduler default), checks for the F$MODE of the process will re-
+ sult in "OTHER", so some logic may have to be changed. This is not the
+ case with the DECscheduler using batch as an execution mode.
+
+ If batch is used as the execution mode, DECscheduler will simply sub-
+ mit the job to the specified batch queue. Actual execution of the job
+ will be subject to the queue system on the machine(s):
+
+ o  If the queue is generic, the job may end up running on a differ-
+    ent node. That node must have DECscheduler installed on it.
+
+ o  If the queue is stopped or stalled, the job may not run as sched-
+    uled.
+
+ o  If the execution queue is beyond its executing jobs limit, it may
+    have to wait.
+
+ o  If the queue entry is deleted, or otherwise manually manipulated,
+    the results of the job may be unpredictable.
+
+ o  If the queue system distributes the job to an execution queue on
+    a machine where there is no DECscheduler license, the job will fail.
+
+ o  Any characteristics of the queue will impact DECscheduler jobs, in-
+    cluding the queue's run priority.
+
+ If any currently running job has its execution mode changed, the re-
+ sults of the current run may be unpredictable.
+
+ A job cannot have different sets of dependencies for different days
+ of the week.
+
+                                  5
+
+ 
+
+ Day restrictions for cyclic jobs with dependencies sometimes do not
+ produce the desired behavior when production spans day boundaries. Usu-
+ ally these problems can be solved by modifying the time calculation
+ algorithm for the specific jobs using the /USE_NEXT qualifier.
+
+ Documentation
+
+ The DECscheduler Documentation Set consists of:
+
+    DECscheduler for OpenVMS Installation
+    DECscheduler for OpenVMS User Information
+    DECscheduler for OpenVMS Programming
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations as specified in the System
+ Support Addendum (SSA 32.19.02-x).
+
+ SOFTWARE REQUIREMENTS
+
+ For Systems Using Terminals (No DECwindows
+ Interface):
+
+ VMS Operating System
+
+ For Workstations Running VWS:
+
+ VMS Operating System
+
+ VMS Workstation Software
+
+ For Workstations Running DECwindows:
+
+ VMS Operating System
+
+ Layered Products:
+
+ DECnet-VAX (end-node)
+
+ DECforms Runtime License (for menu-driven interface)
+
+ VMS/ULTRIX Connection (for systems supporting remote ULTRIX RISC)
+
+                                  6
+
+ 
+
+ Refer to the System Support Addendum (SSA 32.10.02-x) for availabil-
+ ity and required versions of prerequisite/optional software and for
+ information regarding components of VMS DECwindows. ORDERING INFOR-
+ MATION
+
+ Software Licenses: QL-YLLA*-**
+ Software Media: QA-YLLA*-**
+ Software Documentation: QA-YLLAA-GZ
+ Software Product Services: QT-YLLA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support:
+
+ The DECscheduler for OpenVMS layered product supports the VMS License
+ Management Facility.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+
+
+
+
+                                  7
+
+ 
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum to this SPD.
+ 
+
+ [TM] The DIGITAL Logo, CI, DEC, DECforms, DECnet, DECscheduler,
+     DECwindows, MicroVAX, OpenVMS, TK, ULTRIX, VAX, VAXcluster,
+     VAXserver, VAXstation, and VMS are trademarks of Digital
+     Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  8

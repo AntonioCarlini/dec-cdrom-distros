@@ -1,0 +1,408 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  VAXcluster Console System, Version 1.4  SPD 27.46.05
+
+ DESCRIPTION
+
+ The VAXcluster Console System (VCS) is a software product which en-
+ ables system managers or operators to perform console functions on any
+ device that meets certain technical specifications. VCS allows a sys-
+ tem manager or an operator to manage up to 32 devices that send ASCII
+ data over a RS232C line, has an EIA console port, supports XON/XOFF
+ and I/O buffering. Examples of such devices that have been managed in
+ the past are:
+
+ o  VAXcluster systems
+
+ o  Standalone VAX systems
+
+ o  PDP-11s
+
+ o  Line printer servers or controllers
+
+ o  LAN bridges and other third-party devices
+
+ The VAXcluster Console System (VCS) is a VMS V5.4 DECwindows layered
+ software product which provides a central point for system console ser-
+ vices and for logging console data received from the serviced nodes.
+ From a single terminal or VAXstation display connected to the VCS host
+ system, a system manager can perform all console functions for all ser-
+ viced nodes. These functions include, but are not limited to:
+
+ o  Shutting down or rebooting the serviced nodes
+
+ o  Running standalone diagnostics
+
+ o  Performing standalone backup operations
+
+ o  Installing layered products
+
+                               DIGITAL                      May 1992
+
+                                                         AE-HV29E-TE
+
+ 
+
+ o  Viewing console output
+
+ o  Reviewing historical console data
+
+ o  Retrieving historical console data for analysis or printing
+
+ o  Searching for console data
+
+ VCS also performs the following functions:
+
+ o  Logs all data and activities between VCS and the serviced nodes
+
+ o  Scans incoming messages from the serviced nodes for specific text
+    strings that may contain status or error information
+
+ o  Notifies system managers of critical system messages via DECtalk,
+    VAXmail, or by changing icon colors
+
+ o  Enables users to assemble icons (not drawn to scale) into graph-
+    ics displays on a VAXstation screen representing the aerial view
+    of the data center and the logical grouping of the VAXcluster con-
+    figurations
+
+ o  Provides an optional security facility to control access to the ser-
+    viced nodes
+
+ VCS can be accessed from locally connected terminals or remotely over
+ the Ethernet.
+
+ The VAXcluster Console System software can be installed on any VAX,
+ MicroVAX or VAXstation platform identified in the System Software Ad-
+ dendum (SSA 27.46.05-x) The devices managed by VCS are connected to
+ the VCS platform by:
+
+ o  Direct connection, that is, connecting to a port of a serial line
+    interface device (DHV11, DHQ11, DZQ11, or CXY08) within the VCS host
+    system cabinet
+
+ o  Host-initiated LAT connection, that is, connecting to a port of a
+    terminal server which is accessible by the VCS host system over the
+    Ethernet. The DECserver port must be mapped to an LTA terminal de-
+    vice defined in the VCS host system.
+
+                                  2
+
+ 
+
+ o  Via a user supplied pseudo terminal program. The program interfaces
+    to VCS via an FTA pseudo terminal device. The user supplied pro-
+    gram must format the data stream from foreign device into a char-
+    acter stream suitable for use by VCS.
+
+ Software Components
+
+ The VCS V1.4 software includes the following components:
+
+ I/O Data Logger - Manages the console lines and logs all data received
+ on these lines. In addition, it makes the received data available to
+ other VCS components and transmits the data on the console lines to
+ nodes designated by those components.
+
+ Data Scanner - Scans the console log data for predefined events. The
+ information about detected events is relayed to other VCS components
+ for logging and additional processing.
+
+ Event Logger - Records events detected by the Data Scanner. It logs
+ all events from all currently configured systems to a disk log file.
+
+ Central Control Coordinator Interface - A DECwindows interface that
+ provides an aerial view of a data center. From this interface, sys-
+ tem managers can monitor all console activities and respond to events
+ detected on the console connections. Console events are reflected by
+ the node icons in the display and direct the system manager to sys-
+ tems needing attention. Other interactive interfaces can also be ac-
+ tivated from the Central Control Coordinator Interface.
+
+ Monitor Interface - Enables system managers to monitor the serviced
+ nodes. It monitors these systems by displaying multiple windows of in-
+ formation. System managers can connect the primary window to a sin-
+ gle system or display log data in this window while monitoring other
+ nodes.
+
+ Connect Interface - Enables system managers to connect to a serviced
+ node, making their terminal the dedicated console (more than one sys-
+ tem manager can connect to the same node). Once connected, all keystrokes,
+ except for the defined "break" and "escape" characters, are transmit-
+ ted directly to the console line of the node to which VCS is connected.
+
+                                  3
+
+ 
+
+ While connected to that node, the system manager has normal console
+ behavior. The only exception to normal behavior is that one control
+ character is reserved to enable the operator to escape back to the VCS
+ system from which the connection was made.
+
+ Record Interface - Enables operators to capture console line activ-
+ ity on a hardcopy device.
+
+ Review Interface - Enables system managers to retrieve console data
+ and event information from the console and event log files. The re-
+ trieved information and data can be specified in terms of source node
+ and time interval.
+
+ Access Interface - A programming interface that provides an alternate
+ method for capturing events for additional processing. User-written
+ applications can be used with the Access Interface. In addition, VCS
+ provides a default application, complete with source codes, which sends
+ scan and console events to a specified output device.
+
+ Even Notification System - A suite of Access Interface applications
+ for interfacing with a wide range of communication media for VCS event
+ notification.
+
+ Configuration Editor - Helps operators create and maintain the con-
+ figuration information that VCS requires.
+
+ Configuration File - Contains information about the nodes being ser-
+ viced by VCS and the VCS environment itself. The Configuration Edi-
+ tor is provided to aid in the creation and modification of this data.
+
+ Log Files - VCS maintains the console and event log files as the per-
+ manent historical records of console data from the serviced nodes. VCS
+ creates a new set of console and event log files every 24 hours, be-
+ ginning at midnight.
+
+ When additional space is needed on the disk device, VCS displays a warn-
+ ing message before disk space shortage is critical. Then, as additional
+ space is required, VCS deletes the oldest log files to make room for
+ the new ones. The system manager can back up the log files before VCS
+ deletes them.
+
+                                  4
+
+ 
+
+ Console Emulation Package - This is a new capability of V1.4. It em-
+ ulates the full capabilities of VCS by simulating the operation of a
+ system under VCS control. This is done by playing back a previously
+ recorded production log file.
+
+ This emulation package is useful for:
+
+ -  Training new personnel on a stand-alone workstation
+
+ -  Providing a means to test out development changes, that is, new scan
+    profiles, action routines, etc
+
+ -  Helping diagnose problems by replaying production log files, thus,
+    recreating a past sequence of events
+
+ The Console Emulation Package cannot be run concurrently with a VCS
+ production environment on the same host platform.
+
+ It is recommended that the VAXcluster Console System not be a member
+ of a CI VAXcluster system or a satellite member of a Local Area or Mixed
+ Interconnect VAXcluster system. However, the VAXcluster Console Sys-
+ tem can serve as the boot member of a Local Area VAXcluster System.
+
+ Features
+
+ o  Support of up to 32 devices; either VAXcluster system nodes, stand-
+    alone VAXsystems or any device that sends ASCII data over an RS232
+    line, has an EIA console port and supports XON/XOFF and I/O buffer-
+    ing. The maximum supported console terminal speed is 19.2K baud.
+
+ o  All data received from connected devices are logged by VCS and iden-
+    tified by source node name and the time received by VCS.
+
+ o  Operators can connect to the console port of any node serviced by
+    VCS from any terminal connected to the VCS host.
+
+ o  VCS can control remote devices via host-initiated connections over
+    Ethernet using terminal servers.
+
+ o  Operators can remotely access the VCS host system via DECnet, LAT
+    or dial-up ports to perform VCS functions.
+
+                                  5
+
+ 
+
+ o  A security facility is provided to allow the system manager to re-
+    strict access to VCS-controlled devices.
+
+ o  VCS detects console events by scanning console text messages and
+    comparing them with predefined text strings contained in the con-
+    figuration file.
+
+ o  With VAXstation host systems, VCS provides the ability to build an
+    icon-based view of all devices connected to it. This graphics lay-
+    out uses color to indicate the severity of an event. It also al-
+    lows the user to easily access a device's console by clicking with
+    a mouse to activate a VCS interface.
+
+ o  Users are alerted of critical system messages by changing icon col-
+    ors via a DECtalk device or through VAXmail.
+
+ o  Users can train new personnel, diagnose problems or try out new scan
+    profiles utilizing the Console Emulation Package
+
+ o  Users can connect to consoles of devices not using an RS-232-C con-
+    nectivity by utilizing the Pseudoterminal (FTA) support. An FTA em-
+    ulates a terminal or LAT line connection to VCS enabling an appli-
+    cation to connect to foreign devices.
+
+ HARDWARE REQUIREMENTS
+
+ Processors and/or hardware configurations as specified in the System
+ Support Addendum (SSA 27.46.05-x).
+
+ Cables and adapters as specified in the System Support Addendum.
+
+ SOFTWARE REQUIREMENTS
+
+ For VAX hosts:
+
+ VMS Operating System
+
+ For VAXstation hosts:
+
+ VMS Operating System
+
+                                  6
+
+ 
+
+ VMS DECwindows (included with VMS Operating System)
+
+ VMS DECwindows Motif[R] (using VCS XUI based applications)
+
+ Refer to the System Support Addendum (SSA 27.46.05-x) for availabil-
+ ity and required versions of Prerequisite/Optional Software.
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-V01A*-**
+ Software Media: QA-V01A*-**
+ Software Documentation: QA-V01A*-GZ
+ Software Product Services: QT-V01A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ The VCS license is user-based. The user is defined as a node or de-
+ vice managed by VCS. One license allows the VCS system to have one de-
+ vice (serviced node) connected to it. Additional licenses may be pur-
+ chased in increments of one to accommodate an expanding data center.
+
+ If VCS is run exclusively with the Console Emulation Package provid-
+ ing console data in place of actual managed nodes, up to the full 32
+ node emulation can be configured using a single VCS concurrent use li-
+ cense.
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+
+
+
+
+
+
+                                  7
+
+ 
+
+ LICENSE MANAGEMENT FACILITY SUPPORT
+
+ License Management Facility Support (LMF)
+
+ This layered product supports the VMS License Management Facility.
+
+ License units for this product are allocated on a Concurrent Use ba-
+ sis.
+
+ This layered product offers a Concurrent Use license. Each Concurrent
+ Use license allows one real console line to be logged, scanned and ac-
+ cessed by the VCS product. A single Concurrent Use license allows the
+ VCS product to log and scan up to 32 eumlated console lines when all
+ of the configured console lines are emulated using the VCS Console Em-
+ ulation Package.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx) or
+ the License Management Facility manual of the VMS Operating System doc-
+ umentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+
+ [R]  Motif is a registered trademark of Open Software Foundation,
+    Inc.
+
+
+                                  8
+
+ 
+
+
+ [TM]The Digital Logo, VAX, VMS, MicroVAX, VAXstation, DECnet,
+    DECwindows, DECserver, DECtalk, PDP-11, LAT, VAXft, DECconnect,
+    VAXmail, VAXcluster, MicroVAX and VAXserver are trademarks of
+    Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  9

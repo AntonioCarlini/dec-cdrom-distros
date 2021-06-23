@@ -1,0 +1,646 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  VAX DBMS, Version 4.3                   SPD 25.48.22
+                (Database Management System)
+
+ DESCRIPTION
+
+ VAX DBMS is a multi-user, general purpose CODASYL-compliant database
+ management system that runs under the VMS Operating System. VAX DBMS
+ is used to access and administer databases ranging in complexity from
+ simple hierarchies to complex networks with multi-level relationships.
+ It supports full concurrent access in a multi-user environment with-
+ out compromising the integrity and security of the user's databases.
+
+ VAX DBMS is based upon the March, 1981 Working Document of the ANSI
+ Data Definition Language Committee.
+
+ Features
+
+ o  Full concurrent access capabilities (storage, retrieval, update,
+    and deletion) in a multi-user environment
+
+ o  Record locking and journaling
+
+ o  Automatic transaction and verb rollback
+
+ o  Multiple database support (one or more databases per process)
+
+ o  Two Phase Commit capability atomically commits or rolls back up-
+    dates across multiple databases in one transaction (Optional -- Re-
+    fer to SSA 25.48.22-x for details)
+
+ o  Full VAXcluster support, including automatic recovery upon node fail-
+    ure
+
+ o  Integrated with VAX Common Data Dictionary/Plus (VAX CDD/Plus) fa-
+    cility
+
+ o  Schema, Subschema, Storage Schema, and Security Schema Data Def-
+    inition Languages (DDLs)
+
+                               DIGITAL                    March 1992
+
+                                                         AE-L818W-TE
+
+ 
+
+ o  Security audit logging of database and Security Schema access.
+
+ o  FORTRAN Data Manipulation Language (FDML)
+
+ o  COBOL DML statements supported by the VAX COBOL compiler
+
+ o  Generic DML preprocessor for BASIC, BLISS, C, DIBOL, Pascal, PL/I
+    and VAX Ada
+
+ o  Callable interpretive interface for any VAX language that adheres
+    to the VAX calling standard
+
+ o  Automatic subschema definition extraction from the CDD/Plus for BA-
+    SIC, BLISS, C, COBOL, DIBOL, MACRO, Pascal, PL/I, and VAX Ada when
+    using the high-level call interface or generic DML preprocessor
+
+ o  Easy-to-use utility command language (DBO)
+
+ o  Database Restructuring Utility (DRU) provides the ability to change
+    many database characteristics without unloading and reloading the
+    database.
+
+ o  Interactive Database Query Utility (DBQ) with video display of sub-
+    schema structure diagrams on VT100, VT200, or VT300 compatible ter-
+    minals
+
+ o  On-line and incremental database verification including verifica-
+    tion by set
+
+ o  Full and incremental database backup with or without concurrent database
+    users
+
+ o  Full and incremental database restore of the entire database, or
+    individual areas
+
+ o  Ability to redo a sequence of committed transactions (roll forward)
+
+ o  Initial Load utility; Unload utility for data extraction; function-
+    ality for database restructuring with Unload/Load
+
+ o  BATCH RETRIEVAL ready mode (database snapshots) for increased con-
+    currency in large retrieval applications
+
+ o  Space Area Management (SPAM) pages which improve database free-space
+    search performance
+
+                                  2
+
+ 
+
+ o  Boolean record selection expression with index optimization on FIND
+    and FETCH DML statements
+
+ o  Data compression of data items and database key (DBKey) pointers
+
+ o  Direct record access through the use of database key (DBKey) point-
+    ers
+
+ o  Automatic expansion of large records across multiple database pages
+
+ o  Simple restructuring, including adding AREAS and initializing AR-
+    EAS, without unloading and reloading a database
+
+ o  Sorted sets implemented with B-trees or simple chains; prefix and
+    suffix compression for sort keys with the B-tree implementation
+
+ o  DECnet database access to provide full remote read/write access to
+    non-redundant distributed databases.
+
+ Data Definition
+
+ VAX DBMS has a four-part data definition language. The schema DDL de-
+ fines the logical structure of the database, the storage schema DDL
+ defines the physical structure of the database, the subschema DDL de-
+ fines application program views of the schema, and the security schema
+ DDL defines access rights to database objects.
+
+ The schema DDL is the only DDL that must be written. By default, the
+ DDL compiler produces a default subschema, storage schema, and secu-
+ rity schema for every schema it compiles.
+
+ The schema DDL defines the records, sets, and areas composing the database.
+ A record is a collection of data items. A set is a relationship be-
+ tween records having one owner record and one or more member records
+ in some specified order. An area is a logical and physical subdivi-
+ sion of the database that contains records.
+
+ The storage schema DDL defines the representation of storage records,
+ storage sets, and storage areas (which are equivalent to VMS files).
+
+                                  3
+
+ 
+
+ It also defines the placement of records within the database, the stor-
+ age set parameters, and the representation of data items within a stor-
+ age record. Most database tuning is accomplished by changing the stor-
+ age schema.
+
+ The subschema DDL defines a logical subset of the database in terms
+ of records, sets and realms (a collection of one or more areas). Many
+ subschemas can be written to provide different views of the database
+ for different application programs.
+
+ The security schema DDL defines the access rights to all database ob-
+ jects. DML statement access rights can be defined for each DML state-
+ ment on areas, records, items, and sets.
+
+ All database structure definitions are established and maintained by
+ the DDL compiler and stored in the VAX Common Data Dictionary/Plus (CDD/Plus
+ or CDD/Repository for VMS), where they can be retrieved by VAX DBMS
+ Utilities, VAX COBOL and VAX DATATRIEVE.
+
+ Data Manipulation
+
+ Application programs must call the Database Control System (DBCS) for
+ all database operations. The specific database operations supported
+ are: CONNECT, DISCONNECT, ERASE, FETCH, FIND, GET, MODIFY, RECONNECT,
+ and STORE for manipulating database records and sets; FREE and KEEP
+ for saving and purging database currencies and keeplists; COMMIT, READY,
+ and ROLLBACK for controlling the permanence in non distributed trans-
+ actions; ALSO, EMPTY, MEMBER, OWNER, TENANT, NULL, and WITHIN condi-
+ tions for testing the state of the database, currencies, and keeplists.
+ A Boolean expression with EQ, NE, LE, LT, GT, GE, AND, OR, NOT, MATCHES,
+ or CONTAINS operators can be used on the FIND and FETCH statements.
+
+ Application programs written in COBOL and FORTRAN perform database op-
+ erations with a set of Data Manipulation Language (DML) statements in-
+ cluded in the source code. COBOL DML statements are compiled by the
+ VAX COBOL compiler. FORTRAN DML statements are translated by the VAX DBMS
+ FORTRAN DML Preprocessor into FORTRAN source code that is compiled by
+ the VAX FORTRAN compiler. Application programs written in BASIC, BLISS,
+ C, DIBOL, Pascal, PL/I, and VAX Ada can access a database through a
+ generic DML preprocessor. DML statements can be included directly into
+
+                                  4
+
+ 
+
+ the program. The source file is then passed on to the appropriate host
+ language compiler.
+
+ Run-Time Environment (Integrity and Consistency Features)
+
+ The Database Control System (DBCS) controls access to VAX DBMS databases.
+ The DBCS ensures the integrity of user databases by automatically lock-
+ ing records that have been modified, records representing currencies,
+ and records on keeplists. Optionally, the DBA can request that all records
+ read in a particular database be locked for the life of the database
+ transaction. Users cannot modify data in records that are locked by
+ another user. Moreover, users cannot read data that another user has
+ modified but not yet committed. When a user process terminates or ex-
+ ecutes a ROLLBACK or COMMIT operation, all locks are released. When
+ a user process executes a COMMIT RETAINING operation, all record locks
+ not in currency indicators or keeplists are released and all records
+ locked for update are changed to read locks. Locking of entire areas
+ can be used to improve performance in certain applications. The VMS
+ lock manager services ($ENQ and $DEQ) are used for locking.
+
+ All database changes between READY and COMMIT or ROLLBACK operations
+ are recorded in a recovery-unit journal. When a user performs a COM-
+ MIT operation, all database changes are made permanent. A ROLLBACK op-
+ eration will undo all database changes.
+
+ The DBCS automatically performs a ROLLBACK operation on any uncommit-
+ ted database changes if a program error or system failure occurs. Recovery-
+ unit journaling can be disabled by readying an AREA in BATCH UPDATE
+ mode which can result in improved performance. A risk of disabling the
+ recovery-unit journaling is that the database might be corrupted should
+ a system failure occur.
+
+ The BATCH RETRIEVAL ready mode, also called a snapshot, can be used
+ by retrieval transactions that read many records, require a consis-
+ tent view of the database, and do not handle deadlock conditions. A
+ database must have snapshots allowed to enable transactions in BATCH
+ RETRIEVAL mode; snapshots may be enabled per area.
+
+
+
+                                  5
+
+ 
+
+ Long-term after-images can optionally be saved and used by the DBO util-
+ ity to recover from storage device or system software failures and is
+ recommended strongly.
+
+ VAXcluster Environment
+
+ VAX DBMS databases can operate in a VAXcluster environment, thus al-
+ lowing for concurrent, multiple-node database access. VAX DBMS auto-
+ matically recovers the database if a processor in the VAXcluster fails
+ and provides optional after-image journaling to further protect the
+ integrity of the VAXcluster database.
+
+ VAX DBMS uses the VMS distributed lock manager to synchronize cluster-
+ wide updates to the database root file, to initiate the automatic re-
+ covery process when a node fails, and to coordinate concurrent updates
+ to the same database from processes running on different nodes. VAX-
+ clusters offer higher availability to VAX DBMS databases in a prop-
+ erly configured VAXcluster environment.
+
+ Security Features
+
+ VAX DBMS provides security on database objects via the security schema,
+ on DBO commands via access control lists, on files via the VMS file
+ protection features, and on metadata in the CDD/Plus dictionary via
+ the CDD/Plus security features.
+
+ Application programs access the database through a security schema.
+ The security schema controls the access to areas, records, items, and
+ sets for each DML statement. The security schema for a given user is
+ controlled by the User Execution List (UEL), which is an access con-
+ trol list. The UEL consists of user identification codes (UIC) and the
+ security schema through which they are allowed access to the database.
+ UELs are manipulated by the database administrator through the use of
+ the DBO/PERMIT_ USER command.
+
+ Access to DBO commands is controlled by an access control list for each
+ DBO command. The Command Authorization Lists (CALs) are manipulated
+ by the Database Administrator with the com- mand DBO/GRANT_COMMAND.
+ There is a CAL for every DBO command except MONITOR, SHOW, and CON-
+ VERT. There is no CAL for the CDD commands.
+
+                                  6
+
+ 
+
+ The DBCS runs in EXEC mode, securing its code and data structures from
+ the user's user mode applications.
+
+ VAX DBMS uses standard VMS file security (SYSTEM, OWNER, GROUP, WORLD)
+ to protect database storage areas (files). An application program can
+ only access records defined in its SUBSCHEMA. It is the responsibil-
+ ity of the Database Administrator (DBA) to define storage areas and
+ realms plus set up file protection and access control lists and se-
+ curity schemas to prevent unauthorized access to sensitive data.
+
+ Metadata security and protection can be provided by preventing access
+ to metadata definitions stored in the VAX Common Data Dictionary/Plus
+ (CDD/Plus). The CDD supports a hierarchical security system based on
+ access control lists. It is the responsibility of the DBA to define
+ CDD access control lists to prevent unauthorized access to sensitive
+ database definitions.
+
+ Tracking and reporting of access to a secured database environment is
+ provided through the DBO utility. Profiles for this security track-
+ ing can be defined and activated for individual Security Schemas, as
+ well as securable database commands. The result is an audit-trail of
+ all secured database access for a particular database.
+
+ Utilities
+
+ Interactive DML Utility (DBQ)
+
+ Provides on-line procedural database access capabilities by interac-
+ tively processing generic Data Manipulation Language (DML) statements.
+
+ o  Provides DISPLAY,EDIT, IF-THEN-ELSE, INITIALIZE, LOOP, MACRO, MOVE,
+    SET, SHOW, PRINT, and SHIFT statements
+
+ o  Allows DCL commands from within the image
+
+ The current position in a subschema is optionally displayed graphi-
+ cally (on a VT100, VT200, or VT300 compatible terminal) as the user
+ navigates through the database.
+
+ Database Operator Utility (DBO)
+
+                                  7
+
+ 
+
+ Provides the Database Administrator with all of the functions required
+ to create, maintain, delete, and control VAX DBMS databases. It pro-
+ vides the following major features:
+
+ o  Creating, initializing, and deleting databases.
+
+ o  Loading and unloading databases.
+
+ o  Restructuring databases; RECALCing records into expanded areas.
+
+ o  Controlling access to DBO commands and to the database through ACLs
+    and security schemas.
+
+ o  Reporting on VAX DBMS information in the VAX Common Data Dictio-
+    nary/Plus.
+
+ o  Extracting DDL information from the VAX Common Data Dictionary/Plus.
+
+ o  Deleting DDL information in the VAX Common Data Dictionary/Plus.
+
+ o  Verifying the integrity of internal database structures on-line.
+    (Verification of the database is performed more efficiently on lightly
+    loaded or inactive databases.)
+
+ o  Modifying the contents of corrupted database storage areas. (This
+    function is not recommended or required for normal use.)
+
+ o  Producing formatted dumps of the database, AIJ, or RUJ files.
+
+ o  Providing the spooling of after-image journal files by backing them
+    up to another device.
+
+ o  Producing full and incremental database backup, on-line and off-
+    line.
+
+ o  Restoring the database from backup and long-term journals.
+
+ o  Controlling and displaying the status of the DBCS Monitor process.
+
+ o  Providing for orderly database shutdown on a single node or across
+    a VAXcluster.
+
+ o  Creating static analysis of database space usage (DBO/ANALYZE) on-
+    or off-line.
+
+                                  8
+
+ 
+
+ o  On-line or replay of DBMS statistics in the form of a histogram,
+    a columnar chart, a time plot on a single node basis for active databases,
+    or areas (DBO/SHOW STATISTICS). Statistics include: summary I/O,
+    database verb, database index, virtual memory usage, summary lock-
+    ing, summary after-image journal, summary page I/O, I/O stall time,
+    stall messages, and transaction durations.
+
+ o  Generating a User Work Area (UWA) for application programs using
+    the callable interpretive interface.
+
+ Database Restructuring Utility (DRU)
+
+ Provides the ability to change many database characteristics without
+ unloading and reloading the database. It provides the following ma-
+ jor features:
+
+ o  Removing areas from record WITHIN clauses.
+
+ o  Changing set insertion and retention modes to AUTOMATIC MANDATORY
+    or AUTOMATIC FIXED.
+
+ o  Specifying that duplicates are not allowed on sorted sets.
+
+ o  Changing the sort key and sort order on sorted sets.
+
+ o  Changing set ORDER and MODE clauses.
+
+ o  Changing B-tree node size, reset the B-tree fill factor, and for
+    SYSTEM-owned set, change the B-tree location.
+
+ o  Remove items from the database that are no longer needed.
+
+ o  Modify the data type and data length of items already existing in
+    the database.
+
+ Product Assistance Facilities
+
+ VAX DBMS provides extensive help facilities for the interactive DML
+ Utility (DBQ), the DML precompiler(DML), the Database Operator Util-
+ ity (DBO), and the DDL compiler. The help files contain all necessary
+ information on the use of each of these facilities.
+
+                                  9
+
+ 
+
+ VAX DATATRIEVE provides an optional interface to VAX DBMS database struc-
+ tures. This provides the VAX DBMS user with a high-level, nonproce-
+ dural query and report generating facility.
+
+ Components
+
+ DDL Compiler (DDL) - Used by the Database Administrator (DBA) to cre-
+ ate and maintain database structure definitions including records, sets,
+ areas, and realms in the VAX Common Data Dictionary/Plus. It compiles
+ the schema, subschema, storage schema, and security schema DDLs, and
+ generates default subschemas, storage schemas, and security schemas.
+ The VMS DCL command "DDL" invokes the compiler.
+
+ Database Control System (DBCS) - Controls access to VAX DBMS databases.
+ The DBCS is a shareable image that is linked with any application pro-
+ gram that accesses the database.
+
+ FORTRAN DML Preprocessor (FDML) - Preprocesses FORTRAN DML applica-
+ tion programs. It translates FORTRAN DML statements into FORTRAN calls
+ to the DBCS and data definition statements and passes the complete FOR-
+ TRAN source program to the VAX FORTRAN Compiler.
+
+ Generic DML Preprocessor - Preprocesses application programs written
+ in BASIC, BLISS, C, DIBOL, Pascal, PL/I, and VAX Ada. It converts DML
+ statements into calls to the DBCS and passes the complete source pro-
+ gram to the host language compiler.
+
+ Database Monitor Process - Controls all interprocess database commu-
+ nication and recovery.
+
+ Database Recovery Process (DBR) - Provides the database recovery ca-
+ pability.
+
+ Interactive DML Utility (DBQ) - Provides interactive DML access to any
+ VAX DBMS database. The VMS DCL command "MCR SYS$SYSTEM:DBQ" invokes
+ the utility.
+
+ Database Operator Utility (DBO) - Used by the DBA to create, maintain,
+ delete, and control all VAX DBMS databases. The VMS DCL command "DBO"
+ invokes the utility.
+
+                                 10
+
+ 
+
+ Database Restructuring Utility (DRU) - Enables the DBA to make user-
+ data dependent changes to the database.
+
+ DBMSERVER - Provides access to local databases for remote DECnet users.
+
+ Installation Verification Procedures (IVP) - Verifies the correct in-
+ stallation of all VAX DBMS components and builds the PARTS database
+ that is used in examples throughout the documentation.
+
+ Demonstration (DEMO) - A demonstration package which uses the PARTS
+ database.
+
+ Limits and Parameters
+
+ o  Maximum length of a sort key is 255 bytes.
+
+ o  Maximum number of sort key items is limited by the total sort key
+    length.
+
+ o  Maximum length of a calc key is 32K bytes.
+
+ o  Maximum number of calc key items is limited by the total calc key
+    length.
+
+ o  Maximum length of database object name is 31 bytes.
+
+ o  Other schema size (complexity) parameters are limited by machine
+    address space and disk space.
+
+ o  Minimum database page size is 512 bytes.
+
+ o  Maximum database page size is 32K bytes.
+
+ o  Maximum number of pages per area is 2**32 pages.
+
+ o  Maximum number of areas (files) per database is 32K files (VMS re-
+    sources and typical SYSGEN parameters will constrain this to be much
+    lower).
+
+ o  Maximum length of a storage record, including DBMS overhead, is 32K
+    bytes.
+
+ o  Minimum interval between SPAM pages is 256 pages.
+
+ o  Maximum interval between SPAM pages is 64K pages.
+
+                                 11
+
+ 
+
+ o  Maximum number of concurrent users per database is 2032 (not all
+    database maintenance functions can be performed efficiently with
+    large numbers of active users).
+
+ Optional VAX DBMS Run-Time Only Environment
+
+ A Run-Time Only version of VAX DBMS is available. It provides all fea-
+ tures and facilities except the DDL compiler, the FORTRAN Data Manip-
+ ulation Language (FDML) preprocessor, and the Generic DML preproces-
+ sor. The purpose of the Run-Time Only version is to support the ex-
+ ecution of applications on one machine that have been developed on other
+ machines using the development version of the product. Program devel-
+ opment is not supported under the Run-Time Only version.
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations as specified in the System
+ Support Addendum (SSA 25.48.22-x).
+
+ SOFTWARE REQUIREMENTS
+
+ VMS Operating System
+
+ Layered Products
+
+ VAX CDD/Plus or CDD/Repository for VMS
+
+ Refer to the System Support Addendum for availability and required ver-
+ sions of prerequisite/optional software (SSA 25.48.22-x).
+
+ ORDERING INFORMATION
+
+ For Development Only:
+
+ Software Licenses: QL-899A*-**
+ Software Media: QA-899A*-**
+ Software Documentation: QA-899AA-GZ
+ Software Product Services: QT-899A*-**
+
+ For Run-time Only:
+
+                                 12
+
+ 
+
+ Software Licenses: QL-915A*-**
+ Software Media: QA-915A*-**
+ Software Documentation: QA-915AA-GZ
+ Software Product Services: QT-915A*-**
+
+ *  Denotes variant fields. For additional information on licenses, ser-
+    vices and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 13
+
+ 
+
+ License Management Facility Support
+
+ This layered product supports the VMS License Management Facility and
+ allows Development and Runtime licenses on the same cluster.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ VMS Operating System Software Product Description (SPD 25.01.xx) or
+ the VMS Operating System documentation set.
+
+ For more information on Digital's licensing policies, contact your lo-
+ cal Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ eightpointss
+
+ [TM] The DIGITAL Logo, DECnet, DBMS, ACMS, DATATRIEVE, VAX C,
+     VAX COBOL, VAX BASIC VAX DIBOL, VAX Ada VAX, VAXcluster, VAXs-
+     tation, VAXserver, VAXft, MicroVAX and VMS are trademarks of
+     Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+                                 14
