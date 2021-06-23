@@ -57,6 +57,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -262,10 +263,18 @@ func decode_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDi
 			}
 		} else {
 			if len(spd_matches) == 0 {
-				fmt.Println("ISSUE: No SPD ID found")
+				fmt.Println("ISSUE: No SPD ID found in", spdFilename)
 			}
 			if len(spd_matches) > 1 {
-				fmt.Println("ISSUE: Too many SPD IDs found")
+				scanner := bufio.NewScanner(strings.NewReader(raw_title))
+				fmt.Println("ISSUE: Too many SPD IDs found in [")
+				for i := 0; scanner.Scan() && (i < 5); i++ {
+					fmt.Println(scanner.Text())
+				}
+				if scanner.Scan() {
+					fmt.Println("... further lines omitted ...")
+				}
+				fmt.Println("] in ", spdFilename)
 			}
 		}
 
@@ -412,7 +421,7 @@ func find_product_text(spd_text string) (string, string) {
 	}
 
 	// Match against a Swedish SPD
-	re_text_swe := regexp.MustCompile(`(?ms)PRODUKTNAMN\s*:(.*?)(?:ALLM.{1,3}N\s+)?BESKRIVNING`)
+	re_text_swe := regexp.MustCompile(`(?ms)(?:PRODUKTNAMN|PRODUCT NAME)\s*:(.*?)(?:ALLM.{1,3}N\s+)?BESKRIVNING`)
 	matches = re_text_swe.FindAllStringSubmatch(spd_text, -1)
 	if len(matches) > 0 {
 		text := matches[0][1]
