@@ -58,6 +58,8 @@ package main
 
 import (
 	"bufio"
+	"crypto/md5"
+	"encoding/hex"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -80,6 +82,7 @@ type SPD_Entry struct {
 	Date     string // yyyy-mm never bother with an actual day, even in the unlikely event that one is present
 	Notes    string // Free form notes
 	path     string // Path to SPD file (note: lowercase member name so that it will not be exported to the YAML output)
+	md5      bool   // True if an MD5 checksum was performed when analysing this file
 }
 
 type CDROM struct {
@@ -93,8 +96,9 @@ type CDROM struct {
 	Path     string // Directory path
 }
 
-type PathToCDROM map[string]CDROM
-type MonthNameToNumber map[string]string
+type PathToCDROM map[string]CDROM        // map of SPD file subdirectory (just the last path element before the filename) => CDROM object
+type MonthNameToNumber map[string]string // map of month name in text => two digit month number string
+type FilenameToMD5 map[string]string     // map of SPD filename => MD5 checksum
 
 func main() {
 	verbose := flag.Bool("verbose", false, "Enable verbose reporting")
@@ -136,33 +140,50 @@ func main() {
 	var spdEntries []SPD_Entry
 	var badSPDs []SPD_Entry
 
+	duplicateFilenames := buildDuplicateFilenamesList(inputFiles)
+
+	// Track a number of statistics
+	validButNoDate := 0
+	validButNoPartNum := 0
+	duplicateSPDFile := 0
+	md5ChecksumsPerformed := 0
+	md5ChecksumsAvoided := 0
+
 	for _, spdFilename := range inputFiles {
 		if *verbose {
 			fmt.Println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 			fmt.Println("Processing SPD: [" + spdFilename + "]")
 		}
-		thisSPD := decode_spd_file(spdFilename, pathToCDROM, monthNamesToDigits, *verbose)
-		if thisSPD.ID == "FAILED" {
-			badSPDs = append(badSPDs, thisSPD)
+		thisSPD, analysed := analyse_spd_file(spdFilename, pathToCDROM, monthNamesToDigits, duplicateFilenames, *verbose)
+		if thisSPD.md5 {
+			md5ChecksumsPerformed++
 		} else {
-			spdEntries = append(spdEntries, thisSPD)
+			md5ChecksumsAvoided++
 		}
+		if analysed {
+			if thisSPD.ID == "FAILED" {
+				badSPDs = append(badSPDs, thisSPD)
+			} else {
+				spdEntries = append(spdEntries, thisSPD)
+				if thisSPD.Part_num == "" {
+					validButNoPartNum++
+				}
+				if thisSPD.Date == "" {
+					validButNoDate++
+				}
+			}
+		} else {
+			duplicateSPDFile++
+		}
+
 		if *verbose {
 			fmt.Println("=========================================================")
 		}
 	}
 
-	validButNoDate := 0
-	validButNoPartNum := 0
-	for _, spd := range spdEntries {
-		if *verbose {
+	if *verbose {
+		for _, spd := range spdEntries {
 			fmt.Println("SPD:  ID", spd.ID, "T:", spd.Title, "#:", spd.Part_num, "D:", spd.Date, "N:", spd.Notes)
-		}
-		if spd.Part_num == "" {
-			validButNoPartNum++
-		}
-		if spd.Date == "" {
-			validButNoDate++
 		}
 	}
 
@@ -171,6 +192,9 @@ func main() {
 		fmt.Println("Total good SPDs without a date:   ", validButNoDate)
 		fmt.Println("Total good SPDs without a part #: ", validButNoPartNum)
 		fmt.Println("Total REJECTED SPDs:              ", len(badSPDs))
+		fmt.Println("Total duplicate SPD files:        ", duplicateSPDFile)
+		fmt.Println("Total MD5 Checksums performed:    ", md5ChecksumsPerformed)
+		fmt.Println("Total MD5 Checksums avoided:      ", md5ChecksumsAvoided)
 	}
 
 	if *listSPDsWithNoPartNum {
@@ -210,14 +234,47 @@ func main() {
 }
 
 // Read the specified file and examine the text to locate the information necessary to create an SPD_Entry.
+// If the file is identical to one that has already been analysed, return an invalid SPD_Entry and false.
 // The SPD ID (i.e. "SPD xx.xx.xx") is mandatory, as is the title.
 // Date and Part # are optional as there are SPDs that don't have one or the other (or even both).
 // The Notes field will be filled in with an indetifier that is close to what would be on the physical CDROM label.
-func decode_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDigits MonthNameToNumber, verbose bool) SPD_Entry {
+//
+// Inputs:
+//  spdFilename: path to the SPD file to analyse
+//  pathToCDROM: map of last element of full pathname to CDROM object
+//  monthNamesToDigits: map of month name string to two digit string (with leading 0 where necessary)
+//  duplicateFilenames: map of filename to MD5checksum
+//  verbose: bool that is true if verbose messages are required
+// Outputs:
+//  spdResult: an SPD_Entry built using data parsed from the file spdFilename
+//  spdAnalysed: true if the SPD file was analysed; false if its checksum was found to match that of a file that has already been analysed
+//
+func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDigits MonthNameToNumber, duplicateFilenames FilenameToMD5, verbose bool) (spdResult SPD_Entry, spdAnalysed bool) {
 	// Read the SPD file
 	bytes, err := ioutil.ReadFile(spdFilename)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	spd := SPD_Entry{ID: "FAILED", Title: "", Part_num: "", Date: "", Notes: "", path: spdFilename, md5: false}
+
+	// Find the filename and use that to look for identical files.
+	// Avoid processing a file if another has already been processed with an identical checksum
+	file_dir, filename := path.Split(spdFilename)
+	if checksum, filename_present := duplicateFilenames[filename]; filename_present {
+		if checksum == "" {
+			md5Hash := md5.Sum(bytes)
+			duplicateFilenames[filename] = hex.EncodeToString(md5Hash[:])
+			spd.md5 = true
+		} else {
+			md5Hash := md5.Sum(bytes)
+			hashString := hex.EncodeToString(md5Hash[:])
+			spd.md5 = true
+			if hashString == duplicateFilenames[filename] {
+				// This SPD file has an MD5 checksum that matches that of an SPD file (of the same filename) that has already been analysed.
+				return spd, false
+			}
+		}
 	}
 
 	// Eliminate any trailing System Support Addendum text that may be appended.
@@ -232,11 +289,6 @@ func decode_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDi
 	if len(drop_ssa) > 0 {
 		spd_text = drop_ssa[0][1]
 	}
-	spd := SPD_Entry{ID: "FAILED", Title: "", Part_num: "", Date: "", Notes: "", path: spdFilename}
-
-	// Find the subdirectory, which can be decoded into a CDROM disc identifier
-	file_dir, _ := path.Split(spdFilename)
-	_, last_path := path.Split(strings.TrimSuffix(file_dir, "/"))
 
 	// Find the SPD ID and the SPD title
 	re_spaces := regexp.MustCompile(`\s+`)
@@ -245,6 +297,8 @@ func decode_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDi
 	if len(product_text) == 0 {
 		spd.Notes = spdFilename
 	} else {
+		// Find the subdirectory, which can be decoded into a CDROM disc identifier
+		_, last_path := path.Split(strings.TrimSuffix(file_dir, "/"))
 		spd.Notes = build_CDROM_identifier(last_path, pathToCDROM)
 		raw_title := product_text
 		if verbose {
@@ -336,7 +390,45 @@ func decode_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDi
 		}
 	}
 
-	return spd
+	return spd, true
+}
+
+// Given the list of input filepaths, build a map of duplicate filenames to a string.
+// This string will initially be an empty string.
+// When that filename is initially encountered, an MD5 checksum will be generated and inserted into the map.
+// When that filename entry is encountered on a subsequent occasion, if its checksum is the
+// same, then no further processing is required.
+// Note that filenames that are unique will not be added to the map.
+func buildDuplicateFilenamesList(inputFiles []string) FilenameToMD5 {
+	filenamesSeen := make(FilenameToMD5)
+	unique := 0
+	for _, filepath := range inputFiles {
+		_, filename := path.Split(filepath)
+		if value, ok := filenamesSeen[filename]; !ok {
+			filenamesSeen[filename] = "+" // a filename has been seen for the first time
+			unique++                      // count a new unique filename
+		} else {
+			filenamesSeen[filename] = "" // a filename has been seen again
+			if value == "+" {
+				unique-- // count out a unique filename in the list
+			}
+
+		}
+	}
+	// Eliminate unique filenames - only duplicate filenames should be tracked so that
+	// MD5 checksums are only performed to check that identically named files actually are identical.
+	// Deleteing elements from a map turns out to be slower than building a new map.
+	if unique > 0 {
+		duplicatedFilenames := make(FilenameToMD5)
+
+		for key := range filenamesSeen {
+			if filenamesSeen[key] == "" {
+				duplicatedFilenames[key] = ""
+			}
+		}
+		filenamesSeen = duplicatedFilenames
+	}
+	return filenamesSeen
 }
 
 // Given a subdirectory name, use that to identify the CDROM in question and build a textual representation of that CDROM.
