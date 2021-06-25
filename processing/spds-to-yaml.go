@@ -67,6 +67,7 @@ import (
 	"os"
 	"path"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -76,15 +77,17 @@ import (
 
 // struct to hold SPD information
 type SPD_Entry struct {
-	ID       string // The SPD ID of the form ab.cd.ef
-	Title    string // The text title of the SPD
-	Part_num string // The DEC part#: ab-cdefg-hj
-	Date     string // yyyy-mm never bother with an actual day, even in the unlikely event that one is present
-	Notes    string // Free form notes
-	path     string // Path to SPD file (note: lowercase member name so that it will not be exported to the YAML output)
-	md5      bool   // True if an MD5 checksum was performed when analysing this file
+	ID          string // The SPD ID of the form ab.cd.ef
+	Title       string // The text title of the SPD
+	Part_num    string // The DEC part#: ab-cdefg-hj
+	Date        string // yyyy-mm never bother with an actual day, even in the unlikely event that one is present
+	Notes       string // Free form notes
+	path        string // Path to SPD file (note: lowercase member name so that it will not be exported to the YAML output)
+	md5         bool   // True if an MD5 checksum was performed when analysing this file
+	md5Checksum string // The MD5 checksum (if any) of the file on which this data is based
 }
 
+// struct to hold information about DEC CDROM discs
 type CDROM struct {
 	Part_num string // DEC 2-5-2 part number
 	Title    string // CDROM title
@@ -96,9 +99,22 @@ type CDROM struct {
 	Path     string // Directory path
 }
 
-type PathToCDROM map[string]CDROM        // map of SPD file subdirectory (just the last path element before the filename) => CDROM object
-type MonthNameToNumber map[string]string // map of month name in text => two digit month number string
-type FilenameToMD5 map[string]string     // map of SPD filename => MD5 checksum
+// struct to hold information about _SPD.TXT files that are difficult to analyse automatically or have no valid information
+type ManualSpdInfo struct {
+	Filename    string // Filename (no path info)
+	Id          string // SPD ID (or empty string if none available)
+	Title       string // SPD title (or empty string if none available)
+	Part_num    string // SPD document Part number
+	Date        string // SPD date in YYYY-MM format
+	Reason      string // reason for special handling (e.g. unknown character encoding)
+	Path        string // path to file
+	Md5Checksum string // MD5 checksum of file, or nil if not knownn
+}
+
+type PathToCDROM map[string]CDROM            // map of SPD file subdirectory (just the last path element before the filename) => CDROM object
+type MonthNameToNumber map[string]string     // map of month name in text => two digit month number string
+type FilenameToMD5 map[string]string         // map of SPD filename => MD5 checksum
+type ManualSpdFiles map[string]ManualSpdInfo // map of filename => ManualSpdInfo object
 
 func main() {
 	verbose := flag.Bool("verbose", false, "Enable verbose reporting")
@@ -216,9 +232,41 @@ func main() {
 	}
 
 	if *verbose || *listBadSPDs {
-		fmt.Println("These SPDs failed validation (no ID found):")
+		// Output the list of problematic SPD entries in filename order (to ease future comparisons when updating).
+		// Build a map of filenam => bad SPD, sort the keys and output in sorted key order.
+		keys := make([]string, 0, len(badSPDs))
+		badSpdMap := make(map[string]SPD_Entry)
 		for _, spd := range badSPDs {
-			fmt.Println("SPD:  ID", spd.ID, "T:", spd.Title, "#:", spd.Part_num, "D:", spd.Date, "N:", spd.Notes)
+			_, filename := path.Split(spd.path)
+			keys = append(keys, filename)
+			badSpdMap[filename] = spd
+		}
+		sort.Strings(keys)
+
+		for _, k := range keys {
+			spd := badSpdMap[k]
+			_, filename := path.Split(spd.path)
+			if spd.Title == "" {
+				spd.Title = `""`
+			}
+			if spd.Part_num == "" {
+				spd.Part_num = `""`
+			}
+			if spd.Date == "" {
+				spd.Date = `""`
+			}
+			if spd.md5Checksum == "" {
+				spd.md5Checksum = `""`
+			}
+			fmt.Println(filename + ":")
+			fmt.Println("    filename:", filename)
+			fmt.Println("    id: \"\"")
+			fmt.Println("    title:", spd.Title)
+			fmt.Println("    part_num:", spd.Part_num)
+			fmt.Println("    date:", spd.Date)
+			fmt.Println("    reason: \"Automatically generated: no reason available yet\"")
+			fmt.Println("    path:", spd.path)
+			fmt.Println("    md5checksum:", spd.md5Checksum)
 		}
 	}
 
@@ -266,10 +314,12 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 			md5Hash := md5.Sum(bytes)
 			duplicateFilenames[filename] = hex.EncodeToString(md5Hash[:])
 			spd.md5 = true
+			spd.md5Checksum = hex.EncodeToString(md5Hash[:])
 		} else {
 			md5Hash := md5.Sum(bytes)
 			hashString := hex.EncodeToString(md5Hash[:])
 			spd.md5 = true
+			spd.md5Checksum = hex.EncodeToString(md5Hash[:])
 			if hashString == duplicateFilenames[filename] {
 				// This SPD file has an MD5 checksum that matches that of an SPD file (of the same filename) that has already been analysed.
 				return spd, false
@@ -299,7 +349,6 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 	} else {
 		// Find the subdirectory, which can be decoded into a CDROM disc identifier
 		_, last_path := path.Split(strings.TrimSuffix(file_dir, "/"))
-		spd.Notes = build_CDROM_identifier(last_path, pathToCDROM)
 		raw_title := product_text
 		if verbose {
 			fmt.Println("Found text: [" + raw_title + "]")
@@ -315,6 +364,7 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 				fmt.Println("Found SPD: [" + spd.ID + "]")
 				fmt.Println("Title:     [" + spd.Title + "]")
 			}
+			spd.Notes = build_CDROM_identifier(last_path, pathToCDROM)
 		} else {
 			if len(spd_matches) == 0 {
 				fmt.Println("ISSUE: No SPD ID found in", spdFilename)
