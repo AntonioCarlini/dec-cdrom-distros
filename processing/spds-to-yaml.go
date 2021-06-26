@@ -85,6 +85,7 @@ type SPD_Entry struct {
 	path        string // Path to SPD file (note: lowercase member name so that it will not be exported to the YAML output)
 	md5         bool   // True if an MD5 checksum was performed when analysing this file
 	md5Checksum string // The MD5 checksum (if any) of the file on which this data is based
+	manual      bool   // SPD entry taken from manually analysed data
 }
 
 // struct to hold information about DEC CDROM discs
@@ -115,6 +116,7 @@ type PathToCDROM map[string]CDROM            // map of SPD file subdirectory (ju
 type MonthNameToNumber map[string]string     // map of month name in text => two digit month number string
 type FilenameToMD5 map[string]string         // map of SPD filename => MD5 checksum
 type ManualSpdFiles map[string]ManualSpdInfo // map of filename => ManualSpdInfo object
+type ChecksumToCDROM map[string]SPD_Entry    // map of SPD file checksum => SPD_Entry object
 
 func main() {
 	verbose := flag.Bool("verbose", false, "Enable verbose reporting")
@@ -125,6 +127,7 @@ func main() {
 	yamlOutputFilename := flag.String("yaml", "", "filepath of the output file to hold the generated yaml")
 	cdromsFilename := flag.String("cdroms", "", "filepath of the input file that describes the known CDROM discs")
 	monthsFilename := flag.String("months", "months.yaml", "filepath of YAML file that provides month name to month number in various languages")
+	manuallyHandledFilename := flag.String("manual", "", "filepath of YAML file that provides manually derived data for some SPD files")
 	flag.Parse()
 
 	args_error := false
@@ -152,25 +155,29 @@ func main() {
 
 	pathToCDROM := build_path_to_CDROM_map(*cdromsFilename)
 	monthNamesToDigits := build_month_names_to_digits_map(*monthsFilename)
+	manuallyHandledSpds := build_checksum_to_SpdEntry_map(*manuallyHandledFilename)
 
-	var spdEntries []SPD_Entry
-	var badSPDs []SPD_Entry
+	var spdEntries []SPD_Entry        // Good SPDs
+	var badSPDs []SPD_Entry           // SPDs that could not be analysed (no SPD ID)
+	var manualProblemSpds []SPD_Entry // Manually analysed SPDs that have no SPD ID present
 
 	duplicateFilenames := buildDuplicateFilenamesList(inputFiles)
 
 	// Track a number of statistics
 	validButNoDate := 0
 	validButNoPartNum := 0
+	validButNoTitle := 0
 	duplicateSPDFile := 0
 	md5ChecksumsPerformed := 0
 	md5ChecksumsAvoided := 0
+	manualGoodSpds := 0
 
 	for _, spdFilename := range inputFiles {
 		if *verbose {
 			fmt.Println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 			fmt.Println("Processing SPD: [" + spdFilename + "]")
 		}
-		thisSPD, analysed := analyse_spd_file(spdFilename, pathToCDROM, monthNamesToDigits, duplicateFilenames, *verbose)
+		thisSPD, analysed := analyse_spd_file(spdFilename, pathToCDROM, monthNamesToDigits, duplicateFilenames, manuallyHandledSpds, *verbose)
 		if thisSPD.md5 {
 			md5ChecksumsPerformed++
 		} else {
@@ -178,9 +185,17 @@ func main() {
 		}
 		if analysed {
 			if thisSPD.ID == "FAILED" {
-				badSPDs = append(badSPDs, thisSPD)
+				if thisSPD.manual {
+					manualProblemSpds = append(manualProblemSpds, thisSPD)
+				} else {
+					badSPDs = append(badSPDs, thisSPD)
+				}
 			} else {
+				manualGoodSpds++
 				spdEntries = append(spdEntries, thisSPD)
+				if thisSPD.Title == "" {
+					validButNoTitle++
+				}
 				if thisSPD.Part_num == "" {
 					validButNoPartNum++
 				}
@@ -203,14 +218,37 @@ func main() {
 		}
 	}
 
+	// Report any statistical anomalies. Force reporting of statistics if any issues are found.
+
+	// All files are either checksummed or not, so the checksums performed + avoided must equal the number of files presented
+	if (md5ChecksumsPerformed + md5ChecksumsAvoided) != len(inputFiles) {
+		fmt.Println("Checksums performed and avoided does not match SPDs presented.")
+		*listStatistics = true
+	}
+
+	// All input files must fall into one of these mutually exclusive categories:
+	// o A valid SPD
+	// o A duplicated SPD
+	// o A manually analysed SPD file that has no SPD ID
+	// o An analysed file where no SPD id is found (badSPDs)
+	if (len(spdEntries) + len(manualProblemSpds) + len(badSPDs) + duplicateSPDFile) != len(inputFiles) {
+		fmt.Println("Good + manual-but-problematic + rejected + duplicate SPDs does not match SPDs presented.")
+		*listStatistics = true
+
+	}
+
 	if *listStatistics {
-		fmt.Println("Total Good SPDs:                  ", len(spdEntries))
-		fmt.Println("Total good SPDs without a date:   ", validButNoDate)
-		fmt.Println("Total good SPDs without a part #: ", validButNoPartNum)
-		fmt.Println("Total REJECTED SPDs:              ", len(badSPDs))
-		fmt.Println("Total duplicate SPD files:        ", duplicateSPDFile)
-		fmt.Println("Total MD5 Checksums performed:    ", md5ChecksumsPerformed)
-		fmt.Println("Total MD5 Checksums avoided:      ", md5ChecksumsAvoided)
+		fmt.Println("Total SPD text files presented:                   ", len(inputFiles))
+		fmt.Println("Total good SPDs:                                  ", len(spdEntries))
+		fmt.Println("Total good SPDs without a title:                  ", validButNoTitle)
+		fmt.Println("Total good SPDs without a date:                   ", validButNoDate)
+		fmt.Println("Total good SPDs without a part #:                 ", validButNoPartNum)
+		fmt.Println("Total manually analysed problematic SPDs:         ", len(manualProblemSpds))
+		fmt.Println("Total REJECTED SPDs:                              ", len(badSPDs))
+		fmt.Println("Total duplicate SPD files:                        ", duplicateSPDFile)
+		fmt.Println("Total MD5 Checksums performed:                    ", md5ChecksumsPerformed)
+		fmt.Println("Total MD5 Checksums avoided:                      ", md5ChecksumsAvoided)
+		fmt.Println("Unique checksums for manually handled SPD files:  ", len(manuallyHandledSpds))
 	}
 
 	if *listSPDsWithNoPartNum {
@@ -234,6 +272,7 @@ func main() {
 	if *verbose || *listBadSPDs {
 		// Output the list of problematic SPD entries in filename order (to ease future comparisons when updating).
 		// Build a map of filenam => bad SPD, sort the keys and output in sorted key order.
+		// Omit any manually analysed SPDs from this list
 		keys := make([]string, 0, len(badSPDs))
 		badSpdMap := make(map[string]SPD_Entry)
 		for _, spd := range badSPDs {
@@ -297,14 +336,14 @@ func main() {
 //  spdResult: an SPD_Entry built using data parsed from the file spdFilename
 //  spdAnalysed: true if the SPD file was analysed; false if its checksum was found to match that of a file that has already been analysed
 //
-func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDigits MonthNameToNumber, duplicateFilenames FilenameToMD5, verbose bool) (spdResult SPD_Entry, spdAnalysed bool) {
+func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToDigits MonthNameToNumber, duplicateFilenames FilenameToMD5, manuallyHandledSpds ChecksumToCDROM, verbose bool) (spdResult SPD_Entry, spdAnalysed bool) {
 	// Read the SPD file
 	bytes, err := ioutil.ReadFile(spdFilename)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	spd := SPD_Entry{ID: "FAILED", Title: "", Part_num: "", Date: "", Notes: "", path: spdFilename, md5: false}
+	spd := SPD_Entry{ID: "FAILED", Title: "", Part_num: "", Date: "", Notes: "", path: spdFilename, md5: false, manual: false}
 
 	// Find the filename and use that to look for identical files.
 	// Avoid processing a file if another has already been processed with an identical checksum
@@ -327,6 +366,24 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 		}
 	}
 
+	// Find the subdirectory, which can be decoded into a CDROM disc identifier
+	_, last_path := path.Split(strings.TrimSuffix(file_dir, "/"))
+
+	// If this SPD has been analysed manually, use the manual data.
+	if knownSpd, present := manuallyHandledSpds[spd.md5Checksum]; present {
+		if verbose {
+			fmt.Println("file known about: ", spdFilename)
+		}
+		knownSpd.md5 = true
+		knownSpd.manual = true
+		knownSpd.Notes = build_CDROM_identifier(last_path, pathToCDROM)
+		// The code currently marks SPDs as "bad" by setting the ID to "FAILED".
+		// It may be better to change the rest of the code to treat an empty string as failure, but for now follow th rest of the code's lead.
+		if knownSpd.ID == "" {
+			knownSpd.ID = "FAILED"
+		}
+		return knownSpd, true
+	}
 	// Eliminate any trailing System Support Addendum text that may be appended.
 	// Everything from the first occurrence of
 	//    System
@@ -347,8 +404,6 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 	if len(product_text) == 0 {
 		spd.Notes = spdFilename
 	} else {
-		// Find the subdirectory, which can be decoded into a CDROM disc identifier
-		_, last_path := path.Split(strings.TrimSuffix(file_dir, "/"))
 		raw_title := product_text
 		if verbose {
 			fmt.Println("Found text: [" + raw_title + "]")
@@ -631,6 +686,43 @@ func build_month_names_to_digits_map(monthsYAMLFilename string) MonthNameToNumbe
 	}
 
 	return monthsData
+}
+
+// Construct a map of checksum => CDROM object.
+// This is used to identify SPD files that have been manually determined of
+// are known to be unable to be parsed.
+func build_checksum_to_SpdEntry_map(filename string) ChecksumToCDROM {
+	checksumToCDROM := make(ChecksumToCDROM)
+
+	// Bail out if no filename was specified
+	if filename == "" {
+		return checksumToCDROM
+	}
+
+	// Read in the data that identifies manually handled SPD files
+	manualSpdsYamlData, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Fatal("Error opening manual SPD file: ["+filename+"]: ", err)
+	}
+
+	var manualSpdFiles ManualSpdFiles
+	err = yaml.Unmarshal(manualSpdsYamlData, &manualSpdFiles)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Convert the information from ManualSpdFiles format to a map (string => CDROM)
+	for _, spdInfo := range manualSpdFiles {
+		var spd SPD_Entry
+		spd.ID = spdInfo.Id
+		spd.Title = ""
+		spd.Part_num = spdInfo.Part_num
+		spd.Date = spdInfo.Date
+		spd.Notes = ""
+		spd.md5Checksum = spdInfo.Md5Checksum
+		checksumToCDROM[spd.md5Checksum] = spd
+	}
+	return checksumToCDROM
 }
 
 // Construct a map of "path" => CDROM object
