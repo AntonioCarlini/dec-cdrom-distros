@@ -1,0 +1,791 @@
+
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC DBMS Version 5.1 for OpenVMS VAX    SPD 25.48.24
+
+ DESCRIPTION
+
+ DEC DBMS[TM] is a multi-user, general purpose CODASYL-compliant 
+ database management system that runs under the OpenVMS[TM] VAX[TM]
+ operating system. DEC DBMS is used to access and administer 
+ databases ranging in complexity from simple hierarchies to complex 
+ networks with multilevel relationships. It supports full concurrent
+ access in a multiuser environment without compromising the 
+ integrity and security of the user's databases.
+
+ Features
+
+ o  Full concurrent access capabilities (storage, retrieval, update,
+    and deletion) in a multi-user environment
+
+ o  Record locking and journaling
+
+ o  Automatic transaction and verb rollback
+
+ o  Multiple database support (one or more databases per process)
+
+ o  Two Phase Commit capability atomically commits or rolls back 
+    updates across multiple databases in one transaction 
+    (Optional -- Refer to SSA 25.48.24-x for details)
+
+ o  Full VAXcluster[TM] support, including automatic recovery upon 
+    node failure
+
+
+
+                               DIGITAL                   August 1993
+
+                                                         AE-L818Y-TE
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ o  Integration with CDD/Repository[TM] for OpenVMS
+
+ o  Schema, Subschema, Storage Schema, and Security Schema Data 
+    Definition Languages (DDLs)
+
+ o  Security audit logging of database and Security Schema access
+
+ o  FORTRAN Data Manipulation Language (FDML)
+
+ o  COBOL DML statements supported by the VAX
+    COBOL[TM] compiler
+
+ o  Generic DML preprocessor for BASIC, BLISS, C, DIBOL, Pascal, 
+    PL/I, and VAX Ada[TM]
+
+ o  Callable interpretive interface for any VAX language that 
+    adheres to the OpenVMS calling standard
+
+ o  Automatic subschema definition extraction from the 
+    CDD/Repository for BASIC, BLISS, C, COBOL, DIBOL, MACRO, Pascal,
+    PL/I, and VAX Ada when using the high-level call interface or 
+    generic DML preprocessor
+
+ o  Easy-to-use utility command language (DBO)
+
+ o  Database Restructuring Utility (DRU) provides the ability to 
+    change many database characteristics without unloading and 
+    reloading the database
+
+ o  Interactive Database Query utility (DBQ) with video display of 
+    subschema structure diagrams on VT100[TM], VT200, or VT300[TM],
+    compatible terminals
+
+
+
+                                  2
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ o  Online and incremental database verification including 
+    verification by set
+
+ o  Full and incremental database backup with or without concurrent 
+    database users
+
+ o  Full and incremental database restore of the entire database or 
+    individual areas
+
+ o  Ability to redo a sequence of committed transactions (roll 
+    forward)
+
+ o  Initial Load utility; Unload utility for data extraction; 
+    functionality for database restructuring with Unload/Load
+
+ o  BATCH RETRIEVAL ready mode (database snapshots) for increased 
+              concurrency in large retrieval applications
+ o  Space Area Management (SPAM) pages that improve database 
+    free-space search performance
+
+ o  Boolean record selection expression with index optimization on 
+    FIND and FETCH DML statements
+
+ o  Data compression of data items and database key (DBKey) pointers
+
+ o  Direct record access through the use of database key (DBKey) 
+    pointers
+
+ o  Automatic expansion of large records across multiple database 
+    pages
+
+ o  Simple restructuring, including adding AREAS and initializing 
+    AREAS, without unloading and reloading a database
+
+
+                                  3
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ o  Sorted sets implemented with B-trees or simple chains; prefix 
+    and suffix compression for sort keys with the B-tree 
+    implementation 
+
+ o  DECnet[TM] database access to provide full remote read/write 
+    access to nonredundant distributed databases
+
+ Data Definition
+
+ DEC DBMS has a four-part data definition language. The schema DDL 
+ defines the logical structure of the database, the storage schema
+ DDL defines the physical structure of the database, the subschema
+ DDL defines application program views of the schema, and the 
+ security schema DDL defines access rights to database objects.
+
+ The schema DDL is the only DDL that must be written. By default, 
+ the DDL compiler produces a default subschema, storage schema, and
+ security schema for every schema it compiles.
+
+ The schema DDL defines the records, sets, and areas composing the 
+ database. A record is a collection of data items. A set is a 
+ relationship between records having one owner record and one or 
+ more member records in some specified order. An area is a logical 
+ and physical subdivision of the database that contains records.
+ The storage schema DDL defines the representation of storage 
+ records, storage sets, and storage areas (which are equivalent 
+ to OpenVMS files).
+
+ It also defines the placement of records within the database, the 
+ storage set parameters, and the representation of data items within
+ a storage record. Most database tuning is accomplished by changing 
+ the storage schema.
+
+ The subschema DDL defines a logical subset of the database in terms
+
+                                  4
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ of records, sets, and realms (a collection of one or more areas). 
+ Many subschemas can be written to provide different views of the 
+ database for different application programs.
+
+ The security schema DDL defines the access rights to all database 
+ objects. DML statement access rights for each user can be defined 
+ for each DML statement on areas, records, items, and sets.
+
+ All database structure definitions are established and maintained 
+ by the DDL compiler and stored in the CDD/Repository for OpenVMS,
+ where they can be retrieved by DEC DBMS utilities, VAX COBOL and 
+ DEC DATATRIEVE[TM].
+
+ Data Manipulation
+
+ Application programs must call the Database Control System (DBCS) 
+ for all database operations. The specific database operations 
+ supported are: CONNECT, DISCONNECT, ERASE, FETCH, FIND, GET, 
+ MODIFY, RECONNECT, and STORE for manipulating database records 
+ and sets; FREE and KEEP for saving and purging database currencies
+ and keeplists; COMMIT, READY, and ROLLBACK for controlling the 
+ permanence in nondistributed transactions; ALSO, EMPTY, MEMBER, 
+ OWNER, TENANT, NULL, and WITHIN conditions for testing the state 
+ of the database, currencies, and keeplists. A Boolean expression 
+ with EQ, NE, LE, LT, GT, GE, AND, OR, NOT, MATCHES, or CONTAINS 
+ operators can be used on the FIND and FETCH statements.
+
+ Application programs written in COBOL and FORTRAN perform database
+ operations with a set of Data Manipulation Language (DML) state-
+ ments included in the source code. COBOL DML statements are com-
+ piled by the VAX COBOL compiler. FORTRAN DML statements are trans-
+ lated by the DEC DBMS FORTRAN DML Preprocessor into FORTRAN source
+ code that is compiled by the DEC Fortran[TM], compiler. Applica-
+ tion programs written in BASIC, BLISS, C, DIBOL, Pascal, PL/I, and
+
+                                  5
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ VAX Ada can access a database through a generic DML preprocessor. 
+ DML statements can be included directly into the program. The 
+ source file is then passed on to the appropriate host language 
+ compiler.
+
+ Run-Time Environment (Integrity and Consistency Features)
+
+ The Database Control System (DBCS) controls access to DEC DBMS 
+ databases. The DBCS ensures the integrity of user databases by 
+ automatically locking records that have been modified, records 
+ representing currencies, and records on keeplists. Optionally, 
+ the DBA can request that all records read in a particular database 
+ be locked for the life of the database transaction. Users cannot 
+ modify data in records that are locked by another user. Moreover, 
+ users cannot read data that another user has modified but not yet 
+ committed. When a user process terminates or executes a ROLLBACK 
+ or COMMIT operation, all locks are released. When a user process 
+ executes a COMMIT RETAINING operation, all record locks not in 
+ currency indicators or keeplists are released and all records
+ locked for update are changed to read locks. Locking of entire 
+ areas can be used to improve performance in certain applications. 
+ The OpenVMS lock manager services ($ENQ and $DEQ) are used for 
+ locking.
+
+ All database changes between READY and COMMIT or ROLLBACK 
+ operations are recorded in a recovery-unit journal. When a user 
+ performs a COMMIT operation, all database changes are made 
+ permanent. A ROLLBACK operation will undo all database changes.
+
+ The DBCS automatically performs a ROLLBACK operation on any 
+ uncommitted database changes if a program error or system failure 
+ occurs. Recovery-unit journaling can be disabled by readying an 
+ AREA in BATCH UPDATE mode, which can result in improved perfor-
+
+
+                                  6
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ mance. A risk of disabling the recovery-unit journaling is that 
+ the database might be corrupted should a system failure occur.
+
+ The BATCH RETRIEVAL ready mode, also called a snapshot, can be used
+ by retrieval transactions that read many records, require a consis-
+ tent view of the database, and do not handle deadlock conditions. A
+ database must have snapshots allowed to enable transactions in 
+ BATCH RETRIEVAL mode; snapshots may be enabled per area.
+ Optionally, long-term after-images can be saved and used by the DBO
+ utility to recover from storage device or system software failures.
+ This approach is strongly recommended.
+
+ VAXcluster Environment
+
+ DEC DBMS databases can operate in a VAXcluster environment, thus 
+ allowing for concurrent, multiple-node database access. DEC DBMS 
+ automatically recovers the database if a processor in the 
+ VAXcluster configuration fails and provides optional after-image 
+ journaling to further protect the integrity of the VAXcluster 
+ database.
+
+ DEC DBMS uses the OpenVMS distributed lock manager to synchronize
+ clusterwide updates to the database root file, to initiate the 
+ automatic recovery process when a node fails, and to coordinate 
+ concurrent updates to the same database from processes running on
+ different nodes. Properly configured VAXcluster environments offer
+ higher availability to DEC DBMS database applications.
+
+ Security Features
+
+ DEC DBMS provides security on database objects via the security
+ schema, on DBO commands via access control lists, on files via the
+ OpenVMS file protection features, and on metadata in the 
+ CDD/Repository dictionary via the CDD/Repository security features.
+
+                                  7
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+ Application programs access the database through a security schema.
+ The security schema controls the access to areas, records, items, 
+ and sets for each DML statement. The security schema for a given 
+ user is controlled by the User Execution List (UEL), which is an 
+ access control list. The UEL consists of user identification codes 
+ (UIC) and the security schema through which they are allowed 
+ access to the database. UELs are manipulated by the database 
+ administrator through the use of the DBO/PERMIT_ USER command.
+
+ Access to DBO commands is controlled by an access control list for
+ each DBO command. The Command Authorization Lists (CALs) are 
+ manipulated by the Database Administrator with the command
+ DBO/GRANT_COMMAND. There is a CAL for every DBO command except 
+ MONITOR, SHOW, and CONVERT. There is no CAL for the CDD commands.
+
+ The DBCS runs in EXEC mode, securing its code and data structures 
+ from the user's user mode applications.
+
+ DEC DBMS uses standard OpenVMS file security (SYSTEM, OWNER, GROUP,
+ WORLD) to protect database storage areas (files). An application
+ program can only access records defined in its SUBSCHEMA. It is 
+ the responsibility of the Database Administrator (DBA) to define 
+ storage areas and realms plus set up file protection and access 
+ control lists and security schemas to prevent unauthorized access
+ to sensitive data.
+
+ Metadata security and protection can be provided by preventing 
+ access to metadata definitions stored in the CDD/Repository. The 
+ CDD supports a hierarchical security system based on access control
+ lists. It is the responsibility of the DBA to define CDD access 
+ control lists to prevent unauthorized access to sensitive database
+ definitions.
+
+ Tracking and reporting of access to a secured database environment
+ is provided through the DBO utility. Profiles for this security 
+
+                                  8
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ tracking can be defined and activated for individual Security 
+ Schemas, as well as securable database commands. The result is an
+ audit trail of all secured database access for a particular data-
+ base. 
+
+ Utilities
+ 
+ Interactive DML Utility (DBQ)
+
+ Provides online procedural database access capabilities by interac-
+ tively processing generic Data Manipulation Language (DML) state-
+ ments.
+
+ o  Provides DISPLAY, EDIT, IF-THEN-ELSE, INITIALIZE, LOOP, MACRO,
+    MOVE, SET, SHOW, PRINT, and SHIFT statements
+
+ o  Allows DCL commands from within the image
+
+ The current position in a subschema is optionally displayed graphi-
+ cally (on a VT100, VT200, or VT300 compatible terminal) as the user
+ navigates through the database.
+
+ Database Operator Utility (DBO)
+
+ Provides the Database Administrator with all of the functions 
+ required to create, maintain, delete, and control DEC DBMS 
+ databases. It provides the following major features:
+
+ o  Creating, initializing, and deleting databases.
+
+ o  Loading and unloading databases.
+
+ o  Restructuring databases; RECALCing records into expanded areas.
+
+
+                                  9
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ o  Controlling access to DBO commands and to the database through
+    ACLs and security schemas.
+
+ o  Generating alarms for and/or records of security-relevant 
+    activities.
+
+ o  Reporting on DEC DBMS information in the
+    CDD/Repository.
+
+ o  Extracting DDL information from the CDD/Repository.
+
+ o  Deleting DDL information in the CDD/Repository.
+
+ o  Verifying the integrity of internal database structures on line.
+    (Verification of the database is performed more efficiently on 
+    lightly loaded or inactive databases.)
+
+ o  Modifying the contents of corrupted database storage areas. 
+    (This function is not recommended or required for normal use.)
+
+ o  Producing formatted dumps of the database, AIJ, or RUJ files.
+
+ o  Providing the spooling of after-image journal files by backing 
+    them up to another device.
+
+ o  Producing full and incremental database backup, on line and off 
+    line.
+
+ o  Restoring the database from backup and long-term journals.
+
+ o  Controlling and displaying the status of the DBCS Monitor 
+    process.
+
+ o  Providing for orderly database shutdown on a single node or 
+    across a VAXcluster.
+                                 10
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+
+ o  Creating static analysis of database space usage (DBO/ANALYZE)
+    on line or off line.
+
+ o  Online display or replay of DBMS statistics in the form of a 
+    histogram, a columnar chart, a time plot on a single node basis
+    for active databases, or areas (DBO/SHOW STATISTICS). 
+    Statistics include: summary I/O, database verb, database index,
+    virtual memory usage, summary locking, summary after-image 
+    journal, summary page I/O, I/O stall time, stall messages, and
+    transaction durations.
+
+ o  Generating a User Work Area (UWA) for application programs using
+    the callable interpretive interface.
+
+ Database Restructuring Utility (DRU)
+
+ Provides the ability to change many database characteristics 
+ without unloading and reloading the database. It provides the 
+ following major features:
+
+ o  Removing areas from record WITHIN clauses.
+
+ o  Changing set insertion and retention modes to AUTOMATIC 
+    MANDATORY or AUTOMATIC FIXED.
+
+ o  Specifying that duplicates are not allowed on sorted sets.
+
+ o  Changing the sort key and sort order on sorted sets.
+
+ o  Changing set ORDER and MODE clauses.
+
+ o  Changing B-tree node size, resetting the B-tree fill factor, 
+    and, for SYSTEM-owned set, changing the B-tree location.
+
+                                  11
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+
+ o  Removing items from the database that are no longer needed.
+
+ o  Modifying the data type and data length of items already 
+    existing in the database.
+
+ Product Assistance Facilities
+
+ DEC DBMS provides extensive help facilities for the interactive DML
+ utility (DBQ), the DML precompiler(DML), the Database Operator 
+ utility (DBO), and the DDL compiler. The help files contain all 
+ necessary information on the use of each of these facilities.
+
+ DEC DATATRIEVE provides an optional interface to DEC DBMS database 
+ structures. This provides the DEC DBMS user with a high-level, 
+ nonprocedural query and report generating facility.
+
+ Components
+
+ DDL Compiler (DDL) - Used by the Database Administrator (DBA) to 
+ create and maintain database structure definitions including 
+ records, sets, areas, and realms in the CDD/Repository. It compiles
+ the schema, subschema, storage schema, and security schema DDLs, 
+ and generates default subschemas, storage schemas, and security 
+ schemas. The OpenVMS DCL command "DDL" invokes the compiler.
+
+ Database Control System (DBCS) - Controls access to DEC DBMS 
+ databases. The DBCS is a shareable image that is linked with any 
+ application program that accesses the database.
+
+ FORTRAN DML Preprocessor (FDML) - Preprocesses FORTRAN DML applica-
+ tion programs. It translates FORTRAN DML statements into FORTRAN 
+ calls to the DBCS and data definition statements and passes the 
+ complete FORTRAN source program to the DEC Fortran Compiler.
+
+                                  12
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+
+ Generic DML Preprocessor - Preprocesses application programs 
+ written in BASIC, BLISS, C, DIBOL, Pascal, PL/I, and VAX Ada. It 
+ converts DML statements into calls to the DBCS and passes the 
+ complete source program to the host language compiler.
+
+ Database Monitor Process - Controls all interprocess database 
+ communication and recovery.
+
+ Database Recovery Process (DBR) - Provides the database recovery 
+ capability.
+
+ Interactive DML utility (DBQ) - Provides interactive DML access to
+ any DEC DBMS database.
+ Database Operator utility (DBO) - Used by the DBA to create, 
+ maintain, delete, and control all DEC DBMS databases. The OpenVMS 
+ DCL command "DBO" invokes the utility.
+
+ Database Restructuring Utility (DRU) - Enables the DBA to make 
+ user-data dependent changes to the database.
+
+ DBMSERVER - Provides access to local databases for remote DECnet 
+ users.
+
+ Installation Verification Procedures (IVP) - Verifies the correct 
+ in stallation of all DEC DBMS components and builds the PARTS 
+ database that is used in examples throughout the documentation.
+
+ Demonstration (DEMO) - A demonstration package that uses the PARTS
+ database.
+
+ Limits and Parameters
+
+ o  Maximum length of a sort key is 255 bytes.
+
+                                  13
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+
+
+ o  Maximum number of sort key items is limited by the total sort 
+    key length.
+
+ o  Maximum length of a calc key is 32K bytes.
+
+ o  Maximum number of calc key items is limited by the total calc 
+    key length.
+
+ o  Maximum length of database object name is 31 bytes.
+
+ o  Other schema size (complexity) parameters are limited by machine
+    address space and disk space.
+
+ o  Minimum database page size is 512 bytes.
+
+ o  Maximum database page size is 32K bytes.
+
+ o  Maximum number of pages per area is 2**32 pages.
+
+ o  Maximum number of areas (files) per database is 32K files (Open-
+    VMS resources and typical SYSGEN parameters will constrain this
+    to be much lower).
+ o  Maximum length of a storage record, including DBMS overhead, is
+    32K bytes.
+
+ o  Minimum interval between SPAM pages is 256 pages.
+
+ o  Maximum interval between SPAM pages is 64K pages.
+
+ o  Maximum number of concurrent users per database is 2,032 (not 
+    all database maintenance functions can be performed efficiently 
+    with large numbers of active users).
+
+                                  14
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+
+ Application Portability
+
+ DEC DBMS DML and FDML applications may be ported from the OpenVMS 
+ VAX to OpenVMS AXP by recompiling and relinking the programs using
+ DEC DBMS for OpenVMS AXP and the OpenVMS AXP implementation of the
+ appropriate language compiler(s). Differences in the 3GL compiler 
+ version or implementation may make minor changes to the source code
+ necessary. This approach assumes that the source code is available
+ and an equivalent 3GL compiler is available for use on the OpenVMS
+ AXP Operating System.
+
+ In cases where either the source code or the required compiler is 
+ not available but the OpenVMS VAX object code for the application
+ is available, the DECmigrate product may be used to port the appli-
+ cation to the OpenVMS AXP Operating System. This product translates
+ OpenVMS VAX application images for use under OpenVMS AXP. DML 
+ applications that will be processed using DECmigrate must first be
+ relinked under DEC DBMS for OpenVMS VAX with the DECmigrate support
+ library provided with the DEC DBMS for OpenVMS VAX software 
+ distribution.
+
+ Optional DEC DBMS Run-Time Only Environment
+
+ A Run-Time Only version of DEC DBMS is available. It provides all 
+ features and facilities except the DDL compiler, the FORTRAN Data
+ Manipulation Language (FDML) preprocessor, and the Generic DML 
+ preprocessor. The purpose of the Run-Time Only version is to
+ support the execution of applications on one machine that have been
+ developed on other machines using the development version of the 
+ product. Program development is not supported under the Run-Time 
+ Only version.
+
+
+
+                                  15
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ CONFORMANCE TO STANDARDS
+
+ DEC DBMS is based upon the March, 1981 Working Document of the ANSI
+ Data Definition Language Committee.
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations as specified in the System
+ Support Addendum (SSA 25.48.24-x).
+
+ SOFTWARE REQUIREMENTS
+
+ OpenVMS VAX Operating System
+ CDD/Repository for OpenVMS VAX
+
+ Refer to the System Support Addendum for availability and required 
+ versions of prerequisite/optional software (SSA 25.48.24-x).
+
+ ORDERING INFORMATION
+
+ Full Development Option:
+
+ ClusterWide[TM] Software Licenses: QL-899A*-**
+ Personal Use Software License: QL-899AA-2B
+ Software Media: QA-899A*-**
+ Software Documentation: QA-899AA-GZ
+ Software Product Services: QT-899A*-**
+
+
+
+
+
+
+
+
+                                  16
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ Run-Time Only Option:
+
+ ClusterWide Software Licenses: QL-915A*-**
+ Concurrent Use Software License: QL-915AA-3B
+ Software Media: QA-915A*-**
+ Software Documentation: QA-915AA-GZ
+ Software Product Services: QT-915A*-**
+
+ *  Denotes variant fields. For additional information on licenses, 
+    services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of 
+ Digital Equipment Corporation's Standard Terms and Conditions. For
+ more information about Digital's licensing terms and policies,
+ Contact your local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity.
+
+ ClusterWide licensing is available for both the Full Development 
+ and Run-time Only options of this layered product. Personal Use 
+ licensing is available for the Full Development option and 
+ Concurrent Use licensing is available for the Run-Time Only option.
+
+ ClusterWide licenses are allocated on the basis of the total CPU 
+ capacity of the processor or portion of the VAXcluster configura-
+ tion on which the layered product is installed. Each Personal Use 
+ license allows one identified individual to use the layered 
+ product. Each Concurrent Use license allows any one individual at 
+ a time to use the layered product.
+
+                                  17
+
+ 
+
+
+
+ DEC DBMS Version 5.1 for OpenVMS VAX                  SPD 25.48.24
+
+
+ SOFTWARE WARRANTY
+
+ 
+ The Full Development and Run-Time Only licenses can be used concur-
+ rently on the same system or cluster.
+
+ For more information on the License Management Facility, refer to
+ the OpenVMS VAX Operating System Software Product Description 
+ (SPD 25.01.xx) or the License Management Facility manual of the 
+ OpenVMS VAX Operating System documentation set.
+
+ For more information on Digital's licensing policies, contact your 
+ local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more 
+ information, contact your local Digital office.
+
+ Warranty for this software product is provided by Digital with the
+ purchase of a license for the product as defined in the Software 
+ Warranty Addendum of this SPD.
+
+ [TM] The DIGITAL Logo, CDD/Repository, ClusterWide DBMS, DEC,
+      DECnet, Digital, OpenVMS, VAX, VAX Ada, VAX COBOL, DATATRIEVE,
+      DEC Fortran, VAXcluster, VT100 and VT300 are trademarks of
+      Digital Equipment Corporation.
+
+
+
+
+
+
+ 
+
+                                  18

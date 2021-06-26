@@ -1,0 +1,897 @@
+
+Software
+Product
+Description
+
+___________________________________________________________________
+
+PRODUCT NAME:  POLYCENTER Console Manager, Version 1.1 SPD 42.90.01
+               POLYCENTER Console Manager, OpenVMS VAX,
+               Version 1.5
+
+VERSION NUMBERING SCHEME
+
+You will note that the OpenVMS VAX version of PCM is Version 1.5 while
+version numbers on the other platforms (OpenVMS AXP, Ultrix RISC and
+DEC OSF/1) are at Version 1.1. This is due to the fact that PCM Ver-
+sion 1.5 replaces VAXcluster Console System (VCS) Version 1.4 and, as
+such, must have a higher version number.
+To prevent continued confusion over version numbers, Digital will bring
+the revision number to V1.5 for PCM on each of the other platforms with
+the next release of the platform CONDIST. By late August, PCM V1.5 will
+be the shipping version on all platforms.
+
+Printed documentation refers to PCM Version 1.1 when describing all
+platforms. The change in version number occurred after the documen-
+tation was submitted for printing. Version 1.1 and Version 1.5 are func-
+tionally the same, and so the V1.1 Installation and User Guide doc-
+umentation is applicable for both versions.
+
+DESCRIPTION
+
+POLYCENTER Console Manager (PCM) is a layered software product which
+enables a host system to manage, monitor and control client console
+devices. PCM can support up to 200 systems/devices of any platform type
+that sends ASCII data over RS232C direct, TELNET or LAT connections
+which support XON /XOFF, and I/O buffering. PCM also supports using
+a pseudo-terminal interface. This provides a "soft" console for use
+with user-defined application programs.
+
+
+
+                              DIGITAL                      May 1994
+
+                                                        AE-PRD4C-TE
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+Examples of devices which can be managed are:
+
+o  DECsystem computers
+
+o  VAX systems or computers
+
+o  Third-party systems
+
+o  PrintServers
+
+o  LAN bridges
+
+o  Power distribution and air conditioning units
+
+PCM provides a centralized point for system console services. PCM has
+built in security, restricting full console access to qualified users.
+The functionality includes:
+
+o  Shutting down or rebooting the serviced systems, as supported by
+   hardware and/or operating system
+
+o  Running diagnostics
+
+o  Performing standalone backup procedures
+
+o  Viewing console output
+
+o  Reviewing historical console data
+
+o  Retrieving historical data for analysis
+
+o  Searching for console information
+
+o  Consolidation of data and activities between the PCM system and ser-
+   viced hosts
+
+o  Scanning of incoming text for significant event information
+
+o  Event notification services
+
+o  Graphical iconic display of the serviced systems
+
+                                 2
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+INSTALLATION
+
+PCM software can be installed on any Digital workstation system or server
+system as identified in this SPD. The devices serviced by PCM are con-
+nected to the PCM host platform via:
+
+o  Direct connection to the PCM host platform using a port of a se-
+   rial line interface device (DHT)
+
+o  Host-initiated LAT connection to a terminal server which is acces-
+   sible to the PCM host system
+
+o  Host-initiated TELNET connection to a terminal server which is ac-
+   cessible to the PCM host system
+
+o  A PCM host application program which takes its input from a pseudo-
+   terminal port assigned to PCM
+
+SOFTWARE COMPONENTS
+
+PCM consists of the following components:
+
+o  Console Controller Processes - Manages groups of console lines. The
+   processes log to disk data received on those lines, searching for
+   the occurrence of user-defined text strings which form PCM events.
+   Matches are dispatched to the event notification services process.
+   The console controller processes also control the user connect and
+   monitor functions.
+
+o  Central Control Coordinator (C3) Interface - An X-Windows OSF/Motif[R]
+   interface that provides a logical view of the controlled systems.
+   From this interface, system managers can monitor all console ac-
+   tivities and respond to events detected on the console. Console events
+   are reflected by the node icons in the display and direct the sys-
+   tem manager to systems needing attention. Other interactive inter-
+   faces can also be activated from the central control coordinator
+   Interface.
+
+   Note: Only Color Graphic display terminals are supported.
+
+o  Full functionality with command line interface.
+
+                                 3
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+o  Monitor Interface - Enables system managers to monitor the serviced
+   systems. It monitors these systems by displaying multiple windows
+   of information. System managers can connect the primary window to
+   a single system or display log data in this window while monitor-
+   ing other nodes. This interface is equivalent to a subset of the
+   C3 interface functionality, but is provided on a character cell ter-
+   minal device.
+
+o  Connect Interface - Enables system managers to connect to a man-
+   aged system, making their terminal the dedicated console. Once con-
+   nected, all keystrokes, except for the control keys defined to pro-
+   vide the PCM exit, escape and break characters, are transmitted di-
+   rectly to the console line of the node to which PCM is connected.
+   While connected to serviced system, the system manager sees nor-
+   mal console behavior. The only exceptions to normal behavior are
+   the configurable control characters reserved to enable the oper-
+   ator to escape back to the PCM monitor, exit to the operating sys-
+   tem shell or CLI, and send a break character to the managed sys-
+   tem. This interface is equivalent to a subset of the C3 interface
+   functionality, but is provided on a character cell terminal device.
+
+   Note: More than one system manager can connect to the same serviced
+   system. However, connections made after the first are placed into
+   "Read-Only" mode because it is unable to execute commands on that
+   console.
+
+o  Event Notification Services (ENS) - A suite of applications for in-
+   terfacing with a wide range of communications media for PCM event
+   notification. Event notification services provide a highly flex-
+   ible mechanism for notifying system managers and other operations
+   personnel of events occurring on the serviced systems. The events
+   reported and the notification mechanism are highly customizable to
+   fit the individual requirements of the system management domain.
+
+o  Callable Interface - An API which allows users to interface their
+   own programs to the event notification services. Only programs writ-
+   ten in C are supported.
+
+o  Configuration Editor - Allows operations staff to create and main-
+   tain the configuration information.
+
+                                 4
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+o  Configuration Database - Contains information about the users and
+   hosts being serviced by PCM.
+
+o  Log Files - PCM maintains console, event and time stamp log files
+   as the permanent historical records of console data from the ser-
+   viced systems. These files may be spread over multiple disks for
+   performance improvements.
+
+Features
+
+o  Supports up to 200 console connections to any systems or devices
+   that transmits ASCII data over a RS232 line which supports XON/XOFF
+   and I/O buffering. The maximum supported console terminal speed is
+   19.2K baud.
+
+o  All data received by PCM from connected systems or devices is logged
+   to a disk file for the respective system or device, and is time stamped
+   by PCM.
+
+o  Operators can connect to the console port of any system serviced
+   by PCM from any terminal connected to the PCM host.
+
+o  PCM can control remote systems or devices in a LAN via LAT host-
+   initiated connections over Ethernet using LAT terminal servers.
+
+o  PCM can control remote systems or devices in a WAN via TELNET con-
+   nections over an internet, using terminal servers which support TEL-
+   NET connections.
+
+o  Security is provided to allow the PCM Administrator to restrict user
+   access.
+
+o  PCM detects events by scanning console text messages and compar-
+   ing them with predefined literal strings or expressions contained
+   in the configuration database.
+
+o  This graphical display uses color to indicate the severity of an
+   event. It also allows the user to easily access a console by click-
+   ing with a mouse to activate a PCM interface.
+
+
+                                 5
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+o  Users are alerted of critical system messages by changing icons us-
+   ing six ISO colors or other user-defined actions.
+
+o  Facilities to archive old sections of the PCM log files to another
+   disk.
+
+o  Conversion utility to aid upgrade from VCS Version 1.4 to PCM Ver-
+   sion 1.5
+
+o  Conversion utility to aid upgrade from PCM Version 1.0 to PCM Ver-
+   sion 1.1
+
+o  Facilities to provide loose integration with the POLYCENTER NetView[R]
+   (on the OSF/1[R] platform only.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 6
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+HARDWARE REQUIREMENTS
+
+RISC ULTRIX Processors Supported:
+
+The PCM software is supported on the following MIPS host platforms.
+Where the platform is a MIPS workstation the graphics display is ONLY
+supported for color systems.
+
+            DECstation 5000 Model 120/125
+            DECstation 5000 Model 200
+            DECstation 5000 Model 240
+            DECstation 5000 Model 133
+            Personal DECstation 5000 Model 20
+            Personal DECstation 5000 Model 25
+
+            DECsystem 5000 Model 25
+            DECsystem 5000 Model 240
+            DECsystem 5100
+            DECsystem 5400
+            DECsystem 5500
+
+Note: There is no support for VAX processors as host platforms using
+the ULTRIX operating system.
+
+VAX Processors Supported:
+
+VAX:        VAX 4000 Model 100,
+            VAX 4000 Model 200,
+            VAX 4000 Model 300,
+            VAX 4000 Model 400,
+            VAX 4000 Model 500,
+            VAX 4000 Model 600
+            VAX 4000 Model 700
+
+            VAX 6000 Model 200 Series,
+            VAX 6000 Model 300 Series,
+            VAX 6000 Model 400 Series,
+
+
+
+
+                                 7
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+
+            VAX 6000 Model 500 Series,
+            VAX 6000 Model 600 Series
+
+            VAX 7000 Model 600 Series
+
+            VAX 8200, VAX 8250, VAX 8300,
+            VAX 8350, VAX 8500, VAX 8530,
+            VAX 8550, VAX 8600, VAX 8650,
+            VAX 8700, VAX 8800, VAX 8810,
+            VAX 8820, VAX 8830, VAX 8840
+
+            VAX 9000 Model 110,
+            VAX 9000 Model 210,
+            VAX 9000 Model 300 Series,
+            VAX 9000 Model 400 Series
+
+            VAX 10000 Model 600 Series
+
+MicroVAX:   MicroVAX 3100 Model 10/10E,
+            MicroVAX 3100 Model 20/20E,
+            MicroVAX 3100 Model 30,
+            MicroVAX 3100 Model 40,
+            MicroVAX 3100 Model 80,
+            MicroVAX 3100 Model 90,
+            MicroVAX 3300, MicroVAX 3400,
+            MicroVAX 3500, MicroVAX 3600,
+            MicroVAX 3800, MicroVAX 3900
+
+VAXstation: VAXstation 3100 Model 30,
+            VAXstation 3100 Model 38,
+            VAXstation 3100 Model 40,
+            VAXstation 3100 Model 48,
+            VAXstation 3100 Model 76,
+            VAXstation 3200, VAXstation 3500,
+            VAXstation 3520, VAXstation 3540
+
+
+
+
+
+                                 8
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+
+
+            VAXstation 4000 Model 60,
+            VAXstation 4000 Model 90,
+
+VAXserver:  VAXserver 3100, VAXserver 3300,
+            VAXserver 3400, VAXserver 3500,
+            VAXserver 3600, VAXserver 3602,
+            VAXserver 3800, VAXserver 3900
+
+            VAXserver 4000 Model 200,
+            VAXserver 4000 Model 300,
+            VAXserver 4000 Model 500
+            VAXserver 4000 Model 600
+            VAXserver 4000 Model 700
+
+            VAXserver 6000 Model 210,
+            VAXserver 6000 Model 220,
+            VAXserver 6000 Model 310,
+            VAXserver 6000 Model 320,
+            VAXserver 6000 Model 410,
+            VAXserver 6000 Model 420,
+            VAXserver 6000 Model 510,
+            VAXserver 6000 Model 520,
+            VAXserver 6000 Model 610,
+            VAXserver 6000 Model 620,
+            VAXserver 6000 Model 630
+
+OpenVMS AXP Processors Supported:
+
+              DEC 2000 Model 300 AXP Server,
+              DEC 2000 Model 500 AXP Server,
+
+              DEC 3000 Model 300 AXP Workstation,
+              DEC 3000 Model 400 AXP Workstation,
+              DEC 3000 Model 400 AXP Server,
+              DEC 3000 Model 500 AXP Workstation,
+
+
+
+
+                                 9
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+
+              DEC 3000 Model 500 AXP Server
+
+              DEC 4000 Model 610 AXP System
+
+              DEC 7000 Model 610 AXP System
+
+              DEC 10000 Model 610 AXP System
+
+OSF/1 AXP Processors Supported:
+
+The PCM software is supported on the following AXP host platforms. Where
+the platform is a Alpha AXP workstation the graphics display is ONLY
+supported for color systems.
+
+              DEC 2000 Model 300 AXP Server,
+              DEC 2000 Model 500 AXP Server,
+
+              DEC 3000 Model 300 AXP Workstation,
+              DEC 3000 Model 400 AXP Workstation,
+              DEC 3000 Model 400 AXP Server,
+              DEC 3000 Model 500 AXP Workstation,
+              DEC 3000 Model 500 AXP Server
+
+              DEC 4000 Model 610 AXP System
+
+              DEC 7000 Model 610 AXP System
+
+              DEC 10000 Model 610 AXP System
+
+MANAGED SYSTEM RESTRICTIONS
+
+The PCM software cannot currently support a DECstation system as a man-
+aged system. This is due to a feature of the RISC ULTRIX X-Server which
+can not support the console device being directed to a physical tty
+port on the system rather than the graphics device.
+
+Remote system halt requires hardware and/or operating system support
+to transmit a signal.
+
+
+                                10
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+Other Hardware Required:
+
+A CD-ROM drive is required for all platforms except ULTRIX as the load
+media, where the option of TK50 cartridge is available.
+
+Disk Space Requirements
+
+The tables below summarize the use of disk space by each subset in-
+cluded with the PCM product on each of the supported platform types.
+
+The sizes quoted are approximate. The actual sizes may vary depend-
+ing on the installer's system environment, configuration, and soft-
+ware options.
+
+For RISC ULTRIX Systems:
+
+Disk space required for use (permanent):
+
+___________________________________________________________________
+Subset________File_System_____Directory_______Req.Space____________
+
+All           Root            /               0 MB
+DCRBASE       User            /usr/kits       2.6 MB
+              Var             /var/kits       0.02 MB
+DCRBIN        User            /usr/kits       14.6 MB
+              Var             /var/kits       0.02 MB
+DCRENS        User            /usr/kits       14.6 MB
+              Var             /var/kits       0.02 MB
+DCRREL        User            /usr/doc        0.01 MB
+DCRMAN________Var_____________/usr/man________0.02_MB______________
+
+
+
+
+
+
+
+
+
+
+
+                                11
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+For OSF/1 AXP Systems:
+
+Disk space required for use (permanent):
+
+___________________________________________________________________
+Subset________File_System_____Directory_______Req.Space____________
+
+All           Root            /               0 MB
+DCRBASE       User            /usr/opt        2.6 MB
+              Var             /var/opt        0.02 MB
+DCRBIN        User            /usr/opt        14.6 MB
+              Var             /var/opt        0.02 MB
+DCRENS        User            /usr/opt        14.6 MB
+              Var             /var/opt        0.02 MB
+DCRREL        User            /usr/doc        0.01 MB
+DCRMAN________Var_____________/usr/man________0.02_MB______________
+
+For OpenVMS VAX Systems:
+
+OpenVMS VAX systems store all the base system files in the disk vol-
+ume pointed to by the logical name CONSOLE$ROOT. The installer is al-
+lowed to define this logical name during the product installation.
+
+___________________________________________________________________
+Device_______________________Req.Space_____________________________
+
+SYS$SYSDEVICE                3 blocks
+CONSOLE$ROOT_________________10,000_blocks_________________________
+
+For OpenVMS AXP Systems:
+
+OpenVMS VAX systems store all the base system files in the disk vol-
+ume pointed to by the logical name CONSOLE$ROOT. The installer is al-
+lowed to define this logical name during the product installation.
+
+
+
+
+
+
+
+                                12
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+___________________________________________________________________
+Device_______________________Req.Space_____________________________
+
+SYS$SYSDEVICE                3 blocks
+CONSOLE$ROOT_________________10,000_blocks_________________________
+
+Note: These counts refer to the disk space required for the product base
+files, it does not take account of the requirements for the log and
+archive data collected by the PCM software.
+
+The sizes are approximate; actual sizes may vary depending on the user's
+system environment, configuration, and software options.
+
+Memory Requirements for PCM Support:
+
+PCM performance is highly dependent upon the amount of physical mem-
+ory present. A minimum of 32 MB memory is required. This requirement
+will increase with the number of serviced systems and the number of
+concurrent X-Windows run from the PCM software.
+
+TERMINAL SERVER REQUIREMENTS
+
+The following terminal servers are supported for providing LAT and TEL-
+NET PCM connections:
+
+___________________________________________________________________
+Terminal_Server____LAT_________TELNET______________________________
+
+DECserver 200      X
+DECserver 300      X           X
+DECserver 90L      X
+DECserver 90L+     X
+DECserver 90TL     X           X
+DECserver 90M      X           X
+DECserver 500      X
+DECserver 550      X
+DECserver 700      X           X
+DECserver 900TM    X           X
+
+
+
+                                13
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+___________________________________________________________________
+Terminal_Server____LAT_________TELNET______________________________
+
+LATprint___________X_______________________________________________
+
+Note: TELNET Break functionality is only supported on the DECserver 90TL,
+DECserver 90M and the DECserver 700 with the Network Access Software.
+
+SOFTWARE REQUIREMENTS
+
+For RISC ULTRIX Systems:
+
+o  ULTRIX V4.3a
+
+o  OSF/Motif V1.1.3
+
+For OpenVMS VAX Systems:
+
+o  OpenVMS V6.0
+
+o  DEC TCP/IP Services for OpenVMS V2.0 (Optional)
+
+For OpenVMS AXP Systems:
+
+o  OpenVMS V1.5
+
+o  DEC TCP/IP Services for OpenVMS V2.0 (Optional)
+
+For OSF/1 AXP Systems:
+
+o  OSF/1 V1.3
+
+Note: The optional product DEC TCP/IP Services for OpenVMS is required
+on OpenVMS platforms in order to make use of the TELNET connection mech-
+anism.
+
+GROWTH CONSIDERATIONS
+
+The minimum hardware/software requirements for any future version of
+this product may be different from the requirements for the current
+version.
+
+                                14
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+DISTRIBUTION MEDIA
+
+TK50 or CD-ROM, depending on the platform.
+
+This product is also available as part of the Consolidated Software
+Distribution on CD-ROM.
+
+The software documentation for this product is also available as part
+of the Online Documentation Library on CD-ROM.
+
+ORDERING INFORMATION
+
+RISC ULTRIX Systems:
+
+Software Licenses: QL-MU1A*-**
+Software Media: QA-MU1A*-**
+Software Documentation: QA-V01AA-GZ
+Software Product Services: QT-MU1A*-**
+
+OpenVMS VAX Systems:
+
+Software Licenses: QL-V01A*-**
+Software Media: QA-V01A*-**
+Software Documentation: QA-V01AA-GZ
+Software Product Services: QT-V01A*-**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                15
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+OpenVMS AXP Systems:
+
+Software Licenses: QL-2PCA*-**
+Software Media: QA-2PCA*-**
+Software Documentation: QA-V01AA-GZ
+Software Product Services: QT-2PCA*-**
+
+OSF/1 AXP Systems:
+
+Software Licenses: QL-2PDA*-**
+Software Media: QA-2PDA*-**
+Software Documentation: QA-V01AA-GZ
+Software Product Services: QT-2PDA*-**
+
+*  Denotes variant fields. For additional information on available li-
+   censes, services, and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished only under a license. For more information
+about Digital's licensing terms and policies, contact your local Dig-
+ital office.
+
+License Management Facility Support
+
+This layered product supports the VMS License Management Facility.
+
+License units for this product are allocated on an Unlimited System
+Use plus Concurrent Use basis.
+
+Each Concurrent Use license allows identified systems/devices to be
+monitored/managed by this layered product. Unlimited licenses support
+the monitoring/management of up to 200 systems as supported by the soft-
+ware.
+
+For more information on the License Management Facility, refer to the
+relevant Operating System Software Product Description or the Guide
+to Software Licensing in the Operating System documentation set.
+
+
+
+                                16
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from Digital. For more in-
+formation, contact your local Digital office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by Digital with the pur-
+chase of a license for the product as defined in the Software Warranty
+Addendum of this SPD.
+
+The above information is valid at time of release. Please contact your
+local Digital office for the most up-to-date information.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                17
+
+ 
+
+
+
+POLYCENTER Console Manager, Version 1.1               SPD 42.90.01
+POLYCENTER Console Manager, OpenVMS VAX, Version 1.5
+
+
+[R]  OSF/1 and OSF/Motif are trademarks of the Open Software Foun-
+     dation, Inc
+
+[R]  NetView is a registered trademark of International Business
+     Machines Corporation.
+
+[TM] MIPS is a trademark of MIPS Computer Systems, Inc.
+
+[TM] The DIGITAL Logo, Alpha AXP, AXP, DEC, DECserver, DECstation,
+     DECsystem, Digital, LATprint, MicroVAX, OpenVMS, POLYCENTER,
+     TK, ULTRIX, VAX, VAX 8200, VAX 8250, VAX 8300, VAX 8350, VAX
+     8500, VAX 8530, VAX 8550, VAX 8600, VAX 9000, VAXserver, and
+     VAXstation are trademarks of Digital Equipment Corporation.
+
+)1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                18

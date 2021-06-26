@@ -1,0 +1,1076 @@
+ 
+
+
+
+
+
+
+   Software
+   Product
+   Description
+
+   ___________________________________________________________________
+
+   PRODUCT NAME:  DEC DB Integrator, Version 1.0B, for OpenVMS VAX SPD
+   47.25.02
+
+   DESCRIPTION
+
+   DEC DB Integrator for OpenVMS VAX (DBI) is a multi-database manage-
+   ment system that provides users with the capability to transparently
+   access and update data stored in multiple databases, in distributed
+   locations, and with multiple data formats. DEC DB Integrator enables
+   users and applications to access this data as if it were located in
+   a single, local database without regard to the actual location of the
+   data or to the functional limitations of the underlying data managers.
+
+   DBI services are accessible to a wide variety of client applications
+   over DECnet, TCP/IP or Novell[R] networks using SQL, SQL/Services and
+   the DEC ODBC Driver for MS[R] Windows[TM] application programming in-
+   terfaces (APIs). DEC DB Integrator clients access underlying data sources
+   via a full-featured implementation of SQL data manipulation language
+   (DML).
+
+   DEC DB Integrator provides clients with both remote request and dis-
+   tributed request capabilities against underlying data sources. These
+   sources, called link databases, include DEC Rdb, DEC DBMS, IBM[R] DB2[TM],
+   ORACLE[R], SYBASE[R] databases, Digital Standard M (DSM) globals, OpenVMS
+   RMS files and VSAM data sets.
+
+   Features
+
+   o  Multi-Database Management - Information in DEC Rdb, DEC DBMS, DB2,
+      ORACLE and SYBASE databases, Digital Standard M (DSM) globals, VMS
+      RMS files, and VSAM data sets can be integrated into a single fed-
+      erated database through the use of DEC DB Integrator and turnkey
+      DEC DB Integrator gateways (formally RdbAccess Gateways). DEC DBI
+
+                                 DIGITAL                     July 1994
+
+                                                           AE-Q1YXC-TE
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+      Gateway for Custom Drivers supports the integration of data sources
+      that lack turnkey DEC DBI gateways.
+
+      Users can directly query DEC DB Integrator metadata to determine
+      the availability and source of data within the federated database.
+
+   o  Local Autonomy - Link databases are managed as independent enti-
+      ties; DB Integrator imposes no restrictions on other uses of the
+      underlying databases. Synchronizing DEC DB Integrator metadata with
+      corresponding metadata in the link databases is accomplished through
+      two DBA functions: one to update the DEC DB Integrator metadata for
+      a specific table, the other to refresh only the table's statistics.
+
+   o  Location Transparency - Remote and local data sources are accessed
+      as if they reside in a single, local database. Tables may be joined
+      with each other independent of the location of the link databases
+      in which they physically reside.
+
+   o  Functional Transparency - All data is accessed via a single imple-
+      mentation of ANSI/ISO standard DEC SQL. Link database capabilities
+      are supplemented by services provided by DBI and DBI gateways so
+      that clients have access to a single, uniformly functional, fed-
+      erated database.
+
+      Some capabilities, such as identifying a record by its internal database
+      object identifier (DB Key) or integration with DECdtm, the Digital
+      implementation of the two phase commit (2PC) protocol, depend to-
+      tally on link database capabilities and are not available for all
+      link databases.
+
+   o  Partitioned Views - Several similar tables located at different sites
+      can be presented to clients as a single, horizontally partitioned
+      table.
+
+   o  Client Interoperability - Client applications with interfaces to
+      the DEC ODBC Driver for MS Windows or the SQL/Services API can ac-
+      cess DEC DB Integrator services via a SQL/Services server and DECnet,
+      TCP/IP, Novell IPX/SPX or AppleTalk[R] network transports.
+
+
+
+                                    2
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   o  Compatibility - Applications designed to work with DEC SQL data ma-
+      nipulation language (DML) through either the compiled or dynamic
+      SQL interfaces will work with DEC DB Integrator without any mod-
+      ification other than changing the database name.
+
+   o  Performance - DB Integrator accelerates the response time of com-
+      plex queries/updates through distributed optimization techniques
+      designed to minimize the movement of data across the network. The
+      DB Integrator distributed query optimizer is both cost-based and
+      capabilities-based resulting in efficient strategies for process-
+      ing of user requests. Runaway queries may be controlled by limit-
+      ing the CPU time, elapsed time and/or the rows returned by a spe-
+      cific client request.
+
+   o  Distributed Unit of Work Support - DEC DB Integrator uses DECdtm
+      services to provide a transparent, two phase commit (2PC) for dis-
+      tributed transactions that span multiple DEC Rdb databases, DEC DBMS
+      databases or RMS files. DEC DB Integrator may be configured to al-
+      low distributed updates across link databases that lack DECdtm sup-
+      port. These updates may produce inconsistent results.
+
+      Statement atomicity in distributed transactions is ensured through
+      the use of the markpoint capabilities of the link database managers.
+
+      For more information on DECdtm refer to the OpenVMS VAX Operating
+      System SPD (25.01.xx)
+
+   o  Data Dictionary Integration - Definitions of databases, domains,
+      fields, tables and views may be maintained through the use of
+      CDD/Repository. Sharing common definitions across databases and ap-
+      plications fosters the consistent use of data within an organiza-
+      tion.
+
+   o  Security - DEC DB Integrator presents itself to the link databases
+      as a user. Both responsibility for, and control of data access re-
+      mains with the administrators of these link databases. Database ad-
+      ministrators can control access to DEC DB Integrator metadata through
+      privilege-based security mechanisms. DEC DB Integrator encrypts the
+      proxy information it uses to attach to link databases.
+
+
+                                    3
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   o  Data Type Support - All DEC SQL data types are supported. Data types
+      unique to the link database managers are transparently mapped to
+      corresponding DEC SQL data types. DEC SQL data type support includes:
+
+
+      -  ASCII text (1 to 16,383 bytes)
+
+      -  Varying string (1 to 16,383 bytes)
+
+      -  Date (ANSI and VMS)
+
+      -  Signed byte (1 byte)
+
+      -  Signed word (16-bit) integer
+
+      -  Signed longword (32-bit) integer
+
+      -  Signed quadword (64-bit) integer
+
+      -  Single precision floating point (F_floating)
+
+      -  Double precision floating point (G_floating)
+
+      -  List cursors (Segmented strings) for storing large amounts of
+         unstructured data or multimedia objects such as documents, voice,
+         or graphics. Access to list cursor data types is limited to read-
+         only.
+
+   o  Language Support - Precompilers for DEC C, DEC Ada, DEC COBOL, DEC
+      Fortran, DEC Pascal and PL/I for OpenVMS are available with the pur-
+      chase of a Full Development Option.
+
+   o  Data Integrity - Access to link databases will not override the busi-
+      ness rules established in, and enforced by, the data managers of
+      those databases.
+
+   CONFORMANCE TO STANDARDS
+
+   DEC DB Integrator complies with the International Standard, ISO/IEC
+   9075:1992 and the American National Standard, ANSI X3.135-1992, Database
+   Language SQL, Entry-Level specification, and the Federal Information
+   Processing Standard for Database Language SQL (FIPS SQL) as defined
+   in FIPS PUB 127-2.
+
+                                    4
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   The DEC ODBC Driver for MS Windows complies with the Microsoft Open
+   Database Connectivity specification V1.0. It supports all Core and Level
+   1 calls and many, but not all, Level 2 calls.
+
+
+   HARDWARE REQUIREMENTS
+
+   Processors Supported
+
+   VAX:           VAX 4000 Model 100,
+                  VAX 4000 Model 200,
+                  VAX 4000 Model 300,
+                  VAX 4000 Model 400,
+                  VAX 4000 Model 500,
+                  VAX 4000 Model 600,
+                  VAX 4000 Model 705A
+
+                  VAX 6000 Model 200 Series,
+                  VAX 6000 Model 300 Series,
+                  VAX 6000 Model 400 Series,
+                  VAX 6000 Model 500 Series,
+                  VAX 6000 Model 600 Series
+
+                  VAX 7000 Model 600 Series
+
+                  VAX 8200, VAX 8250, VAX 8300,
+                  VAX 8350, VAX 8500, VAX 8530,
+                  VAX 8550, VAX 8600, VAX 8650,
+                  VAX 8700, VAX 8800, VAX 8810,
+                  VAX 8820, VAX 8830, VAX 8840
+
+                  VAX 9000 Model 110,
+                  VAX 9000 Model 210,
+                  VAX 9000 Model 300 Series,
+                  VAX 9000 Model 400 Series
+
+                  VAX 10000 Model 600 Series
+
+                  VAX-11/730, VAX-11/750
+                  VAX-11/780, VAX-11/785
+
+                                    5
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+
+   VAXft:         VAXft 3000 Model 110,
+                  VAXft 3000 Model 310,
+                  VAXft 3000 Model 410,
+                  VAXft 3000 Model 610,
+                  VAXft 3000 Model 612
+
+   MicroVAX:      MicroVAX II, MicroVAX 2000,
+                  MicroVAX 3100 Model 10/10E,
+                  MicroVAX 3100 Model 20/20E,
+                  MicroVAX 3100 Model 30,
+                  MicroVAX 3100 Model 40,
+                  MicroVAX 3100 Model 80,
+                  MicroVAX 3100 Model 85,
+                  MicroVAX 3100 Model 90,
+                  MicroVAX 3200, MicroVAX 3300,
+                  MicroVAX 3400, MicroVAX 3500,
+                  MicroVAX 3600, MicroVAX 3800,
+                  MicroVAX 3900
+
+   VAXstation:    VAXstation II, VAXstation 2000,
+                  VAXstation 3100 Model 30,
+                  VAXstation 3100 Model 38,
+                  VAXstation 3100 Model 40,
+                  VAXstation 3100 Model 48,
+                  VAXstation 3100 Model 76,
+                  VAXstation 3200, VAXstation 3500,
+                  VAXstation 3520, VAXstation 3540
+
+                  VAXstation 4000 Model 60,
+                  VAXstation 4000 Model 90,
+                  VAXstation 4000 VLC
+
+   VAXserver:     VAXserver 3100, VAXserver 3200,
+                  VAXserver 3300, VAXserver 3400,
+                  VAXserver 3500, VAXserver 3600,
+                  VAXserver 3800, VAXserver 3900
+
+
+
+
+                                    6
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+
+                  VAXserver 4000 Model 200,
+                  VAXserver 4000 Model 300,
+                  VAXserver 4000 Model 400,
+                  VAXserver 4000 Model 500,
+                  VAXserver 4000 Model 600,
+                  VAXserver 4000 Model 700
+
+                  VAXserver 6000 Model 200 Series,
+                  VAXserver 6000 Model 300 Series,
+                  VAXserver 6000 Model 400 Series,
+                  VAXserver 6000 Model 500 Series,
+                  VAXserver 6000 Model 600 Series
+
+                  VAXserver 8200,VAXserver 8250,
+                  VAXserver 8300,VAXserver 8350,
+                  VAXserver 8530,VAXserver 8550,
+                  VAXserver 8600,VAXserver 8650,
+                  VAXserver 8700,VAXserver 8800,
+                  VAXserver 8810,VAXserver 8830,
+                  VAXserver 8840
+
+   Unsupported Processors
+
+                  MicroVAX I, VAXstation I,
+                  VAX-11/725, VAX-11/782,
+                  VAXstation 8000
+
+   Processor Restrictions
+
+   o  A TK50 cartridge tape drive, 9-track 1600 BPI magnetic tape drive
+      or CD-ROM drive is required to install this software
+
+   o  A minimum of 4 MB of memory.
+
+
+
+
+
+
+
+                                    7
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   Disk Space Requirements (Block Cluster Size = 1)
+
+   Disk space required for installation
+
+   Development Option:         59,000 blocks
+                               (29 MB)
+
+   Interactive Option:         53,000 blocks
+                               (26 MB)
+
+   Run-Time Only Option:       53,000 blocks
+                               (26 MB)
+
+   Disk space required for use (permanent)
+
+
+   Development Option:         53,000blocks
+                               (26 MB)
+
+   Interactive Option:         41,000 blocks
+                               (21 MB)
+
+   Run-Time Only Option:       41,000 blocks
+                               (21 MB)
+
+   Approximately 28,000 blocks (14 MB) of this requirement is for soft-
+   ware components common to DEC DB Integrator (DBI) and the DBI family
+   of gateways. If one of these products is already installed on a sys-
+   tem or VMScluster, the additional disk space required for the instal-
+   lation and use of this product will be reduced by approximately this
+   (14 MB) amount.
+
+   In addition, the use of an ORACLE V7 database for storage of metadata
+   will increase the requirement for both installation and use for all
+   options by 3,000 blocks (1.5 MB).
+
+
+
+
+
+
+                                    8
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   These counts refer to the disk space required on the system disk. The
+   sizes are approximate; actual sizes may vary depending on the user's
+   system environment, configuration, and software options selected.
+
+   Additional space must be allowed for programs, logs, and temporary database
+   cache files, and user interface software.
+
+   OPTIONAL HARDWARE
+
+   For desktop clients on DEC ODBC Driver for MS Windows:
+
+   o  Personal Computer XT, Personal Computer AT[R], or equivalent
+
+   o  Ethernet LAN connectivity
+
+   CLUSTER ENVIRONMENT
+
+   This product is fully supported when installed on any valid and li-
+   censed VAXcluster configuration without restrictions. The HARDWARE RE-
+   QUIREMENTS sections of this product's Software Product Description and
+   System Support Addendum detail any special hardware required by this
+   product.
+
+   VAXcluster configurations are fully described in the VAXcluster Soft-
+   ware Product Description (SPD 29.78.xx) and include CI, Ethernet, and
+   Mixed Interconnect configurations.
+
+   SOFTWARE REQUIREMENTS
+
+   DBI OpenVMS Platform
+
+   o  OpenVMS VAX Operating System, V5.5-2 - V6.1
+
+   o  An RDBMS to manage the DEC DB Integrator catalog database. May be:
+
+      -  DEC Rdb for OpenVMS VAX, V4.1 - V6.0 or
+         DEC Rdb for OpenVMS AXP, V5.1, V6.0
+
+         Runtime, Interactive or Development Option
+
+
+                                    9
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+      -  Oracle Corporation's ORACLE RDBMS, V7.0
+
+   o  Network Support
+
+      Required to access remote link databases. May be either:
+
+      -  DECnet transport - DECnet for OpenVMS VAX, V1.5
+
+      -  TCP/IP transport - DEC TCP/IP Services for OpenVMS VAX V3.0
+
+   Desktop Client Network Support
+
+   DEC DB Integrator will require one or more of the following network
+   software products to provide SQL/Services and DEC ODBC Driver for MS
+   Windows desktop applications with direct access to link databases.
+
+   o  SQL/Services and DEC ODBC Driver for MS Windows client applications
+      communicating via DECnet require DECnet-VAX, V5.5-2 - V6.1, on the
+      host system
+
+   o  SQL/Services and DEC ODBC Driver for MS Windows client applications
+      communicating via TCP/IP require DEC TCP/IP Services for OpenVMS,
+      V1.3 - V3.1, on the host system
+
+   o  SQL/Services and DEC ODBC Driver for MS Windows client applications
+      communicating via Novell NetWare[R] require a Novell IPX/SPX trans-
+      port - InterConnections Leverage for NetWare File Sharing Services
+      (FSS), V1.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   10
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   OpenVMS Tailoring
+
+   The following OpenVMS classes are required for full functionality of
+   this layered product.
+
+   o  OpenVMS Required Saveset
+
+   o  Programming Support
+
+   o  Network Support
+
+   o  Utilities
+
+   In addition, DECdtm services must be installed.
+
+   For more information on OpenVMS classes and tailoring, refer to the
+   OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx)
+
+   DEC ODBC Driver Client Platforms
+
+   DEC ODBC Driver for MS Windows client
+   (DECnet, TCP/IP or IPX/SPX):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  MS Windows, V3.0 - V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+      -  PATHWORKS V5 for DOS and Windows client software
+         (DECnet and TCP/IP support only)
+
+      -  FTP[R] PC/TCP V2.2[1]
+
+   ____________________
+ [1]  In addition, the DEC ODBC Driver for MS Windows and SQL/Services MS
+     Windows clients are compliant with the Windows Sockets V1.1 speci-
+     fication.  The only Windows Sockets compliant transport that has been
+
+     fully tested is FTP PC/TCP V2.2
+
+                                   11
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+      -  Novell NetWare 3.11 Windows Workstation Client
+         with IPX.COM or IPXODI.COM, and NETX shell
+
+
+   SQL Multimedia Client Platforms
+
+   SQL Multimedia MS Windows client
+   (DECnet or TCP/IP):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  MS Windows, V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+      -  PATHWORKS V5 for DOS and Windows client software
+         (DECnet and TCP/IP support)
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL Multimedia Macintosh System 7 MPW client
+   (DECnet, AppleTalk, or TCP/IP):
+
+   o  Macintosh Operating System, V7, V7.1
+
+   o  PATHWORKS for Macintosh, V1.2
+
+   o  AppleShare Workstation Software for System 7.1
+      (required for PATHWORKS installation)
+
+   o  MPW Development Environment, Version 3.3.1, and MPW, Version 3.3.1,
+      C compiler
+      (Required for application development only)
+
+   SQL/Services Client Platforms
+
+   SQL/Services MS Windows client
+   (DECnet, TCP/IP or IPX/SPX):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+                                   12
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   o  MS Windows, V3.0 - V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+      -  PATHWORKS V5 for DOS and Windows client software
+         (DECnet and TCP/IP support only)
+
+      -  FTP PC/TCP V2.2[1]
+
+      -  Novell NetWare 3.11 Windows Workstation Client
+         with IPX.COM or IPXODI.COM, and NETX shell
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services MS-DOS client
+   (DECnet, TCP/IP or IPX/SPX):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+      -  PATHWORKS V5 for DOS and Windows client software
+         (DECnet and TCP/IP support only)
+
+      -  Novell NetWare 3.11 Windows Workstation Client
+         with IPX.COM or IPXODI.COM, and NETX shell
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services OS/2 client (DECnet only):
+
+   o  OS/2 Operating System, V1.3
+
+   o  PATHWORKS for OS/2, V1.1 - V2.0B
+
+   o  Microsoft C, V6.0, V7.0
+
+                                   13
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   SQL/Services Macintosh System 6.0.8 MPW[TM] client
+   (DECnet, AppleTalk, or TCP/IP)
+
+   o  Macintosh Operating System V6.0.8
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare[R] Workstation Software for System V6.0.8
+      (Required for PATHWORKS installation)
+
+   o  MPW Development Environment, Version 3.2.3, and MPW, Version 3.2.3,
+      C compiler
+      (Required for application development only)
+
+   SQL/Services Macintosh System 7 MPW client
+   (DECnet, AppleTalk, or TCP/IP):
+
+   o  Macintosh Operating System, V7, V7.1
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare Workstation Software for System 7
+      (required for PATHWORKS installation)
+
+   o  MPW Development Environment, Version 3.3.1, and MPW, Version 3.3.1,
+      C compiler
+      (Required for application development only)
+
+   SQL/Services Macintosh System 6.0.8 ThinkC client
+   (DECnet,AppleTalk, or TCP/IP):
+
+   o  Macintosh Operating System, V6.0.8
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare Workstation Software for System, V6.0.8
+      (Required for PATHWORKS installation)
+
+   o  Symantec[R] ThinkC, V6.0.1, and ThinkC, V6.0.1, C Compiler for the
+      Macintosh system
+      (Required for application development only)
+
+                                   14
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   SQL/Services Macintosh System 7 ThinkC client
+   (DECnet,AppleTalk, or TCP/IP):
+
+   o  Macintosh Operating System, V7, V7.1
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare Workstation Software for System 7
+      (Required for PATHWORKS installation)
+
+   o  Symantec ThinkC, V6.0.1, and ThinkC, V6.0.1, C Compiler for the Macintosh
+      system
+      (required for application development only)
+
+   SQL/Services ULTRIX client (DECnet or TCP/IP):
+
+   o  ULTRIX Operating System, V4.1 - V4.3
+
+   o  DECnet/OSI for ULTRIX, V5.1, for RISC and VAX
+      (Required for DECnet applications only)
+
+   SQL/Services Sun client (TCP/IP only):
+
+   o  Sun Operating System, V4.1.1
+
+   OPTIONAL SOFTWARE
+
+   o  DEC Rdb for OpenVMS AXP, V5.1 - V6.0
+
+   o  DEC Rdb for OpenVMS VAX, V4.1 - V6.0
+
+   o  DEC DB Integrator Gateway for RMS, V3.0B
+
+   o  DEC DB Integrator Gateway for DB2 Client V3.0B
+
+   o  DEC DB Integrator Gateway for ORACLE, V3.0B
+
+   o  DEC DB Integrator Gateway for SYBASE, V1.0B
+
+   o  DEC DB Integrator Gateway for Custom Drivers V3.0B
+
+   o  DEC DB Integrator Gateway for DBMS, V1.0
+
+   o  DEC DB Integrator Gateway for DSM, V1.0
+
+                                   15
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   o  DEC RdbAccess for VAX RMS on VMS, V2.1
+
+   o  DEC RdbAccess for ORACLE for OpenVMS VAX, V2.0
+
+   o  DEC RdbAccess for DB2 for OpenVMS VAX, V2.0
+
+   o  DEC RALLY for OpenVMS VAX Systems, V3.2 - V4.0
+
+   o  CDD/Repository for OpenVMS VAX Systems V5.1 - V5.2
+
+   o  DEC Data Distributor V6.0
+
+   GROWTH CONSIDERATIONS
+
+   The minimum hardware/software requirements for any future version of
+   this product may be different from the requirements for the current
+   version.
+
+   DISTRIBUTION MEDIA
+
+   9-track 1600 BPI Magnetic Tape, TK50 Streaming Tape
+
+   This product is also available as part of the OpenVMS Consolidated Soft-
+   ware Distribution on CD-ROM.
+
+   ORDERING INFORMATION
+
+   DEC DB Integrator for OpenVMS VAX
+   Full Development Option
+
+   o  Traditional Software Licenses: QL-0U1A*-**
+
+   o  Software Media: QA-0U1AA-H*
+
+   o  Software Documentation (hardcopy): QA-0U1AA-GZ
+
+   o  Software Product Services: QT-0U1A*-**
+
+   DEC DB Integrator for OpenVMS VAX
+   Interactive Option
+
+   o  Traditional Software Licenses: QL-221A*-**
+
+                                   16
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   o  Software Media: QA-221AA-H*
+
+   o  Software Documentation (hardcopy): QA-221AA-GZ
+
+   o  Software Product Services: QT-221A*-**
+
+   DEC DB Integrator for OpenVMS VAX
+   Run-Time Option
+
+   o  Traditional Software Licenses: QL-21YA*-**
+
+   o  Concurrent Use Software License: QL-21YAA-3B
+
+   o  Software Media: QA-21YAA-H*
+
+   o  Software Documentation (hardcopy): QA-21YAA-GZ
+
+   o  Software Product Services: QT-21YA*-**
+
+   *   Denotes variant fields. For additional information on available
+       licenses, services, and media, refer to the appropriate price
+       book.
+
+   The above information is valid at time of release. Please contact your
+   local Digital Office for the most up-to-date information.
+
+   SOFTWARE LICENSING
+
+   Full Development Option
+
+   The DEC DB Integrator for OpenVMS VAX Full Development Option includes
+   facilities for maintaining the catalog metadata and executing client
+   requests for link databases access. These facilities include base DB
+   Integrator software, dynamic SQL engine, SQL/Services server, full cat-
+   alog database definition and manipulation facilities (interactive SQL),
+   all available language precompilers (SQL/Pre) and compilers (SQL mod-
+   ule language), the SQL/Services client API libraries and the DEC ODBC
+   Driver for MS Windows.
+
+   The Full Development Option is the standard license.
+
+                                   17
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   Interactive Option
+
+   The DEC DB Integrator for OpenVMS VAX Interactive Option includes fa-
+   cilities for maintaining the catalog metadata and executing client re-
+   quests for link databases access. These facilities include the multi-
+   database management software and full interactive catalog database def-
+   inition and manipulation facilities (interactive SQL), the SQL/Services
+   Server and the DEC ODBC Driver for MS Windows
+
+   The purpose of the Interactive Option is to support execution of pre-
+   viously developed applications, as well as to provide the ability to
+   perform database definition and interactive queries using interactive
+   SQL.
+
+   Run-Time Option
+
+   The Run-Time Option for DEC DB Integrator for OpenVMS VAX provides the
+   multi-database software, the SQL/Services Server and the DEC ODBC Driver
+   for MS Windows. The purpose of the Run-Time Only version is to sup-
+   port the execution of previously developed applications on a target
+   machine.
+
+   Interactive data definition is not supported under the Run-Time Op-
+   tion.
+
+   The software components contained in each license option are summa-
+   rized in the following chart:
+
+   ___________________________________________________________________
+                        Run-  Inter-
+   DBI_Component________Time__active_Development______________________
+
+   Base DB Integrator   X     X      X
+   software
+
+   ____________________
+ [2] The Run-Time Option does not support the full interactive SQL com-
+     mand set.  It does support a data manipulation language (DML) sub-
+
+     set of interactive SQL.
+
+                                   18
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+   ___________________________________________________________________
+                        Run-  Inter-
+   DBI_Component________Time__active_Development______________________
+
+   Interactive SQL      X[2]  X      X
+   Utility
+
+   Dynamic SQL engine   X     X      X
+
+   SQL/Services         X     X      X
+   Server
+
+   DEC ODBC Driver      X     X      X
+   for MS Windows
+
+   SQL Module Lan-      -     -      X
+   guage Compiler
+
+   SQL Rdb/Precompilers -     -      X
+
+   SQL/Services         -     -      X
+   Client_APIs________________________________________________________
+
+   This software is furnished only under a license. For more information
+   about Digital's licensing terms and policies, contact your local Digital
+   office.
+
+   License Management Facility Support
+
+   This layered product supports the OpenVMS License Management Facil-
+   ity. Traditional licenses are available for the Full Development and
+   Interactive options. Traditional and Concurrent Use licenses are avail-
+   able for the Run-Time option. A Traditional license permits an unlim-
+   ited number of authorized users to access this product on a single,
+   identified processor. A Concurrent Use license allows any one user at
+   a time to access the layered product.
+
+   For this software product a user is defined as an OpenVMS process serv-
+   ing either an individual or another local or remote process.
+
+   For more information on the License Management Facility, refer to the
+   OpenVMS VAX Operating System documentation.
+
+   For more information on Digital's licensing terms and policies, con-
+   tact your local Digital office.
+
+                                   19
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+   Client Software Licensing
+
+   A site-wide right to use SQL/Services client software is included with
+   each Traditional or Personal Use license for the Full Development Op-
+   tion of the DEC Rdb, DEC SQL or DEC DB Integrator software products
+   on either the OpenVMS VAX or the OpenVMS AXP platform.
+
+   Parties selling or distributing a software product that incorporates
+   Digital Equipment Corporation's SQL/Services client application pro-
+   gramming interface, may copy and distribute the SQL/Services client
+   runtime libraries with that software product.
+
+   Parties selling or distributing a software product that incorporates
+   the Microsoft ODBC application programming interface, may copy and dis-
+   tribute Digital Equipment Corporation's DEC ODBC Driver distribution
+   kit with that software product. The DEC ODBC Driver kit must be dis-
+   tributed in a manner that guarantees the end-user will receive the en-
+   tire contents of the DEC ODBC Driver kit.
+
+   SOFTWARE PRODUCT SERVICES
+
+   A variety of service options are available from Digital. For more in-
+   formation, contact your local Digital office.
+
+   SOFTWARE WARRANTY
+
+   Warranty for this software product is provided by Digital with the pur-
+   chase of a license for the product as defined in the Software Warranty
+   Addendum of this SPD.
+
+   [R] AppleTalk, AppleShare and Macintosh are registered trademarks
+       of Apple Computer Inc.
+
+   [R] IBM and OS/2 are registered trademarks of International Busi-
+       ness Machines Corporation.
+
+   [R] Microsoft, MS, and MS-DOS are registered trademarks of
+       Microsoft Corporation.
+
+
+
+                                   20
+
+ 
+
+
+
+   DEC DB Integrator, Version 1.0B, for OpenVMS VAX      SPD 47.25.02
+
+
+
+   [R] Novell is a registered trademark of Novell Inc.
+
+   [R] ORACLE is a registered trademark of Oracle Corporation.
+
+   [R] Sun is a registered trademark of Sun Microsystems, Inc.
+
+   [R] SYBASE is a registered trademark of Sybase, Inc.
+
+   [R] Symantec is a registered trademark of Symantec Corporation
+
+   [TM]MPW is a trademark of Apple Computer Inc.
+
+   [TM]DB2 is a trademark of International Business Machines Corpora-
+       tion.
+
+   [TM]Windows is a trademark of Microsoft Corporation.
+
+   [TM]The DIGITAL Logo, Bookreader, AXP, CDD/Repository, DBMS, DEC,
+       DECdtm, DEC Ada, DEC Fortran, DEC RALLY, DECnet, Digital,
+       OpenVMS, PATHWORKS, ULTRIX, VAX VAX 11/750, VAX 11/780,
+       VAX 6000, VAX 8200, VAX 8250, VAX 8300, VAX 8350, VAX 8500,
+       VAX 8530, VAX 8550, VAX 9000, VAXstation 4000 VLC, VAX C,
+       VAXcluster, VAXft, VAXserver, VAXstation, VAX RMS, VMS, VMS RMS
+       and VMScluster are trademarks of Digital Equipment Corporation.
+
+       All other trademarks and registered trademarks are the property
+       of their respective owners.
+
+   ©1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+                                   21

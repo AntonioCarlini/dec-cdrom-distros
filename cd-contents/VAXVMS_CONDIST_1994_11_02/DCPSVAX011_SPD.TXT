@@ -1,0 +1,1130 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ___________________________________________________________________
+
+          PRODUCT NAME:  DECprint Supervisor (DCPS) for OpenVMS, SPD 44.15.02
+                         Version 1.1
+
+          DESCRIPTION
+
+          DECprint Supervisor (DCPS) for OpenVMS is a family of layered prod-
+          ucts that run on OpenVMS VAX and OpenVMS AXP systems to provide ac-
+          cess to selected PostScript [R] Level 1 and Level 2 print devices.
+
+          The DECprint Supervisor family consists of the following products:
+
+          o  DECprint Supervisor for OpenVMS, Base (DCPS-Base)-DCPS-Base drives
+             Digital PostScript printers, and supports files formatted in PostScript
+             and ANSI (DEC PPL3). It also supports these printers' special fea-
+             tures, such as tray selection and two sided printing, and the mail-
+             box option for the LPS32. DCPS-Base also allows PCL5 files to be
+             printed on printers which have a native PCL5 interpreter. See the
+             Other Hardware Required section of the SPD for specific models. The
+             license rights to this product are included with the OpenVMS op-
+             erating system.
+
+          o  DECprint Supervisor for OpenVMS, Open (DCPS-Open)-DCPS-Open drives
+             selected third party PostScript printers, and supports files for-
+             matted in PostScript and ANSI (DEC PPL3). It also supports these
+             printers' special features, such as tray selection and two sided
+             printing. DCPS-Open allows PCL5 files to be printed on printers which
+             have a native PCL5 interpreter. See the Other Hardware Required sec-
+             tion of the SPD for specific models. The license rights for this
+             product must be separately purchased.
+
+          o  DECprint Supervisor for OpenVMS, Plus (DCPS-Plus)-DCPS-Plus includes
+             value added features, such as number-up, layup, Automatic Data Type
+             Detection, and high speed image printing, plus the full range of
+             translators for the most popular printer languages. The license rights
+             for this product must be separately purchased. Licenses are required
+
+                                        DIGITAL                     July 1994
+
+                                                                  AE-PUM0C-TE
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+             for both DCPS-Open and DCPS-Plus for advanced printing features for
+             third-party printers.
+
+          DECprint Supervisor software consists of the following components:
+
+          o  A print symbiont that processes print requests from the host on which
+             it resides.
+
+          o  Communication software to transmit the request and associated data
+             over the following protocols: Ethernet to a PrintServer printer via
+             DECnet and TCP/IP using CPAP; AppleTalk over Ethernet or LocalTalk;
+             LAT; serial line.
+
+          o  Translators to convert non-PostScript files into the PostScript lan-
+             guage for printing.
+
+          o  Page formatting capabilities such as the ability to print multi-
+             ple page images on a single side of a sheet of paper, and to spec-
+             ify borders, margins, and page offsets.
+
+          o  A series of PostScript tools for application developers. These in-
+             clude a PostScript error handler and Font Encoding Vectors for the
+             ISO Latin Alphabet Number 1 (ISO 8859/1) and Digital Multinational
+             Character Set for use with all the PostScript text fonts that are
+             built into Digital's PostScript printers.
+
+          o  A collection of ALL-IN-1 Scripts and a WPS-PLUS Printer Table file
+             that provide access to the many unique features of PostScript print-
+             ers. Printing performance can be significantly improved for ALL-IN-1
+             multiple selection and print operations. Support for LN03 and DE-
+             Claser font cartridge emulation is included. This collection is pro-
+             vided for ALL-IN-1 Versions 2.3 and 2.4 only. This capability is
+             available only with DECprint Supervisor for OpenVMS VAX; it is not
+             available with DECprint Supervisor for OpenVMS AXP.
+
+          DECprint Supervisor software must be installed on each node that has
+          print queues for PostScript printers. A DCPS-Open license must be in-
+          stalled on each node that has queues which connect to third-party PostScript
+          printers. However, systems providing printing through PATHWORKS servers
+          to third-party printers are licensed through PATHWORKS for OpenVMS and
+          do not need a separate DCPS-Open license. A DCPS-Plus license is also
+
+                                           2
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          required for each node that has queues that take advantage of the DCPS-
+          Plus features, whether they connect to Digital or third-party print-
+          ers. To use the value added features with supported third party print-
+          ers, you need both the DCPS-Open and the DCPS-Plus licenses.
+
+          Note: PrintServer Software (SPD 49.09.xx) is required to make a PrintServer
+          operational.
+
+          Basic Printing Features
+
+          Basic printing features are provided by DCPS-Base for Digital PostScript
+          printers, and by DCPS-Open for third-party PostScript printers, within
+          the limitations of the supported print devices. Not all basic features
+          are available on all supported devices.
+
+          Basic features include:
+
+          o  PostScript printing. The print symbiont passes PostScript files di-
+             rectly to the printer. DECprint Supervisor does not interpret or
+             translate PostScript files. Therefore, they must be created using
+             standard PostScript Level 1 or Level 2 operators as defined within
+             the printer itself.
+
+          o  DEC ANSI (PPL3) printing. DECprint Supervisor translates DEC ANSI
+             (PPL3) files into PostScript for printing on the output device. These
+             ANSI files may contain ASCII text, sixel graphics, and other fea-
+             tures of Digital's ANSI-compliant Printing Protocol Level 3 (PPL3).
+
+          o  Selection of input tray via INPUT_TRAY, SHEET_SIZE, or PAGE_SIZE
+             parameters, and output tray via OUTPUT_TRAY, within the limitations
+             of the printer and the tray-naming conventions to provide such fea-
+             tures.
+
+          o  Rotation of the page via the PAGE_ORIENTATION parameter for non-
+             PostScript files only.
+
+          o  Selection of single-sided, double-sided, or tumble printing when
+             available on the printer, via the SIDES parameter.
+
+          o  Formatting of ANSI text files via the /HEADER, /FORM, /SPACE, and
+             /FEED qualifiers and the TAB parameter.
+
+                                           3
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          o  Control of ANSI file margins, page setup, and wrap or truncate op-
+             tions as specified by the DEFINE/FORM commands.
+
+          o  Printing ANSI files with optional fonts via the FONTS_USED param-
+             eter. (The optional fonts are available as a separately orderable
+             SoftFonts kit.)
+
+          o  Status and error messages sent to the user's terminal, printed on
+             the job trailer page or job log page, written to a log file, or printed
+             on the operator's console.
+
+          o  Use of device control modules for basic data types via the /SETUP
+             qualifier. PostScript modules may contain any PostScript operators
+             supported by the printer in the printing context.
+
+          o  Provide accounting information for each print job as follows: sheets
+             of paper printed, the number of RMS Gets, and the number of QIO Writes.
+
+          o  Provide access to the PCL 5 interpreter native to selected print-
+             ers. Printers for which native PCL interpreter is supported are listed
+             in the Other Hardware Required section of the SPD.
+
+          o  Provides access to DCPS product features for printers with an Ap-
+             pleTalk connection (this capability is not yet supported on Open-
+             VMS AXP).
+
+          o  Supports PrintServer printers on TCP/IP interconnects using CPAP
+             protocol (requires TCP/IP Services for OpenVMS).
+
+          Advanced Printing Features
+
+          Advanced printing features are provided by DCPS-Plus for either Dig-
+          ital or third-party PostScript printers, within the limitations of the
+          supported print devices. Third-party printers still require the DCPS-
+          Open license.
+
+          Advanced features include:
+
+          o  Automatic data type detection and switching. The software attempts
+             to determine the data type of the file. If successful, it will au-
+             tomatically translate, if necessary, and print the file. If it can-
+
+                                           4
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+             not determine the file data type, it will use the default data type
+             defined by DATA_TYPE=AUTOMATIC.
+
+             If the file is printed using the data type defined by DATA_TYPE=AUTOMATIC,
+             the symbiont will look for a switch to PostScript command (%!) and
+             continue to process the rest of the file as PostScript. This switch
+             may occur only once per file. The switch to PostScript feature is
+             disabled if DCPS uses the native printer interpreter to process the
+             file.
+
+          o  Printing non-PostScript data types on the PostScript printer. Trans-
+             lators are provided to translate the following data types into PostScript
+             for printing:
+
+             -  DDIF (Bitonal Image subset only)
+
+             -  PCL Level 4 (as implemented on the HP [R] LaserJet [R] IID)
+
+             -  IBM [R] Proprinter [R] XL24
+
+             -  ReGIS
+
+             -  TEKTRONIX [R] 4010/4014
+
+             -  ASCII LIST translator that formats and numbers ASCII files. This
+                translator numbers each line of text, creates alternating bars
+                of gray and white in the background, and creates a running head
+                of the file name, and page number.
+
+          o  Printing two or more page images on a single side of a sheet via
+             the NUMBER_UP parameter.
+
+          o  Specifying page layup features via the LAYUP_DEFINITION parameter.
+             Page layup features include Borders, Margins, Margin Alternation,
+             Pages Per Sheet, First Page, Page Order, and Page Grid. Layup def-
+             inition options may be provided directly, as arguments to the LAYUP_
+             DEFINITION parameter, or indirectly, as the contents of a file spec-
+             ified by that parameter.
+
+          o  Specifying a range of pages of the file to be printed via the PAGE_
+             LIMIT parameter.
+
+                                           5
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          o  Automatically scaling a page created for one paper size so that it
+             fits on a different paper size via use of both the PAGE_SIZE and
+             SHEET_SIZE parameters on the same print command.
+
+          o  Printing multiple (uncollated) copies of each sheet via the SHEET_
+             COUNT parameter.
+
+          o  Use of device control modules for all data types via the /SETUP qual-
+             ifier. ANSI modules may include control sequences. PCL modules may
+             include binary font data.
+
+          o  Supports image printing on PrintServer printers (for printing of
+             DDIF bitonal image files) taking advantage of the fastest image print-
+             ing capabilities of the printer (PostScript Level 1, PostScript Level
+             2, or Image PDL).
+
+          DEC ANSI PPL3 (LN03 and DEClaser) Emulation
+
+          Printing of ANSI text and sixel graphics is compatible with Digital's
+          ANSI-compliant PPL3 printers (LN03 and the DEClaser family). Documents
+          containing PPL3 font cartridge commands will be printed if the sys-
+          tem has the appropriate optional SoftFonts kits installed, and the op-
+          tional font modules are specified with the FONTS_USED parameter.
+
+          Note: PostScript printers differ in the amount of virtual memory they
+          have available for printing and font storage. Files which require down-
+          loading of fonts may be printed differently, may print more slowly,
+          or may fail to print, on some printers.
+
+          Third-Party Printing Devices
+
+          The DCPS-Open license extends to selected third-party PostScript print-
+          ers the support equivalent to that provided for a similar Digital printer
+          with the DCPS-Base license, within the limits of the third-party printer.
+
+          The Other Hardware Required section of the SPD lists the supported third-
+          party printers. Digital makes no representation relative to the use
+          of this product to drive PostScript devices not listed in this SPD.
+          The use of the DCPS-Open product to drive PostScript devices not listed
+          on this SPD is not warranted nor supported.
+
+                                           6
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          INSTALLATION STATEMENT
+
+          Digital requires/recommends that a customer's first purchase of this
+          software product include Digital Installation Services. These services
+          provide for installation of the software product by an experienced Dig-
+          ital Software Specialist.
+
+          For subsequent purchases of this product, only customers with knowl-
+          edge of OpenVMS generic and execution print queues in clustered and
+          non-clustered environments and, if operating in a DECserver environ-
+          ment, knowledge of DECserver management, should attempt installation
+          of this software product. Digital recommends that all other customers
+          purchase Digital's Installation Services.
+
+          These services provide for the installation of the software product
+          and Digital PostScript Printer hardware by an experienced Digital Spe-
+          cialist.
+
+          Before installation of the software by Digital Installation Services,
+          the customer must:
+
+          o  Obtain, install, and demonstrate as operational any equipment and
+             facilities necessary to interface to Digital's communication equip-
+             ment.
+
+          o  Make available for a reasonable period of time, as mutually agreed
+             upon by Digital and the customer, all hardware, communication fa-
+             cilities, and terminals that are to be used during installation.
+
+          o  For verification of installation and connectivity in a multi-node
+             node network, designate and provide access to a host that has pre-
+             viously been installed by Digital.
+
+          Delays caused by any failure to meet the responsibilities will be charged
+          at the then prevailing rate for time and materials.
+
+          Installation of DECprint Supervisor software will consist of the fol-
+          lowing:
+
+          o  Verification that all prerequisite software and hardware has been
+             installed.
+
+                                           7
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          o  Verification that a complete set of DECprint Supervisor software
+             media and documentation has been received.
+
+          o  Verification that all hardware and software prerequisites have been
+             met and the equipment is operational.
+
+          o  Installation of DECprint Supervisor software on one system.
+
+          o  Verification that DECprint Supervisor software has been correctly
+             installed by running the Installation Verification Procedure.
+
+          o  Modification of the DECnet database to add PrintServer node names
+             and addresses.
+
+          o  Modification of the OpenVMS start-up files to automate the start-
+             up of print queues.
+
+          HARDWARE REQUIREMENTS
+
+          Processor and/or hardware configurations as specified below and at least
+          one of the supported printers.
+
+          For Alpha AXP Systems
+
+          Processors Supported
+
+          Alpha       DEC 2000 Model 300 AXP System,
+          AXP:
+                      DEC 2000 Model 500 AXP System
+
+                      DEC 3000 Model 300 AXP Workstation,
+                      DEC 3000 Model 300L AXP Workstation,
+                      DEC 3000 Model 400 AXP Workstation,
+                      DEC 3000 Model 400 AXP Server,
+                      DEC 3000 Model 500 AXP Workstation,
+                      DEC 3000 Model 500 AXP Server,
+                      DEC 3000 Model 500X AXP Workstation,
+                      DEC 3000 Model 600 AXP System,
+                      DEC 3000 Model 600S AXP System,
+
+
+                                           8
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+
+                      DEC 3000 Model 800 AXP System,
+                      DEC 3000 Model 800S AXP System
+
+                      DEC 4000 Model 600 Series AXP System
+
+                      DEC 7000 Model 600 Series AXP System
+
+                      DEC 10000 Model 600 Series AXP System
+
+          For OpenVMS VAX Systems
+
+          Processors Supported
+
+          VAX:        VAXft Model 110,
+                      VAXft Model 310,
+                      VAXft Model 410,
+                      VAXft Model 610,
+                      VAXft Model 612
+
+                      VAX 4000 Model 100,
+                      VAX 4000 Model 200,
+                      VAX 4000 Model 300,
+                      VAX 4000 Model 400,
+                      VAX 4000 Model 500,
+                      VAX 4000 Model 600
+
+                      VAX 6000 Model 200 Series,
+                      VAX 6000 Model 300 Series,
+                      VAX 6000 Model 400 Series,
+                      VAX 6000 Model 500 Series,
+                      VAX 6000 Model 600 Series
+
+                      VAX 7000 Model 600 Series
+
+
+
+
+
+
+
+                                           9
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+
+                      VAX 8200, VAX 8250, VAX 8300,
+                      VAX 8350, VAX 8500, VAX 8530,
+                      VAX 8550, VAX 8600, VAX 8650,
+                      VAX 8700, VAX 8800, VAX 8810,
+                      VAX 8820, VAX 8830, VAX 8840
+
+                      VAX 9000 Model 110,
+                      VAX 9000 Model 210,
+                      VAX 9000 Model 300 Series,
+                      VAX 9000 Model 400 Series
+
+                      VAX 10000 Model 600 Series
+
+                      VAX-11/750, VAX-11/780,
+                      VAX-11/785
+
+          MicroVAX:   MicroVAX II, MicroVAX 2000,
+                      MicroVAX 3100 Model 10/10E,
+                      MicroVAX 3100 Model 20/20E,
+                      MicroVAX 3100 Model 30,
+                      MicroVAX 3100 Model 40,
+                      MicroVAX 3100 Model 80,
+                      MicroVAX 3100 Model 90,
+                      MicroVAX 3300, MicroVAX 3400,
+                      MicroVAX 3500, MicroVAX 3600,
+                      MicroVAX 3800, MicroVAX 3900
+
+          VAXstation: VAXstation II, VAXstation 2000,
+                      VAXstation 3100 Model 30,
+                      VAXstation 3100 Model 38,
+                      VAXstation 3100 Model 40,
+                      VAXstation 3100 Model 48,
+                      VAXstation 3100 Model 76,
+                      VAXstation 3200, VAXstation 3500,
+                      VAXstation 3520, VAXstation 3540
+
+
+
+
+
+                                           10
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+
+                      VAXstation 4000 Model 60,
+                      VAXstation 4000 Model 90,
+                      VAXstation 4000 VLC
+
+          VAXserver:  VAXserver 3100 Model 10/10E,
+                      VAXserver 3100 Model 20/20E,
+                      VAXserver 3300, VAXserver 3400,
+                      VAXserver 3500, VAXserver 3600,
+                      VAXserver 3602, VAXserver 3800,
+                      VAXserver 3900
+
+                      VAXserver 4000 Model 200,
+                      VAXserver 4000 Model 300,
+                      VAXserver 4000 Model 500
+
+                      VAXserver 6000 Model 210,
+                      VAXserver 6000 Model 220,
+                      VAXserver 6000 Model 310,
+                      VAXserver 6000 Model 320,
+                      VAXserver 6000 Model 410,
+                      VAXserver 6000 Model 420,
+                      VAXserver 6000 Model 510,
+                      VAXserver 6000 Model 520,
+                      VAXserver 6000 Model 610,
+                      VAXserver 6000 Model 620,
+                      VAXserver 6000 Model 630
+
+          Processors Not Supported
+
+          MicroVAX I
+          , VAXstation I, VAXstation 8000,
+          VAX-11/752, VAX-11/730, VAX-11/782
+
+          Processor Restrictions
+
+          A TK50 Tape Drive is required for standalone MicroVAX 2000 and VAXs-
+          tation 2000 systems.
+
+          Other Hardware Required
+
+                                           11
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          At least one Digital or third-party PostScript [R] printer, as fol-
+          lows:
+
+          ** Support for direct printing to native PCL interpreter.
+
+          Digital Printers
+
+          Digital Serial Line Devices
+
+          o  DEClaser 5100 (LN09) **
+
+          o  DEClaser 3250 (LN08R)
+
+          o  DEClaser 2250 (LN06R)
+
+          o  DEClaser 2150 (LN05R)
+
+          o  DEClaser 1152 (LN07C)
+
+          o  DEClaser 1150 (LN07R)
+
+          o  ScriptPrinter (LN03R)
+
+          o  DECcolorwriter 1000 (LF02)
+
+          o  Colormate PS [R] (LF01R)
+
+          Digital PrintServer Printers
+
+          o  PrintServer 17 **
+
+          o  PrintServer 17/600 **
+
+          o  PrintServer 20
+
+          o  turbo PrintServer 20
+
+          o  PrintServer 32
+
+          o  PrintServer 40
+
+          o  PrintServer 40 Plus
+
+          Third-Party Printers and Printer/Cartridge Configurations
+
+          o  Apple [R] LaserWriter [R] IIg
+
+          o  Apple [R] LaserWriter [R] IIf
+
+                                           12
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          o  Apple LaserWriter II NT
+
+          o  Apple LaserWriter II NTR
+
+          o  Apple LaserWriter II NTX
+
+          o  Apple LaserWriter Plus
+
+          o  Apple LaserWriter Pro 600
+
+          o  Apple LaserWriter Pro 630
+
+          o  HP LaserJet [R] III with HP PostScript (Level 1) cartridge
+
+          o  HP LaserJet III with HP PostScript-Plus (Level 2) cartridge
+
+          o  HP LaserJet IIID with HP PostScript (Level 1) cartridge
+
+          o  HP LaserJet IIID with HP PostScript-Plus (Level 2) cartridge
+
+          o  HP LaserJet IIISi with PostScript (Level 1) option **
+
+          o  HP LaserJet IIISi with PostScript (Level 2) option **
+
+          o  HP LaserJet 4M **
+
+          o  HP LaserJet 4M Plus **
+
+          o  HP LaserJet 4ML **
+
+          o  HP LaserJet 4MP **
+
+          o  HP LaserJet 4SiMX **
+
+          o  HP PaintJet XL300
+
+          o  Tektronics Phaser 200e
+
+          o  Tektronics Phaser 200i
+
+          o  Tektronics Phaser 220e
+
+          For Digital Serial Line and Third-Party Printers Listed Above
+
+          o  At least one Digital serial line or third-party printer listed above
+
+          o  Serial Interface via RS232 or MMJ with Adapter
+
+                                           13
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          o  One of the following serial interfaces is required:
+
+             -  DHV11 (9600 baud)
+
+             -  DZQ11 (9600 baud)
+
+             -  DLV11 (9600 baud)
+
+             -  DHU11 (9600 baud)
+
+             -  DMZ32 (4800 baud)
+
+             -  DMF32 (9600 baud)
+
+             -  DMB32 (9600 baud)
+
+             -  DECserver 100 (9600 baud)
+
+             -  DECserver 200/MC (19.2K baud)
+
+             -  DECserver 250 (19.2K baud)
+
+             -  DECserver 300 (19.2K baud)
+
+             -  DECserver 500 (9600 baud)
+
+             -  DECserver 550 (9600 baud)
+
+             -  DECserver 700 (57.6K baud)
+
+             -  MUXserver 100 (19.2K baud)
+
+             -  MUXserver 300 (19.2K baud)
+
+             -  CVAX serial interface (CXA16, CXB16, CX08, DZQ-11) (9600 baud)
+
+             -  DECserver 90L (38.4K baud)
+
+             -  DECserver 90M (38.4K baud)
+
+             -  DECserver 90TL (57.6K baud)
+
+             -  DECserver 900 (57.6K baud)
+
+          o  The printer's communications interface must be set for 8-bit, no
+             parity communications, XON/XOFF flow control.
+
+                                           14
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          For PrintServer Configurations Only
+
+          o  A PrintServer printer
+
+          o  An Ethernet Controller Interface for the client system
+
+          o  An Ethernet physical channel for the printer, and one of the fol-
+             lowing:
+
+             -  Ethernet Transceiver (H4000 or H4004)
+
+             -  Local Network Interconnect (DELNI)
+
+             -  ThinWire Ethernet Station Adapter (DESTA)
+
+             -  ThinWire Interconnect (DEMPR)
+
+          For AppleTalk Configurations Only
+
+          o  A printer with an AppleTalk controller
+
+          o  An Ethernet Controller Interface for the client system
+
+          o  An EtherTalk or LocalTalk physical channel for the printer. If the
+             LocalTalk interconnect is used, an EtherTalk/LocalTalk router must
+             be used to convert between the physical protocols. Refer to the PATH-
+             WORKS SPD 30.50.xx for more information about configuring AppleTalk
+             networks.
+
+          Disk Space Requirements (Block Cluster Size = 1):
+
+          DCPS FOR OPENVMS VAX
+
+          Disk space required for      8,800 blocks
+          installation:                (4.4 Mbytes)
+
+          Disk space required for
+          use (permanent:)
+
+          With ALL-IN-1 compatibil-    4,500 blocks
+          ity kit                      (2.3 Mbytes)
+
+                                           15
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+
+          Without ALL-IN-1 compati-    2,500 blocks
+          bility kit                   (1.3 Mbytes)
+
+          DCPS FOR OPENVMS AXP
+
+          Disk space required for      5,000 blocks
+          installation:                (2.5 Mbytes)
+
+          Disk space required for
+          use (permanent:)
+
+          With ALL-IN-1 compatibil-    N/A
+          ity kit
+
+          Without ALL-IN-1 compati-    2,200 blocks
+          bility kit                   (1.1 Mbytes)
+
+          These counts refer to the disk space required on the system disk. The
+          sizes are approximate; actual sizes may vary depending on the user's
+          system environment, configuration, and software options.
+
+          SOFTWARE REQUIREMENTS
+
+          For All Systems:
+
+          o  OpenVMS VAX Operating System V5.5-2, V6.0, V6.1
+             or
+             OpenVMS AXP Operating System V1.5, V6.1
+
+          For PrintServer Printer Configurations Only:
+
+          o  A Supporting Host for the PrinterServer. Refer to the PrintServer
+             Software SPD 48.09.xx for more information.
+
+          For AppleTalk Printer Configurations Only:
+
+          o  DECnet for OpenVMS VAX V5.5-2, V6.0, V6.1
+
+
+
+                                           16
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          o  The AppleTalk stack from the PATHWORKS V5.0 Server for OpenVMS
+
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of Digital
+          Equipment Corporation's Standard Terms and Conditions. For more in-
+          formation about Digital's licensing terms and policies, contact your
+          local Digital office.
+
+          DECprint Supervisor for OpenVMS, Base
+
+          The right to use the DECprint Supervisor for OpenVMS, Base, is included
+          with the license for the OpenVMS VAX (SPD 25.01.xx) and OpenVMS AXP
+          (SPD 41.87.xx) operating systems.
+
+          This right permits execution of the DECprint Supervisor for OpenVMS,
+          Base, software on any licensed processor (i.e., VAX or Alpha AXP com-
+          puter) for purposes of controlling and providing basic printing fea-
+          tures for all Digital PostScript printers controlled by the licensed
+          node.
+
+          DECprint Supervisor for OpenVMS, Open
+
+          This capacity-based traditional license permits execution of the DECprint
+          Supervisor for OpenVMS, Open, software on a single node for purposes
+          of controlling and providing basic printing features for supported third-
+          party PostScript printers controlled by the licensed node.
+
+          The right to use the DECprint Supervisor for OpenVMS, Open, is also
+          included with the license for PATHWORKS V5.0 for OpenVMS (SPD 30.50.xx).
+
+          The Hardware Requirements section of this SPD lists the supported third-
+          party printers. Digital makes no representation relative to the use
+          of this product with PostScript devices not listed in the SPD. Cus-
+          tomers' use of the product with PostScript devices not listed in the
+          SPD is at their own risk.
+
+          DECprint Supervisor for OpenVMS, Plus
+
+
+                                           17
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          This capacity-based traditional license permits execution of the DECprint
+          Supervisor for OpenVMS, Plus, software on a single node for purposes
+          of providing advanced printing features for:
+
+          o  All Digital PostScript printers controlled by the licensed node,
+             and
+
+          o  All third-party PostScript printers listed on the SPD and controlled
+             by the licensed node.
+
+          The Hardware Requirements section of the SPD lists the supported third-
+          party printers. Digital makes no representation relative to the use
+          of this product with PostScript devices not listed in the SPD. Cus-
+          tomers' use of the product with PostScript devices not listed in the
+          SPD is at their own risk.
+
+          License Management Facility
+
+          This layered product supports the OpenVMS License Management Facil-
+          ity.
+
+          License units for this product are allocated on an unlimited System
+          Use basis. Unlimited System Use is an umbrella term used to describe
+          the set of capacity style license offerings. License types included
+          under this umbrella are Traditional and Clusterwide.
+
+          CLUSTER ENVIRONMENT
+
+          This layered product is fully supported when installed on any valid
+          and licensed VMScluster* configuration without restrictions. The Hard-
+          ware Requirements section of this product's Software Product Descrip-
+          tion and System Support Addendum detail any special hardware required
+          by this product.
+
+          *  VMScluster configurations are fully described in the VMScluster Soft-
+             ware Product Description (42.18.xx) and include CI, Ethernet, and
+             DSSI configurations.
+
+          OpenVMS Tailoring
+
+
+                                           18
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          For OpenVMS V5.5-2, V6.0, and V6.1 systems, the following OpenVMS classes
+          are required for full functionality of this layered product:
+
+          o  OpenVMS Required Saveset
+
+          o  Network Support (for PrintServer support)*
+
+          o  Secure User's Environment
+
+          o  Utilities (for support of DECserver connected printers)*
+
+          o  DECwindows Application Files (for printing DDIF encoded bitonal im-
+             ages)*
+
+          *  These are optional features. Installations that do not use these
+             features do not need to install the tailoring classes indicated.
+
+          For more information on OpenVMS classes and tailoring, refer to the
+          appropriate OpenVMS Operating System Software Product Description.
+
+          OPTIONAL SOFTWARE
+
+          o  DEC Distributed Queuing Service for OpenVMS AXP V1.3
+
+          o  DECimage Application Services for VMS V3.1
+
+          o  DEClaser Printer Monospaced Soft Fonts
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future version of
+          this product may be different from the requirements for the current
+          version.
+
+
+
+
+
+
+
+
+                                           19
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+          DISTRIBUTION MEDIA
+
+          For OpenVMS VAX Systems:
+
+          9-track 1600 BPI Magtape, TK50 Streaming Tape
+
+          This product is also available as part of the OpenVMS VAX Consolidated
+          Software Distribution on CD-ROM, part number QA-VWJ8A-A8.
+
+          For OpenVMS AXP Systems:
+
+          This product is distributed on the Digital CD-ROM Software Library for
+          OpenVMS AXP, part number QA-03XAA-H8.
+
+          For Online Documentation:
+
+          The software documentation for this product is also available as part
+          of the OpenVMS Online Documentation Library on CD-ROM.
+
+          For Documentation Only:
+
+          Use part number QA-09NAA-GZ to order only the documentation for the
+          DECprint Supervisor. The VAX and AXP platforms share a common set of
+          manuals.
+
+          New to DCPS V1.1 is a CD-ROM which contains the savesets for VAX and
+          AXP platforms, online BOOKREADER documents, PostScript files of the
+          manuals, and the SPD form. The part number is QA-09NAB-H8.
+
+          ORDERING INFORMATION
+
+          Software Licenses:
+             DCPS-Open for OpenVMS VAX: QL-09FA*-AA
+             DCPS-Plus for OpenVMS VAX: QL-09LA*-AA
+             DCPS-Open for OpenVMS AXP: QL-09KA*-AA
+             DCPS-Plus for OpenVMS AXP: QL-09MA*-AA
+          Software Media and Documentation: QA-09NAA-H*
+          Software Documentation: QA-09NAA-GZ
+          Software Product Services:
+             LPS DCPS-Open for OpenVMS VAX: QT-09FA*-AA
+             LPS DCPS-Plus for OpenVMS VAX: QT-09LA*-AA
+
+                                           20
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+             Media and Documentation Update for DCPS-Base,
+             Open, and Plus: QT-09NAA-E*
+             Documentation update for DCPS-Base, Open, and
+             Plus: QT-09NAA-KZ
+             LPS DCPS-Open for OpenVMS AXP: QT-09KA*-AA
+             LPS DCPS-Plus for OpenVMS AXP: QT-09MA*-AA
+
+          The QA-09NAA-GZ documentation applies to both the OpenVMS VAX and AXP
+          products.
+
+          *  Denotes variant fields. For additional information on available li-
+             censes, services, and media, refer to the appropriate price book.
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available from Digital. For more in-
+          formation, contact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with the pur-
+          chase of a license for the product as defined in the Software Warranty
+          Addendum of this SPD only when the product is used to drive a PostScript
+          device listed in the SPD.
+
+          [R]  Apple and LaserWriter are registered trademarks of Apple
+               Computer, Inc.
+
+          [R]  Colormate PS is a registered trademark of NEC.
+
+          [R]  HP, PCL, and LaserJet are registered trademarks of Hewlett-
+               Packard Company.
+
+          [R]  IBM and Proprinter are registered trademarks of International
+               Business Machines Corporation.
+
+          [R]  PostScript is a registered trademark of Adobe Systems, Inc.
+
+          [R]  TEKTRONIX is a registered trademark of Tektronix, Inc.
+
+
+                                           21
+
+ 
+
+
+
+          DECprint Supervisor (DCPS) for OpenVMS,               SPD 44.15.02
+          Version 1.1
+
+
+          [TM] The DIGITAL Logo, ALL-IN-1, Alpha AXP, AXP, CI, CX, DEC, DEC-
+               image, DEClaser, DECnet, DECprint, DECserver, DECwindows,
+               DELNI, DEMPR, DESTA, Digital, LAT, LN03, LN03 ScriptPrinter,
+               MicroVAX, MUXserver, OpenVMS, PrintServer, Q-bus, ReGIS,
+               ThinWire, TK, ULTRIX, VAX, VMScluster, VAXft, VAXserver,
+               VAXstation, VMS, and WPS-PLUS are trademarks of Digital
+               Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           22

@@ -1,0 +1,757 @@
+ 
+
+
+
+
+
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECtrace for OpenVMS, Version 2.1       SPD 25.G1.04
+
+ DESCRIPTION
+
+ DECtrace is an OpenVMS layered product that collects and reports on
+ event-based data and provides on-line capabilities to view performance
+ data in real-time. This data is useful for performance analysis, ca-
+ pacity planning, database tuning, error logging, and other areas in
+ which detailed event performance information on applications and lay-
+ ered products is needed. DECtrace event data can be gathered from any
+ OpenVMS layered product or combination of products that contain DEC-
+ trace service routine calls. Customers can also put DECtrace event calls
+ in their application code to collect application-specific event and
+ performance data. DECtrace is designed to operate with minimal per-
+ formance impact on the system and can be used in both development and
+ production environments. DECtrace supports both single-node and VM-
+ Scluster environments.
+
+ A DECtrace event is defined to be an application-defined occurrence.
+ An event can have a start and an end (duration event) or can simply
+ occur (point event). DECtrace allows events within layered products
+ or customer application programs to be defined and data items to be
+ associated with each event. These data items can be resource utiliza-
+ tion statistics (for example, CPU time) or other application-defined
+ items (for example, text strings). Data items specific to the Digi-
+ tal layered product, third-party layered product, or customer appli-
+ cation can be associated with each event. In addition, event data can
+ be tracked across product boundaries. So, for example, performance data
+ about a VAX ACMS procedure call can be related to the DEC Rdb for OpenVMS
+ (DEC Rdb) events that execute on behalf of that procedure call. These
+ data items defined with DECtrace can be used for supporting database
+
+
+
+
+                               DIGITAL                 February 1994
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ tuning, application-level error logging, application transaction per-
+ formance data, and a range of other information logging needs.
+
+ DECtrace enables the user to graphically display ACMS, Rdb, or other
+ application performance event data in real-time. Performance data to
+ be viewed is selected from many menu choices. The user can set thresh-
+ olds on this data to be alerted of potential performance problems.
+
+ DECtrace provides detail, summary, and frequency reports based upon
+ the formatted event data in the DECtrace DEC Rdb database. Since the
+ event data can be stored in a DEC Rdb database or an RMS file, users
+ can write customized reports using DATATRIEVE, DECdecision, DEC RALLY,
+ other 4GL tools, or standard 3GL languages such as COBOL. The DECtrace
+ formatted DEC Rdb database definitions can optionally be stored in 
+ CDD/Repository for VMS. DECtrace event data can also be used by other
+ applications such as DEC RdbExpert, which optimizes the performance of 
+ DEC Rdb databases and ALL-IN-1 Performance Reports, which generates 
+ reports from ALL-IN-1 data collected by DECtrace.
+
+ DECtrace is an event-based data collector rather than sample-based;
+ it collects data at defined locations in the application code each time
+ that the code is executed.
+
+ DECtrace does not attempt to analyze or modify the performance of an
+ application. Its function is to collect, and report or display the event
+ data. Interpreting the reports is the responsibility of the user. De-
+ scriptions of the DECtrace data is provided in the documentation for
+ these products. For a current list of supported layered products, re-
+ fer to the OPTIONAL SOFTWARE section of this SPD.
+
+ DECtrace software components are available on OpenVMS VAX and Open-
+ VMS AXP systems. These components may be used on a single system or
+ distributed across several systems. Components on VAX and AXP systems
+ are interoperable. For example, DECtrace Reporter on an OpenVMS AXP
+ system can be used to report data collected by the DECtrace Collec-
+ tor on an OpenVMS VAX system.
+
+
+
+
+
+                                  2
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ Features
+
+ DECtrace allows application or layered product software developers to:
+
+ o  Define events and data items specific to their software.
+
+ o  Place DECtrace service routine calls at appropriate locations in
+    the program source code. These locations are determined by the type
+    of information to be collected and the way it will be used and in-
+    terpreted by the user. (DECtrace provides a Language Sensitive Ed-
+    itor template to aid in the coding process.)
+
+ o  Register these application programs with DECtrace.
+
+ Users of DECtrace data may be applications developers, applications
+ performance analysts, database administrators, system managers, ca-
+ pacity planners, and others interested in event or performance data.
+ The DECtrace user can:
+
+ o  Display information about facilities and collections.
+
+ o  Generate real-time displays of collected data while applications
+    are running.
+
+ o  Collect event data and format it into a DEC Rdb database or RMS file.
+
+ o  If CDD/Repository for VMS is installed on the system, DECtrace can
+    record the formatted DEC Rdb database definitions into CDD/Repository
+    for VMS.
+
+ o  Collect data from single and multi-user test and production envi-
+    ronments allowing one or more collections per node to be active at
+    any given time.
+
+ o  Turn data collection on and off from the command line interface.
+
+ o  Merge data from different collection instances.
+
+ o  Track event data across facility (product) boundaries.
+
+ o  Produce detail, frequency, and summary reports from the DEC Rdb for-
+    matted database.
+
+                                  3
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ o  Generate customized reports from the DEC Rdb database or RMS data
+    file using 3GL or 4GL language products.
+
+
+ Product Licenses
+
+ The DECtrace product set consists of two software components: DECtrace
+ Full and DECtrace Collector. DECtrace Full includes the following com-
+ ponents:
+
+ o  DECtrace Collector
+
+    The DECtrace Collector contains a set of service routines; calls
+    to these services are placed within the layered application soft-
+    ware and represent the application events. Data is collected on these
+    events and stored for subsequent use by the DECtrace Reporter. The
+    DECtrace Collector provides a library of service routine calls with
+    the ability to:
+
+    -  Register facilities
+
+    -  Create selection definitions
+
+    -  Schedule collections and collect data
+
+    -  Register each layered product and application (called facili-
+       ties)
+
+    -  Selectively consolidate data from one or more of these facil-
+       ities
+
+    -  Display information about these facilities and about the col-
+       lected data
+
+ o  DECtrace Monitor
+
+    The DECtrace Monitor provides the ability to display application
+    performance data. DECtrace Collector is required for real-time dis-
+    plays (not required for replay). Through the command line inter-
+    face, the user can perform the following functions:
+
+    -  View real-time Motif[R] displays
+
+    -  Replay previous collections
+
+                                  4
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ o  DECtrace Reporter
+
+    The DECtrace Reporter product provides the formatting and report-
+    ing functions. Through the command line interface, the user can per-
+    form the following functions:
+
+    -  Format the data into either a DEC Rdb database or an RMS file
+
+    -  Create reports using the DECtrace reporting mechanism
+
+ The DECtrace Collector license includes only the Collector component
+ described above.
+
+ CONFORMANCE TO STANDARDS
+
+ Recognized standards do not exist for products that collect and re-
+ port system event.
+
+ HARDWARE REQUIREMENTS
+
+ Supported AXP Processors
+
+ AXP:      DEC 3000 Model 400 AXP Workstation,
+           DEC 3000 Model 400 AXP Server,
+           DEC 3000 Model 500 AXP Workstation,
+           DEC 3000 Model 500 AXP Server
+
+           DEC 4000 Model 610 AXP System
+
+           DEC 7000 Model 610 AXP System
+
+           DEC 10000 Model 610 AXP System
+
+ Supported VAX Processors
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+
+                                  5
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300,
+           VAX 8350, VAX 8500, VAX 8530,
+           VAX 8550, VAX 8600, VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+           VAX-11/730, VAX-11/750
+           VAX-11/780, VAX-11/785
+
+ VAXft:    VAXft Model 110,
+           VAXft Model 310,
+           VAXft Model 410,
+           VAXft Model 610,
+           VAXft Model 612
+
+
+
+
+
+
+
+
+
+
+
+                                  6
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+
+ MicroVAX: MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100 Model 10/10E,
+           MicroVAX 3100 Model 20/20E,
+           MicroVAX 3100 Model 30,
+           MicroVAX 3100 Model 40,
+           MicroVAX 3100 Model 80,
+           MicroVAX 3100 Model 90,
+           MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+ VAXstation:VAXstation II, VAXstation 2000,
+           VAXstation 3100 Model 30,
+           VAXstation 3100 Model 38,
+           VAXstation 3100 Model 40,
+           VAXstation 3100 Model 48,
+           VAXstation 3100 Model 76,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90,
+           VAXstation 4000 VLC
+
+ VAXserver: VAXserver 3100, VAXserver 3300,
+           VAXserver 3400, VAXserver 3500,
+           VAXserver 3600, VAXserver 3602,
+           VAXserver 3800, VAXserver 3900
+
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 500
+
+
+
+
+
+
+
+
+                                  7
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+
+           VAXserver 6000 Model 210,
+           VAXserver 6000 Model 220,
+           VAXserver 6000 Model 310,
+           VAXserver 6000 Model 320,
+           VAXserver 6000 Model 410,
+           VAXserver 6000 Model 420,
+           VAXserver 6000 Model 510,
+           VAXserver 6000 Model 520,
+           VAXserver 6000 Model 610,
+           VAXserver 6000 Model 620,
+           VAXserver 6000 Model 630
+
+ Unsupported Processors
+
+           MicroVAX I, VAXstation I,
+           VAX-11/725, VAX-11/782,
+           VAXstation 8000
+
+ Processor Restrictions
+
+ o  A TK50 cartridge tape drive, 9-track 1600 BPI magnetic tape drive
+    or CD-ROM drive is required to install this software
+
+ o  A minimum of 4 Mbytes of memory is required on VAX systems. A min-
+    imum of 8 Mbytes of memory is required on AXP systems
+
+ o  ECO level 4 or later and WCS microcode version 123 or later are re-
+    quired for VAX-11/780 or VAX-11/785 processors
+
+ o  ECO level 3 or later required for VAX-11/750 processors
+
+ Disk Space Requirements: (Block Cluster Size = 1)
+
+ DECtrace Full (Standalone)for OpenVMS VAX
+
+ Disk space required for    26,900 blocks
+ installation:
+                            (14 Mbytes)
+
+
+                                  8
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+
+ System disk space re-      10,400 blocks
+ quired for use:
+                            (5 Mbytes)
+
+ Additional disk space      8,000 blocks
+ required for use:
+                            (4 Mbytes)
+
+ DECtrace Full (Cluster) for OpenVMS VAX
+
+ Disk space required for    31,000 blocks
+ installation:
+                            (16 Mbytes)
+
+ System disk space re-      10,400 blocks
+ quired for use:
+                            (6 Mbytes)
+
+ Additional disk space      8,700 blocks
+ required for use:
+                            (5 Mbytes)
+
+ DECtrace Collector (Standalone) for OpenVMS VAX
+
+ Disk space required for    24,900 blocks
+ installation:
+                            (13 Mbytes)
+
+ Disk space required for    7,500 blocks
+ ongoing use:
+                            (4 Mbytes)
+
+ Additional disk space      8,000 blocks
+ required for use:
+                            (4 Mbytes)
+
+
+
+
+
+                                  9
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ DECtrace Collector (Cluster) for OpenVMS VAX
+
+ Disk space required for    29,000 blocks
+ installation:
+                            (15 Mbytes)
+
+ Disk space required for    7,500 blocks
+ ongoing use:
+                            (4 Mbytes)
+
+ Additional disk space      8,700 blocks
+ required for use:
+                            (5 Mbytes)
+
+ DECtrace Full for OpenVMS AXP
+
+ Disk space required for    32,000 blocks
+ installation:
+                            (16 Mbytes)
+
+ System disk space re-      17,700 blocks
+ quired for use:
+                            (9 Mbytes)
+
+ Additional disk space      8,000 blocks
+ required for use:
+                            (4 Mbytes)
+
+ DECtrace Collector for OpenVMS AXP
+
+ Disk space required for    29,000 blocks
+ installation:
+                            (15 Mbytes)
+
+ Disk space required for    13,200 blocks
+ ongoing use:
+                            (7 Mbytes)
+
+
+
+
+                                 10
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+
+ Additional disk space      8,000 blocks
+ required for use:
+                            (4 Mbytes)
+
+ Unless otherwise noted, these counts refer to the disk space required
+ on the system disk. The sizes are approximate; actual sizes may vary
+ depending on the user's system environment, configuration, and soft-
+ ware options selected.
+
+ Additional disk space will be required for DECtrace data collection
+ files, formatted data and/or database files. This space is not required
+ on the system disk. The amount of additional space required is depen-
+ dent on the amount of information collected and formatted using DEC-
+ trace, and will vary from collection to collection.
+
+ Memory Requirements for DECwindows Support
+
+ The Monitor facility is a DECwindows application. The minimum supported
+ memory for this application running in a standalone DECwindows envi-
+ ronment with both the client and server executing on that same sys-
+ tem is 8 Mbytes on VAX processors and 8 Mbytes on AXP processors.
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VAXcluster or VMSCluster configuration without restric-
+ tions. The HARDWARE REQUIREMENTS sections of this product's Software
+ Product Description detail any special hardware required by this prod-
+ uct.
+
+ VAXcluster configurations are described in the VAXcluster Software Prod-
+ uct Description (29.78.xx). VMScluster configurations are described
+ in the VMScluster Software Product Description (42.18.xx). These con-
+ figurations include CI, Ethernet, and Mixed Interconnect configura-
+ tions.
+
+
+
+
+
+                                 11
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ SOFTWARE REQUIREMENTS
+
+ OpenVMS VAX Systems
+
+ o  OpenVMS VAX Operating System V5.4 - V6.0
+
+ o  VMS DECwindows Motif[R] V1.1 - V1.2
+
+    Required by the DECtrace Monitor facility only
+
+ o  DEC Rdb for OpenVMS VAX V4.0b - V5.1 Runtime License
+
+    The DEC Rdb Runtime Option is required by DECtrace utilities to cre-
+    ate and access its administration, history, and formatted databases.
+
+ OpenVMS AXP Systems
+
+ o  OpenVMS AXP Operating System, V1.5
+
+ o  DECwindows Motif[R] for OpenVMS AXP,V1.1
+
+    Required by the DECtrace Monitor facility only
+
+ o  DEC Rdb for OpenVMS AXP V5.1
+
+    The DEC Rdb Runtime Option is required by DECtrace utilities to cre-
+    ate and access its administration, history, and formatted databases.
+
+ OpenVMS Tailoring
+
+ For OpenVMS systems, the following OpenVMS class is required for full
+ functionality of this layered product:
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx)
+ or the OpenVMS AXP Operating System Software Product Description (SPD
+ 41.87.xx).
+
+
+                                 12
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ OPTIONAL SOFTWARE
+
+ The following software may be used with DECtrace to create reports or
+ to analyze system workloads using data collected by DECtrace.
+
+ o  DEC RdbExpert for VMS V1.0 - V2.1
+
+ o  CDD/Repository for VMS V4.3 - V5.1
+
+ o  DEC RALLY for VMS V2.3 - V3.3
+
+ o  DEC DATATRIEVE for OpenVMS, V5.1 - V6.1
+
+ Products instrumented with DECtrace calls
+
+ o  VAX ACMS, V3.1 - V3.3
+
+ o  DEC Rdb for OpenVMS AXP, V5.1 - V6.0
+
+ o  DEC Rdb for OpenVMS VAX, V4.2 - V6.0
+
+ o  DEC DBMS for OpenVMS VAX, V4.2 - V5.1
+
+ o  DEC DBMS for OpenVMS AXP, V5.1
+
+ o  DECforms, V1.3 - V2.0
+
+ o  DEC RALLY for OpenVMS VAX Systems, V2.3 - V3.2
+
+ o  DEC RALLY for OpenVMS AXP Systems, V3.2
+
+ o  ALL-IN-1 Integrated Office System Server for OpenVMS V2.3 - V3.0
+
+ Certain versions of these products depend upon a specific version of
+ the operating system. Please refer to the Software Product Descrip-
+ tion of the product in question to determine which version is neces-
+ sary.
+
+
+
+
+                                 13
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ ORDERING INFORMATION
+
+ DECtrace Full for OpenVMS VAX:
+       Software Licenses: QL-VW2A9-AA
+       Software Media: QA-VW2AA-H5/HM
+       Software Documentation: QA-VW2AA-GZ
+       Software Product Services: QT-VW2A*-**
+
+ DECtrace Collector for OpenVMS VAX:
+       Software Licenses: QL-YV4A9-AA
+       Software Media: QA-YV4AA-H5/HM
+       Software Product Services: QT-YV4A*-**
+
+ DECtrace Full for OpenVMS AXP:
+       Software Licenses: QL-2FHA9-AA
+       Software Media: QA-03XAA-H8
+       Software Product Services: QT-2FHA*-**
+       Software Documentation: QA-VW2AA-GZ
+
+ DECtrace Collector for OpenVMS AXP:
+       Software Licenses: QL-2FJA9-AA
+       Software Media: QA-03XAA-H8
+       Software Product Services: QT-2FJA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ The DECtrace Full License includes the Monitor, Reporter and Collec-
+ tor facilities. A DECtrace Full license is required on each system where
+ DECtrace data will be monitored, formatted and reported.
+
+ A DECtrace Collector only license is required on each additional sys-
+ tem from which events will be collected.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+
+                                 14
+
+ 
+
+
+
+ DECtrace for OpenVMS, Version 2.1                     SPD 25.G1.04
+
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. Traditional licenses are available. These licenses permit an un-
+ limited number of authorized users to access this product on a sin-
+ gle, identified, processor.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS License Management Facility Manual of the OpenVMS Operating
+ System documentation set or the appropriate OpenVMS Operating System
+ Software Product Description (SPD 41.87.xx for VAX Systems, SPD 41.87.xx
+ for AXP Systems).
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum to this SPD.
+
+ [R] Motif is a registered trademark of Open Software Foundation,
+    Inc.
+
+ [TM]The DIGITAL Logo, ACMS, ALL-IN-1, AXP, CDD/Repository, CI,
+    DATATRIEVE, DBMS, DEC, DEC RALLY, DECdecision, DECforms,
+    DECtrace, DECwindows, Digital, MicroVAX, OpenVMS, TK, VAX,
+    VAXcluster, VAX COBOL, VAXft, VAX RALLY, VAX RMS, VAXserver,
+    VAXstation, and VMS are trademarks of Digital Equipment Corpo-
+    ration.
+
+
+
+
+
+
+
+
+                                 15

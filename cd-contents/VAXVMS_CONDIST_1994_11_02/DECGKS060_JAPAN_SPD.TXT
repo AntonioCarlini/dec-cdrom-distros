@@ -1,0 +1,849 @@
+ 
+
+
+
+
+
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+   ソフトウェア仕様書
+
+仕様書の包含する範囲
+
+この文書は，DEC GKS（GKS: Graphical Kernel System）for OpenVMS VAXのソフトウ
+ェア機能仕様について述べたものです。
+
+1   DEC GKS for OpenVMS VAXの概要
+
+DEC GKS for OpenVMS VAX V6.0は，DEC GKS-3D V1.1とDEC GKS V4.2の2つのプロダク
+トを統合したものです。DEC GKSは，様々な装置に3次元または2次元画像を定義し，表
+示するための関数群を提供します。DEC GKSは，移植性にすぐれ，装置に依存しない3
+次元または2次元アプリケーションを開発するためのツールです。
+
+DEC GKS for OpenVMS VAXは，3次元グラフィックスのための国際標準（GKS-3D国際標
+準（ISO 8805(E) 1988）に準拠し，ISO GKS標準（ISO 7942-1985）に上位互換性を
+保つように機能拡張したものです。DEC GKSは，レベル2cの機能を提供します。つま
+り，ワークステーション独立セグメント記憶域（Workstation Independent Segment
+Storage）を含んだすべての出力機能（レベル2），同期および非同期入力が可能なす
+べての入力機能（レベルc）を提供しています。
+
+DEC GKS for OpenVMS VAXは，共用可能なイメージ・デバイス・ハンドラと共に，VMS
+ランタイム・ライブラリとしてパックされているサブルーチン・ライブラリです。
+
+2  機能
+
+■座標変換機能
+
+DEC GKS for OpenVMS VAXは，3次元オブジェクトのビューを指定し，作業座標系（世
+界座標）を定義します。世界座標は自由に拡大縮小をすることができます。たとえ
+ば，1つのアプリケーションが最大で0から1000.0までの範囲をもつ一方で，もう1つの
+アプリケーションは，0.01から0.1までの範囲に制限することが可能です。
+
+ユーザは，同じオブジェクトの複数のビューを，同一画面上の異なった位置に同時に
+表示できるのと同様に，別の装置画面上に同時に表示することができます。たとえ
+ば，あるアプリケーション・プログラムは，ワークステーションのウィンドウの1つに
+は立方体のイメージを表示し，別の（必要ならば，他のワークステーションの）ウィ
+ンドウには，同じ立方体の後部の詳細図を表示させることが可能です。
+
+
+
+                                    DIGITAL                        1994年11月
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+■GKS-3Dメタファイル
+
+DEC GKS for OpenVMS VAXは，ISO（8805）が提唱するGKS-3Dメタファイルの保存およ
+び解釈に基づいたシーケンシャル・ファイルと，ISO（7942）が提唱するGKSMメタファ
+イルの解釈に基づいたシーケンシャル・ファイルに対するインターフェイスを提供し
+ます。メタファイルは，以下の目的で使用することができます。
+
+o  装置に依存しない形式でグラフィックス出力情報を保存する。
+
+o  GKSと互換性のあるシステム間でのグラフィックス出力情報の交換を行う。
+
+o  DEC GKSで書かれたアプリケーション間でのグラフィックス出力情報の交換を行
+   う。
+
+o  DEC GKSアプリケーションとDEC GKS-3Dアプリケーション間でのグラフィックス出
+   力情報の交換を行う。
+
+o  関連する非グラフィックス出力情報を保存する。
+
+■CGM（Computer Graphics Metafile）出力
+
+DEC GKS for OpenVMS VAXは，CGMを使って情報を保存する方法を提供します。情報
+は，ANSIで定められたCGM（ANSI X3.122-1986）の形式で格納します。日本語DEC GKS
+for OpenVMS VAXは，次の3通りのCGM出力形式を提供します。日本語出力機能はサポー
+トしていません。
+
+o  Clear Text Encoding
+
+   この出力形式は，一般的なテキスト・エディタで簡単に作成，参照，修正できるよ
+   うな形式でグラフィックス出力データを保存します。この形式は，テキスト・ファ
+   イル転送しかサポートしないネットワークを介してのグラフィックス出力データ転
+   送に適しています。
+
+o  Character Encoding
+
+   この出力形式は，グラフィックス出力データを最小のファイル・サイズの文字列形
+   式で保存するための形式です。この形式で保存されたデータは，バイナリ・データ
+   形式のファイル転送をサポートしないネットワークを介してのデータ転送に特に適
+   しています。
+
+o  Binary Encoding
+
+   この出力形式は，グラフィックス出力データをコンパクトに保存し，最も早くデー
+   タを読み込みや書き込むことのできる形式です。しかしながら，各々のバイトの8
+   ビットにはすべて意味があるため，コミュニケーション・ラインを介した伝達には
+   適していません。
+
+■DDIF（Digital's Document Interchange Format）出力
+
+DEC GKS for OpenVMS VAXは，DDIFの形式で符号化された3次元オブジェクトの2次元
+のビューを保存する機能を提供します。DDIFの形式で保存されたビューは，DECのCDA
+（Compound Document Architecture）に準拠したアプリケーションによって処理する
+ことが可能です。
+
+                                       2
+
+ 
+
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ソフトウェア仕様書
+
+
+■DECwindows, Motif
+
+DEC GKS for OpenVMS VAXは，日本語VMS DECwindowsと日本語VMS DECwindows
+Motif[R]をサポートします。
+
+■エスケープ機能
+
+DEC GKS for OpenVMS VAXは，GKS標準で定義されていない装置固有の機能を使用する
+ためのエスケープ機能を提供します。
+
+■豊富なストローク・フォント
+
+英数字を主体とした24種類のストローク・フォントに加えて，高精度の漢字ストロー
+ク・フォントが提供されます。
+
+■キャラクタ・セット
+
+DEC GKS for OpenVMS VAXは，装置に依存しないストローク表示精度を持つ一連のキャ
+ラクタ・フォントを提供します。
+
+また，DEC GKS for OpenVMS VAXは，サポートしているグラフィックス装置固有のキャ
+ラクタ・セットに対して文字列のサポートを提供します。DEC GKS for OpenVMS VAXで
+は，文字列は3次元空間の任意の位置に置かれた平面に表示されます。
+
+■言語バインディング
+
+DEC GKS for OpenVMS VAX関数は，4種類のサブルーチン呼び出しで利用できます。
+
+o  ISO標準（DIS 8806/1）FORTRANバインディングに準拠したGKS-3Dのインターフェイ
+   ス
+   FORTRANバインディング・インターフェイスを使うことにより，FORTRANで書かれた
+   GKSのアプリケーションを，FORTRAN，GKS-3Dに準拠したイメージが実現する他のオ
+   ペレーティング・システムに移植することができます。
+
+o  ISO標準（OP 8651/4）C言語バインディングの3次元の拡張に準拠したGKSのインタ
+   ーフェイス
+
+o  VMS標準の関数呼び出しに準拠し，様々なプログラミング言語から呼び出しが可能
+   な，言語に依存しない3Dバインディング
+
+o  VMS標準の関数呼び出しに準拠し，様々なプログラミング言語から呼び出しが可能
+   な，言語に依存しない2Dバインディング
+
+■グラフィック・ハンドラ
+
+DEC GKS for OpenVMS VAXは，種々のグラフィックス装置をサポートしています。本製
+品の『システム・サポート付加情報』（SSA 25.M6.03-x）の"オプション・ハードウェ
+ア"を参照してください。
+
+                                       3
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+■出力機能
+
+アプリケーション・プログラムは，次に示す出力基本要素を使用することができま
+す。
+
+セグメント    DEC GKS for OpenVMS VAXは，セグメントと呼ばれる出力基本要素の記
+(segment)     憶グループに関して，その生成，処理，削除など一連の操作を行う。
+
+即時実行      この方法は，セグメントを使用しなくても可能。DEC GKS for OpenVMS
+　モード      VAXは，画像出力を即時に実行する方法を提供する。
+(immediate
+mode)
+
+折れ線        3次元空間の任意の連続した3次元座標点間の線分を結ぶことにより描
+(polyline)    画する。
+
+マーカ列      任意の3次元座標点に重要な点であることを示すためのシンボルを描画
+(polymarker)  する。
+
+文字列        3次元空間の任意の面に文字列を描画する。文字列はさまざまなフォン
+(text)        トと出力方向で表示することができる。日本語フォント選択した場合
+              には，日本語を表示することができる。
+
+領域          3次元空間の任意の面に，多角形領域を描画する。この領域はホロー
+(fill area)   （hollow）または単一色かパターン，あるいはハッチ（hatch）で塗り
+              つぶすことができる。
+
+領域セット    ホローまたは単一色かパターン，あるいはハッチで塗りつぶされた一
+(fill area    組の多角形領域を描画する。辺の制御が可能。
+set)
+
+セル配列      3次元空間の任意の面に画像要素の2次元配列を指定することにより，
+(cell array)  矩形を描画する。
+
+GDP           上記の関数では使用できないグラフィックス装置の描画機能を使用す
+(Generalized  ることが可能。たとえば，円や円弧の描画にGDPを使用する。
+Drawing
+Primitive)
+
+■属性
+
+各出力機能には，出力の見え方を制御する"属性"の集合があります。属性は，束表
+（bundle）と呼ばれるグループで定義したり，個別（individual）に定義したりする
+ことができます。次に，折れ線の属性の一例を示します。
+
+
+
+
+                                       4
+
+ 
+
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ソフトウェア仕様書
+
+
+
+線種          点線や破線といった，線の形式を制御する。
+(line
+type)
+
+線幅          線幅を指定する。
+(line
+width)
+
+線色          色の選択は，すでに定義されている色の中から選択するかまたは，カ
+(line         ラー装置で特別な色を定義するために必要な赤，緑，青の輝度を指定
+color)        することによって行う。
+
+■入力機能
+
+次に示す入力装置に関して，同期および非同期の入力がサポートされています。
+
+位置入力    世界座標上の一点を得る。
+(locator)
+
+点列入力    世界座標上の連続した点を得る。
+(stroke)
+
+実数値入    特定の範囲内の実数値を得る。
+力
+(valuator)
+
+選択値入    特定の範囲内のステータスと整数値を得る（選択値の文字列に漢字コー
+力          ドを指定することができる）。
+(choice)
+
+文字列入    文字列を得る（かな漢字変換による日本語入力ができる）。
+力
+(string)
+
+ピック入    ステータス，セグメント名やピック識別子を得る（外部セグメントの基
+力          本要素はピックされない）。
+(pick)
+
+■制御機能
+
+DEC GKS for OpenVMS VAXは，画素が表示される方法や装置を管理する制御機能を提供
+します。GKSの初期化および終了，論理グラフィックス装置のオープン，クローズ，画
+面の消去などの機能が含まれます。
+
+
+
+
+                                       5
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+■問い合わせ機能
+
+モジュール化された，装置独立性の高いアプリケーション・プログラムの作成を支援
+するために，ワークステーションの特性，GKSの状態などの各種の情報を問い合わせる
+機能が提供されています。
+
+■ランタイム専用オプション
+
+DEC GKS for OpenVMS VAXは，DEC GKSを利用して開発されたグラフィックス・アプリ
+ケーションを実行するための，ランタイム専用オプションを提供します。ランタイム
+専用オプションでは，新しいアプリケーションを作成することはできませんが，DEC
+GKS開発オプションを使ってすでに作成されているアプリケーションを実行することは
+可能です。
+
+3  必要なハードウェア
+
+適用プロセッサ
+
+VAX:    VAX 4000モデル100,
+        VAX 4000モデル200,
+        VAX 4000モデル300,
+        VAX 4000モデル500,
+        VAX 4000モデル600
+
+        VAX 6000モデル200シリーズ,
+        VAX 6000モデル300シリーズ,
+        VAX 6000モデル400シリーズ,
+        VAX 6000モデル500シリーズ,
+        VAX 6000モデル600シリーズ
+
+        VAX 8200, VAX 8250, VAX 8300, VAX 8350,
+        VAX 8500, VAX 8530, VAX 8550, VAX 8600,
+        VAX 8650, VAX 8700, VAX 8800, VAX 8810,
+        VAX 8820, VAX 8830, VAX 8840
+
+        VAX 9000モデル110,
+        VAX 9000モデル210,
+        VAX 9000モデル300シリーズ,
+        VAX 9000モデル400シリーズ
+
+        VAXftモデル110, VAXftモデル310,
+        VAXftモデル410, VAXftモデル610,
+        VAXftモデル612
+
+        VAX-11/730, VAX-11/750,
+
+
+
+                                       6
+
+ 
+
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ソフトウェア仕様書
+
+
+
+        VAX-11/780, VAX-11/785
+
+MicroVAX:   MicroVAX II, MicroVAX 2000,
+            MicroVAX 3100モデル10/10E,
+            MicroVAX 3100モデル20/20E,
+            MicroVAX 3100モデル30/40,
+            MicroVAX 3100モデル80,
+            MicroVAX 3300, MicroVAX 3400,
+            MicroVAX 3500, MicroVAX 3600,
+            MicroVAX 3800, MicroVAX 3900
+
+
+VAXstation: VAXstation II, VAXstation 2000,
+            VAXstation 3100モデル30/40,
+            VAXstation 3100モデル38/48,
+            VAXstation 3100モデル76
+
+            VAXstation 3200, VAXstation 3500,
+            VAXstation 3520, VAXstation 3540
+
+            VAXstation 4000 VLC,
+            VAXstation 4000モデル60,
+            VAXstation 4000モデル90
+
+            VAXserver 3100, VAXserver 3300,
+            VAXserver 3400, VAXserver 3500,
+            VAXserver 3600, VAXserver 3602,
+            VAXserver 3800, VAXserver 3900
+
+            VAXserver 4000モデル200,
+            VAXserver 4000モデル300,
+            VAXserver 4000モデル500
+
+            VAXserver 6000モデル210,
+            VAXserver 6000モデル220,
+            VAXserver 6000モデル310,
+            VAXserver 6000モデル320,
+            VAXserver 6000モデル410,
+            VAXserver 6000モデル420,
+            VAXserver 6000モデル510,
+            VAXserver 6000モデル520,
+            VAXserver 6000モデル610,
+            VAXserver 6000モデル620,
+            VAXserver 6000モデル630
+
+
+
+                                       7
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+適用されないプロセッサ
+
+VAX-11/725, VAX-11/782, MicroVAX I, VAXstation I,
+VAXstation 8000
+
+プロセッサ制限事項
+
+スタンドアロンのMicroVAX 2000およびVAXstation 2000では，TK50テープ駆動装置が
+必要です。
+
+必要なディスク容量
+
+（Block Cluster Size=1の場合）
+
+o  DEC GKS for OpenVMS VAXキットの場合
+
+   《インストール時》    約45,000ブロック
+
+                       （22.5 Mバイト）
+   《システム運用時》    最大44,000ブロック
+
+                       （22 Mバイト）
+
+o  DEC GKS for OpenVMS VAXランタイム（RTO）キットの場合
+
+   《インストール時》    約25,000ブロック
+   
+                       （12.5 Mバイト）
+   《システム運用時》    最大24,000ブロック
+   
+                       （12 Mバイト）
+
+これらのディスク容量は，システム・ディスク上で必要となるディスク領域を表した
+ものであり，概数です。実際の値は，システムの環境，構成，ソフトウェア・オプシ
+ョンに応じて異なります。
+
+日本語DECwindowsおよび日本語DECwindows Motif[R]のサポートに必要なメモリ
+
+クライアントとサーバが同一のシステム上で実行されている，スタンドアロンの日本
+語DECwindowsまたは日本語DECwindows Motif環境でDEC GKS for OpenVMS VAXを実行す
+る場合，最小のサポート・メモリは24 Mバイトです。
+
+日本語DECwindowsおよび日本語DECwindows Motifアプリケーションの性能とメモリ使
+用量は，システムの構成によってかなり異なります。サーバ（アプリケーションを表
+示する構成要素）が別のシステムに常駐している場合，クライアント・システム（ソ
+フトウェアがインストールされ，実行されるシステム）が必要とするメモリは少なく
+てすみます。複数のアプリケーションが実行されているシステムでは，より多くのメ
+モリを必要とします。また，アプリケーションの性能を向上させたい場合にも，より
+多くのメモリが必要になります。
+
+                                       8
+
+ 
+
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ソフトウェア仕様書
+
+
+4  オプション・ハードウェア
+
+DEC GKS for OpenVMS VAXは，各種の会話型装置およびハードコピー装置をサポートし
+ています。グラフィックス出力を表示するには，次の装置の少なくとも1つが必要で
+す。
+
+o  ワークステーション
+
+   − すべてのDEC製ワークステーションをサポートします（"適用プロセッサ"の項を
+      参照してください）。
+
+o  DECwindowsクライアント
+
+   − すべてのDEC製ワークステーションをサポートします（このSPDの"適用プロセッ
+      サ"の項を参照してください）。
+
+   − DECterminal VXT2000
+
+o  ターミナル
+
+   − VT125白黒モニタまたはオプションのカラー・モニタ(ReGIS)
+
+   − VT240白黒モニタ(ReGIS，Tek[R] 4014)
+
+   − VT241カラー・モニタ(ReGIS，Tek 4014）
+
+   − VT284日本語白黒モニタ(ReGIS）
+
+   − VT286日本語カラー・モニタ(ReGIS）
+
+   − VT330白黒モニタ
+
+   − VT340カラー・モニタ
+
+   − TEKTRONIX[R] 4014 (オプション34または同等品付き)
+
+       注意: TEKTRONIX[R] 4014は，どのハードウェアにもサポートされていませ
+      ん。
+
+   − TEKTRONIX 4107ターミナル
+
+   − TEKTRONIX 4207ターミナル
+
+   − TEKTRONIX 4128ターミナル
+
+   − TEKTRONIX 4129ターミナル
+
+o  シクセル・プリンタ
+
+   − DEClaser 1100
+
+   − DEClaser 2100，2200，2300, 2400レーザ・プリンタ
+
+   − Digital LA50（グラフィックス・アスペクト比率2:1）
+
+   − Digital LA75
+
+   − Digital LA84
+
+   − Digital LA86
+
+                                       9
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+   − Digital LA280
+
+   − Digital LA324（マルチ・プリンタ）
+
+   − Digital LA380
+
+   − Digital LN03（LN03S-UA付き）
+
+   − Digital LN03 PLUSレーザ・プリンタ
+
+   − Digital漢字レーザ・プリンタLN03S-JA
+
+   − TEKTRONIX 4611ハードコピー・ユニット
+      （TEKTRONIX 4014コンピュータ・ディスプレイ・ターミナルに接続されている
+      場合）
+
+o  HPGL[R]（Hewlett Packard[R] Graphics Language）装置
+
+   − Digital LVP16ペン・プロッタ
+
+   − HP7475 Hewlett Packardペン・プロッタ
+
+   − HP7550 Hewlett Packardペン・プロッタ
+
+   − HP7580 Hewlett Packardペン・プロッタ
+
+   − HP7585 Hewlett Packardペン・プロッタ
+
+o  フィルム・レコーダ
+
+   − Lasergraphic MPS-2000[TM]フィルム・レコーダ
+
+o  Hewlett-Packard PCL Level 4装置
+
+   − Hewlett-Packard LaserJet[R] II
+
+o  インク・ジェット・プロッタ
+
+   − Digital LJ250（カラー・シクセル）
+
+   − Digital LCG01カラー・インク・ジェット・プロッタ（ReGIS）
+
+o  PostScript[R]装置
+
+   − DEClaser 1150
+
+   − DEClaser 2150, 2250
+
+   − Digital LN03R ScriptPrinterレーザ・プリンタ
+
+   − Digital LPS20レーザ・プリンタ
+
+   − Digital LPS40レーザ・プリンタ
+
+   − 日本語プリントサーバ20（Digital LPS20-AJ）
+
+   − 日本語プリントサーバ40（Digital LPS40-AJ）
+
+   − 日本語プリントサーバ40プラス（Digital LPS40-DJ）
+
+   − Apple[R] LaserWriter[R]
+
+                                      10
+
+ 
+
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ソフトウェア仕様書
+
+
+   − Apple LaserWriter PLUS
+
+   − Apple LaserWriter II NTX-J
+
+5  クラスタ環境
+
+本レイヤード・プロダクトは，正規のライセンスを持つVAXcluster構成上にインスト
+ールされている場合，機能上の制限を受けません。本ソフトウェアで必要とされるハ
+ードウェアについては，必要なハードウェアの最小構成の項に記述されているとおり
+です。
+
+*  バージョン5.xのVAXcluster構成については，VAXclusterの『Software Product
+   Description』（SPD 29.78.xx）に詳しく説明されています。また，この構成には
+   CI，NIおよびMixed Interconnect構成が含まれます。
+
+6  必要なソフトウェア
+
+o  ターミナル使用のシステムの場合
+   （日本語DECwindowsインターフェイスなし）
+
+   − 日本語OpenVMS VAXオペレーティング・システムV5.5-2
+
+o  日本語OpenVMS VAXワークステーション・ソフトウェアの搭載されたワークステー
+   ションの場合
+
+   − 日本語OpenVMS VAXオペレーティング・システムV5.5-2
+
+   − 日本語OpenVMS VAXワークステーション・ソフトウェアV4.4
+
+o  日本語DECwindowsの搭載されたワークステーションの場合
+
+   − 日本語OpenVMS VAXオペレーティング・システムV5.5-2
+      （および日本語OpenVMS VAX DECwindowsの必要な構成要素）
+
+o  日本語OpenVMS VAX DECwindows Motifの搭載されたワークステーションの場合
+
+   − 日本語OpenVMS VAXオペレーティング・システムV5.5-2
+      （および日本語OpenVMS VAX DECwindowsの必要な構成要素）
+
+   − 日本語OpenVMS VAX DECwindows Motif V1.1
+
+DEC GKS for OpenVMS VAXアプリケーションは，次のいずれの方法でも実行できます。
+
+o  スタンドアロンでの実行
+
+   − X11ディスプレイ・サーバとクライアント・アプリケーションを同一マシン上で
+      実行する。
+
+o  リモートでの実行
+
+   − X11ディスプレイ・サーバとクライアント・アプリケーションを別のマシン上で
+      実行する。
+
+                                      11
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+日本語OpenVMS VAX DECwindowsは，日本語OpenVMS VAXオペレーティング・システムの
+要素であり，日本語OpenVMS VAXとは別にインストールしてください。日本語OpenVMS
+VAX DECwindowsのインストールは，次の4つの構成要素のいくつか，またはすべてをイ
+ンストールすることのできるオプションを提供します。
+
+o  OpenVMS VAX DECwindows Device Support
+
+o  OpenVMS VAX DECwindows Applications
+
+o  OpenVMS VAX DECwindows Programming Support
+
+o  OpenVMS VAX DECwindows Example Files
+
+日本語OpenVMS VAX DECwindowsの搭載されたワークステーション上でスタンドアロン
+で実行する場合は，次の日本語DECwindowsの構成要素がマシンにインストールされて
+いることが必要です。
+
+o  OpenVMS VAX DECwindows Device Support
+
+o  OpenVMS VAX DECwindows Applications
+
+o  OpenVMS VAX DECwindows Programming Support
+
+日本語OpenVMS VAX DECwindowsの搭載されたワークステーション上でリモートで実行
+する場合は，次の日本語DECwindowsの構成要素がそれぞれのマシンにインストールさ
+れていることが必要です。
+
+o  サーバ・マシンの場合
+
+   − OpenVMS VAX DECwindows Device Support
+
+   − OpenVMS VAX DECwindows Applications
+
+o  クライアント・マシンの場合
+
+   − OpenVMS VAX DECwindows Device Support
+
+   − OpenVMS VAX DECwindows Applications
+
+   − OpenVMS VAX DECwindows Programming Support
+
+日本語OpenVMS VAX DECwindows Motifの搭載されたワークステーションでは，スタン
+ド・アロンで実行する場合と，クライアント・マシンやサーバ・マシンでリモートで
+実行する場合には，次の日本語DECwindowsの構成要素がそれぞれのマシンにインスト
+ールされていることが必要です。
+
+o  OpenVMS VAX DECwindows Device Support
+
+また，日本語OpenVMS VAX DECwindows Motifの搭載されたワークステーションでリモ
+ートで実行する場合には，日本語OpenVMS VAX DECwindows Motifがクライアント・マ
+シンとサーバ・マシンにインストールされていることが必要です。
+
+DEC GKS for OpenVMS VAXを使用してアプリケーション・プログラムを開発するには，
+DEC GKS for OpenVMS VAXのサポートする言語のうちの1つが必要です。
+
+                                      12
+
+ 
+
+
+DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ソフトウェア仕様書
+
+
+7  OpenVMSテーラリング
+
+OpenVMS VAXバージョン6.0以降のシステムで，本レイヤード・プロダクトの全機能を
+得るには次のOpenVMS VAX構成要素が必要です。
+
+o  OpenVMS Required Saveset
+
+o  Network Support
+
+o  Programming Support
+
+OpenVMS VAXのクラスおよびテーラリングについては，OpenVMS VAX Operating System
+の『Software Product Description』（SPD 25.01.xx）を参照してください。
+
+8  オプション・ソフトウェア
+
+o  VAX Ada V2.3
+
+o  VAX FORTRAN V5.8
+
+o  VAX Pascal V5.0
+
+o  VAX C V3.2
+
+o  VAX PL/I V3.4
+
+o  VAX BASIC V3.5
+
+o  VAX BLISS-32 Implementation Language V4.6
+
+*  これらの製品のバージョンはオペレーティング・システムのバージョンに依存して
+   います。必要なバージョンについては，各製品のシステム・サポート付加情報を参
+   照してください。
+
+9  注文情報
+
+最寄りの日本DECの各支店／営業所にお問い合わせください。
+
+10  ソフトウェア・ライセンス
+
+本ソフトウェアは日本DEC標準販売約款中のライセンス規定に基づいて提供されます。
+
+日本DECのライセンス条件とその方針についての詳細は，最寄りの日本DECの各支店／
+営業所にお問い合わせください。
+
+
+
+
+                                      13
+
+ 
+
+
+ DEC GKS V6.0 for OpenVMS VAX                                     SPD 25.M5.05
+ ソフトウェア仕様書
+
+
+11  ライセンス管理機能
+
+本ソフトウェアはOpenVMS VAXライセンス管理機能（LMF）をサポートしています。
+
+開発用キットのライセンス単位には，無制限ユーザ・システムとパーソナル・ユース
+があります。ランタイム用キットのライセンス単位には，無制限ユーザ・システムと
+コンカレント・ユースがあります。
+
+パーソナル・ユースでは，登録された一人のみが利用できます。コンカレント・ユー
+スでは，規定された人数内で同時にだれでも利用できます。
+
+ライセンス管理機能に関する詳細は，OpenVMS VAX Operating Systemの『Software
+Product Description』（SPD 25.01.xx）またはOpenVMS VAX Operating Systemのドキ
+ュメント・セット中の『License Management Utility Manual』を参照してください。
+
+12  ソフトウェア製品サービス
+
+日本DECでは，様々なサービス・オプションを提供しています。詳細に関しては，最寄
+りの日本DEC各支店／営業所にお問い合わせください。
+
+13  保証
+
+本ソフトウェアについては，日本DEC所定のソフトウェア保証基準に定められた保証が
+提供されます。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_______________________
+
+  [R] AppleおよびLaserWriterは米国Apple Computer社の商標です。
+
+  [R] Hewlett-Packard，HP，HPGLおよびLaserJetは米国Hewlett-Packard社の商標です。
+
+ [TM] LASERGRAPHICS MPS-200は米国Laser Graphics社の商標です。
+
+  [R] MotifはOpen Software Foundation社の商標です。
+  [R] PostScriptはAdobe System（アドビ システムズ）社の各国における登録商標お
+      よび商標です。
+  [R] TEKTRONIXおよびTekは米国Tektronix社の商標です。
+
+                                      14

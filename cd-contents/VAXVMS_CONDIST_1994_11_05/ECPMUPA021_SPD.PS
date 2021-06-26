@@ -1,0 +1,1663 @@
+%!PS-Adobe-3.0
+%%Title: CP21_SPD
+%%Creator: VAX DOCUMENT V2.2
+%%Copyright: 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.
+%%+All Rights Reserved.
+%%CreationDate: Wed Jun  1 1994 14:46:49
+%%For: KLOTZ       
+%%BoundingBox: (atend)
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%DocumentFonts: (atend) 
+%%DocumentNeededFonts: (atend) 
+%%DocumentProcSets: Underlay Color5044
+%%DocumentSuppliedProcSets: Underlay Color5044
+%%DocumentProcessColors: (atend)
+%%DocumentCustomColors: (atend)
+%%EndComments
+%
+%%BeginResource: procset Underlay
+%%CreationDate: (2/10/92)
+%
+% In VAX DOCUMENT V2.1-1, simple EPSF files up to 65,000 bytes long
+% may be an underlay. Define the EPSF as a PostScript proceedure
+% called /UNDERLAY and prefix to DOCUMENT's PS output  For example:.
+% /UNDERLAY ( EPSF code here ) cvx def
+%
+% To create a "Preliminary" underlay change /UNDERLAY* to /UNDERLAY
+/UNDERLAY* (
+  /Note (Preliminary) def
+  /NoteSize 120 def
+  /NoteFont /Helvetica findfont NoteSize scalefont def
+  /Note where { pop Note length 0 gt {
+    /NoteWidth NoteFont setfont Note stringwidth pop def
+    PaperWidth 36 mul PaperHeight 36 mul moveto
+    PaperHeight PaperWidth atan rotate
+    NoteWidth -2 div NoteSize .729 mul -2 div rmoveto 
+    Note true charpath .075 setseparationgray fill
+  }if  }if
+) cvx def
+%%EndResource
+%
+%%BeginResource: procset Color5044
+%%CreationDate: (1/21/91)
+%%Version:1.0 3
+%Implementation of Adobe 5044 color specification
+%/ndf allows command override during color separation
+/Color5044Dict 100 dict def
+Color5044Dict begin
+/bdf {bind def} def
+/ndf
+  {1 index where
+    {pop pop pop
+    }
+    {dup xcheck
+      {bind} if
+    def
+    }
+    ifelse
+  } bdf
+/setcmykcolor
+  {1 exch sub
+  3 
+    {dup 5 -1 roll sub 0 2 copy lt
+      {exch} if
+    pop exch
+    } repeat
+  pop setrgbcolor
+  }ndf
+/setcmykcoloroverprint
+  {4
+    {dup -1 eq
+      {pop 0} if
+      4 1 roll
+    } repeat
+  setcmykcolor
+  } ndf
+/findcmykcustomcolor
+  {5 /packedarray where
+    {pop packedarray
+    }
+    {array astore readonly
+    }
+    ifelse
+  } ndf
+/setcustomcolor
+  {exch aload pop pop
+  4
+    {4 index mul 4 1 roll
+    } repeat
+  setcmykcolor pop
+  } ndf
+/setseparationgray
+  {1 exch sub systemdict /setgray get exec
+  } ndf
+/setoverprint {pop} ndf
+/currentoverprint false ndf
+%CMYK multi-proc colorimage
+/colorimage
+  {4 ne
+    {(\nUnsupported number of colors for colorimage.\n) print flush quit
+    } if
+  not
+    {(\nSingle procedure form  colorimage unsupported.\n) print flush quit
+    } if
+  save 20 dict begin /&saveobj exch def
+  /&Kproc exch def /&Yproc exch def /&Mproc exch def /&Cproc exch def
+    {&Cproc &Mproc &Yproc &Kproc
+    /&K exch def /&Y exch def /&M exch def /&C exch def
+    0 1 &K length 1 sub
+      {/&i exch def
+      &K &i 255
+      &C &i get 30 mul
+      &M &i get 59 mul add
+      &Y &i get 11 mul add
+      &K &i get 100 mul add
+      100 idiv
+      dup 255 gt
+        {pop 255} if
+      sub put
+      } for
+    &K
+    } image
+  &saveobj end restore
+  } ndf
+/customcolorimage
+  {pop systemdict /image get exec
+  } ndf
+/separationimage
+  {systemdict /image get exec
+  } ndf
+end
+%%EndResource
+Color5044Dict begin
+%
+/DEC_DVC$dict 300 dict def
+DEC_DVC$dict begin
+%
+/DVC$PSJob save def
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+}def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+% Exit page (temporarily) to add fonts/characters.
+/XP { }def
+% 
+% Resume page
+/RP { }def
+%
+% End Page: EP
+/EP {DVC$PSPage restore}def
+%
+% Purge fonts to reclaim VM
+/PF {
+  currentoverprint
+  currentrgbcolor
+  EP			%Does restore
+  PageSetup     %Does save
+  setrgbcolor
+  setoverprint
+}def
+%
+% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+%
+/Yadjust {Ymax exch sub} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto
+} def
+%
+/R {						% Draw a rectangle
+  /ht exch def  /wd exch def   gsave
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill grestore wd 0 rmoveto
+}def
+%
+%Setup Page Media:  <paper-height> <paper-width> PM
+/PM {
+  /Xmax exch Resolution mul def
+  /Ymax exch Resolution mul def
+  /UNDERLAY where {
+    pop
+    /eps_save save def		% save before EPSF underlay
+    Resolution 72 div dup scale % Revert coords to points
+    count array astore /DVCstack exch def % save op stack
+    /dict_count countdictstack def % # of dicts
+    userdict begin		% default dict
+    /showpage {}def		% disable showpage
+    0 setgray
+      {UNDERLAY} stopped {(Error executing /UNDERLAY)== quit}if
+    countdictstack dict_count sub {end} repeat % clean up dict stack
+    clear DVCstack aload pop	% restore op stack
+    eps_save restore		% restore after EPSF
+  }if
+  PageSetup
+}def
+%
+%Setup page coordinates
+/PageSetup
+{
+  /DVC$PSPage save def
+  PortraitMode not {PaperWidth 0 translate  90 rotate} if
+  /Xpos 0 def
+  /Ypos 0 def
+}def
+%
+% Begin EPS file: <xoffset> <yoffset> SPB
+/SPB {
+  Yadjust transform		% convert from DVC to device coords
+  EP				% page-level restore
+  /eps_save save def		% save before EPSF
+  Resolution 72 div dup scale 	% Revert coords to points
+  itransform			% convert position back to points  
+  translate			% set position for EPSF
+  PortraitMode not {90 rotate} if % rotate for EPSF
+  count array astore /DVCstack exch def	% save op stack
+  /dict_count countdictstack def % # of dicts
+  userdict begin		% default dict
+  /showpage {}def		% disable showpage
+  0 setgray
+}def
+%
+% End EPS file
+/SPE {
+  countdictstack dict_count sub {end} repeat % clean up dict stack
+  clear DVCstack aload pop	% restore op stack
+  eps_save restore		% restore after EPSF
+  PageSetup			% restore DVC coords
+}def
+%
+% Print-Page Routine: <Page #> PP
+/PP {
+  gsave
+  showpage
+  grestore
+}def
+%
+/DMF {		%  /font-name <point-size> DMF
+  exch findfont exch scalefont setfont
+}def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def
+  /namstr exch cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+}def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+}def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+}def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+}def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+}def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+}def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+}def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+}def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div}def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+}def
+/RunLengthToRasters {
+  % none yet
+}def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+}def
+%
+/int-dict-name {int (-dict) concatnam}def
+/int-dict {int (-dict) concatnam cvx load}def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      }def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+}def 
+/PXLF { true  DefinePXLFont}def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont}def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+}def
+%
+/CKSZ {abs 127 le and}def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if}def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+}def
+%
+% set color routine: Color# SC
+/SC {ColorPalette exch get 1.0 setcustomcolor}bind def
+%
+%%EndProlog
+
+
+%%BeginSetup
+/PxlResolution 300 def
+/Resolution 3600 def
+/RasterScaleFactor PxlResolution Resolution div def
+/PortraitMode true def
+/PaperWidth 8.500 def
+/PaperHeight 11.000 def
+72 Resolution div dup scale
+
+%>  Postamble of file USER14:[KLOTZ]CP21_SPD.DVI_PS.
+% DefineFont:F207 Category:15 Pointsize:24
+% DownloadPSFont
+%!PS-Adobe-2.0
+%%Title: PostScript Digital Logo Font, v1.1
+%%Creator: Ned Batchelder
+%%CreationDate: 9-Nov-87
+%%DocumentFonts: Symbol
+%%DocumentSuppliedFonts: DigitalLogo
+%%EndComments
+%
+%		    DIGITAL INTERNAL USE ONLY
+% 
+% INTRODUCTION:
+% This rendition of the Digital logo was prepared by Ned Batchelder using 
+% Adobe Illustrator and hand manipulation of the resulting PostScript code.
+% Photographic masters of the logo were obtained from David Comberg in the
+% Graphic Design Group. Additional consultation was provided by Elliot
+% Hendrickson, one of the original designers of the logo.
+% 
+% USE:
+% This file defines a new PostScript font, called /DigitalLogo. It consists
+% of three characters. (d) is the entire Digital logo, (t) is a small
+% trademark symbol, and (T) is a large trademark symbol. The font is designed
+% so that the argument to scalefont is the height of the logo. There is no
+% extra white space around the logo at all. The trademarks are designed to be
+% shown right after the logo, and they align themselves. The only correct
+% strings to show with this font are (d), (dt), and (dT). There is an entry
+% (named GapWidth) in the font dictionary which gives the unscaled width of
+% the gap between the blocks. This distance is given because it is used as a
+% unit to determine how much space to leave around the logo.
+% 
+% HISTORY:
+% The logo was designed in 1957 by Elliot Hendrickson, who was then working
+% as an independent designer. He was contracted by DEC to do a brochure, and
+% DEC wanted a logo to accompany it. The logo up to then had been the letters
+% DEC in blocks the shape of the plug-in cards that DEC had been producing.
+% Elliot re-worked the logo, incorporating letters which were hand-drawn for 
+% the purpose by Arthur Hover(?). The logo has been maintained since then in 
+% conventional technology, ie, film masters. There was at least one reworking 
+% of the logo at some point.
+% 
+% The masters I received had a number of interesting features. The boxes were
+% not all the same width, and there seemed to be no logic to which boxes were
+% wider. The 'g' was the narrowest, and the 'i' and 'l' were second widest.
+% Also, the two 'i's were not exactly the same shape. On ten-inch masters,
+% (one box to an 8½x11 sheet), the boxes were not rectangles, but were very
+% slightly tapered in wierd ways. I assume that the tapering is the result of
+% too many reproductions, but the difference in widths may have been
+% deliberate at some time. Elliot reports that when he drew it, all boxes
+% were the same width. I have retained the different widths in my version,
+% since the experts I had at hand did not seem to think I should make them
+% uniform.
+% 
+% Please feel free to use this logo, but keep in mind the following:
+% 
+% 1. This code is for INTERNAL USE ONLY.
+% 2. I am not entirely happy with the final shapes of the letters, and am
+% hoping to improve them. Please allow for future updates to this code.
+% 3. Only use this logo within the guidelines of the Corporate Identity
+% program. If you use this font precisely as is, you can't get in much
+% trouble. Don't take the shapes and do strange things with them. 
+% In particular, the Identity states that the logo is a one-color logo: The
+% letters are actually holes in the blocks, through which the background can
+% be seen. Do not modify this code so that the letters are always white.
+% 
+% Edit history:
+% 
+% 21-Sep-87 nmb	    Created as a standalone file with demo.
+%  6-Nov-87 nmb	    Converted to font form.
+%  9-Nov-87 nmb	    Removed // uses for compatibility with LW Classics
+%
+
+%%BeginFont: DigitalLogo
+10 dict begin
+
+/FontInfo 3 dict def
+FontInfo begin
+    /Notice
+(The Digital logo is a registered trademark of Digital Equipment Corporation.)
+    def
+    /FullName (Digital logo) def
+    /version (1.1) def
+    end
+
+/FontType 3 def				% This is a user-defined font
+/FontMatrix matrix def			% Use an identity transform
+/FontBBox [ 0 0 3.383 1 ] def		% Logo itself is biggest
+/GapWidth .070 def			% The width of the gap between boxes
+
+/Encoding 256 array def
+0 1 255 { Encoding exch /.notdef put } bind for
+
+Encoding
+dup (d) 0 get /DEC-logo put		% (d) gives logo
+dup (t) 0 get /smalltrademark put	% (t) gives small trademark
+    (T) 0 get /largetrademark put	% (T) gives large trademark
+
+/Work 15 dict def			% for doing work in font.
+
+/BuildChar {
+    exch begin				% Use the font dictionary
+	Work begin
+	    Encoding exch get		% Look up the character name
+	    load			% Pull out the procedure
+	    exec			% Run it.
+	    end				% Work
+	end				% fontdict
+    } bind def
+
+Work begin
+
+/.notdef {} def
+
+%
+% - `DEC-logo' -
+%
+% Images a DEC logo with the lower left corner at the current origin, with a
+% height of one unit, in the current color.
+% 
+
+/m /moveto load def
+/l /lineto load def
+/c /curveto load def
+
+/DEC-logo {
+    3.383 0 0 0 3.383 1 setcachedevice
+    {	% D
+	% d counter
+	.2930 .3513 m
+	.2932 .3217 .2587 .2758 .2167 .2757 c
+	.1719 .2759 .1280 .3165 .1280 .3977 c
+	.1280 .4801 .1718 .5225 .2153 .5227 c
+	.2587 .5225 .2932 .4760 .2930 .4407 c
+	closepath
+	% d outside
+	.2953 .5787 m
+	.2953 .7600 l
+	.3843 .7600 l
+	.3843 .1960 l
+	.2923 .1960 l
+	.2923 .2220 l
+	.2848 .2144 .2531 .1813 .1990 .1813 c
+	.1426 .1812 .0417 .2282 .0417 .3977 c
+	.0417 .5414 .1171 .6157 .2067 .6157 c
+	.2399 .6157 .2725 .6039 .2953 .5787 c
+	closepath
+	% d box
+	.432 0.0 m
+	.432 1.0 l
+	.000 1.0 l
+	.000 0.0 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	.927 0.0 m
+	.927 1.0 l
+	.502 1.0 l
+	.502 0.0 l
+	closepath
+	% i body
+	.6695 .196 m
+	.6695 .600 l
+	.7595 .600 l
+	.7595 .196 l
+	closepath
+	% i dot
+	.6695 .655 m
+	.6695 .755 l
+	.7595 .755 l
+	.7595 .655 l
+	closepath
+	} exec
+    {	% G
+	% g counter
+	1.2813 .4478 m
+	1.2813 .4837 1.2409 .5208 1.2035 .5208 c
+	1.1713 .5208 1.1215 .5003 1.1215 .4084 c
+	1.1215 .3105 1.1827 .2962 1.2030 .2962 c
+	1.2433 .2962 1.2813 .3239 1.2813 .3667 c
+	closepath
+	% g box
+	0.997 1.0 m
+	1.415 1.0 l
+	1.415 0.0 l
+	0.997 0.0 l
+	closepath
+	% g outside
+	1.2822 .5609 m
+	1.2729 .5742 1.2424 .6044 1.1988 .6044 c
+	1.1311 .6043 1.0367 .5652 1.0367 .3955 c
+	1.0368 .2617 1.1437 .2168 1.1876 .2168 c
+	1.2350 .2167 1.2702 .2443 1.2798 .2547 c
+	1.2798 .2126 l
+	1.2798 .1815 1.2479 .1511 1.1945 .1511 c
+	1.1485 .1512 1.1437 .1807 1.1437 .1953 c
+	1.0497 .1953 l
+	1.0497 .1486 1.0798 .0804 1.1888 .0803 c
+	1.2864 .0803 1.3186 .1176 1.3325 .1316 c
+	1.3442 .1434 1.3617 .1758 1.3617 .2017 c
+	1.3617 .6 l
+	1.2823 .6 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	1.910 0.0 m
+	1.910 1.0 l
+	1.485 1.0 l
+	1.485 0.0 l
+	closepath
+	% i body
+	1.6525 .196 m
+	1.6525 .6 l
+	1.7425 .6 l
+	1.7425 .196 l
+	closepath
+	% i dot
+	1.6525 .655 m
+	1.6525 .755 l
+	1.7425 .755 l
+	1.7425 .655 l
+	closepath
+	} exec
+    {	% T
+	% t
+	2.2128 .7525 m
+	2.1305 .7525 l
+	2.1305 .6071 l
+	2.0874 .6071 l
+	2.0874 .5396 l
+	2.1305 .5396 l
+	2.1305 .2852 l
+	2.1305 .2367 2.1554 .1986 2.2248 .1987 c
+	2.2573 .1987 2.2560 .1985 2.2842 .2034 c
+	2.2842 .2874 l
+	2.2658 .2842 2.2601 .2829 2.2511 .2832 c
+	2.2338 .2837 2.2128 .2898 2.2128 .3206 c
+	2.2128 .5395 l
+	2.2780 .5395 l
+	2.2780 .6071 l
+	2.2128 .6071 l
+	closepath
+	% t box
+	2.404 0.0 m
+	1.980 0.0 l
+	1.980 1.0 l
+	2.404 1.0 l
+	closepath
+	} exec
+    {	% A
+	% a box
+	2.474 0.0 m
+	2.474 1.0 l
+	2.888 1.0 l
+	2.888 0.0 l
+	closepath
+	% a outside
+	2.5439 .4728 m
+	2.6210 .4728 l
+	2.6210 .5138 2.6422 .5353 2.6826 .5353 c
+	2.7470 .5354 2.7449 .5067 2.7448 .4708 c
+	2.7050 .4553 2.7087 .4557 2.6480 .4419 c
+	2.5709 .4241 2.5237 .3911 2.5236 .3112 c
+	2.5237 .2331 2.5793 .1914 2.6420 .1915 c
+	2.7048 .1914 2.7178 .2117 2.7438 .2290 c
+	2.7438 .1978 l
+	2.8422 .1978 l
+	2.8190 .2352 2.8251 .2425 2.8249 .2706 c
+	2.8250 .2926 2.8249 .5080 2.8249 .5080 c
+	2.8250 .5507 2.8028 .5768 2.7883 .5855 c
+	2.7521 .6071 2.7074 .6097 2.6826 .6098 c
+	2.5945 .6096 2.5438 .5653 2.5439 .4728 c
+	closepath
+	% a counter
+	2.7448 .3946 m
+	2.7448 .3401 l
+	2.7448 .3152 2.7145 .2670 2.6550 .2669 c
+	2.6260 .2668 2.6098 .2883 2.6097 .3162 c
+	2.6098 .3442 2.6335 .3657 2.6536 .3697 c
+	2.6745 .3739 2.7226 .3862 2.7448 .3946 c
+	closepath
+	} exec
+    {	% L
+	% l box
+	3.383 0.0 m
+	3.383 1.0 l
+	2.958 1.0 l
+	2.958 0.0 l
+	closepath
+	% l
+	3.1255 .196 m
+	3.1255 .765 l
+	3.2155 .765 l
+	3.2155 .196 l
+	closepath
+	} exec
+    fill
+    } bind def
+
+%
+% % pct `trademark' --
+%
+% Borrow the sans-serif trademark symbol from /Symbol. AFM file says:
+%	C 228 ; WX 786 ; N trademarksans ; B 5 293 725 673 ;
+% We scale it down to pct percent of the height of the logo and superscript 
+% it some, and voila!
+%
+
+/trademark {
+    /s exch .380 div def
+    /w s .725 mul .070 add def
+    /u 1 .673 s mul sub def
+    w 0 0 u w 1 setcachedevice
+    /Symbol findfont s scalefont setfont
+    .070 u m					% Superscript it
+    (\344) show
+    } bind def
+
+% 
+% These are two different trademarks (just different sizes).
+%
+
+/smalltrademark { .15 trademark } def
+/largetrademark { .25 trademark } def
+
+end						% Work dictionary
+
+currentdict					% Get the font dict
+end						% Close it up
+/DigitalLogo exch definefont pop		% Define the font.
+
+%%EndFont
+% EndDownloadPSFont
+/F207 1200.0 /DigitalLogo DPSF
+% DefineFont:F49 Category:10 Pointsize:6
+/Helvetica-BoldOblique /Helvetica-BoldOblique@DOCPSE DOCPSE ReENCODE
+/F49 300.0 /Helvetica-BoldOblique@DOCPSE DPSF
+% DefineFont:F48 Category:10 Pointsize:6
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F48 300.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F39 Category:10 Pointsize:9
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F39 450.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F38 Category:10 Pointsize:9
+/F38 450.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+
+%Spot color array for this job
+/ColorPalette [
+0.0 0.0 0.0 1.0 (BLACK) findcmykcustomcolor
+] def
+
+%%EndSetup
+%
+%%Page: (1) 1
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 5443 XY F16(Software)S 3600 6688 XY(Produ)S 2 x(ct)S 3600 7934 XY
+(Description)S 3600 X 747 y 23316 204 R 3600 9455 XY F36(PRODUC)S -2 x
+(T)S 167 x(NAME:)S 597 x(POL)S -46 x(YCENTER)S 166 x(Capacity)S 167 x
+(Planner)S -27 x(,)S 23784 X(SPD)S 166 x(36.04.04)S 8459 X 631 y(V)S
+-27 x(ersion)S 167 x(2.1)S 3600 11794 XY F40(OVER)S -9 x(VIEW)S 150 x
+(OF)S 149 x(THE)S 149 x(PRODUCT)S 148 x(F)S -25 x(AMIL)S -41 x(Y)S 3600 12848 XY
+F39(POL)S -41 x(YCENTER)S 292 x(Performanc)S 2 x(e)S 293 x(Solution)S
+292 x F38(is)S 293 x(a)S 293 x(family)S 293 x(of)S 3600 X 548 y(OpenVMS)S
+168 x(and)S 167 x(U*IX)S 166 x(layered)S 168 x(products)S 168 x(that)S
+166 x(reduce)S 2 x(s)S 166 x(the)S 3600 X 548 y(time)S 144 x(and)S 144 x
+(ef)S -8 x(fort)S 143 x(requ)S 2 x(ired)S 144 x(to)S 143 x(mana)S 2 x
+(ge)S 144 x(and)S 144 x(monitor)S 145 x(system)S 3600 X 548 y(performa)S
+2 x(nce,)S 118 x(as)S 112 x(well)S 109 x(as)S 111 x(plan)S 111 x(for)S
+111 x(future)S 111 x(resou)S 2 x(rce)S 111 x(require-)S 3600 X 548 y
+(ments.)S 192 x(The)S 128 x(POL)S -33 x(YCENTER)S 127 x(Performan)S
+2 x(ce)S 128 x(Solution)S 127 x(prod-)S 3600 X 548 y(ucts)S 188 x(can)S
+189 x(be)S 188 x(used)S 189 x(with)S 187 x(standalone)S 189 x(OpenVMS,)S
+189 x(MIPS\207)S 3600 X 548 y(UL)S -33 x(TRIX,)S 148 x(DEC)S 149 x(OSF/1\206)S
+149 x(AXP)S -57 x(,)S 149 x(and)S 150 x(clustered)S 150 x(systems.)S
+3600 17189 XY(The)S 111 x(POL)S -33 x(YCENTER)S 110 x(Performanc)S 2 x
+(e)S 110 x(Solution)S 111 x(products)S 112 x(\(for-)S 3600 X 548 y(merly)S
+170 x(known)S 169 x(as)S 170 x(DECperformance)S 171 x(Solution,)S 173 x
+(or)S 169 x(DECps\))S 3600 X 548 y(include:)S 3600 19339 XY(\201)S 441 x
+F39(POL)S -41 x(YCENTER)S 133 x(Capacity)S 134 x(Planner)S 135 x F38
+(predicts)S 134 x(OpenVM)S 2 x(S)S 4198 X 547 y(system)S 108 x(perform)S
+2 x(ance)S 108 x(levels)S 107 x(for)S 108 x(various)S 108 x(workloads)S
+109 x(and)S 4198 X 548 y(con\211gura)S 2 x(tions.)S 198 x(It)S 149 x
+(is)S 149 x(described)S 151 x(in)S 149 x(this)S 149 x(SPD.)S 3600 21388 XY
+(\201)S 441 x F39(POL)S -41 x(YCENTER)S 413 x(Performan)S 2 x(ce)S 415 x
+(Data)S 414 x(Collector)S 414 x(for)S 4198 X 548 y(OpenVMS)S 164 x F38
+(gathers)S 165 x(and)S 165 x(manages)S 165 x(OpenVMS)S 165 x(system)S
+4198 X 548 y(data)S 150 x(\(see)S 150 x(SPD)S 149 x(36.02.xx\).)S 3600 23438 XY
+(\201)S 441 x F39(POL)S -41 x(YCENTER)S 413 x(Performan)S 2 x(ce)S 415 x
+(Data)S 414 x(Collector)S 414 x(for)S 4198 X 548 y(UNIX\206)S 207 x
+F38(gathers)S 208 x(and)S 208 x(mana)S 2 x(ges)S 208 x(MIPS)S 207 x
+(UL)S -33 x(TRIX,)S 206 x(DEC)S 4198 X 548 y(OSF/1)S 177 x(AXP)S -57 x
+(,)S 177 x(and)S 179 x(other)S 179 x(U*IX)S 178 x(system)S 178 x(data)S
+179 x(\(see)S 179 x(SPD)S 4198 X 548 y(46.97.xx\).)S 3600 26036 XY(\201)S
+441 x F39(POL)S -41 x(YCENTER)S 201 x(Perform)S 2 x(ance)S 203 x(Advisor)S
+204 x(for)S 202 x(OpenVM)S 2 x(S)S 4198 X 548 y F38(analyzes)S 183 x
+(OpenVMS)S 183 x(data)S 182 x(through)S 183 x(the)S 182 x(application)S
+182 x(of)S 4198 X 548 y(expert)S 185 x(system)S 185 x(technology)S -32 x
+(.)S 303 x(It)S 184 x(identi\211es)S 184 x(speci\211c)S 185 x(per-)S
+4198 X 548 y(formance)S 103 x(problem)S 2 x(s,)S 111 x(presents)S 103 x
+(detailed)S 102 x(suppor)S 2 x(ting)S 101 x(evi-)S 4198 X 548 y(dence,)S
+122 x(and)S 115 x(make)S 2 x(s)S 114 x(recom)S 2 x(mendations)S 116 x
+(to)S 114 x(improve)S 116 x(sys-)S 4198 X 548 y(tem)S 150 x(performan)S
+2 x(ce)S 149 x(\(see)S 151 x(SPD)S 149 x(36.03.xx\).)S 3600 29730 XY
+(\201)S 441 x F39(POL)S -41 x(YCENTER)S 98 x(Accounting)S 101 x(Chargeback)S
+101 x(for)S 100 x(OpenVMS)S 4198 X 547 y F38(V)S -33 x(AX)S 156 x(generates)S
+158 x(a)S 156 x(report)S 157 x(of)S 156 x(charges)S 158 x(based)S 157 x
+(on)S 157 x(Open-)S 4198 X 548 y(VMS)S 178 x(system)S 179 x(resour)S
+2 x(ce)S 178 x(utilizati)S -2 x(on)S 179 x(and)S 178 x(user)S 179 x
+(speci\211ed)S 4198 X 548 y(resource)S 151 x(pricing)S 150 x(\(see)S
+150 x(SPD)S 149 x(36.60.xx\).)S 3600 32427 XY F40(DESCRIPTI)S -2 x(ON)S
+3600 33480 XY(POL)S -42 x(YCENTER)S 149 x(Capacity)S 150 x(Planner)S
+3600 34534 XY F38(The)S 136 x(POL)S -33 x(YCENTER)S 135 x(Capacity)S
+135 x(Planner)S 136 x(mode)S 2 x(ling)S 135 x(compo-)S 3600 X 548 y
+(nent)S 183 x(is)S 183 x(used)S 184 x(to)S 183 x(predict)S 184 x(the)S
+183 x(performa)S 2 x(nce)S 183 x(of)S 183 x(standalone)S 3600 X 548 y
+(OpenVMS)S 186 x(V)S -33 x(AX,)S 184 x(OpenVMS)S 186 x(AXP)S -58 x(,)S
+185 x(and)S 185 x(VMScluster)S 186 x(sys-)S 3600 X 548 y(tems,)S 183 x
+(and)S 178 x(to)S 176 x(determine)S 178 x(system)S 177 x(perform)S 2 x
+(ance)S 177 x(levels)S 176 x(for)S 15854 11781 XY(various)S 115 x(workloads)S
+115 x(and)S 115 x(con\211gur)S 2 x(ations.)S 187 x(Performan)S 2 x(ce)S
+114 x(cal-)S 15854 X 548 y(culations)S 259 x(are)S 260 x(based)S 260 x
+(on)S 260 x(queuing)S 260 x(theory)S 260 x(and)S 260 x(analytic)S 15854 X
+548 y(models.)S 15854 X 897 y(The)S 195 x(modeling)S 195 x(compo)S 2 x
+(nent)S 195 x(includes)S 194 x(a)S 195 x(graph)S 2 x(ical)S 194 x(model-)S
+15854 X 548 y(ing)S 151 x(interface)S 152 x(from)S 151 x(which)S 151 x
+(`)S -8 x(`what-if')S -10 x(')S 151 x(analyses)S 152 x(can)S 152 x(be)S
+151 x(per-)S 15854 X 548 y(formed.)S 307 x(A)S 185 x(baseline)S 186 x
+(model)S 186 x(is)S 184 x(created)S 186 x(from)S 186 x(information)S
+15854 X 548 y(collected)S 142 x(by)S 143 x(the)S 142 x(POL)S -33 x(YCENTER)S
+141 x(Performanc)S 2 x(e)S 142 x(Data)S 142 x(Col-)S 15854 X 547 y(lectors.)S
+194 x(This)S 133 x(baseline)S 133 x(mode)S 2 x(l)S 132 x(becom)S 2 x
+(es)S 133 x(the)S 133 x(starting)S 134 x(point)S 15854 X 548 y(for)S
+121 x(assessing)S 122 x(the)S 121 x(impact)S 121 x(of)S 121 x(changes)S
+122 x(to)S 121 x(the)S 121 x(con\211gur)S 2 x(ation)S 15854 X 548 y
+(or)S 124 x(the)S 124 x(workloads.)S 191 x(Users)S 125 x(can)S 124 x
+(add,)S 130 x(delete,)S 128 x(or)S 125 x(change)S 125 x(any)S 15854 X
+548 y(hardware)S 140 x(componen)S 2 x(t)S 137 x(or)S 139 x(workload,)S
+140 x(and)S 139 x(examine)S 139 x(the)S 138 x(im-)S 15854 X 548 y(pact)S
+212 x(on)S 211 x(perform)S 2 x(ance)S 212 x(by)S 211 x(viewing)S 211 x
+(various)S 212 x(perform)S 2 x(ance)S 15854 X 548 y(metrics,)S 197 x
+(such)S 189 x(as:)S 275 x(utilizati)S -2 x(on,)S 198 x(response)S 189 x
+(times,)S 197 x(through-)S 15854 X 548 y(put,)S 229 x(queue)S 214 x
+(length,)S 229 x(and)S 214 x(service)S 214 x(time.)S 389 x(Mode)S 2 x
+(ls)S 212 x(can)S 214 x(be)S 15854 X 548 y(saved)S 236 x(for)S 236 x
+(further)S 235 x(evaluation.)S 457 x(The)S 235 x(`)S -8 x(`what-if)S
+-2 x(')S -8 x(')S 235 x(analyses)S 15854 X 548 y(form)S 150 x(the)S
+150 x(foundation)S 150 x(of)S 149 x(capacity)S 150 x(plans.)S 15854 X
+897 y(The)S 217 x(POL)S -33 x(YCENTER)S 216 x(Capacity)S 217 x(Planner)S
+218 x(allows)S 216 x(the)S 217 x(sys-)S 15854 X 548 y(tem)S 231 x(mana)S
+2 x(ger)S 231 x(or)S 232 x(planner)S 232 x(to)S 231 x(de\211ne)S 232 x
+(the)S 231 x(system')S -8 x(s)S 231 x(total)S 15854 X 548 y(workload)S
+254 x(in)S 252 x(terms)S 254 x(of)S 252 x(mana)S 2 x(geable)S 253 x
+(units.)S 509 x(W)S -8 x(orkloads)S 15854 X 547 y(are)S 209 x(express)S
+2 x(ed)S 208 x(as)S 209 x(classes)S 209 x(that)S 207 x(include)S 209 x
+(groups)S 209 x(of)S 208 x(pro-)S 15854 X 548 y(cesses)S 160 x(\(for)S
+159 x(both)S 159 x(OpenVMS)S 159 x(and)S 159 x(U*IX)S 159 x(wit)S -2 x
+(h)S 159 x(similar)S 158 x(char-)S 15854 X 548 y(acteristics\).)S 356 x
+(These)S 202 x(classes)S 203 x(are)S 202 x(used)S 203 x(in)S 201 x(mode)S
+2 x(l)S 201 x(gener-)S 15854 X 548 y(ation.)S 358 x(W)S -8 x(orkload)S
+204 x(classes)S 203 x(can)S 203 x(be)S 203 x(de\211ned)S 204 x(according)S
+204 x(to)S 15854 X 548 y(users,)S 228 x(UICs,)S 225 x(process)S 213 x
+(name,)S 228 x(account)S 212 x(name,)S 227 x(and)S 212 x(pro-)S 15854 X
+548 y(cess)S 139 x(mode)S 2 x(.)S 195 x(Subclasses)S 140 x(are)S 139 x
+(a)S 139 x(set)S 139 x(of)S 139 x(transactions)S 139 x(under)S 15854 X
+548 y(a)S 123 x(class.)S 190 x(These)S 123 x(may)S 123 x(be)S 123 x
+(images)S 123 x(if)S 122 x(the)S 122 x(images)S 124 x(function)S 122 x
+(as)S 15854 X 548 y(transactions.)S 209 x(W)S -7 x(orkloads)S 153 x
+(are)S 154 x(thus)S 153 x(able)S 153 x(to)S 152 x(be)S 153 x(expre)S
+2 x(ssed)S 15854 X 548 y(as)S 207 x(a)S 208 x(class/subclass)S 207 x
+(table)S 207 x(for)S 207 x(transac)S 2 x(tion)S 206 x(perform)S 2 x
+(ance)S 15854 X 548 y(statistics.)S 338 x(U*IX)S 195 x(subclasse)S 2 x
+(s)S 196 x(are)S 197 x(not)S 196 x(suppor)S 2 x(ted)S 196 x(since)S
+196 x(a)S 15854 X 548 y(process)S 151 x(runs)S 150 x(one)S 151 x(and)S
+150 x(only)S 150 x(one)S 150 x(image)S 150 x(\(comm)S 2 x(and\).)S 15854 X
+897 y(The)S 196 x(POL)S -33 x(YCENTER)S 194 x(Capacity)S 195 x(Planner)S
+197 x(provides)S 196 x(perfor-)S 15854 X 548 y(mance)S 136 x(information)S
+135 x(for)S 135 x(each)S 136 x(supported)S 136 x(CPU,)S 134 x(HSC,)S
+134 x(disk,)S 15854 X 547 y(channe)S 2 x(l,)S 263 x(adapter)S -24 x
+(,)S 264 x(bridge,)S 265 x(router)S -24 x(,)S 264 x(and)S 242 x(interconnect)S
+242 x(at)S 15854 X 548 y(both)S 145 x(curren)S 2 x(t)S 144 x(and)S 145 x
+(projected)S 146 x(workloads)S 145 x(or)S 145 x(con\211gu)S 2 x(rations.)S
+15854 X 548 y(This)S 149 x(includes)S 149 x(support)S 150 x(for)S 149 x
+(OpenVMS)S 150 x(volume)S 150 x(shadowing)S 15854 X 548 y(and)S 150 x
+(disk)S 150 x(striping)S 149 x(\(but)S 150 x(not)S 150 x(above)S 150 x
+(RAID\2031)S 149 x(level\).)S -378 x 38446 Y F40(May)S 151 x(1994)S
+23874 X 548 y(AE-PH6QD-TE)S 13021 X -126 y F207(dt)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica DigitalLogo
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (2) 2
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 3002 XY F40(POL)S -42 x(YCENTER)S 149 x(Capacity)S 150 x(Planner)S
+-24 x(,)S 23947 X(SPD)S 149 x(36.04.04)S 3600 X 548 y(V)S -25 x(ersion)S
+150 x(2.1)S 3600 4835 XY F38(The)S 171 x(POL)S -33 x(YCENTER)S 170 x
+(Capacity)S 171 x(Planner)S 172 x(suppo)S 2 x(rts)S 171 x(the)S 171 x
+(fol-)S 3600 X 548 y(lowing)S 149 x(network)S 150 x(protocols:)S 3600 X
+897 y(\201)S 441 x(SCS)S 3600 X 797 y(\201)S 441 x(NSP/DECnet)S 3600 X
+797 y(\201)S 441 x(OSI/DEC)S -2 x(net)S 3600 X 797 y(\201)S 441 x(TCP/IP)S
+3600 X 797 y(\201)S 441 x(UDP/I)S -2 x(P)S 3600 X 797 y(\201)S 441 x
+(LA)S -33 x(T)S 3600 X 896 y(The)S 142 x(network)S 142 x(subsystem)S
+2 x(,)S 143 x(as)S 142 x(it)S 140 x(pertains)S 143 x(to)S 141 x(system-b)S
+2 x(ased)S 3600 X 548 y(capacity)S 235 x(planning,)S 257 x(is)S 234 x
+(the)S 235 x(set)S 235 x(of)S 234 x(network)S 236 x(componen)S 2 x(ts)S
+3600 X 548 y(and)S 139 x(protocols)S 139 x(for)S 139 x(which)S 138 x
+(commu)S 2 x(nication)S 138 x(of)S 138 x(workload)S 139 x(tra-)S 3600 X
+548 y(verses)S 165 x(selected)S 163 x(network)S 164 x(path\(s\))S 164 x
+(over)S 165 x(all)S 162 x(capacity)S 164 x(plan-)S 3600 X 548 y(ning)S
+115 x(end-n)S 2 x(ode)S 115 x(pairs.)S 188 x(The)S 115 x(mode)S 2 x
+(ling)S 114 x(focus)S 115 x(of)S 115 x(the)S 115 x(network)S 3600 X
+548 y(subsystem)S 122 x(is)S 120 x(to)S 120 x(suppo)S 2 x(rt)S 120 x
+(end-to-e)S 2 x(nd)S 121 x(response)S 122 x(time)S 120 x(mod-)S 3600 X
+548 y(eling,)S 120 x(network)S 114 x(device)S 114 x(performan)S 2 x
+(ce,)S 120 x(and)S 114 x(client/server)S 114 x(ca-)S 3600 X 548 y(pacity)S
+149 x(planning)S 151 x(\(extended)S 151 x(LAN)S 149 x(suppor)S 2 x(t,)S
+148 x F39(not)S 150 x F38(W)S -16 x(AN\).)S 3600 X 897 y(Client/server)S
+106 x(suppor)S 2 x(t)S 106 x(is)S 106 x(provided)S 107 x(in)S 106 x
+(that)S 106 x(software)S 107 x(servers)S 3600 X 548 y(may)S 175 x(be)S
+174 x(de\211ne)S 2 x(d)S 174 x(to)S 174 x(serve)S 175 x(one)S 175 x
+(or)S 175 x(more)S 175 x(clients.)S 272 x(Multiple)S 3600 X 548 y(levels)S
+166 x(of)S 165 x(software)S 166 x(server)S 2 x(s)S 165 x(are)S 167 x
+(allowed.)S 248 x(POL)S -34 x(YCENTER)S 3600 X 547 y(Capacity)S 163 x
+(Planner)S 164 x(will)S 162 x(support)S 164 x(capacity)S 164 x(planning)S
+163 x(for)S 164 x(en-)S 3600 X 548 y(vironments)S 125 x(that)S 124 x
+(include)S 124 x(applications)S 124 x(whose)S 124 x(client/server)S
+3600 X 548 y(compon)S 2 x(ents)S 149 x(are)S 151 x(implemented)S 150 x
+(on)S 150 x(multiple)S 149 x(CPUs.)S 3600 X 897 y(The)S 174 x(perform)S
+2 x(ance)S 175 x(statisti)S -2 x(cs)S 175 x(are)S 174 x(provided)S 175 x
+(in)S 174 x(either)S 174 x(sum-)S 3600 X 548 y(mary)S 151 x(or)S 150 x
+(detailed)S 149 x(reports)S 151 x(and)S 150 x(include:)S 3600 X 897 y
+(\201)S 441 x(Resource)S 151 x(utili)S -2 x(zation)S 3600 X 797 y(\201)S
+441 x(Response)S 151 x(time)S 3600 X 797 y(\201)S 441 x(Throughp)S 2 x
+(ut)S 3600 X 797 y(\201)S 441 x(Queue)S 150 x(length)S 3600 X 797 y
+(\201)S 441 x(Service)S 150 x(time)S 3600 X 896 y(POL)S -33 x(YCENTER)S
+115 x(Capacity)S 115 x(Planner)S 117 x(provides)S 117 x(prediction)S
+116 x(re-)S 3600 X 548 y(porting)S 133 x(that)S 132 x(indicates)S 133 x
+(the)S 132 x(workload)S 133 x(size)S 133 x(at)S 132 x(which)S 133 x
+(a)S 132 x(com-)S 3600 X 548 y(ponent)S 153 x(wil)S -2 x(l)S 151 x(saturate.)S
+207 x(The)S 152 x(report)S 152 x(shows)S 152 x(the)S 152 x(system)S
+152 x(per-)S 3600 X 548 y(formance)S 116 x(at)S 115 x(incremental)S
+115 x(increase)S 2 x(s)S 115 x(of)S 114 x(workload)S 116 x(up)S 115 x
+(to)S 114 x(the)S 3600 X 548 y(saturation)S 139 x(point.)S 195 x(The)S
+139 x(increme)S 2 x(nt)S 138 x(steps)S 139 x(are)S 140 x(25)S 139 x
+(percent)S 140 x(of)S 3600 X 548 y(initi)S -2 x(al)S 202 x(compone)S
+2 x(nt)S 201 x(utilizati)S -2 x(on.)S 356 x(After)S 201 x(an)S 203 x
+(increase)S 202 x(to)S 202 x(100)S 3600 X 548 y(percen)S 2 x(t,)S 148 x
+(only)S 150 x(the)S 149 x(saturation)S 150 x(point)S 150 x(is)S 149 x
+(shown.)S 15854 4821 XY(The)S 279 x(saturation)S 278 x(analysis)S 279 x
+(identi\211es)S 278 x(bottlenecks)S 279 x(before)S 15854 X 548 y(they)S
+180 x(occur)S -24 x(,)S 186 x(allowing)S 179 x(the)S 179 x(system)S
+180 x(manag)S 2 x(er)S 179 x(to)S 179 x(be)S 180 x(proac-)S 15854 X
+548 y(tive)S 109 x(in)S 110 x(eliminating)S 109 x(bottlenecks)S 110 x
+(and)S 111 x(providing)S 110 x(a)S 110 x(consistent)S 15854 X 548 y
+(level)S 149 x(of)S 150 x(system)S 150 x(performa)S 2 x(nce)S 150 x
+(to)S 149 x(users.)S 15854 X 896 y F40(Features)S 15854 X 897 y F38
+(POL)S -33 x(YCENTER)S 129 x(Capacity)S 129 x(Planner)S 130 x(provide)S
+2 x(s)S 129 x(the)S 130 x(user)S 130 x(with)S 15854 X 548 y(the)S 211 x
+(capabilities)S 210 x(to)S 210 x(plan)S 211 x(ef)S -8 x(fectively)S
+209 x(for)S 211 x(future)S 211 x(computer)S 15854 X 548 y(resour)S 2 x
+(ce)S 149 x(need)S 2 x(s:)S 15854 X 897 y(\201)S 441 x(A)S 165 x(graph)S
+2 x(ical)S 165 x(modeling)S 166 x(interface)S 166 x(provides)S 166 x
+(an)S 166 x(easy-to-)S 16452 X 548 y(use)S 150 x(tool)S 149 x(for)S
+150 x(performing)S 151 x(multiple)S 149 x(`)S -9 x(`what-if')S -10 x
+(')S 149 x(analyses.)S 15854 X 797 y(\201)S 441 x(W)S -8 x(ork)S 330 x
+(performed)S 330 x(by)S 330 x(OpenVMS)S 330 x(systems)S 329 x(can)S
+330 x(be)S 16452 X 548 y(grouped)S 151 x(into)S 149 x(meaning)S 2 x
+(ful)S 148 x(categor)S 2 x(ies.)S 15854 X 896 y(POL)S -33 x(YCENTER)S
+156 x(Capacity)S 157 x(Planner)S 159 x(has)S 157 x(two)S 157 x(portions:)S
+215 x(the)S 15854 X 548 y(Modeler/Char)S 2 x(acterizer)S 252 x(and)S
+253 x(the)S 252 x(Data)S 252 x(Integrator)S -24 x(.)S 507 x(The)S 15854 X
+548 y(Data)S 124 x(Integrator)S 124 x(compr)S 2 x(esses)S 124 x(perform)S
+2 x(ance)S 124 x(data)S 125 x(collected)S 15854 X 548 y(from)S 154 x
+(one)S 155 x(or)S 154 x(more)S 155 x(nodes)S 155 x(by)S 154 x(Data)S
+154 x(Collectors.)S 211 x(The)S 154 x(Mod-)S 15854 X 548 y(eler/Characterizer)S
+151 x(provides)S 150 x(the)S 150 x(followi)S -2 x(ng)S 150 x(functions:)S
+15854 X 897 y(\201)S 441 x(Performan)S 2 x(ce)S 208 x(mode)S 2 x(ling)S
+208 x(is)S 208 x(supported)S 210 x(for)S 208 x(standalone)S 16452 X
+548 y(systems)S 157 x(with)S 155 x(the)S 156 x(above)S 158 x(operating)S
+157 x(systems)S 157 x(and)S 157 x(VM-)S 16452 X 547 y(Scluster)S 150 x
+(systems.)S 15854 X 797 y(\201)S 441 x(`)S -9 x(`What-if')S -9 x(')S
+121 x(analysis)S 123 x(provides)S 123 x(performan)S 2 x(ce)S 122 x(character)S
+2 x(is-)S 16452 X 548 y(tics)S 167 x(of)S 168 x(the)S 167 x(system)S
+169 x(before)S 169 x(actual)S 167 x(chang)S 2 x(es)S 168 x(are)S 168 x
+(imple-)S 16452 X 548 y(mented.)S 15854 X 797 y(\201)S 441 x(Built-in)S
+109 x(con\211gura)S 2 x(tion)S 109 x(rules)S 111 x(assist)S 109 x(in)S
+110 x(modeling)S 111 x(and)S 110 x(val-)S 16452 X 548 y(idating)S 149 x
+(suppor)S 2 x(ted)S 149 x(con\211gur)S 2 x(ations.)S 15854 X 797 y(\201)S
+441 x(Saturation)S 182 x(analysis)S 183 x(identi\211es)S 182 x(the)S
+182 x(workload)S 183 x(at)S 182 x(which)S 16452 X 548 y(system)S 219 x
+(compo)S 2 x(nents)S 219 x(wil)S -2 x(l)S 219 x(saturate)S 219 x(and)S
+219 x(perform)S 2 x(ance)S 16452 X 548 y(bottlenecks)S 150 x(will)S
+148 x(occur)S -24 x(.)S 15854 X 797 y(\201)S 441 x(Session)S 150 x(journaling)S
+150 x(and)S 150 x(recover)S 2 x(y)S 149 x(is)S 149 x(suppo)S 2 x(rted.)S
+15854 X 797 y(\201)S 441 x(CPU)S 149 x(priority)S 149 x(modeling)S 150 x
+(is)S 149 x(suppo)S 2 x(rted.)S 15854 X 797 y(\201)S 441 x(Extended)S
+195 x(LAN)S 195 x(protocols)S 195 x(and)S 195 x(compon)S 2 x(ents)S
+194 x(are)S 196 x(sup-)S 16452 X 548 y(ported.)S 15854 X 797 y(\201)S
+441 x(Client/)S -2 x(server)S 400 x(application)S 397 x(environm)S 2 x
+(ents)S 398 x(are)S 399 x(sup-)S 16452 X 548 y(ported.)S 15854 X 797 y
+(\201)S 441 x(Context-sensitive)S 149 x(Help)S 150 x(is)S 149 x(available.)S
+15132 38868 XY F40(2)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (3) 3
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 3002 XY F40(POL)S -42 x(YCENTER)S 149 x(Capacity)S 150 x(Planner)S
+-24 x(,)S 23947 X(SPD)S 149 x(36.04.04)S 3600 X 548 y(V)S -25 x(ersion)S
+150 x(2.1)S 3600 4834 XY(Processor)S 2 x(s)S 149 x(That)S 150 x(Can)S
+150 x(Be)S 149 x(Modeled)S 3600 X 897 y F38(Any)S 150 x(number)S 151 x
+(of)S 149 x(user-)S 2 x(de\211ned)S 151 x(CPUs)S 149 x(can)S 150 x(be)S
+150 x(modeled.)S 3600 X 697 y 11064 24 R 7945 6926 XY F49(V)S -22 x
+(AX)S 149 x(Processors)S 3600 X 299 y 11064 24 R 3932 7773 XY F48(730)S
+606 x(4200)S 606 x(6220)S 606 x(6350)S 606 x(6520)S 606 x(6650)S 605 x
+(8250)S 606 x(8700)S 606 x(9410)S 3932 X 498 y(750)S 606 x(4300)S 606 x
+(6230)S 606 x(6360)S 606 x(6530)S 606 x(6660)S 605 x(8300)S 606 x(8800)S
+606 x(9420)S 3932 X 498 y(780)S 606 x(4400)S 606 x(6240)S 606 x(6410)S
+606 x(6540)S 606 x(7610)S 605 x(8350)S 606 x(8810)S 606 x(9430)S 3932 X
+499 y(782)S 606 x(4500)S 606 x(6250)S 606 x(6420)S 606 x(6550)S 606 x
+(7620)S 605 x(8370)S 606 x(8820)S 606 x(9440)S 3932 X 498 y(785)S 606 x
+(4500A)S 390 x(6260)S 606 x(6430)S 606 x(6560)S 606 x(7630)S 605 x(8500)S
+606 x(8830)S 440 x(10610)S 3766 X 498 y(4050)S 606 x(4600)S 606 x(6310)S
+606 x(6440)S 606 x(6610)S 606 x(7640)S 605 x(8530)S 606 x(8840)S 440 x
+(10620)S 3766 X 498 y(4090)S 606 x(4600A)S 390 x(6320)S 606 x(6450)S
+606 x(6620)S 606 x(7650)S 605 x(8550)S 606 x(91)S -16 x(10)S 456 x(10630)S
+3766 X 498 y(4100)S 606 x(4700A)S 390 x(6330)S 606 x(6460)S 606 x(6630)S
+606 x(7660)S 605 x(8600)S 606 x(9210)S 440 x(10640)S 3766 X 498 y(4100A)S
+390 x(6210)S 606 x(6340)S 606 x(6510)S 606 x(6640)S 606 x(8200)S 605 x
+(8650)S 606 x(9310)S 440 x(10650)S -830 x 498 y(10660)S 3600 X 598 y
+11064 24 R 6762 13352 XY F49(Fault)S 143 x(T)S -11 x(olerant)S 144 x
+(V)S -22 x(AXft)S 143 x(Processors)S 3600 X 299 y 11064 24 R 3766 14199 XY
+F48(ft1)S -17 x(10)S 589 x(ft310)S 572 x(ft410)S 572 x(ft610)S 572 x
+(ft612)S 572 x(ft810)S 405 x(ft3000)S 3600 X 598 y 11064 24 R 8343 15295 XY
+F49(V)S -22 x(AXstation)S 3600 X 299 y 11064 24 R 3600 16142 XY F48
+(2000)S 606 x(3100)S 606 x(3130)S 606 x(3138)S 605 x(3140)S 606 x(3148)S
+606 x(3150)S 606 x(3176)S 606 x(3200)S 3600 X 498 y(3400)S 606 x(3500)S
+606 x(3520)S 606 x(3540)S 605 x(4000V)S 2 x(LC)S 173 x(4060)S 439 x
+(4090)S 606 x(8000)S 3600 X 598 y 11064 24 R 7547 17736 XY F49(MicroV)S
+-22 x(AX)S 148 x(Processors)S 3600 X 299 y 11064 24 R 3766 18583 XY
+F48(2000)S 606 x(3100)S 440 x(3100E)S 407 x(31)S -16 x(10E)S 422 x(3120E)S
+574 x(3130)S 605 x(3140)S 606 x(3180)S 606 x(3190)S 3766 X 498 y(3300)S
+606 x(3400)S 606 x(3500)S 606 x(3600)S 606 x(3800)S 606 x(3900)S 439 x
+(MV)S -16 x(-II)S 3600 X 598 y 11064 24 R 5854 20177 XY F49(Alpha)S
+142 x(Systems)S 142 x(for)S 142 x(OpenVMS)S 142 x(AXP)S 3600 X 299 y
+11064 24 R 3600 21024 XY F48(DEC)S -631 x 398 y(2000)S -664 x 399 y
+(Model)S -864 x 398 y(300)S 772 x 21024 Y(DEC)S -631 x 398 y(2000)S
+-664 x 399 y(Model)S -864 x 398 y(500)S 772 x 21024 Y(DEC)S -631 x 398 y
+(3000)S -664 x 399 y(Model)S -864 x 398 y(300)S 772 x 21024 Y(DEC)S
+-631 x 398 y(3000)S -664 x 399 y(Model)S -864 x 398 y(300L)S 588 x 21024 Y
+(DEC)S -631 x 398 y(3000)S -664 x 399 y(Model)S -864 x 398 y(300)S -498 x
+399 y(LX)S 888 x 21024 Y(DEC)S -631 x 398 y(3000)S -664 x 399 y(Model)S
+-864 x 398 y(300)S -498 x 399 y(X)S 11219 21024 XY(DEC)S -631 x 398 y
+(3000)S -664 x 399 y(Model)S -864 x 398 y(400)S 772 x 21024 Y(DEC)S
+-631 x 398 y(3000)S -664 x 399 y(Model)S -864 x 398 y(500)S 3600 X 897 y
+(DEC)S -631 x 398 y(3000)S -664 x 399 y(Model)S -864 x 398 y(500X)S
+573 x 23116 Y(DEC)S -631 x 398 y(3000)S -664 x 399 y(Model)S -864 x
+398 y(600)S 772 x 23116 Y(DEC)S -631 x 398 y(3000)S -664 x 399 y(Model)S
+-864 x 398 y(800)S 772 x 23116 Y(DEC)S -631 x 398 y(4000)S -664 x 399 y
+(Model)S -864 x 398 y(610)S 771 x 23116 Y(DEC)S -631 x 398 y(4000)S
+-664 x 399 y(Model)S -864 x 398 y(620)S 772 x 23116 Y(DEC)S -631 x 398 y
+(4000)S -664 x 399 y(Model)S -864 x 398 y(710)S 772 x 23116 Y(DEC)S
+-631 x 398 y(4000)S -664 x 399 y(Model)S -864 x 398 y(720)S 772 x 23116 Y
+(DEC)S -631 x 398 y(7000)S -664 x 399 y(Model)S -864 x 398 y(610)S 3600 X
+498 y(DEC)S -631 x 399 y(7000)S -664 x 398 y(Model)S -864 x 399 y(620)S
+772 x 24809 Y(DEC)S -631 x 399 y(7000)S -664 x 398 y(Model)S -864 x
+399 y(630)S 772 x 24809 Y(DEC)S -631 x 399 y(7000)S -664 x 398 y(Model)S
+-864 x 399 y(640)S 772 x 24809 Y(DEC)S -631 x 399 y(7000)S -664 x 398 y
+(Model)S -864 x 399 y(650)S 771 x 24809 Y(DEC)S -631 x 399 y(7000)S
+-664 x 398 y(Model)S -864 x 399 y(660)S 772 x 24809 Y(DEC)S -631 x 399 y
+(10000)S -830 x 398 y(Model)S -864 x 399 y(610)S 772 x 24809 Y(DEC)S
+-631 x 399 y(10000)S -830 x 398 y(Model)S -864 x 399 y(620)S 772 x 24809 Y
+(DEC)S -631 x 399 y(10000)S -830 x 398 y(Model)S -864 x 399 y(630)S
+3600 X 498 y(DEC)S -631 x 398 y(10000)S -830 x 399 y(Model)S -864 x
+398 y(640)S 772 x 26503 Y(DEC)S -631 x 398 y(10000)S -830 x 399 y(Model)S
+-864 x 398 y(650)S 772 x 26503 Y(DEC)S -631 x 398 y(10000)S -830 x 399 y
+(Model)S -864 x 398 y(660)S 3600 X 299 y 11064 24 R 15854 4834 XY F40
+(Disks)S 150 x(That)S 149 x(Can)S 150 x(Be)S 149 x(Modeled)S 15854 X
+897 y F38(Any)S 150 x(number)S 151 x(of)S 150 x(user-de\211n)S 2 x(ed)S
+150 x(disks)S 149 x(can)S 151 x(be)S 150 x(modeled.)S 15854 X 697 y
+11064 24 R 20566 6926 XY F49(Disk)S 150 x(T)S -11 x(ypes)S 15854 X 299 y
+11064 24 R 15854 7773 XY F48(EF51)S 780 x(ESE58)S 565 x(RA81)S 730 x
+(RRD40S)S 315 x(RF31)S 763 x(RF72)S 762 x(RZ22)S 763 x(RZ28)S 15854 X
+498 y(EF52)S 780 x(RA60)S 730 x(RA82)S 730 x(RRD42)S 514 x(RF31F)S 580 x
+(RFH72)S 546 x(RZ23)S 763 x(RZ55)S 15854 X 498 y(EF53)S 780 x(RA70)S
+730 x(RA90)S 730 x(RRD50)S 514 x(RF31T)S 580 x(RF73)S 762 x(RZ23L)S
+580 x(RZ56)S 15854 X 499 y(ESE20)S 565 x(RA71)S 730 x(RA92)S 730 x(RD52)S
+730 x(RF35)S 763 x(RF73F)S 579 x(RZ24)S 763 x(RZ57)S 15854 X 498 y(ESE20E)S
+2 x(P)S 165 x(RA72)S 730 x(RD31)S 730 x(RD53)S 730 x(RF35F)S 580 x(RM05)S
+696 x(RZ24L)S 580 x(RZ58)S 15854 X 498 y(ESE52)S 565 x(RA73)S 730 x
+(RD32)S 730 x(RD54)S 730 x(RF36)S 763 x(RP06)S 746 x(RZ25)S 763 x(RZ73)S
+15854 X 498 y(ESE56)S 565 x(RA80)S 730 x(RRD40)S 514 x(RF30)S 763 x
+(RF71)S 763 x(RP07)S 746 x(RZ26)S 763 x(RF74)S 15854 X 498 y(EZ51)S
+780 x(EZ54)S 780 x(EZ58)S 780 x(RZ26B)S 547 x(RZ26L)S 580 x(RZ74)S 15854 X
+299 y 11064 24 R 15854 12456 XY F40(HSCs)S 149 x(That)S 150 x(Can)S
+149 x(Be)S 150 x(Modeled)S 15854 X 697 y 11064 24 R 20567 13651 XY F49
+(HSC)S 149 x(T)S -11 x(ypes)S 15854 X 299 y 11064 24 R 15854 14498 XY
+F48(HSC40)S 531 x(HSC50)S 531 x(HSC60)S 531 x(HSC65)S 531 x(HSC70)S
+531 x(HSC90)S 530 x(HSC95)S 15854 X 498 y(HSD05)S 531 x(HSJ30)S 581 x
+(HSJ40)S 15854 X 299 y 11064 24 R 15854 16192 XY F40(Adapters)S 150 x
+(That)S 150 x(Can)S 150 x(Be)S 149 x(Modeled)S 15854 X 697 y 11064 24 R
+20318 17387 XY F49(Adapter)S 148 x(T)S -11 x(ypes)S 15854 X 299 y 11064 24 R
+15854 18234 XY F48(ci750)S 747 x(ci780)S 747 x(cibca-a)S 464 x(cibca-b)S
+447 x(cibci)S 813 x(cixcd)S 729 x(debna)S 613 x(debni)S 15854 X 498 y
+(delqa)S 713 x(delqa-t)S 513 x(delua)S 713 x(demfa)S 613 x(demna)S 530 x
+(deqna)S 612 x(desqa)S 630 x(desva)S 15854 X 498 y(deuna)S 613 x(kfmsa)S
+630 x(kfmsa-b)S 347 x(kfqsa)S 713 x(lance)S 730 x(sgec)S 812 x(tgec)S
+879 x(shac)S 15854 X 498 y(deqra)S -814 x 299 y 11064 24 R 15854 20924 XY
+F40(Interconnects)S 151 x(That)S 150 x(Can)S 149 x(Be)S 150 x(Modeled)S
+15854 X 697 y 11064 24 R 19986 22119 XY F49(Interconnect)S 147 x(T)S
+-12 x(ypes)S 15854 X 299 y 11064 24 R 15854 22966 XY F48(CI)S 17124 X
+(DSSI)S 573 x(FDDI)S 572 x(T)S -23 x(oken)S 133 x(Ring)S 883 x(Point-Point)S
+22203 X 399 y(Link)S 24743 X -399 y(NI)S 133 x(\(Ethernet\))S 15854 X
+698 y 11064 24 R 15854 24560 XY F40(Bridges)S 150 x(and)S 149 x(Routers)S
+150 x(That)S 150 x(Can)S 149 x(Be)S 150 x(Modeled)S 15854 X 698 y 11064 24 R
+19849 25756 XY F49(Bridges)S 147 x(and)S 147 x(Routers)S 15854 X 299 y
+11064 24 R 15854 26603 XY F48(LAN)S 132 x(Bridge)S 132 x(100)S 19814 X
+(LAN)S 132 x(Bridge)S 132 x(150)S 23774 X(LAN)S 132 x(Bridge)S 132 x
+(200)S 15854 X 498 y(DECbridge)S 132 x(90)S 19814 X(DECbridge)S 132 x
+(500)S 23774 X(DECbridge)S 132 x(51x)S 15854 X 498 y(DECbridge)S 132 x
+(52x)S 19814 X(DECbridge)S 132 x(600)S 23774 X(DECbridge)S 132 x(61x)S
+15854 X 498 y(DECbridge)S 132 x(62x)S 19814 X(DECrouter)S 132 x(100)S
+23774 X(DECrouter)S 132 x(150)S 15854 X 498 y(DECrouter)S 132 x(200)S
+19814 X(DECrouter)S 132 x(250)S 23774 X(DECrouter)S 132 x(2000)S 15854 X
+498 y(DECNIS)S 133 x(500)S 19814 X(DECNIS)S 133 x(600)S 15854 X 299 y
+11064 24 R 15132 38868 XY F40(3)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-BoldOblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (4) 4
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 3002 XY F40(POL)S -42 x(YCENTER)S 132 x(Capacity)S 134 x(Planner)S
+-24 x(,)S 23980 X(SPD)S 133 x(36.04.04)S 3600 X 548 y(V)S -25 x(ersion)S
+134 x(2.1)S 3600 4834 XY(HARDW)S -26 x(ARE)S 149 x(REQUIREMENTS)S 3600 5761 XY
+F39(Processo)S 2 x(rs)S 149 x(Suppo)S 2 x(rted:)S 3600 6687 XY F42(V)S
+-30 x(AX:)S 6589 X(V)S -30 x(AXft)S 132 x(Model)S 132 x(1)S -30 x(10,)S
+6589 X 528 y(V)S -30 x(AXft)S 132 x(Model)S 132 x(310,)S 6589 X 528 y
+(V)S -30 x(AXft)S 132 x(Model)S 132 x(410,)S 6589 X 527 y(V)S -30 x
+(AXft)S 132 x(Model)S 132 x(610,)S 6589 X 528 y(V)S -30 x(AXft)S 132 x
+(Model)S 132 x(612,)S 6589 X 528 y(V)S -30 x(AXft)S 132 x(Model)S 132 x
+(810,)S 6589 X 528 y(V)S -30 x(AXft)S 132 x(Model)S 132 x(3000)S 6589 10910 XY
+(V)S -30 x(AX)S 133 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(90)S
+132 x(,)S 6589 X 527 y(V)S -30 x(AX)S 133 x(400)S -2 x(0)S 133 x(Mode)S
+-2 x(l)S 134 x(100)S -2 x(,)S 6589 X 528 y(V)S -30 x(AX)S 133 x(400)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(200)S -2 x(,)S 6589 X 528 y(V)S
+-30 x(AX)S 133 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(300)S -2 x
+(,)S 6589 X 528 y(V)S -30 x(AX)S 133 x(400)S -2 x(0)S 133 x(Mode)S -2 x
+(l)S 134 x(400)S -2 x(,)S 6589 X 528 y(V)S -30 x(AX)S 133 x(400)S -2 x
+(0)S 133 x(Mode)S -2 x(l)S 134 x(500)S -2 x(,)S 6589 X 528 y(V)S -30 x
+(AX)S 133 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(600)S 6589 15132 XY
+(V)S -30 x(AX)S 133 x(600)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(200)S
+131 x(Series,)S 6589 X 528 y(V)S -30 x(AX)S 133 x(600)S -2 x(0)S 133 x
+(Mode)S -2 x(l)S 134 x(300)S 131 x(Series,)S 6589 X 528 y(V)S -30 x
+(AX)S 133 x(600)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(400)S 131 x(Series,)S
+6589 X 528 y(V)S -30 x(AX)S 133 x(600)S -2 x(0)S 133 x(Mode)S -2 x(l)S
+134 x(500)S 131 x(Series,)S 6589 X 528 y(V)S -30 x(AX)S 133 x(600)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(600)S 131 x(Series)S 6589 18299 XY
+(V)S -30 x(AX)S 133 x(700)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(600)S
+131 x(Series)S 6589 19355 XY(V)S -30 x(AX)S 133 x(820)S -2 x(0,)S 132 x
+(V)S -29 x(AX)S 132 x(8250)S -2 x(,)S 133 x(V)S -30 x(AX)S 133 x(830)S
+-2 x(0,)S 6589 X 498 y(V)S -30 x(AX)S 133 x(835)S -2 x(0,)S 132 x(V)S
+-29 x(AX)S 132 x(8500)S -2 x(,)S 133 x(V)S -30 x(AX)S 133 x(853)S -2 x
+(0,)S 6589 X 498 y(V)S -30 x(AX)S 133 x(855)S -2 x(0,)S 132 x(V)S -29 x
+(AX)S 132 x(8600)S -2 x(,)S 133 x(V)S -30 x(AX)S 133 x(865)S -2 x(0,)S
+6589 X 498 y(V)S -30 x(AX)S 133 x(870)S -2 x(0,)S 132 x(V)S -29 x(AX)S
+132 x(8800)S -2 x(,)S 133 x(V)S -30 x(AX)S 133 x(881)S -2 x(0,)S 6589 X
+499 y(V)S -30 x(AX)S 133 x(882)S -2 x(0,)S 132 x(V)S -29 x(AX)S 132 x
+(8830)S -2 x(,)S 133 x(V)S -30 x(AX)S 133 x(884)S -2 x(0)S 6589 22403 XY
+(V)S -30 x(AX)S 133 x(900)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(1)S
+-30 x(10,)S 6589 X 498 y(V)S -30 x(AX)S 133 x(900)S -2 x(0)S 133 x(Mode)S
+-2 x(l)S 134 x(210)S -2 x(,)S 6589 X 499 y(V)S -30 x(AX)S 133 x(900)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(300)S 131 x(Series,)S 6589 X 498 y
+(V)S -30 x(AX)S 133 x(900)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(400)S
+131 x(Series)S 6589 24953 XY(V)S -30 x(AX)S 133 x(100)S -2 x(00)S 132 x
+(Model)S 132 x(600)S 132 x(Series)S 6589 26009 XY(V)S -30 x(AX-1)S -31 x
+(1/750,)S 131 x(V)S -30 x(AX-1)S -30 x(1/78)S -2 x(0,)S 6589 X 498 y
+(V)S -30 x(AX-1)S -31 x(1/785)S 3600 27483 XY(MicroV)S -30 x(AX:)S 6589 X
+(MicroV)S -30 x(AX)S 132 x(II,)S 133 x(MicroV)S -30 x(AX)S 132 x(2000,)S
+6589 X 528 y(MicroV)S -30 x(AX)S 132 x(3100)S 132 x(Mode)S -2 x(l)S
+134 x(10/)S -2 x(10E,)S 6589 X 528 y(MicroV)S -30 x(AX)S 132 x(3100)S
+132 x(Mode)S -2 x(l)S 134 x(20/)S -2 x(20E,)S 6589 X 528 y(MicroV)S
+-30 x(AX)S 132 x(3100)S 132 x(Mode)S -2 x(l)S 134 x(30,)S 6589 X 528 y
+(MicroV)S -30 x(AX)S 132 x(3100)S 132 x(Mode)S -2 x(l)S 134 x(40,)S
+6589 X 528 y(MicroV)S -30 x(AX)S 132 x(3100)S 132 x(Mode)S -2 x(l)S
+134 x(80,)S 6589 X 527 y(MicroV)S -30 x(AX)S 132 x(3100)S 132 x(Mode)S
+-2 x(l)S 134 x(90,)S 6589 X 528 y(MicroV)S -30 x(AX)S 132 x(3300,)S
+131 x(MicroV)S -29 x(AX)S 132 x(3400)S -2 x(,)S 6589 X 528 y(MicroV)S
+-30 x(AX)S 132 x(3500,)S 131 x(MicroV)S -29 x(AX)S 132 x(3600)S -2 x
+(,)S 6589 X 528 y(MicroV)S -30 x(AX)S 132 x(3800,)S 131 x(MicroV)S -29 x
+(AX)S 132 x(3900)S 3600 33210 XY(V)S -30 x(AXstation:)S 6589 X(V)S -30 x
+(AXstation)S 132 x(II,)S 132 x(V)S -30 x(AXstation)S 131 x(2000,)S 6589 X
+528 y(V)S -30 x(AXstation)S 132 x(310)S -2 x(0)S 133 x(Mode)S -2 x(l)S
+134 x(30,)S 6589 X 528 y(V)S -30 x(AXstation)S 132 x(310)S -2 x(0)S
+133 x(Mode)S -2 x(l)S 134 x(38,)S 6589 X 528 y(V)S -30 x(AXstation)S
+132 x(310)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(40,)S 6589 X 527 y
+(V)S -30 x(AXstation)S 132 x(310)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x
+(48,)S 6589 X 528 y(V)S -30 x(AXstation)S 132 x(310)S -2 x(0)S 133 x
+(Mode)S -2 x(l)S 134 x(76,)S 6589 X 528 y(V)S -30 x(AXstation)S 132 x
+(320)S -2 x(0,)S 132 x(V)S -29 x(AXstation)S 131 x(3500)S -2 x(,)S 18843 4995 XY
+(V)S -30 x(AXstation)S 132 x(352)S -2 x(0,)S 132 x(V)S -29 x(AXstation)S
+131 x(3540)S 18843 6047 XY(V)S -30 x(AXstation)S 132 x(400)S -2 x(0)S
+133 x(Mode)S -2 x(l)S 134 x(60,)S 18843 X 527 y(V)S -30 x(AXstation)S
+132 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(90,)S 18843 X 526 y
+(V)S -30 x(AXstation)S 132 x(400)S -2 x(0)S 133 x(VLC)S 15854 8075 XY
+(V)S -30 x(AXserver:)S 18843 X(V)S -30 x(AXserver)S 132 x(310)S -2 x
+(0)S 133 x(Mode)S -2 x(l)S 134 x(10/1)S -2 x(0E,)S 18843 X 498 y(V)S
+-30 x(AXserver)S 132 x(310)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(20/2)S
+-2 x(0E,)S 18843 X 498 y(V)S -30 x(AXserver)S 162 x(3300)S -2 x(,)S
+171 x(V)S -30 x(AXserver)S 162 x(3400,)S 18843 X 498 y(V)S -30 x(AXserver)S
+162 x(3500)S -2 x(,)S 171 x(V)S -30 x(AXserver)S 162 x(3600,)S 18843 X
+498 y(V)S -30 x(AXserver)S 162 x(3602)S -2 x(,)S 171 x(V)S -30 x(AXserver)S
+162 x(3800,)S 18843 X 498 y(V)S -30 x(AXserver)S 132 x(390)S -2 x(0)S
+18843 11618 XY(V)S -30 x(AXserver)S 132 x(400)S -2 x(0)S 133 x(Mode)S
+-2 x(l)S 134 x(400)S -2 x(-VLC,)S 18843 X 526 y(V)S -30 x(AXserver)S
+132 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(200)S -2 x(,)S 18843 X
+526 y(V)S -30 x(AXserver)S 132 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S
+134 x(300)S -2 x(,)S 18843 X 527 y(V)S -30 x(AXserver)S 132 x(400)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(500)S 18843 X 526 y(V)S -30 x(AXserver)S
+132 x(400)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(600)S 18843 14775 XY
+(V)S -30 x(AXserver)S 132 x(600)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x
+(200)S 131 x(Series,)S 15854 15750 XY(Alpha)S 132 x(AXP:)S 18843 X(DEC)S
+132 x(3000)S 131 x(Model)S 132 x(300)S 131 x(AXP)S 133 x(W)S -7 x(orkstation)S
+-2 x(,)S 18843 X 526 y(DEC)S 132 x(3000)S 131 x(Model)S 132 x(300L)S
+131 x(AXP)S 132 x(W)S -7 x(orkstation,)S 18843 X 527 y(DEC)S 132 x(3000)S
+131 x(Model)S 132 x(300)S 131 x(AXP)S 133 x(Server)S -24 x(,)S 18843 X
+526 y(DEC)S 132 x(3000)S 131 x(Model)S 132 x(400)S 131 x(AXP)S 133 x
+(W)S -7 x(orkstation)S -2 x(,)S 18843 X 526 y(DEC)S 132 x(3000)S 131 x
+(Model)S 132 x(400)S 131 x(AXP)S 133 x(Server)S -24 x(,)S 18843 X 527 y
+(DEC)S 132 x(3000)S 131 x(Model)S 132 x(500)S 131 x(AXP)S 133 x(W)S
+-7 x(orkstation)S -2 x(,)S 18843 X 526 y(DEC)S 132 x(3000)S 131 x(Model)S
+132 x(500X)S 131 x(AXP)S 133 x(W)S -7 x(orkstat)S -2 x(ion,)S 18843 X
+526 y(DEC)S 132 x(3000)S 131 x(Model)S 132 x(500)S 131 x(AXP)S 133 x
+(Server)S -24 x(,)S 18843 X 526 y(DEC)S 132 x(3000)S 131 x(Model)S 132 x
+(600)S 131 x(AXP)S 133 x(W)S -7 x(orkstation)S -2 x(,)S 18843 X 527 y
+(DEC)S 132 x(3000)S 131 x(Model)S 132 x(600)S 131 x(AXP)S 133 x(Server)S
+-24 x(,)S 18843 X 526 y(DEC)S 132 x(3000)S 131 x(Model)S 132 x(800)S
+131 x(AXP)S 133 x(W)S -7 x(orkstation)S -2 x(,)S 18843 X 526 y(DEC)S
+132 x(3000)S 131 x(Model)S 132 x(800)S 131 x(AXP)S 133 x(Server)S -24 x
+(,)S 18843 X 527 y(DEC)S 132 x(4000)S 131 x(Model)S 132 x(610)S 131 x
+(AXP)S 133 x(System,)S 18843 X 526 y(DEC)S 132 x(4000)S 131 x(Model)S
+132 x(620)S 131 x(AXP)S 133 x(System,)S 18843 X 526 y(DEC)S 132 x(7000)S
+131 x(Model)S 132 x(610)S 131 x(AXP)S 133 x(System,)S 18843 X 526 y
+(DEC)S 132 x(7000)S 131 x(Model)S 132 x(620)S 131 x(AXP)S 133 x(System,)S
+18843 X 527 y(DEC)S 132 x(7000)S 131 x(Model)S 132 x(630)S 131 x(AXP)S
+133 x(System,)S 18843 X 526 y(DEC)S 132 x(7000)S 131 x(Model)S 132 x
+(640)S 131 x(AXP)S 133 x(System,)S 18843 X 526 y(DEC)S 132 x(7000)S
+131 x(Model)S 132 x(650)S 131 x(AXP)S 133 x(System,)S 18843 X 527 y
+(DEC)S 132 x(7000)S 131 x(Model)S 132 x(660)S 131 x(AXP)S 133 x(System,)S
+18843 X 526 y(DEC)S 132 x(1000)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x
+(610)S 131 x(AXP)S 132 x(System,)S 18843 X 526 y(DEC)S 132 x(1000)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(620)S 131 x(AXP)S 132 x(System,)S
+18843 X 526 y(DEC)S 132 x(1000)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x
+(630)S 131 x(AXP)S 132 x(System,)S 18843 X 527 y(DEC)S 132 x(1000)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(640)S 131 x(AXP)S 132 x(System,)S
+18843 X 526 y(DEC)S 132 x(1000)S -2 x(0)S 133 x(Mode)S -2 x(l)S 134 x
+(650)S 131 x(AXP)S 132 x(System,)S 18843 X 526 y(DEC)S 132 x(1000)S
+-2 x(0)S 133 x(Mode)S -2 x(l)S 134 x(660)S 131 x(AXP)S 132 x(System)S
+15854 29832 XY F39(Processo)S 2 x(rs)S 150 x(Not)S 149 x(Supported)S
+15854 30757 XY F38(MicroV)S -32 x(AX)S 286 x(I,)S 285 x(V)S -33 x(AXstation)S
+286 x(I,)S 285 x(V)S -33 x(AX-1)S -33 x(1/725,)S 321 x(V)S -33 x(AX-1)S
+-33 x(1/730,)S 15854 X 548 y(V)S -33 x(AX-1)S -33 x(1/782,)S 150 x(V)S
+-33 x(AXstation)S 149 x(8000)S 15854 32230 XY F40(Disk)S 149 x(Space)S
+151 x(Requirements)S 149 x(\(Block)S 150 x(Cluster)S 150 x(Size)S 149 x
+(=)S 150 x(1\):)S 15854 33154 XY F39(Disk)S 149 x(Space)S 150 x(Requireme)S
+2 x(nts)S 149 x(on)S 150 x(OpenVMS)S 151 x(V)S -25 x(AX:)S 15854 34079 XY
+F42(Disk)S 134 x(space)S 132 x(req)S -2 x(uired)S 132 x(for)S 132 x
+(installation:)S 23625 X(30,0)S -2 x(00)S 132 x(blocks)S 23625 X 498 y
+(\(15.0)S 131 x(Mbytes\))S 15854 X 527 y(Disk)S 134 x(space)S 132 x
+(req)S -2 x(uired)S 132 x(for)S 132 x(use)S 15854 X 498 y(\(perma)S
+-2 x(nent\))S -2 x(:)S 23625 X -498 y(14,0)S -2 x(00)S 132 x(blocks)S
+23625 X 498 y(\(7.0)S 131 x(Mbytes\))S 15132 38868 XY F40(4)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (5) 5
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 3002 XY F40(POL)S -42 x(YCENTER)S 149 x(Capacity)S 150 x(Planner)S
+-24 x(,)S 23947 X(SPD)S 149 x(36.04.04)S 3600 X 548 y(V)S -25 x(ersion)S
+150 x(2.1)S 3600 4835 XY F39(Disk)S 149 x(Space)S 150 x(Requireme)S
+2 x(nts)S 149 x(on)S 150 x(OpenVMS)S 151 x(AXP:)S 3600 X 897 y F42(Disk)S
+134 x(space)S 132 x(req)S -2 x(uired)S 132 x(for)S 132 x(installation:)S
+11371 X(48,0)S -2 x(00)S 132 x(blocks)S 11371 X 498 y(\(24.)S -2 x(0)S
+133 x(Mbytes\))S 3600 X 697 y(Disk)S 144 x(space)S 143 x(require)S -2 x
+(d)S 144 x(for)S 142 x(use)S 144 x(\(pe)S -2 x(rma-)S 3600 X 498 y(nent)S
+-2 x(\):)S 11371 X -498 y(22,0)S -2 x(00)S 132 x(blocks)S 11371 X 498 y
+(\(1)S -30 x(1.0)S 131 x(Mbytes\))S 3600 9019 XY F38(These)S 202 x(counts)S
+203 x(refer)S 202 x(to)S 201 x(the)S 202 x(disk)S 202 x(space)S 202 x
+(require)S 2 x(d)S 201 x(on)S 202 x(the)S 3600 X 548 y(system)S 158 x
+(disk)S 158 x(where)S 158 x(approp)S 2 x(riate.)S 222 x(The)S 158 x
+(sizes)S 158 x(are)S 158 x(appro)S 2 x(xi-)S 3600 X 548 y(mate;)S 222 x
+(actual)S 198 x(sizes)S 198 x(may)S 199 x(vary)S 199 x(depending)S 199 x
+(on)S 198 x(the)S 198 x(user)S 18 x(')S -9 x(s)S 3600 X 548 y(system)S
+245 x(environmen)S 2 x(t,)S 266 x(con\211gu)S 2 x(ration,)S 267 x(and)S
+245 x(software)S 244 x(op-)S 3600 X 548 y(tions.)S 3600 X 897 y(For)S
+117 x(installation)S 116 x(and)S 118 x(perman)S 2 x(ent)S 117 x(disk)S
+117 x(requiremen)S 2 x(ts)S 116 x(for)S 117 x(the)S 3600 X 548 y(performa)S
+2 x(nce)S 173 x(data)S 174 x(collectors,)S 178 x(refer)S 174 x(to)S
+173 x(SPD)S 173 x(36.02.xx)S 173 x(for)S 3600 X 548 y(POL)S -33 x(YCENTER)S
+199 x(Perform)S 2 x(ance)S 201 x(Data)S 200 x(Collector)S 200 x(for)S
+201 x(Open-)S 3600 X 548 y(VMS)S 208 x(and)S 207 x(to)S 208 x(SPD)S
+206 x(46.97.xx)S 208 x(for)S 207 x(POL)S -33 x(YCENTER)S 206 x(Perfor-)S
+3600 X 548 y(mance)S 151 x(Data)S 149 x(Collector)S 149 x(for)S 150 x
+(UNIX.)S 3600 X 896 y(For)S 135 x(more)S 136 x(information)S 136 x(on)S
+135 x(the)S 135 x(recomm)S 2 x(ended)S 136 x(system)S 135 x(size)S 3600 X
+548 y(for)S 103 x(use)S 103 x(of)S 102 x(POL)S -33 x(YCENTER)S 102 x
+(Capacity)S 102 x(Planner)S -24 x(,)S 112 x(contact)S 103 x(your)S 3600 X
+548 y(local)S 149 x(Digital)S 148 x(of)S -8 x(\211ce.)S 3600 17787 XY
+F40(CLUSTER)S 148 x(ENVIRONMENT)S 3600 X 896 y F38(This)S 202 x(layered)S
+204 x(product)S 203 x(is)S 202 x(fully)S 201 x(suppo)S 2 x(rted)S 202 x
+(when)S 203 x(installed)S 3600 X 548 y(on)S 246 x(any)S 246 x(valid)S
+246 x(and)S 246 x(licensed)S 246 x(V)S -33 x(AXcluster*)S 246 x(con\211gu)S
+2 x(ration,)S 3600 X 548 y(VMScluster*)S 255 x(con\211gu)S 2 x(ration)S
+254 x(and)S 255 x(standalone)S 255 x(OpenVM)S 2 x(S)S 3600 X 548 y(V)S
+-33 x(AX)S 187 x(and)S 189 x(OpenVMS)S 189 x(AXP)S 187 x(systems)S 189 x
+(without)S 187 x(restrictions.)S 3600 X 548 y(The)S 271 x F39(HARDW)S
+-9 x(ARE)S 270 x(REQUIREMENTS)S 269 x F38(sections)S 271 x(of)S 270 x
+(this)S 3600 X 548 y(produc)S 2 x(t')S -9 x(s)S 171 x(Software)S 171 x
+(Product)S 172 x(Description)S 171 x(detail)S 170 x(any)S 172 x(spe-)S
+3600 X 548 y(cial)S 149 x(hardware)S 151 x(required)S 151 x(by)S 150 x
+(this)S 149 x(product.)S 3600 X 896 y(*)S 424 x(V5.x)S 142 x(V)S -33 x
+(AXcluster)S 142 x(con\211gur)S 2 x(ations)S 142 x(are)S 142 x(fully)S
+141 x(describe)S 2 x(d)S 142 x(in)S 4198 X 548 y(the)S 205 x(V)S -33 x
+(AXcluster)S 206 x(Software)S 205 x(Product)S 206 x(Description)S 205 x
+(\(SPD)S 4198 X 548 y(29.78.xx\))S 225 x(and)S 225 x(include)S 225 x
+(CI,)S 224 x(Ethernet,)S 243 x(and)S 225 x(Mixed)S 225 x(In-)S 4198 X
+548 y(terconnect)S 187 x(con\211gu)S 2 x(rations.)S 309 x(VMScluster)S
+187 x(Software)S 186 x(for)S 4198 X 548 y(OpenVMS)S 162 x(AXP)S 161 x
+(con\211g)S 2 x(urations)S 162 x(are)S 162 x(fully)S 160 x(described)S
+163 x(in)S 4198 X 548 y(the)S 184 x(VMScluster)S 184 x(Software)S 184 x
+(Product)S 185 x(Description)S 183 x(\(SPD)S 4198 X 548 y(42.18.xx\).)S
+3600 X 897 y F40(SOFTW)S -25 x(ARE)S 149 x(REQUIREMENTS)S 3600 X 896 y
+F38(\201)S 441 x(OpenVMS)S 101 x(V)S -33 x(AX)S 100 x(Operating)S 101 x
+(System)S 100 x(V5.0)S 101 x(to)S 100 x(V5.5-2)S 101 x(and)S 4198 X
+548 y(V6.0)S 149 x(to)S 150 x(V6.1)S 3600 X 797 y(\201)S 441 x(OpenVMS)S
+150 x(AXP)S 150 x(V6.1)S 3600 X 897 y(The)S 296 x(POL)S -34 x(YCENTER)S
+294 x(Perform)S 2 x(ance)S 296 x(Data)S 295 x(Collector)S 294 x(for)S
+3600 X 548 y(OpenVMS)S 189 x(provides)S 189 x(the)S 188 x(data)S 189 x
+(required)S 189 x(by)S 188 x(the)S 189 x(Capacity)S 3600 X 548 y(Planner)S
+138 x(for)S 137 x(OpenVMS)S 139 x(systems.)S 195 x(This)S 137 x(data)S
+138 x(is)S 137 x(accessible)S 3600 X 548 y(by)S 186 x(the)S 185 x(Capacity)S
+185 x(Planner)S 186 x(within)S 185 x(a)S 185 x(VMScluster)S -24 x(,)S
+194 x(LAN,)S 185 x(or)S 3600 X 548 y(W)S -16 x(AN.)S 3600 X 896 y(DECwindows)S
+247 x(Motif\206)S 247 x(V1.1.3)S 248 x(is)S 247 x(required)S 249 x(for)S
+248 x(graphical)S 3600 X 548 y(user)S 150 x(interface)S 150 x(system)S
+150 x(use.)S 15854 4835 XY F39(OpenVMS)S 151 x(T)S -42 x(ailoring)S
+15854 6249 XY F38(For)S 102 x(OpenVMS)S 103 x(systems,)S 112 x(the)S
+102 x(follow)S -2 x(ing)S 102 x(OpenVMS)S 103 x(classes)S 15854 X 548 y
+(are)S 144 x(required)S 144 x(for)S 143 x(full)S 141 x(functionality)S
+142 x(of)S 143 x(this)S 142 x(layered)S 144 x(product:)S 15854 8211 XY
+(\201)S 441 x(OpenVMS)S 150 x(Required)S 151 x(Saveset)S 15854 9526 XY
+(\201)S 441 x(Program)S 2 x(ming)S 150 x(Support)S 15854 10840 XY(\201)S
+441 x(System)S 150 x(Program)S 2 x(ming)S 150 x(Support)S 15854 12155 XY
+(\201)S 441 x(Util)S -2 x(ities)S 15854 13469 XY(\201)S 441 x(Network)S
+149 x(Suppor)S 2 x(t)S 15854 14883 XY(For)S 246 x(more)S 246 x(information)S
+245 x(on)S 246 x(OpenVMS)S 246 x(classes)S 246 x(and)S 246 x(tai-)S
+15854 X 548 y(loring,)S 232 x(refer)S 216 x(to)S 215 x(the)S 215 x(OpenVM)S
+2 x(S)S 215 x(V)S -33 x(AX)S 215 x(Operating)S 216 x(System)S 15854 X
+548 y(Software)S 167 x(Product)S 168 x(Descriptions)S 167 x(\(SPD)S
+167 x(25.01.xx)S 167 x(for)S 167 x(V)S -33 x(AX,)S 15854 X 548 y(41.87.xx)S
+150 x(for)S 150 x(AXP\).)S 15854 17941 XY F40(OPTIONAL)S 148 x(SOFTW)S
+-25 x(ARE)S 15854 19355 XY F38(\201)S 441 x(POL)S -33 x(YCENTER)S 411 x
+(Performa)S 2 x(nce)S 413 x(Data)S 412 x(Collector)S 412 x(for)S 16452 X
+548 y(OpenVMS,)S 220 x(V)S -25 x(ersion)S 220 x(2.1)S 220 x(provides)S
+220 x(the)S 219 x(data)S 220 x(required)S 16452 X 548 y(by)S 271 x(the)S
+271 x(POL)S -33 x(YCENTER)S 269 x(Capacity)S 271 x(Planner)S 272 x(V2.1)S
+270 x(for)S 16452 X 548 y(V)S -33 x(AX)S 183 x(OpenVMS)S 185 x(and)S
+184 x(OpenVMS)S 185 x(AXP)S 183 x(systems)S 185 x(\(SPD)S 16452 X 548 y
+(36.02.xx\).)S 15854 22861 XY(\201)S 441 x(VMS)S 108 x(DECwi)S -2 x
+(ndows)S 109 x(Motif)S 107 x(V1.1.3)S 107 x(is)S 108 x(required)S 109 x
+(for)S 107 x(POL)S -33 x(Y-)S 16452 X 548 y(CENTER)S 162 x(Capacity)S
+162 x(Planner)S 164 x(V2.0)S 163 x(on)S 163 x(V)S -33 x(AX)S 162 x(OpenVM)S
+2 x(S)S 16452 X 548 y(\(SPD)S 149 x(36.09.xx\).)S 15854 25272 XY(\201)S
+441 x(DECwi)S -2 x(ndows)S 289 x(Motif)S 288 x(V)S -24 x(ersion)S 289 x
+(V1.1.3)S 288 x(for)S 288 x(OpenVM)S 2 x(S)S 16452 X 548 y(AXP)S 129 x
+(is)S 130 x(required)S 131 x(for)S 130 x(POL)S -34 x(YCENTER)S 129 x
+(Capacity)S 130 x(Planner)S 16452 X 548 y(V2.1)S 149 x(on)S 150 x(OpenVMS)S
+151 x(AXP)S 149 x(\(SPD)S 150 x(42.19.xx\).)S 15854 27782 XY F40(GROWTH)S
+149 x(CONSI)S -2 x(DERA)S -34 x(TIONS)S 15854 29196 XY F38(The)S 184 x
+(minimum)S 185 x(hardware)S 2 x(/software)S 183 x(requirem)S 2 x(ents)S
+184 x(for)S 184 x(any)S 15854 X 548 y(future)S 159 x(version)S 159 x
+(of)S 158 x(this)S 158 x(product)S 159 x(may)S 159 x(be)S 159 x(dif)S
+-9 x(ferent)S 159 x(from)S 158 x(the)S 15854 X 548 y(requirem)S 2 x
+(ents)S 149 x(for)S 150 x(the)S 150 x(current)S 150 x(version.)S 15854 31706 XY
+F40(DISTRIB)S -2 x(UTION)S 148 x(MEDIA)S 15854 33120 XY F38(9-track)S
+113 x(1600)S 112 x(BPI)S 111 x(Magtape)S 113 x(and)S 112 x(TK50)S 112 x
+(Streaming)S 113 x(T)S -50 x(ape)S 112 x(on)S 15854 X 548 y(OpenVMS)S
+135 x(V)S -34 x(AX,)S 134 x(and)S 134 x(CD\203ROM)S 133 x(only)S 134 x
+(for)S 133 x(OpenVMS)S 135 x(AXP)S -58 x(.)S 15854 35082 XY(This)S 166 x
+(product)S 166 x(is)S 166 x(also)S 165 x(available)S 166 x(as)S 166 x
+(part)S 166 x(of)S 166 x(the)S 165 x(OpenVM)S 2 x(S)S 15854 X 548 y
+(V)S -33 x(AX)S 154 x(and)S 155 x(OpenVM)S 2 x(S)S 154 x(AXP)S 154 x
+(Consolidated)S 155 x(Software)S 154 x(Distri-)S 15854 X 548 y(butions)S
+150 x(on)S 150 x(CD-ROM.)S 15132 38868 XY F40(5)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (6) 6
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 3002 XY F40(POL)S -42 x(YCENTER)S 149 x(Capacity)S 150 x(Planner)S
+-24 x(,)S 23947 X(SPD)S 149 x(36.04.04)S 3600 X 548 y(V)S -25 x(ersion)S
+150 x(2.1)S 3600 4834 XY(ORDERIN)S -2 x(G)S 149 x(INFORMA)S -34 x(TION)S
+3600 5869 XY F39(Software)S 150 x(Licenses:)S 3600 6904 XY F38(QL\203GX3A9\203AA)S
+150 x(\(OpenVM)S 2 x(S)S 149 x(V)S -33 x(AX\))S 3600 X 686 y(QL\20323MA9)S
+2 x(\203AA)S 149 x(\(OpenVM)S 2 x(S)S 149 x(AXP\))S 3600 8625 XY F39
+(Software)S 150 x(Media:)S 3600 9659 XY F38(QA\203GX3AA\203H*)S 150 x
+(\(OpenVMS)S 151 x(V)S -33 x(AX\))S 3600 X 686 y(QA\20323MAA\203H8)S
+151 x(\(OpenVMS)S 151 x(AXP\))S 3600 11380 XY F39(Software)S 150 x(Documentation:)S
+3600 12415 XY F38(QA\203GX3AA\203GZ)S 150 x(\(OpenVMS)S 150 x(V)S -33 x
+(AX\))S 3600 X 686 y(QA\20323MAA\203GZ)S 151 x(\(OpenVMS)S 150 x(AXP\))S
+3600 14136 XY F39(Software)S 150 x(Product)S 150 x(Services:)S 3600 15170 XY
+F38(QT)S -25 x(\203GX3A*\203**)S 151 x(\(OpenVM)S 2 x(S)S 149 x(V)S
+-33 x(AX\))S 3600 X 686 y(QT)S -25 x(\20323MA*)S 2 x(\203**)S 150 x
+(\(OpenVM)S 2 x(S)S 149 x(AXP\))S 3600 16891 XY(*)S 424 x(Denotes)S
+152 x(variant)S 153 x(\211elds.)S 207 x(For)S 153 x(additional)S 152 x
+(information)S 152 x(on)S 4198 X 548 y(available)S 165 x(licenses,)S
+169 x(services,)S 169 x(and)S 166 x(media,)S 170 x(refer)S 165 x(to)S
+165 x(the)S 4198 X 548 y(appropr)S 2 x(iate)S 149 x(price)S 150 x(book.)S
+3600 19022 XY(The)S 108 x(above)S 108 x(information)S 107 x(is)S 107 x
+(valid)S 107 x(at)S 107 x(time)S 107 x(of)S 107 x(release.)S 186 x(Please)S
+3600 X 548 y(contact)S 169 x(your)S 170 x(local)S 168 x(Digital)S 167 x
+(of)S -8 x(\211ce)S 169 x(for)S 169 x(the)S 169 x(most)S 169 x(up-to-da)S
+2 x(te)S 3600 X 548 y(information.)S 3600 21750 XY F40(SOFTW)S -25 x
+(ARE)S 149 x(LICENSIN)S -2 x(G)S 3600 22785 XY F38(The)S 151 x(right)S
+150 x(to)S 150 x(use)S 150 x(POL)S -33 x(YCENTER)S 150 x(Capacity)S
+150 x(Planner)S 151 x(is)S 149 x(in-)S 3600 X 548 y(cluded)S 172 x(in)S
+171 x(the)S 171 x(license)S 172 x(for)S 171 x(previous)S 172 x(versions)S
+173 x(of)S 171 x(this)S 171 x(soft-)S 3600 X 548 y(ware)S 118 x(produ)S
+2 x(ct,)S 123 x(formerly)S 119 x(called)S 117 x(DECperforman)S 2 x(ce)S
+118 x(Solution)S 3600 X 548 y(Capacity)S 136 x(Planner)S 137 x(\(SPD)S
+136 x(36.04.xx\),)S 140 x(and)S 137 x(in)S 136 x(the)S 136 x(license)S
+136 x(for)S 3600 X 548 y(V)S -33 x(AX)S 127 x(Performan)S 2 x(ce)S 127 x
+(Advisor)S 128 x(\(SPD)S 127 x(27.71.xx\).)S 192 x(This)S 127 x(applies)S
+3600 X 548 y(to)S 185 x(OpenVMS)S 186 x(V)S -34 x(AX)S 185 x(installations)S
+184 x(only)S 185 x(as)S 186 x(POL)S -34 x(YCENTER)S 3600 X 548 y(Capacity)S
+146 x(Planner)S 148 x(V1.1)S 146 x(and)S 148 x(the)S 146 x(V)S -33 x
+(AX)S 147 x(Performanc)S 2 x(e)S 146 x(Advi-)S 3600 X 548 y(sor)S 150 x
+(opera)S 2 x(te)S 149 x(solely)S 149 x(on)S 150 x(that)S 149 x(platform.)S
+3600 27655 XY(For)S 260 x(the)S 259 x(convenienc)S 2 x(e)S 259 x(of)S
+259 x(Capacity)S 259 x(Planner)S 260 x(V1.1)S 260 x(cus-)S 3600 X 548 y
+(tomers,)S 119 x(Digital)S 109 x(has)S 111 x(also)S 111 x(continued)S
+112 x(support)S 111 x(for)S 111 x(the)S 111 x(legacy)S 3600 X 548 y
+(character)S 2 x(-cell)S 141 x(interface)S 142 x(on)S 143 x(the)S 142 x
+(OpenVMS)S 143 x(V)S -33 x(AX)S 142 x(platform.)S 3600 X 548 y(The)S
+240 x(customer)S 240 x(can)S 240 x(choos)S 2 x(e)S 239 x(to)S 239 x
+(install)S 238 x(the)S 240 x(graphical)S 240 x(or)S 3600 X 548 y(character)S
+2 x(-cell)S 149 x(UI)S 149 x(or)S 150 x(both)S 149 x(during)S 151 x
+(installati)S -2 x(on.)S 3600 30882 XY(This)S 219 x(software)S 219 x
+(is)S 218 x(furnished)S 220 x(only)S 219 x(under)S 221 x(a)S 219 x(license.)S
+407 x(For)S 3600 X 548 y(more)S 255 x(information)S 255 x(about)S 255 x
+(Digit)S -2 x(al')S -8 x(s)S 254 x(licensing)S 254 x(terms)S 255 x(and)S
+3600 X 548 y(policies,)S 149 x(contact)S 150 x(your)S 150 x(local)S
+149 x(Digital)S 148 x(of)S -8 x(\211ce.)S 3600 33012 XY F39(License)S
+150 x(Mana)S 2 x(gement)S 150 x(Facility)S 148 x(Suppor)S 2 x(t)S 3600 34047 XY
+F38(This)S 124 x(layered)S 124 x(prod)S 2 x(uct)S 123 x(suppo)S 2 x
+(rts)S 124 x(the)S 123 x(License)S 125 x(Manag)S 2 x(ement)S 3600 X
+548 y(Faciliti)S -2 x(es)S 150 x(for)S 150 x(OpenVMS.)S 3600 35630 XY
+(License)S 125 x(units)S 124 x(for)S 124 x(this)S 124 x(produc)S 2 x
+(t)S 123 x(are)S 125 x(allocated)S 124 x(on)S 125 x(an)S 125 x(Unlim-)S
+3600 X 548 y(ited)S 149 x(System)S 150 x(Use)S 150 x(basis.)S 15854 4821 XY
+(For)S 171 x(more)S 171 x(information)S 171 x(on)S 171 x(the)S 170 x
+(License)S 171 x(Mana)S 2 x(gement)S 171 x(Fa-)S 15854 X 548 y(cilit)S
+-2 x(y)S -33 x(,)S 130 x(refer)S 125 x(to)S 124 x(the)S 125 x(OpenVMS)S
+125 x(Operating)S 125 x(System)S 126 x(Software)S 15854 X 548 y(Product)S
+203 x(Description)S 203 x(\(SPD)S 202 x(25.01.xx)S 203 x(and)S 203 x
+(for)S 202 x(AXP)S 203 x(SPD)S 15854 X 548 y(41.87.xx\))S 112 x(or)S
+112 x(the)S 112 x(OpenVMS)S 112 x(Operating)S 112 x(System)S 112 x(docum)S
+2 x(en-)S 15854 X 548 y(tation.)S 15854 X 896 y F40(SOFTW)S -25 x(ARE)S
+149 x(PRODUCT)S 148 x(SER)S -8 x(VICES)S 15854 X 897 y F38(A)S 190 x
+(variety)S 189 x(of)S 190 x(service)S 190 x(options)S 190 x(are)S 191 x
+(available)S 189 x(from)S 191 x(Digit)S -2 x(al.)S 15854 X 548 y(For)S
+150 x(more)S 151 x(information,)S 149 x(contact)S 150 x(your)S 150 x
+(local)S 150 x(Digit)S -2 x(al)S 149 x(of)S -8 x(\211ce.)S 15854 10848 XY
+F40(SOFTW)S -25 x(ARE)S 149 x(W)S -24 x(ARRA)S -2 x(NTY)S 15854 X 897 y
+F38(W)S -16 x(arranty)S 136 x(for)S 136 x(this)S 135 x(software)S 136 x
+(produ)S 2 x(ct)S 135 x(is)S 135 x(provided)S 137 x(by)S 136 x(Digital)S
+15854 X 548 y(with)S 118 x(the)S 119 x(purch)S 2 x(ase)S 119 x(of)S
+119 x(a)S 120 x(license)S 119 x(for)S 119 x(the)S 119 x(produ)S 2 x
+(ct)S 119 x(as)S 119 x(de\211ned)S 15854 X 548 y(in)S 149 x(the)S 150 x
+(Software)S 149 x(W)S -16 x(arranty)S 151 x(Addendum)S 151 x(of)S 149 x
+(this)S 149 x(SPD.)S 15854 X 897 y F42(\206)S 603 x(Motif)S 135 x(and)S
+135 x(OSF/1)S 136 x(are)S 135 x(reg)S -2 x(istered)S 135 x(tradema)S
+-2 x(rks)S 136 x(of)S 136 x(the)S 135 x(Open)S 16751 X 498 y(Softw)S
+-2 x(are)S 132 x(Founda)S -2 x(tion,)S 132 x(Inc.)S 15854 X 697 y(\206)S
+603 x(UNIX)S 144 x(is)S 145 x(a)S 145 x(reg)S -2 x(istered)S 144 x(trade)S
+-2 x(mark)S 145 x(of)S 144 x(Unix)S 145 x(System)S 144 x(Lab-)S 16751 X
+498 y(orat)S -2 x(ories,)S 151 x(Inc.,)S 150 x(a)S 147 x(wholly-owne)S
+-2 x(d)S 147 x(subsidiary)S 147 x(of)S 147 x(Novell,)S 16751 X 498 y
+(Inc.)S 15854 X 698 y(\206)S 603 x(MIPS)S 132 x(is)S 133 x(a)S 133 x
+(trad)S -2 x(emark)S 132 x(of)S 132 x(MIPS)S 133 x(Comp)S -2 x(uter)S
+132 x(Systems)S 133 x(Inc.)S 15854 X 697 y(\207)S 498 x(The)S 135 x
+(DIGIT)S -30 x(AL)S 135 x(logo,)S 134 x(AXP)S -52 x(,)S 136 x(DA)S -30 x
+(T)S -29 x(A)S -30 x(TRIEVE,)S 134 x(DEC,)S 135 x(DEC)S 134 x(Ada,)S
+16751 X 498 y(DEC)S 140 x(Fortra)S -2 x(n,)S 142 x(DECper)S -2 x(formance)S
+-2 x(,)S 143 x(DECwind)S -2 x(ows,)S 142 x(Digital,)S 16751 X 498 y
+(Open)S -2 x(VMS,)S 134 x(POL)S -30 x(YCENTER,)S 133 x(ReGIS,)S 133 x
+(V)S -30 x(AX,)S 134 x(V)S -30 x(AX)S 134 x(Ada,)S 133 x(V)S -29 x(AX)S
+16751 X 499 y(BASIC,)S 136 x(V)S -30 x(AX)S 137 x(FOR)S -7 x(TRAN,)S
+137 x(V)S -30 x(AX)S 137 x(LISP)S -52 x(,)S 137 x(V)S -30 x(AX)S 137 x
+(MACRO,)S 137 x(V)S -30 x(AX)S 16751 X 498 y(Pascal,)S 130 x(and)S 129 x
+(V)S -30 x(AX)S 130 x(Perfor)S -2 x(mance)S 129 x(Advisor)S 130 x(are)S
+129 x(trade)S -2 x(marks)S 130 x(of)S 16751 X 498 y(Digital)S 133 x
+(Equ)S -2 x(ipment)S 132 x(Corpo)S -2 x(ration.)S 15854 X 896 y F38
+(\2511994)S 206 x(Digit)S -2 x(al)S 205 x(Equipment)S 205 x(Corporation.)S
+364 x(All)S 204 x(Rights)S 203 x(Re-)S 15854 X 548 y(served.)S 15132 38868 XY
+F40(6)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Trailer
+%%Pages: 6
+%%BoundingBox: 0 0 612 792
+%%DocumentFonts: DigitalLogo Helvetica-BoldOblique
+%%+ Helvetica-Bold Helvetica Helvetica-Oblique
+%%DocumentNeededFonts: Helvetica-BoldOblique
+%%+ Helvetica-Bold Helvetica Helvetica-Oblique
+%%DocumentProcessColors:
+%%DocumentCustomColors: (BLACK)
+%%CMYKCustomColor: 0.0 0.0 0.0 1.0 (BLACK)
+%
+DVC$PSJob restore
+end %DEC_DVC$dict
+end %Color5044Dict
+%
+%%EOF

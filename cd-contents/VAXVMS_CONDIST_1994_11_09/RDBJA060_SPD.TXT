@@ -1,0 +1,1440 @@
+ 
+
+
+
+
+
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                        SPD 25.C0.08
+   リレーショナル・データベース管理システム
+
+1  日本語DEC Rdb for OpenVMS VAXの概要
+
+日本語DEC Rdb for OpenVMS VAX (DEC Rdb)は，OpenVMSオペレーティング・システム
+用に設計された，完全な機能を提供するSQLベースのリレーショナル・データベース管
+理システムです。汎用で複数利用者，集中型または分散型アプリケーションのどちら
+にも対応するよう設計されています。また，日本語DEC Rdb for OpenVMS VAXは，デ
+ータベース管理ユーティリティおよびホスト・ベース・プログラムングとクライアン
+ト／サーバ・プログラミングのサポートを含みます。DEC Rdbは，OpenVMS AXPおよび
+OpenVMS VAXシステムの両方に使用可能です。
+
+
+2  日本語DEC Rdb for OpenVMS VAXの機能
+
+
+2.1  SQL言語サポート
+
+日本語DEC Rdb for OpenVMS VAXによって，アプリケーション開発者はデータベース定
+義言語(DDL)とデータ操作言語(DML)の両方について強力な標準SQLを実装することがで
+きます。
+
+データ定義言語(DDL)
+
+会話型SQLユーティリティ，またはSQLプリコンパイラやSQLモジュール言語を介して
+DDLを使用すると，利用者は次のことを実行できます。
+
+o  スキーマ(データベース)，表(関係)，ビュー，列(フィールド)，索引(昇順および
+   降順)の生成
+
+o  表と索引の記憶領域の生成
+
+o  WORM (write-once, read-many)光学ディスク装置上の記憶領域の生成
+
+                                    DIGITAL                         1994年4月
+
+                                                                  AE-PQPCD-TE
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+o  表定義における制約の定義
+
+o  表定義に対するトリガの定義
+
+o  スキーマ，表，ビュー，列に対するアクセス権の許可と取消し
+
+o  表，列，記憶領域，アクセス権の定義の変更
+
+o  表，ビュー，列，索引，制約，トリガ，記憶領域，アクセス権の定義の削除
+
+o  第3世代言語で書かれたユーザ定義の機能を含めるSQL機能の拡張
+
+o  データベースのアンロード／再ロードなしのオンラインでのスキーマの再構成
+
+o  定義域，表，ビュー，列，索引の定義へのコメントの追加
+
+o  複数の言語文字集合のための照合順序の定義
+
+o  ジャーナル高速コミット・トランザクション処理の使用許可／禁止の指定
+
+o  データと識別子の両方に対するマルチ・オクテット文字集合の使用
+
+o  オクテットではなく文字による文字列の長さとオフセットの指定
+
+データ操作言語(DML)
+
+すべての会話型，プリコンパイラ，またはモジュール言語インターフェイスを介して
+DML文を使用すると，利用者は次のことを実行できます。
+
+o  標準データ操作演算の実行: 挿入，選択，更新，削除
+
+o  標準関係演算の実行: 選択(SELECT)，結合(JOIN)，(SQLのみ)合併(UNION)，射影
+   (PROJECT)
+
+o  SQLにおける日／時(date-time)演算の実行: CAST, CURRENT_DATE, CURRENT_TIME,
+   CURRENT_TIMESTAMP,およびEXTRACT
+
+o  同一プログラム内での複数データベースのアクセス
+
+o  シングル・データベース上または複数のデータベースおよびアプリケーション相互
+   間のコミットまたはロールバックにより完了される基本トランザクションの実行
+
+o  SQLモジュール言語の複数文プロシージャの使用によるアプリケーション・プログ
+   ラムとデータベース・システム相互間の交換回数の減少
+
+o  LIST OF BYTE VARYINGデータ型で表されるマルチメディア・オブジェクト固有のセ
+   グメントを取り出すためのスクロール可能なリスト・カーソルの使用
+
+                                       2
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+o  SQL実行時エラーに対するエラー処理ルーチンのカスタマイズを指示
+
+
+
+2.2  SQLプログラミング・インターフェイス
+
+DEC Rdbは，すべての標準のSQLアプリケーション・プログラミング・インターフェ
+イスをサポートします。このインターフェイスには，会話型SQL，埋込み型SQL，SQL
+モジュール言語，および動的SQLが含まれています。DEC社の分散リポジトリである
+CDD/Repositoryの統合はオプションです。
+
+会話型SQL環境
+
+会話型SQL環境は，DEC Rdbデータベースへの会話型のSQLベースのアクセスを提供しま
+す。この環境では，以前のSQL要求を編集できるコマンド・バッファがサポートされま
+す。さらに，オンライン・ヘルプや，データベースとセッションについての情報を表
+示する SQL SHOW機能もサポートされます。 PREPARE文やRELEASE文のような別のSQLイ
+ンターフェイスに依存する文を除くすべての実行可能なDEC Rdb SQL文が使用可能で
+す。
+
+動的SQLプログラミング
+
+動的SQLインターフェイスは，その呼出しインターフェイスを介して渡されたSQL要求
+をコンパイルして実行します。このプログラミング方法は，実行時まで要求の正確な
+パラメータが不明であるような突発的な問合せのアプリケーションに非常に効果的で
+す。これは，OpenVMS呼出し標準をサポートするすべてのプログラミング言語に対して
+互換性があります。DEC Ada，DEC PL/I，およびVAX Cは，動的メモリ処理機能を備え
+ており，この方法の能力と柔軟性を十分に利用できます。
+
+埋込み型SQLプログラミング
+
+DEC Rdbのフル開発オプションには，DEC Ada，
+VAX C，VAX COBOL，DEC Fortran，DEC Pascal，およびDEC PL/IのSQLプリコンパ
+イラが含まれています。これらのプリコンパイラによって，SQL言語文をホスト言語プ
+ログラムに直接埋め込むことができます。ホスト言語のプリコンパイラはSQL文をコン
+パイルし，ホスト言語のコンパイラを使用してオブジェクト・モジュールを作成し，
+それを実行可能イメージにリンクします。
+
+
+                                       3
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+これらのプリコンパイラ・サポートは，オプションのFIPS (Federal Information
+Processing Standards)フラッガをサポートしているので，利用者は現在のANSI/ISO
+SQL標準に含まれていないSQL標準を識別することができます。MIA (Multivendor
+Integration Architecture)標準の例外フラッガも提供されます。
+
+SQLモジュール言語サポート
+
+SQLモジュール言語およびSQLモジュール・プロセッサによって，SQL文と複数文プロシ
+ージャをモジュールにグループ分けしてコンパイルできます。その結果作成されたオ
+ブジェクト・モジュールを，OpenVMS呼出し標準に準拠する言語コンパイラが作成した
+オブジェクトにリンクすると，実行可能なアプリケーションを作成したり，一連のス
+トアド・プロシージャとして保守したりできます。
+
+クライアント・アプリケーションは，SQL CALL文によりストアド・プロシージャを起
+動します。ストアド・プロシージャへのアクセスは，アクセス・コントロール・リス
+ト(ACL)で制御されます。
+
+複数文プロシージャ構文には，SQL DML文，SQLトランザクション・コントロール文，
+および制御処理文が含まれます。
+
+SQLモジュール言語コンパイラは，FIPSおよびMIAフラッガ機能をサポートします。
+
+データ辞書サポート
+
+DEC Rdbは，システム定義の表の中の属性，フィールド，索引のようなデータベース・
+オブジェクトの定義を格納するデータ辞書をデータベース中に含んでいます。これら
+の定義は，SQL DDL言語インターフェイスを介して読込みや変更を行うことができま
+す。
+
+DEC RdbにおけるCDD/Repositoryの使用は必須ではありませんが，使用されることをお
+すすめします。理由は，これを使用するすべてのアプリケーション，データベース，
+およびプログラミング・ツールで共用できるリポジトリ内のデータ定義を，統合して
+維持することが可能になるからです。CDD/RepositoryをDEC Rdbで使用すると，次のこ
+とが可能です。
+
+-  辞書定義に基づく，データベースのフィールドと関係の定義
+
+-  複数のデータベース間での標準定義の共用
+
+-  共用定義の変更による影響の分析
+
+                                       4
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+2.3  その他のプログラミング・インターフェイス
+
+DEC Rdbは標準SQLインターフェイスだけでなく，SQL/Services (DEC ODBC Driver for
+MS[R] Windows およびSQL Multimedia API)によりクライアント／サーバ・システムの
+実装をサポートします。
+
+SQL/Servicesサポート
+
+SQL/Servicesはクライアント／サーバ・システムであり，MS Windows[TM]，MS-DOS[R]，
+Macintosh[R]，Sun[R]，OpenVMS，およびULTRIXプラットフォーム上のクライアント・
+アプリケーションに対して，DEC RdbデータベースとDEC DB Integrator (DBI)やDBIフ
+ァミリのゲートウェイがサポートするデータ・マネージャを提供します。これらのゲ
+ートウェイは，ORACLE[R]，SYBASE[R]，DB2[TM]，VMS RMSファイル，およびVSAMデー
+タ・セットに対して用意されています。Paradox[R] やdBase IV[R]のようないくつか
+のデスクトップ・アプリケーションには，SQL/Servicesとの互換性があります。
+
+DEC Rdbは，サポートするプラットフォーム用のSQL/Servicesクライアント・アプリケ
+ーションのプログラミング・ライブラリを含んでいます。OpenVMS上のSQL/Servicesク
+ライアント・アプリケーションは，OpenVMS標準呼び出しをサポートするどんな言語
+でも書くことができます。MS-DOSおよびMS Windowsクライアント・アプリケーション
+は，Microsoft[R] Cで書かなければなりません。Macintoshクライアント・アプリケー
+ションは，MPW[TM] CまたはTHINK C[R]で書くことができます。
+
+SQL Multimediaサポート
+
+_______________________
+
+  [R] MSは米国Microsoft Corporationの商標です。
+
+ [TM] Windowsは米国Microsoft Corporationの商標です。
+
+  [R] MS-DOSは米国Microsoft Corporationの商標です。
+
+  [R] Macintoshは米国Apple Computer Incの商標です。
+
+  [R] Sunは米国Sun Microsystems, Incの商標です。
+
+  [R] ORACLEは米国ORACLE Corporationの商標です。
+
+  [R] SYBASEは米国SYBASE Incの商標です。
+
+ [TM] DB2は米国International Business Machines Corporationの商標です。
+
+  [R] Paradoxは米国Borland International, Incの商標です。
+
+  [R] dBaseは米国Borland International, Incの商標です。
+
+  [R] Microsoftは米国Microsoft Corporationの商標です。
+
+ [TM] MPWは米国Apple Computer Incの商標です。
+
+  [R] THINK Cは米国Symantec Corporationの商標です。
+
+                                       5
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+DEC Rdbと共に提供されるSQL Multimediaソフトウェア・ライブラリは，分散型ク
+ライアント/サーバ・マルチメディア・アプリケーションの開発を簡素化します。
+SQL/Servicesを使用すれば，このライブラリは，MS-Windows，MS-DOS，Macintosh，
+ULTRIX/RISCおよびOpenVMSプラットフォーム上で実行されるデータベース・サーバ・
+アプリケーションとクライアント・アプリケーション相互間でマルチメディア・オブ
+ジェクトを変換するための呼出しを提供します。クライアント・アプリケーション
+は，Microsoft Cで書かなければなりません。Macintoshクライアント・アプリケーシ
+ョンは，MPW CまたはTHINK Cで書くことができます。
+
+SQL Multimediaライブラリによって，アプリケーション・プログラマはマルチメディ
+ア・オブジェクト・クラスを定義できるようになります。このクラスには，COMPOUND
+DOCUMENT，TEXT，TABLE，IMAGE VOICE，VIDEO，およびBLOB，さらに利用者定義オブジ
+ェクト形式が含まれます。DECimage Application Servicesを介してイメージ圧縮と圧
+縮解凍が使用可能です。
+
+Microsoft ODBCサポート
+
+DEC ODBC Driver for MS Windowsを使用している Microsoft Open Database
+Connectivity (ODBC)アプリケーションは，DEC Rdbデータベースに対して読書き
+操作を行うことができます。このドライバはMS-Windows ODBCクライアント上にイン
+ストールされ，DECnet，TCP/IP，またはNovell[R] NetWare[R]ネットワーク転送で
+SQL/Servicesサーバへのアクセスを可能にします。さらにこのドライバは，このアプ
+リケーションに対して DB Integrator (DBI)ゲートウェイがサポートするデータへの
+アクセスを可能にします。
+
+RDOとRDMLプログラミング・インターフェイス・サポート
+
+DEC Rdbは，RDOユーティリティ，呼出し可能RDO，および RDMLプリコンパイラのサポ
+ートを続けます。これらのインターフェイスには，SQLインターフェイスのいくつかの
+機能はありませんが，SQLインターフェイスに対応する類似した機能が提供されていま
+す。
+
+
+
+
+_______________________
+
+  [R] Novellは米国Novell Incの商標です。
+
+  [R] NetWareは米国Novell Incの商標です。
+
+                                       6
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+2.4  データ管理機能
+
+実行時にデータベース・エンジンは，並列データ・アクセスを最大にし，同時にデー
+タの一貫性と機密保護を強化します。並列性，データの一貫性，機密保護，および性
+能の特徴のいくつかを，次に示します。
+
+並列性制御
+
+o  複数利用者環境での全並列アクセス(格納，検索，更新，削除)
+
+o  複数のアプリケーションが同じデータベースを並列してアクセス可能
+
+o  読込み専用トランザクションを他のトランザクションから保護するためのオプショ
+   ンの読込み専用(スナップショット)モード
+
+o  トランザクション隔離性水準SERIALIZABLE，REPEATABLE READ，READ COMMITTEDの
+   サポート
+
+一貫性制御
+
+o  列レベルでの妥当性のチェック
+
+o  実行時に強制的に従う宣言参照整合性規則
+
+o  失敗したトランザクションの自動およびプログラム制御のロールバック
+
+o  トランザクション・ロールバック回復による回復単位ジャーナリング
+
+o  ロールフォワード回復による直後像ジャーナリング
+
+o  SQL基準の二段階コミット・プロトコルによる単一トランザクションの複数の分散
+   型DEC Rdbデータベースへの拡張
+
+o  DECdtmサービスによる，単一トランザクションの分散型DEC Rdbデータベース，DEC
+   DBMSデータベース，およびDECtpアプリケーションへの拡張
+
+o  トリガによる，あるデータベース条件が満たされた時点での1つあるいは複数の動
+   作の実行
+
+機密保護
+
+o  データベース・ファイルは，OpenVMSファイル保護により保護されます。
+
+                                       7
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+o  データベース演算を実行する権利は，データベース内の実体(entity)に関連したア
+   クセス制御リスト(ACL)の集合に収められています。ACLはデータベース内に格納さ
+   れ，データベースの所有者により保守されます。ACLはいつでも更新可能です。
+
+o  アクセス制御リストは，次のものに対するアクセスを制御します。
+
+   -  表
+
+   -  ビュー
+
+   -  データ定義
+
+   -  データ操作演算
+
+   -  データベース・ユーティリティ演算
+
+o  すべてのデータベース・アクセス要求を記録するロギング機能
+
+動的問合せの最適化
+
+DEC Rdbは，静的および動的問合せの両方を使用して問合せ実行を最適化します。コ
+ンパイル時には静的オプティマイザが問合せ要求を評価して，最も効果的な実行戦略
+を決めます。この評価は，表と索引の要素数の見積りに基づく実行原価の算術的な予
+測，データ分散，および選択句が返されるレコード数に及ぼす影響に基づくもので
+す。
+
+データへのアクセス方法が複数ある場合には，動的オプティマイザは，選択されてい
+る戦略の実行原価と代替戦略の実行原価とを評価し続けます。代替戦略の実行原価が
+実行中の戦略の実行原価よりも低くなると，動的オプティマイザはその代替戦略に切
+り替えます。
+
+リモート・データベース・アクセス
+
+OpenVMS VAXまたはOpenVMS AXPシステムで実行されるアプリケーションは，次のデー
+タベースに対する読書きが可能です。
+
+-  共通のネットワーク内のOpenVMS VAXシステム上または OpenVMS AXPシステム上の
+   DEC Rdbデータベース
+
+-  共通のネットワーク内のOpenVMSノード上で実行中のDEC DBIゲートウェイを介する
+   IBM[R] DB2, SYBASEおよびORACLEデータベース
+
+_______________________
+
+  [R] IBMは米国International Business Machines Corporationの商標です。
+
+                                       8
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+SQL/ServicesおよびDEC ODBC Driver for MS Windowsはデスクトップ・クライアント
+に対して，DECnet，TCP/IP，またはIPX/SPXネットワーク転送を介してOpenVMS VAXお
+よびOpenVMS AXPノード上のDEC RdbとDBIへのリモート・アクセスを提供します。
+
+
+2.5  データベース管理サポート
+
+Rdb管理ユーティリティ(RMU)は，データベースのバックアップや格納，データベース
+の内容や構造の分析，利用者の使用状況や資源割り当ての監視の機能によって，DEC
+Rdbデータベース管理をサポートします。
+
+o  データやメタデータを別のRdbデータベースに移行するための論理的なIMPORT
+   /EXPORT
+
+o  データベース・レベルまたは記憶領域レベルにおける，追加部分あるいは全体のオ
+   ンライン・バックアップと復元
+
+o  データベース内のデータ構造の整合性を検証するデータベース検証機能
+
+o  データベースのページの使い方，表によるスペースの使い方，索引レベルのスペー
+   スの使い方と数を分析するための分析機能
+
+o  性能を監視するための統計機能とデータベース分析のためのデータベース・ダン
+   プ・ユーティリティ
+
+o  各表に機能するLOAD/UNLOAD機能
+
+o  グローバル・バッファを定義および制御するためのグローバル・バッファ機能
+
+o  アタッチしている全プロセスに対して，修正済みのバッファをディスクにフラッシ
+   ュさせるCHECKPOINTコマンド
+
+o  破損したデータベース記憶領域の内容を変更するためのALTER機能 (通常の使用に
+   おいては，この機能は必要ありません。また，その使用をおすすめしておりませ
+   ん。)
+
+2.6  その他のデータベース・パラメータ
+
+物理的記憶特性
+
+                                       9
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+o  物理的データベースは，単一の記憶領域(単一ファイル)または複数の記憶領域(複
+   数ファイル)から構成されています。記憶領域はディスク・ボリュームまたはマル
+   チ・ディスク・ボリューム・セットに置かれます。
+
+o  記憶領域は実際の記憶必要量を格納するために動的に拡張されます。記憶領域は
+   WORM (write-once, read-many)媒体を使用することができ，読込み専用として定義
+   できます。
+
+o  スナップショット・ファイルをオプションで使用すると，読込み専用トランザクシ
+   ョンの非ブロッキング読込み一貫性が保証されます。スナップショット・ファイル
+   が許可される場合，各記憶領域はそれに対応するスナップショット・ファイルを持
+   っています。このファイルには，その記憶領域のレコードの以前のバージョンが，
+   それ以前の読込み専用トランザクションが起動している間中保持されます。スナッ
+   プショット・ファイルに割り当てられるディスク領域は，必要に応じて動的に拡張
+   されます。スナップショット・ファイルは，データベースをオフラインにしたり，
+   利用者をログアウトさせることなく，切り捨てることができます。
+
+o  記憶領域マップは，表および索引を記憶領域へ割り当てるために使用されます。表
+   はそれぞれの列の値に基づいて，それぞれの記憶領域を超えて水平に分割されま
+   す。
+
+o  共通の定義域を持つ複数の表からの行は，共通のページ上に分類されます。
+
+o  LIST OF BYTE VARYINGと定義されている列は，それを論理的に含んでいる表ではな
+   く別の記憶領域に格納されます。この配置によって，表中の演算可能なデータを磁
+   気ディスク上に格納できるようになり，膨大なデータの格納がWORM (write-once,
+   read-many)媒体で管理できるようになります。これらのデータのサイズは，それが
+   割り当てられる記憶領域のサイズによってのみ制限されます。
+
+o  表に関するB木構造(昇順または降順でソートされた)およびハッシュ索引の両方が
+   サポートされます。索引は，表とは別の領域に格納されます。
+
+o  データベースの定期的再編成を必要としません。
+
+OpenVMSデータ型のサポート
+
+DEC Rdbは次のOpenVMSデータ型をサポートします。
+
+o  ASCIIテキスト（日本語テキストを含む，
+   1〜16,383バイト）
+
+o  可変長文字列（1〜16,383バイト）
+
+                                      10
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+o  日付
+
+o  符号付きバイト（1バイト）
+
+o  符号付きワード（16ビット）整数
+
+o  符号付きロングワード（32ビット）整数
+
+o  符号付きクォドワード（64ビット）整数
+
+o  単精度浮動小数点（F_floating)
+
+o  倍精度浮動小数点（G_floating)
+
+o  文書，音声，グラフィックスなどの大量の構造化されていないデータを格納するた
+   めのリスト・カーソル（セグメント文字列）
+
+VMSclusterサポート
+
+o  日本語DEC Rdb for OpenVMS VAXでは，VAXcluster環境の複数プロセッサ間での並
+   列データベース・アクセスが可能です。VAXcluster中のあるプロセッサに障害が
+   生じると，日本語DEC Rdb for OpenVMS VAXは自動的にデータベースを回復し，
+   VAXclusterデータベースの一貫性をさらに保護するためにオプションとして直後像
+   ジャーナリングを提供します。
+
+o  日本語DEC Rdb for OpenVMS VAXはOpenVMS分散ロック・マネージャを使用してお
+   り，データベース・ルート・ファイルに対するクラスタ・ワイドな更新の同期化，
+   ノードに障害が生じた場合の自動回復プロセスの開始，別々のノード上で実行され
+   るプロセスからの同一データベースへの並列更新の調整を行います。VAXcluster環
+   境においては，VMSプロセッサで実行されているDEC RdbプロセスとVAXプロセッサ
+   で実行されているDEC Rdbプロセスは，同一の物理的なDEC Rdbデータベースに対し
+   て並列アクセスすることができます。
+
+o  VAXclusterは，適切に構成されたVAXcluster環境において，DEC Rdbデータベース
+   の高度の可用性を提供します。
+
+o  日本語DEC Rdb for OpenVMS VAXは，単一ノード上またはVAXcluster上の複数バー
+   ジョンのRDBMSをサポートします。
+
+分散型データベース環境
+
+DEC社の二段階コミット・プロトコル，DECdtmに基づく分散型作業単位のサポートによ
+って，複数の分散型データベースを単一トランザクション内で同時に使用できます。
+
+                                      11
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+オプションのレイヤード・プロダクトであるVAX Data Distributorをインストールす
+ることにより，日本語DEC Rdb for OpenVMS VAXでは次のことが可能です。
+
+o  リモートにあるDEC Rdb，IBM DB2，およびSYBASEデータベース間の特定のデータの
+   定期的な転送
+
+o  複数のソース・データベースから単一の新しいターゲット・データベースへ関係お
+   よびフィールドを抽出する追加機能を持つ，抽出と同義の抽出ロールアップ
+
+o  格納およびフォワード複製
+   ターゲット・データベースが一旦生成されると，ソース・データベースへの更新は
+   一定の間隔で，または要求に応じてターゲット・データベース(1つまたは複数)に
+   送られます。
+
+アプリケーションの移植性
+
+o  DEC Rdbアプリケーション・プログラムは，日本語DEC Rdb for OpenVMS VAXと
+   OpenVMS AXPに実装された適切な言語コンパイラを使用してプログラムの再コンパ
+   イルおよび再リンクを行うことによって，OpenVMS VAXからOpenVMS AXPに移植す
+   ることができます。3GLコンパイラのバージョンまたは実装の違いは，必要なソー
+   ス・コードに対する小さい変更を伴う可能性があります。この方法は，ソース・コ
+   ードが使用可能であり，OpenVMS AXPオペレーティング・システム上で同等の3GLコ
+   ンパイラが使用可能であることが前提となります。
+
+o  ソース・コードまたは必要なコンパイラが使用不可能であり，DEC Rdbバージョン
+   4.0以降に基づくDEC Rdbアプリケーションの場合には，DECmigrate for OpenVMS
+   AXP製品によって，OpenVMS VAX実行可能イメージからOpenVMS AXP実行可能イメー
+   ジに直接変換できる可能性があります。この方法によって，大部分のOpenVMS VAX
+   アプリケーションをOpenVMS AXPアプリケーションに移植できますが，すべてのイ
+   メージの変換は保証されません。
+
+o  DEC Rdb for OpenVMS AXPおよびDEC Rdb for OpenVMS VAXは，共通のディスク・フ
+   ァイル構造を共用します。RMU/BACKUPとRMU/RESTOREユーティリティを使用するこ
+   とによって，これら２つのプラットフォーム間でデータベースを移動できます。
+   VAXclusterでは，両方のプラットフォーム上のプロセスは共通のDEC Rdbデータベ
+   ースへの並列アクセスが可能です。
+
+o  DEC Rdb for OpenVMSが発行するパーソナル・ユース・ライセンスは，OpenVMS for
+   VAXまたはOpenVMS for AXPプラットフォームのいずれかに使用できます。
+
+                                      12
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+日本語機能
+
+日本語DEC Rdb for OpenVMS VAXでは，次の日本語機能を提供しています。
+
+o  会話型RDOと会話型SQLのコマンド行で，ローマ字／かな漢字変換による日本語デー
+   タ入力をサポートします。
+
+o  会話型SQLのEDITコマンドで日本語スクリーン・エディタ（XTPU）を呼び出せま
+   す。
+
+o  DEC RdbとSQLのデータ操作言語で日本語文字列を使用できます。
+
+o  会話型SQL，会話型RDOのコマンド，および高級言語プリコンパイラのソース・コー
+   ドに日本語コメントを書くことができます。
+
+o  日本語文字列の格納／検索／更新／削除／表示に必要な2バイト文字の処理をして
+   います。
+
+o  会話型RDO，会話型SQL，およびRMUの日本語ヘルプ(DEC Rdb V4.2)を提供します。
+
+o  会話型RDOと会話型SQLの日本語エラー・メッセージを提供します。
+
+制限値とパラメータ
+
+o  データベース内の表の最大数: 8,191
+
+o  データベース内のビューの最大数: 53,247
+
+o  レコードの最大バイト数: 65,535
+
+o  関係内のフィールドの最大数: 2,000
+
+o  最大索引キー・サイズ: 254バイト
+
+o  データベース・オブジェクト名の最大長: 31オクテット
+
+o  データベースの最小ページ・サイズ: 512バイト
+
+o  データベース・ファイルの最大サイズ: 使用可能な物理装置により制限されます。
+
+o  データベース・アタッチの最大数: 2,032
+
+o  結合できる表の最大数: 32
+
+                                      13
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+3  準拠する基準
+
+DEC Rdbは，American National Standard Database Language SQL ANSI X3.135-
+1992,およびFIPS PUB 127-2に定義されている Entry-Level specification and the
+Federal Information Processing Standard for Database Language SQL (FIPS SQL)
+に準拠しています。
+
+DEC RdbはMIA (Multivendor Integration Architecture)をサポートします。このサポ
+ートには，データベース・オブジェクト，リテラル，パラメータのマルチバイト文字
+集合の使用，バイトではなく文字によるるデータベース・オブジェクトの長さとオフ
+セットを指定する機能，１つのデータベース内での複数の文字集合の使用，およびJIS
+X0208-1983に準拠した漢字文字集合のサポートが含まれます。
+
+DEC ODBC Driver for MS WindowsはMicrosoft Open Database connectivity V1.0に準
+拠しています。コア関数，レベル1関数，およびほとんどのレベル2関数をサポートし
+ています。
+
+4  必要なハードウェア
+
+適用プロセッサ
+
+VAX:        VAX 4000モデル100/100A,
+            VAX 4000モデル200,
+            VAX 4000モデル300,
+            VAX 4000モデル400,
+            VAX 4000モデル500/500A,
+            VAX 4000モデル600/600A,
+            VAX 4000モデル700A
+
+            VAX 6000モデル200シリーズ
+            VAX 6000モデル300シリーズ
+            VAX 6000モデル400シリーズ
+            VAX 6000モデル500シリーズ
+            VAX 6000モデル600シリーズ
+
+            VAX 7000モデル600シリーズ
+
+
+
+                                      14
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+
+            VAX 8200, VAX 8250, VAX 8300,
+            VAX 8350, VAX 8500, VAX 8530,
+            VAX 8550, VAX 8600, VAX 8650,
+            VAX 8700, VAX 8800, VAX 8810,
+            VAX 8820, VAX 8830, VAX 8840
+
+            VAX 9000モデル110,
+            VAX 9000モデル210,
+            VAX 9000モデル300シリーズ
+            VAX 9000モデル400シリーズ
+
+            VAX 10000モデル600シリーズ
+
+            VAX-11/730, VAX-11/750
+            VAX-11/780, VAX-11/785
+
+VAXft:      VAXft 3000モデル110,
+            VAXft 3000モデル310,
+            VAXft 3000モデル410,
+            VAXft 3000モデル610,
+            VAXft 3000モデル612
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      15
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+
+MicroVAX:   MicroVAX II, MicroVAX 2000,
+            MicroVAX 3100モデル10/10E,
+            MicroVAX 3100モデル20/20E,
+            MicroVAX 3100モデル30,
+            MicroVAX 3100モデル40,
+            MicroVAX 3100モデル80,
+            MicroVAX 3100モデル90,
+            MicroVAX 3300, MicroVAX 3400,
+            MicroVAX 3500, MicroVAX 3600,
+            MicroVAX 3800, MicroVAX 3900
+
+VAXstation: VAXstation II, VAXstation 2000,
+            VAXstation 3100モデル30,
+            VAXstation 3100モデル38,
+            VAXstation 3100モデル40,
+            VAXstation 3100モデル48,
+            VAXstation 3100モデル76,
+            VAXstation 3200, VAXstation 3500,
+            VAXstation 3520, VAXstation 3540
+
+            VAXstation 4000モデル60,
+            VAXstation 4000モデル90,
+            VAXstation 4000 VLC
+
+VAXserver:  VAXserver 3100モデル10/10E,
+            VAXserver 3200モデル20/20E,
+            VAXserver 3300, VAXserver 3400,
+            VAXserver 3500, VAXserver 3600,
+            VAXserver 3800, VAXserver 3900
+
+            VAXserver 4000モデル200,
+            VAXserver 4000モデル300,
+            VAXserver 4000モデル500
+
+
+
+
+
+                                      16
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+
+            VAXserver 6000モデル210/220，
+            VAXserver 6000モデル310/320，
+            VAXserver 6000モデル410/420，
+            VAXserver 6000モデル510/520，
+            VAXserver 6000モデル610，620，630
+
+適用されないプロセッサ
+
+            MicroVAX I, VAXstation I,
+            VAX-11/725, VAX-11/782,
+            VAXstation 8000
+
+プロセッサ制限事項
+
+o  本ソフトウェアをインストールするためには，TK50カートリッジ・テープ・ドライ
+   ブ，9トラック1600 BPI磁気テープ・ドライブ，あるいはCD-ROMドライブが必要で
+   す。
+
+o  4Mバイト以上のメモリが必要です。
+
+o  VAX-11/780，およびVAX-11/784プロセッサにはECOレベル4以上，およびWCSマイク
+   ロコード・バージョン123以上が必要です。
+
+o  VAX-11/750プロセッサにはECOレベル3以上が必要です。
+
+4.1  必要なディスク容量（Block Cluster Size = 1の場合）
+
+これらのディスク容量は，システム・ディスク上で必要となる数値を示したものであ
+り，概算です。実際の値は，システムの環境，構成，ソフトウェア・オプションに応
+じて異なります。
+
+日本語DEC Rdb for OpenVMS AXPインストール時
+
+すべてのオプション:          93,000ブロック
+                             (47 Mバイト)
+
+
+
+                                      17
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+日本語DEC Rdb for OpenVMS AXPシステム運用時
+
+
+フル開発オプション:          74,000ブロック
+                             (37 Mバイト)
+
+会話型オプション:            68,000ブロック
+                             (34 Mバイト)
+
+実行時オプション:            66,000ブロック
+                             (33 Mバイト)
+
+その他のハードウェア制限事項すべてのプロセッサで，構築されたデータベースのバ
+ックアップおよび復元を行うための大容量記憶領域が必要です。
+
+5  オプション・ハードウェア
+
+MS Windows，MS-DOS，あるいはOS/2[R]のSQL/Servicesデスクトップ・クライアント，
+およびDEC ODBC Driver for MS Windowsを使用するためには以下のハードウェアが必
+要です。
+
+o  Personal Computer XT，Personal Computer AT，あるいはそれに相当する機種
+
+o  イーサネットLAN接続機器
+
+SQL/Services Macintoshプラットフォーム用には以下のハードウェアが必要です。
+
+o  Macintosh Plus，Macintosh SE，SE/30，Macintosh II，IIx，IIcx，IIci，IIfx，
+   Macintosh portable
+
+o  イーサネットLAN接続機器
+
+Sun[R]プラットフォーム用には以下のハードウェアが必要です。
+
+o  SPARCstation[TM] 1
+
+o  イーサネットLAN接続機器
+
+_______________________
+
+  [R] OS/2は米国International Business Machines Corporationの商標です。
+ [TM] SPARCstationは米国SPARC International Incの商標であり，米国Sun
+
+      Microsystems, Inc社がライセンスしています。
+
+                                      18
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+6  クラスタ環境
+
+本プロダクトは，正規のライセンスを持つVMScluster構成の上にインストールされて
+いる場合，機能上の制限を受けません。このような構成については，『VMScluster
+Software Product Description (SPD 29.78.xx)』に詳しく説明されています。
+
+7  必須ソフトウェア
+
+サーバ・プラットフォーム
+
+o  日本語OpenVMS VAX V5.4からV6.0
+
+o  サーバ上のSQL multimediaアプリケーションの開発用の VAX C言語コンパイラV3.2
+
+o  ネットワーク・サポート
+
+   -  DECnetを介してSQL/ServicesおよびDEC ODBC Driver for MS Windows クラ
+      イアント・アプリケーションを使用する場合は，ホスト・システムに 日本語
+      OpneVMS VAX V5.4からV6.0が必要です。
+
+   -  TCP/IPを介してSQL/ServicesおよびDEC ODBC Driver for MS Windows クライ
+      アント・アプリケションを使用する場合は，ホスト・システムに DEC TCP/IP
+      Services for OpenVMS V1.3からV2.0が必要です。
+
+   -  Novell NetWareを介してSQL/Servicesおよび DEC ODBC Driver for MS Win
+      dowsクライアント・アプリケーションを使用する場合は，Novell IPX/ SPX -
+      InterConnections Leverage for NetWare File Sharing Services (FSS) の
+      V1.5が必要です。
+
+7.1  クライアント・プラットフォーム
+
+DEC ODBC Driver for MS Windowsクライアント
+（DECnet，TCP/IPまたはIPX/PSX）
+
+o  MS-DOSオペレーティング・システムV5.0, V6.2
+
+o  MS Windows V3.0 - V3.1
+
+o  次に挙げるいずれかのネットワーク製品
+
+   -  PATHWORKS for DOS V4.1A
+
+   -  PATHWORKS for DOS (TCP/IP) V2.0
+
+                                      19
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+   -  PATHWORKS V5 for DOS and Windows client software
+
+   -  FTP[R] PC/TCP V2.2[1]
+
+   -  Novell Netware 3.11 Windows Workstation ClientとIPX.COMまた は
+      IPXODI.COM，およびNEXT shell
+
+SQL/Services MS Windowsクライアント
+（DECnet，TCP/IP，またはIPX/SPX）
+
+o  MS-DOSオペレーティング・システムV5.0, V6.2
+
+o  MS Windows V3.0 - V3.1
+
+o  次に挙げるいずれかのネットワーク製品
+
+   -  PATHWORKS for DOS V4.1A
+
+   -  PATHWORKS for DOS (TCP/IP) V2.0
+
+   -  PATHWORKS V5 for DOS and Windows client software (DECnetおよびTCP/IPだ
+      けサポート)
+
+   -  FTP PC/TCP V2.2[1]
+
+   -  Novell NetWare 3.11 Windows Workstation ClientとIPX.COMあるいは
+      IPXODI.COMおよびNEXT shell
+
+o  Microsoft C V7.0, Microsoft Visual C++
+
+SQL/Services MS-DOSクライアント(DECnetまたはTCP/IP):
+
+o  MS-DOSオペレーティング・システムV5.0, V6.2
+
+o  次に挙げるいずれかのネットワーク製品
+
+   -  PATHWORKS for DOS V4.1A
+
+   -  PATHWORKS for DOS (TCP/IP) V2.0
+
+_______________________
+
+  [R] FTPは米国Schere Laboratories, Incの商標です。
+  [1]  DEC ODBC Driver for MS WindowsおよびSQL/Services MS Windows クライアン
+      トはWindows Sockets V1.1の仕様に対応しています。 ただし，転送のテストを
+
+      行ったのはFTP PC/TCP V2.2のみです。
+
+                                      20
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+   -  Novell NetWare 3.11 Windows Workstation ClientとIPX.COMまたは
+      IPXODI.COMおよびNEXT shell
+
+o  Microsoft C V7.0, Microsoft Visual C++
+
+SQL/Services OS/2クライアント(DECnetのみ):
+
+o  OS/2オペレーティング・システムV1.3
+
+o  PATHWORKS for OS/2 V1.1 - V2.0B
+
+o  Microsoft C V6.0, V7.0
+
+SQL/Services Macintosh System 6.0.8 MPWクライアント
+（DECnet，AppleTalk[R]，またはTCP/IP）
+
+o  Macintoshオペレーティング・システムV6.0.8
+
+o  PATHWORKS for Macintosh V1.2
+
+o  AppleShare[R] Workstation Software for System V6.0.8
+   （PATHWORKSのインストールに必要）
+
+o  MPW Development Environment, Version 3.2.3,および MPW, Version 3.2.3, C
+   compiler
+   （アプリケーションの開発のみに必要）
+
+SQL/Services Macintosh System 7 MPWクライアント
+（DECnet，AppleTalk，またはTCP/IP）
+
+o  Macintoshオペレーティング・システムV7, V7.1
+
+o  PATHWORKS for Macintosh, V1.2
+
+o  AppleShare Workstation Software for System 7.1
+   （PATHWORKSのインストールに必要）
+
+o  MPW Development Environment, Version 3.3.1,および MPW, Version 3.3.1, C
+   compiler
+   （アプリケーションの開発のみに必要）
+
+_______________________
+
+  [R] AppleTalkは米国Apple Computer Incの商標です。
+
+  [R] AppleShareは米国Apple Computer Incの商標です。
+
+                                      21
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+SQL/Services Macintosh System 6.0.8 THINK Cクライアント
+（DECnet，Apple Talk，またはTCP/IP）
+
+o  Macintoshオペレーティング・システムV6.0.8
+
+o  PATHWORKS for Macintosh, V1.2
+
+o  AppleShare Workstation Software for System, V6.0.8
+   （PATHWORKSのインストールに必要）
+
+o  Symantec[R] THINK C V6.0.1
+   （アプリケーションの開発のみに必要）
+
+SQL/Services Macintosh System 7 THINK Cクライアント
+（DECnet，AppleTalk，またはTCP/IP）
+
+o  Macintoshオペレーティング・システムV7, V7.1
+
+o  PATHWORKS for Macintosh, V1.2
+
+o  AppleShare Workstation Software for System 7.1
+   （PATHWORKSのインストールに必要）
+
+o  Symantec THINK C V6.0.1
+   （アプリケーションの開発のみに必要）
+
+SQL/Services ULTRIXクライアント
+（DECnetまたはTCP/IP）
+
+o  ULTRIXオペレーティング・システムV4.1 - V4.3
+
+o  PATHWORKS for ULTRIX, V2.2
+   （DECnetアプリケーションのみに必要）
+
+SQL/Services Sunクライアント
+（TCP/IPのみ）
+
+o  Sunオペレーティング・システムV4.1.1
+
+OpenVMSテーラリング
+
+_______________________
+
+  [R] Symantecは米国Symantec Corpの商標です。
+
+                                      22
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+本レイヤード・プロダクトの全機能を得るためには，次のVMS構成要素が必要です。
+
+o  OpenVMS Required Saveset
+
+o  Network Support
+
+o  Programming Support
+
+o  Secure User's Environment
+
+o  Utilities
+
+OpenVMS DEC dtm構成では，二段階コミット・プロトコルのサポートが必要です。
+
+OpenVMS AXPのクラスおよびテーラリングについては，『OpenVMS AXP Operating
+System Software Product Description (SPD 41.87.xx)』を参照してください。
+
+8  オプション・ソフトウェア
+
+以下の製品のバージョンは，オペレーティング・システムのバージョンに依存してい
+ます。必要なバージョンについては，各製品のソフトウェア仕様書，およびシステ
+ム・サポート付加情報を参照してください。
+CDD/Repository for OpenVMS VAX Systems V5.0 - V5.3
+DEC Ada for OpenVMS VAX Systems V3.0A
+DEC Data Distributor for OpenVMS VAX V6.0
+DEC DATATRIEVE for OpenVMS V6.1
+DEC Fortran for OpenVMS VAX Systems V6.1
+DEC Graphical Schema Editor for OpenVMS VAX Systems V2.1
+DEC InstantSQL for OpenVMS VAX Systems V2.1
+DEC PL/I for OpenVMS VAX V3.5
+DEC Pascal for OpenVMS VAX V5.0
+DEC RALLY for MS-DOS V3.2
+DEC RALLY for OpenVMS VAX System V3.2
+DEC Rdb Language Translators V1.0
+DEC RdbExpert for OpenVMS VAX Systems V2.1
+DEC SERdb for Security-Enhanced VMS V4.2
+DECtrace for VMS V2.1
+VAX ACMS V3.B
+VAX C V3.2
+VAX BASIC V3.5
+
+                                      23
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+VAX BLISS-32 Implementation Language V4.6
+VAX COBOL for OpenVMS VAX V5.1
+
+
+9  バージョンアップの考慮
+
+本製品の将来のバージョンでは，必要なハードウェアおよびソフトウェアの最小構成
+が変更されることがあります。
+
+10  提供媒体
+
+本製品は，9トラック1600 BPI磁気テープ，またはTK50ストリーム・テープで提供され
+ます。
+本製品は，CD-ROMによるOpenVMS Consolidated Software Distibutionの一部としても
+提供されています。
+
+11  ソフトウェア・ライセンス
+
+本ソフトウェアは日本DEC標準販売約款中のライセンス規定に基づいて提供されます。
+
+日本DECのライセンス条件とその方針についての詳細は,最寄りの日本DECの各支店／営
+業所にお問い合わせください。
+
+ここでは日本語DEC Rdb for OpenVMS VAXの製品固有のライセンス情報について記述し
+ます。
+
+フル開発オプション
+
+日本語DEC Rdb for OpenVMS VAXフル開発オプションには，基本データベース・ソフト
+ウェア，動的SQLエンジン，SQL/Servicesサーバ，すべてのデータベース保守／管理機
+能（RMU)，すべてのデータベース定義／操作機能（会話型SQL,会話型RDO,呼出し可能
+RDO)，すべての使用可能な言語プリコンパイラ(SQL/Pre, Rdb/Pre, RDML)とコンパイ
+ラ(SQLモジュール言語），SQL/ServicesクライアントAPIライブラリ，SQL Multimedia
+APIライブラリ，およびDEC ODBC Driver for MS-Windowsが含まれています。
+
+フル開発オプションは，標準的なライセンスです。
+
+会話型オプション
+
+                                      24
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+
+日本語DEC Rdb for OpenVMS VAX会話型オプションには，基本データベース・ソフトウ
+ェア，動的SQLエンジン，SQL/Servicesサーバ，すべてのデータベース保守／管理機能
+（RMU)，すべての会話型データベース定義／操作機能（会話型SQLおよび／または会話
+型RDO)，呼出し可能RDO，およびDEC ODBC Driver for MS-Windowsが含まれています。
+
+会話型オプションの目的は，データベース定義や，会話型SQLおよび／または会話型
+RDOを使用した会話型の問合せを実行する機能を提供することに加えて，以前のバージ
+ョンで開発されたアプリケーションの実行をサポートすることです。
+
+会話型オプションでは，プログラム開発はサポートされていません。
+
+実行時オプション
+
+日本語DEC Rdb for OpenVMS VAXには，実行時オプションがあります。実行時オプショ
+ンには，基本データベース・ソフトウェアに加えて，動的SQLエンジン，データベース
+保守ユーティリティ(RMU)，RDO会話型ユーティリティのサブセット，呼出し可能RDO機
+能，会話型SQL，SQL/Servicesサーバ，およびDEC ODBC Driver for MS-Windowsが含ま
+れています。実行時オプションの目的は，以前に開発されたアプリケーションのター
+ゲット・マシン上での実行をサポートすることです。
+
+実行時オプションでは，会話型データ定義とプログラム開発はサポートされていませ
+ん。クライアント・ソフトウェア・ライセンス
+
+フル開発オプションのライセンスがあれば，SQL/Servicesクライアント・ソフトウェ
+アを使用することができます。
+
+SQL/Servicesクライアント・アプリケーション・プログラミング・インターフェイス
+をいっしょに使用するようなソフトウェアを販売，および配布するベンダは，そのソ
+フトウェアとともにSQL/Servicesクライアント実行時ライブラリを提供しても構いま
+せん。
+
+Microsoft ODBCアプリケーション・プログラミング・インターフェイスをいっしょに
+使用するようなソフトウェアを販売，および配布するベンダは，そのソフトウェアと
+ともにDEC ODBC Driverの配布キットを提供しても構いません。ただし，エンド・ユー
+ザがキットを完全な形(キット全部)で受け取るように配布してください。
+
+次の表は，各ライセンス・オプションに含まれるソフトウェア構成要素をまとめたも
+のです。
+
+                                      25
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+_____________________________________________________________________________
+                   実行    会話
+___________________時______型______フル開発__________________________________
+
+基本データベー     X       X       X
+ス・ソフトウェ
+ア
+
+会話型SQLユーテ    X[1]    X       X
+ィリティ
+
+SQLモジュール言    -       -       X
+語コンパイラ
+
+動的SQLエンジン    X       X       X
+
+SQLプリコンパイ    -       -       X
+ラ
+
+SQL/Servicesサ     X       X       X
+ーバ
+
+SQL/Servicesク     -       -       X
+ライアントAPI
+
+DEC ODBC Driver    X       X       X
+
+SQLマルチメディ    -       -       X
+ア・ライブラリ
+
+RMU                X       X       X
+
+RDOユーティリテ    X[2]    X       X
+ィ
+
+呼出し可能RDO      X[3]    X       X
+
+
+
+
+                                      26
+
+ 
+
+
+日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+リレーショナル・データベース管理システム
+
+_____________________________________________________________________________
+                   実行    会話
+___________________時______型______フル開発__________________________________
+
+RDML，Rdbプリコ    -       -       X
+ンパイラ_____________________________________________________________________
+
+ライセンス管理機能
+
+本レイヤード製品はOpenVMSライセンス管理機能（LMF）をサポートしています。
+ClusterWideのライセンスはフル開発，会話型，および実行時オプションに利用でき
+ます。パーソナル・ユース・ライセンスはフル開発および会話型オプションに利用で
+き，コンカレント・ユース・ライセンスは実行時オプションに利用できます。
+
+ClusterWideのライセンスは，本レイヤード製品がインストールされているプロセッサ
+のCPUに基づいて発行されています。各パーソナル・ユース・ライセンスは，レイヤー
+ド製品を使用する登録された個人に対して使用を許可します。各コンカレント・ユー
+ス・ライセンスでは，レイヤード製品を使用する規定された人数内で同時にだれでも
+利用できます。
+
+ライセンス管理機能についての詳細は『OpenVMS AXP Operating System Software
+Product Description (SPD 45.87.xx)』またはOpenVMSオペレーティング・システムの
+ドキュメント・セットの中の『License Management Utility Manual』を参照してくだ
+さい。
+
+12  ソフトウェア製品サービス
+
+日本DECでは，様々なサービス・オプションを提供しています。詳細については，最寄
+りの日本DEC各支店／営業所にお問い合わせください。
+
+
+
+_______________________
+  [1] 実行時オプションでは，会話型SQLコマンドのサブセット(データ操作のみ)が使
+
+      用できます。
+  [2] 実行時オプションでは，RDOコマンドのサブセット(データ操作のみ)が使用でき
+
+      ます。
+  [3] 実行時オプションでは，呼出し可能RDOコマンドのサブセット(データ操作のみ)
+
+      が使用できます。
+
+                                      27
+
+ 
+
+
+ 日本語DEC Rdb Version 6.0 for OpenVMS VAX                       SPD 25.C0.08
+ リレーショナル・データベース管理システム
+
+
+13  保証
+
+本ソフトウェアについては，日本DEC所定のソフトウェア保証基準に定められた保証が
+提供されます。
+
+(c)1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      28

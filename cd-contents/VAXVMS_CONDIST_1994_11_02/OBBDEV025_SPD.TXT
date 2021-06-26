@@ -1,0 +1,749 @@
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  ObjectBroker for OpenVMS, Version 2.5        SPD 44.12.01
+
+ DESCRIPTION
+
+ ObjectBroker for OpenVMS (VAX and AXP) Version 2.5 provides applica-
+ tion developers and system integrators with the development tools and
+ run-time environments to integrate applications and services distributed
+ across UNIX[R] environments (OSF/1[R], ULTRIX, SunOS[TM], HP-UX[R],
+ IBM[R] AIX[R]), Microsoft[R] Windows[TM], Macintosh[R], and Windows
+ NT[TM] (AXP and Intel[TM]).
+
+ ObjectBroker Version 2.5 is Digital's compliant implementation of the
+ Object Management Group's (OMG[R]) Common Object Request Broker Ar-
+ chitecture (CORBA[TM]) V1.2 specification.
+
+ ObjectBroker simplifies distributed application development by pro-
+ viding platform-independent, client/server, programming interfaces.
+ It offers an object-oriented (O-O) approach to dynamic linking of in-
+ dependently developed applications and services. ObjectBroker allows
+ application processes to transparently invoke, control, and interact
+ with each other across multiple platforms.
+
+ Features
+
+ o  A single high-level, standards-based application programming in-
+    terface (API) across 11 platforms.
+
+ o  Compliant with OMG's CORBA V1.2 specification, protecting users'
+    software development investments.
+
+
+
+                               DIGITAL                September 1994
+
+                                                         AE-Q9KMA-TE
+
+
+
+ o  OLE Integration (known as OLE Portal) and DDE Integration (known
+    as DDE listener) provides shrink-wrapped and custom desktop appli-
+    cations that comply with the Microsoft OLE and DDE interfaces. De-
+    velopers can use the OLE Portal and DDE listener features today to
+    begin moving toward open client/server environments.
+
+ o  Script Servers allow client access to existing applications using
+    command line interfaces, with no source changes necessary, facil-
+    itating the migration to client/server computing.
+
+ o  O-O abstraction provides insulation of clients and servers from changes
+    in network topology or application code through the use of implementation-
+    independent brokering services.
+
+ ObjectBroker for OpenVMS, Version 2.5 Capabilities
+
+ o  Interface Definition Language (IDL) for describing classes and mes-
+    sages
+
+ o  Support for User Defined Types (UDT)
+
+ o  Generation of client-side stubs for operations defined on one or
+    more interfaces:
+
+    -  Static interfaces use code skeletons (stubs) containing routines
+       that cannot be changed. Stubs provide a linear interface and re-
+       duce the complexity of the method resolution.
+
+    -  Dynamic interfaces use routines that the client defines and builds
+       as it is running. The dynamic interface provides client with more
+       flexibility to use deferred synchronous operations, different
+       method maps, and new interfaces.
+
+ o  Generation of IDL skeletons (dispatchers), registration routines,
+    and method routine stubs for servers
+
+ o  Support for the Dynamic Invocation Interface (DII) routines
+
+ Interface Repository
+
+                                  2
+
+
+
+ The interface repository is a storage container for the definitions
+ of interfaces, operations, and attributes which a client can use to
+ make requests of the Object Request Broker (ORB). The interface repos-
+ itory can also contain method maps, which describe the criteria by which
+ to select implementations. The interface definitions in the Interface
+ Repository are written in CORBA IDL, which is described in the CORBA
+ V1.2 specification and in ObjectBroker documentation.
+
+ Context Object
+
+ A context object contains information about a user's preferences which
+ are taken into account during the method resolution process, and about
+ property values, which are propagated to the server-side during an in-
+ vocation request. In addition, applications can store profile infor-
+ mation in the context object that is not used as method resolution cri-
+ teria.
+
+ Agent
+
+ The agent is the entity provided as part of ObjectBroker V2.5 which
+ performs services on behalf of a user in the context of ObjectBroker.
+ An agent must be present on any host which will be supporting appli-
+ cations which are providing services using ObjectBroker.
+
+ Script Server
+
+ The Script Server is a special ObjectBroker server process which al-
+ lows legacy applications to be encapsulated as object implementations.
+ The Script Server allows applications which export a command line in-
+ terface to be used as object implementations. Client applications have
+ no knowledge that an object's implementation is actually implemented
+ as a script.
+
+
+
+
+
+
+
+
+                                  3
+
+
+
+ Security Registry
+
+ The Security Registry contains information about a user's authoriza-
+ tion to access specific implementations (method servers) and methods.
+ The implementations and methods referenced by the Security Database
+ must be implementations and methods which are registered in the Im-
+ plementation Registry. Information about the Agent is the only excep-
+ tion to this policy. This is because the Agent and its methods are en-
+ tities which are well known to the ORB.
+
+ A user's authorization information is maintained in the form of an Ac-
+ cess Control List (ACL). This list contains the information about what
+ methods of an implementation a user is allowed to access. Therefore,
+ in order for a user to start a server, the user must have access to
+ the StartServer method of the Agent; this is the default. Failure to
+ have this access restricts a user from starting any new servers.
+
+ Along with authorization information for users, the Security Database
+ also contains information which describes the list of remote users that
+ are allowed to access ObjectBroker on the current host. This infor-
+ mation allows system administrators to specify a mapping between a user
+ on a remote host and a local user account. This allows for remote users
+ to access server applications on the local hosts which are not avail-
+ able to the general populous.
+
+ Advertisement Registry
+
+ Advertisements are the primary source of information to both a client
+ application and the ORB Core. A client application can retrieve ini-
+ tial objects from the advertisement registry.
+
+ ObjectBroker's advertisement registry stores information about a server,
+ where to find them, and what they provide. Advertisements are created
+ when an implementation is installed somewhere on the network. The gen-
+ erated advertisement can be distributed at any time to remote adver-
+ tisement registries.
+
+ Implementation Registry
+
+
+                                  4
+
+ 
+
+ The implementation registry contains information about object imple-
+ mentations which have been installed on this host. At a minimum, the
+ implementation registry contains the unique identifier of the imple-
+ mentation, the operating system specific command for starting the server
+ process which contains the implementation code, and the list of at-
+ tributes which are defined as environment variables when the process
+ that will execute the implementation is started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  5
+
+ 
+
+ Configuration Registry
+
+ The configuration registry contains information about the configura-
+ tion of ObjectBroker on a given node. Configuration information stored
+ in the configuration registry includes the list of available trans-
+ ports, the authentication package to be used, and the location of files
+ that contain the various implementations for the transport, security,
+ and repository replaceable components. The configuration registry in-
+ cludes the list of locations for shared resources such as context ob-
+ jects, advertisements, and repositories.
+
+ Digital Extensions to the CORBA specification are not required
+ by an application but provide additional capabilities. These
+ extensions include:
+
+ Languages
+
+ o  The Implementation Language (IML) describes methods and method servers
+    that constitute the implementation of an object.
+
+ o  The Method Mapping Language (MML) maps operations to the methods
+    that implement them.
+
+ ObjectBroker Utility Graphical User Interface provides a new, fully
+ supported, windowed set of utilities that help system integrators man-
+ age the CORBA environment and programmers develop new distributed ap-
+ plications. The utility provides interfaces that:
+
+ o  View and manipulate context objects, repositories, and remote servers
+
+ o  Generate code for programmers
+
+ o  Set up the environment (security, proxies, transport)
+
+ The user interface of each utility is based on CORBA concepts. The util-
+ ity's interface is native to the platform on which it is executing (Mo-
+ tif[R], Windows, Macintosh).
+
+ OLE and DDE
+
+                                  6
+
+
+
+ ObjectBroker Version 2.5 works cooperatively with Microsoft's Object
+ Linking and Embedding (OLE) to provide a network "portal" from Microsoft
+ Windows platforms to ObjectBroker server platforms. ObjectBroker ap-
+ plications on UNIX and OpenVMS systems can be made OLE-aware (by im-
+ plementing a set of predefined OLE methods shipped with ObjectBroker)
+ and will respond to requests from OLE applications on Microsoft Win-
+ dows.
+
+ The ObjectBroker-OLE portal processes OLE API calls on the PC and maps
+ them to messages. These messages are then sent to an appropriate Ob-
+ jectBroker server on the network for resolution. From a user's per-
+ spective, the mapping process is transparent. Within an OLE applica-
+ tion, the OLE Network Portal appears as another local OLE server ap-
+ plication, which can be expanded to a window to display OLE-aware ap-
+ plications/servers on the network. Information from sources across the
+ network can be linked or embedded into desktop applications through
+ ObjectBroker. The ObjectBroker OLE portal employs OLE Version 2.0 in-
+ terfaces and also provides support for OLE Version 1.0 applications.
+
+ ObjectBroker extends the Microsoft Dynamic Data Exchange (DDE) com-
+ munications protocol to allow Microsoft Windows applications on a net-
+ worked PC to interact using DDE with applications running on SunOS,
+ IBM AIX, HP-UX, ULTRIX, OpenVMS and DEC OSF/1. Applications can func-
+ tion as DDE clients or servers. DDE support in ObjectBroker allows two
+ Microsoft applications to communicate on different PCs.
+
+ Transports
+
+ ObjectBroker supports PATHWORKS TCP/IP, Novell[R] TCP/IP and PATHWORKS
+ DECnet IV network transports. In addition, ObjectBroker uses the Winsocket
+ Version 1.1.1 interface to PATHWORKS TCP/IP and Novell TCP/IP and may
+ work with other Winsocket-compliant TCP/IP transports implementations.
+ However, no others have been tested nor are they supported at this time.
+
+ Multiple Simultaneous Transports
+
+
+
+
+
+                                  7
+
+
+
+ ObjectBroker V2.5 supports multiple network transports on a single sys-
+ tem; each transport can run concurrently on the system. A client run-
+ ning TCP/IP and DECnet can communicate with a server that is running
+ either TCP/IP, DECnet, or both. The system administrator controls which
+ transports are available to client and server applications on each sys-
+ tem. The platforms that support multiple simultaneous transports are
+ OpenVMS systems, Macintosh, Microsoft Windows, and Windows NT (Intel
+ and AXP).
+
+ Network Test Tool
+
+ The network test tool provides the ability to determine whether the
+ network is properly configured for use with ObjectBroker. A user can
+ specify the target host to test against and the amount of data to be
+ sent. This tool also provides detailed error messages when failures
+ occur.
+
+ Installations
+
+ New installations on all platforms provide the installer with a sim-
+ plified installation.
+
+ Interoperability
+
+ ObjectBroker V2.5 supports the use of the ACA Services Version 2.1,
+ ACAS_ routines, and ObjectBroker Version 2.5 CORBA routines. Instal-
+ lation of the Objectbroker Version 2.5 and ACA 2.1 compatibility bits
+ must be on the same system.
+
+ The CORBA routines are supported on all platforms. The ACA routines
+ are supported on platforms released with ACA V2.1, but not on new plat-
+ forms released with ObjectBroker V2.5 such as Windows NT.
+
+ The installation procedure allows the installation of the ObjectBro-
+ ker software and the ACA compatibility software. Installation of the
+ compatibility software is optional. Applications which use the ACAS_
+ routines can continue to communicate with applications using the ACA
+ Services V2.1 release, but will not be able to communicate with ap-
+ plications using the CORBA_routines.
+
+                                  8
+
+
+
+ New features in ObjectBroker V2.5 will not be available from the ACAS_
+ routines. Applications which were written against the ORB_ routines
+ provided in the ACA Services V2.1 release will need to be migrated to
+ the CORBA routines provided in the ObjectBroker V2.5 release. This mi-
+ gration will require code modifications, recompilation, and relink-
+ ing.
+
+ HARDWARE REQUIREMENTS
+
+ Processors Supported - Alpha AXP Processors for Development and Run-
+ time Only:
+
+ Alpha AXP:  DEC 3000 Model 400 AXP Workstation,
+             DEC 3000 Model 400 AXP Server,
+             DEC 3000 Model 500 AXP Workstation,
+             DEC 3000 Model 500 AXP Server
+
+             DEC 4000 Model 610 AXP System
+
+             DEC 7000 Model 610 AXP System
+
+             DEC 10000 Model 610 AXP System
+
+ Processors Supported - VAX-based Processors for Development and Run-
+ time Only:
+
+ VAX:       VAX 4000 Model 200,
+            VAX 4000 Model 300,
+            VAX 4000 Model 500,
+            VAX 4000 Model 600
+
+            VAX 6000 Model 200 Series,
+            VAX 6000 Model 300 Series,
+            VAX 6000 Model 400 Series,
+            VAX 6000 Model 500 Series,
+            VAX 6000 Model 600 Series
+
+
+
+
+                                  9
+
+
+
+
+            VAX 8200, VAX 8250, VAX 8300,
+            VAX 8350, VAX 8500, VAX 8530,
+            VAX 8550, VAX 8600, VAX 8650,
+            VAX 8700, VAX 8800, VAX 8810,
+            VAX 8820, VAX 8830, VAX 8840
+
+            VAX 9000 Model 110,
+            VAX 9000 Model 210,
+            VAX 9000 Model 300 Series,
+            VAX 9000 Model 400 Series
+
+            VAXft Model 110,
+            VAXft Model 310,
+            VAXft Model 410,
+            VAXft Model 610,
+            VAXft Model 612
+
+            VAX-11/730, VAX-11/750,
+            VAX-11/780, VAX-11/785
+
+ MicroVAX:  MicroVAX II, MicroVAX 2000,
+            MicroVAX 3100, MicroVAX 3300,
+            MicroVAX 3400, MicroVAX 3500,
+            MicroVAX 3600, MicroVAX 3800,
+            MicroVAX 3900
+
+ VAXstation: VAXstation II, VAXstation 2000,
+            VAXstation 3100 Series, VAXstation 3200,
+            VAXstation 3500, VAXstation 3520,
+            VAXstation 3540
+
+            VAXstation 4000 Model 60,
+            VAXstation 4000 VLC
+
+
+
+
+
+
+                                 10
+
+
+
+
+ VAXserver: VAXserver 3100, VAXserver 3300,
+            VAXserver 3400, VAXserver 3500,
+            VAXserver 3600, VAXserver 3602,
+            VAXserver 3800, VAXserver 3900
+
+            VAXserver 4000 Model 200,
+            VAXserver 4000 Model 300,
+            VAXserver 4000 Model 500
+
+            VAXserver 6000 Model 210,
+            VAXserver 6000 Model 220,
+            VAXserver 6000 Model 310,
+            VAXserver 6000 Model 320,
+            VAXserver 6000 Model 410,
+            VAXserver 6000 Model 420,
+            VAXserver 6000 Model 510,
+            VAXserver 6000 Model 520,
+            VAXserver 6000 Model 610,
+            VAXserver 6000 Model 620,
+            VAXserver 6000 Model 630
+
+ Processors Not Supported
+
+ MicroVAX I, VAXstation I, VAX-11/725, VAX-11/782, VAXstation 8000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 11
+
+
+
+ Processor Restriction
+
+ A TK50 tape drive is required for standalone MicroVAX 2000 and VAXs-
+ tation 2000 systems.
+
+ Disk Space Requirements
+
+    OpenVMS AXP 8,400 blocks
+    OpenVMS VAX 8,400 blocks
+
+ This value refers to the disk space required on the user file system.
+ This size is an approximate; actual size may vary depending on the user's
+ system environment, configuration, and software options.
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VAXcluster* configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section details any special hardware this product
+ requires.
+
+ * V5.x VAXcluster configurations are fully described in the VAXclus-
+ ter Software Product Description (SPD 29.78.xx) and include CI, Eth-
+ ernet, and Mixed Interconnect configurations.
+
+ SOFTWARE REQUIREMENTS
+
+ Operating Systems:
+
+ o  OpenVMS VAX Version 5.2 or later
+
+ o  OpenVMS AXP Version 1.5 or later
+
+ Transports For OpenVMS VAX:
+
+ o  DECnet - VAX Version 5.4 or Version 5.5
+
+ o  TCP/IP - Services for OpenVMS, Version 3.0
+
+
+                                 12
+
+ 
+
+ For OpenVMS AXP:
+
+ o  TCP/IP - Services for OpenVMS, Version 3.0
+
+ OPTIONAL SOFTWARE
+
+ o  DEC C for OpenVMS AXP Systems (for program development on OpenVMS
+    AXP)
+
+ o  VAX C (for program development on OpenVMS VAX)
+
+ ObjectBroker development and run-time licenses for the following plat-
+ forms can be used in conjunction with these products:
+
+ o  ObjectBroker for ULTRIX Version 2.5
+
+ o  ObjectBroker for Windows NT Intel Version 2.5
+
+ o  ObjectBroker for Windows NT AXP Version 2.5
+
+ o  ObjectBroker for HP-UX Version 2.5
+
+ o  ObjectBroker for IBM AIX Version 2.5
+
+ o  ObjectBroker for OSF/1 AXP Version 2.5
+
+ o  ObjectBroker for SunOS Version 2.5
+
+ o  ObjectBroker for Macintosh Version 2.5
+
+ o  ObjectBroker for Microsoft Windows Version 2.5
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+
+
+                                 13
+
+ 
+
+ DISTRIBUTION MEDIA
+
+ ObjectBroker for OpenVMS VAX:
+
+ o  TK50 Streaming Tape
+
+ ObjectBroker for ObjectBroker OpenVMS VAX and OpenVMS AXP:
+
+ o  CD-ROM
+
+ ORDERING INFORMATION
+
+ ObjectBroker for UNIX Software Licenses
+
+ Orderable for Specific OpenVMS Operating Systems:
+
+ ObjectBroker for OpenVMS AXP Development:
+    QL-06UA*-**
+
+ ObjectBroker for OpenVMS AXP Run-Time Only:
+    QL-06VA*-**
+
+ ObjectBroker for OpenVMS VAX Development:
+    QL-XKAA*-**
+
+ ObjectBroker for OpenVMS VAX Run-Time Only:
+    QL-XKBA*-**
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ ObjectBroker for OpenVMS Software Media and Documentation Kits
+
+ Orderable for Specific OpenVMS Operating Systems:
+
+ The ObjectBroker Development and Run-Time CD-ROMs include all supported
+ platforms except ULTRIX:
+
+ ObjectBroker Development CD-ROM
+    QA-0PKAA-H8
+
+ ObjectBroker Run-Time CD-ROM
+    QA-0PKAB-H8
+
+ ObjectBroker for OpenVMS AXP Development and Run-Time:
+    ObjectBroker CD-ROMs only
+
+ ObjectBroker for OpenVMS VAX Development:
+    QA-XKAA9-H5
+
+ ObjectBroker for OpenVMS VAX Run-Time Only:
+    QA-XKBA9-H5
+
+ ObjectBroker for OpenVMS Software Documentation
+
+ Order the Same Documentation Kit for all ObjectBroker Products:
+    QA-0PKAA-GZ
+
+ ObjectBroker for OpenVMS Software Product Services
+
+ Orderable for Specific OpenVMS Operating Systems:
+
+ ObjectBroker for OpenVMS AXP Development:
+    QT-06UA*-**
+
+ ObjectBroker for OpenVMS AXP Run-Time:
+    QT-06VA*-**
+
+ ObjectBroker for OpenVMS VAX Development:
+    QT-XKAA*-**
+
+ ObjectBroker for OpenVMS VAX Run-Time Only:
+    QT-XKBA*-**
+
+                                 15
+
+ 
+
+ * Denotes variant fields. For additional information on available li-
+ censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+ License Management Facility Support
+
+ The OpenVMS VAX and OpenVMS AXP support the OpenVMS License Manage-
+ ment Facilities.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD. The above information is valid at time of re-
+ lease. Please contact your local Digital office for the most up-to-
+ date information.
+
+ [R] HP-UX is a registered trademark of Hewlett-Packard Company.
+
+ [R] IBM and AIX are registered trademarks of International Business
+    Machines Corporation.
+
+ [R] Macintosh is a registered trademarks of Apple Computer, Inc.
+
+ [R] Microsoft, MS, and MS-DOS are registered trademarks of Mi-
+    crosoft Corporation.
+
+                                 16
+
+ 
+
+
+ [R] Motif and OSF/1 are registered trademarks of Open Software
+    Foundation, Inc.
+
+ [R] Novell is a registered trademark of Novell, Inc.
+
+ [R] OMG is a registered trademark of Object Management Group.
+
+ [R] UNIX is a registered trademark in the United States and other
+    countries, licensed exclusively through X/Open Company, Ltd.
+
+ [TM]CORBA is a trademark of Object Management Group
+
+ [TM]Intel is a trademark of Intel Corporation.
+
+ [TM]SunOS is a trademark of Sun Microsystems, Inc.
+
+ [TM]Windows and Windows NT are trademarks of Microsoft Corporation.
+
+ [TM]The DIGITAL Logo, AXP, DEC, DECnet, Digital, ObjectBroker,
+    OpenVMS, PATHWORKS, RX, TK, ULTRIX, and VAX are trademarks of
+    Digital Equipment Corporation.
+
+ ©1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 17

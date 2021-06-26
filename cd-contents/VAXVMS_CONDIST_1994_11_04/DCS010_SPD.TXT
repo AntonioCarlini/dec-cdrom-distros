@@ -1,0 +1,356 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC Distributed Computing Services for OpenVMS,  SPD
+ 43.11.00                Version 1.0
+
+ DESCRIPTION
+
+ The DEC Distributed Computing Services (DECdcs) software integrates
+ remote OpenVMS AXP (AXP) compute server systems into the OpenVMS VAX
+ (VAX) computing environment. It extends the OpenVMS VAX environment
+ to control jobs executing on remote OpenVMS AXP compute servers.
+
+ The DECdcs software provides:
+
+ o  VAX users and applications with the capability to submit jobs to
+    remote AXP compute servers via familiar OpenVMS batch commands
+
+ o  Remote interactive access to server applications that use DECwin-
+    dows (or X Windows) to display back onto the client
+
+ o  Synchronization with the jobs on the compute servers via standard
+    OpenVMS batch synchronization techniques (e.g., the DCL command SYN-
+    CHRONIZE)
+
+ o  A high degree of compatibility with other OpenVMS batch mechanisms,
+    so that the jobs seem like normal jobs to OpenVMS users
+
+ o  Systems and applications programmers with the tools to "hide" the
+    remote system from the OpenVMS end user-the VAX end user can ac-
+    cess the compute power of the remote AXP systems without being aware
+    that the server is another node
+
+ o  Sharing of a single AXP compute server among a number of OpenVMS
+    systems or VMSclusters
+
+ o  Use of a number of servers from a single OpenVMS system or VMSclus-
+    ter
+
+                               DIGITAL                 November 1992
+
+                                                         AE-PU2BA-TE
+
+ 
+
+ DECdcs uses DECnet to communicate with remote AXP servers. All job and
+ control information passes between the local VAX client and the re-
+ mote AXP server via the network connection; no other optional soft-
+ ware is required for DECdcs operation.
+
+ Data and file sharing between the clients and remote servers depends
+ on the nature and design of the application that is sent to the server.
+ The choice of file sharing method is part of the application design
+ process.
+
+ The system manager can designate the number of job streams to allow
+ per client or server system, so that servers of varying capacity can
+ be accommodated. In addition, job limits can be placed on the clients.
+ This provides the ability to ensure equitable sharing of a server among
+ multiple client systems-no single client system will be allowed to mo-
+ nopolize all of the job slots on the server system.
+
+ Features
+
+ The most important feature of the DECdcs software is its ability to
+ allow a VAX user to use local OpenVMS commands to execute a job on a
+ remote compute server. To the OpenVMS end user, the job appears to be
+ executing on the local VAX system or VMScluster.
+
+ The fact that most of the existing OpenVMS batch features are avail-
+ able to the DECdcs user means that applications can be built to in-
+ tegrate the best features of OpenVMS and the remote systems. For ex-
+ ample, an OpenVMS job running on a VAXstation could consolidate data,
+ dispatch a compute-intensive processing phase to an AXP server, and
+ then wait for the remote phase to complete, before continuing with the
+ rest of the job on the local workstation.
+
+ It is also possible for OpenVMS application programs to create jobs
+ on remote systems by calling DECdcs through the $SNDJBC system ser-
+ vice programming interface to the OpenVMS batch system. This service
+ allows an OpenVMS program to create jobs, and other system service calls
+ to allow the program to monitor the progress of the job-for example,
+ to wait for its completion.
+
+ Interactive Remote Programs
+
+                                  2
+
+ 
+
+ Through the client/server split inherent in DECwindows, it is possi-
+ ble to use DECdcs to integrate interactive remote applications with
+ a local workstation. A user on a VAXstation can easily initiate a re-
+ mote job that will use the VAXstation's display for a remote AXP job's
+ interactive input and output.
+
+ These features can be used to create applications where the user is
+ unaware that certain functions are done on VAX systems, and other func-
+ tions are handled by remote AXP systems. For example, an OpenVMS DECwin-
+ dows application could be written so that a click on a menu item on
+ the VAXstation could cause a DECdcs remote job to be started on the
+ server.
+
+ That remote job would execute on a remote AXP compute server, and then
+ create a window back on the VAXstation-and the end user would not even
+ be aware that the window actually came from a job running on the AXP
+ server. The user simply selects a menu item, and a window appears on
+ his/her VAXstation.
+
+ OpenVMS Programming
+
+ The VAX user or application submits a standard DCL command procedure
+ to the queue controlled by the DECdcs software. Because this proce-
+ dure executes in the environment of the AXP server system, certain guide-
+ lines should be followed by this command procedure, as described in
+ the DECdcs User's Manual. This may require some changes to local com-
+ mand procedures, so that they will operate correctly on the remote sys-
+ tem.
+
+ File and Data Sharing
+
+ File access and sharing are done according to application needs. The
+ programmer decides on an appropriate model for sharing information be-
+ tween the OpenVMS VAX system and the remote server:
+
+ o  Use DECnet remote file access to allow the AXP jobs to read and write
+    the files on the VAX client system
+
+
+
+                                  3
+
+ 
+
+ o  Copy files from the client system to the remote system (e.g., us-
+    ing RMS with DECnet or the DCL command COPY) and process them on
+    local disks on the server machine, and then copy output files back
+    to the client
+
+ o  Maintain files on local storage on the remote server system and do
+    only local processing
+
+ o  Any combination of these methods
+
+ The choice of file access method will be determined by application de-
+ sign and local configuration and network load. For example, if the ap-
+ plication performs heavy I/O to an exclusively accessed file, then it
+ may be desirable to place that file on local storage during the run.
+
+ DECdcs provides what is basically a production environment so that re-
+ mote applications can be controlled by OpenVMS users. DECdcs does not
+ provide an extended development environment, although the DECdcs en-
+ vironment could be used for program development. Most likely, however,
+ the application developer would want to use the normal interactive en-
+ vironment and tools available on the server system to develop the ap-
+ plications.
+
+ Security
+
+ The DECdcs software maintains a database to determine which VAX client
+ systems are allowed to interact with which remote AXP servers. This
+ password-protected database helps ensure that only authorized nodes
+ are permitted to send jobs to the compute servers.
+
+ Standard OpenVMS security mechanisms, such as Access Control Lists on
+ the DECdcs queues, can be used to restrict access to authorized in-
+ dividuals on the client system. Other users would be prevented from
+ sending jobs to the system.
+
+ The security for shared files is provided by the network file access
+ protocols of DECnet.
+
+
+
+                                  4
+
+ 
+
+ DECdcs maintains an outbound proxy database on the client system. This
+ allows a user to have different usernames on the client and server sys-
+ tems. It also permits the system manager of the client system to des-
+ ignate a single username on the remote system for certain groups to
+ share, without requiring the manager of the server system to be in-
+ volved.
+
+ On the server system, DECdcs maintains an inbound proxy database. DECdcs
+ will not run a user job unless it finds a proxy entry covering that
+ user. Wildcard proxy entries can be used to map entire client systems,
+ or to specify that a job should run under the same username on the server
+ system as on the client. A privileged job will not be run unless the
+ system manager on the server system specifies that a certain user be
+ permitted to run with privileges-wildcard entries will not permit priv-
+ ileged jobs to run. The system manager of the server system can spec-
+ ify the set of privileges that are allowed for wildcard entries.
+
+ HARDWARE REQUIREMENTS
+
+ The client components of DECdcs can be installed on any OpenVMS VAX
+ processor or configuration as specified in the System Support Adden-
+ dum (SSA 43.11.00-x).
+
+ The server components of DECdcs can be installed on any OpenVMS AXP
+ system or server configuration as specified in the System Support Ad-
+ dendum (SSA 43.11.00-x).
+
+ The client and server must have network connections to each other. Usu-
+ ally, they would be on the same local area network. The DECdcs soft-
+ ware will work over wide area network connections, but the lower band-
+ width typical of wide area networks would have to be considered in the
+ application design.
+
+
+
+
+
+
+
+
+                                  5
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ For Client Systems:
+
+ OpenVMS VAX Operating System
+ DECnet/OSI for OpenVMS VAX
+
+ For Server Systems:
+
+ OpenVMS AXP Operating System
+ DECnet for OpenVMS AXP
+
+ Refer to the System Support Addendum (SSA 43.11.00-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ OpenVMS VAX-Based Client Systems
+
+ Client Software Licenses: QL-07NAA-3B
+ Software Update Service: QT-07NAA-DB
+
+ OpenVMS AXP-Based Server Systems
+
+ Server Software Licenses: QL-07PA*-AA
+ Software Update Service: QT-07PA*-L9
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, refer to the appropriate price book.
+
+ General
+
+ Media (TK50)* & Documentation: QA-07NAA-H5
+ Media & Documentation Service: QT-07NAA-E5
+ Media (CD-ROM)* & Documentation: QA-07PAA-H8
+ Software Documentation: QA-07NAA-GZ
+ Documentation Support Service: QT-07NAA-KZ
+
+ *  Either media kit contains both the client and server software mod-
+    ules.
+
+                                  6
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions.
+
+ DECdcs consists of client and server software modules. Both modules
+ are licensed.
+
+ A client license enables a client connection to remote servers and con-
+ trols the number of concurrent jobs that a client will allow. A sin-
+ gle client license consists of eight units. Each client/server con-
+ nection consumes three units. Each job dispatched to a server requires
+ one unit to run. Hence, a single client license allows a single server
+ connection plus the ability to run five concurrent jobs. Alternatively,
+ it allows two server connections and two concurrent jobs. Purchasing
+ extra client licenses will extend the number of server connections and
+ /or the number of jobs.
+
+ A server license is required to enable client connection to the server.
+ The server license purchased must match the machine type on which the
+ DECdcs server software will run. Up to eight client systems are al-
+ lowed per server process. The number of jobs issued to the server is
+ controlled via the client licenses.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ 
+ (R)  PostScript is a registered trademark of Adobe Systems Inc.
+
+
+
+
+
+                                  7
+
+ 
+
+
+ [TM]The DIGITAL Logo, Alpha AXP, AXP, Bookreader, CI, DEC, DECnet,
+    DECwindows, Digital, MicroVAX, OpenVMS, TK, VAX, VAXcluster,
+    VAXft, VAXserver, VAXstation, and VMScluster are trademarks of
+    Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  8
