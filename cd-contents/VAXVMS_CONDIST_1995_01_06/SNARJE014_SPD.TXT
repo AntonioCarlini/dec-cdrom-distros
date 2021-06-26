@@ -1,0 +1,403 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECnet SNA Remote Job Entry             SPD 26.85.05
+                for OpenVMS, Version 1.4
+
+ This SPD describes DECnet SNA Remote Job Entry for OpenVMS, which is
+ available for the OpenVMS VAX and OpenVMS AXP platforms. All infor-
+ mation applies to both platforms unless otherwise indicated.
+
+ DESCRIPTION
+
+ DECnet SNA Remote Job Entry for OpenVMS (RJE) is a layered software
+ product that allows suitably configured OpenVMS systems within a DEC-
+ net network to function as an SNA/RJE workstation or group of work-
+ stations that can transmit batch jobs to an IBM host and receive job
+ output. The OpenVMS system user can prepare batch jobs in files, sub-
+ mit the jobs, and obtain the job output. Access to the IBM SNA host
+ environment is via one of the following products:
+
+ o  DECnet SNA Gateway for Synchronous Transport
+
+ o  DECnet SNA Gateway for Channel Transport
+
+ o  DEC SNA Domain Gateway for Channel Transport
+
+ o  VMS/SNA - an OpenVMS VAX layered product that supports users on the
+    system where VMS/SNA is running
+
+ By using batch interaction with the IBM host system, RJE can be used
+ to submit data that can be used for periodic update of databases and
+ other applications. Easily modified translation tables resident in ei-
+ ther the SNA gateway or VMS/SNA convert ASCII code to a subset of IBM
+ multi-national EBCDIC for transmission to the IBM host, and from EBCDIC
+ to ASCII on reception of job output.
+
+                               DIGITAL                  October 1993
+
+                                                         AE-EX17F-TE
+
+ 
+
+ Features
+
+ RJE offers the following features:
+
+ o  Each workstation includes a console interface that an operator can
+    use to communicate with the Job Entry System in the IBM host.
+
+ o  RJE can support record sizes of up to 245 characters.
+
+ o  RJE supports data compression on reader streams and data decompres-
+    sion on printer and punch streams.
+
+ o  The RJE Server can be run on the OpenVMS system to increase through-
+    put of the SNA gateway. When using the DEC SNA Domain Gateway for
+    Channel Transport for access to the IBM host system, the RJE Server
+    must be run on the OpenVMS system.
+
+ o  ASCII to EBCDIC translation is transparent to the user but can be
+    inhibited with /NOTRANSLATE qualifier on the ASSIGN command.
+
+ Sending Jobs to the IBM Host
+
+ Workstation users submit jobs to OpenVMS queues. The workstation trans-
+ mits the queued jobs to the IBM host over the input streams associ-
+ ated with a queue.
+
+ This queuing technique makes it possible for many RJE users to sub-
+ mit jobs at the same time and to do so even if the workstation is in-
+ active. When the operator sets the workstation on, the workstation trans-
+ mits all the jobs in its queues. For each submitted job, the user spec-
+ ifies one or more files containing JCL (Job Control Language) state-
+ ments, data, or programs.
+
+
+
+
+
+
+
+
+                                  2
+
+ 
+
+ Receiving Job Output
+
+ The IBM host returns job output to a workstation over various output
+ streams. Each IBM output stream will have an OpenVMS directory assigned
+ to it. As output from jobs is received on an output stream, it is as-
+ signed a file name identical to the name given to the job as it is ex-
+ ecuted in the IBM system (normally names are specified by user sup-
+ plied JCL). This mechanism allows easy identification of a particu-
+ lar job when several users share the same job stream. In the SNA gate-
+ way environment, job output may be directed to a system on the DEC-
+ net network other than the initiating system.
+
+ Managing the Workstation
+
+ OpenVMS users with the required privilege can issue a set of restricted
+ commands to manage the workstation. These commands allow the user to
+ initialize and control the workstation, and to communicate interac-
+ tively with the IBM batch subsystem. The following functions are avail-
+ able:
+
+ o  Set the workstation ON and OFF
+
+ o  Stop the transmission of a job
+
+ o  Collect logging information in a disk file
+
+ o  Display status
+
+ o  Obtain on-line help information
+
+ Specifying a Server
+
+ When using an SNA gateway, there is an option of running the RJEServer
+ on the SNA gateway (default) or running the RJEServer on the OpenVMS
+ node. (When using the Gateway-CT or VMS/SNA as the transport to the
+ IBM host, you must run the RJEServer on the OpenVMS node.) By running
+ the RJEServer on an OpenVMS node, you can utilize idle OpenVMS resources
+ and increase throughput of your SNA gateway.
+
+
+                                  3
+
+ 
+
+ INSTALLATION
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Have previously installed all requisite hardware including termi-
+    nals and SNA gateway products;
+
+ o  Obtain, install, and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment;
+
+ o  Demonstrate equivalence of operation for modems other than Bell Sys-
+    tem 201C, 208A or 209A, AT&T 2596 or 2556, Dataphone II (2096A, Dig-
+    ital 2500, or equivalent) type modems or, in Europe, PTT approved
+    modems;
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the SNA gateway or VMS/SNA
+    and the Remote Job Entry product;
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rate for time and materials.
+
+ Successful use of this product requires that:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the pre-installation activities.
+
+
+                                  4
+
+ 
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support either the SNA gateway or VMS/SNA and
+    the Remote Job Entry software.
+
+ WARRANTY LIMITATIONS
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ and IBM System/390 (includes 9xxx, 30xx, and 43xx series) class pro-
+ cessor systems configured with the following IBM software. While this
+ software may function correctly with other IBM software and equipment,
+ and with software other than that supported by IBM, Digital cannot of-
+ fer its standard warranty for this software unless it has been tested
+ with such equipment and software configurations.
+
+ The RJE software interoperates with the following IBM software:
+
+ ___________________________________________________________________
+ Software_Product________Version__Release___________________________
+
+ MSV/SP JES2 (Known as   2        2.3
+ MVS/XA)
+
+ MSV/SP JES3 (Known as   2        2.3
+ MVS/XA)
+
+ MSV/ESA SP JES2         3        1.3
+                         4        2.0
+                                  3.0
+
+ MSV/ESA SP JES3         3        1.3
+                         4        2.0
+                                  3.0
+
+
+
+
+
+
+                                  5
+
+ 
+
+
+ ___________________________________________________________________
+
+ ACF/VTAM                3        2.0
+                                  2.1
+                                  3.0
+                                  4.1
+                                  4.2
+                         4        1.0
+
+ RSCS                    2        3.0
+                         3        1.0
+
+ VSE/SP                  3        2.0
+
+ VSE/POWER_______________2________3.0_______________________________
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+ information regarding listed configurations.
+
+ Refer to the SNA gateway Software Product Descriptions (SPD 29.76.xx,
+ SPD 25.C6.xx, or SPD 38.69.xx) or the VMS/SNA Software Product Descrip-
+ tion (SPD 27.01.xx) for additional information on supported IBM op-
+ erating systems, access methods and communications front end software.
+
+ PREREQUISITE SUPPORT
+
+ A Network Profile and a DECnet Customer Support Plan (where appropri-
+ ate) covering all OpenVMS nodes that wish to access the IBM host based
+ applications environment must be prepared jointly by Digital and the
+ customer.
+
+ For DECnet SNA 3270 Remote Job Entry for OpenVMS to be Digital sup-
+ ported, the customer must have a Digital supported SNA gateway or VMS
+ /SNA configuration.
+
+ To have a Digital supported SNA gateway or VMS/SNA configuration, pur-
+ chase of the Transport Orientation/Installation Service (QSF0x-SZ) is
+ REQUIRED in conjunction with the customer's first purchase of the gate-
+ way.
+
+                                  6
+
+ 
+
+ HARDWARE REQUIREMENTS
+
+ For AXP Systems:
+
+ o  AXP processor as specified in the System Support Addendum (SSA 26.84.07-
+    x).
+
+ o  Any properly configured SNA gateway as specified in the System Sup-
+    port Addendum (SSA 26.84.07-x).
+
+ For VAX Systems:
+
+ o  VAX, MicroVAX, VAXstation, or VAXserver configuration as specified
+    in the System Support Addendum (SSA 26.84.07-x).
+
+ o  Any properly configured SNA gateway as specified in the System Sup-
+    port Addendum (SSA 26.84.07-x). An alternative is to run VMS/SNA
+    software on the same VAX system as the RJE product.
+
+ SOFTWARE REQUIREMENTS
+
+ For AXP Systems:
+
+ o  OpenVMS AXP Operating System (SPD 41.87.xx)
+
+ o  DECnet for OpenVMS (SPD 42.25.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ For VAX Systems in a DECnet SNA Gateway Environment:
+
+ o  OpenVMS VAX Operating System (SPD 25.01.xx)
+
+ o  DECnet-VAX (SPD 48.48.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+                                  7
+
+ 
+
+ For VAX Systems in a VMS/SNA Environment:
+
+ o  OpenVMS VAX Operating System (SPD 25.01.xx)
+
+ o  VMS/SNA Software (SPD 27.01.xx)
+
+ *  Refer to the System Support Addendum (SSA 26.85.05-x) for avail-
+    ability and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ DECnet SNA Remote Job Entry for OpenVMS, Version 1.4
+
+ For OpenVMS AXP Systems:
+
+ Software Licenses: QL-10UA*-**
+ Software Documentation: QA-453A*-GZ
+ Software Product Services: QT-10UA*-**
+
+ Media and documentation for this product are available on the Digi-
+ tal CD-ROM Software Library for OpenVMS AXP. Documentation in hard-
+ copy format can be ordered separately.
+
+ For OpenVMS VAX Systems:
+
+ Software Licenses: QL-453A*-**
+ Software Media: QA-453A*-**
+ Software Documentation: QA-453A*-GZ
+ Software Product Services: QT-453A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services and media refer to the appropriate price book.
+
+
+
+
+
+
+
+
+                                  8
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital's
+ Standard Terms and Conditions. For more information about Digital's
+ licensing terms and policies, contact your local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. License units for this product are allocated on a CPU-capacity
+ basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ the OpenVMS AXP Operating System Software Product Description (SPD 41.87.xx),
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ [R] IBM is a registered trademark of International Business Ma-
+    chines Corporation.
+
+ [TM]The Digital logo, AXP, DEC, DECnet, Digital, OpenVMS, VMS, and
+    VT are trademarks of Digital Equipment Corporation.
+
+ All other trademarks and registered trademarks are the property of their
+ respective holders.
+
+ © 1993 Digital Equipment Corporation. All Rights Reserved.
+
+                                  9

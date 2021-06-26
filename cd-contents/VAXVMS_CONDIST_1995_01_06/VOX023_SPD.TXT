@@ -1,0 +1,765 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECvoice Software,                      SPD 29.97.05
+                Version 2.3
+
+ DESCRIPTION
+
+ The DECvoice Software provides a programming interface to the DECvoice
+ hardware (DTC04 and DTCN5/DTC05 options). The DECvoice hardware and
+ software has been designed to allow access to the North American tele-
+ phone network by voice applications on a VAX platform.
+
+ DECvoice Software supports the following functionality:
+
+ Note: Not all functions are available in all modes. Refer to the HARD-
+ WARE REQUIREMENTS section for details.
+
+ o  Answers telephone calls
+
+ o  Originates telephone calls
+
+ o  Monitors the progress of telephone calls
+
+ o  Automatically adjusts the volume level of messages
+
+ o  Generates hook-flash signaling that can be used to control certain
+    PBX features such as call-transfer capability
+
+ o  Detects and generates DTMF tones (Touchtone[TM])
+
+ o  Records and plays digitized messages in a variety of standardized
+    formats
+
+ o  Synthesizes messages from ASCII text
+
+ o  Performs speaker-independent voice recognition of a predefined vo-
+    cabulary
+
+ o  Performs speaker-dependent voice recognition of a user-defined vo-
+    cabulary
+
+                               DIGITAL                     July 1994
+
+                                                         AE-LZ25F-TE
+
+ 
+
+ The telephone network interface can be either analog (tip-ring, RJ11)
+ using the DTC04 option or digital (T1, RJ45) using the DTCN5/DTC05 op-
+ tions. Refer to the HARDWARE REQUIREMENTS section for details of the
+ network interface requirements.
+
+ The text-to-speech synthesis subsystem is comparable to the DECtalk
+ family of speech synthesizers. Name pronunciation software enhances
+ the pronunciation accuracy of surnames and placenames. A user-defined
+ dictionary capability is also provided for alternate pronunciation of
+ synthesized text.
+
+ The digitized speech subsystem supports encoding at 64 Kilobits per
+ second (Kbps) u-Law, 64 Kbps A-Law, 32 Kbps ADPCM, 24 Kbps ADPCM, 16
+ Kbps ADPCM, and 16 Kbps sub-band.
+
+ Note: Not all encoding methods are available in all modes of operation.
+ Refer to the HARDWARE REQUIREMENTS section for details.
+
+ The isolated word recognition software, licensed as part of the base
+ kit, and the continuous word recognition software, licensed separately,
+ are optimized for native speakers of American English. Both the iso-
+ lated word recognition subsystem voice recognition standard templates
+ and the optional continuous word recognition subsystem voice recog-
+ nition templates contain speaker-independent recognition support for
+ the digits zero through nine, and the words "yes," "no," and, as used
+ as a substitute for zero, "oh."
+
+ Documentation and system routines are provided to allow the creation
+ of site and application specific isolated word speaker-dependent tem-
+ plates.
+
+ Note: This feature is currently supported on the DTC05 in full-function
+ mode, not in multiline mode.
+
+ DECvoice Software provides users with the capability to monitor the
+ progress of calls that it originates. Application software can use this
+ feature to determine if dial tone, busy signal, ringing, and/or call
+ pickup has occurred.
+
+
+                                  2
+
+ 
+
+ SOURCE CODE INFORMATION
+
+ The following DECvoice source code modules are provided on the dis-
+ tribution media:
+
+ o  Versions of utilities and prototype application programs. These source
+    code modules are intended to demonstrate and assist users in their
+    implementations of various voice technologies. These modules are
+    supplied without warranties.
+
+ o  A set of digitized voice files are provided for number pronunci-
+    ation. These files are intended to assist users in application de-
+    velopment only.
+
+ Digital provides these source modules on an ``as is'' basis.
+
+ HARDWARE REQUIREMENTS
+
+ Note: DECvoice Software V2.3 supports either DTC04 or DTC05 options,
+ but not both by the same processor.
+
+ For the DTC04 Q-bus Option
+
+ Processors Supported
+
+ MicroVAX: MicroVAX II
+
+ Processors Not Supported:
+
+ MicroVAX: MicroVAX I, MicroVAX 2000,
+           MicroVAX 3100, MicroVAX 3200,
+           MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+ VAX, VAXstation, VAXserver processors
+
+ The DECvoice DTC04 option consists of a quad-sized module and Each TLI
+ supports two DTC04 modules.
+
+                                  3
+
+ 
+
+ The telephone interface provided by the TLI is a tip-ring loop cir-
+ cuit. A minimum of Service Type 1 circuit parameters (Federal Commu-
+ nications Commission Tariff No. 9) are required for basic system op-
+ eration.
+
+ Loop start signaling is supported for receiving and initiating tele-
+ phone calls. Ground start signaling is supported for receiving tele-
+ phone calls. Hook-flash signaling is supported for call transfers.
+
+ The DTC04 option supports the following functions:
+
+ o  Support for one voice channel and associated phone line
+
+ o  Digitized record and playback (16, 32, and 64 Kbps)
+
+ o  DTMF tone detection
+
+ o  Call progress analysis
+
+ o  Text-to-speech synthesis
+
+ o  Speaker-dependent isolated word recognition
+
+ o  Optional speaker-independent continuous word recognition
+
+ Processor Restrictions:
+
+ o  Automatic Volume Leveling (AVL) is not supported on the DTC04-AA
+    modules.
+
+ o  64 KB of available Q-bus I/O memory space for each DTC04-AA mod-
+    ule installed in the system.
+
+ o  A maximum of 16 DTC04-AA modules can be supported on a single Mi-
+    croVAX subject to the following restrictions:
+
+    -  The module can be mounted only in a BA23 or BA123 enclosure, or
+       in a multiple BA23 enclosure such as the DTCAA-CA or the H9642-
+       based dual-BA23 MicroVAX systems.
+
+    -  The number of usable Q-bus quad-width slots are subject to avail-
+       able power and loading on the Q-bus.
+
+                                  4
+
+ 
+
+    -  The number of adjacent "B"-size mounting slots on the I/O bulk-
+       head. The I/O bulkhead space available on various enclosures lim-
+       its the number of Telephone Line Interfaces that can be installed
+       on the system.
+
+       The following table contains the maximum limits of TLIs and DTC04-
+       AA modules. The actual number of TLIs and DTC04-AA modules that
+       can be installed in a system may be further reduced by other hard-
+       ware or software installed on the system:
+
+       _____________________________________________________________
+       System        Maximum
+       Enclosure_____TLIs_________Maximum_DTC04-AA__________________
+
+       DTCAA-CA[1]   8            16
+       H3490[2]      3            6
+       H9642-S[2]    3            6
+       BA123[3]      2            4
+       BA23[4]       1            2
+
+       _____________________________________________________________
+       [1]The DTCAA-CA series enclosures, built from the H3490-E
+       bulkhead and three BA23 enclosures, support a maximum of
+       eight TLIs; eight TLIs provide support for up to 16 DTC04-AA
+       modules.
+
+       [2]The H3490 bulkheads are used in the 630QE dual-BA23 Mi-
+       croVAX systems, the H9642-S expansion enclosure and various
+       other dual-BA23-based cabinetry. The H3490 bulkheads support
+       a maximum of three TLIs; three TLIs provide support for up
+       to six DTC04-AA modules.
+
+       [3]The BA123 enclosures support a maximum of two TLIs; two
+       TLIs provide support for up to four DTC04-AA modules.
+
+       [4]The single-BA23 enclosures support a maximum of one TLI;
+       one_TLI_provides_support_for_up_to_two_DTC04-AA_modules._____
+
+ o  The performance of the realtime portion of the DTC04-AA system is
+    sensitive to processor, VAXcluster, and device-interrupt latency.
+    Degradations will be noticed if DTC04 interrupts are blocked by any
+
+                                  5
+
+ 
+
+    other software and/or hardware in the MicroVAX system. A dedicated
+    MicroVAX system is recommended for optimal DECvoice performance.
+
+ o  The DTC04-AA module is not distributed, nor shareable, across nodes
+    in the VAXcluster. The module must reside locally, that is, on the
+    MicroVAX processor that performs the calls to the DECvoice libraries.
+
+ o  A minimum of 8 MB of physical memory on any system containing any
+    DTC04-AA modules
+
+ o  A minimum of 16 MB of physical memory on any system containing eight
+    or more DTC04-AA modules
+
+ For the DTCN5/DTC05 Q-bus Options
+
+ Processors Supported:
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+           VAX 4000 Model 100A,
+           VAX 4000 Model 105A,
+           VAX 4000 Model 500A,
+           VAX 4000 Model 600A,
+           VAX 4000 Model 700A,
+
+ MicroVAX: MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+ VAXserver: VAXserver 3300, VAXserver 3400,
+           VAXserver 3500, VAXserver 3600, VAXserver 3800,
+           VAXserver 3900,
+           VAXserver 4000 Model 200,
+
+
+
+                                  6
+
+ 
+
+
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 400,
+           VAXserver 4000 Model 500,
+           VAXserver 4000 Model 600
+
+ Processors Not Supported
+
+ VAX:      VAXft 3000 Models 110, 310, 410, 610, 612
+
+           VAX 4000 Model 50,
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000, Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300, VAX 8350, VAX 8500, VAX
+           8530, VAX 8550, VAX 8600, VAX 8650, VAX 8700, VAX 8800,
+           VAX 8810, VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000, Model 600 Series
+
+ VAXserver: VAXserver 3100, VAXserver 3200,
+           VAXserver 6000, Models 210, 220,
+           310, 320, 410, 420, 510, 520
+
+
+
+
+
+
+                                  7
+
+ 
+
+
+           VAXserver 8200, VAXserver 8250, VAXserver 8300,
+           VAXserver 8350, VAXserver 8530, VAXserver 8550,
+           VAXserver 8600, VAXserver 8650, VAXserver 8700,
+           VAXserver 8800, VAXserver 8810, VAXserver 8820,
+           VAXserver 8830, VAXserver 8840
+
+           VAX-11/725, VAX-11/730, VAX-11/750, VAX-11/780, VAX-11
+           /785
+
+ MicroVAX: MicroVAX I, MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100, MicroVAX 3200
+
+ VAXstation:VAXstation I, VAXstation II, VAXstation 2000, VAXstation
+           3100, VAXstation 3200, VAXstation 3500, VAXstation 3520,
+           VAXstation 3540, VAXstation 4000
+
+ The DTCN5 option is used to connect the DECvoice system to a maximum
+ of three digital DS1 telephone circuits. It consists of a quad Q-bus
+ module and a bulkhead adapter assembly used for telephone network con-
+ nection and a voice interconnect bus connection.
+
+ The T1 physical interface complies with Section 10 (DSX-1 Intercon-
+ nection), LATA Switched System Generic Requirements and "Interconnec-
+ tion Specifications for Digital Cross-Connects," CB119, Issue 3. Each
+ DSX-1 circuit can be up to 655 feet in length.
+
+ For direct connection to the telephone network a network interface such
+ as a CSU is required.
+
+ Direct connections can be made to PBXs that support DSX-1 circuits.
+ However, many PBXs have distance limitations of approximately 100 feet.
+ This distance can be extended if the T1 connections are made through
+ a CSU.
+
+ Connection to Analog circuits can be made through a channel bank.
+
+ Signal framing can be either D3/D4 or ESF compliant selectable under
+ software control. Zero-density requirement can be met through either
+ Jam Bit 7 or B8ZS techniques selectable under software control.
+
+                                  8
+
+ 
+
+ A variety of signaling techniques are available on a per-channel ba-
+ sis under software control including E&M, FXO/FXS, and DPO/DPT. Hook-
+ flash signaling can be detected and generated. DTMF or pulse dialing
+ can be selected on a per-channel basis.
+
+ Automatic Number Identification (ANI) and/or Dialed Number Identifi-
+ cation Service (DNIS) can be received (if provided by the PBX/Central
+ Office) through DTMF when E&M protocol is used (MF is not supported).
+
+ The DTC05 option is a quad Q-bus module that provides voice genera-
+ tion and recognition capability. DECvoice Software allows the DTC05
+ option to operate in either full-function mode or multiline mode.
+
+ Multiline mode supports the following functions:
+
+ o  Call Progress Analysis
+
+ o  Automatic Volume Leveling (AVL) of messages
+
+ o  Support for eight voice channels
+
+ o  Digitized record and playback (16, 24, and 32 Kbps)
+
+    Note: 64 Kbps is not supported in this mode.
+
+ o  DTMF tone detection
+
+ Full function mode provides the following features:
+
+ o  Automatic Volume Leveling (AVL) of messages
+
+ o  Support for one voice channel
+
+ o  Digitized record and playback (16, 24, 32 and 64 Kbps)
+
+ o  Call progress analysis
+
+ o  Text-to-speech synthesis
+
+ o  Speaker-dependent isolated word recognition
+
+ o  Limited vocabulary speaker-independent isolated word recognition
+
+ o  Optional speaker-independent continuous word recognition
+
+                                  9
+
+ 
+
+ o  Recording algorithm conversions
+
+ Processor Restrictions:
+
+ o  64 KB of Q-bus I/O space is required for each DTCN5 and DTC05 mod-
+    ule installed in the system.
+
+ o  One DTCN5 module per system is permitted.
+
+ o  The voice interconnect bus is divided into three physical segments.
+    Each segment supports 31 voice channels. A maximum of four DTC05
+    options per segment are supported. Although there are 93 voice chan-
+    nels, a maximum of 72 phone lines per system is supported. Addi-
+    tional voice channels can be used for features such as music-on-
+    hold and algorithm conversions. Any combination of multiline and
+    full-function modules can be configured.
+
+ o  VAX 4000 Models 100, 100A and 105A systems requires a B400 series
+    Q-bus Expansion Box.
+
+ o  Power and bus loading constraints may limit the maximum DTC05 con-
+    figuration (e.g., a maximum of 11 DTC05 and 1 DTCN5 can be supported
+    on the VAX 4000 Model 300 system, using a BA440 Expansion Box, with
+    no other options).
+
+ o  The performance of the realtime portions of the system is sensi-
+    tive to processor, VAXcluster, and device-interrupt latency. Degra-
+    dations will be noticed if DTCN5/DTC05 interrupts are blocked by
+    any other software and/or hardware in the system. It is recommended
+    that DECvoice applications are configured to run at elevated pri-
+    ority. A dedicated VAX system is recommended for optimal DECvoice
+    performance.
+
+ o  Based on typical application performance the following table lists
+    the typical maximum recommended number of active voice lines per
+    system processor type and does not necessarily correspond to or-
+    derable standard products. This table is intended as a guideline
+    only.
+
+
+                                 10
+
+ 
+
+
+    ________________________________________________________________
+
+    VAX 3300, VAX 3400, VAX   24
+    3500, VAX 3600
+
+    VAX 3800, VAX 3900, VAX   48
+    4000 Model 200
+
+    VAX 4000 Model 100,       72
+    Model 100A, Model 105A,
+    Model 300, Model 400,
+    Model 500, Model 500A,
+    Model 600, Model 600A,
+    Model_700A______________________________________________________
+
+ o  The DTCN5/DTC05 modules are not distributed, nor shareable, across
+    nodes in the VAXcluster. The module must reside locally, that is,
+    on the processor that performs the calls to the DECvoice libraries.
+
+ o  A minimum of 1 MB of memory per voice line configured is recommended.
+
+ Disk Space Requirements (Block Cluster Size = 1)
+
+ Disk space required for    30,000 blocks
+ installation:              (14.6 MB)
+ Disk space required for    20,000 blocks
+ use (permanent):           (9.8 MB)
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options.
+
+ If voice recordings are stored on disk, significant disk space can be
+ required. As general guideline in planning disk space requirements the
+ following information can be used:
+
+
+
+
+                                 11
+
+ 
+
+
+ _________________________per_______________________________________
+ _________________________minute_____per_hour_______________________
+
+ Disk space required      480        28,800 blocks
+ for voice data when      blocks     (14 Mb)
+ recorded at 32 kbps      (0.23
+ ADPCM_(default_mode)_____Mb)_______________________________________
+
+ OPTIONAL HARDWARE
+
+ The DTCN5 option is listed as an indirect connect device to the pub-
+ lic telephone network. If a direct connection to the telephone net-
+ work is desired, then a network interface device such as a CSU is re-
+ quired (Digital model DFDO2 or DFDO3 can be used). If an Analog con-
+ nection to the network is desired, then a channel bank is required.
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VAXcluster* configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section of this product's Software Product Descrip-
+ tion details any special hardware required by this product.
+
+ *  V6.x VAXcluster configurations are fully described in the VAXclus-
+    ter Software Product Description (SPD 29.78.xx) and include CI, Eth-
+    ernet, and Mixed Interconnect configurations.
+
+ SOFTWARE REQUIREMENTS
+
+ OpenVMS Operating System V5.5-2 - V6.1
+
+ OpenVMS Tailoring
+
+ The following OpenVMS class is required for full functionality of this
+ layered product if the DECvoice software is to be used in a run-time
+ only environment, that is, no program debugging or development is to
+ be conducted:
+
+
+                                 12
+
+ 
+
+ o  OpenVMS Required Saveset
+
+ To conduct program development with the DECvoice software, the fol-
+ lowing OpenVMS classes are required for full functionality of this lay-
+ ered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Programming Support
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx).
+
+ OPTIONAL SOFTWARE
+
+ The microcode binaries for the DECvoice Software Version 2.3 contin-
+ uous word speech recognition software are included in the DECvoice Soft-
+ ware kit. The continuous word recognition software is a separately li-
+ censed product.
+
+ The Continuous Word Recognizer product offers a Concurrent Use License.
+ Each Concurrent Use License allows one DTC04 or DTC05 option to load
+ and use the Continuous Word Recognizer microcode at a time.
+
+ The isolated word recognizer and the optional continuous word recog-
+ nizer are mutually exclusive; they cannot both be used on the same DECvoice
+ module at the same time. The recognizer in use on a specific DECvoice
+ module, when both are licensed, can be switched dynamically under the
+ control of a user program.
+
+ The performance of the recognition software is highly dependent upon
+ the quality of the telephone network. The following parameters are rec-
+ ommended for optimal recognition capability:
+
+
+
+
+
+
+
+                                 13
+
+ 
+
+
+ ___________________________________________________________________
+
+ Signal level at the      -16 db minimum
+ DECvoice system:
+ Noise level:             -50 db maximum
+ Signal-to-noise_ratio:___20_db_minimum_____________________________
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ 9-track 1600 BPI Magtape, TK50 Streaming Tape
+
+ This product is also available as part of the OpenVMS VAX Consolidated
+ Software Distribution on CD-ROM.
+
+ The software documentation for this product is also available as part
+ of the OpenVMS VAX Online Documentation Library on CD-ROM.
+
+ ORDERING INFORMATION
+
+ Software License: QL-VFUA9-J*
+ Software Media: QA-VFUAA-H*
+ Software Documentation: QA-VFUAA-GZ
+ Software Product Services: QT-VFUA*-**
+ Continuous Word Recognizer License: QL-YFCAA-3B
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+
+
+
+
+
+                                 14
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity.
+
+ License units for the product, including the isolated word recognizer,
+ are allocated on an Unlimited System Use basis. License units for the
+ optional continuous word recognizer are allocated on a Concurrent Use
+ basis.
+
+ Each Concurrent Use license for the Continuous Word Recognizer allows
+ one telephone call at a time to use continuous word recognition.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx)
+ or the License Management Facility manual of the OpenVMS VAX Operat-
+ ing System documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ The above information is valid at time of release. Please contact your
+ local Digital office for the most up-to-date information.
+
+ © 1994 Digital Equipment Corporation. All rights reserved.
+
+
+                                 15
+
+ 
+
+
+ [TM]TouchTone is a trademark of American Telephone and Telegraph
+    Company.
+
+ [TM]The DIGITAL Logo, CI, DEC, DECtalk, DECvoice, DECstation,
+    DECsystem, Digital, MicroVAX, OpenVMS, TK, VAX, VAX 8200,
+    VAX 8250, VAX 8300, VAX 8350, VAX 8500, VAX 8530, VAX 8550,
+    VAX 8600, VAX 9000, VAXcluster, VAXft, VAXserver, VAXstation,
+    and VMS are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 16
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 17

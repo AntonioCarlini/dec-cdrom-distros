@@ -1,0 +1,1358 @@
+                                                                
+
+
+
+
+
+
+   Software
+   Product
+   Description
+
+   ___________________________________________________________________
+
+   PRODUCT NAME:  DEC DB Integrator, Version 3.1          SPD 47.25.03
+
+   DESCRIPTION
+
+   DEC DB Integrator (DBI) is a multi-database management system that pro-
+   vides users with the capability to transparently access and update data
+   stored in multiple databases, in distributed locations, and with mul-
+   tiple data formats. DEC DB Integrator enables users and applications
+   to access this data as if it were located in a single, local database
+   without regard to the actual location of the data or to the functional
+   limitations of the underlying data managers.
+
+   DBI services are accessible to a wide variety of client applications
+   over DECnet, TCP/IP, AppleTalk[R] and IPX/SPX networks using SQL, SQL/Services
+   and the DEC ODBC Driver for MS[R] Windows[TM] application programming
+   interfaces (APIs). DEC DB Integrator clients access underlying data
+   sources via a full-featured implementation of SQL data manipulation
+   language (DML).
+
+   DEC DB Integrator provides clients with both remote request and dis-
+   tributed request capabilities against underlying data sources. These
+   sources, called link databases, include DEC Rdb, DEC DBMS, IBM[R] DB2[TM],
+   ORACLE[R], SYBASE[R] databases, Digital Standard M (DSM) globals, VMS
+   RMS files and VSAM data sets. Data sources other than DEC Rdb are ac-
+   cessed through DB Integrator gateways.
+
+   The DB Integrator Gateway for EDA/SQL[TM] and the DB Integrator Gate-
+   way for SequeLink[TM] extend this integrated access to INGRES[R], IN-
+   FORMIX[R], AS/400, DB2/6000, DB2/2 and the many other data sources ac-
+   cessible via SequeLink and EDA/SQL servers.
+
+
+
+
+                                 DIGITAL                 November 1994
+
+                                                           AE-Q1YXD-TE
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   The DEC DBI Gateway for Custom Drivers enables integrated access to
+   data sources that are not accessible though the existing set of DBI
+   gateways.
+
+
+   Features
+
+   o  Multi-Database Management - Information from multiple link databases
+      can be integrated into a single federated database through the use
+      of DEC DB Integrator and the required DEC DB Integrator gateways.
+
+      Users can directly query DEC DB Integrator metadata to determine
+      the availability and source of data within the federated database.
+
+   o  Local Autonomy - Link databases are managed as independent enti-
+      ties; DB Integrator imposes no restrictions on other uses of the
+      underlying databases. Synchronizing DEC DB Integrator metadata with
+      corresponding metadata in the link databases is accomplished through
+      two DBA functions: one to update the DEC DB Integrator metadata for
+      a specific table, the other to refresh only the table's statistics.
+
+   o  Location Transparency - Remote and local data sources are accessed
+      as if they reside in a single, local database. Tables may be joined
+      with each other independent of the location of the link databases
+      in which they physically reside.
+
+   o  Functional Transparency - All data is accessed via a single imple-
+      mentation of ANSI/ISO standard DEC SQL. Link database capabilities
+      are supplemented by services provided by DBI and DBI gateways so
+      that clients have access to a single, uniformly functional, fed-
+      erated database.
+
+      Some capabilities, such as identifying a record by its internal database
+      object identifier (DB Key) or integration with DECdtm, the Digital
+      implementation of the two phase commit (2PC) protocol, depend to-
+      tally on link database capabilities and are not available for all
+      link databases.
+
+   o  Partitioned Views - Several similar tables located at different sites
+      can be presented to clients as a single, horizontally partitioned
+      table.
+
+                                    2
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  Client Interoperability - Client applications with interfaces to
+      the DEC ODBC Driver for MS Windows or the SQL/Services API can ac-
+      cess DEC DB Integrator services via a SQL/Services server and DECnet,
+      TCP/IP, AppleTalk or IPX/SPX network transports[1].
+
+   o  Compatibility - Applications designed to work with DEC SQL data ma-
+      nipulation language (DML) through either the compiled or dynamic
+      SQL interfaces will work with DEC DB Integrator without any mod-
+      ification other than changing the database name.
+
+   o  Performance - DB Integrator accelerates the response time of com-
+      plex queries/updates through distributed optimization techniques
+      designed to minimize the movement of data across the network. The
+      DB Integrator distributed query optimizer is both cost-based and
+      capabilities-based resulting in efficient strategies for process-
+      ing of user requests. Runaway queries may be controlled by limit-
+      ing the CPU time, elapsed time and/or the rows returned by a spe-
+      cific client request.
+
+   o  Distributed Unit of Work Support - DEC DB Integrator uses DECdtm
+      services to provide a transparent, two phase commit (2PC) for dis-
+      tributed transactions that span multiple DEC Rdb databases, DEC DBMS
+      databases or RMS files. DEC DB Integrator may be configured to al-
+      low distributed updates across link databases that lack DECdtm sup-
+      port. These updates may produce inconsistent results.
+
+      Statement atomicity in distributed transactions is ensured through
+      the use of the markpoint capabilities of the link database managers.
+
+      For more information on DECdtm refer to the DEC OSF/1[R] AXP Op-
+      erating System SPD (41.61.xx), the OpenVMS AXP Operating System SPD
+      (42.18.xx) or the OpenVMS VAX Operating System SPD (25.01.xx).
+
+   o  Data Dictionary Integration - Definitions of databases, domains,
+      fields, tables and views may be maintained through the use of
+      CDD/Repository. Sharing common definitions across databases and ap-
+      plications fosters the consistent use of data within an organiza-
+      tion.
+   ____________________
+ [1] Refer to the SERVER SOFTWARE REQUIREMENTS section to determine the
+     network transports supported on a specific server platform
+
+                                    3
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  Security - DEC DB Integrator presents itself to the link databases
+      as a user. Both responsibility for, and control of data access re-
+      mains with the administrators of these link databases. Database ad-
+      ministrators can control access to DEC DB Integrator metadata through
+      privilege-based security mechanisms. DEC DB Integrator encrypts the
+      proxy information it uses to attach to link databases.
+
+   o  Data Type Support - All DEC SQL data types are supported. Data types
+      unique to the link database managers are transparently mapped to
+      corresponding DEC SQL data types.
+
+   o  Language Support - Precompilers for DEC Ada, DEC C, DEC COBOL, Mi-
+      cro Focus COBOL, DEC Fortran, DEC Pascal, and PL/I for OpenVMS are
+      available with the purchase of a Full Development Option.[2]
+
+   o  Data Integrity - Access to link databases will not override the busi-
+      ness rules established in, and enforced by, the data managers of
+      those databases.
+
+   CONFORMANCE TO STANDARDS
+
+   DEC DB Integrator complies with the International Standard, ISO/IEC
+   9075:1992 and the American National Standard, ANSI X3.135-1992, Database
+   Language SQL, Entry-Level specification, and the Federal Information
+   Processing Standard for Database Language SQL (FIPS SQL) as defined
+   in FIPS PUB 127-2.
+
+   The DEC ODBC Driver for MS Windows complies with the Microsoft[R] Open
+   Database Connectivity specification V1.0. It supports all Core and Level
+   1 calls and many, but not all, Level 2 calls.
+
+
+
+
+   ____________________
+ [2] The availability of language precompiler support varies by platform.
+     Refer to the SOFTWARE LICENSING section of this SPD for a descrip-
+     tion of language precompiler support by platform.
+
+
+                                    4
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   HARDWARE REQUIREMENTS
+
+   Processors Supported
+
+
+   AXP:           DECpc AXP 150 Systems
+
+                  DEC 2000 Models 300, 500
+
+                  Digital 2100 Server Models A500MP, A600MP
+
+                  DEC 3000 Models 300, 300L,300LX, 300X, 400, 400S
+                  500, 500S, 500X, 600, 600S, 700, 800, 800S and 900
+
+                  DEC 4000 Models, 600, 610, 620, 700, 710, 720
+
+                  DEC 7000 Models 600, 610, 620, 700, 710, 720
+
+                  DEC 10000 Model 600 Series
+
+   VAX:           VAX 4000 Models 50, 100, 100A,
+                  200, 200A, 300, 300A, 500, 500A
+                  600, 700A
+
+                  VAX 6000 Models 210, 220, 230, 240,
+                  310, 320, 330, 340, 360, 410, 420,
+                  440, 440, 450, 460, 510, 520, 530,
+                  540, 550, 560, 610, 620, 630, 640
+
+                  VAX 7000 Models 610, 620, 630, 640,
+                  650, 660
+
+                  VAX 8200, VAX 8250, VAX 8300,
+                  VAX 8350, VAX 8500, VAX 8530,
+                  VAX 8550, VAX 8600, VAX 8650,
+                  VAX 8700, VAX 8800, VAX 8810,
+                  VAX 8820, VAX 8830, VAX 8840
+
+                  VAX 9000 Models 110, 110VP, 210, 210VP,
+                  310, 310VP, 320, 320VP, 330, 330VP
+                  410, 410VP, 420, 420VP, 430, 430VP
+
+                  VAX 10000 600 Model Series
+
+                  VAX-11/730, VAX-11/750
+                  VAX-11/780, VAX-11/785
+
+                                    5
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+
+   VAXft:         VAXft 3000 Models 110, 310, 410, 610, 612
+
+   MicroVAX:      MicroVAX II, MicroVAX 2000,
+                  MicroVAX 3200, MicroVAX 3300,
+                  MicroVAX 3400, MicroVAX 3500,
+                  MicroVAX 3600, MicroVAX 3800,
+                  MicroVAX 3900, MicroVAX 3100 Models 10, 10E, 20,
+                  20E, 30, 40, 80, 90
+
+   VAXstation:    VAXstation II, VAXstation II/GPX,
+                  VAXstation II/QVSS
+
+                  VAXstation 2000, VAXstation 2000/GPX,
+                  VAXstation 2000/MFB
+
+                  VAXstation 3100 Models 30, 38, 40, 48, 76
+
+                  VAXstation 3100/SPX Models 38, 48, 76
+
+                  VAXstation 3100/GPX Models 38, 48, 76
+
+                  VAXstation 3200, VAXstation 3500,
+                  VAXstation 3520, VAXstation 3540
+
+                  VAXstation 4000 Models 60, 90, VLC
+
+   VAXserver:     VAXserver 3100, VAXserver 3200,
+                  VAXserver 3300, VAXserver 3400,
+                  VAXserver 3500, VAXserver 3600,
+                  VAXserver 3800, VAXserver 3900
+
+                  VAXserver 4000 Models 200, 300, 400, 500, 600
+
+                  VAXserver 6000 Models 210, 220, 310, 320, 410, 420,
+                  510, 520
+
+                  VAXserver 8200,VAXserver 8250,
+                  VAXserver 8300,VAXserver 8350,
+                  VAXserver 8530,VAXserver 8550,
+                  VAXserver 8600,VAXserver 8650,
+                  VAXserver 8700,VAXserver 8800,
+                  VAXserver 8810,VAXserver 8830,
+                  VAXserver 8840
+
+                                    6
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   Unsupported Processors
+
+                  MicroVAX I, VAXstation I,
+                  VAX-11/725, VAX-11/782,
+                  VAXstation 8000
+
+   AXP Processor Restrictions
+
+   o  A CD-ROM drive is required to install this product on an AXP pro-
+      cessor.
+
+   o  A minimum of 16 MB of memory is required on AXP systems.
+
+   VAX Processor Restrictions
+
+   o  A TK50 cartridge tape drive, 9-track 1600 BPI magnetic tape drive
+      or CD-ROM drive is required to install this software on VAX Sys-
+      tems.
+
+   o  A minimum of 4 MB of memory is required on VAX systems
+
+   Disk Space Requirements
+
+   Table 1 lists the disk space required to install and operate DBI soft-
+   ware by hardware/operating system platform (Platform). The common re-
+   quirement represents the space required to store software objects that
+   are common to DBI and the DB Integrator family of gateways. If one of
+   these products is not already installed on the system or cluster, the
+   permanent disk space requirement will be increased by this amount.
+
+   ___________________________________________________________________
+
+   Table_1:__Disk_Space_Requirements_by_Platform______________________
+
+                                  Disk Space Required (Blocks)
+
+   Platform_______________Install_____Permanent____Common_____________
+
+   OpenVMS VAX Requirements
+
+   Development Option     53,300      25,300       28,000
+
+                                    7
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+   ___________________________________________________________________
+
+   Table_1_(Cont.):__Disk_Space_Requirements_by_Platform______________
+
+                                  Disk Space Required (Blocks)
+
+   Platform_______________Install_____Permanent____Common_____________
+
+   Interactive Option     41,300      13,300       28,000
+
+   Runtime Option         41,300      13,300       28,000
+
+   OpenVMS AXP Requirements
+
+   Development Option     85,700      46,700       39,000
+
+   Interactive Option     62,700      23,700       39,000
+
+   Runtime_Option_________62,700______23,700_______39,000_____________
+
+   These counts refer to the disk space required on the system disk. The
+   sizes are approximate; actual sizes may vary depending on the user's
+   system environment, configuration, and software options selected.
+
+   Additional space must be allowed for programs, logs, and temporary database
+   cache files, and user interface software.
+
+   OPTIONAL HARDWARE
+
+   For desktop clients based on DEC ODBC Driver for MS Windows, Microsoft
+   Windows or MS-DOS[R] :
+
+   o  Personal Computer XT, Personal Computer AT[R], or equivalent
+
+   o  Ethernet LAN connectivity
+
+   For SQL/Services Macintosh[R] platform:
+
+   o  Macintosh Plus, Macintosh SE and SE/30, Macintosh II, IIx, IIcx,
+      IIci, and IIfx, Macintosh portable
+
+   o  Ethernet LAN connectivity
+
+   For Sun[R] platform:
+
+   o  SPARCstation[TM] 1
+
+                                    8
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  Ethernet LAN connectivity
+
+
+   SERVER SOFTWARE REQUIREMENTS
+
+   This section lists the software required by DBI on each supported server
+   platform. It also describes the network transport options supported
+   for desktop clients.
+
+   DEC DB Integrator for OpenVMS VAX Server
+
+   Software Requirements
+
+   o  OpenVMS VAX Operating System, V5.5-2 - V6.1
+
+   o  A RDBMS to manage the DEC DB Integrator catalog database. May be:
+
+      -  DEC Rdb for OpenVMS VAX, V4.1 - V6.0
+
+         (Development, Interactive or Runtime Option)
+
+      -  Oracle Corporation's ORACLE RDBMS, V7.0
+
+      -  SYBASE SQL Server, Release 4.8
+
+   o  DECdtm services (included with OpenVMS VAX Operating System)
+
+   Network Transport Options
+
+   DBI will require one or more of the following network software prod-
+   ucts to access remote link databases and to support direct access to
+   local and remote link databases by SQL/Services and DEC ODBC Driver
+   for MS Windows desktop applications.
+
+   o  DECnet transport - DECnet for OpenVMS VAX, V5.5-2 - V6.1
+
+   o  TCP/IP transport - DEC TCP/IP Services for OpenVMS VAX, V3.0 - V3.1
+
+   o  Novell[R] NetWare[R] - SQL/Services and DEC ODBC Driver client ap-
+      plications communicating via Novell NetWare[R] require a Novell IPX/SPX
+      transport - InterConnections Leverage for NetWare File Sharing Ser-
+      vices (FSS), V1.5 - V2.0
+
+                                    9
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   Table 2 summarizes the desktop clients and network transports supported
+   by DBI on the OpenVMS VAX platform.
+
+   ___________________________________________________________________
+
+   Table_2:__DBI_OpenVMS_VAX_Client/Network_Support___________________
+
+   Desktop                        Client Transport Support
+
+   Client_Platform_____DECnet__TCP/IP____IPX/SPX___AppleTalk__________
+
+   DEC ODBC Driver Clients
+   Microsoft Windows   X       X         X         -
+
+   SQL/Services Clients
+   Microsoft Windows   X       X         X         -
+   MS-DOS              X       X         X         -
+   Macintosh           X       X         -         X
+   OS/2                X       -         -         -
+   ULTRIX              X       X         -         -
+   SUN_________________-_______X_________-_________-__________________
+
+   OpenVMS Tailoring
+
+   The following OpenVMS classes are required for full functionality of
+   this layered product.
+
+   o  OpenVMS Required Saveset
+
+   o  Programming Support
+
+   o  Network Support
+
+   o  Utilities
+
+   For more information on OpenVMS classes and tailoring, refer to the
+   OpenVMS Operating System documentation.
+
+
+
+
+                                    10
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   DEC DB Integrator for OpenVMS AXP Server
+
+   Software Requirements
+
+   o  OpenVMS AXP Operating System, V6.1
+
+   o  A RDBMS to manage the DEC DB Integrator catalog database. May be:
+
+      -  DEC Rdb for OpenVMS AXP, V5.1 - V6.0
+
+         (Development, Interactive or Runtime Option)
+
+      -  Oracle Corporation's ORACLE RDBMS, V7.0
+
+      -  SYBASE Open Server, Release 4.9.1
+
+   o  DECdtm services (included with OpenVMS AXP Operating System)
+
+   Network Transport Options
+
+   DBI will require one or more of the following network software prod-
+   ucts to access remote link databases and to support direct access to
+   local and remote link databases by SQL/Services and DEC ODBC Driver
+   for MSWindows desktop applications.
+
+   o  DECnet transport - DECnet for OpenVMS AXP, V6.1
+
+   o  TCP/IP transport - DEC TCP/IP Services for OpenVMS AXP, V3.0 - V3.1
+
+   Table 3 summarizes the desktop clients and network transports supported
+   by DBI on the OpenVMS AXP platform.
+
+
+
+
+
+
+
+
+
+
+                                    11
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   ___________________________________________________________________
+
+   Table_3:__DBI_OpenVMS_AXP_Client/Network_Support___________________
+
+   Desktop                        Client Transport Support
+
+   Client_Platform_____DECnet__TCP/IP____IPX/SPX___AppleTalk__________
+
+   DEC ODBC Driver Clients
+   Microsoft Windows   X       X         -         -
+
+   SQL/Services Clients
+   Microsoft Windows   X       X         -         -
+   MS-DOS              X       X         -         -
+   OS/2                X       -         -         -
+   ULTRIX              X       X         -         -
+   SUN_________________-_______X_________-_________-__________________
+
+   DEC DB Integrator for OSF/1 AXP Server
+
+   Software Requirements
+
+   o  DEC OSF/1 Operating System, V3.0
+
+   o  A RDBMS to manage the DEC DB Integrator catalog database. May be:
+
+      -  DEC Rdb for OSF/1 AXP, V6.1
+
+      -  Oracle Corporation's ORACLE RDBMS, V7.1
+
+      -  SYBASE Open Server, Release 10
+
+   o  DECdtm services (included with DEC OSF/1 Operating System)
+
+   Network Transport Options
+
+   The TCP/IP facility included with the DEC OSF/1 Operating System sup-
+   ports connections to desktop clients and remote link databases via the
+   TCP/IP network protocol.
+
+
+                                    12
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   DECnet/OSI, Version 2.0, for DEC OSF/1 AXP is required to access re-
+   mote link databases and to support SQL/Services or DEC ODBC Driver for
+   MS Windows applications via the DECnet transport.
+
+   Table 4 lists the desktop clients and network transports supported by
+   DBI on the DEC OSF/1 platform.
+
+   ___________________________________________________________________
+
+   Table_4:__DBI_OSF/1_AXP_Client/Network_Support_____________________
+
+   Desktop                        Client Transport Support
+
+   Client_Platform_____DECnet__TCP/IP____IPX/SPX___AppleTalk__________
+
+   DEC ODBC Driver Clients
+   Microsoft Windows   X       X         -         -
+   Windows NT[TM]      X       X         -         -
+
+   SQL/Services Clients
+   Microsoft Windows   X       X         -         -
+   Windows NT          X       X         -         -
+   MS-DOS              X       X                   -
+   DEC OSF/1 AXP       X       X         -         -
+   ULTRIX              X       X         -         -
+   SUN_________________-_______X_________-_________-__________________
+
+   DESKTOP CLIENT SOFTWARE REQUIREMENTS
+
+   This section describes the software required by each DBI desktop client
+   platform. A specific desktop client can connect with a specific DBI
+   server only if they share support for a common network transport.
+
+
+
+
+
+
+
+
+
+                                    13
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   DEC ODBC Driver Clients
+
+   DEC ODBC Driver for Windows NT Client
+   (TCP/IP Transport):
+
+   o  Microsoft Windows NT Operating System, V3.1
+
+   o  Microsoft Windows, V3.1
+
+   DEC ODBC Driver for Windows NT Intel Client
+   (DECnet Transport):
+
+   o  Microsoft Windows NT Operating System, V3.1
+
+   o  Microsoft Windows, V3.1
+
+   o  PATHWORKS for NT, V4.1
+
+   DEC ODBC Driver for MS Windows Intel client
+   (DECnet Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  Microsoft Windows, V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+      -  PATHWORKS V5 for DOS and Windows client software
+
+   DEC ODBC Driver for MS Windows client
+   (TCP/IP Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  Microsoft Windows, V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+                                    14
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+      -  A Windows Sockets V1.1 specification compliant transport.[3]
+
+
+   SQL/Services Clients
+
+   SQL/Services Microsoft Windows client
+   (DECnet Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  Microsoft Windows, V3.0 - V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+      -  A Windows Sockets V1.1 specification compliant transport [3]
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services Microsoft Windows client
+   (TCP/IP Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  Microsoft Windows, V3.0 - V3.1
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+      -  A Windows Sockets V1.1 specification compliant transport.[3]
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services Microsoft Windows client
+   (IPX/SPX Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   ____________________
+ [3]  PATHWORKS V5 for DOS and Windows client software and FTP[R] PC/TCP
+     V2.3 have been fully tested with the SQL/Services and DEC ODBC Driver
+     for Microsoft Windows clients.  Other transports that comply with the
+     Windows Sockets V1.1 specification may function correctly but have
+     not been fully tested by Digital
+
+                                    15
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  Microsoft Windows, V3.0 - V3.1
+
+   o  Novell NetWare 3.11 Windows Workstation Client
+      with IPX.COM or IPXODI.COM, and NETX shell
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services MS-DOS client
+   (DECnet Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS, V4.1A
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services MS-DOS client
+   (TCP/IP Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  One of the following network products:
+
+      -  PATHWORKS for DOS (TCP/IP), V2.0
+
+      -  PATHWORKS V5 for DOS and Windows client software
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services MS-DOS client
+   (IPX/SPX Transport):
+
+   o  MS-DOS Operating System, V5.0 - V6.2
+
+   o  Novell NetWare 3.11 Windows Workstation Client
+      with IPX.COM or IPXODI.COM, and NETX shell
+
+   o  Microsoft C, V7.0, Microsoft Visual C++
+
+   SQL/Services Macintosh System 6.0.8 MPW[TM] client
+   (DECnet, AppleTalk, or TCP/IP Transports:)
+
+   o  Macintosh Operating System V6.0.8
+
+                                    16
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare[R] Workstation Software for System V6.0.8
+      (Required for PATHWORKS installation)
+
+   o  MPW Development Environment, Version 3.2.3, and MPW, Version 3.2.3,
+      C compiler
+      (Required for application development only)
+
+   SQL/Services Macintosh System 7 MPW client
+   (DECnet, AppleTalk, or TCP/IP Transports):
+
+   o  Macintosh Operating System, V7, V7.1
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare Workstation Software for System 7
+      (required for PATHWORKS installation)
+
+   o  MPW Development Environment, Version 3.3.1, and MPW, Version 3.3.1,
+      C compiler
+      (Required for application development only)
+
+   SQL/Services Macintosh System 6.0.8 ThinkC client
+   (DECnet,AppleTalk, or TCP/IP Transports):
+
+   o  Macintosh Operating System, V6.0.8
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+   o  AppleShare Workstation Software for System, V6.0.8
+      (Required for PATHWORKS installation)
+
+   o  Symantec[R] ThinkC, V6.0.1, and ThinkC, V6.0.1, C Compiler for the
+      Macintosh system
+      (Required for application development only)
+
+   SQL/Services Macintosh System 7 ThinkC client
+   (DECnet,AppleTalk, or TCP/IP Transports):
+
+   o  Macintosh Operating System, V7, V7.1
+
+   o  PATHWORKS for Macintosh, V1.2A
+
+                                    17
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  AppleShare Workstation Software for System 7
+      (Required for PATHWORKS installation)
+
+   o  Symantec ThinkC, V6.0.1, and ThinkC, V6.0.1, C Compiler for the Macintosh
+      system
+      (required for application development only)
+
+   SQL/Services OSF/1 AXP client
+   (DECnet or TCP/IP Transports):
+
+   o  DEC OSF/1 AXP Operating System, V3.0
+
+   o  DECnet/OSI, V2.0, for DEC OSF/1 AXP
+      (Required for DECnet applications only)
+
+   SQL/Services ULTRIX client
+   (DECnet or TCP/IP Transports):
+
+   o  ULTRIX Operating System, V4.1 - V4.3
+
+   o  DECnet/OSI for ULTRIX, V5.1, for RISC and VAX
+      (Required for DECnet applications only)
+
+   SQL/Services Sun client
+   (TCP/IP Transport):
+
+   o  SunOS[TM], V4.1.1
+
+   OPTIONAL SOFTWARE
+
+   o  DEC Rdb for OpenVMS AXP, V5.1 - V6.0
+
+   o  DEC Rdb for OpenVMS VAX, V4.1 - V6.0
+
+   o  DEC DB Integrator Gateway for RMS, V3.0
+
+   o  DEC DB Integrator Gateway for DB2 Client V3.1
+
+   o  DEC DB Integrator Gateway for ORACLE, V3.1
+
+   o  DEC DB Integrator Gateway for SYBASE, V3.1
+
+   o  DEC DB Integrator Gateway for SequeLink, V3.1
+
+                                    18
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   o  DEC DB Integrator Gateway for EDA/SQL, V3.1
+
+   o  DEC DB Integrator Gateway for Custom Drivers V3.0
+
+   o  DEC DB Integrator Gateway for DBMS, V1.0
+
+   o  DEC DB Integrator Gateway for DSM, V1.0
+
+   o  CDD/Repository for OpenVMS Systems V5.1 - V5.2
+
+   o  DEC Data Distributor V6.0
+
+   GROWTH CONSIDERATIONS
+
+   The minimum hardware/software requirements for any future version of
+   this product may be different from the requirements for the current
+   version.
+
+   DISTRIBUTION MEDIA
+
+   Media for OpenVMS VAX systems is distributed on 9-track 1600 BPI Mag-
+   netic Tape, TK50 Streaming Tape and as part of the OpenVMS VAX Con-
+   solidated Software Distribution on CD-ROM.
+
+   Media for OpenVMS AXP systems is distributed on CD-ROM and as part of
+   the OpenVMS AXP Consolidated Software Distribution on CD-ROM
+
+   Media for DEC OSF/1 AXP systems is distributed on CD-ROM as part of
+   the DEC OSF/1 AXP Consolidated Software Distribution on CD-ROM
+
+   ORDERING INFORMATION
+
+   DEC DB Integrator for OpenVMS VAX
+   Full Development Option (0U1)
+      Traditional Software Licenses: QL-0U1A*-**
+      Concurrent Use License: QL-0U1AA-3B
+      Software Documentation (hardcopy): QA-0U1AA-GZ
+      Software Product Services: QT-0U1A*-**
+
+
+
+                                    19
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   DEC DB Integrator for OpenVMS VAX
+   Interactive Option (221)
+      Traditional Software Licenses: QL-221A*-**
+      Concurrent Use License: QL-221AA-3B
+      Software Documentation (hardcopy): QA-221AA-GZ
+      Software Product Services: QT-221A*-**
+
+   DEC DB Integrator for OpenVMS VAX
+   Run-Time Option (21Y)
+      Traditional Software Licenses: QL-21YA*-**
+      Concurrent Use Software License: QL-21YAA-3B
+      Software Documentation (hardcopy): QA-21YAA-GZ
+      Software Product Services: QT-21YA*-**
+
+   DEC DB Integrator for OpenVMS AXP
+   Full Development Option (0U2)
+      Traditional Software Licenses: QL-0U2A*-**
+      Concurrent Use License: QL-0U1AA-3B
+      Software Documentation: QA-0U1AA-GZ
+      Software Product Services: QT-0U2A*-**
+
+   DEC DB Integrator for OpenVMS AXP
+   Interactive Option (222)
+      Traditional Software Licenses: QL-222A*-**
+      Concurrent Use License: QL-221AA-3B
+      Software Documentation: QA-221AA-GZ
+      Software Product Services: QT-222A*-**
+
+   DEC DB Integrator for OpenVMS AXP
+   Run-Time Option (21Z)
+      Traditional Software Licenses: QL-21ZA*-**
+      Concurrent Use Software License: QL-21YAA-3B
+      Software Documentation (hardcopy): QA-21YAA-GZ
+      Software Product Services: QT-21ZA*-**
+
+
+
+
+
+
+
+                                    20
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   DEC DB Integrator for OSF/1 AXP
+   Full Development Option (2Q7)
+      Traditional Software Licenses: QL-2Q7A*-**
+      Concurrent Use License: QL-2Q7AM-3B
+      Software Documentation: QA-0U1AA-GZ
+      Software Product Services: QT-2Q7A*-**
+
+   DEC DB Integrator for OSF/1 AXP
+   Interactive Option (2Q9)
+      Traditional Software Licenses: QL-2Q9A*-**
+      Concurrent Use License: QL-2Q9AM-3B
+      Software Documentation: QA-221AA-GZ
+      Software Product Services: QT-2Q9A*-**
+
+   DEC DB Integrator for OSF/1 AXP
+   Run-Time Option (2Q8)
+      Traditional Software Licenses: QL-2Q8A*-**
+      Concurrent Use Software License: QL-2Q8AA-3B
+      Software Documentation: QA-21YAA-GZ
+      Software Product Services: QT-2Q8A*-**
+
+   *   Denotes variant fields. For additional information on available
+       licenses, services, and media, refer to the appropriate price
+       book.
+
+   The above information is valid at time of release. Please contact your
+   local Digital Office for the most up-to-date information.
+
+   SOFTWARE LICENSING
+
+   Full Development Option
+
+   The DEC DB Integrator Full Development Option includes facilities for
+   maintaining the catalog metadata and executing client requests for link
+   databases access. These facilities include base DB Integrator soft-
+   ware, dynamic SQL engine, SQL/Services server, full catalog database
+   definition and manipulation facilities (interactive SQL), the DEC SQL
+   compiler (SQL module language), the DEC SQL precompilers supported on
+   the server platform, the SQL/Services client API libraries and the DEC
+
+
+                                    21
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   ODBC Driver for MS Windows. Table 5 describes the DEC SQL precomplier
+   support by platform.
+
+   ___________________________________________________________________
+
+   Table_5:__DEC_SQL_Precompiler_Support______________________________
+
+   Language                           Software Platform
+
+   Compiler____________OpenVMS_VAX____OpenVMS_AXP_____OSF/1_AXP_______
+
+   DEC Ada             X              X               -
+
+   DEC C               X              X               X
+
+   OSF/1 C             -              -               X
+
+   DEC COBOL           X              X               X
+
+   DEC Fortran         X              X               -
+
+   DEC Pascal          X              X               -
+
+   PL/I_for_OpenVMS____X______________X_______________-_______________
+
+   The Full Development Option is the standard license.
+
+   Interactive Option
+
+   The DEC DB Integrator Interactive Option includes facilities for main-
+   taining the catalog metadata and executing client requests for link
+   databases access. These facilities include the multi-database manage-
+   ment software and full interactive catalog database definition and ma-
+   nipulation facilities (interactive SQL), the SQL/Services Server and
+   the DEC ODBC Driver for MS Windows
+
+   The purpose of the Interactive Option is to support execution of pre-
+   viously developed applications, as well as to provide the ability to
+   perform database definition and interactive queries using interactive
+   SQL.
+
+
+
+                                    22
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   Run-Time Option
+
+   The Run-Time Option for DEC DB Integrator provides the multi-database
+   software, the SQL/Services Server and the DEC ODBC Driver for MS Windows.
+   The purpose of the Run-Time Only version is to support the execution
+   of previously developed applications on a target machine.
+
+   Interactive data definition is not supported under the Run-Time Op-
+   tion.
+
+   The software components contained in each license option are summa-
+   rized in Table 6.
+
+   ___________________________________________________________________
+
+   Table_6:__DBI_License_Options______________________________________
+
+                                         Inter-
+   DBI_Component_______________Run-Time__active_____Development_______
+
+   Base DB Integrator soft-    X         X          X
+   ware
+
+   Interactive SQL Utility     X[4]      X          X
+
+   Dynamic SQL engine          X         X          X
+
+   SQL/Services Server         X         X          X
+
+   DEC ODBC Driver for MS      X         X          X
+   Windows
+
+   SQL Module Language         -         -          X
+   Compiler
+
+   SQL Rdb/Precompilers        -         -          X
+
+   SQL/Services_Client_APIs____-_________-__________X_________________
+
+   This software is furnished only under a license. For more information
+   about Digital's licensing terms and policies, contact your local Digital
+   office.
+
+
+   ____________________
+ [4] The Run-Time Option does not support the full interactive SQL com-
+     mand set.  It does support a data manipulation language (DML) sub-
+     set of interactive SQL.
+
+                                    23
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   License Management Facility Support
+
+   This layered product supports the OSF/1 License Management Facility.
+   Traditional licenses are available for the Full Development and In-
+   teractive options. Traditional and Concurrent Use licenses are avail-
+   able for the Run-Time option. A Traditional license permits an unlim-
+   ited number of authorized users to access this product on a single,
+   identified processor. A Concurrent Use license allows any one user at
+   a time to access the layered product.
+
+   For this software product a user is defined as an OSF/1 process serv-
+   ing either an individual or another local or remote process.
+
+   For more information on the License Management Facility, refer to the
+   DEC OSF/1 Operating System documentation.
+
+   For more information on Digital's licensing terms and policies, con-
+   tact your local Digital office.
+
+   Client Software Licensing
+
+   A site-wide right to use SQL/Services client software is included with
+   each Traditional or Personal Use license for the Full Development Op-
+   tion of the DEC Rdb or DEC DB Integrator software products on the Open-
+   VMS VAX, OpenVMS AXP or DEC OSF/1 AXP platforms.
+
+   Parties selling or distributing a software product that incorporates
+   Digital Equipment Corporation's SQL/Services client application pro-
+   gramming interface, may copy and distribute the SQL/Services client
+   runtime libraries with that software product.
+
+   Parties selling or distributing a software product that incorporates
+   the Microsoft ODBC application programming interface, may copy and dis-
+   tribute Digital Equipment Corporation's DEC ODBC Driver distribution
+   kit with that software product. The DEC ODBC Driver kit must be dis-
+   tributed in a manner that guarantees the end-user will receive the en-
+   tire contents of the DEC ODBC Driver kit.
+
+
+
+
+
+
+                                    24
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+   SOFTWARE PRODUCT SERVICES
+
+   A variety of service options are available from Digital. For more in-
+   formation, contact your local Digital office.
+
+   SOFTWARE WARRANTY
+
+   Warranty for this software product is provided by Digital with the pur-
+   chase of a license for the product as defined in the Software Warranty
+   Addendum of this SPD.
+
+   [R] AppleTalk and Macintosh are registered trademarks of Apple
+       Computer Inc.
+
+   [R] INGRES is a registered trademark of Ingres Corporation
+
+   [R] INFORMIX is a registered trademark of Informix Software, Inc.
+
+   [R] AT, IBM and OS/2 are registered trademarks of International
+       Business Machines Corporation.
+
+   [R] Microsoft, MS, and MS-DOS are registered trademarks of Mi-
+       crosoft Corporation.
+
+   [R] Novell and NetWare are registered trademarks of Novell Inc.
+
+   [R] OSF/1 is a registered trademark of Open Software Foundation,
+       Inc.
+
+   [R] ORACLE is a registered trademark of Oracle Corporation.
+
+   [R] FTP is a registered trademark of Schere Laboratories, Inc.
+
+   [R] Sun is a registered trademark of Sun Microsystems, Inc.
+
+   [R] SYBASE is a registered trademark of Sybase, Inc.
+
+   [R] Symantec is a registered trademark of Symantec Corporation
+
+   [TM]MPW is a trademark of Apple Computer Inc.
+
+   [TM]EDA/SQL is a trademark of Information Builders, Inc.
+
+   [TM]DB2 is a trademark of International Business Machines Corpora-
+       tion.
+
+   [TM]Windows and Windows NT are trademarks of Microsoft Corporation.
+
+   [TM]SPARCstation and SunOS are trademarks of Sun Microsystems, Inc.
+
+                                    25
+
+ 
+
+
+
+   DEC DB Integrator, Version 3.1                        SPD 47.25.03
+
+
+
+   [TM]SequeLink is a registered trademark of TechGnosis, Inc.
+
+   [TM]The DIGITAL Logo, AXP, CDD/Repository, DBMS, DEC, DEC Ada,
+       DEC Fortran, DEC Rdb, DECdtm, DECnet, Digital, MicroVAX,
+       MicroVAX I, MicroVAX II, OpenVMS, PATHWORKS, SQL Multimedia,
+       ULTRIX, VAX, VAX 11/750, VAX 11/780, VAX 6000, VAX 8200,
+       VAX 8250, VAX 8300, VAX 8350, VAX 8500, VAX 8530, VAX 8550,
+       VAX 8600, VAX 9000, VAXcluster, VAXft, VAXserver, VAXstation,
+       VAXstation 4000 VLC, VAX RMS, VMS, VMS RMS and VMScluster are
+       trademarks of Digital Equipment Corporation.
+
+       All other trademarks and registered trademarks are the property
+       of their respective owners.
+
+   ©1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    26

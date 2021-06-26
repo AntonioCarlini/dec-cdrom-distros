@@ -1,0 +1,1247 @@
+ 
+
+
+
+
+
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                       SPD 47.73.01
+   ソフトウェア仕様書
+
+仕様書の包含する範囲
+
+本書は，日本語ACMS Desktop for OpenVMS (以下，ACMS Desktopと呼ぶ)のソフトウェ
+ア機能仕様を述べたものです。
+
+1  製品概要
+
+ACMS Desktopは，デスクトップ・システム上のユーザ(クライアント)がネイティブな
+デスクトップ・システム環境からACMSトランザクション処理アプリケーション(サー
+バ)にアクセスするためのソフトウェアです。ACMS Desktopはサーバ・プラットフォー
+ムとして，OpenVMS VAXおよびOpenVMS AXPをサポートします。また，サポートするク
+ライアントとネットワークは次のとおりです。
+
+ネットワーク       DECnet，
+                   TCP/IP，
+                   Netware SPX/IPX，
+                   Dial-in，
+                   X.25，
+                   AppleTalk
+
+クライアント       Microsoft Windows，
+                   DOS，
+                   Windows NT，
+                   Macintosh，
+                   OpenVMS，
+                   SCO UNIX
+
+ACMS Desktopには，クライアント用とサーバ用のソフトウェア構成要素が含まれてい
+ます。クライアント構成要素には，サポート・ライブラリとアプリケーション・プロ
+グラミング・インタフェース(API)が含まれています。APIは，デスクトップ・アプリ
+ケーションおよびプレゼンテーション・サービスを開発するために，各種デスクトッ
+プ開発ツールが呼出し可能な関数から構成されます。
+
+
+
+
+
+
+
+                                    DIGITAL                         1994年9月
+
+                                                                  AE-PZ19B-TE
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+2  仕様
+
+ACMS Desktopの次の機能について説明します。
+
+o  開発環境
+
+o  実行時システム
+
+o  ネットワークのサポート
+
+o  管理と制御
+
+o  漢字コード変換
+
+o  ドキュメント
+
+o  サンプル・アプリケーション
+
+本製品には，サポート対象ではないソフトウェア構成要素がいくつか含まれており，
+本SPD中にその旨記載してあります。これらのソフトウェア構成要素は，弊社のカスタ
+マ・サポート・センターによるサポートはありませんが，ACMS Desktopを使用してい
+ただく上で役に立つという理由で本製品に含めてあります。このため，将来にわたり
+提供することを約束するものではありませんので，ご了承ください。
+
+いくつかのサード・パーティ製品が本製品の関連製品として使用でき，本SPDにその旨
+記載してあります。なお，記載してあるサード・パーティ製品は本製品が提供するも
+のではありません。また，本製品が直接サポートするものでもありません。
+
+ACMS Desktopとともに使用する場合であっても，通常弊社ではサード・パーティ製品
+を直接サポートしていません。ただし，いくつかのサード・パーティ製品の特定のバ
+ージョンに関しては試験を行い，本バージョンのACMS Desktopとともに使用すること
+ができることを確認しています。確認済みの製品については本SPDの「オプション・ソ
+フトウェア」の節を参照してください。
+
+2.1  開発環境
+
+ACMS Desktopは，サポート・ライブラリと，アプリケーション・ソフトウェアが正規
+のクライアントとして認証され，ACMSアプリケーションとやり取りするための一連の
+プログラミング・インタフェースを提供します。これらのインタフェースを使用する
+ことによりプログラマは，ネットワーク通信，またはACMS言語に関するプログラミン
+グ知識なしでクライアント・プログラムを作成することができます。
+
+ACMS Desktopクライアント
+
+ACMS Desktopは，Microsft Windows，DOS，Windwos NT，Macintosh，OpenVMS，OSF/1
+およびSCO UNIX環境で使用できるアプリケーション・プログラミング・インタフェー
+スを提供します。これらのクライアント・サービスを使用することにより，次の機能
+を含むプログラムを作成することができます。
+
+o  クライアントの認証を行うためのACMS Desktopサーバへのサイン・イン
+
+o  ACMS実行制御プロセスの制御のもとで実行されるACMSタスクの選択
+
+                                       2
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+o  ACMSタスク交換ステップ(フォーム処理)におけるACMSからのコールバックへの応答
+
+o  ACMS Desktopサーバからのサイン・アウト
+
+システム固有のウィンドウまたはフォーム・パッケージのサポート
+
+各デスクトップでは，ユーザが指定した任意の表示ソフトウェアを使用できます。た
+とえば，MacintoshのOS上ではHyperCardを使用することができ，DOS上ではMicrosoft
+Windowsを使用することができます。この場合，表示ソフトウェアにはACMS Desktopが
+提供するオブジェクト・ライブラリを取り込む機能が必要です。
+
+非ブロッキング実行
+
+ACMS Desktopクライアント・サービスは，非ブロッキング・プログラムをサポートし
+ます。Windowsのようなイベント駆動型の処理環境では，プログラムはイベント・ディ
+スパッチ機能と，イベントが発生した時このディスパッチ機能により起動されるプロ
+シジャ群を持つように設計されます。理想的には，次にくるイベントが遅延なくディ
+スパッチされるよう，これらのプロシージャはすぐに完了するように作成されます。
+
+ACMS Desktopクライアント・サービスを使用すると，アプリケーションはACMS
+Desktopサーバからの応答を待たずに，制御をイベント・ディスパッチ機能に返す
+ことができます。ネットワーク通信が遅い場合，またはACMSアプリケーションで大量
+の処理を行なっているため応答が遅い場合に重要になります。
+
+ACMS Desktopポータブル・クライアント
+
+次の2種類のアプリケーションの開発に対応するポータブル・クライアント・インタフ
+ェースを提供します。
+
+o  ACMS Desktopサーバの実行中はアプリケーション・プログラムの実行がブロックさ
+   れるブロッキング・インタフェース。DOS上のMicrosoft COBOLで作成するアプリケ
+   ーションが相当します。
+
+o  MotifならびにMicrosoft Windowsなどの非ブロッキング・ツールで利用できるイベ
+   ント駆動の非ブロッキング・インタフェース。
+
+次のサービスが，Microsoft Windows，Windows NT，DOS，OSF/1，SCO UNIXおよび
+OpenVMS用のACMS Desktopポータブル・クライアントで提供されます。
+
+o  acmsdi_call_task -  読込みアクセス，書込みアクセス，変更アクセスのいずれか
+   を指定するタスク引数を渡し，ACMSタスクを実行します。
+
+o  acmsdi_cancel - 現在実行中のタスクをキャンセルします。非ブロッキングのみ。
+
+o  acmsdi_complete_pp - 保留中の交換ステップを完了します。非ブロッキングの
+   み。
+
+o  acmsdi_dispatch_message - ACMS Desktop Serverメッセージをチェックします。
+   非ブロッキングのみ。
+
+o  acmsdi_return_pointer - Visual Basicで作成したクライアント・プログラムにお
+   いて，データへのポインタを作成するために使用します。
+
+                                       3
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+o  acmsdi_sign_in - ACMS Desktopにサイン・インし，セッションを開始します。
+
+o  acmsdi_sign_out - ACMS Desktopからサイン・アウトし，セッションを終了しま
+   す。
+
+デスクトップのユーザにとってフォーム処理が容易となるように，ACMS Desktopポー
+タブル・クライアントがプレゼンテーション・プロシージャ・ルーチンを自動的に呼
+び出します。次のプレゼンテーション・プロシージャ・ルーチンが，ブロッキングお
+よび非ブロッキングで提供されます。
+
+o  acmsdi_disable - acmsdi_sign_outサービスが呼び出された場合，デスクトップの
+   フォーム・セッションをシャットダウンします。
+
+o  acmsdi_enable - プレゼンテーション・プロシージャで使用されるデータ構造を初
+   期化します(今まで参照されていないフォーム名が含まれているACMSタスクが呼び
+   出された際に起動されます)。
+
+o  acmsdi_receive - 呼び出されたACMSタスクのRECIEVEに応答してフォーム操作を実
+   行します。
+
+o  acmsdi_request - 呼び出されたACMSタスクのREQUESTに応答してフォーム操作を実
+   行します。
+
+o  acmsdi_send - 呼び出されたACMSタスクのSENDに応答してフォーム操作を実行しま
+   す。
+
+o  acsmdi_transceive - 呼び出されたACMSタスクのTRANSCEIVEに応答してフォーム操
+   作を実行します。
+
+DOSメモリ・モードおよびモデル
+
+Microsoft WindowsおよびDOS用に，small，mediumおよびlargeメモリ・モードをサポ
+ートします。
+
+Microsoft Windowsを使用するアプリケーション用に拡張Windowsオペレーティング・
+モードをサポートします。
+
+Macintosh用ACMS Desktopクライアント
+
+このプログラミング・インタフェースは，Macintoshオペレーティング・システムのデ
+ータ・アクセス・マネージャ(DAM)機能をサポートします。特別なDAMデバイス・ドラ
+イバにより，クライアントの実行に必要な次のサービスが提供されます。
+
+o  DBBreak - 現在実行中のACMSのタスクをキャンセルします。
+
+o  DBEnd - ACMSからサイン・アウトします。
+
+o  DBExec - ACMSタスクを実行します。
+
+o  DBGetConnInfo - 指定したセッションの現在のステータスに関する情報を返しま
+   す。
+
+o  DBGetErr - エラー情報の詳細を取り出します。
+
+                                       4
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+o  DBGetItem - タスク完了ステータス，返されたワークスペースおよび交換ステップ
+   のデータを取り出します。
+
+o  DBGetSessNum - 指定したセッション識別子に対応するセッション番号を返しま
+   す。
+
+o  DBInit - ACMSにサイン・インします。
+
+o  DBSend - ACMSに送るメッセージの要素を準備します。
+
+o  DBSendItem -読込みアクセス，書込みアクセス，変更アクセスを指定するタスク引
+   数を含んだACMSに送るメッセージ要素を準備します。
+
+o  DBState - タスク実行完了をチェックします。
+
+o  InitDBPack - データ・アクセス・マネージャをメモリ上にロードします。
+
+これらのサービスは同期して実行されます。各サービスの実行が完了した時点でプロ
+グラムの制御が戻ります。なお，ACMSに対してタスクの実行をサブミットするとすぐ
+にDBExecサービスが完了するため，非ブロッキングのタスク実行は可能です。
+
+非同期のパラメータ・ブロックはこれらのサービスとともに使用することはできませ
+ん。
+
+2.2  実行時システム
+
+Desktopクライアント実行時ライブラリ
+
+ACMS Desktopサービスを使用するクライアント・プログラムの実行に必要な実行時
+ライブラリが，クライアントのオペレーティング・システムごとに提供されます。
+Microsoft Windows用のACMS Desktopクライアントには，ダイナミック・リンク・ライ
+ブラリ(DLL)が提供されます(DECnetに関しては，Microsoft Windowsクライアントの
+スタティック・リンク・ライブラリも提供されます)。Macintosh用ACMS Desktopクラ
+イアントでは，HyperCardおよび4th Dimension用の外部ファンクションも提供されま
+す。
+
+ACMS Desktopサーバ
+
+ACMS Desktopサーバは非同期，マルチスレッドの実行時構成要素で，任意のOpenVMS
+のノードに存在します。このノードはデスクトップ・クライアントから呼ばれるACMS
+アプリケーションが存在するノードとは関係ありません。1つのノードには通常1つの
+ACMS Desktopサーバが存在します。タスクのデバッグのために別のACMS Desktopサー
+バを起動することもできます。ACMS Desktopサーバは，ACMSのエージェントまたは
+ACMSへのゲートウェイとして次の機能を実行します。
+
+o  デスクトップ・クライアント(ACMSのサブミッタ)の認証を行います。
+
+o  ユーザに代わってタスクを呼び出します。ローカルおよびリモートのACMSタスクを
+   選択できます。
+
+o  タスク交換ステップ(デスクトップ・プレゼンテーション・プロシージャ)を実行す
+   る際，デスクトップ・クライアント・プログラムとコミュニケーションします。
+
+                                       5
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+o  ACMS Desktopサブミッタに関する情報をシステム・マネージャに提供します。
+
+
+2.3  ネットワーク・サポート
+
+ローカル・エリア・ネットワーク(LAN)またはワイド・エリア・ネットワーク(WAN)に
+接続されたデスクトップ・ノードに対し，次のネットワーク接続ソフトウェアをサポ
+ートします(詳細については，「必須ソフトウェア」の節を参照してください)。
+
+o  AppleTalk
+
+o  DECnet
+
+o  Dial-in (シリアル通信)
+
+o  NetWare SPX/IPX
+
+o  TCP/IP
+
+o  X.25
+
+ 注意: OpenVMSクライアント用に，TCP/IPおよびNovell NetWare対応の通信モジュー
+ルをテスト用に提供していますが，サポート対象ではありません。
+
+2.4  管理と制御
+
+サポートされる機能
+
+ACMS Desktopでは，次の機能を提供します。
+
+o  ACMSで発生したエラーを，ACMS Desktopクライアント・サービスがクライアント・
+   プログラムに通知します。これにより，デスクトップ側でローカルにエラー処理を
+   行うことができます。
+
+o  ACMS Desktopクライアント・サービスは，オプションでデスクトップ側のロ
+   ーカル・デバイス・ファイルにエラー・メッセージを記録できます(Microsoft
+   Windows，Windows NT，DOS，SCO UNIX，OSF/1およびOpenVMSで利用可能)。
+
+o  巡回冗長チェック(CRC)を付加することにより，データ破壊およびネットワーク障
+   害からメッセージを守ることができます。
+
+o  ACMS Desktopサーバは，ACMSおよびACMS DesktopクライアントのエラーをACMSソフ
+   トウェア・イベント・ロガーに通知します。
+
+o  OpenVMSのシステム・マネージャは通常のACMSユーティリティを使用することで，
+   デスクトップ・クライアントのACMSへのアクセスを制御し，デスクトップ・クライ
+   アントをACMSから取り除くことができます。
+
+o  ACMS Desktopは，DECtraceを使用してサーバのイベント情報を表示します。
+
+プログラミング・サービス
+
+                                       6
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+ACMS Desktopでは，サーバ・システム上でのシステム管理を支援するために，次の機
+能が提供されます。
+
+o  acmsdi$get_submitter_info - アクティブなACMS Desktopクライアントに関する情
+   報を返します。
+
+このサービスを使用したACMS Desktopサブミッタすべてを表示するサンプル・プログ
+ラムが提供されます。ただし，このサンプル・プログラムはサポートの対象ではあり
+ません。
+
+o  acmsdi_check_version - クライアント上でユーザが作成するバージョン・チェッ
+   ク・ルーチンのためのエントリ・ポイント。クライアント・プログラムのバージ
+   ョンとACMS Desktopサーバのバージョンをチェックするためにユーザが作成した
+   ルーチンを，ACMS Desktopクライアントから呼び出すことができます(Microsoft
+   Windows，Windows NT，DOS，OSF/1，SCO UNIXで利用可能)。
+
+o  acmsdi_get_version - サーバ上でユーザが作成するバージョン・チェック・ルー
+   チンのためのエントリ・ポイント。クライアント・プログラム・ルーチンのバージ
+   ョンを知るためにユーザが作成したルーチンをACMS Desktopサーバから呼び出すこ
+   とができます。
+
+2.5  漢字コード変換
+
+クライアントとサーバで使用する漢字コードが異なる場合，クライアント・プログラ
+ム中で漢字コードの変換を行う必要があります。
+
+ACMS Desktopでは，Microsoft Windowsクライアント用にShift JIS - DEC漢字のコー
+ド変換を行うためのダイナミック・リンク・ライブラリ(DLL)を提供します。
+
+なお，Microsoft Windows以外のクライアントをご使用の場合は，漢字コード変換のた
+めのルーチンまたはライブラリを別途作成していただく必要があります。
+
+2.6  ドキュメント
+
+Programming and Management Guide
+
+『Proguramming and Management Guide』には，ACMS Desktopを使用するクライアン
+ト・プログラムの開発および試験方法が記載されています。ACMS Desktopの構成要素
+と機能，設計と開発のガイドライン，システム管理，およびインタフェース情報など
+が記載されています。
+
+Installation Guide
+
+『Installation Guide』には，インストレーション手順が記載されています。デスク
+トップ・システムへのソフトウェアのコピーとインストレーション手順，インストレ
+ーション検証プロシージャ(IVP)の実行手順などが記載されています。
+
+Reference Manual
+
+                                       7
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+『Reference Manual』は，『Programming and Management Guide』と共に使用するド
+キュメントです。これには，ACMS Desktopクライアント・サービスとプレゼンテーシ
+ョン・プロシージャに関する説明が記載されています。
+
+リリース・ノート
+
+『リリース・ノート』には，ACMS Desktopの本リリースに特有な情報および他のドキ
+ュメントの完成後に追加になった情報が記載されています。
+
+4D Externals User's Guide
+
+『4D Externals User's Guide』には，ACMS Desktopと4th Dimensionを使用する際の
+4D Externalsの使用方法が記載されています(Macintosh用のキットの中にオンライ
+ン・ドキュメントとして提供されます)。
+
+日本語機能の手引き
+
+『日本語機能の手引き』には，日本語キットのインストール手順，漢字コード変換ラ
+イブラリの説明などが記載されています。
+
+2.7  サンプル・アプリケーション
+
+レンタカー・アプリケーション(AVERTZ)など，いくつかのサンプル・アプリケーショ
+ンが提供されます。これらのサンプルはキットと共にクライアント・プラットフォー
+ムに提供されますが，本製品のサポート対象ではありません。サンプルには，ソー
+ス・コードおよび必要な実行イメージがすべて含まれています。ソース・コードが含
+まれていますので，デスクトップ・クライアント・プログラムを作成する際のテンプ
+レートとして使用することができます。
+
+サンプル・プログラムには，次の構成要素が含まれています。
+
+o  Microsoft COBOLとMicrosoft Cを使用したDOSクライアント
+
+o  Microsoft Windows SDKとMicrosoft Cを使用したMicrosoft Windowsクライアント
+
+o  Win32 APIを使用したWindows NTクライアント
+
+o  Visual Basicを使用したMicrosoft Windowsクライアント
+
+o  HyperCardと特別なHyperCard XFCNs (HyperTalkとMacintosh Programmer's
+   Workstation (MPW) Cにインプリメントされている)を使用したMacintoshクラ
+   イアント
+
+o  MPW CとData Access Managerサービスを使用したMacintoshクライアント
+
+o  4th Dimensionと特製の4th Dimension Externalsを使用したMacintoshクライアン
+   ト
+
+o  ACMS Desktopの概要を紹介するMacintosh HyperCardアプリケーション
+
+o  OSF/1，OpenVMS，およびSCO UNIX用のMotif V1.1を使用したポータブル・クライア
+   ント
+
+                                       8
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+o  ACMSタスク定義言語，DECformsのフォーム，およびVAX COBOLとVAX SQLにインプリ
+   メントされたプロシージャ・サーバ・モジュールを使用したアプリケーション・モ
+   ジュール
+
+4th Dimention Externals以外の一連のサンプル・アプリケーションは，サポート対象
+外のソフトウェア構成要素です。
+
+3  必要なハードウェア
+
+
+
+3.1  OpenVMS用ACMS Desktopサーバおよびクライアント
+
+適用されるプロセッサ
+
+AXP:
+     DEC 3000モデル400 AXPワークステーション,
+     DEC 3000モデル400 AXPサーバ,
+     DEC 3000モデル500 AXPワークステーション,
+     DEC 3000モデル500 AXPサーバ
+
+     DEC 4000モデル610 AXPシステム
+
+     DEC 7000モデル610 AXPシステム
+
+     DEC 10000モデル610 AXPシステム
+
+VAXft:
+     VAXftモデル110,
+     VAXftモデル310,
+     VAXftモデル410,
+     VAXftモデル610,
+     VAXftモデル612
+
+VAX:
+     VAX 4000モデル100,
+     VAX 4000モデル200,
+     VAX 4000モデル300,
+     VAX 4000モデル400,
+     VAX 4000モデル500,
+     VAX 4000モデル600
+
+     VAX 6000モデル200シリーズ,
+     VAX 6000モデル300シリーズ,
+     VAX 6000モデル400シリーズ,
+     VAX 6000モデル500シリーズ,
+
+
+                                       9
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+
+     VAX 6000モデル600シリーズ
+
+     VAX 7000モデル600シリーズ
+
+     VAX 8200, VAX 8250, VAX 8300,
+     VAX 8350, VAX 8500, VAX 8530,
+     VAX 8550, VAX 8600, VAX 8650,
+     VAX 8700, VAX 8800, VAX 8810,
+     VAX 8820, VAX 8830, VAX 8840
+
+     VAX 9000モデル110,
+     VAX 9000モデル210,
+     VAX 9000モデル300シリーズ,
+     VAX 9000モデル400シリーズ
+
+     VAX 10000モデル600シリーズ
+
+     VAX-11/730, VAX-11/750,
+     VAX-11/780, VAX-11/785
+
+MicroVAX:
+     MicroVAX II, MicroVAX 2000,
+     MicroVAX 3100モデル10/10E,
+     MicroVAX 3100モデル20/20E,
+     MicroVAX 3100モデル30,
+     MicroVAX 3100モデル40,
+     MicroVAX 3100モデル80,
+     MicroVAX 3100モデル90,
+     MicroVAX 3300, MicroVAX 3400,
+     MicroVAX 3500, MicroVAX 3600,
+     MicroVAX 3800, MicroVAX 3900
+
+
+VAXstation:
+     VAXstation II, VAXstation 2000,
+     VAXstation 3100モデル30,
+     VAXstation 3100モデル38,
+     VAXstation 3100モデル40,
+     VAXstation 3100モデル48,
+     VAXstation 3100モデル76,
+     VAXstation 3200, VAXstation 3500,
+     VAXstation 3520, VAXstation 3540
+
+     VAXstation 4000モデル60,
+
+
+
+                                      10
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+
+     VAXstation 4000モデル90,
+     VAXstation 4000 VLC
+
+VAXserver:
+     VAXserver 3100モデル10/10E,
+     VAXserver 3100モデル20/20E,
+     VAXserver 3300, VAXserver 3400,
+     VAXserver 3500, VAXserver 3600,
+     VAXserver 3602, VAXserver 3800,
+     VAXserver 3900
+
+     VAXserver 4000モデル200,
+     VAXserver 4000モデル300,
+     VAXserver 4000モデル500
+
+     VAXserver 6000モデル210,
+     VAXserver 6000モデル220,
+     VAXserver 6000モデル310,
+     VAXserver 6000モデル320,
+     VAXserver 6000モデル410,
+     VAXserver 6000モデル420,
+     VAXserver 6000モデル510,
+     VAXserver 6000モデル520,
+     VAXserver 6000モデル610,
+     VAXserver 6000モデル620,
+     VAXserver 6000モデル630
+
+適用されないプロセッサ
+
+MicroVAX I, VAXstation I, VAX-11/725,
+VAX-11/782, VAXstation 8000
+
+最低4 MBのメモリが必要です。必要なメモリの量は，サーバのCPU，サーバを使用する
+クライアントの個数，および同じサーバで実行されている他のアプリケーションなど
+によって異なります。
+
+3.2  OSF/1用ACMS Desktopクライアント
+
+適用されるプロセッサ
+
+AXP:
+     DEC 3000モデル400 AXPワークステーション,
+     DEC 3000モデル400 AXPサーバ,
+     DEC 3000モデル500 AXPワークステーション,
+     DEC 3000モデル500 AXPサーバ
+
+
+                                      11
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+
+
+     DEC 4000モデル610 AXPシステム
+
+     DEC 7000モデル610 AXPシステム
+
+     DEC 10000モデル610 AXPシステム
+
+
+3.3  Microsoft WindowsおよびDOS用ACMS Desktopクライアント
+
+o  日本語PATHWORKS for DOSおよびWindowsの『ソフトウェア仕様書(SPD 27.S7.xx)』
+   に記載されているパーソナル・コンピュータ(PC)で，Intel 80286，80386，80486
+   を使用しているPCが必要です。Microsoft Windowsクライアント・アプリケーショ
+   ンの場合，80386および80486を使用しているPCが必要です。
+
+o  最低640KBのシステム・メモリが必要です。1 MB以上用意することが望まれます。
+   Microsoft Windowsクライアント・アプリケーションの場合，4 MB以上必要です。
+
+o  日本語PATHWORKS for DOSおよびWindowsの『ソフトウェア仕様書(SPD 27.S7.xx)』
+   に記載されている各種システム用のイーサネット・コントローラが必要です。1つ
+   のシステムでは，そのシステムの制限に応じて複数の通信デバイスを装備できま
+   す。通常，1つの通信デバイスは他の通信デバイスと同時に使用できないため，別
+   の通信デバイスを使用する場合はシステムをリブートする必要があります。
+
+o  ローカル・エリア・ネットワークで結ばれたPCシステムでは，5.25インチのフロッ
+   ピィ・ディスク(360KB)，または3.50インチのフロッピィ・ディスク(720KB)を読む
+   ことができるフロッピィ・ディスク・ドライブを備えたシステムが最低1つ必要で
+   す。
+
+o  Dial-in機能(シリアル通信)を使用する場合は，Hayes互換のモデムが必要です。
+
+3.4  Windows NT用ACMS Desktopクライアント
+
+o  Intel 80386，80486を使用しているパーソナル・コンピュータ
+
+o  Alpha AXP: DECpc 150 AXPパーソナル・コンピュータ
+
+3.5  Macintosh用ACMS Desktopクライアント
+
+o  PATHWORKS for Macintoshの『ソフトウェア仕様書(SPD 31.53.xx)』に記載されて
+   いるMacintoshパーソナル・コンピュータ
+
+
+
+
+
+
+                                      12
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+3.6  SCO UNIX用ACMS Desktopクライアント
+
+o  Open Desktopを使用する場合は，Open Desktopの『ソフトウェア仕様書(SPD
+   32.57.xx)』の「必須ハードウェア」の節を参照してください。
+
+o  SCO UNIX System V/386を使用する場合は，SCO UNIX System V/386 Development
+   Systemの『ソフトウェア仕様書(SPD 32.52.xx)』の「必須ハードウェア」の節を参
+   照してください。
+
+4  クラスタ環境
+
+本製品は，正規のライセンスを持つクラスタ構成*の上にインストールされている場
+合，機能上の制限を受けません。本ソフトウェアで必要とされるハードウェアについ
+ては「必要なハードウェア」の項に記述されているとおりです。
+
+*  V5.x VMScluster構成については，VMSclusterの『ソフトウェア仕様書(SPD
+   29.78.xx)』に記載されています。CI，Ethernet，Mixed Interconnectの構成
+   についても記載されています。
+
+5  必須ソフトウェア
+
+ACMS Desktopを実行する際に必要なソフトウェアを次に記載します。
+
+5.1  OpenVMS用ACMS Desktopサーバ
+
+o  日本語OpenVMS AXPオペレーティング・システムV1.5〜V6.1 (SPD 28.A9.xx)または
+   日本語OpenVMS VAXオペレーティング・システムV5.5〜V6.1 (SPD 25.C4.xx)。
+
+o  日本語ACMS Desktop V2.0 for OpenVMS。
+
+o  日本語ACMS V3.2〜V4.0，日本語ACMS Remote V3.2〜V4.0，または日本語ACMS
+   Run-Time V3.2〜V4.0 (SPD 26.V9.xxまたは25.50.xx)。
+
+o  サポートするネットワーク
+
+   -  DECnetを使用する場合，DECnet-VAX V5.5〜V6.1 (SPD 48.48.xx)またはDECnet
+      for OpenVMS AXP V1.5〜V6.1 (SPD 42.25.xx)。
+
+   -  PATHWORKSまたはAppleTalkを使用する場合，個々のクライアントに対応する
+      PATHWORKSの『ソフトウェア仕様書』に記載されている「必須ソフトウェア」
+      の節を参照してください(たとえば，Macintoshクライアントの場合は，日本語
+      PATHWORKS for Macintoshの『ソフトウェア仕様書』を参照してください)。
+
+      *  AppleTalkはOpenVMS VAX V5.5環境でのみサポートされます。
+
+   -  TCP/IPを使用する場合，DEC TCP/IP Services for OpenVMS V1.3〜V2.0
+      (SPD 25.A4.xx)，またはDEC TCP/IP Services for OpenVMS AXP V3.0 (SPD
+      46.46.xx)。
+
+                                      13
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+   -  NetWareを使用する場合，ACMS DesktopサーバがあるシステムにIPXスタックが
+      インストールされている必要があります。IPXスタックは，InterConnections社
+      から発売されているいくつかのソフトウェア製品に含まれています。
+
+      *  NetwareはOpenVMS VAX V6.1およびOpenVMS AXP環境ではサポートされませ
+         ん。
+
+   -  Dial-in (シリアル通信)を使用する場合，必要なソフトウェア構成要素はACMS
+      Desktopが提供します。
+
+   -  X.25を使用する場合，PATHWORKS X.25 (DOS) V1.0の『ソフトウェア仕様書(SPD
+      42.73.xx)』の「必須ソフトウェア」の節を参照してください。
+
+5.2  Microsoft WindowsおよびDOS用ACMS Desktopクライアント
+
+サポートするオペレーティング・システム
+
+o  Microsoft DOS V3.3，V5.0，V6.0
+
+o  Microsoft Windows V3.0，V3.1
+
+サポートするネットワーク
+
+o  DECnetを使用する場合，日本語PATHWORKS for DOSおよびWindows V4.0〜V5.0 (SPD
+   27.S7.xx)。
+
+o  TCP/IPを使用する場合，PATHWORKS for DOS (TCP/IP) V2.0 (SPD 33.45.xx)または
+   Windows Sockets (1.1)と互換のTCP/IP。
+
+o  NetWareを使用する場合，Novell社のNetware DOS Client V2.15，V2.2，V3.x，
+   V4.0，または日本語PATHWORKS V5.0 for DOSおよびWindowsと共に使用するために
+   必要なソフトウェア構成要素はACMS Desktopが提供します。
+
+o  Dial-in (シリアル通信)を使用する場合，必要なソフトウェア構成要素はACMS
+   Desktopが提供します。
+
+o  PATHWORKSを使用してX.25を使用する場合，PATHWORKS X.25 (DOS) V1.0の『ソフト
+   ウェア仕様書(SPD 42.73.xx)』の「必須ソフトウェア」の節を参照してください。
+
+o  シリアル通信を使用してX.25を使用する場合，必要なソフトウェア構成要素はACMS
+   Desktopが提供します。
+
+5.3  Windows NT用ACMS Desktopクライアント
+
+サポートするオペレーティング・システム
+
+o  Windows NTオペレーティング・システムV3.1 for Alpha AXPまたはIntel
+
+サポートするネットワーク
+
+o  TCP/IPを使用する場合，Windows NT Windows Sockets for TCP/IP。
+
+o  DECnetを使用する場合，PATHWORKS V4.1 for Windows NT (SPD 51.56.xx)。
+
+                                      14
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+5.4  Macintosh用ACMS Desktopクライアント
+
+サポートするオペレーティング・システム
+
+o  Macintoshオペレーティング・システムV7.0〜V7.1
+
+サポートするネットワーク
+
+o  DECnetを使用する場合，日本語PATHWORKS for Macintosh V1.1 (SPD 27.S6.xx)。
+
+o  AppleTalkを使用する場合，日本語PATHSWORKS for Macintosh V1.1の『ソフトウェ
+   ア仕様書』の「必須ソフトウェア」の節を参照してください。
+
+   *  AppleTalkは，日本語OpenVMS VAX V5.5環境でのみサポートされています。
+
+o  TCP/IPを使用する場合，MacTCPツール(日本語PATHWORKS for Macintosh V1.1また
+   はApple Computer社のMacX 1.1.7で提供されています)。
+
+o  Dial-in (シリアル通信)を使用する場合，シリアル通信用ツールが必要です(Apple
+   社のSerial Toolsなど)。
+
+5.5  SCO UNIX用ACMS Desktopクライアント
+
+サポートするオペレーティング・システム
+
+o  SCO UNIX System V/386，Release V3.2，Version 4 (SPD 32.52.xx)またはOpen
+   Desktop Release 1.1 (SPD 32.57.xx)。
+
+サポートするネットワーク
+
+o  SCO UNIXのTCP/IPを使用する場合，SCO TCP/IP V1.1 (SPD 32.56.xx)。
+
+o  DECnetを使用する場合，DECnet for SCO UNIX V1.2 (SPD 34.56.xx)。
+
+5.6  OpenVMS用ACMS Desktopクライアント
+
+サポートするオペレーティング・システム
+
+o  日本語OpenVMS VAXオペレーティング・システムV5.5〜V6.1 (SPD 25.C4.xx)または
+   日本語OpenVMS AXPオペレーティング・システムV1.5〜V6.1 (SPD 28.A9.xx)。
+
+サポートするネットワーク
+
+o  DECnet-VAX V5.5〜V6.1 (SPD 48.48.xx)またはDECnet for OpenVMS AXP V1.5〜
+   V6.1 (SPD 42.25.xx)。
+
+
+
+                                      15
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+5.7  OSF/1用ACMS Desktopクライアント
+
+サポートするオペレーティング・システム
+
+o  日本語DEC OSF/1オペレーティング・システムV1.3 (SPD 27.Y7.xx)
+
+サポートするネットワーク
+
+o  TCP/IPを使用する場合，必要なソフトウェア構成要素は日本語DEC OSF/1オペレー
+   ティング・システムが提供します。
+
+5.8  OpenVMSテーラリング
+
+本製品の全機能を使用するためには,次のOpenVMSクラスが必要です。
+
+o  OpenVMS必須セーブセット
+
+o  ネットワーク・サポート
+
+o  プログラミング・サポート
+
+o  システム・プログラミング・サポート
+
+o  ユーティリティ
+
+OpenVMSのクラスとテーラリングについての詳細は，日本語OpenVMSオペレーティン
+グ・システムの『ソフトウェア仕様書』を参照してください(SPD 28.A9.xxまたは
+25.C4.xx)。
+
+6  オプション・ソフトウェア
+
+ここに掲げてある製品のバージョンはそれぞれのプラットフォームのオペレーティン
+グ・システムのバージョンに依存します。弊社製品に関しては，必要なバージョンは
+その製品の『システム・サポート付加情報(SSA)』を参照してください。
+
+6.1  OpenVMS用ACMS Desktopサーバ
+
+o  DECtrace for VMS V1.2 (SPD 25.G1.xx)
+
+o  ACMSに関連するシステムについては，ACMSの『ソフトウェア仕様書(SPD 26.V9.xx
+   または25.50.xx)』を参照し，関連製品の必要なバージョンなどの情報を得てくだ
+   さい。ACMS Desktopのオプション・ソフトウェアは，Desktopサーバ・システムに
+   インストールされているACMSのオプション・ソフトウェアによって異なります。
+
+
+
+
+
+                                      16
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+6.2  Microsoft WindowsおよびDOS用ACMS Desktopクライアント
+
+o  クライアント・プログラムを作成する際に必要な
+   DECnet-DOSプログラミング・ライブラリ，またはその他のライブラリを作成す
+   るために使用するプログラム・モジュール・アセンブラ。アセンブラはMicrosoft
+   社から購入できます。
+
+o  Microsoft C V6.0またはV7.0互換のCコンパイラ。またはMicrosoft Visual C
+   V1.0。
+
+o  Microsoft COBOL V4.0 (Microsoft社製)。DOS用コマンド・ライン・サンプル・ア
+   プリケーションを修正し，再リンクする際にMS-COBOLが必要です。
+
+o  Microsoft Windows V3.0〜V3.1 (Microsoft社製)
+
+o  Microsoft Windowsソフトウェア開発キットV3.0〜V3.1 (Microsoft社製)
+
+o  Visual Basic V1.0〜V3.0 (Microsoft社製)
+
+o  TFM V3.1.3
+
+o  Smalltalk (ParcPlace systems社製)
+
+o  JAM V5.02 (JYACC社製)
+
+o  Vermont Views (Vermont Creative Software社製)
+
+o  Dialog V2.2 (Micro focus社製)
+
+6.3  Macintosh用ACMS Destopクライアント
+
+o  HyperCard V2.0v2，V2.1 (Apple Computer社製)
+
+o  Macintosh Programmer's Workstation (MPW)開発環境V3.2 (Apple Computer社製)
+
+o  Macintosh Programmer's Workstation C V3.1 (Apple Computer社製)
+
+o  4th Dimension V2.3，V3.0 (ACI US社製)
+
+o  Smalltalk (ParcPlace Systems社製)
+
+o  Open Interface V1.03 (Neuron Data社製)
+
+o  Think C V4.0〜V4.1 (Symantec社製)
+
+6.4  SCO UNIX用ACMS Desktopクライアント
+
+SCO UNIX
+
+o  SCO TCP/IP開発システム，リリース1.1
+
+o  SCO UNIX System V/386開発システム，リリース3.2，バージョン4 (SPD 32.52.xx)
+
+o  DECnet for SCO UNIX開発者キット(SPD 34.21.xx)
+
+                                      17
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+Open Desktop
+
+o  Open Desktop開発システム，リリース1.1
+
+o  DECnet for SCO UNIX開発者キット(SPD 34.21.xx)
+
+6.5  OpenVMS用ACMS Desktopクライアント
+
+VAX
+
+o  日本語DECforms V1.2〜V1.4 (SPD 26.K4.xx)
+
+o  VAX C V2.0〜3.2 (SPD 25.38.xx)
+
+o  日本語CDD/Repository for VMS V5.1 (SPD 28.A3.xx)
+
+o  DECsetリリース11 for OpenVMS VAXシステム(SPD 27.07.xx)
+
+o  日本語VMS DECwindows Motif V1.1 (SPD 27.M9.xx)
+
+AXP
+
+o  日本語DECforms V1.4 (SPD 62.75.xx)
+
+o  DEC C V1.2 for OpenVMS AXPシステム(SPD 42.26.xx)
+
+o  CDD/Repository V5.3 for OpenVMS AXPシステム(SPD 45.91.xx)
+
+o  DECsetリリース11 for OpenVMS AXPシステム(SPD 42.29.xx)
+
+o  日本語DECwindows Motif V1.1 for OpenVMS AXP (SPD 28.A8.xx)
+
+6.6  OSF/1用ACMS Desktopクライアント
+
+o  DEC C++ V1.3 for DEC OSF/1 (SPD 41.91.xx)
+
+7  バージョンアップの考慮
+
+本製品の将来のバージョンでは，必要なハードウェアおよびソフトウェアの最小構成
+が変更されることがあります。
+
+8  提供媒体
+
+o  TK50ストリーミング・テープ
+
+o  CD-ROM
+
+日本語ACMS Desktop for OpenVMSソフトウェアは，VAX版は「日本語OpenVMS
+VAX Consolidated Software Distribution」CD-ROMの一部として，AXP版は「日本
+語OpenVMS AXPソフトウェア・ライブラリ」CD-ROMの一部として，それぞれ提供されま
+す。
+
+                                      18
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+日本語ACMS Desktop for OpenVMSドキュメントは，VAX版は「日本語OpenVMS VAX
+Online Documentation Library」CD-ROMの一部として，AXP版は「日本語OpenVMS AXP
+ソフトウェア・ライブラリ」CD-ROMの一部として，それぞれ提供されます。
+
+
+9  注文情報
+
+日本語ACMS Desktop                     QL-GZGJA-3B
+コンカレント・ユース・ライセンス:
+日本語ACMS Desktop                     QL-GZGJA-2B
+パーソナル・ユース・ライセンス:
+TK50バイナリ・キット:                  QA-GZGJA-H5
+日本語ドキュメント・キット:            QA-GZGJA-GZ
+英語ドキュメント・キット:              QA-GZGAA-GZ
+
+上記の内容はリリース時点の情報です。最新情報については，最寄りの日本DECの各支
+店／営業所までお問い合せください。
+
+10  ソフトウェア・ライセンス
+
+本ソフトウェアは日本DEC標準販売約款中のライセンス規定に基づいて提供されます。
+日本DECのライセンス条件とその方針についての詳細は，最寄りの日本DEC各支店／営
+業所にお問い合わせください。
+
+ライセンス管理機能
+
+本ソフトウェアは，OpenVMSライセンス管理機能(LMF)をサポートしています。
+
+本製品のライセンス単位には，コンカレント・ユースとパーソナル・ユースがありま
+す。コンカレント・ユースでは，ACMS Desktopサーバにログインする数に制限があり
+ますが，ログインするユーザには制限はありません。一方，パーソナル・ユースで
+は，特定のIDを持つユーザだけがACMS Desktopにログインすることができますが，ロ
+グインする数には制限がありません。
+
+ライセンス管理機能についての詳細は，OpenVMSオペレーティング・システムの『ソ
+フトウェア仕様書(SPD 28.A9.xxまたは25.C4.xx)』またはドキュメント・セット中の
+『License Management Utility Manual』を参照してください。
+
+日本DECのライセンス契約の条項についての詳細は，最寄りの日本DEC各支店／営業所
+にお問い合わせください。
+
+11  ソフトウェア製品サービス
+
+日本DECでは様々なサービス・オプションを提供しています。詳細については，最寄り
+の日本DECの各支店／営業所にお問い合わせください。
+
+
+
+                                      19
+
+ 
+
+
+ 日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ ソフトウェア仕様書
+
+
+12  保証
+
+本ソフトウェア製品については，日本DEC所定のソフトウェア保証基準に定められた保
+証が提供されます。
+
+上記の内容は，リリース時点の情報です。最新の情報については，日本DECの各支店／
+営業所にお問い合わせください。
+
+(c) 1994 Digital Equipment Corporation Japan. All rights reserved.
+
+[R]  4th DimensionはACI US社の登録商標です。
+
+[R]  Apple, AppleTalk, HyperCard, HyperTalk, Macintosh,およびMacTCPはApple
+     Computer社の登録商標です。
+
+[R]  DialogはMicro Focus社の登録商標です。
+
+[R]  HayesはHayes Microcomputer Products社の登録商標です。
+
+[R]  JAMはJYACCの登録商標です。
+
+[R]  Microsoft, MS,およびVisual BasicはMicrosoft社の登録商標です。
+
+[R]  MotifおよびOSF/1はOpen Software Foundation社の登録商標です。
+
+[R]  NetWareはNovell社の登録商標です。
+
+[R]  UNIXはX/Openカンパニーリミテッドがライセンスしている米国ならびに他の国に
+     おける登録商標です。
+
+[R]  Vermont ViewsはVermont Creative Softwareの登録商標です。
+
+[TM] IntelはIntel社の商標です。
+
+[TM] InterConnectionsはInterConnections社の商標です。
+
+[TM] MPWはApple Computer社の商標です。
+
+[TM] Open DesktopおよびSCOはSanta Cruz Operations社の商標です。
+
+[TM] Open InterfaceはNeuron Data社の商標です。
+
+[TM] WindowsおよびWindows NTはMicrosoft社の商標です。
+
+
+
+
+
+                                      20
+
+ 
+
+
+日本語ACMS Desktop Version 2.0 for OpenVMS                      SPD 47.73.01
+ソフトウェア仕様書
+
+
+
+[TM] ACMS, ACMS Desktop, ACMSxp, AXP, CDD/Repository, CI, DEC, DECforms,
+     DECnet, DECnet-DOS, DECset, DECtrace, DECwindows, Digital, MicroVAX,
+     OpenVMS, PATHWORKS, TFM, TK, VAX, VAXft, VAXserver, VAXstation, VAX C,
+     VAX COBOL, VAX SQL, VMS, VMSclusterおよびDIGITAL logoは米国Digital
+     Equipment Corporationの商標です。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      21

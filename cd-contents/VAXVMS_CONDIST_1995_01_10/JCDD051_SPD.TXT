@@ -1,0 +1,347 @@
+ 
+
+
+
+
+
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+日本語CDD/Repository for OpenVMS VAX Version 5.1                 SPD 28.A3.00
+   ソフトウェア仕様書
+
+仕様書の包含する範囲
+
+この文書は，日本語CDD/Repository for OpenVMS VAXのソフトウェア機能仕様を述べ
+たものです。
+
+1  日本語CDD/Repository for OpenVMS VAXの概要
+
+日本語CDD/Repository for OpenVMS VAX（以下CDD/Repositoryと記す）は，全社レベ
+ルに渡ってツールやアプリケーションを組織化，管理，制御，統合する機能を提供す
+る，能動的，分散型リポジトリ・システムです。CDD/RepositoryはDECのCOHESION環境
+の基礎であり，Network Application Support (NAS)の構成要素となっています。この
+システムは以前のCDD/Plusのデータ辞書をさらに発展させたものであり，ソフトウェ
+ア開発環境において必要なデータ統合機能を提供します。
+
+リポジトリには，情報管理機能および環境管理機能が備わっているため，アプリケー
+ション開発を簡素化することができます。
+
+1.1  情報管理機能
+
+情報の共通ビュー
+
+CDD/Repositoryは，複数のアプリケーションからアクセス，または共用される共通エ
+レメントやメソッド用の記憶領域を備えています。共通エレメントを使用(および再使
+用)することにより，開発に要する時間を節約できます。
+
+情報の一貫性
+
+複数のアプリケーションによって同一のエレメントやメソッドが使用される場合に
+は，二重定義や定義の不一致を回避することができます。CDD/Repositoryはユーザ
+に，ユーザに関係するエレメントが変更されたことを警告する通知システムを備えて
+います。またユーザは，ある変更を行う前にその変更がもたらす結果をあらかじめ調
+べることもできます。
+
+                                    DIGITAL                         1993年3月
+
+                                                                  AE-PUAPA-TE
+
+ 
+
+
+ 日本語CDD/Repository for OpenVMS VAX Version 5.1                SPD 28.A3.00
+ ソフトウェア仕様書
+
+
+情報の分散
+
+CDD/Repositoryは，ユーザが複数の物理的リポジトリを，ネットワーク上の複数の装
+置にまたがる1つの論理的リポジトリとして扱えるように設計されています。ユーザは
+単一のノードの複数の装置，VAXcluster内の各種ノード，またはネットワークおよび
+リモート・ノードの性能特性の範囲内でローカル・エリア・ネットワークまたはワイ
+ド・エリア・ネットワーク上の各種ノード上の複数の装置にあるリポジトリに対して
+透過的にアクセスすることができます。リポジトリは企業の必要性に応じて組織化す
+ることができ，レポジトリ内の定義は中央でもローカルでも管理できます。そのユー
+ザがアクセスを許可されているリポジトリであれば，ユーザは，1つの物理的リポジト
+リから別のリポジトリに切り替えることができ，どの定義にもアクセスできます。
+
+情報モデルの拡張性
+
+CDD/Repositoryの情報モデルは，ソフトウェア開発プロセスの全過程にわたる一連の
+基本的なエレメント，振るまい，関連(relationship)を備えています。これによりユ
+ーザは，開発プロセスにともなって発生する生産物および開発プロセスのさまざまな
+局面をモデル化，操作，制御することができます。
+
+情報モデルはオブジェクト指向型階層構造の形で実現されます。この形はアプリケー
+ション・コードに明示的に記述しなければならない情報量を減らすために設計された
+ものです。
+
+CDD/Repositoryの情報モデルは，さらにエレメント，振るまい，関連をつくり拡張す
+ることができます。この機能によりユーザは，情報モデルを適合化 (拡張)してアプ
+リケーションとツールを統合したり，ビジネス特有の必要性に対処することもできま
+す。拡張をする場合は，CDD/Repository呼出しインタフェースを使用するか，あるい
+は，姉妹製品のCDD/Administratorを使用します。
+
+1.2  環境管理機能
+
+構成管理
+
+構成管理は複合的な開発に取り組むグループの必要性に合わせて行われます。これ
+は，複数バージョンのシステム・エレメント，複数バージョンのシステム構成，さま
+ざまな開発ラインのために提供されます。
+
+コンテキスト管理
+
+コンテキスト管理によりユーザはプロジェクトのタスクに伴う各種の処理を選択する
+ことができ，各処理の現在状況を維持することができます。
+
+                                       2
+
+ 
+
+
+日本語CDD/Repository for OpenVMS VAX Version 5.1                SPD 28.A3.00
+ソフトウェア仕様書
+
+
+ユーザ設計の許可構造
+
+システム・エレメントがより安定した，あるいは設定した判断基準に達した場合に，
+この構造によりそのシステム・エレメントを，より高次の（より多くの利用に公開す
+る）レベルに移すことができます。
+
+バージョン管理
+
+この機能によりユーザは，生産物のバージョンを追跡して，複数のユーザによって同
+時発生する新バージョンを管理することができます。1つのオブジェクトのバリアント
+を各種作ることができ，それらを1つのバージョンにまとめることもできます。
+
+ピース・トラッキングと通知
+
+ピース・トラッキングを用いると共用定義の使用状況を調査することができます。こ
+れにより定義変更による影響分析が容易になり，変更の計画を行いやすくなります。
+
+通知システムとは，ある定義が変更された場合に，その定義のコピーにアクセスする
+すべてのユーザやアプリケーションに通知する仕組みです。
+
+データ機密保護と統一性
+
+CDD/Repositoryにはリポジトリ定義へのアクセス権を認可あるいは禁止する機能があ
+ります。定義に対してCDD/Repositoryが行う機密保護の機能は，日本語OpenVMS [1]
+の保護機構と整合性があります。
+
+1.3  ユーティリティ／インタフェース
+
+Common Dictionary Operator (CDO)ユーティリティ
+
+CDOユーティリティは，CDD/Repositoryへのコマンド・ライン・ユーザ・インタフェー
+スであり，これによりユーザはデータの記述とリポジトリ管理を行えるようになりま
+す。CDOユーティリティは日本語OpenVMSスタイルのコマンド入力をサポートしていま
+す。メニュー方式のエディタにより，ユーザは新しいフィールドおよびレコードの定
+義を柔軟に作成し，既存のフィールドおよびレコードの定義をブラウジングすること
+ができます。
+
+_______________________
+  [1] 日本語CDD/Repository for OpenVMS VAXのドキュメントでは，日本語VMSおよび
+
+      日本語OpenVMSは，日本語OpenVMS VAXを示します。
+
+                                       3
+
+ 
+
+
+ 日本語CDD/Repository for OpenVMS VAX Version 5.1                SPD 28.A3.00
+ ソフトウェア仕様書
+
+
+CDOを使用すると，DEC提供の情報モデルの拡張版として定義されているオブジェクト
+をはじめとして，CDD/Repositoryの情報モデルに入っているあらゆる種類のオブジェ
+クトを定義することができます。
+
+VERIFY/FIXユーティリティ
+
+このVERIFY/FIXユーティリティにより，リポジトリの矛盾を調べ，必要に応じて修復
+します。
+
+呼出しインタフェース
+
+システム・プログラマ，ソフトウェア技術者，経験豊富なアプリケーション設計者
+は，オブジェクト指向の呼出し可能なインタフェースにより，ユーザ・プログラムか
+らCDD/Repositoryを直接起動することができます。このインタフェースを通じて，ア
+プリケーションはリポジトリ・エレメントを操作するようなメッセージを送出するプ
+ロシージャを呼び出します。呼出しインタフェースを使用すると，ユーザはCDOユーテ
+ィリティを使用しなくても直接リポジトリにアクセスすることができます。
+
+1.4  日本語機能
+
+CDD/Repositoryでは，以下の日本語機能が使用できます。
+
+o  FIELD/RECORD名を日本語で指定できます。
+
+o  CDO上では，データ長をそのCHARACTER_SETに合わせた文字ベースでの定義が可能で
+   す。
+
+o  日本語VAX COBOLで日本語項目を使用できるCHARACTER_SETの指定ができます。
+
+o  日本語VAX COBOLのPICTURE句で日本語編集項目を使用できるEDIT_STRINGの指定が
+   できます。
+
+詳しくは，『日本語CDD/Repository for OpenVMS VAXリリース・ノート』を参照して
+ください。
+
+
+
+
+
+                                       4
+
+ 
+
+
+日本語CDD/Repository for OpenVMS VAX Version 5.1                SPD 28.A3.00
+ソフトウェア仕様書
+
+
+1.5  ドキュメント
+
+メディア・キットの中にある日本語CDD/Repository for OpenVMS VAXドキュメント・
+セットの内容は次のとおりです。
+
+o  『日本語CDD/Repository for OpenVMS VAXユーザーズ・ガイド』
+
+o  『日本語CDD/Repository for OpenVMS VAX CDOリファレンス・マニュアル』
+
+o  『日本語CDD/Repository for OpenVMS VAXアーキテクチャ・マニュアル』
+
+o  『Installing CDD/Repository on VMS Systems』
+
+別売の『CDD/Repository for VMS Advanced Documentation Set』の内容は次のとおり
+です。
+
+o  『CDD/Repository Callable Interface Manual』
+
+o  『CDD/Repository Information Model Volume I』
+
+o  『CDD/Repository Information Model Volume II』
+
+DMUを使用する場合は別売の『DMU Documentation Set』をお勧めします。内容は次の
+とおりです。
+
+o  『VAX CDD/Plus User's Guide』
+
+o  『VAX CDD/Plus Utilities Reference Manual (DMU and CDDV)』
+
+o  『VAX CDD/Plus Data Definition Language Reference Manual』
+
+2  必要なハードウェア
+
+『システム・サポート付加情報（SSA 28.A3.00-A）』に指定されたVAX, MicroVAX,
+VAXstation,あるいはVAXserver構成
+
+
+
+
+                                       5
+
+ 
+
+
+ 日本語CDD/Repository for OpenVMS VAX Version 5.1                SPD 28.A3.00
+ ソフトウェア仕様書
+
+
+3  必要なソフトウェア
+
+ターミナル対応のシステムの場合(日本語DECwindowsインターフェイスなし):
+
+o  日本語OpenVMSオペレーティング・システム
+
+o  日本語DEC Rdb/VMS for OpenVMS VAX実行時オプション
+
+日本語VWSが動作しているワークステーションの場合:
+
+o  日本語OpenVMSオペレーティング・システム
+
+o  日本語VMSワークステーション・ソフトウェア
+
+o  日本語DEC Rdb/VMS for OpenVMS VAX実行時オプション
+
+本製品に必須の，あるいはオプションとして使用できるソフトウェア製品と，その適
+用バージョンについては『システム・サポート付加情報（SSA 28.A3.00-A）』を参照
+してください。
+
+4  注文情報
+
+最寄りの日本DECの各支店/営業所にお問い合わせください。
+
+5  ソフトウェア・ライセンス
+
+本ソフトウェアは日本DEC標準販売約款中のライセンス規定に基づいて提供されます。
+
+ただし，この製品は，例外的に標準版CDD/Repositoryのライセンスにて使用が可能で
+す。
+
+日本DECのライセンス条件とその方針についての詳細は，最寄りの日本DECの各支店/営
+業所にお問い合わせください。
+
+
+
+
+
+
+                                       6
+
+ 
+
+
+日本語CDD/Repository for OpenVMS VAX Version 5.1                SPD 28.A3.00
+ソフトウェア仕様書
+
+
+6  ライセンス管理機能
+
+本ソフトウェアはOpenVMSライセンス管理機能（LMF）をサポートしています。
+
+ライセンス単位には，無制限ユーザ・システムおよびパーソナル・ユースがありま
+す。
+
+無制限ユーザ・システムでは，指定されたシステム上で特に指定された場合をのぞ
+き，利用者数無制限で利用できます。
+
+本製品はパーソナル・ユースも提供しています。パーソナル・ユースでは，登録され
+た1人のみが利用できます。
+
+ライセンス管理機能についての詳細は『OpenVMS Operating System Software Product
+Description (SPD 25.01.xx)』またはOpenVMSオペレーティング・システムのドキュメ
+ント・セットの中の『License Management Facility Manual』を参照してください。
+
+7  ソフトウェア製品サービス
+
+日本DECでは，様々なサービス・オプションを提供しています。詳細については，最寄
+りの日本DEC各支店/営業所にお問い合わせください。
+
+8  保証
+
+本ソフトウェアについては，日本DEC所定のソフトウェア保証基準に定められた保証が
+提供されます。
+
+
+
+
+
+_______________________
+ [TM] DIGITALロゴ, ACMS, ALL-IN-1, CDD/Administrator, CDD Plus, CDD/Repository,
+      CI, COHESION, DECdesign, DECforms, DECintact, DECnet, DECtp, DECtrace, DECwin-
+      dows, MicroVAX, Rdb/VMS, TK, VAX, VAX Ada, VAX BASIC, VAX C, VAX COBOL,
+      VAX COBOL GENERATOR, VAX DATATRIEVE, VAX DBMS, VAX DIBOL, VAX FORTRAN, VAX RALLY,
+      VMS, VAXstation, VAX Pascal, VAX TEAMDATA, VAXcluster, VAXft, VAXserver
+
+      およびVIDAは，米国Digital Equipment Corporationの商標です。
+
+                                       7

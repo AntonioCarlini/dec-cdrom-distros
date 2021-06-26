@@ -1,0 +1,412 @@
+PRODUCT NAME: VAX FMS, Version 2.4                                SPD 26.10.12
+
+DESCRIPTION
+
+The VAX FMS Forms Management System is designed to aid in the development of
+application programs that use video forms.  VAX FMS manages the forms for
+application programs that use DIGITAL's family of VT100, VT200, and
+VT300-compatible terminals.  Users of VAX FMS on DIGITAL's VAXstations
+operating in VT terminal-emulation mode can create, display, and interact
+with long forms of up to 54 lines in 80-column mode or 63 lines in 132-column
+mode.  When used in conjunction with the DECnet/SNA VMS Distributed Host
+Command Facility (DHCF), VAX FMS can be used, with restrictions, with any IBM
+3270-compatible terminal supported by DHCF.  Forms created using VAX FMS can
+be printed on any DIGITAL printer. 
+
+Forms defined using VAX FMS provide the programmer with the ability to use
+the following features of DIGITAL's family of VT100, VT200, and
+VT300-compatible terminals: 
+
+^  Individual character attributes of reverse video, bold, blinking, and 
+   underline
+
+^  Line attributes of double width, double height and scrolled
+
+^  Screen wide attributes such as 80 or 132 column lines and reverse video
+
+^  Alternate character sets including the VT100 "special graphics character 
+   set" for line drawing
+
+VAX FMS form data structures are used by the Form Driver during run-time to
+display forms, and to access and validate data entered by the terminal
+operator.  Forms can be created and  modified interactively with the
+interactive editing facility (FMS/EDIT) or they can be defined as a source
+form description with the Form Language and then converted to a form data
+structure using the Form Language Translator (FMS/TRANSLATE).  (Long forms
+larger than 54 lines in 80-column mode and 63 lines in 132-column mode can
+only be created and modified with the Form Language Translator.) 
+
+Forms usually reside in form library files on disk and are retrieved as
+needed by application programs at execution time.  This arrangement results
+in a high degree of independence between form data structures and application
+programs. Forms can be modified without recompilation or relinking of the
+application program.  Forms can also be converted into  an object module and
+linked with application programs to create memory-resident forms, or forms
+can be dynamically loaded into memory by the application program. 
+
+VAX FMS applications use the FMS Form Driver to control the display of forms,
+their associated data fields, and the input and output of data into fields.
+All data input from the terminal and output to the terminal is passed as
+ASCII strings. 
+
+Data for each field in a VAX FMS form is validated by the Form Driver.
+Field-validation characters are used to construct a "field validation
+picture". During program execution, characters input or output to the field
+are compared to the picture to determine if they are valid.  In most
+instances, the field picture can contain several different field validation
+characters and also field-marker characters.  Field-marker characters, used
+to improve the readability of the displayed form, are transparent to the
+application program. 
+
+Attributes from the following list can be assigned to each individual field: 
+
+^  Name of the Field
+
+^  A default value
+
+^  A help message
+
+^  Autotab*
+
+^  Clear Character*
+
+^  Display Only
+
+^  Fixed Decimal*
+
+^  Indexed
+
+^  Left Justify
+
+^  Right Justify*
+
+^  Must Fill
+
+^  No Echo
+
+^  Response Required
+
+^  Supervisor Only
+
+^  Uppercase*
+
+^  User action routines and associated data parameters
+
+^  Zero Fill
+
+^  Zero Suppress*
+
+*  This feature is either modified or absent when VAX FMS is used on a
+   3270-compatible terminal.
+
+The attributes assigned to each field are checked for validity when the form
+is created.  Some combinations of attributes are not legal.  Each form has
+attributes that apply to the form as a whole.  These attributes include: 
+
+^  Name of the form
+
+^  Name of an associated help form
+
+^  Screen background (black, white, or do not change)
+
+^  Screen width (80 columns, 132 columns, or do not change)
+
+^  Screen area to clear when displaying the form
+
+^  Terminal character set
+
+^  User action routines and associated data parameters
+
+^  Video attributes to be used if the field being worked on is to be 
+   highlighted at run-time
+
+^  The order in which fields are to be accessed
+
+^  Named Data
+
+VAX FMS Utilities
+
+Interactive Form Editor
+
+The FMS/EDIT command invokes the interactive editing facility that is used by
+the form developer to create and modify video forms.  The creation of forms
+with the interactive editing facility is accomplished in phases.  The layout
+phase is used to specify the visual appearance of the form, the background
+text, and what types of characters are to be valid input to the fields. While
+laying out a form on the screen, one has available a set of 48 function keys
+and key combinations.  These keys perform functions such as cursor movement,
+delete and undelete, cut and paste, box drawing, video attribute assignment,
+centering, and displaying  HELP.   Additional phases are used to assign form
+and field attributes, to enter Named Data, and to assign field access order.
+Named Data and all form and field attributes, including user action routines,
+are specified by filling in questionnaires. Highlighting is used to indicate
+which field is being referred to during the field attribute and the field
+order assignment phases.  Finally, the test phase allows the developer to
+interact with a form just as the end user would without exiting the editing
+session. 
+  
+Form Language Translator
+  
+The Form Language Translator provides an alternate means for defining forms.
+The Form Language is a free-form, keyword-oriented, declarative language that
+provides the means to create and modify source form descriptions with a text
+editor or program. 
+
+The FMS/TRANSLATE command is used to convert the source form descriptions
+(contained in a text file) to form data structures.  The data structures
+created are equivalent to those created with the  FMS interactive editor.
+Existing form data structures can be converted back into Form Language source
+code for modification or documentation by using the FMS/DESCRIPTION/FULL
+command. 
+
+Other Form Application Development Aids
+
+The VAX FMS Forms Management System provides additional facilities to aid in
+the application program development process.  The facilities are invoked with
+the following commands: 
+
+^  FMS/LIBRARY -- To create and maintain form libraries
+
+^  FMS/DESCRIPTION -- To obtain any of the following basic types of 
+   descriptions of forms:
+
+   -- /BRIEF -- summary information about a form, its fields, Named Data, and 
+      user action routines.
+
+   -- /FULL -- text files containing Form Language statements suitable for 
+      input to the Form Language Translator.
+
+   -- /DECLARATIONS -- To obtain data division code that can be edited by the 
+      user to create a COBOL Data Division or DATATRIEVE Domain Definition 
+      reflecting the names, lengths, and order of fields on the screen
+
+   -- /DISPLAY_IMAGE -- A printable image of a form in either terminal image 
+      format (with escape sequences), line printer format (without escape 
+      sequences), or LN03/LN03-PLUS format.  Note that the optionally 
+      available VT100/200 Screen Font Cartridge Set is required to actually 
+      print forms on the LN03 and LN03-PLUS laser printers  with full 
+      VT100/200 video attributes.  Refer to the section below on Printing 
+      Forms for more information.
+
+   -- FMS/DIRECTORY -- To obtain a directory list of forms in a library or in 
+      form files
+
+   -- FMS/OBJECT -- To generate an object module containing one or more form 
+      data structures that, when linked with the application program, will 
+      allow access to the forms through virtual memory
+
+^  FMS/VECTOR -- To generate an object module containing a vector table of 
+   addresses that point to the user action routines that are linked with the 
+   application program
+
+^  FMS/TEST -- To invoke the form testing facility which allows the 
+   application developer to display a form as an application program would, 
+   to type data into fields, and to display field help.
+
+^  FMS/CONVERT -- To convert TDMS forms from the VAX Common Data Dictionary/Plus 
+   to FMS forms.
+
+^  FMS/UPGRADE -- To convert VAX FMS, Version 1.1 form files and form 
+   libraries to a format compatible with the current version of VAX FMS. VAX 
+   FMS, Version 1.1 forms are not compatible with the current version of VAX 
+   FMS; they must be upgraded for use with the current version of VAX FMS.
+
+VAX FMS Form Driver
+
+The Form Driver is the run-time component of VAX FMS.  It consists of AST
+reentrant, shareable subroutines that are called by application programs to
+control the interaction of the terminal, the user, and the application
+program. The Form Driver provides facilities for managing multiple work areas
+(each of which contains a single form data structure). Multiple forms can be
+displayed on a single terminal screen. 
+
+Form Driver subroutines provide for terminal input and output, display of
+forms, manipulation of the screen, basic input validation and formatting,
+calling user action routines, and responding to the terminal operator's
+requests for help.  Input and output can be specified one field at a time or
+on a whole form basis. 
+
+The Form Driver has a number of features to facilitate fine tuning of the
+application human interface.  A timeout facility allows the application
+program to continue execution after waiting a specified period of time for
+the operator to enter the next character.  Field video attributes, cursor
+position, and Insert/Overstrike mode can be dynamically altered by Form
+Driver calls in the application program.  Field highlighting, controlled by
+the Form Driver, causes the video attributes of each field to be altered as
+the cursor enters the field and to be restored to their original state when
+the operator exits the field. 
+
+The Form Driver (FDV) may be purchased separately  for systems that require
+only run-time support for applications using VAX FMS. 
+   
+Named Data 
+
+The Form Driver supports the creation of parameter-driven applications by
+providing Named Data.  Named Data are form constants that can be stored as
+part of the form data structure and retrieved at execution time by calls in
+the application program.  Named Data allows information needed by the
+application program (such as form linkage, operator messages and other human
+language information, and data validation criteria for user subroutines) to
+be defined, stored, and modified independently of the application program. 
+
+User Action Routines 
+
+User action routines (UARs) are procedures written by the user in any DIGITAL
+supported VMS programming language.  UARs are associated with forms and
+fields during the creation of form data structures and are automatically
+called by the Form Driver under the following conditions: 
+
+^  When processing for a field is finished 
+
+^  Before and after processing the terminal operator's help request
+
+^  When the terminal operator presses a function key
+
+^  When a screen refresh operation is requested
+
+The Form Driver transfers program control to the user action routine under
+the circumstances defined.  The user action routine has available to it
+(through Form Driver calls) a parameter string of 80 characters (defined as
+part of the form) which can be used to give processing information and the
+current Form Driver context. 
+
+VAX FMS Sample Application Program
+   
+The Sample Application program is a supported VAX FMS demonstration program.
+The Sample Application program, included in the distribution kit, is used to
+certify proper installation of VAX FMS.  The  documentation for VAX FMS gives
+examples from the Sample Application program. The sample programs (in each of
+the documented programming languages) and form descriptions are included in
+the documentation and in the distribution kit.  The Sample Application
+Program can be installed on the target system at the user's discretion. 
+
+Printing Forms
+
+Form images can be created and written to a file for subsequent printing by
+either an application program using a Form Driver call, FDV$PRINT_SCREEN, or
+by a terminal operator using an FMS DCL command,
+FMS/DESCRIPTION/DISPLAY_IMAGE. The following screen images can be created: 
+
+^  Line printer image -- All video attributes are ignored or translated to 
+   formats printable by standard line printers.  Line drawing graphic 
+   characters are converted to standard ASCII characters and all other 
+   characters in alternate character sets remain untranslated.
+
+^  Terminal image -- All escape sequences and control characters are included 
+   to present an exact image of the screen if it were to be displayed on the 
+   same kind of terminal as the current terminal.  This image can be output 
+   properly only to a  printer that understands the same control sequences as 
+   the current terminal.
+
+^  LN03 and LN03-PLUS laser printer image -- Escape sequences are included to 
+   reproduce a screen image which is printable on an LN03 or LN03-PLUS laser 
+   printer.  The resident fonts in these  printers support the printing of 
+   forms which include ONLY single-size characters of the ASCII, DEC 
+   Supplemental, and DEC VT100 Line Drawing character sets.  To print VAX FMS 
+   forms which include the FULL range of character, line, and screen 
+   attributes of the VT100 and VT200-compatible terminals (except for 
+   blinking), the optionally available VT100/200 Screen Font Cartridge Set 
+   must be installed in the LN03 or LN03-PLUS laser printer.  This font 
+   cartridge set can be ordered from DIGITAL using the following ordering 
+   information:
+
+   LN03X-DA       VT100/200 Screen Font Cartridge Set
+  
+   This set of two font cartridges contains all the fonts necessary to 
+   reproduce most of the character, line, and screen attributes available 
+   on VT100, VT200, and VT300-compatible  terminals.   These fonts are 
+   extensions to standard Courier fonts and include the:
+
+   ^  ASCII character set
+   ^  DEC Supplemental character set
+   ^  DEC VT100 Line Drawing character set
+   ^  DEC Overprint Shading character set (reverse video effect)
+
+      in the following sizes:
+
+      - Double-high, double-wide (double-size)
+      - Single-high, double-wide (double-wide)
+      - Single-high, single-wide (single-size) (Overprint only)*
+  
+      and in the following orientations:
+  
+      - Portrait  (80-column)
+      - Landscape (132-column)
+  
+     *  The LN03 and LN03-PLUS resident fonts supply the  single-high,
+        single-wide size for the other three character sets.
+
+Bolding and underlining are also supported by the LN03 and LN03-PLUS.
+Blinking is not supported. 
+
+Release Notes
+
+VAX FMS release notes are provided in machine-readable form on the
+distribution media.  Using the VMSINSTAL procedure, release notes may be
+displayed at the terminal or printed prior to installing VAX FMS and can be
+made available on-line after installation. 
+
+HARDWARE REQUIREMENTS
+
+VAX, MicroVAX, or VAXstation configuration as specified in the System Support
+Addendum (SSA 26.10.12-x). 
+
+SOFTWARE REQUIREMENTS *
+
+VMS Operating System
+VMS Workstation Software (for VAXstation VWS terminal emulation only)
+
+* Refer to the System Support Addendum for availability and required versions
+  of prerequisite software (SSA 26.10.12-x).
+
+ORDERING INFORMATION
+
+Full Development and Run-time System:
+
+Software Licenses:  QL-VD7A*-**
+Software Media:  QA-VD7A*-**
+Software Documentation:  QA-VD7AA-GZ
+Software Product Services:  QT-VD7A*-**
+
+Run-time-Only System:
+
+Software Licenses:  QL-VD8A*-**
+Software Media:  QA-VD8A*-**
+
+* Denotes variant fields.  For additional information on available licenses,
+  services and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of DIGITAL's
+Standard Terms and Conditions.  For more information about DIGITAL's
+licensing terms and policies, contact your local DIGITAL office. 
+
+LICENSE MANAGEMENT FACILITY SUPPORT
+
+This layered product supports the VMS License Management Facility. License
+units for both the Full Development System and Run-time System are allocated
+on a CPU-capacity basis. 
+
+For more information on the License Management Facility, refer to the VMS
+Operating System Software Product Description (SPD 25.01.xx) or the License
+Management Facility manual of the VMS Operating System documentation set. 
+
+SOFTWARE PRODUCT SERVICES 
+
+A variety of service options are available from DIGITAL.  For more
+information contact your local DIGITAL office. 
+
+SOFTWARE WARRANTY 
+
+Warranty for this software product is provided by DIGITAL with the purchase
+of a license for the product as defined in the Software Warranty Addendum of
+this SPD. 
+
+
+January 1989
+AE-R440M-TE
+
+
+
+

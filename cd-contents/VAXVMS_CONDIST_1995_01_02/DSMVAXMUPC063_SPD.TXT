@@ -1,0 +1,639 @@
+ 
+
+
+
+
+
+
+     Software
+     Product
+     Description
+
+     ________________________________________________________________
+
+     PRODUCT NAME:  DSM Version 6.3 for OpenVMS VAX and AXP Systems
+     SPD 25.08.24
+
+     DESCRIPTION
+
+     This Software Product Description describes two products: DSM
+     for OpenVMS AXP and DSM for OpenVMS VAX (DSM).
+
+     DSM (Digital Standard M) for OpenVMS is an implementation of
+     the ANSI Standard Specification for MUMPS (X11.1-1990) that is
+     layered on the OpenVMS operating system. (Digital Standard M
+     was formerly called Digital Standard MUMPS.) It is a high-level
+     interpretive programming language and a multiuser data manage-
+     ment system in which many users can share a common database. DSM
+     software supports a superset of the ANSI MUMPS specification and
+     fully uses the capabilities of the OpenVMS operating system.
+
+     DSM includes the DSM Application Software Library (DASL) soft-
+     ware. The DASL software is an application creation tool that
+     combines a Data Dictionary, Screen (form) Compiler, Report Com-
+     piler, and an end-user SQL-compliant Query Driver. DASL software
+     uses code generation techniques to transform DASL commands and
+     SQL statements into efficient MUMPS code.
+
+     DSM Language
+
+     The DSM language couples the flexible processing of variable
+     length string data with a high-performance database system, mak-
+     ing interactive database application systems easier to implement
+     and maintain.
+
+
+
+                                  DIGITAL               November 1993
+
+                                                          AE-K412Y-TE
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     The DSM language includes the following extensions to the ANSI
+     Standard MUMPS specification:
+
+     o  A 512-character maximum string length for local and global
+        variables.
+
+     o  A 245-character maximum string length for subscripted local
+        and global variable names.
+
+     o  Commands and functions to load, save, and edit DSM routines.
+
+     o  Language elements that implement a subset of the OpenVMS
+        I/O options for the support of terminals, including foreign
+        terminals, magnetic tape devices, mailboxes, and VMS RMS se-
+        quential, relative, and indexed sequential files. The use of
+        DECnet for remote file access and task-to-task communication
+        is also possible.
+
+     o  An I/O command interface to DEC TCP/IP Services for OpenVMS
+        (UCX). This allows application software to access TCP/IP
+        network devices using MUMPS OPEN, USE, READ, WRITE, and CLOSE
+        commands. An interface is also provided to Wollongong WIN
+        /TCP.
+
+     o  An Interface to DECwindows System, XIMAGE Extension, and
+        DECimage Application Services software.
+
+     o  A maximum routine line length of 512 characters.
+
+     o  MUMPS ANSI 1993 Type A Language Extensions.
+
+     o  Routine source code protection.
+
+     o  Flexible device control mnemonic space definition and manage-
+        ment for use with the MUMPS WRITE / and READ / syntax.
+
+     In addition to supporting the calling of user-written proce-
+     dures, DSM software also includes built-in interfaces to se-
+     lected OpenVMS system services and run-time library routines.
+     This gives the DSM language the ability to mount and dismount
+     disk or magnetic tape volumes, spawn DCL subprocesses, manipu-
+     late logical names, and call mathematical and text manipulation
+     functions, or editors.
+
+                                     2
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     For high run-time efficiency, the DSM language is implemented
+     as a precompiler that generates intermediate code that is in-
+     terpreted at run-time. During the precompilation process, which
+     is transparent to the user, DSM software performs operations
+     that optimize subsequent run-time execution. For example, pre-
+     compilation strips comments, checks syntax, optimizes label
+     references, and transforms numeric constants into an internal
+     representation.
+
+     Global Variables
+
+     The DSM language allows symbolic reference to hierarchical
+     arrays called global variables (or simply globals), which can be
+     concurrently accessed by many users of a DSM application. DSM
+     software provides a high-performance implementation of global
+     variables using multiway trees. DSM stores global variables and
+     DSM routines on data structures called DSM volume sets. Each
+     is comprised of up to eight logical volumes. Volumes in a DSM
+     volume set can be either files on an OpenVMS volume or disk
+     packs mounted as foreign OpenVMS volumes. In a DSM run-time
+     environment, up to 31 volume sets can be present simultaneously.
+
+     Database Sharing in a VMScluster Environment
+
+     In OpenVMS configurations that support a VMScluster environment,
+     the DSM for OpenVMS software allows volume sets to be mounted
+     and made accessible to all members of a VMScluster environment.
+     The globals and routines resident within the cluster-mounted
+     volume sets are accessible in the same manner as a locally
+     mounted volume set. Each cluster member maintains and updates
+     a memory disk buffer cache for the cluster-mounted volume set.
+     VMScluster software is used to coordinate the access and update
+     of physical disk blocks.
+
+     DSM configurations can also be run in heterogeneous VMScluster
+     environments consisting of VAX and Alpha AXP CPUs.
+
+     M Windowing Application Programming Interface
+
+                                     3
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     The DSM product includes an implementation of the standard M
+     Windowing Application Programming Interface (WAPI). WAPI pro-
+     vides a high level and portable method of creating a graphical
+     user interface (GUI) for DSM applications.
+
+     WAPI is layered on the DECwindows Motif for OpenVMS system. This
+     architecture and the design of the WAPI enables programming in
+     MUMPS and allows access to DECwindows Motif calls if necessary.
+     (The WAPI standard has been designed to work on all major win-
+     dowing systems, and provides ready application portability among
+     platforms and M vendors.)
+
+     The WAPI uses a database approach to windows programming (rather
+     than relying on function calls, and resource files for defin-
+     ing static displays.) Window definitions can be stored in a
+     global array. A window can be created by merging the global ar-
+     ray into Structured System Variables (SSVNs). The display can
+     later be modified by manipulating SSVNs. In this way, the WAPI
+     combines the capabilities of resource files and functions within
+     a simple, high-level interface.
+
+     The application's primary mechanism for communicating with a
+     user is the window. Applications are made aware of actions taken
+     by users, such as pressing a key or selecting a menu item, by
+     events. Applications specify the events about which they want
+     to be notified and specify the code to execute when an event
+     occurs.
+
+     Distributed Data Processing
+
+     DSM applications can access globals either locally or on a re-
+     mote system. The DSM software supports remote access to globals
+     through a DSM-specific Distributed Data Processing (DDP) pro-
+     tocol. DSM software implements this high-performance protocol
+     on Ethernet in a manner compatible with DSM for DEC OSF/1 AXP
+     (SPD 47.60.00), DSM for ULTRIX (SPD 33.76.xx), and DSM DDP-DOS
+     (SPD 50.19.xx). This allows the user to set up DSM networks con-
+     sisting of any combination of Alpha AXP processors, DECstation
+
+                                     4
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     or DECsystem processors, VAX processors, and personal comput-
+     ers in a local area network. The DDP autoconfiguration facility
+     automatically updates the software tables of members of a DDP
+     network when a new system goes on or off line.
+
+     DSM software also supports DDP over DECnet Phase IV logical
+     links, allowing remote global access between VAX and Alpha AXP
+     systems in a wide area network. DDP over DECnet Phase V networks
+     is not supported.
+
+     Distributed global access can be done either explicitly, through
+     the extended DSM global syntax, or transparently to DSM appli-
+     cations through a system of global translation. Optionally, the
+     DSM environment manager can specify the replication of one or
+     more globals across several systems.
+
+     After-Image Journaling
+
+     DSM supports a journaling facility to provide a record on sec-
+     ondary storage of all operations that modify the database (SET
+     and KILL of global variables). Journaling can be done on a
+     global-by-global basis or for a whole DSM environment. In the
+     event of database degradation, it is possible to restore the
+     current database from a full backup and the journal files using
+     a dejournaling utility.
+
+     Before-Image Journaling
+
+     DSM software provides a journaling capability that records
+     the physical image of a database block before modifications
+     have been made. This facility preserves database integrity in
+     the event of a CPU failure. The physical before-image journal
+     contains only a very small number of blocks and is used to
+     quickly roll back any operations in progress at the time of
+     the failure. The operations protected are SETs to globals that
+     result in a database block split, or KILLs that result in a
+     database block merge.
+
+     Transaction Processing
+
+                                     5
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     DSM provides extensions to the ANSI MUMPS language that allow
+     programmers to group global accesses into well-defined transac-
+     tion recovery units. The use of transaction recovery units gives
+     application designers the ability to create highly reliable and
+     efficient fault-tolerant application systems.
+
+     Database updates made within the context of a recovery unit are
+     treated as a single unit of work. On conclusion of a recovery
+     unit, DSM ensures that updates are either committed entirely or
+     not at all. If a failure occurs during recovery unit processing,
+     any partial updates made to the database are rolled back so
+     that the database is restored to its original state before the
+     recovery unit began.
+
+     Through the conventional use of the MUMPS LOCK command and the
+     application of the recovery unit commands, programmers can
+     construct database transactions that exhibit the transaction
+     processing properties of atomicity, consistency, isolation, and
+     durability (ACID properties).
+
+     DSM supports rollback of recovery units through a system of
+     before-image and after-image journal files. Transaction recovery
+     unit processing is supported on database volume sets that are
+     mounted locally. DSM does not support transaction processing on
+     volume sets mounted clusterwide across multiple nodes within a
+     VMScluster environment.
+
+     Recovery of updates made to databases that are shared using
+     DSM Distributed Data Processing (DDP) is not supported within a
+     transaction recovery unit.
+
+     DECwindows System Interface
+
+     DSM provides a complete binding for the DSM language to the
+     DECwindows system. The binding is implemented as four separate
+     external call packages, which provide a MUMPS interface to the
+     XLIB, XTOOLKIT, XMOTIF, and XMOTIF Resource Manager program
+     libraries. The binding conforms to the ANSI MUMPS Standard
+     Specification.
+
+                                     6
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     An additional package provides data manipulation primitives for
+     allocating and modifying X Window data structures. These pack-
+     ages give the programmer complete access to X Window procedures
+     for creating sophisticated graphical user interfaces.
+
+     A set of sample MUMPS programs is provided with complete docu-
+     mentation of the interface.
+
+     Incremental Backup/Restore
+
+     DSM provides an Incremental Backup Utility (^BACKUP) for use
+     with the DSM database. The ^BACKUP Utility backs up only those
+     blocks that have been modified since the last full backup.
+     Because modified blocks usually constitute a small portion of
+     an entire DSM database, the ^BACKUP Utility represents a major
+     reduction in the time required for backup and the amount of
+     backup storage required.
+
+     The ^BACKUP Utility implements a multiphase backup. The initial
+     phases allow database read and write operations to occur un-
+     restricted on both locally mounted and cluster-mounted volume
+     sets. The last phase temporarily inhibits database operations
+     for a short period to establish a final consistency check point.
+
+     Full database backup of DSM for OpenVMS volume set files is
+     accomplished using the OpenVMS Backup utility. Restoration of
+     an incremental backup is accomplished using the Incremental
+     Restore Utility to apply an incremental backup file onto a fully
+     restored primary database. The backup media supported by the
+     ^BACKUP Utility is OpenVMS sequential disk files.
+
+     Callable Routines Interface
+
+     The callable routines interface allows routines written in
+     software languages that run under the OpenVMS operating system
+     to directly call the DSM shareable image. This capability gives
+     programs written in languages such as FORTRAN, C, PASCAL, and
+     others complete read and write access to globals resident in a
+     DSM volume set. Functions such as global set, kill, get, or lock
+     to a DSM database can be accomplished using many OpenVMS layered
+
+                                     7
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     languages. Also, external programs can declare recovery units,
+     access the DSM local symbol table, and execute MUMPS code.
+
+     The following functions are available to external programs:
+
+     o  Callable interface initialization and rundown
+
+     o  Global database access
+
+     o  Declare recovery unit (start, commit, abort)
+
+     o  LOCK command
+
+     o  Local symbol access
+
+     o  MUMPS command and routine execution
+
+     Utilities
+
+     The DSM product provides application and system level utilities
+     written in the DSM language. Application level utilities help
+     the DSM programmer develop and maintain application software and
+     data. For example, there are utilities to edit and display DSM
+     routines and globals.
+
+     System level utilities allow the management of a DSM application
+     environment. The system manager can create and extend DSM vol-
+     ume sets, specify DSM configuration parameters such as access
+     control (security), the number of concurrent DSM jobs and disk
+     buffers, define DSM command line defaults, establish DDP links
+     and control journaling. For increased efficiency of routine
+     calling, the system manager can map a selected set of DSM appli-
+     cation routines in a shared virtual memory section, resulting in
+     higher application throughput.
+
+     DSM Application Software Library (DASL)
+
+     DASL software is a set of menu-driven tools designed for de-
+     velopers of interactive applications. The DASL package auto-
+     mates many of the tasks involved in defining and documenting a
+     database: generating data input, menu, and help text screens,
+
+                                     8
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     designing reports for data output, and creating tables for
+     database queries.
+
+     The DASL package is fully integrated with DSM. Therefore, DASL
+     software provides both 4GL and 3GL capabilities within a single
+     environment. Users interact with DASL software through menus and
+     screens that were developed using DASL software and are stored
+     as DSM routines.
+
+     The DASL package includes six major modules, each representing
+     a group of related functions that programmers use to develop
+     applications.
+
+     o  The Data Dictionary defines and documents the application
+        database.
+
+     o  The Screen Driver contains options to develop and modify
+        screen displays for data entry, menus, and help text.
+
+     o  The Report Driver contains options to define and modify
+        application reports.
+
+     o  The Query Driver contains options to define tables for the
+        DASL database and create queries to extract data from the
+        tables. The DASL Query Driver conforms to the syntax of
+        the ANSI Standard Database Language SQL (Structured Query
+        Language).
+
+     o  The Development Environment performs a variety of development
+        tasks such as specifying application parameters, or cre-
+        ating an international application using the DASL Language
+        Utilities.
+
+     o  The Application Environment provides facilities for con-
+        trolling the application's run-time environment such as a
+        security system, message center, query database, and error
+        logging.
+
+     Portable Run-Time DASL
+
+                                     9
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     Screens and reports defined using DASL can be compiled into
+     MUMPS code for use on systems provided by other M vendors (for-
+     eign M systems).
+
+     The DASL software generates some non-ANSI Standard MUMPS code.
+     This code has been isolated and can be modified by a DASL devel-
+     oper so that DASL applications can run on platforms other than
+     DSM.
+
+     The DASL Development Environment Menu contains Portable Run-
+     Time DASL utilities that enable DASL developers to port their
+     applications to other M implementations and computers. DASL
+     developers use these utilities to create an application run-
+     time package that contains their DASL application's screens and
+     reports, as well as a DASL run-time environment.
+
+     The application run-time package can be moved to a foreign M
+     system. To run this package on a foreign M system, you must have
+     a Run-Time DASL License.
+
+     SOURCE CODE INFORMATION
+
+     DSM provides example files for writing external routines and
+     external package tables in the SYS$EXAMPLES directory. Examples
+     of programs using the callable routines interface and using
+     Portable Run-Time DASL are also supplied. This source code is
+     provided on an as is basis without any warranty of any kind,
+     either express or implied.
+
+     HARDWARE REQUIREMENTS
+
+     Processor and/or hardware configurations as specified in the
+     System Support Addendum (SSA 25.08.24-x).
+
+
+
+
+
+
+                                    10
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     SOFTWARE REQUIREMENTS
+
+     For Alpha AXP Systems
+
+     OpenVMS AXP Operating System
+
+     For VAX Systems
+
+     OpenVMS VAX Operating System
+
+     Refer to the System Support Addendum (SSA 25.08.24-x) for avail-
+     ability and required versions of prerequisite and optional
+     software.
+
+     ORDERING INFORMATION
+
+     For Alpha AXP Systems
+
+     Software License (Concurrent Use): QL-130AA-3B
+     Software Licenses (Traditional): QL-00ZA*-AA
+     Software Licenses (Run-Time DASL): QL-YP29*-FA
+     Software Media/Documentation: QA-03XAA-H8
+     Software Documentation (hardcopy): QA-130AA-GZ
+     Software Product Services: QT-03XAA-C8
+     DASL Legend Strip: 36-20220-B1
+
+     For VAX Systems
+
+     Software Licenses (Concurrent Use): QL-130AA-3B
+     Software Licenses (Traditional): QL-130A*-AA
+     Software Licenses: (Run-Time DASL): QL-YP29*-FA
+     Software Media: QA-130A*-**
+     Software Documentation (hardcopy): QA-130AA-GZ
+     Software Product Services: QT-130A*-**
+     DASL Legend Strip: 36-20220-B1
+
+     *  Denotes variant fields. For additional information on avail-
+        able licenses, services, and media, refer to the appropriate
+        price book.
+
+                                    11
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+     SOFTWARE LICENSING
+
+     This software is furnished under the licensing provisions of
+     Digital Equipment Corporation's Standard Terms and Conditions.
+     For more information about the licensing terms and policies,
+     contact your local Digital office.
+
+     License Management Facility
+
+     This layered product supports the OpenVMS License Management
+     Facility (LMF). License units for this product are allocated on
+     an Unlimited System Use and Concurrent Use basis. Each Concur-
+     rent Use license allows any one DSM process at a time to use the
+     layered product.
+
+     For more information about the OpenVMS License Management Facil-
+     ity, refer to the appropriate OpenVMS Operating System Software
+     Product Description or documentation.
+
+     SOFTWARE PRODUCT SERVICES
+
+     A variety of service options are available from Digital. For
+     more information, contact your local Digital office.
+
+     SOFTWARE WARRANTY
+
+     Warranty for this software product is provided by Digital with
+     the purchase of a license for the product as defined in the
+     Software Warranty Addendum of this SPD.
+
+     ®    Motif is a registered trademark of Open Software Founda-
+          tion, Inc., licensed by Digital
+
+     ®    OSF/1 and OSF are registered trademarks of Open Software
+          Foundation, Inc.
+
+
+
+
+                                    12
+
+ 
+
+
+     DSM Version 6.3 for OpenVMS VAX and AXP Systems    SPD 25.08.24
+
+
+
+
+     ®    MUMPS is a registered trademark of Massachusetts General
+          Hospital.
+
+     ®    XIMAGE is a registered trademark of Image Corporation.
+
+     [TM] WIN/TCP is a trademark of The Wollongong Group.
+
+     [TM] The following are trademarks of Digital Equipment Cor-
+          poration: Alpha AXP, AXP, DASL, DEC, DECimage, DECnet,
+          DECstation, DECsystem, DECwindows, OpenVMS, ULTRIX, VAX,
+          VAXcluster, VAXstation, VMS, VMS RMS, VMScluster, and the
+          DIGITAL logo.
+
+     ©1993 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    13

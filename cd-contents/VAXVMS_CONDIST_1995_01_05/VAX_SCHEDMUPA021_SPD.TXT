@@ -1,0 +1,357 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  POLYCENTER Scheduler OpenVMS V2.1       SPD 32.19.04
+
+ DESCRIPTION
+
+ POLYCENTER Scheduler OpenVMS is a distributed scheduling application
+ that automates the execution of repetitive production jobs on Open-
+ VMS, OpenVMS AXP, and remote DEC OSF/1 AXP, ULTRIX RISC and Windows
+ NT[TM] systems. A job is a command procedure or an operating system
+ command string. POLYCENTER Scheduler separates information that spec-
+ ifies how jobs should be run from the jobs themselves. It automati-
+ cally takes care of the job rescheduling calculation and completion
+ notification. A scheduled job can run when constraints on its execu-
+ tion are met. There are two types of constraints; the time must be LATER
+ than the job's scheduled time, and all jobs that the job depends on
+ must be completed with a successful status later than the last time
+ the job completed. A job can depend on up to 16 other jobs, within a
+ VMScluster or on remote nodes of a wide area DECnet network. POLYCEN-
+ TER Scheduler supports effectively unlimited dependencies because each
+ one of the 16 jobs can be a place holder for 16 more dependencies.
+ Job database information can be easily accessed through DCL commands.
+ Most commands can also work remotely over the network, allowing cen-
+ tralized control of distributed applications.
+
+ POLYCENTER Scheduler provides customizable special day classes.
+
+ Special day classes:
+
+ o  Contain a list of absolute days
+
+ o  Are shareable among different users
+
+ o  Require SYSPRV or OPER privilege to create them
+
+ o  Are available to ALL users on the system
+
+                               DIGITAL                     June 1993
+
+                                                         AE-PBJ7E-TE
+
+ 
+
+ o  Work in conjunction with the job's schedule interval
+
+ o  Allow the scheduling of jobs on a non-regular basis
+
+ o  Jobs can be set to run on or not run on the specified days
+
+ POLYCENTER Scheduler offers OpenVMS Batch as an optional execution en-
+ gine on OpenVMS systems; you can run jobs as a detached process (the
+ default) or as an OpenVMS Batch job. This feature uses the VAX/VMS lock
+ manager to ensure reliable job tracking.
+
+ POLYCENTER Scheduler provides agents that can execute jobs on ULTRIX
+ RISC, DEC OSF/1 AXP, and Windows NT systems. Actual job scheduling must
+ take place on an OpenVMS system, and job information resides on this
+ system.
+
+ There are three agents: ULTRIX RISC, DEC OSF/1 AXP, and Windows NT.
+ Each agent works basically the same. The ULTRIX command is sent to the
+ ULTRIX system and is executed on that system. The DEC OSF/1 AXP com-
+ mand is sent to the DEC OSF/1 AXP system and is executed there. The
+ Windows NT command is sent to the Windows NT system and is executed
+ on that system. Completion status is sent back to the OpenVMS system.
+
+ POLYCENTER Scheduler for OpenVMS has full VMScluster failover capa-
+ bilities. Jobs can be divided into steps. Interrupted jobs can be restarted
+ automatically at the current step on another node in the VAXcluster.
+ Jobs can be run on any node in a cluster or restricted to a single node.
+ An installation modifiable load-balancing procedure can be invoked at
+ execution time to select the VMScluster node for job execution.
+
+ POLYCENTER Scheduler includes an event logging/reporting facility which
+ can be used to produce job reports.
+
+ Features
+
+ o  Choice of four user interfaces - DCL, DECwindows, menu-driven, or
+    callable (API).
+
+
+
+                                  2
+
+ 
+
+ o  Customizable special days and fiscal calendars. Allows jobs to run
+    only on specified days and/or prohibits jobs from running on spec-
+    ified days. Works in conjunction with schedule interval. Day classes
+    can be shared among different users.
+
+ o  Identifier-based access to jobs to control job access through iden-
+    tifiers. Each POLYCENTER Scheduler job can have a READ, a WRITE,
+    and an EXECUTE identifier. This allows access control to individ-
+    ual POLYCENTER Scheduler jobs on a user by user basis, and elim-
+    inates the need for privileges for operations personnel. It also
+    removes the need for privileged proxy accounts for remote control
+    of privileged jobs.
+
+ o  Job execution on OpenVMS, OpenVMS AXP, ULTRIX RISC, DEC OSF/1 AXP,
+    and Windows NT allows centralized control in a mixed operating sys-
+    tem environment.
+
+ o  OpenVMS Batch supported as an execution engine. Jobs may be run in
+    batch OR as a detached process. Use of VMS locks provides reliable
+    job tracking. If OpenVMS Batch is the mode chosen, job start time
+    is not guaranteed due to the nature of OpenVMS Batch queues.
+
+ o  Option of automatically sending an OPCOM message upon job comple-
+    tion. This is controlled from the DCL interface via the qualifier
+    /OPCOM, from the DECwindows interface in the CREATE and EDIT win-
+    dows, and from the DECforms interface Create Job screen or Edit Job
+    screen. Additional notification methods include mail and terminal
+    broadcast.
+
+ o  Automated error recovery can be achieved by specifying a POLYCEN-
+    TER Scheduler job to be executed automatically in the event of a
+    /STALL or /MAX_TIME condition.
+
+ o  Ability to predict future run schedules and resource usage, based
+    on historical run data (average times consumed).
+
+ o  Modifiable VAXcluster load balancing.
+
+ o  Repetitive jobs executed without the need for command files.
+
+                                  3
+
+ 
+
+ o  Jobs can be synchronized with up to 16 other POLYCENTER Scheduler
+    jobs within the wide area network. The DCL user interface shows which
+    job dependencies have been satisfied and which are still pending.
+
+ o  Date/time (calendar and fiscal) and node/ cluster run specifica-
+    tions for jobs. Jobs run automatically at regular intervals and/or
+    are restricted to run on certain days of the week. Jobs can be re-
+    stricted to run on one or more nodes in a cluster.
+
+ o  Job recovery/restart mechanism. Interrupted jobs can be automat-
+    ically restarted at the current step on the same node or another
+    node in the VAXcluster (the user interface displays the step cur-
+    rently executing if the restart symbol is used).
+
+ o  Remote job scheduling via the LAN or WAN.
+
+ o  Time limits for jobs. Notifies user when a job has exceeded the des-
+    ignated execution time (elapsed time for detached processes, CPU
+    time for OpenVMS Batch jobs). It can also notify the user if a job
+    failed to start by a deadline, after the scheduled time. Under these
+    conditions, it can also run another specified job.
+
+ o  Commands that operate on multiple jobs. Jobs can be specified by
+    Group and Type as well as by name. Jobname, Group and Type are strings
+    up to 40 characters in length. The DCL user interface supports the
+    use of wildcards. For example, the DCL command:
+
+    $ sched run a*/group=%o*/type=*back/user=*s*/confirm
+
+    would prompt for the running of all jobs in the local VAXcluster
+    with names that begin with the letter "A", a type that ends in "BACK",
+    a group with "O" in the second character position, owned by users
+    with an "S" in their username.
+
+ o  Prefunctions and postfunctions that can automatically run before
+    and after the job.
+
+ o  Ability to specify parameters or override job defaults (node, out-
+    put file) on the run command.
+
+ o  Three levels of job status display - from a one line summary to full
+    display.
+
+                                  4
+
+ 
+
+ o  Job reporting facility.
+
+ o  Customizable log file for each POLYCENTER Scheduler node that pro-
+    vides POLYCENTER Scheduler event logging, diagnostics, full VMS ac-
+    counting records, and seven additional activity records.
+
+ Restrictions
+
+ You may need to modify existing command procedures to run with POLY-
+ CENTER Scheduler. For example, you may need to remove existing schedul-
+ ing code, since often procedures may be set to resubmit themselves to
+ batch and this is not required with POLYCENTER Scheduler. Existing jobs
+ may also need to have operator notification code removed from them,
+ since POLYCENTER Scheduler handles this. It is also possible that er-
+ ror recovery may have to be updated. POLYCENTER Scheduler assumes the
+ status of the job to be the status of the last command executed, so
+ if the job has its own special error handling inside the code, it may
+ have to be modified to assure exit with the proper status. Jobs which
+ do not exit with success prevent other jobs that are dependent on them
+ from running.
+
+ o  If a job is to be run as a detached process, (the POLYCENTER Sched-
+    uler default), checks for the F$MODE of the process will result in
+    "OTHER", so some logic may have to be changed. This is not the case
+    with the POLYCENTER Scheduler using batch as an execution mode.
+
+ o  If batch is used as the execution mode, POLYCENTER Scheduler will
+    simply submit the job to the specified batch queue. Any character-
+    istics of the queue will impact POLYCENTER Scheduler jobs, includ-
+    ing the queue's run priority. Actual execution of the job will be
+    subject to the queue system on the machine(s):
+
+    o  If the queue is generic, the job may be run on a different node.
+       That node must have POLYCENTER Scheduler installed on it.
+
+    o  If the queue is stopped or stalled, the job may not run as sched-
+       uled.
+
+    o  If the execution queue is beyond its executing jobs limit, the
+       jobs may have to wait.
+
+                                  5
+
+ 
+
+    o  If the queue entry is deleted, or otherwise manually manipulated,
+       the results of the job may be unpredictable.
+
+    o  If the queue system distributes the job to an execution queue
+       on a machine where there is no POLYCENTER Scheduler license, the
+       job will fail.
+
+ o  If any currently running job has its execution mode changed, the
+    results of the current run may be unpredictable.
+
+ o  A job cannot have different sets of dependencies for different days
+    of the week.
+
+ Day restrictions for cyclic jobs with dependencies sometimes do not
+ produce the desired behavior when production spans day boundaries. Usu-
+ ally these problems can be solved by modifying the time calculation
+ algorithm for the specific jobs using the /USE_NEXT qualifier.
+
+ Documentation
+
+ The POLYCENTER Scheduler Documentation Set consists of:
+
+    POLYCENTER Scheduler for OpenVMS Installation
+    POLYCENTER Scheduler for OpenVMS User Information
+    POLYCENTER Scheduler for OpenVMS Programming
+
+ HARDWARE REQUIREMENTS
+
+ Systems and/or hardware configurations as specified in the System Sup-
+ port Addendum (SSA 32.19.04-x).
+
+ SOFTWARE REQUIREMENTS
+
+ For Systems Using Terminals (No DECwindows User Interface):
+ OpenVMS Operating System
+ For Workstations Running VWS:
+ OpenVMS Operating System
+ OpenVMS Workstation Software
+
+
+                                  6
+
+ 
+
+ For Workstations Running DECwindows:
+ OpenVMS Operating System
+
+ Layered Products:
+
+ DECnet-VAX (end-node)
+
+ DECforms Runtime License (for menu-driven interface)
+
+ DEC TCP/IP Services for OpenVMS
+ for systems supporting remote ULTRIX RISC, DEC OSF/1 AXP and Windows
+ NT
+
+ Refer to the System Support Addendum (SSA 32.10.04- x) for availabil-
+ ity and required versions of prerequisite/optional software and for
+ information regarding components of VMS DECwindows.
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-YLLA*-**
+ Software Media: QA-YLLA*-**
+ Software Documentation: QA-YLLAA-GZ
+ Software Product Services: QT-YLLA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support:
+
+ The POLYCENTER Scheduler OpenVMS layered product supports the Open-
+ VMS License Management Facility.
+
+
+                                  7
+
+ 
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum to this SPD.
+ 
+ [TM] Windows NT is a trademark of Microsoft Corporation.
+
+ [TM] The DIGITAL Logo, AXP, DEC, DECforms, DECnet, DECwindows,
+     OpenVMS, POLYCENTER, POLYCENTER Scheduler, ULTRIX, VAX, VAX-
+     cluster, and VMS are trademarks of Digital Equipment Corpora-
+     tion.
+
+
+
+
+
+
+
+
+
+
+
+                                  8

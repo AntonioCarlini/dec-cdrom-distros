@@ -1,0 +1,1391 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DECserver Network Access Software,      SPD 46.13.02
+                Version 1.3
+
+ DESCRIPTION
+
+ DECserver Network Access Software, Version 1.3 is the software release
+ for the DECserver 700 equipped with 2 MB or more of memory, DECserver
+ 900TM equipped with 4 MB of memory, and for the DECserver 90TL and DEC-
+ server 90M equipped with 4 MB of memory. Throughout this document the
+ term "DECservers" will be used to refer to the DECserver 700-8, DEC-
+ server 700-16, DECserver 900TM, DECserver 90TL, and the DECserver 90M
+ hardware platforms onto which the DECserver Network Access Software
+ may be loaded. Those features that are restricted to, or limited by,
+ a specific DECserver hardware platform are noted.
+
+ The DECservers are communications servers for Ethernet local area net-
+ works (LANs). They provide a convenient method to logically connect
+ asynchronous terminals and personal computers to one or more service
+ nodes (hosts) on an Ethernet. Once the terminal or PC is connected,
+ a user can use application programs and utilities as though the de-
+ vice is directly connected to a host. Thus, it may be possible to use
+ the DECserver to connect all terminals to service nodes in place of
+ traditional interfaces.
+
+ The DECserver Network Access Software provides concurrent Local Area
+ Terminal (LAT) and Telnet TCP/IP protocol support from a DECserver com-
+ munications server to enable connectivity to host systems that use LAT
+ or TCP/IP protocols. The TCP/IP protocol suite is used to connect to
+ UNIX[R] host systems and other host systems that support the TCP/IP
+ protocol suite.
+
+
+
+                               DIGITAL                  October 1993
+
+                                                         AE-PW62C-TE
+
+ 
+
+ The DECserver also allows for host-initiated connections to serial print-
+ ers. A serial printer can be shared between LAT print requests and Tel-
+ net requests. Telnet requests cannot be queued on the server. A print
+ symbiont on service nodes can initiate connections to serial print-
+ ers connected to DECserver ports. This allows the printers to be dis-
+ tributed throughout a facility and accessed transparently by service
+ node users. Incoming host-initiated connect requests may be queued FIFO
+ at the server.
+
+ The DECserver Network Access Software provides connectivity to IP net-
+ works via SLIP (Serial Line Internet Protocol), CSLIP (Compressed SLIP),
+ and via PPP (Point-to-Point Protocol). As many IP systems as there are
+ serial ports on the DECserver may be connected. These systems can run
+ IP applications (such as Telnet, FTP[R], X Window System[TM], and so
+ on) on the serial line and communicate with other IP services on the
+ network. The DECserver software also routes IP datagrams between asyn-
+ chronous SLIP or PPP ports.
+
+ The DECserver software supports end-node routing for attached AppleTalk
+ [R] hosts. The DECserver software acquires and assigns AppleTalk ad-
+ dresses for attached hosts via AARP and PPP. The DECserver uses the
+ AARP protocol to acquire a new address for a connecting host, and it
+ uses the PPP ATCP protocol to assign this address to the host. The DEC-
+ server keeps a cache of already acquired addresses to optimize the con-
+ nection process. The system administrator can configure the address
+ cache size. A list of supported Macintosh[R] products can be found in
+ the System Support Addendum (SSA 46.13.02-x).
+
+ Provision for user authentication is included in the DECserver Net-
+ work Access Software, using Kerberos Version 4. Kerberos is an authen-
+ tication service for open network systems, developed as part of Project
+ Athena at the Massachusetts Institute of Technology.
+
+ The DECserver has an SNMP (Simple Network Management) agent which al-
+ lows it to be managed by an SNMP network management system. Informa-
+ tion can be retrieved (GET) and modified (SET) from the server.
+
+
+
+
+                                  2
+
+ 
+
+ The DECserver provides TN3270 terminal emulation which permits the users
+ of a Digital ASCII video terminal or PC in terminal emulation mode,
+ within an Internet network, to interactively access IBM[R] host-based
+ applications developed for IBM 3270 display stations.
+
+ The DECserver user interface provides the means to create customized
+ menus and user-defined commands. User-defined commands are new com-
+ mands created by grouping existing server commands.
+
+ The DECserver supports reverse LAT and Telnet Listener. Both facil-
+ ities are provided to enable a network node, such as a host system,
+ to connect to a DECserver port. This facility could be used to sup-
+ port printers, a modem pool for outgoing calls, and connection to the
+ asynchronous ports of a system without other network access of other
+ types of devices that have an asynchronous interface. Reverse LAT and
+ Telnet Listener also provide the ability to group physical ports into
+ logical groupings. For example, ports connected to the asynchronous
+ interfaces of the same system could be grouped so a connect request
+ would be routed to any of the currently unused ports. A logical group-
+ ing can contain any number of ports from one to all the ports on the
+ server. Port-to-port connections on the same server are also supported.
+
+ The DECserver implements the LAT protocol for communications with ser-
+ vice nodes that implement this protocol on the same Ethernet. This in-
+ terface has been optimized for high terminal I/O performance over an
+ Ethernet while reducing host CPU cycles required to handle interrupts.
+ Under most I/O loading conditions, a significant performance gain may
+ be realized by using the DECserver versus direct terminal connections
+ via traditional asynchronous backplane communications interfaces.
+
+ The DECserver also implements the TCP/IP protocol suite for communi-
+ cations with host systems that implement TCP/IP. The TCP/IP protocols
+ are based on the University of California's 4.3 Berkeley Software Dis-
+ tribution (BSD).
+
+ The following TCP/IP protocols are supported and adhere to the Inter-
+ net Request for Comments (RFCs):
+
+ o  BOOTP (RFC 951 and RFC 1084) and TFTP (RFC 783) together provide
+    a method for downloading the DECserver from any host that supports
+
+                                  3
+
+ 
+
+    those protocols. BOOTP provides a mechanism by which the server can
+    identify a host from which it can request a download. TFTP provides
+    the data transfer facility used to copy to software from the load
+    host to the server.
+
+ o  Transmission Control Protocol (TCP) (RFC 793) is the Internet-standard,
+    transport-level protocol that provides the reliable, end-to-end full
+    duplex stream service that supports many application protocols.
+
+ o  User Datagram Protocol (UDP) (RFC 768) is an Internet protocol that
+    provides datagram service to application programs, allowing an ap-
+    plication program on one machine to send a datagram to an appli-
+    cation program on another machine. UDP is necessary for the Domain
+    Name System and Simple Network Management Protocol (SNMP).
+
+ o  Internet Protocol (IP) (RFC 791) is an Internet-standard protocol
+    that defines the Internet datagram as the unit of information that
+    is passed across the Internet, and provides the universal address-
+    ing scheme for hosts and gateways for Internet connectionless, best-
+    effort packet delivery services. IP includes ICMP as an integral
+    part.
+
+ o  Internet Control Message Protocol (ICMP) (RFC 792) is an Internet
+    network protocol that specifies error and control messages used with
+    the Internet protocols.
+
+    -  Packet Internet Groper (PING) tests the reachability of nodes
+       on the users' Internet. ICMP echoes requests are sent and replies
+       processed.
+
+ o  Address Resolution Protocol (ARP) (RFC 826) is an Internet proto-
+    col used to perform dynamic address resolution to dynamically map
+    or translate an Internet address into the correct physical hard-
+    ware address.
+
+ o  Telnet (RFC 854) is the standard Internet application-level pro-
+    tocol for remote terminal connection service. Telnet is a virtual
+    terminal facility that allows a user at one site to establish a TCP
+    connection to a remote system. Telnet makes the local terminal ap-
+    pear as a direct extension of the remote system, allowing the user
+
+                                  4
+
+ 
+
+    to conduct a session and run application programs as if the user's
+    terminal was directly connected to the remote system.
+
+    Both Telnet client and server capabilities are provided:
+
+    -  3270 Terminal Emulation allows the users of a Digital ASCII video
+       terminal or PC in terminal emulation mode (VT100, VT200, VT300,
+       VT400 mode) within an Internet network to interactively access
+       IBM host-based applications developed for IBM 3270 display sta-
+       tions.
+
+    -  Telnet client provides the ability to connect to any remote TCP
+       port at an Internet address on a LAN or a wide area network (WAN).
+       Telnet client allows the user to specify a remote computer by
+       Internet address as well as by Domain name.
+
+    -  Telnet server allows hosts to connect to devices (like print-
+       ers, host systems, and other serial devices) connected to the
+       DECserver ports.
+
+    -  Telnet character and binary profiles features are available to
+       facilitate using Telnet sessions in interactive or file-transfer
+       modes. Telnet options supported include: status (RFC 859), end
+       of record (RFC 885), remote flow control (RFC 1080), echo (RFC
+       857), timing mark (RFC 860), binary (RFC 856), suppress go ahead
+       (RFC 858) and send location (RFC 779).
+
+    -  TN3270 server-wide keymapping is a feature which allows the net-
+       work manager to make up to six customized terminal types and as-
+       sociated keymappings available on the server and an individual
+       port can access any one of these key- mappings without using up
+       additional NVRAM. The port user chooses one of the terminal types
+       with the SET PORT TN3270 TERMINAL command.
+
+    -  Telnet Remote Console allows a user to establish a remote Tel-
+       net connection to the management port on the terminal server and
+       manage the server as if locally attached. The Telnet Listener
+       23 can now be assigned to any terminal server port as well as
+       the remote console. Any Telnet Listener (23, 2001-2016) can be
+       assigned to be the remote console.
+
+                                  5
+
+ 
+
+ o  Internet Domain Name System (DNS) Support - The Domain Name Sys-
+    tem provides the translation from system name to Internet address.
+    The DECserver will interface to user programs and send queries to
+    Domain name servers for translating Domain names to Internet ad-
+    dresses, and Internet addresses to Domain names (RFCs 1034, 1035).
+
+ o  Subnet Addressing (RFC 950).
+
+ o  Simple Network Management Protocol (SNMP) - The SNMP agent allows
+    the DECserver to be managed by an SNMP network management system.
+    Retrieving information from the terminal server is possible using
+    the SNMP GET and GET-NEXT requests. The SNMP SET operation is fully
+    supported, providing the ability to modify DECserver parameters as
+    well as create and delete applicable table entries. The terminal
+    server can send unsolicited event alarms to specified SNMP manage-
+    ment stations via the SNMP TRAP message. Terminal server variables
+    accessible via SNMP (RFC 1157), not a MIB, are defined by the In-
+    ternet documents: MIB II (RFC 1213), RS232-like MIB (RFC 1317), the
+    Character MIB (RFC 1316). Also supported are the AppleTalk MIB (RFC
+    1243) and the Ethernet-like MIB (RFC 1284).
+
+ o  Serial Line Internet Protocol (SLIP) - A host computer that sup-
+    ports SLIP can use the DECserver serial port as its network con-
+    nection. This gives IP hosts, which have no direct Ethernet con-
+    nection, access to the network and to IP hosts attached to other
+    DECserver serial ports. Any IP application can then be run over the
+    SLIP link (RFC 1055).
+
+ o  Compressed Serial Line Internet Protocol (CSLIP) (RFC 1144) - CSLIP
+    employs Van Jacobson header compression to increase the performance
+    on serial line connections.
+
+ o  Point-to-Point Protocol (PPP) (RFC 1331, RFC 1332, RFC 1334, RFC
+    1378) - A host computer that supports PPP can use the DECserver se-
+    rial port as its network connection. PPP provides error recovery
+    and is a reliable datalink protocol.
+
+    -  Link Control Protocol (LCP) (RFC 1331) - The following LCP op-
+       tions are settable: Maximum Receive Unit - specifies the max-
+       imum sized datagram a side would like to receive over the link;
+       Async Character Control Map - specifies which characters require
+
+                                  6
+
+ 
+
+       byte stuffing; Password Authentication Protocol (PAP) (RFC 1334)
+       - provides dial-in security via a PAP packet; Protocol Field Com-
+       pression - compresses the HDLC Protocol Field from two bytes to
+       one; Address and Control Field Compression - compresses the HDLC
+       Address and Control Fields causing them to be omitted from the
+       frame.
+
+    -  Internet Protocol Control Protocol (IPCP) (RFC 1332) - The fol-
+       lowing IPCP options are settable: IP Addresses - Negotiates IP
+       addresses for both ends of the link, used if the attached de-
+       vice does not support "IP Address" negotiation; IP Compression
+       Protocol - supports Van Jacobson's TCP/IP Header Compression (RFC
+       1144); IP Address - Negotiates IP address for each end of the
+       link.
+
+    -  AppleTalk Control Protocol (ATCP) (RFC 1378) - The following ATCP
+       options are fixed: AppleTalk Address - negotiates AppleTalk ad-
+       dress for each end of the link; Routing Protocol - negotiates
+       which routing protocols may be used over the link. Only RTMP and
+       NONE are supported; Suppress Broadcast - peer may request that
+       the server not forward broadcast traffic to the attached host;
+       Default Router - allows the server to inform the attached host
+       what the address is for the default Router; Zone Information -
+       allows the server to inform the attached host what the name is
+       for the default zone.
+
+ The DECserver also implements and supports the Terminal Device/Session
+ Management Protocol (TD/SMP) to manage multiple sessions at the de-
+ vice level. The DECserver provides the ability to communicate with de-
+ vices which also implement this protocol (such as VT420, VT330+, or
+ VT340+), and assist in the management of multiple sessions for these
+ devices. By implementing this protocol, the DECserver can permit at-
+ tached devices to maintain screen and keyboard context for multiple
+ LAT and/or Telnet sessions, as well as allow these devices to run mul-
+ tiple LAT and/or Telnet sessions concurrently.
+
+ The DECserver software will support block mode transfers of up to 2,048
+ bytes.
+
+
+                                  7
+
+ 
+
+ The DECserver implements the ODL (On Demand Loading) font-loading pro-
+ tocol, which allows Asian-language terminals that implement the ODL
+ protocol to communicate with an OpenVMS host via a terminal server.
+ The Asian-language terminals will be able to request font definitions
+ from an OpenVMS host when connected to a DECserver. This feature is
+ supported only for LAT connections.
+
+ Software that runs on the DECserver is downline loaded over the net-
+ work from a load host using MOP or BOOTP/TFTP. Terminal access using
+ the DECserver does not require DECnet running in the same service node;
+ LAT uses the Ethernet addressing mechanism to transport terminal mes-
+ sages. The DECserver software contains provisions to be loaded from
+ nonvolatile memory (Flash RAM) incorporated in some of the DECserver
+ hardware platforms.
+
+ Features such as login load balancing, multiple terminal sessions, au-
+ tomatic failover, and remote printer support can lead to greater user
+ productivity.
+
+ For WAN communications, terminal users can connect to remote hosts via
+ Telnet through a TCP/IP router or gateway. In addition, terminal users
+ can connect to a local service node running DECnet, where they can "SET
+ HOST" to a remote system via the DECnet network terminal protocol. If
+ this system has the requisite X.25 or SNA 3270 access routines, a ter-
+ minal user could communicate to a remote SNA or X.25 host through the
+ appropriate gateway and this intervening host. A DECserver terminal
+ user cannot communicate directly to remote hosts through DECnet Routers
+ or X.25/SNA Gateways. WAN traffic will not provide the same high level
+ of performance as local terminal connections due to the additional DEC-
+ net or Internet protocol overhead. The DECservers support connections
+ to WANs via modems.
+
+ Features
+
+ Remote Connectivity
+
+
+
+
+
+                                  8
+
+ 
+
+ PPP, SLIP, and CSLIP provide remote IP connectivity from any host com-
+ puter that supports SLIP, CSLIP, or PPP. This means that the host can
+ use the DECserver serial port as its network connection. This gives
+ IP end nodes, which have no Ethernet controller or that reside at re-
+ mote sites, access to the network and to other serial-line attached
+ TCP/IP end nodes. Any IP application can then be run over the link.
+
+ AUTOLINK
+
+ Provides a generic asynchronous serial datalink connection (or ses-
+ sion) for dial-in ports. This feature allows a server manager to con-
+ figure a dial-in port to service both PPP and SLIP users with mini-
+ mal user interaction. An AUTOLINK session passably examines charac-
+ ters received from the attached devise. If a PPP or SLIP packet is de-
+ tected, the current session will attempt to change itself into the cor-
+ responding type of datalink session, PPP or SLIP.
+
+ Terminal Connection Management
+
+ Through the use of a simple command, users can establish a logical con-
+ nection, called a session, to any service node that implements the LAT
+ or Telnet protocol on the same Ethernet LAN, or to a remote host that
+ implements the TCP/IP protocol suite. This connection makes the ter-
+ minal appear as if it were physically connected to the service node,
+ and the terminal user can use standard system utilities and applica-
+ tions supported by that node. Each terminal connected to the server
+ can connect to the same or a different service node on the Ethernet.
+ Furthermore, several servers can be used to connect many terminals to
+ one or more service nodes.
+
+ A service node can have one or more LAT services that are offered to
+ DECserver users. Services and nodes are identified by name. Users al-
+ ways connect to services, not to nodes; often one of the service names
+ will be the node name. Users of Telnet connect to nodes.
+
+ In a VAXcluster environment, the DECserver LAT users see each VAXclus-
+ ter on the Ethernet as a collection of service nodes offering a com-
+ mon service. Each cluster node may also offer a service whose name is
+
+
+                                  9
+
+ 
+
+ equivalent to its node name. In this case, a terminal user can con-
+ nect either to the cluster service or a service associated with a par-
+ ticular cluster node. To connect via Telnet, a user may need to spec-
+ ify the specific cluster node to which to connect.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 10
+
+ 
+
+ Load Balancing
+
+ When a connection is made to a service, the actual node for the con-
+ nection is determined by load balancing. Load balancing is a process
+ the server uses when more than one node offers the same service. Ser-
+ vice nodes do not have to be configured in a cluster for load balanc-
+ ing to be used. Service nodes with the same names may be running dif-
+ ferent operating systems. Using the load balancing process, the server
+ connects to the node with the highest rating for the service desired.
+ This rating is based on the current loading on the nodes that offer
+ the service. This feature is typically supported only for LAT connec-
+ tions.
+
+ Multiple Sessions
+
+ The DECserver allows each user to establish and maintain up to eight
+ sessions to one or more service nodes. Only one session per user can
+ be active at a time. Through simple switching commands, the user can
+ access the different sessions without repeating a login dialogue each
+ time. Some operating systems may impose limits on the number of LAT
+ or Telnet sessions that a host will support.
+
+ Multiple Session Management
+
+ The DECserver software allows direct communications with devices that
+ support the TD/SMP protocol. This protocol provides the ability for
+ the attached device to maintain screen and keyboard context for the
+ multiple LAT or Telnet sessions that the DECserver provides. By im-
+ plementing the Multiple Session protocol, the DECserver can now as-
+ sist in the management of context of these multiple sessions, as well
+ as allow for simultaneous output to multiple LAT or Telnet sessions
+ being maintained by the device.
+
+ Outbound Connection Queues
+
+ If a terminal user requests a connection to a service and the requested
+ service is currently in use, the terminal server users may opt to have
+ the requested connection queued to the remote service. If the user's
+
+
+                                 11
+
+ 
+
+ port has been appropriately configured, this feature happens automat-
+ ically whenever a connection fails for this reason. The connection re-
+ quest is queued at the service node end and is processed first-in/first-
+ out (FIFO) until such time as the user's connection request can be com-
+ pleted. This feature assists in the fair management of limited net-
+ work resources. Once queued for connection, the user also has the op-
+ tion to cancel the queue entry and proceed with other sessions. This
+ feature is supported only for LAT connections. Similar functionality
+ may be available via a print filter program on a Telnet host.
+
+ Command Line Recall and Editing
+
+ The DECserver server supports multiple command line entry recall and
+ editing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 12
+
+ 
+
+ Welcome Identification
+
+ The DECserver server-standard welcome banner, which includes server
+ type, version number, and internal base level, is issued whenever a
+ user successfully logs in to the server. The server will also print
+ a Server-Manager-settable identification string. This can be useful
+ for automatic server identification or for small daily messages used
+ for communications with the terminal server users.
+
+ Local Mode and Service Mode
+
+ For the most part, the environment provided by the DECserver is iden-
+ tical to the environment the user would experience if attached directly
+ to the service node. When operating in this mode, the user is said to
+ be in Service Mode. Occasionally, such as during connection establish-
+ ment, the user interacts directly with the DECserver. When operating
+ in this mode, the user is in Local Mode.
+
+ In Local Mode the terminal input is interpreted directly by the soft-
+ ware as commands to be performed by the server.
+
+ Local Mode has three different levels of privilege: privileged, non-
+ privileged, and secure. Privileged mode is provided for the Server Man-
+ ager to control the environment of the server and the terminal users.
+ Access to this mode is password protected. Nonprivileged commands al-
+ low the terminal user to control their service sessions, set the ter-
+ minal characteristics, and show server information. The Server Man-
+ ager can set the server to secure mode on a per-terminal basis, which
+ further limits the commands users can enter to only those which di-
+ rectly relate to the user's own terminal.
+
+ Additional commands and displays to support the features available with
+ the TD/SMP protocol are usable in Local Mode. These commands will be
+ used to enable or disable server recognition of the TD/SMP commands.
+
+ The Server Manager environment is a logical extension of the user en-
+ vironment. The Server Manager is treated as a server user with a priv-
+ ileged status. The Server Manager sets a terminal to this status us-
+ ing a command which requires a password. This privileged status al-
+ lows the Server Manager to enter commands not usually available to server
+
+                                 13
+
+ 
+
+ users. These commands set server characteristics, provide control over
+ server port usage, and provide the ability to control the user's ac-
+ cess to the server and network services.
+
+ In Service Mode, the terminal input is passed directly to the connected
+ service node with several exceptions. One exception, called the lo-
+ cal switch character, allows the user to enter Local Mode from Ser-
+ vice Mode. The [BREAK] key may also be used for this function. Other
+ exceptions, called the forward and backward switch characters, allow
+ the user to switch between sessions without the need to enter local
+ mode. The switch characters are disabled by default but may be enabled
+ by command. Both CTRL/S and CTRL/Q are usually interpreted locally,
+ but flow control using these characters can be disabled.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ Autoconnection
+
+ Autoconnection is a function that automatically connects a user ter-
+ minal to a service node when connection failures occur or upon user
+ login to the server. In conjunction with this function, a dedicated
+ or preferred service can be specified for each terminal user. If a ded-
+ icated service is specified, the DECserver will attempt to connect to
+ that service when a character is typed on the terminal keyboard or when
+ an existing connection fails. In dedicated service mode, only one ses-
+ sion is available. As this mode is designed to simulate a direct ter-
+ minal connection, no local mode commands or messages are available to
+ the terminal user. Ports with dedicated service can be automatically
+ logged out of the server when the user logs out of the service node.
+
+ If a preferred service is specified, the DECserver will attempt to con-
+ nect to that service as with the dedicated service mode of operation.
+ However, the terminal user can enter local mode and establish other
+ sessions.
+
+ Automatic Protocol Selection
+
+ It is possible to automatically connect to an Internet host or LAT ser-
+ vice without explicitly identifying the connection as LAT or Telnet.
+ If the port is configured with a value for the default protocol as "ANY",
+ the server will attempt a LAT connection first to the name specified
+ in the LAT service field. If the service is not available or unknown,
+ the terminal server will then automatically attempt a Telnet connec-
+ tion to the Internet host specified in the command.
+
+ Automatic Session Failover
+
+ If a service is available on two or more service nodes and a connec-
+ tion to a service fails, the server will attempt to connect the user
+ to another service node offering the same service. The user does not
+ have to be connected to that service node. Furthermore, the user's con-
+ text at the time of failure is not automatically restored and login
+ to the new service is required. This feature is supported only for LAT
+ connections.
+
+ Groups
+
+                                 15
+
+ 
+
+ Every terminal and service node in a LAT network is a member of one
+ or more groups specified by a list of numbers from 0 to 255. Groups
+ allow an easy means of subdividing the network into what appears to
+ be many smaller networks. A terminal user is only aware of the ser-
+ vices that are offered by nodes in the same group(s).
+
+ The Server Manager can specify the authorized group(s) in which a ter-
+ minal is a member. The authorized groups define the set of services
+ that the user is allowed to access. In addition, for those nodes that
+ implement group codes, a user can further limit access to services by
+ disabling some of the authorized groups using a nonprivileged group
+ command. The user-settable group codes are a subset of the authorized
+ groups.
+
+ Groups provide a restrictive view of the network. This restricted view
+ is mainly for user convenience. Groups apply only to LAT connections.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 16
+
+ 
+
+ Security
+
+ The DECserver provides functions that enhance security features al-
+ ready available in the service nodes. DECserver security includes the
+ ability to lock a terminal's keyboard from other users, optional lo-
+ gin protection, and nonprivileged local mode of operation as a default.
+
+ A user may lock the terminal using a lock password. This allows the
+ user to leave sessions running at the terminal without fear of secu-
+ rity violations. When a terminal is locked, all input from the ter-
+ minal is ignored until the lock password is re-entered. The lock fea-
+ ture may be disabled by the Server Manager.
+
+ Each terminal port can be set to operate in a secure mode, which causes
+ all commands that relate to other users to be disabled for that port.
+
+ Login passwords can be enabled on a per-server basis by the Server Man-
+ ager. If enabled, the terminal user must enter a login password to ac-
+ cess server functions.
+
+ DECserver users usually have access to the nonprivileged local mode.
+ In this mode, users may only issue commands that affect their own ter-
+ minal environment. The server has a privileged mode for Server Man-
+ ager's use. The mode is password protected.
+
+ The Server Manager can further restrict non-privileged and secure ports
+ by enabling the LIMITED VIEW characteristic, which prohibits users from
+ viewing tables of LAT nodes, LAT services, and certain internet databases.
+ The Sever Manager can restrict the port user to a predetermined set
+ of commands by creating a command menu with these commands in it and
+ defining this menu as the default menu on the port. In this case, the
+ menu is automatically entered when the user logs into the port and the
+ user cannot exit from the menu, except to log out of the port.
+
+ Kerberos Security
+
+ Provision for user authentication is included in the DECserver Net-
+ work Access Software, using Kerberos Version 4. Kerberos is an authen-
+ tication service for open network systems, developed as part of Project
+ Athena at the Massachusetts Institute of Technology. In addition, users
+
+                                 17
+
+ 
+
+ may change their Kerberos passwords, stored on the Kerberos master database,
+ remotely from the DECserver.
+
+ User authentication is a security feature that requires a user to en-
+ ter a valid username and password pair before being allowed to log in
+ to the DECserver. The user must have been previously registered (user-
+ name and password) with a Kerberos Key Distribution Center on a host
+ running the Kerberos server software. This effectively gives users on
+ the network their own password to log in to the network through the
+ DECserver by using Kerberos.
+
+ Kerberos uses the Data Encryption Standard to authenticate its mes-
+ sages over the network. No Kerberos passwords are transmitted in the
+ clear.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 18
+
+ 
+
+ Online HELP Facility
+
+ A full online reference HELP facility is available. The server's HELP
+ command provides information on the correct syntax and details about
+ each command. In addition, a tutorial HELP feature allows new users
+ to quickly learn the basics of DECserver operation. Tutorial HELP may
+ be entered upon logging into the server. HELP is based on whether the
+ user is secure, nonprivileged, or privileged.
+
+ Command Prompting
+
+ The command prompting feature allows users to solicit specific help
+ based upon where they are in the command sequence. The user types a
+ question mark and is presented a list of next possible commands or key-
+ words.
+
+ Command Groups
+
+ The command group feature allows users to define their own command word(s),
+ which, when invoked, will execute a sequence of stored server commands.
+
+ Customized Menus
+
+ This feature allows the privileged user to create a customized menu-
+ style user interface rather than the command line interface.
+
+ Directory Service
+
+ Any DECserver user can obtain a directory of LAT services available
+ to that user with a SHOW SERVICES command. Services for which the user
+ is not authorized will not be displayed. Services apply only to LAT
+ connections.
+
+ Permanent Characteristics
+
+ The DECserver maintains permanent characteristics in nonvolatile mem-
+ ory, which is retained even when the power is disconnected. Permanent
+ characteristics are maintained for service and server parameters as
+ well as per-port parameters. Permanent characteristics can be reset
+ to factory defaults by pressing the software reset button on the hard-
+ ware unit while plugging in the power cord.
+
+                                 19
+
+ 
+
+ Port Characteristics Configuration
+
+ Characteristics governing the operation of an individual port can be
+ displayed by a nonprivileged terminal user interactively from the user's
+ terminal. Many of the characteristics may be set by the user, but cer-
+ tain characteristics are privileged and may only be changed by the Server
+ Manager.
+
+ Port parameters that can be set and displayed include: speed, char-
+ acter size, group codes, parity, terminal type, access, autobaud, de-
+ fault protocol, and password protection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 20
+
+ 
+
+ Port Access
+
+ Port access is the characteristic which determines how a port may ac-
+ cess or be accessed by interactive users and service nodes. A port on
+ a DECserver may be configured in different ways depending on the de-
+ vice attached to the port and its intended use. Additionally, differ-
+ ent DECserver hardware platforms provide support for different port
+ devices.
+
+ o  Access Local - Designed for interactive terminals. This allows the
+    device (typically an interactive terminal) attached to the port to
+    CONNECT to LAT or Telnet. Additional example: dial-in modem.
+
+ o  Access Remote - Designed for application-driven devices such as asyn-
+    chronous printers which are allocated by a service node process.
+    This allows the implementation of certain shared printers by mul-
+    tiple service nodes. Additional example: dial-out modem.
+
+ o  Access Dynamic - Designed for devices (such as personal computers
+    or printers with keyboards) that require both Local and Remote ac-
+    cess. Additional example: dial-in/dial-out modem.
+
+ o  Access None - Designed to allow the Server Manager to disable the
+    use of a port.
+
+ With printer support capabilities, the configuration procedure of re-
+ mote printers needs to be done once and will be automatically recon-
+ figured on system startup. The particular server port must be config-
+ ured for remote access and set up to match the characteristics of the
+ printer. Improved printer sharing allows a printer on the server to
+ be shared among hosts using LAT and hosts using Telnet.
+
+ Terminal Operation
+
+ The DECserver 90TL and 90M software supports the simultaneous oper-
+ ation of up to eight asynchronous devices at speeds from 75 bps to 57.6
+ Kbps. The DECserver 700 and DECserver 900TM software supports the si-
+ multaneous operation of up to 8, 16 or 32 asynchronous devices at speeds
+ from 75 bps to 115.2 Kbps.
+
+                                 21
+
+ 
+
+ The DECserver Network Access Software supports:
+
+ o  Data leads only support
+
+ o  Full modem control (DS700-08 only)
+
+ o  Modem Fallback Features (DS700-08 only)
+
+ o  Signal control (DS90TL and DS90M only)
+
+ o  Signal control with Signal Select (DS700-16 and DS900TM only)
+
+ o  DSR logout
+
+ o  Long Break logout
+
+ o  Signal check
+
+ o  CTS/RTS flow control (DS700-08, DS700-16 and DS900TM only)
+
+ o  DSR/DTR flow control
+
+ o  XON/XOFF flow control
+
+ o  Split speed (transmit and receive) terminal operation
+
+ o  Block Mode transfers up to 2,048 bytes
+
+ o  Digital personal computer file transfer
+
+ o  Automatic line speed detection
+
+ o  Data transparency mode
+
+ o  Ability to pass break character and error notification
+
+ o  Ability to assist in multiple session management via TD/SMP
+
+ o  RI simulation for DTEs that require it (DS700-08, DS700-16 and DS900TM
+    only)
+
+ Server Management
+
+ Several facilities exist for managing and troubleshooting server op-
+ eration. The Server Manager in privileged mode can set up server iden-
+ tification information, change port characteristics, or fine tune the
+ operating characteristics of the server. Troubleshooting facilities
+
+                                 22
+
+ 
+
+ include diagnostic tests, a remote console feature, and online statis-
+ tics.
+
+ A privileged user can diagnose Ethernet communications problems by loop-
+ ing messages to an Ethernet host and through the Ethernet hardware in-
+ terface at the server. To diagnose terminal problems, users can ex-
+ ecute a command to transmit test data to their terminal, or the Server
+ Manager can send test data to any terminal.
+
+ The capability also exists for the Server Manager to test a service
+ connection by sending data from the initiating port to the service node
+ and back again. The data is then compared and any discrepancies re-
+ ported. At the service node, the data can be looped back by the LAT
+ protocol or internally or externally at the service port. This fea-
+ ture is supported only by DECserver service nodes; OpenVMS service nodes
+ do not support this service loopback capability.
+
+ The server maintains a variety of statistics and counters. These in-
+ clude the following: Ethernet data link statistics, LAT protocol statis-
+ tics, port character counters, and port error statistics. This data
+ can be displayed and zeroed by the Server Manager. Server parameters
+ that can be modified and displayed include the server identification,
+ circuit timer, session limits, and login limits.
+
+ Internet statistics are also maintained by the server. Internet char-
+ acteristics such as Internet address and subnet mask can be modified
+ and displayed. IP, ICMP, TCP, IP, UDP, DNS, and SNMP protocol statis-
+ tics can be displayed.
+
+
+
+
+
+
+
+
+
+
+
+
+                                 23
+
+ 
+
+ Remote Server Management
+
+ The DECserver implements the console carrier feature which enables ac-
+ cess to the DECserver local mode from either a Telnet host or from a
+ Phase IV or Phase V DECnet host on the same LAN. With the exception
+ of remote console port configuration, the entire local mode user in-
+ terface is accessible to the remote console carrier user. This includes
+ the privileged commands if the user knows the server's privileged pass-
+ word. This capability allows centralized server management and remote
+ server diagnosis.
+
+ The Telnet Remote Console feature is also available and can be used
+ to support remote server management as stated above.
+
+ DECserver Operation
+
+ The DECserver ROM-based firmware provides the necessary maintenance
+ operation protocols for downline loading DECserver software from a TCP
+ /IP host via BOOTP/TFTP or from a Phase IV or Phase V DECnet load host
+ over the Ethernet into server memory. All self-test diagnostics are
+ in DECserver ROM and are executed on power-up prior to downline load-
+ ing the server. In the event of a bugcheck caused by a fatal error,
+ the unit will normally attempt to upline dump server memory to the load
+ host. The upline dump is via either BOOTP/TFTP or MOP. Following this,
+ the unit will automatically initialize itself and invoke a downline
+ load.
+
+ DECserver Configuration and Performance
+
+ The process of configuring the DECserver is based primarily on trade-
+ offs of cost and performance within the realm of satisfying user ap-
+ plication requirements. Network applications will range from low-speed
+ /low-cost to those of relatively high performance (e.g., connecting
+ high-speed local terminals to local hosts within a LAN). The perfor-
+ mance of a given server is a function of the expected network traf-
+ fic, the load on hosts to which terminals are connected, and resul-
+ tant processing pursuant to the dedicated function of the unit. Thus
+ performance depends on several factors:
+
+ o  Number of terminals
+
+                                 24
+
+ 
+
+ o  Number of host systems with active connections to the server
+
+ o  Terminal speeds
+
+ o  Terminal user applications
+
+ o  Number and size of host buffers
+
+ o  Terminal workload
+
+ In order to achieve a viable configuration, the user and/or Digital
+ Software Specialist should perform a level of application analysis that
+ addresses the factors above. The actual maximum data throughput can-
+ not be calculated by multiplying the number of lines by the line speed,
+ since many factors already discussed in this section may reduce the
+ actual throughput.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 25
+
+ 
+
+ Communications - DECserver 700/DECserver 900TM Hardware Dependent
+
+ The DECserver 700 is available in two models: the DECserver 700-16,
+ and the DECserver 700-08. The DECserver 700-16 provides attachment for
+ 16 asynchronous devices via MJ8 connectors (also referred to as RJ45
+ connectors). The DECserver 900TM provides attachment for 32 asynchronous
+ devices via MJ8 connectors (also referred to as RJ45 connectors). The
+ DECserver 700-16 and DECserver 900TM conform to the DEC423 electri-
+ cal interface standard for local connections, and support two user se-
+ lectable modem signaling options: CTS/RTS/DSR/DTR or RI/DCD/DSRS/DTR.
+ DEC423 is a superset of EIA-423-A/CCITT V1.0 with some exceptions, and
+ supports longer cable runs and higher signaling speeds. The DECserver
+ 700-08 provides attachment for eight asynchronous devices via DB25 male
+ connectors. Both DECserver 700 models support asynchronous devices with
+ interfaces that conform to EIA/TIA-232-E/CCITT V.24/V.28.
+
+ The DECserver 700-16 and DECserver 900TM can sustain an aggregate char-
+ acter throughput of 215,000 characters per second. The DECserver 700-
+ 08 can sustain an aggregate character throughput of 120,000 charac-
+ ters per second. The DECserver 700-08 hardware has eight DB25 male con-
+ nectors integral to the box. Each port can be individually configured
+ in various modes:
+
+ o  Modem Control (DS700-08 only)
+
+ o  Signal Control with Signal Select (DS700-16 and DS900TM only)
+
+ o  Data leads with DSR logout (if a terminal is powered down the ses-
+    sion is automatically disconnected)
+
+ o  Data leads with signal check (checks signal status before and dur-
+    ing a session)
+
+ o  DSR/DTR flow control
+
+ o  CTS/RTS flow control
+
+ o  XON/XOFF flow control
+
+ o  Long Break logout
+
+ o  Modem Fallback Feature
+
+                                 26
+
+ 
+
+ o  RI simulation for DTEs that require it
+
+ Communications - DECserver 90TL and DECserver 90M Hardware Dependent
+
+ The DECserver 90TL and DECserver 90M uses DEC 423-A electrical inter-
+ face standard for local connections, which is compatible with the DEC
+ EIA/TIA-232-E/CCITT V.24/V.28 interface and supports eight asynchronous
+ devices operating at speeds up to 57.6 Kbps with DTR/DSR (Data Ter-
+ minal Ready/Data Terminal Set Ready) signaling. The DECserver 90TL and
+ 90M can sustain an aggregate character throughput of 30,000 charac-
+ ters per second. The DECserver 90TL and DECserver 90M hardware have
+ eight MJ8 connectors integral to the box. Each port can be individ-
+ ually configured in various modes:
+
+ o  Data leads only
+
+ o  Signal Control
+
+ o  Data leads with DSR logout (if a terminal is powered down the ses-
+    sion is automatically disconnected)
+
+ o  Data leads with signal check (checks signal status before and dur-
+    ing a session)
+
+ o  DSR/DTR flow control
+
+ o  Long Break logout
+
+ The DECserver 90TL and 90M DSR and DTR signals can be used to control
+ some modems. The control signals required between a communications server
+ and a modem are determined by the modem and, in some cases, Telecom-
+ munications Utility regulations. To provide satisfactory operation,
+ the modem must be configured as follows:
+
+ o  DSR - The modem must assert DSR when it has connected to an open
+    telephone line and the modem is ready to establish an outgoing call.
+    The modem must deassert DSR when it is not connected to an open tele-
+    phone line.
+
+
+                                 27
+
+ 
+
+ o  DTR - When DTR is asserted by the server, the modem must be put into
+    a state of readiness for receiving an incoming call, or the modem
+    must be made ready to initiate an outgoing call. When DTR is de-
+    asserted, the modem must disconnect from the telephone line and pre-
+    vent subsequent connections to the telephone line.
+
+ Modems that cannot be configured in this way are not compatible with
+ the DECserver 90TL and DECserver 90M.
+
+ The DECserver 90TL and 90M can operate with a modem that is speed buffer-
+ ing only if the modem and server are configured for XON/XOFF flow con-
+ trol and the data is nonbinary. For binary data communication with a
+ modem that is speed buffering and is not configured for XON/XOFF flow
+ control, a communications server with CTS/RTS flow control is needed
+ (such as the DECserver 700).
+
+ The modems that have been tested with the DECservers are specified in
+ the System Support Addendum (SSA 46.13.02-x).
+
+ Restrictions on DECserver Usage
+
+ While terminal connections using the DECserver have been designed to
+ simulate direct terminal connections as much as possible, a few dif-
+ ferences necessarily exist because of the nature of the product. Un-
+ der most circumstances, these differences are not noticed by termi-
+ nal users or service node application programs. However, applications
+ which are directly dependent on the following functions may not op-
+ erate as with a direct connection:
+
+ o  Applications that depend on reading or setting the terminal speed,
+    character size, and parity by manipulating system data structures
+
+ o  Applications that depend on an extremely fast response time (typ-
+    ically less than 200 ms) to operate
+
+ o  Applications that use an alternate terminal driver in the service
+    node
+
+ o  Applications that expect incoming connections to have fixed device
+    names
+
+                                 28
+
+ 
+
+ HARDWARE REQUIREMENTS
+
+ Processor and/or hardware configurations as specified in the System
+ Support Addendum (SSA 46.13.02-x).
+
+ SOFTWARE REQUIREMENTS
+
+ For OpenVMS Systems and Alpha AXP Systems:
+
+ o  OpenVMS VAX or OpenVMS AXP Operating System
+
+ o  DECnet/OSI for OpenVMS (Phase IV or Phase V)
+
+ For ULTRIX Systems:
+
+ o  ULTRIX Operating System
+
+ o  MOP
+
+ For AXP OSF/1[R] Operating Systems:
+
+ o  AXP OSF/1 Operating System
+
+ o  BOOTP/TFTP
+
+ For MS-DOS[R] Systems:
+
+ o  MS-DOS Operating System
+
+ o  PATHWORKS for DOS
+
+ For UNIX Systems:
+
+ The following generic operating systems are supported. Note that com-
+ plete support cannot be granted on systems where customization has taken
+ place. Also, note that some UNIX implementations, not listed below,
+ may operate successfully, but no support is implied.
+
+ o  BOOTP/TFTP
+
+    One of the following:
+
+    -  SunOS
+
+                                 29
+
+ 
+
+    -  OSF/1[R]
+
+    -  IBM AIX[R]
+
+    -  SCO[TM] UNIX System V/386
+
+    -  HP-UX[R]
+
+ Some System V systems, such as HP-UX and SCO, may not support the up-
+ line dump of server memory.
+
+ Refer to the System Support Addendum (SSA 46.13.02-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ Software License: QL-0LWA9-AA
+ Software Media: QA-0LWA*-H*
+ Software Documentation: QA-0LWAA-GZ
+ Software Product Services: QT-0LWA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ The DECserver software license applies to the DECserver on which the
+ server software runs, not to service host node CPUs in the network.
+
+ This product does not provide support for the OpenVMS License Manage-
+ ment Facility. A Product Authorization Key (PAK) is not required for
+ installation or use of this version of the product.
+
+
+
+                                 30
+
+ 
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+
+ [R] FTP is a registered trademark of Schere Laboratories, Inc.
+
+ [R] HP-UX is a registered trademark of Hewlett-Packard Company.
+
+ [R] IBM, AT, and AIX are registered trademarks of International
+    Business Machines Corporation.
+
+ [R] MS-DOS is a registered trademark of Microsoft Corporation.
+
+ [R] OSF/1 is a registered trademark of Open Software Foundation,
+    Inc.
+
+ [R] UNIX is a registered trademark of American Telephone and Tele-
+    graph Co.
+
+ [TM]SCO is a trademark of Santa Cruz Operations, Inc.
+
+ [TM]X Window System is a trademark of Massachusetts Institute of
+    Technology.
+
+ [TM]The DIGITAL Logo, Alpha AXP, AXP, DEC, DECnet, DECserver, Dig-
+    ital, LA, LAT, OpenVMS, PATHWORKS, ULTRIX, VAX, VAXcluster,
+    VT100, VT300, VT330, VT340, and VT420 are trademarks of Digital
+    Equipment Corporation.
+
+ ©1993 Digital Equipment Corporation. All Rights Reserved.
+
+
+                                 31

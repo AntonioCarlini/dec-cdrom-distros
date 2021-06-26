@@ -1,0 +1,1293 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ___________________________________________________________________
+
+          PRODUCT NAME:  WANrouter 90/250 Software, Version 1.2  SPD 36.24.04
+
+          DESCRIPTION
+
+
+          Overview
+
+          The WANrouter 90/250 software runs on the DECwanrouter 90, DECwanrouter
+          90EW, and DECrouter 250 hardware units. These access router hardware
+          platforms contain both local and wide area communication ports. To-
+          gether, the hardware and software form routing nodes and provide a net-
+          work routing service for computer systems and PCs connected to the com-
+          munications ports.
+
+          The following sections contain more information on the capabilities
+          of the WANrouter 90/250 software (referred to as WANrouter software
+          for the remainder of this document).
+
+          o  Types of Client
+
+          o  Connections to the WANrouter hardware
+
+          o  Routing features - IP, Novell Netware, DECnet, OSI, X.25 and Dial-
+             up services.
+
+          o  Installation, configuration, and loading.
+
+          o  Network management
+
+          o  Network size and supported circuits
+
+          o  Performance
+
+          o  X.25 public networks
+
+                                        DIGITAL                 December 1994
+
+                                                                  AE-PJM9E-TE
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          Types of Client Systems
+
+          The WANrouter software provides a network routing service for:
+
+          o  TCP/IP hosts
+
+          o  Novell[R] NetWare[R] nodes
+
+          o  OSI-compatible systems
+
+          o  DECnet/OSI Phase V nodes
+
+          o  DECnet Phase IV nodes
+
+          Connections to the WANrouter Hardware
+
+          Client systems can be connected to the WANrouter hardware via:
+
+          o  The same Local Area Network as the router using Ethernet or IEEE
+             802.3 protocols
+
+          o  The serial communications ports of the router using DDCMP (asyn-
+             chronous/synchronous) or HDLC (synchronous only) data link proto-
+             cols
+
+          o  Remotely across a Packet Switched Data Network (PSDN) using X.25
+             protocols
+
+          Connections to the serial communication ports may be made:
+
+          o  Locally - Using dedicated null modem wiring (asynchronous only),
+             or modem eliminators (synchronous or asynchronous)
+
+          o  Remotely - Using modem connections over leased lines or dial-up Pub-
+             lic Switched Telephone Network (PSTN) lines or X.25 connections over
+             PSDNs
+
+          Routing Features
+
+          IP Routing
+
+                                           2
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          The WANrouter software provides support for the following IP routing
+          protocols:
+
+          o  Integrated Intermediate System to Intermediate System (IS-IS) pro-
+             tocol for routing in pure TCP/IP and dual environments, as spec-
+             ified in RFC 1195.
+
+          o  RIP (Routing Information Protocol) for routing in pure TCP/IP en-
+             vironments, as specified in RFC 1058. (Note that in DECnet Phase
+             IV areas, where DECnet Phase IV routing algorithms are used, RIP
+             should be used instead of integrated IS-IS.)
+
+          o  Exterior Gateway Protocols (EGPs) as specified in RFCs 827, 888,
+             and 904.
+
+          Integrated IS-IS is the OSI IS-IS Intra-Domain routing, with additions
+          for IP routing as defined in RFC 1195. IP Reachable Addresses may also
+          be manually configured for static routes over CSMA/CD, serial, or X.25
+          circuits.
+
+          When using Integrated IS-IS, the WANrouter software provides equal-
+          cost path splitting of IP data over equal-cost paths. Variable, but
+          contiguous, IP subnet masks are also supported.
+
+          IP hosts and gateways on the same CSMA/CD circuit as the router are
+          identified by the Address Resolution Protocol (ARP) as described in
+          RFC 826. Proxy ARP (RFC 1027) is also supported.
+
+          The WANrouters can communicate directly with IP hosts or gateways over
+          CSMA/CD circuits. They inter-operate with other IP gateways using RIP
+          or EGP on these circuits.
+
+          IP datagrams can be forwarded over:
+
+          o  CSMA/CD circuits using Ethernet format packets
+
+          o  Serial synchronous circuits using HDLC, or DDCMP data links
+
+          o  Serial asynchronous circuits using DDCMP data links
+
+          o  Dynamically assigned X.25 circuits. Note that X.25 static circuits
+             (DLM) are not supported.
+
+                                           3
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          When operating over DDCMP or HDLC circuits, the software directly com-
+          municates only with other Digital routers. When operating over X.25
+          dynamic circuits, the software can communicate with other routers and
+          end systems that support the OSI connectionless network service over
+          X.25 data links. Forwarding of IP traffic over X.25 circuits is sup-
+          ported in accordance with RFC 877.
+
+          Novell Netware Routing
+
+          The WANrouter software provides support of native Novell NetWare pro-
+          tocols using Ethernet, Ethernet-II, 802.2, Encapsulated Ethernet (802.2
+          SNAP), and 802.3 RAW (Novell) datalink formats. The following Novell
+          NetWare protocols are supported:
+
+          o  Novell NetWare IPX Forwarding
+
+          o  Novell NetWare Routing Information Protocol (RIP)
+
+          o  Novell NetWare Service Access Protocol (SAP)
+
+          Novell IPX is supported over wide area links using IP encapsulation
+          according to RFC 1234. Novell IPX routing is managed using the WAN-
+          router configuration utility and the NCL command line interface.
+
+          DECnet Routing
+
+          The WANrouter 90/250 software implements IS-IS (link state routing)
+          as the DECnet/OSI Phase V routing protocol. Note that the DECnet/OSI
+          Phase V routing protocol also supports DECnet Phase IV end systems.
+
+          For backward compatibility, the WANrouter 90/250 software also imple-
+          ments DECnet Phase IV routing (router vector routing).
+
+          The WANrouter 90/250 software supports both intra-area routing (Level
+          1) and inter-area routing (Level 2). The router can run either the Phase
+          IV or Phase V routing algorithm in either combination at each level.
+
+          Routers within the same DECnet area must use the same routing algo-
+          rithms, either DECnet Phase IV or DECnet/OSI Phase V, but not both.
+
+
+                                           4
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          Communication with other DECnet end systems or routers over the se-
+          rial connections can use either DDCMP (synchronous or asynchronous),
+          HDLC (synchronous only), or X.25 data link circuits.
+
+          If the routing circuit costs are set appropriately, the WANrouter 90
+          /250 software performs path splitting across up to four routing paths
+          of equal cost. Note that routing cost is an arbitrary network manage-
+          ment parameter set by the network manager to control network traffic
+          flow. If the cost between the router and the destination node is the
+          same on multiple circuits, then the software splits the traffic across
+          the circuits.
+
+          OSI Routing
+
+          The WANrouter 90/250 software fully implements the requirements of an
+          OSI Intermediate System. The WANrouter 90/250 exchanges information
+          about reachability of end systems using the OSI Intermediate System
+          to Intermediate System (IS-IS) Intra-Domain Routing Exchange Proto-
+          col as specified in ISO/IEC 10589.
+
+          OSI-compatible end systems on the same Local Area Network can exchange
+          information with the WANrouter 90/250 using the OSI End System to In-
+          termediate System (ES-IS) Routing Exchange Protocol as specified in
+          ISO 9542.
+
+          The WANrouter 90/250 software uses the OSI Connectionless Network Pro-
+          tocol (CLNP), as specified in ISO 8473, to communicate with OSI-compatible
+          systems over an ISO 8802/3 or IEEE 802.3 Local Area Network. Commu-
+          nication over the serial links uses the synchronous HDLC data link pro-
+          tocol, the synchronous/asynchronous DDCMP data link protocol, or the
+          synchronous X.25 packet-level protocols.
+
+          Routing over X.25 PSDNs
+
+          The WANrouter 90 and 250 support the use of dynamically assigned X.25
+          routing circuits. Dynamically assigned circuits are established only
+          when there is information to send over the routing circuit. They are
+          disconnected when there is no further information to send. DA circuits
+          are only supported between different areas using Level 2 routing.  Note
+          that static circuits (X.25 DLM) are not supported.
+
+                                           5
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          The WANrouter 90/250 supports up to 8 physical connections (if avail-
+          able) to one or more X.25 PSDNs. The software can share outgoing calls
+          between all the DTEs connected to a PSDN. The software supports rout-
+          ing over Switched Virtual Circuits (SVCs).
+
+          Each X.25 virtual circuit can run only one routing protocol. However,
+          different routing protocols can be run over separate virtual circuits
+          on the same X.25 DTE connection.
+
+          Routing over Dial-up or Switched Services
+
+          The WANrouter software supports direct call/answer procedures for dial-
+          up access using the "raise DTR" method for outgoing and "Ring Indi-
+          cate" for incoming calls. Switched circuits may be defined as:
+
+          o  Static Outgoing - calls are established when the circuit is enabled
+             and stay established until the circuit is disabled.
+
+          o  Static Incoming - calls are established by the remote router and
+             stay established until the circuit is disabled locally or by the
+             remote router.
+
+          o  Dynamically assigned - calls are established on receipt of traf-
+             fic and cleared on expiration of a timer when the circuit is idle.
+
+          Failover using Switched Services
+
+          Switched circuits can also be defined as secondary routing circuits
+          which can be enabled when the primary routing circuit fails. The pri-
+          mary circuit is constantly monitored and the secondary circuit enabled
+          should the line be lost. Conversely, the secondary circuit is disabled
+          and the primary circuit re-enabled should the primary line recover.
+
+          Installation, configuration and loading
+
+          The WANrouter software is installed and configured on a host system
+          (termed a load host). A load host may be any of the following systems:-
+
+          o  OpenVMS/VAX
+
+          o  RISC/ULTRIX
+
+                                           6
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          o  MS-DOS for IBM-compatible PCs
+
+          The minimum requirement is for one host to load the target router. How-
+          ever, WANrouter software can be installed on a number of load hosts.
+          This helps to protect against loss of service if a single load host
+          is unavailable, or unable to load the system for any other reason.
+
+          Once installed, the router software must be configured using config-
+          uration programs supplied with the product. The host configuration util-
+          ities allow the router hardware to be defined in the load hosts' net-
+          work node database. The router configuration utilities allow a unique
+          initialization script file to be created for each router installed.
+          Once configured, the software image and initialization script file are
+          then downline loaded from the load host to the router hardware over
+          the local or wide area network.
+
+          Loading over the Local area network uses Digital's Maintenance Oper-
+          ation Protocol (MOP). In addition, BOOTP/TFTP is also supported on the
+          DECwanrouter 90EW.
+
+          MOP may be used to load over the wide area network via a point-to-point
+          link from a DECnet/OSI host, or from a DECNIS router which has been
+          configured to use Agent Loading.
+
+          When using agent loading, the load host may be located anywhere in the
+          Wide Area Network accessible to the Agent Loading router. This Agent
+          loading router must be configured to copy the WANrouter software im-
+          age and initialization scripts from the load host using DECnet/OSI and
+          to load these over the direct point-to-point link with the target router
+          using MOP.
+
+          Network Management
+
+          The WANrouter software conforms to both the IETF Structure of Manage-
+          ment Information and the Digital Enterprise Management Architecture
+          (EMA). Simple Network Management Protocol (SNMP) or Digital's imple-
+          mentation of the Control Management Information Protocol (CMIP) are
+          used to manage the WANrouters
+
+
+
+                                           7
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          The WANrouter software is managed dynamically from any MS-DOS, DEC OSF
+          /1 AXP, OpenVMS or ULTRIX system using the Network Command Language
+          (NCL) command line interface. Dynamic management tasks that can be per-
+          formed include:
+
+          o  Management of connections, for example, set up the data links, en-
+             able and disable circuits.
+
+          o  Monitoring of network traffic, for example, enable event logging,
+             display counters.
+
+          o  Problem solving, for example, test circuit availability, perform
+             loopback tests.
+
+          Event logging and data tracing utilities are also available on DEC OSF
+          /1 AXP, OpenVMS or ULTRIX systems to assist problem solving by log-
+          ging network events and by tracing control messages received or sent
+          by the WANrouter software.
+
+          The WANrouter software can also be managed dynamically from POLYCEN-
+          TER/Netview network management platforms or from any system support-
+          ing the Simple Network Management Protocol (SNMP). SNMP gets are sup-
+          ported where appropriate for the variables defined in the Management
+          Information Base MIB-II (RFC 1213). MIB-II interface support is pro-
+          vided for CSMA/CD, HDLC, LAPB, and DDCMP datalinks. SNMP can only be
+          used to monitor MIB variables when IP routing is enabled.
+
+          The WANrouter responds to, but can not source, IP Pings and OSI Echo
+          requests. The WANrouter can also forward echo requests and responses.
+
+          Dynamic management of the router provides only temporary changes to
+          the router configuration. These temporary changes are lost when the
+          hardware unit is re-loaded with the original script file.
+
+          Permanent changes to the configuration of the WANrouter software can
+          be made by re-using the configuration utilities to create a script file
+          and then downline loading these to the hardware unit.
+
+
+
+
+                                           8
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          Network Size and Supported Circuits
+
+          DECnet Phase IV networks are hierarchical networks that can be seg-
+          mented into up to 63 areas, each containing up to 1,023 nodes. Note
+          that these are maximum values permitted by the Digital Network Archi-
+          tecture, and that satisfactory operation in large networks requires
+          proper network planning. DECnet/OSI Phase V Domains can be virtually
+          unlimited. However, the actual size of a Domain is limited by the prod-
+          uct's memory size and processor power.
+
+          Internet addresses are 32 bit quantities which can be divided into five
+          different classes where the classes differ in the number of bits as-
+          signed to the network and host portions. Depending on the network class,
+          different numbers of host systems can be supported within a network.
+          Also, by using subnet masks, a further network hierarchy can be over-
+          laid within a network.
+
+          Tables 1 and 2 list the values of the parameters used to determine the
+          size of the supported network for each hardware unit. Note that these
+          figures are given as a guide only. Actual sizes experienced will de-
+          pend on a number of factors including the topological characteristics
+          of the network, the mix of protocols and data link interfaces, and the
+          amount of routing control traffic generated by the network. Consult
+          your local Digital Sales office for more details and for assistance
+          with network sizing and planning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           9
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          ___________________________________________________________________
+
+          Table_1:__Network_Sizes____________________________________________
+
+                                                 Maximum Number
+
+          Attribute_______________WR250_________WR90/WR90EW__________________
+
+          Total Areas in          200           200
+          Domain¹
+
+          Routing Addresses in    3200          3200
+          Area
+
+          Level 1 Routers in      100           100
+          Area
+
+          Level 2 Routers in      400           400
+          Domain
+
+          OSI Reachable Ad-       100           100
+          dresses¹
+
+          Local IP Interface      15            15
+          Addresses
+
+          IP Nets per Domain      500           500
+
+          IP Reachable Ad-        100           100
+          dresses
+
+          Total IPX Routes +      80            400
+          SAP services²
+
+          IPX Tunnel circuits     8             8
+
+          X.25 DTEs               8             2
+
+          X.25 Virtual Cir-       32            16
+          cuits______________________________________________________________
+
+          Notes:
+
+          1. The total number of areas plus OSI reachable addresses cannot ex-
+             ceed 200. If not all OSI reachable addresses are used, then more
+             areas can be supported up to the maximum stated above.
+
+                                           10
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          2. Note that there may be more than one reachable route to any IPX net-
+             work.
+
+          Attribute Definitions
+
+          Total        Number of area addresses in the routing Domain. This
+          Areas in     value, plus the number of OSI reachable addresses, is
+          Domain:      the total number of addresses which can be forwarded
+                       to, using Level 2 forwarding.
+
+          Routing      Total number of addresses (IDs) which can be for-
+          Addresses    warded to, using Level 1 forwarding. Each router may
+          in Area:     have one or two addresses, each end system has one
+                       or more addresses (e.g., a Phase IV and a Phase V
+                       address, each one counts as a separate address).
+
+          Level 1      Number of Level 1 Routers in the Area.
+          Routers:
+
+          Level 2      Number of Level 2 Routers in the Routing Domain.
+          Routers :
+
+          OSI          Number of OSI reachable addresses which may be manu-
+          Reach-       ally configured on the local router (when the local
+          able Ad-     router is being used as a Level 2 Router).
+          dresses:
+
+          Local IP     Total number of IP addresses which can be configured
+          Inter-       for the local interface ports.
+          face Ad-
+          dresses:
+
+          IP Nets      Number of unique nets/subnets reachable within the
+          per          local routing Domain at Level 2. This number is the
+          Domain:      summation of IP subnets propagated from Level 1 IS-
+                       IS, IP subnets propagated from RIP and EGP, and IP
+                       Reachable Address Prefixes defined at Level 2.
+
+          IP Reach-    Number of manually configured IP nets/subnets.
+          able Ad-
+          dresses:
+
+                                           11
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+
+          X.25         The maximum number of X.25 switched virtual circuits
+          Virtual      supported per system for routing.
+          Circuits:
+
+          ___________________________________________________________________
+
+          Table_2:__Local_Router_Adjacency_Attributes________________________
+
+          Attribute_____________Maximum_Number_______________________________
+
+          LAN L1 Router         32
+          Adjacencies
+
+          LAN L2 Router         32
+          Adjacencies
+
+          LAN Endsystem         1024
+          Adjacencies
+
+          Manual Endsystem      2
+          Adjacencies
+
+          Endsystem Ad-         2080
+          dresses____________________________________________________________
+
+          Attribute Definitions
+
+          LAN L1       Number of Level 1 Routers on the LAN (not including
+          Router       the local node). If a Level 1 Router has more than
+          Adjacen-     one connection to the LAN, each connection counts
+          cies:        as a LAN L1 Router Adjacency. If a Level 2 Router
+                       has any Level 1 connections to the LAN, then each
+                       connection counts as a LAN Level 1 Router Adjacency.
+
+          LAN L2       Number of Level 2 Routers on the LAN (not includ-
+          Router       ing the local node). If a Level 2 Router has more
+          Adjacen-     than one Level 2 connection to the LAN, each such
+          cies:        connection counts as a LAN L2 Router Adjacency.
+
+
+                                           12
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+
+          LAN          Number of end systems on the LAN. If an Endsystem has
+          Endsystem    more than one connection to the LAN, each connection
+          Adjacen-     counts as one LAN Endsystem Adjacency.
+          cies:
+
+          Manual       Number of non-autoconfiguring end systems which may
+          Endsystem    be manually created on a broadcast circuit.
+          Adjacen-
+          cies:
+
+          Endsystem    Total number of addresses (IDs) of all end systems
+          Ad-          adjacently connected to the router. These include
+          dresses:     Endsystems on the LAN, manual Endsystem Adjacencies,
+                       and Endsystems connected to the serial ports over a
+                       single point-to-point link.
+
+          Performance
+
+          The DECrouter 250 can saturate the band width of all serial lines at
+          the speeds shown in Table 4 with packet sizes of 128 bytes or greater.
+
+          The DECwanrouter 90 and 90EW products have a maximum system perfor-
+          mance of approximately 100 packets per second.
+
+          The actual performance of packets forwarded by any given WANrouter 90
+          /250 depends on many protocol and network topology considerations. Some
+          of these considerations are:
+
+          o  Mix of protocol types
+
+          o  Type of traffic (routing updates or data packets) and data rates
+
+          o  The proportion of leased line to X.25 traffic
+
+          o  Communications line characteristics
+
+          o  Frequency and type of errors on the synchronous or asynchronous links
+
+          o  Network topology stability
+
+          o  Protocol overhead
+
+                                           13
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          X.25 Public Networks Supported
+
+          The following X.25 public are supported.
+
+          ___________________________________________________________________
+
+          Table_3:__Public_PSDNs_Supported___________________________________
+
+          Country_______Public_Network_and_CCITT_Revisions___________________
+
+          Argentina     Arpac
+
+          Australia     Austpac
+
+          Austria       Datex-P
+
+          Belgium       DCS
+
+          Brazil        Renpac
+
+          Canada        Datapac (1980)
+                        DPN-NAS
+                        Faspac
+                        Infoswitch
+
+          Chile         VTRNET
+
+          China         CNPAC
+
+          Denmark       Datapak
+
+          Eire          Eirpac (1980)
+
+          Finland       Datapak
+
+          France        Transpac
+
+          Germany       Datex-P
+
+          Hong Kong     Datapak
+                        GDN
+                        INET
+                        Intelpak
+
+          Indonesia     SKDP
+
+          Italy         Itapac
+
+                                           14
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+          ___________________________________________________________________
+
+          Table_3_(Cont.):__Public_PSDNs_Supported___________________________
+
+          Country_______Public_Network_and_CCITT_Revisions___________________
+
+          Japan         DDX (1976, 1980, 1984) See Note 1
+                        ACE telnet
+                        CCVAN
+                        INS-P
+                        Jaisnet
+                        Venus-P (1980) and Venus-LP
+                        TYMNET[R]
+
+          Luxemburg     LUXPAC
+
+          Malaysia      Maypac
+
+          Mexico        Telepac
+
+          Netherlands   Datanet 1
+
+          New           Pacnet
+          Zealand
+
+          Norway        Datapak
+
+          Pakistan      Paknet
+
+          Philippines   Datanet
+
+          Portugal      Telepac
+
+          Singapore     Telepac
+
+          South         Dacomnet
+          Korea
+
+          Spain         Iberpac
+
+          Sweden        Datapak
+
+          Switzerland   Telepac (1978, 1980)
+
+          Taiwan        Pacnet
+
+          United        PSS See Note 2
+          Kingdom       Mercury 500
+
+                                           15
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+          ___________________________________________________________________
+
+          Table_3_(Cont.):__Public_PSDNs_Supported___________________________
+
+          Country_______Public_Network_and_CCITT_Revisions___________________
+
+          United        Accunet[R]
+          States        Autonet[R]
+                        Bell Atlantic
+                        BT[R]-TYMNET
+                        CompuServe[R]
+                        ConnNet
+                        Digipac
+                        Fedexitc
+                        Graphnet
+                        IMPACS
+                        Infonet
+                        Mark*Net Extended Service
+                        PPSNET
+                        Pulselink
+                        Sinet
+                        Telenet[R]
+                        Western Union PTN-1
+          ______________Worldnet_____________________________________________
+
+          Notes:
+
+          1. Digital offices in Japan can supply the mandatory additional in-
+             formation that explains the special use of the WANrouter 90/250 soft-
+             ware with the DDX PSDN.
+
+          2. PSS Extended Facilities are required.
+
+          Unless otherwise acknowledged within the product's documentation, the
+          trademarks under which services are offered are proprietary to the re-
+          spective national PTT, the owning or operating companies, or equiv-
+          alent organization.
+
+
+
+
+
+                                           16
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          Connections to public networks not listed are not supported by Dig-
+          ital at the time of publication of this SPD. Please consult your lo-
+          cal Digital office or Digital Business partner for any questions you
+          have concerning other public networks.
+
+          In addition to the public PSDNs listed, certain private PSDNs are sup-
+          ported by the WANrouter 90 and 250. The appropriate profiles are in-
+          cluded in these products.
+
+          Conformance to Standards
+
+          The WANrouter 90/250 software conforms to the following CCITT recom-
+          mendations, international standards, and Internet RFCs:
+
+          o  CCITT Recommendation X.25 (1980 or 1984) using the LAPB or LAPBE
+             variants of the data link
+
+          o  ISO 3309-High-level Data Link Control (HDLC) Frame Structure
+
+          o  ISO 7776-High-level Data Link Control (HDLC) Procedures: X.25 LAPB-
+             compatible DTE Data Link Procedures
+
+          o  ISO 8208-X.25 Packet Level Protocol for Data Terminal Equipment
+
+          o  ISO 8348/Addendum 2 (Network Layer Addressing)
+
+          o  ISO 8473-Specification of Protocol to Provide the Connectionless-
+             mode Network Service
+
+          o  ISO 9542-End System to Intermediate System (ES-IS) Routing Exchange
+             Protocol for Use in Conjunction with ISO 8473
+
+          o  ISO/IEC 10589-Intermediate System to Intermediate System (IS-IS)
+             Intra Domain Routing Exchange Protocol for Use in Conjunction with
+             ISO 8473
+
+          o  ISO 8802/2-Local Area Networks/Part 2: Logical Link Control
+
+          o  ISO 8802/3-Local Area Networks/Part 3: CSMA/CD Access Method and
+             Physical Layer Specification
+
+          o  RFC 768-User Datagram Protocol (UDP)
+
+          o  RFC 783 - TFTP Protocol (Revision 2)
+
+                                           17
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          o  RFC 791-Internet Protocol (IP)
+
+          o  RFC 792-Internet Control Message Protocol (ICMP)
+
+          o  RFC 826-Address Resolution Protocol (ARP)
+
+          o  RFC 827, 888, & 904-Exterior Gateway Protocol (EGP)
+
+          o  RFC 877-Standard For the Transmission of IP Datagrams Over Public
+             Data Networks
+
+          o  RFC 922-Broadcasting Internet Datagrams in the Presence of Subnets
+
+          o  RFC 950-Internet Standard Subnetting Procedure
+
+          o  RFC 951 - BOOTSTRAP Protocol (BOOTP)
+
+          o  RFC 1009-Requirements for Internet Gateways (Applicable Sections)
+
+          o  RFC 1027-Using ARP to Implement Transparent Subnet Gateways
+
+          o  RFC 1058-Routing Information Protocol (RIP)
+
+          o  RFC 1155-Structure and Identification of Management Information for
+             TCP/IP-based Internets
+
+          o  RFC 1157-A Simple Network Management Protocol (SNMP)
+
+          o  RFC 1195-Use of OSI IS-IS for Routing in TCP/IP and Dual Environ-
+             ment
+
+          o  RFC 1213-Management Information Base for Network Management of TCP
+             /IP-based Internets (MIB-II)
+
+          o  RFC 1234 - Tunneling IPX Traffic through IP Networks
+
+          PREREQUISITE SUPPORT
+
+          A Network Profile and DECnet Customer Support Plan covering all in-
+          tended network nodes and their support may be required by your Dig-
+          ital office.
+
+                                           18
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          HARDWARE REQUIREMENTS
+
+          The WANrouter software is supported on the following hardware devices:.
+
+          ___________________________________________________________________
+
+          Table_4:__Hardware_units___________________________________________
+
+          Product Name      Serial
+          /(Order_No)_______Ports_______Ethernet_Ports_______________________
+
+          DECwanrouter      1x64K       Thinwire or Hub
+          90 (DEWAR)
+
+          DECwanrouter      2x64K       Thinwire or Hub
+          90EW (DEWA2)
+
+          DECrouter 250     8x19.2K     Thinwire or
+          (DSRVR)           or 2x64K    thickwire selectable
+                            or 1x64K
+          __________________+_4x9.6K_________________________________________
+
+          Serial Interfaces
+
+          Each serial interface may operate in either synchronous or asynchronous
+          mode. When running in asynchronous mode, the DDCMP data link must be
+          selected for that port. The dial-out features listed in the section
+          Routing over Dial-up or Switched Services are not supported on the DECwan-
+          router 90 model when operating over asynchronous DDCMP connections.
+          These features are supported on the DECwanrouter 90 when operating in
+          synchronous mode and for the DECwanrouter 90EW and DECrouter 250 when
+          operating in asynchronous or synchronous mode.
+          All serial ports operate in full-duplex mode and support full modem
+          control for manual or auto dial/answer modems conforming to Bell stan-
+          dards and CCITT recommendations, including V.22, V.22bis and V.32.
+
+          Six of the DECrouter 250 ports are V.24/V.28 (EIA-232-D) and operate
+          up to 19.2bps. The physical connection to these is via a standard ISO
+          2110 25 pin connector.
+
+
+                                           19
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          Two of the ports on the DECrouter 250 and all ports on the DECwanrouter
+          90/90EW modules utilize a multi-standard connector. These require use
+          of an appropriate adapter cable to support one of the following elec-
+          trical and physical interface standards:
+
+          Note that for all platforms, when any port is configured for V.28/V.24
+          (EIA-232-D/C) or asynchronous mode, the speed is restricted to 19.2Kbps
+          maximum.
+
+          o  CCITT V.28/V.24 (EIA-RS232-C/D) - ISO 2110
+
+          o  CCITT V.36/V.11 (EIA-RS422/449) - ISO 4902
+
+          o  CCITT V.35 - ISO 2593
+
+          o  CCITT V.10 (EIA-RS423/449) - ISO 4902
+
+          o  CCITT V.11 - ISO 4903 (for British Telecom 64K Kilostream service
+             only)
+
+          o  CCITT X.21 leased line - ISO 4902, DEWAR and DEWA2 only.
+
+          Serial Adapter Cables
+
+          Different adapter cables are required for the DECwanrouter 90 and 250
+          (DEWAR/DSRVR) and DECwanrouter 90EW (DEWA2) models as shown in the ta-
+          bles 5 and 6 below.
+
+          ___________________________________________________________________
+
+          Table_5:__DEWAR/DSRVR_Adapter_Cables_______________________________
+
+          Electrical                      Adapter       Connector
+
+          Interface_Type__________________Cable_________Pinout_______________
+
+          CCITT V.28/V.24 (EIA-RS232-C    BC23V-02      ISO 2110
+          /D)
+
+          CCITT V.10 (EIA-RS423/449)      BC19E-02      ISO 4902
+
+          CCITT V.36/X.27(V.11, EIA-      BC19B-02      ISO 4902
+          RS422/449)
+
+          CCITT_V.35______________________BC19F-02______ISO_2593_____________
+
+                                           20
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          The BC23V-02 cable provides the V.28/V.24 (RS232-D) interface, but is
+          supplied with an adapter that allows it to be used for RS232-C as well.
+
+          Within the UK, an additional adapter cable is needed to allow connec-
+          tion to the British Telecom Kilostream as listed:
+
+             BC22X-02
+
+          ___________________________________________________________________
+
+          Table_6:__DEWA2_Adapter_Cables_____________________________________
+
+          Electrical                      Adapter       Connector
+
+          Interface_Type__________________Cable_________Pinout_______________
+
+          CCITT V.28/V.24 (EIA-RS232-C    BC12L-06      ISO 2110
+          /D)
+
+          CCITT V.10 (EIA-RS423/449)      BC12K-06      ISO 4902
+
+          CCITT V.36/X.27(V.11, EIA-      BC12H-06      ISO 4902
+          RS422/449)
+
+          CCITT V.35                      BC12G-06      ISO 2593
+
+          CCITT_X.21_leased_line__________BC12F-06______ISO_4902_____________
+
+          Modem Support
+
+          All serial ports operate in full-duplex mode and support full modem
+          control for manually dialed and auto-answer modems conforming to Bell
+          standards and CCITT recommendations.
+
+          SOFTWARE REQUIREMENTS
+
+          The WANrouter software requires at least one local or remote system
+          to act as a load host. That system needs to be one of the following:
+
+          o  a VAX-based system running the OpenVMS operating system
+
+          o  a RISC-based system running the ULTRIX operating system
+
+          o  an IBM compatible PC running the MS-DOS operating system
+
+                                           21
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          Each OpenVMS system acting as a load host or dump receiver requires:
+
+          o  OpenVMS VAX Operating System V5.5-2 or later
+
+          o  DECnet/OSI for OpenVMS VAX V5.6B or later
+
+          Each RISC/ULTRIX system acting as a load host or dump receiver requires:
+
+          o  ULTRIX Operating System V4.3A
+
+          o  DECnet/OSI for ULTRIX V5.1A
+
+          Each MS-DOS system acting as a load host or dump receiver requires:
+
+          o  MS-DOS Operating System V5.0 or later
+
+          When using the router configuration utility on a PC, the program needs
+          at least 8 MByte of extended memory free for a typical configuration.
+          For more complex configurations involving multiple circuits, more than
+          this amount of free memory may be required.
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future version of
+          this product may be different from the requirements of the current ver-
+          sion.
+
+          DISTRIBUTION MEDIA
+
+          For OpenVMS VAX systems:
+          9-track 1600 BPI Magtape, TK50 Streaming Tape.
+
+          For RISC/ULTRIX systems:
+
+          TK50 Streaming Tape.
+
+          For MS-DOS PCs:
+
+          RX23K 2.0MB 3.5" Disks
+
+
+                                           22
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          ORDERING INFORMATION
+
+          A software license is required for each hardware unit. This license
+          is normally included in the price of the hardware package. A license
+          letter shipped with the hardware unit, along with the invoice, serves
+          as proof of license. The WANrouter 90 or 250 licenses may also be pur-
+          chased separately, using the part numbers listed below.
+
+          o  Software Licenses:
+             WANrouter 90 License: QL-366A9-AA
+             WANrouter 250 License: QL-GZZA9-AA
+
+          o  Software Media:
+
+             ________________________________________________________________
+             Operating
+             System________Order_Code________________________________________
+
+             OpenVMS       QA-GZZAA-H*
+             /VAX:
+
+             RISC          QA-GZZAC-H5
+             /ULTRIX:
+
+             PC/MS-DOS:____QA-GZZAF-HC_______________________________________
+
+          o  Software Documentation:
+
+          The software documentation is included in the above media kits but may
+          also be ordered separately:
+
+          WANrouter 90/250 Documentation: QA-GZZAA-GZ
+
+          o  Software Product Services:
+             WANrouter 90: QT-366A*-**
+             WANrouter 250: QT-GZZA*-**
+
+          *  Denotes variant fields. For additional information on available li-
+             censes, services, and media, refer to the appropriate price book.
+
+          The above information is valid at the time of release. Please contact
+          your local Digital office for the most up-to-date information.
+
+                                           23
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available. For more information, con-
+          tact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          Digital has designed or adapted the X.25 portion of this product to
+          operate with equipment conforming to the standards as listed in this
+          SPD, to the public PSDNs, and to certain private PSDNs, for which Dig-
+          ital has included specific PSDN profiles in this product.
+
+          Digital cannot offer its standard warranty for this product unless it
+          has been configured appropriately for the PSDN. If the product has not
+          been configured appropriately, the product will not be supported by
+          Digital.
+
+          Each PSDN listed in this SPD indicates Digital's commitment to sup-
+          porting the WANrouter software for that public service. However, it
+          does not imply that the appropriate networking authority has granted
+          network certification for the product. Please contact your Digital of-
+          fice or Digital Business Partner for up-to-date information on cer-
+          tification status.
+
+          Warranty for this software product is provided by Digital with the pur-
+          chase of a license for the product as defined in the Software Warranty
+          Addendum of this SPD.
+
+
+
+          [R]  Accunet is a registered trademark of American Telephone and
+               Telegraph Company.
+
+          [R]  Autonet is a registered trademark of Sanders Associates, Inc.
+
+          [R]  BT is a registered trademark of British Telecommunications
+               plc.
+
+
+
+
+                                           24
+
+ 
+
+
+
+          WANrouter 90/250 Software, Version 1.2                SPD 36.24.04
+
+
+
+          [R]  CompuServe is a registered trademark of CompuServe, Inc.
+
+          [R]  Telenet is a registered trademark of GTE Telenet Communica-
+               tion Corporation.
+
+          [R]  TYMNET is a registered trademark of McDonnell Douglas Corpo-
+               ration.
+
+          [TM] The DIGITAL Logo, DDCMP, DEC, DECmcc, DECnet, DECNIS, DE-
+               Crouter, DECstation, DECsystem, Digital, MicroVAX, OpenVMS,
+               TK, ULTRIX, VAX, VAXft, VAXserver, VAXstation, and VMS are
+               trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           25

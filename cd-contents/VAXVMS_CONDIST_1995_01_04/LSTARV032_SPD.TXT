@@ -1,0 +1,666 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC OSMS-Optical Storage Management Software     SPD
+ 47.46.02                for OpenVMS, Version 3.2
+
+ DESCRIPTION
+
+ The DEC Optical Storage Management Software for OpenVMS (DEC OSMS) prod-
+ uct provides OpenVMS applications and users the functionality neces-
+ sary to access an optical disk autochanger (jukebox) using the con-
+ ventional device, file, and record access services provided by the Open-
+ VMS Operating System. In most cases no changes will be required to ex-
+ isting applications that use magnetic disk storage.
+
+ The OpenVMS VAX version of DEC OSMS provides local access to rewritable,
+ WORM (Write Once, Read Many), and multifunction autochangers, and VAX-
+ cluster access to RW5xx autochangers using rewritable media only. The
+ OpenVMS AXP version of DEC OSMS provides local access to RW5xx autochang-
+ ers using rewritable media only at this time.
+
+ Pseudo-Device Representation
+
+ DEC OSMS allows the OpenVMS host to view the autochanger as a virtual
+ set of disk devices. For single-headed drives, this translates to one
+ virtual disk device for each optical disk surface in the autochanger.
+ For example, Digital's RW530 autochanger has two single-headed opti-
+ cal disk drives and 32 optical disk cartridge storage slots. Each stor-
+ age slot holds one optical disk cartridge, so the autochanger has the
+ capacity of 64 optical disk surfaces. The autochanger, therefore, ap-
+ pears to applications as 64 virtual disk devices, named JBA0: through
+ JBA63:. The JB devices are not physical devices; they are called pseudo-
+ devices. Excluding those functions that are unique to the optical tech-
+ nology, these pseudo-devices emulate the operation of a conventional
+ OpenVMS magnetic disk.
+
+ Volume Access
+
+                               DIGITAL                     June 1994
+
+                                                         AE-PXYMC-TE
+
+ 
+
+ Volumes in an autochanger used with DEC OSMS are accessed using the
+ same techniques that are used to access conventional OpenVMS disks.
+ The standard OpenVMS INITIALIZE command is used to prepare each side
+ of an optical disk cartridge for use and the standard OpenVMS MOUNT
+ command is used to make the volume known to OpenVMS. WORM (Write Once)
+ volumes can only be "initialized" once, whereas rewritable volumes,
+ like magnetic disks, can be "initialized" multiple times. Once a vol-
+ ume has been mounted, DEC OSMS manages the use of the physical opti-
+ cal disk drives to allow volumes to remain logically mounted regard-
+ less of where the volume is in the autochanger.
+
+ File Access
+
+ Files on volumes under control of DEC OSMS are accessed using the same
+ techniques that are used to access conventional OpenVMS files. Once
+ a volume has been mounted, files may be opened, read, written, and closed
+ using the conventional OpenVMS system services and run-time library
+ functions. Write Once (WORM) volumes use the WORMS-11[R] file system.
+ Rewritable volumes use the FILES-11 file system.
+
+ DEC OSMS provides essentially transparent access using standard Open-
+ VMS commands and I/O statements from application programs. DEC OSMS
+ supports all OpenVMS commands and their library routine equivalents,
+ such as, but not limited to:
+
+    INITIALIZE *
+    MOUNT
+    DISMOUNT
+    ALLOCATE
+    DEALLOCATE
+    CREATE
+    CREATE/DIRECTORY
+    DIRECTORY
+    COPY
+    EDIT
+    OPEN
+    READ
+    CLOSE
+    DIFFERENCE
+
+                                  2
+
+ 
+
+    RENAME
+    PURGE **
+    DELETE **
+    BACKUP
+    WRITE
+    APPEND
+
+ *  This command can only be used once with WORM media.
+
+ ** These commands can be used with WORM media but will not free up ad-
+    ditional disk space as with rewritable media.
+
+ System Management Functions
+
+ An autochanger management utility (JBUTIL) is provided to allow the
+ system manager to control the parameters affecting the operation of
+ the autochanger. The utility also allows cartridges to be loaded into
+ and removed from the autochanger. Once a cartridge has been placed in
+ a storage slot inside the autochanger, it will remain associated with
+ the corresponding JBxx: device destination until the cartridge is re-
+ moved from the autochanger using JBUTIL.
+
+ A utility (ODUTIL) is provided for analyzing and recovering lost files
+ on WORM media (for VAX systems only). "ODUTIL" allows the user to:
+
+ o  Recover files that have been "lost" on a WORMS-11 optical disk; that
+    is, files that still exist on the disk but are not entered into any
+    directory
+
+ o  Display the number of allocated blocks in all files currently vis-
+    ible (not deleted) on the disk volume
+
+ o  Analyze and repair the file structure of a WORMS-11 optical disk
+    by correcting the pointer that describes the next free block to use
+    on the optical disk
+
+ o  Recreate corrupted directories and restore the required files into
+    the directory
+
+ This functionality was previously provided in the "ODRECOVER" and "OD-
+ ANALYZE" utilities.
+
+                                  3
+
+ 
+
+ HARDWARE REQUIREMENTS
+
+ It is extremely important to understand all the hardware requirements,
+ including the type of SCSI adapter required and the autochanger to be
+ supported, before identifying the processor on which to run this soft-
+ ware product. For example, the VAX 6000, 7000, 8000, 9000 and 10000
+ series processors are ONLY supported in a VAXcluster environment and
+ only when the optical library is connected to a supported host node
+ via a supported SCSI connection/adapter.
+
+ Processors Supported:
+
+ Alpha     DEC 2000 Model 300
+ AXP:
+
+           DEC 3000 Model 300,
+           DEC 3000 Model 300L,
+           DEC 3000 Model 400,
+           DEC 3000 Model 400S,
+           DEC 3000 Model 500,
+           DEC 3000 Model 500S,
+           DEC 3000 Model 500X,
+           DEC 3000 Model 600,
+           DEC 3000 Model 600S,
+           DEC 3000 Model 800,
+           DEC 3000 Model 800S
+
+           DEC 7000 Model 600 series
+
+           DEC 10000 Model 600 series
+
+ VAX:      VAX 4000 Model 100, 100A
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500, 500A
+           VAX 4000 Model 600, 600A
+
+
+
+                                  4
+
+ 
+
+
+           VAX 4000 Model 700A
+
+ MicroVAX: MicroVAX II,
+           MicroVAX 3100 Model 10/10E,
+           MicroVAX 3100 Model 20/20E,
+           MicroVAX 3100 Model 30,
+           MicroVAX 3100 Model 40,
+           MicroVAX 3100 Model 80,
+           MicroVAX 3100 Model 90,
+           MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+ VAXstation:VAXstation 3100 Models 30, 38, 40, 48, 76,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540,
+           VAXstation 4000 VLC,
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90
+
+ VAXserver: VAXserver 3100 Model 10/10E,
+           VAXserver 3100 Model 20/20E,
+           VAXserver 3300, VAXserver 3400,
+           VAXserver 3500, VAXserver 3600,
+           VAXserver 3602, VAXserver 3800,
+           VAXserver 3900,
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 500
+
+
+
+
+
+
+
+
+
+
+                                  5
+
+ 
+
+ Processors Not Supported:
+
+ Alpha     DEC 4000 Model 600 series,
+ AXP:
+           DEC 4000 Model 700
+
+ VAX:      VAXft Model 110, VAXft Model 310,
+           VAXft Model 410, VAXft Model 610,
+           VAXft Model 612
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300,
+           VAX 8350, VAX 8500, VAX 8530,
+           VAX 8550, VAX 8600, VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+           VAX-11/725, VAX-11/730,
+           VAX-11/750, VAX-11/780,
+           VAX-11/782, VAX-11/785
+
+ MicroVAX: MicroVAX I, MicroVAX 2000
+
+
+
+
+                                  6
+
+ 
+
+
+ VAXstation:VAXstation I, VAXstation II,
+           VAXstation 2000
+
+           VAXserver 6000 Model 220,
+           VAXserver 6000 Model 310,
+           VAXserver 6000 Model 320,
+           VAXserver 6000 Model 410,
+           VAXserver 6000 Model 420,
+           VAXserver 6000 Model 510,
+           VAXserver 6000 Model 520,
+           VAXserver 6000 Model 610,
+           VAXserver 6000 Model 620,
+           VAXserver 6000 Model 630
+
+
+ SUPPORTED HARWARE
+
+ Following are the specific SCSI adapters and the optical libraries sup-
+ ported by DEC OSMS Version 3.2.
+
+ Other Hardware Required - Connectivity/Adapters:
+
+ o  SCSI Interface: A SCSI interface (direct or via a supported adapter)
+    is required for use of any of the supported autochangers. The fol-
+    lowing list are the only adapters supported for use with this prod-
+    uct.
+
+       Q-bus Adapter: Digital's KZQSA Q-bus-to-SCSI adapter board is
+       required for DEC OSMS to manage autochangers on Q-bus proces-
+       sors.
+       EISA-based SCSI Controller: The DEC 2000 Model 300 AXP system
+       requires Digital's PB2HA-SA optional SCSI controller in order
+       to connect more than two external SCSI devices to the system.
+       This controller would therefore be necessary to connect opti-
+       cal libraries requiring more than two SCSI IDs.
+
+
+
+
+                                  7
+
+ 
+
+       XMI-bus Adapter: Digital's KZMSA XMI-to-SCSI adapter board is
+       required for DEC OSMS to manage autochangers on XMI-bus AXP pro-
+       cessors. Note that this adapter is not supported on VAX proces-
+       sors.
+
+ In addition, it is important to understand that autochanger manufac-
+ turers use differing approaches to their respective SCSI interfaces.
+ Some manufacturers require one SCSI ID per optical drive in the au-
+ tochanger, some manufacturers require one SCSI ID for an entire au-
+ tochanger regardless of the number of drives.
+
+ Digital's RW5xx autochanger family requires one SCSI ID for the au-
+ tochanger plus one SCSI ID per optical drive. The RW5xx family uses
+ the SCSI interface for all communications with the host processor.
+
+ o  RS232 Interface: Some third party autochanger manufacturers use an
+    RS232 interface for robotic command communications between the pro-
+    cessor and the autochanger. With these autochangers, an RS232 se-
+    rial port is required on the host processor. Digital's RW5xx au-
+    tochanger family does not require an RS232 interface.
+
+ Other Hardware Required - Supported Autochangers:
+
+ For OpenVMS AXP processors, the DEC Optical Storage Management Soft-
+ ware for OpenVMS supports the following specific 5.25-inch optical au-
+ tochangers. Rewritable media only are currently supported by DEC OSMS
+ for these autochangers.
+
+ o  Digital RW524 and RW504: one 5.25-inch multifunction drive; 16 slots
+
+ o  Digital RW530 and RW510: two 5.25-inch multifunction drives; 32 slots
+
+ o  Digital RW534 and RW514: four 5.25-inch multifunction drives; 88
+    slots
+
+ o  Digital RW536 and RW516: four 5.25-inch multifunction drives; 144
+    slots
+
+
+
+                                  8
+
+ 
+
+ For OpenVMS VAX processors, DEC OSMS supports the following specific
+ 5.25-inch and 12-inch optical autochangers. Rewritable (5.25-inch) and
+ Write Once (WORM) (5.25-inch and 12-inch) media are supported by the
+ software.
+
+ o  Digital RW524 and RW504: one 5.25-inch multifunction drive; 16 slots
+
+ o  Digital RW530 and RW510: two 5.25-inch multifunction drives; 32 slots
+
+ o  Digital RW534 and RW514: four 5.25-inch multifunction drives; 88
+    slots
+
+ o  Digital RW536 and RW516: four 5.25-inch multifunction drives; 144
+    slots
+
+ o  Cygnet 1602: two LMSI 4100 12-inch WORM drives; 29 slots maximum
+
+ o  Cygnet 1802: two to five LMSI 12-inch WORM drives; 61 slots max-
+    imum
+
+ o  Cygnet 1803: two to five LMSI 12-inch WORM drives; 141 slots max-
+    imum
+
+ o  LMSI LF4500 RapidChanger; one LMSI 12-inch WORM drive; 5 slots
+
+ Disk Space Requirements (1 Block = 512 Bytes)
+
+ Disk space required for    15,000 blocks
+ VAX installation:
+                            (7.7 MB)
+ Disk space required for    4,000 blocks
+ VAX use:
+                            (2 MB) *
+
+ Disk space required for    15,000 blocks
+ AXP installation:
+                            (7.7 MB)
+ Disk space required for    3,500 blocks
+ AXP use:
+                            (1.75 MB) *
+
+                                  9
+
+ 
+
+ These counts refer to the disk space required on the system disk. Ad-
+ ditional disk space may be required based on the user's system envi-
+ ronment and configuration, as well as the user options selected at in-
+ stallation time.
+
+ *  NOTE: With this release of DEC OSMS, caching is done on the basis
+    of one cache file per optical storage volume. As a result, volume
+    caching options selected at installation can result in disk require-
+    ments ranging from 256 additional blocks (to cache one optical disk
+    volume) to 9,216,000 additional blocks (maximum allowable cache for
+    288 optical disk volumes).
+
+ The minimum memory supported is 16 MB for VAX systems and 32 MB for
+ AXP systems. The use of this software in conjunction with increased
+ memory capability improves performance. The memory size suggested for
+ most typical VAX hardware configurations is at least 32 MB.
+
+ SOFTWARE REQUIREMENTS
+
+ o  OpenVMS VAX Operating System V5.5-2 - V6.1 for VAX systems.
+
+ o  VAXcluster Software is required for cluster access to RW5xx libraries
+    using rewritable media on VAX systems.
+
+       NOTE: WORM media is not supported on VAXclusters at this time.
+       AXP systems are not cluster supported at this time.
+
+ o  OpenVMS AXP Operating System V1.5 - V6.1 for AXP systems except the
+    DEC 2000/300.
+
+ o  OpenVMS AXP Operating System V1.5H1 - V6.1 for the DEC 2000/300 sys-
+    tem.
+
+ ORDERING INFORMATION
+
+ Software Licenses:
+
+ QL-0UMA9-AA      5.25-inch jukebox for maximum of 16 platters
+
+
+                                 10
+
+ 
+
+
+ QL-0UBA9-AA      5.25-inch jukebox for maximum of 32 platters
+ QL-0UCA9-AA      5.25-inch jukebox for maximum of 88 platters
+ QL-0UDA9-AA      5.25-inch jukebox upgrade for 56 platters to be
+                  added to 5.25-inch 88 platter jukebox for maximum
+                  of 144 platters
+ QL-0UEA9-AA      5.25-inch jukebox for maximum of 144 platters
+ QL-0UFA9-AA      12-inch jukebox for maximum of 12 platters
+ QL-0UGA9-AA      12-inch jukebox for maximum of 29 platters
+ QL-0UHA9-AA      12-inch jukebox for maximum of 77 platters
+ QL-0UJA9-AA      12-inch jukebox upgrade for 64 platters to be
+                  added to 12-inch 77 platter jukebox for maximum
+                  of 141 platters
+ QL-0UKA9-AA      12-inch jukebox for maximum of 141 platters
+
+ Software Media and Documentation:
+
+ QA-0UBAA-H*      TK50 or Magnetic Tape for OpenVMS VAX
+ QA-0UBAA-H8      CD-ROM for OpenVMS VAX
+
+ This product is also available as part of the OpenVMS VAX Consolidated
+ Software Distribution on CD-ROM.
+
+ QA-0UBAB-H8      CD-ROM for OpenVMS AXP
+
+ This product is also available as part of the OpenVMS AXP Consolidated
+ Software Distribution on CD-ROM.
+
+ Software Documentation:
+
+ QA-0UBAA-GZ      Documentation for OpenVMS VAX and OpenVMS AXP
+
+ The software documentation for this product is also available as part
+ of the OpenVMS VAX Online Documentation Library on CD-ROM, and the Open-
+ VMS AXP Online Documentation Library on CD-ROM.
+
+ Software Installation Services:
+
+ QT-0UBA9-I9      For all OSMS licenses
+
+                                 11
+
+ 
+
+ Software Product Services:
+
+ QT-0UMA9-**      For 5.25-inch jukebox with 16 platter license
+ QT-0UBA9-**      For 5.25-inch jukebox with 32 platter license
+ QT-0UCA9-**      For 5.25-inch jukebox with 88 platter license
+ QT-0UEA9-**      For 5.25-inch jukebox with 144 platter license
+ QT-0UFA9-**      For 12-inch jukebox with 12 platter license
+ QT-0UGA9-**      For 12-inch jukebox with 29 platter license
+ QT-0UHA9-**      For 12-inch jukebox with 77 platter license
+ QT-0UKA9-**      For 12-inch jukebox with 141 platter license
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+ License Management Facility Support
+
+ DEC Optical Storage Management Software for OpenVMS supports the Open-
+ VMS License Management Facility.
+
+ License units for DEC Optical Storage Management Software for Open-
+ VMS are allocated to a single autochanger according to the type (5.25-
+ inch or 12-inch form factor) of autochanger and according to the max-
+ imum number of media slots in the autochanger or category of autochang-
+ ers, on an Unlimited System Use basis.
+
+ Upgrade license units for DEC Optical Storage Management Software for
+ OpenVMS, which are used in conjunction with a hardware upgrade of the
+ applicable autochanger, are added to the original license to provide
+ a total equal to the combined units of the original license plus the
+ upgrade license.
+
+ License units for DEC Optical Storage Management Software for Open-
+ VMS are useable on either VAX or AXP systems running the OpenVMS op-
+ erating system.
+
+                                 12
+
+ 
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ or the OpenVMS AXP Operating System Software Product Description (SPD
+ 41.87.xx), or the License Management Facility manual of the appropri-
+ ate version (VAX or AXP) of the OpenVMS Operating System documenta-
+ tion sets.
+
+ CLUSTER ENVIRONMENT
+
+ DEC Optical Storage Management Software for OpenVMS using RW5xx au-
+ tochangers with rewritable media on OpenVMS VAX systems (not AXP sys-
+ tems) is fully supported when connected to a supported system via a
+ supported SCSI connection/adapter.
+
+ NOTE: WORM volumes (media) in an autochanger are available only to the
+ host node to which the optical autochanger is connected. They are not
+ available to nor useable by the rest of the VAXcluster.
+
+ VAXcluster configurations are fully described in the VAXcluster Soft-
+ ware Product Description (SPD 29.78.xx) and include CI, Ethernet, and
+ Mixed Interconnect configurations.
+
+ OpenVMS Tailoring Classes
+
+ The following OpenVMS classes are required for full functionality of
+ DEC Optical Storage Management Software for OpenVMS:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ or the OpenVMS AXP Operating System Software Product Description (SPD
+ 41.87.xx).
+
+
+
+                                 13
+
+ 
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ For OpenVMS VAX Systems:
+
+ 9-track 1600 BPI Magnetic Tape, TK50 Streaming Tape, CD-ROM
+
+ This product is also available as part of the OpenVMS VAX Consolidated
+ Software Distribution on CD-ROM.
+
+ The software documentation for this product is also available as part
+ of the OpenVMS VAX Online Documentation Library on CD-ROM.
+
+ For OpenVMS AXP Systems:
+
+ CD-ROM
+
+ This product is also available as part of the OpenVMS AXP Consolidated
+ Software Distribution on CD-ROM.
+
+ The software documentation for this product is also available as part
+ of the OpenVMS AXP Online Documentation Library on CD-ROM.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ [R] WORMS-11 is a registered trademark of Perceptics Corporation.
+
+ [TM]The DIGITAL Logo, Alpha AXP, AXP, CI, Digital, DEC, DEC OSMS,
+    MicroVAX, OpenVMS, Q-bus, TK, VAX, VAX-11/750, VAX-11/780,
+    VAX 8200, VAX 8250, VAX 8300, VAX 8350, VAX 8500, VAX 8530,
+    VAX 8550, VAX 8600, VAX 9000, VAXft, VAXserver, VAXstation,
+    and VAXstation 4000 VLC are trademarks of Digital Equipment
+    Corporation.
+
+ ©1994 Digital Equipment Corporation. All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 15

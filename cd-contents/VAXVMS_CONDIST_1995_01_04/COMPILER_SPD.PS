@@ -1,0 +1,1563 @@
+%!PS-Adobe-3.0
+%EDMS_Index: 53121 1544           
+%+EDMS_Begin_Index_Area
+%EDMS_Version: 2.2
+%%Title: 
+%%For: SALVATORE
+%%Creator: EDM V4.02
+%%CreationDate:  7-OCT-1993 12:17:05.55
+%EDMS_RealFileCreator: VAX DOCUMENT V2.1-1
+%EDMS_DocType: TEXT_BODY
+%%DocumentMedia: (8.5X11) 612 792 0 () ()
+%%DocumentCustomColors:
+%%DocumentProcessColors: Black
+%%DocumentFonts: DigitalLogo Helvetica Helvetica-Bold
+%%+ Helvetica-Oblique
+%%DocumentNeededFonts: Helvetica Helvetica-Bold Helvetica-Oblique
+%%BoundingBox: 0 0 612 792
+%%Pages: 2
+%%EndComments
+%%BeginResource: procset EDM_FIRST
+%%Copyright: 1993 by Digital Equipment Corporation, Maynard, MA, All rights reserved.
+%%Creator: R. Anderson
+%%CreationDate: (05/04/93)
+%%Version: 1.0 16
+/EDMSdict where
+% Reuse EDMatic dictionary
+{
+  pop
+  EDMSdict /EDM_eoj {} put
+}
+% Create new dict
+{
+  % For cleanup at end of file
+  save countdictstack count
+  /EDMSdict 200 dict def
+  EDMSdict begin
+  3 array astore/EDM_state exch def
+  /L2? systemdict/languagelevel known{languagelevel 2 ge}{false}ifelse def
+  /bdf {bind def} bind def
+  /udf {bind userdict 3 1 roll put} bind def
+  % Call at end of file
+  /EDM_eoj
+  {
+    /olduserdict where { pop end } if % close extra userdict
+    EDMSdict /EDM_state get aload pop
+    count 1 sub exch ne {(Error: Residue on operand stack.\n)print quit}if
+    countdictstack exch ne{(Error: Residue on dict stack.\n)print quit}if
+    restore
+  } udf
+  end % EDMSdict
+  % expand userdict
+} ifelse
+%%EndResource
+%%BeginResource: procset EDM_PRINTSPEC
+%%Copyright: 1993 by Digital Equipment Corporation, Maynard, MA, All rights reserved.
+%%Creator: R. Anderson
+%%CreationDate: (08/09/93)
+%%Version: 1.0 22
+EDMSdict begin
+% This procset calibrates spot color to PrintSpec definitions 
+% This must be loaded whenever using spot color
+% Define if not already defined
+/ndf % /key value ndf --
+{1 index where {pop pop pop} {dup xcheck {bind} if userdict 3 1 roll put} ifelse} def
+% cmyk color fallback uses Ned Batchelder's algorithm
+/@setcmykcolor /setcmykcolor where
+{ /setcmykcolor get def }
+{
+  {
+    1 sub 4 1 roll %(k-1)
+    1 sub   3 index mul 3 1 roll % (c-1)(k-1)
+    1 sub   3 index mul 3 1 roll % (m-1)(k-1)
+    1 sub 4 -1 roll mul 3 1 roll % (y-1)(k-1)
+    setrgbcolor
+  } bdf
+} ifelse
+% Print spot as process using PrintSpec values
+% [c m y k /name] tint setprocess --
+/setprocess
+{
+  exch
+  aload pop pop
+  4 index 1.0 ne { 4 {4 index mul 4 1 roll} repeat} if
+  @setcmykcolor pop
+} bdf
+% Get PrintSpec-equivalent spot color
+% [c m y k /oldname] getspot [c m y k /newname]
+/getspot
+{
+  PrintSpec 1 index 4 get known
+  {PrintSpec exch 4 get get} % PrintSpec replacement
+  {
+    EDMSdict/BadSpot known not {/BadSpot 20 dict def} if
+    BadSpot 1 index 4 get known not
+    {
+      (Warning: Unknown spot color = ) print dup 4 get =string cvs print (\n) print flush
+	  BadSpot 1 index aload pop 5 1 roll /Process 5 array astore put
+    } if
+    BadSpot exch 4 get get % BadSpot replacement
+  } ifelse
+} bdf
+% Convert document spot color to printspec spot color
+% [c m y k /name] tint setcustomcolor -
+/setcustomcolor dup where
+{
+   pop
+   EDMSdict /@customcolor /setcustomcolor load put
+  {
+    EDMSdict begin
+    exch
+    getspot % get PrintSpec spot color
+    dup 4 get /Process eq % check if bound to process
+    {exch setprocess}
+    {exch @customcolor} ifelse
+    end % EDMSdict
+  }
+}
+{{
+    EDMSdict begin
+    exch
+    getspot % get PrintSpec spot color
+    exch setprocess
+    end % EDMSdict
+}} ifelse
+udf
+% These two are needed in addition to setcustomcolor for Adobe Illustrator
+/setoverprint { pop } ndf
+/findcmykcustomcolor {5 array astore} ndf
+% Update EDM color binding with EDMatic color binding
+/color_update
+{
+  EDMSdict /EDMatic_color_binding known
+  {
+    PrintSpec begin
+    PrintSpec % look at every EDM color binding
+    {
+      4 get % EDM PrintSpec color
+      dup EDMatic_color_binding exch known
+      {
+        EDMatic_color_binding exch get store % bind to EDMatic color
+      }
+      {
+        pop pop 
+      } ifelse
+    }forall
+    end
+  }if
+} bdf
+end % EDMSdict
+%%EndResource
+%%BeginResource: procset EDM_SUPPRESS_CMY
+%%Copyright: 1993 by Digital Equipment Corporation, Maynard, MA, All rights reserved.
+%%Creator: R. Anderson
+%%CreationDate: (06/06/93)
+%%Version: 1.0 20
+% Inhibits rgb, hsb and cmyk color
+%
+/EDMS_rgbcolor systemdict/setrgbcolor get def
+/EDMS_hsbcolor systemdict/sethsbcolor get def
+/setrgbcolor {EDMS_rgbcolor currentgray setgray} bind def
+/sethsbcolor {EDMS_hsbcolor currentgray setgray} bind def
+/setcmykcolor systemdict/setcmykcolor known
+  {
+    /EDMS_cmykcolor systemdict/setcmykcolor get def
+    {EDMS_cmykcolor currentgray setgray}
+  }
+  % cmyk color fallback uses Ned Batchelder's algorithm
+  {{
+    1 sub 4 1 roll %(k-1)
+    1 sub   3 index mul 3 1 roll % (c-1)(k-1)
+    1 sub   3 index mul 3 1 roll % (m-1)(k-1)
+    1 sub 4 -1 roll mul 3 1 roll % (y-1)(k-1)
+    setrgbcolor
+  }}
+  ifelse
+bind def
+%%EndResource
+%%BeginResource: procset EDM_STATUSDICT
+%%Copyright: 1993 by Digital Equipment Corporation, Maynard, MA, All rights reserved.
+%%Creator: R. Anderson
+%%CreationDate: (06/01/93)
+%%Version: 1.0 19
+% sanitize device dependent commands
+% statusdict commands
+mark
+/10x13tray {}
+/10x14tray {}
+/11x17tray {}
+/3.875x7.5tray {}
+/4.125x9.5tray {}
+/7x9tray {}
+/9x12tray {}
+/a3tray {}
+/a4tray {}
+/a5tray {}
+/appletalktype (LaserWriter)
+/b4tray {}
+/b5tray {}
+/b6tray {}
+/baud {pop 9600}
+/c4tray {}
+/c5tray {}
+/c6tray {}
+/checkconfiguration {true}
+/checkpassword {pop true}
+/componentids {mark} 
+/databits {8}
+/defaultjobtimeout {0}
+/defaultmirrorprint false
+/defaultnegativeprint false
+/defaultoutputtray {1}
+/defaultpagetimeout {0}
+/defaultpapertray {1}
+/defaulttimeouts {0 0 0}
+/deviceid {1 1}
+/diskdriveparams {0<0101040202B800000000>putinterval}
+/diskonline {false}
+/diskstatus {0 0}
+/dltray {}
+/dostartpage {false}
+/eerom false
+/eescratch {pop 0}
+/executivetray {}
+/fcsize {0}
+/firstside {true} 
+/flowcontrol {pop 0}
+/flushpages {}
+/halflettertray {}
+/hardwareiomode {0}
+/idlefonts {mark}
+/initializedisk {pop pop}
+/jobname null
+/jobsource (unknown) 
+/jobstate (unknown)
+/jobtimeout {0}
+/lastmode 0
+/ledgertray {}
+/legaltray {}
+/lettertray {}
+/manualfeed false
+/manualfeedtimeout {0}
+/margins {0 0}
+/mirrorprint false
+/negativeprint false
+/newsheet {}
+/outputtray {1}
+/pagecount {0}
+/pagestackorder {true}
+/pagetimeout {0}
+/pagetype {0}
+/papersize	 { /lettertray false}
+/papertray {1}
+/parity {pop 0}
+/prefeed false
+/printererror {pop pop}
+/printername  { dup 0  (unknown) putinterval 0 7 getinterval} 
+/product (unknown)
+/ramsize {0}
+/returnstatus {cleartomark}
+/revision 0
+/sccbatch { pop 9600 7}
+/sccinteractive { pop 9600 7} 
+/sendctrld false
+/setappletalkname {pop}
+/setbaud {pop pop}
+/setdatabits {pop pop}
+/setdefaultjobtimeout {pop}
+/setdefaultmirrorprint {pop}
+/setdefaultnegativeprint {pop}
+/setdefaultoutputtray {pop}
+/setdefaultpagetimeout {pop}
+/setdefaultpapertray  {pop}
+/setdefaulttimeouts {pop pop pop}
+/setdiskdriveparams {pop}
+/setdostartpage {pop}
+/seteescratch {pop pop}
+/setfirstside {}
+/setflowcontrol {pop pop}
+/sethardwareiomode {pop}
+/setidlefonts {cleartomark}
+/setjobname {statusdict begin/jobname exch def end}
+/setjobtimeout {pop}
+/setlight {pop pop} 
+/setmargins {pop pop}
+/setoutputtray {pop}
+/setpage {pop pop pop}
+/setpagemargin {pop}
+/setpageparams {exch setpagemargin setpage}
+/setpagestackorder {pop}
+/setpagetimeout {pop}
+/setpagetype {pop}
+/setpapertray {pop}
+/setparity {pop pop}
+/setpassword {pop pop true}
+/setprintername {pop}
+/setsccbatch {pop pop pop}
+/setsccinteractive {pop pop pop}
+/setsoftwareiomode {pop}
+/setstacklimit {pop}
+/setstopbits {pop pop}
+/setuserdiskpercent {pop}
+/setvmlimit
+ {dup type/integertype ne {errordict/typecheck get exec} {pop}ifelse}
+/setvmlimit {pop}
+/sheetcount {0}
+/softwareiomode {0}
+/stopbits {pop 1}
+/switchsetting {0}
+/twothirdsa4tray {}
+/userdiskpercent{15}
+/waittimeout {0}
+% count new commands
+counttomark 2 idiv
+% expand statusdict
+EDMSdict/L2? get not
+{
+  dup statusdict length add 30 add dict begin
+  statusdict {def} forall
+  userdict/statusdict currentdict put
+  end
+} if
+% add new commands to statusdict
+statusdict begin {def} repeat end pop
+%
+% userdict commands
+mark
+/11x17
+/11x17R
+/a3
+/a3R
+/a4
+/a4page
+/a4pageR
+/a4R
+/a4small
+/a4smallR
+/a5
+/a5R
+/executivepage
+/3.875x7.5
+/4.125x9.5
+/7x9
+/a6
+/b4
+/b5
+/b6
+/c5
+/dl
+/b4
+/b4R
+/b5
+/b5R
+/ledger
+/ledgerR
+/legal
+/legalR
+/letter
+/letterR
+/lettersmall
+/lettersmallR
+/note
+/noteR
+/statement
+/halfletter
+/legalsmall
+/twothirdsa4
+/statementR
+% noop commands in userdict
+counttomark
+userdict begin
+{{}def}repeat
+%
+<1A>cvn {}
+<04>cvn {}
+<041A>cvn {}
+(\004PSp)cvn {PSp}
+(\024\004statusdict)cvn {statusdict}
+(restore\004)cvn {restore}
+(restore\015\004)cvn {restore}
+/setpagedevice {pop}
+counttomark 2 idiv
+{def}repeat
+%
+end % 2nd userdict
+pop %mark
+%
+% ignore exitserver commands
+userdict/serverdict  1 dict put
+serverdict begin /exitserver  {pop end} def end
+% Enlarge userdict for Level-1 printers
+EDMSdict /L2? get not
+{
+  /olduserdict /userdict load def
+  /userdict olduserdict length 200 add dict def
+  userdict begin
+  olduserdict {def} forall
+  % leave extra userdict open
+} if
+%%EndResource
+%%EndProlog
+%%BeginSetup
+EDMSdict begin
+% Color binding dictionary
+/PrintSpec 1 dict def
+PrintSpec begin
+(BLACK) [0.000 0.000 0.000 1.000 /Process] def
+end % PrintSpec
+color_update
+end % EDMSdict
+%%EndSetup
+%%BeginDocument USRL:[SALVATORE.SPD]373902.PS;2
+%!PS-Adobe-3.0
+%%Title: 373902
+%%Creator: VAX DOCUMENT V2.1-1
+%%Copyright: 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.
+%%+All Rights Reserved.
+%%CreationDate: Wed Oct  6 1993 16:06:56
+%%For: SALVATORE   
+%%BoundingBox: (atend)
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%DocumentFonts: (atend) 
+%%DocumentNeededFonts: (atend) 
+%%DocumentProcSets: Underlay Color5044
+%%DocumentSuppliedProcSets: Underlay Color5044
+%%DocumentProcessColors: (atend)
+%%DocumentCustomColors: (atend)
+%%EndComments
+%
+%%BeginResource: procset Underlay
+%%CreationDate: (2/10/92)
+%
+% In VAX DOCUMENT V2.1-1, simple EPSF files up to 65,000 bytes long
+% may be an underlay. Define the EPSF as a PostScript proceedure
+% called /UNDERLAY and prefix to DOCUMENT's PS output  For example:.
+% /UNDERLAY ( EPSF code here ) cvx def
+%
+% To create a "Preliminary" underlay change /UNDERLAY* to /UNDERLAY
+/UNDERLAY* (
+  /Note (Preliminary) def
+  /NoteSize 120 def
+  /NoteFont /Helvetica findfont NoteSize scalefont def
+  /Note where { pop Note length 0 gt {
+    /NoteWidth NoteFont setfont Note stringwidth pop def
+    PaperWidth 36 mul PaperHeight 36 mul moveto
+    PaperHeight PaperWidth atan rotate
+    NoteWidth -2 div NoteSize .729 mul -2 div rmoveto 
+    Note true charpath .075 setseparationgray fill
+  }if  }if
+) cvx def
+%%EndResource
+%
+%%BeginResource: procset Color5044
+%%CreationDate: (1/21/91)
+%%Version:1.0 3
+%Implementation of Adobe 5044 color specification
+%/ndf allows command override during color separation
+/Color5044Dict 100 dict def
+Color5044Dict begin
+/bdf {bind def} def
+/ndf
+  {1 index where
+    {pop pop pop
+    }
+    {dup xcheck
+      {bind} if
+    def
+    }
+    ifelse
+  } bdf
+/setcmykcolor
+  {1 exch sub
+  3 
+    {dup 5 -1 roll sub 0 2 copy lt
+      {exch} if
+    pop exch
+    } repeat
+  pop setrgbcolor
+  }ndf
+/setcmykcoloroverprint
+  {4
+    {dup -1 eq
+      {pop 0} if
+      4 1 roll
+    } repeat
+  setcmykcolor
+  } ndf
+/findcmykcustomcolor
+  {5 /packedarray where
+    {pop packedarray
+    }
+    {array astore readonly
+    }
+    ifelse
+  } ndf
+/setcustomcolor
+  {exch aload pop pop
+  4
+    {4 index mul 4 1 roll
+    } repeat
+  setcmykcolor pop
+  } ndf
+/setseparationgray
+  {1 exch sub systemdict /setgray get exec
+  } ndf
+/setoverprint {pop} ndf
+/currentoverprint false ndf
+%CMYK multi-proc colorimage
+/colorimage
+  {4 ne
+    {(\nUnsupported number of colors for colorimage.\n) print flush quit
+    } if
+  not
+    {(\nSingle procedure form  colorimage unsupported.\n) print flush quit
+    } if
+  save 20 dict begin /&saveobj exch def
+  /&Kproc exch def /&Yproc exch def /&Mproc exch def /&Cproc exch def
+    {&Cproc &Mproc &Yproc &Kproc
+    /&K exch def /&Y exch def /&M exch def /&C exch def
+    0 1 &K length 1 sub
+      {/&i exch def
+      &K &i 255
+      &C &i get 30 mul
+      &M &i get 59 mul add
+      &Y &i get 11 mul add
+      &K &i get 100 mul add
+      100 idiv
+      dup 255 gt
+        {pop 255} if
+      sub put
+      } for
+    &K
+    } image
+  &saveobj end restore
+  } ndf
+/customcolorimage
+  {pop systemdict /image get exec
+  } ndf
+/separationimage
+  {systemdict /image get exec
+  } ndf
+end
+%%EndResource
+Color5044Dict begin
+%
+/DEC_DVC$dict 300 dict def
+DEC_DVC$dict begin
+%
+/DVC$PSJob save def
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+}def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+% Exit page (temporarily) to add fonts/characters.
+/XP { }def
+% 
+% Resume page
+/RP { }def
+%
+% End Page: EP
+/EP {DVC$PSPage restore}def
+%
+% Purge fonts to reclaim VM
+/PF {
+  currentoverprint
+  currentrgbcolor
+  EP			%Does restore
+  PageSetup     %Does save
+  setrgbcolor
+  setoverprint
+}def
+%
+% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+%
+/Yadjust {Ymax exch sub} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto
+} def
+%
+/R {						% Draw a rectangle
+  /ht exch def  /wd exch def   gsave
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill grestore wd 0 rmoveto
+}def
+%
+%Setup Page Media:  <paper-height> <paper-width> PM
+/PM {
+  /Xmax exch Resolution mul def
+  /Ymax exch Resolution mul def
+  /UNDERLAY where {
+    pop
+    /eps_save save def		% save before EPSF underlay
+    Resolution 72 div dup scale % Revert coords to points
+    count array astore /DVCstack exch def % save op stack
+    /dict_count countdictstack def % # of dicts
+    userdict begin		% default dict
+    /showpage {}def		% disable showpage
+    0 setgray
+      {UNDERLAY} stopped {(Error executing /UNDERLAY)== quit}if
+    countdictstack dict_count sub {end} repeat % clean up dict stack
+    clear DVCstack aload pop	% restore op stack
+    eps_save restore		% restore after EPSF
+  }if
+  PageSetup
+}def
+%
+%Setup page coordinates
+/PageSetup
+{
+  /DVC$PSPage save def
+  PortraitMode not {PaperWidth 0 translate  90 rotate} if
+  /Xpos 0 def
+  /Ypos 0 def
+}def
+%
+% Begin EPS file: <xoffset> <yoffset> SPB
+/SPB {
+  Yadjust transform		% convert from DVC to device coords
+  EP				% page-level restore
+  /eps_save save def		% save before EPSF
+  Resolution 72 div dup scale 	% Revert coords to points
+  itransform			% convert position back to points  
+  translate			% set position for EPSF
+  PortraitMode not {90 rotate} if % rotate for EPSF
+  count array astore /DVCstack exch def	% save op stack
+  /dict_count countdictstack def % # of dicts
+  userdict begin		% default dict
+  /showpage {}def		% disable showpage
+  0 setgray
+}def
+%
+% End EPS file
+/SPE {
+  countdictstack dict_count sub {end} repeat % clean up dict stack
+  clear DVCstack aload pop	% restore op stack
+  eps_save restore		% restore after EPSF
+  PageSetup			% restore DVC coords
+}def
+%
+% Print-Page Routine: <Page #> PP
+/PP {
+  gsave
+  showpage
+  grestore
+}def
+%
+/DMF {		%  /font-name <point-size> DMF
+  exch findfont exch scalefont setfont
+}def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def
+  /namstr exch cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+}def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+}def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+}def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+}def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+}def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+}def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+}def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+}def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div}def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+}def
+/RunLengthToRasters {
+  % none yet
+}def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+}def
+%
+/int-dict-name {int (-dict) concatnam}def
+/int-dict {int (-dict) concatnam cvx load}def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      }def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+}def 
+/PXLF { true  DefinePXLFont}def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont}def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+}def
+%
+/CKSZ {abs 127 le and}def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if}def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+}def
+%
+% set color routine: Color# SC
+/SC {ColorPalette exch get 1.0 setcustomcolor}bind def
+%
+%%EndProlog
+%%BeginSetup
+/PxlResolution 300 def
+/Resolution 3600 def
+/RasterScaleFactor PxlResolution Resolution div def
+/PortraitMode true def
+/PaperWidth 8.500 def
+/PaperHeight 11.000 def
+72 Resolution div dup scale
+%>  Postamble of file DSK:[SALVATORE.SPD]373902.DVI_PS.
+% DefineFont:F207 Category:15 Pointsize:24
+% DownloadPSFont
+%!PS-Adobe-2.0
+%%Title: PostScript Digital Logo Font, v1.1
+%%Creator: Ned Batchelder
+%%CreationDate: 9-Nov-87
+%%DocumentFonts: Symbol
+%%DocumentSuppliedFonts: DigitalLogo
+%%EndComments
+%
+%		    DIGITAL INTERNAL USE ONLY
+% 
+% INTRODUCTION:
+% This rendition of the Digital logo was prepared by Ned Batchelder using 
+% Adobe Illustrator and hand manipulation of the resulting PostScript code.
+% Photographic masters of the logo were obtained from David Comberg in the
+% Graphic Design Group. Additional consultation was provided by Elliot
+% Hendrickson, one of the original designers of the logo.
+% 
+% USE:
+% This file defines a new PostScript font, called /DigitalLogo. It consists
+% of three characters. (d) is the entire Digital logo, (t) is a small
+% trademark symbol, and (T) is a large trademark symbol. The font is designed
+% so that the argument to scalefont is the height of the logo. There is no
+% extra white space around the logo at all. The trademarks are designed to be
+% shown right after the logo, and they align themselves. The only correct
+% strings to show with this font are (d), (dt), and (dT). There is an entry
+% (named GapWidth) in the font dictionary which gives the unscaled width of
+% the gap between the blocks. This distance is given because it is used as a
+% unit to determine how much space to leave around the logo.
+% 
+% HISTORY:
+% The logo was designed in 1957 by Elliot Hendrickson, who was then working
+% as an independent designer. He was contracted by DEC to do a brochure, and
+% DEC wanted a logo to accompany it. The logo up to then had been the letters
+% DEC in blocks the shape of the plug-in cards that DEC had been producing.
+% Elliot re-worked the logo, incorporating letters which were hand-drawn for 
+% the purpose by Arthur Hover(?). The logo has been maintained since then in 
+% conventional technology, ie, film masters. There was at least one reworking 
+% of the logo at some point.
+% 
+% The masters I received had a number of interesting features. The boxes were
+% not all the same width, and there seemed to be no logic to which boxes were
+% wider. The 'g' was the narrowest, and the 'i' and 'l' were second widest.
+% Also, the two 'i's were not exactly the same shape. On ten-inch masters,
+% (one box to an 8½x11 sheet), the boxes were not rectangles, but were very
+% slightly tapered in wierd ways. I assume that the tapering is the result of
+% too many reproductions, but the difference in widths may have been
+% deliberate at some time. Elliot reports that when he drew it, all boxes
+% were the same width. I have retained the different widths in my version,
+% since the experts I had at hand did not seem to think I should make them
+% uniform.
+% 
+% Please feel free to use this logo, but keep in mind the following:
+% 
+% 1. This code is for INTERNAL USE ONLY.
+% 2. I am not entirely happy with the final shapes of the letters, and am
+% hoping to improve them. Please allow for future updates to this code.
+% 3. Only use this logo within the guidelines of the Corporate Identity
+% program. If you use this font precisely as is, you can't get in much
+% trouble. Don't take the shapes and do strange things with them. 
+% In particular, the Identity states that the logo is a one-color logo: The
+% letters are actually holes in the blocks, through which the background can
+% be seen. Do not modify this code so that the letters are always white.
+% 
+% Edit history:
+% 
+% 21-Sep-87 nmb	    Created as a standalone file with demo.
+%  6-Nov-87 nmb	    Converted to font form.
+%  9-Nov-87 nmb	    Removed // uses for compatibility with LW Classics
+%
+%%BeginFont: DigitalLogo
+10 dict begin
+/FontInfo 3 dict def
+FontInfo begin
+    /Notice
+(The Digital logo is a registered trademark of Digital Equipment Corporation.)
+    def
+    /FullName (Digital logo) def
+    /version (1.1) def
+    end
+/FontType 3 def				% This is a user-defined font
+/FontMatrix matrix def			% Use an identity transform
+/FontBBox [ 0 0 3.383 1 ] def		% Logo itself is biggest
+/GapWidth .070 def			% The width of the gap between boxes
+/Encoding 256 array def
+0 1 255 { Encoding exch /.notdef put } bind for
+Encoding
+dup (d) 0 get /DEC-logo put		% (d) gives logo
+dup (t) 0 get /smalltrademark put	% (t) gives small trademark
+    (T) 0 get /largetrademark put	% (T) gives large trademark
+/Work 15 dict def			% for doing work in font.
+/BuildChar {
+    exch begin				% Use the font dictionary
+	Work begin
+	    Encoding exch get		% Look up the character name
+	    load			% Pull out the procedure
+	    exec			% Run it.
+	    end				% Work
+	end				% fontdict
+    } bind def
+Work begin
+/.notdef {} def
+%
+% - `DEC-logo' -
+%
+% Images a DEC logo with the lower left corner at the current origin, with a
+% height of one unit, in the current color.
+% 
+/m /moveto load def
+/l /lineto load def
+/c /curveto load def
+/DEC-logo {
+    3.383 0 0 0 3.383 1 setcachedevice
+    {	% D
+	% d counter
+	.2930 .3513 m
+	.2932 .3217 .2587 .2758 .2167 .2757 c
+	.1719 .2759 .1280 .3165 .1280 .3977 c
+	.1280 .4801 .1718 .5225 .2153 .5227 c
+	.2587 .5225 .2932 .4760 .2930 .4407 c
+	closepath
+	% d outside
+	.2953 .5787 m
+	.2953 .7600 l
+	.3843 .7600 l
+	.3843 .1960 l
+	.2923 .1960 l
+	.2923 .2220 l
+	.2848 .2144 .2531 .1813 .1990 .1813 c
+	.1426 .1812 .0417 .2282 .0417 .3977 c
+	.0417 .5414 .1171 .6157 .2067 .6157 c
+	.2399 .6157 .2725 .6039 .2953 .5787 c
+	closepath
+	% d box
+	.432 0.0 m
+	.432 1.0 l
+	.000 1.0 l
+	.000 0.0 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	.927 0.0 m
+	.927 1.0 l
+	.502 1.0 l
+	.502 0.0 l
+	closepath
+	% i body
+	.6695 .196 m
+	.6695 .600 l
+	.7595 .600 l
+	.7595 .196 l
+	closepath
+	% i dot
+	.6695 .655 m
+	.6695 .755 l
+	.7595 .755 l
+	.7595 .655 l
+	closepath
+	} exec
+    {	% G
+	% g counter
+	1.2813 .4478 m
+	1.2813 .4837 1.2409 .5208 1.2035 .5208 c
+	1.1713 .5208 1.1215 .5003 1.1215 .4084 c
+	1.1215 .3105 1.1827 .2962 1.2030 .2962 c
+	1.2433 .2962 1.2813 .3239 1.2813 .3667 c
+	closepath
+	% g box
+	0.997 1.0 m
+	1.415 1.0 l
+	1.415 0.0 l
+	0.997 0.0 l
+	closepath
+	% g outside
+	1.2822 .5609 m
+	1.2729 .5742 1.2424 .6044 1.1988 .6044 c
+	1.1311 .6043 1.0367 .5652 1.0367 .3955 c
+	1.0368 .2617 1.1437 .2168 1.1876 .2168 c
+	1.2350 .2167 1.2702 .2443 1.2798 .2547 c
+	1.2798 .2126 l
+	1.2798 .1815 1.2479 .1511 1.1945 .1511 c
+	1.1485 .1512 1.1437 .1807 1.1437 .1953 c
+	1.0497 .1953 l
+	1.0497 .1486 1.0798 .0804 1.1888 .0803 c
+	1.2864 .0803 1.3186 .1176 1.3325 .1316 c
+	1.3442 .1434 1.3617 .1758 1.3617 .2017 c
+	1.3617 .6 l
+	1.2823 .6 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	1.910 0.0 m
+	1.910 1.0 l
+	1.485 1.0 l
+	1.485 0.0 l
+	closepath
+	% i body
+	1.6525 .196 m
+	1.6525 .6 l
+	1.7425 .6 l
+	1.7425 .196 l
+	closepath
+	% i dot
+	1.6525 .655 m
+	1.6525 .755 l
+	1.7425 .755 l
+	1.7425 .655 l
+	closepath
+	} exec
+    {	% T
+	% t
+	2.2128 .7525 m
+	2.1305 .7525 l
+	2.1305 .6071 l
+	2.0874 .6071 l
+	2.0874 .5396 l
+	2.1305 .5396 l
+	2.1305 .2852 l
+	2.1305 .2367 2.1554 .1986 2.2248 .1987 c
+	2.2573 .1987 2.2560 .1985 2.2842 .2034 c
+	2.2842 .2874 l
+	2.2658 .2842 2.2601 .2829 2.2511 .2832 c
+	2.2338 .2837 2.2128 .2898 2.2128 .3206 c
+	2.2128 .5395 l
+	2.2780 .5395 l
+	2.2780 .6071 l
+	2.2128 .6071 l
+	closepath
+	% t box
+	2.404 0.0 m
+	1.980 0.0 l
+	1.980 1.0 l
+	2.404 1.0 l
+	closepath
+	} exec
+    {	% A
+	% a box
+	2.474 0.0 m
+	2.474 1.0 l
+	2.888 1.0 l
+	2.888 0.0 l
+	closepath
+	% a outside
+	2.5439 .4728 m
+	2.6210 .4728 l
+	2.6210 .5138 2.6422 .5353 2.6826 .5353 c
+	2.7470 .5354 2.7449 .5067 2.7448 .4708 c
+	2.7050 .4553 2.7087 .4557 2.6480 .4419 c
+	2.5709 .4241 2.5237 .3911 2.5236 .3112 c
+	2.5237 .2331 2.5793 .1914 2.6420 .1915 c
+	2.7048 .1914 2.7178 .2117 2.7438 .2290 c
+	2.7438 .1978 l
+	2.8422 .1978 l
+	2.8190 .2352 2.8251 .2425 2.8249 .2706 c
+	2.8250 .2926 2.8249 .5080 2.8249 .5080 c
+	2.8250 .5507 2.8028 .5768 2.7883 .5855 c
+	2.7521 .6071 2.7074 .6097 2.6826 .6098 c
+	2.5945 .6096 2.5438 .5653 2.5439 .4728 c
+	closepath
+	% a counter
+	2.7448 .3946 m
+	2.7448 .3401 l
+	2.7448 .3152 2.7145 .2670 2.6550 .2669 c
+	2.6260 .2668 2.6098 .2883 2.6097 .3162 c
+	2.6098 .3442 2.6335 .3657 2.6536 .3697 c
+	2.6745 .3739 2.7226 .3862 2.7448 .3946 c
+	closepath
+	} exec
+    {	% L
+	% l box
+	3.383 0.0 m
+	3.383 1.0 l
+	2.958 1.0 l
+	2.958 0.0 l
+	closepath
+	% l
+	3.1255 .196 m
+	3.1255 .765 l
+	3.2155 .765 l
+	3.2155 .196 l
+	closepath
+	} exec
+    fill
+    } bind def
+%
+% % pct `trademark' --
+%
+% Borrow the sans-serif trademark symbol from /Symbol. AFM file says:
+%	C 228 ; WX 786 ; N trademarksans ; B 5 293 725 673 ;
+% We scale it down to pct percent of the height of the logo and superscript 
+% it some, and voila!
+%
+/trademark {
+    /s exch .380 div def
+    /w s .725 mul .070 add def
+    /u 1 .673 s mul sub def
+    w 0 0 u w 1 setcachedevice
+    /Symbol findfont s scalefont setfont
+    .070 u m					% Superscript it
+    (\344) show
+    } bind def
+% 
+% These are two different trademarks (just different sizes).
+%
+/smalltrademark { .15 trademark } def
+/largetrademark { .25 trademark } def
+end						% Work dictionary
+currentdict					% Get the font dict
+end						% Close it up
+/DigitalLogo exch definefont pop		% Define the font.
+%%EndFont
+% EndDownloadPSFont
+/F207 1200.0 /DigitalLogo DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F39 Category:10 Pointsize:9
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F39 450.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F38 Category:10 Pointsize:9
+/F38 450.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+%Spot color array for this job
+/ColorPalette [
+0.0 0.0 0.0 1.0 (BLACK) findcmykcustomcolor
+] def
+%%EndSetup
+%
+%%Page: (1) 1
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 5443 XY F16(Software)S 3600 6688 XY(Produ)S 2 x(ct)S 3600 7934 XY
+(Description)S 3600 X 747 y 23316 204 R 3600 9455 XY F36(PRODUC)S -2 x
+(T)S 167 x(NAME:)S 597 x(DEC)S 166 x(C++)S 165 x(V)S -27 x(ersion)S
+167 x(1.2)S 166 x(for)S 166 x(OpenVMS)S 167 x(V)S -37 x(AX)S 23784 X
+(SPD)S 166 x(37.39.02)S 3600 11794 XY F40(DESCRIPTI)S -2 x(ON)S 3600 12710 XY
+F38(DEC)S 169 x(C++)S 169 x(for)S 169 x(OpenVMS)S 171 x(V)S -34 x(AX)S
+170 x(Systems)S 170 x(is)S 169 x(a)S 170 x(native)S 169 x(pro-)S 3600 X
+548 y(gramm)S 2 x(ing)S 232 x(language)S 233 x(product)S 233 x(which)S
+231 x(suppor)S 2 x(ts)S 231 x(the)S 232 x(C++)S 3600 X 548 y(progra)S
+2 x(mming)S 150 x(language.)S 200 x(It)S 149 x(includes:)S 3600 14722 XY
+(\201)S 441 x(A)S 255 x(C++)S 255 x(comp)S 2 x(iler)S 255 x(that)S 255 x
+(implements)S 257 x(C++)S 255 x(as)S 256 x(de\211ned)S 4198 X 548 y
+(by)S 218 x F39(The)S 218 x(Annotated)S 218 x(C++)S 217 x(Reference)S
+219 x(Manual)S F38(,)S 235 x(Ellis)S 217 x(&)S 4198 X 548 y(Stroustrup,)S
+111 x(as)S 102 x(reprinted)S 103 x(wit)S -2 x(h)S 102 x(corrections)S
+103 x(in)S 101 x(May)S 102 x(1991.)S 4198 X 548 y(The)S 149 x(compiler)S
+150 x(implementation)S 149 x(includes)S 149 x(templates)S 149 x(but)S
+4198 X 548 y(excludes)S 131 x(exception)S 131 x(handling.)S 193 x(DEC)S
+129 x(C++)S 130 x(directly)S 129 x(gen-)S 4198 X 548 y(erates)S 126 x
+(optimized)S 126 x(object)S 125 x(code.)S 192 x(No)S 126 x(intermediate)S
+126 x(trans-)S 4198 X 548 y(lation)S 149 x(to)S 149 x(C)S 149 x(is)S
+149 x(employed)S 2 x(.)S 3600 X 816 y(\201)S 441 x(A)S 166 x(DEC)S 165 x
+(C++)S 165 x(Class)S 165 x(Library)S 167 x(which)S 166 x(consists)S
+166 x(of)S 166 x(the)S 166 x(fol-)S 4198 X 548 y(lowing)S 224 x(class)S
+225 x(library)S 225 x(packag)S 2 x(es:)S 350 x(iostream,)S 244 x(complex,)S
+4198 X 548 y(generic,)S 279 x(Objection,)S 277 x(Stopwatch,)S 278 x
+(String,)S 278 x(task,)S 278 x(Mes-)S 4198 X 548 y(sages,)S 150 x(and)S
+150 x(vector)S -24 x(.)S 3600 X 817 y(\201)S 441 x(ANSI/I)S -2 x(SO)S
+171 x(C)S 170 x(heade)S 2 x(r)S 171 x(\211les)S 170 x(enha)S 2 x(nced)S
+171 x(for)S 171 x(use)S 172 x(wit)S -2 x(h)S 171 x(the)S 4198 X 547 y
+(DEC)S 235 x(C++)S 236 x(compiler)S -24 x(.)S 459 x(These)S 238 x(headers)S
+238 x(are)S 237 x(currently)S 4198 X 548 y(packaged)S 148 x(wit)S -2 x
+(h)S 147 x(DEC)S 145 x(C++)S 145 x(to)S 146 x(make)S 147 x(them)S 146 x
+(available)S 146 x(for)S 4198 X 548 y(use)S 224 x(with)S 223 x(DEC)S
+223 x(C++.)S 422 x(Packaging)S 225 x(of)S 223 x(the)S 224 x(heade)S
+2 x(rs)S 224 x(is)S 4198 X 548 y(subject)S 161 x(to)S 162 x(change)S
+162 x(as)S 162 x(they)S 162 x(become)S 163 x(available)S 161 x(in)S
+162 x(sub-)S 4198 X 548 y(sequent)S 150 x(releases)S 151 x(of)S 149 x
+(related)S 150 x(produ)S 2 x(cts.)S 3600 X 817 y(\201)S 441 x(A)S 188 x
+(separately)S 188 x(packag)S 2 x(ed)S 188 x(run)S 189 x(time)S 187 x
+(kit)S 187 x(that)S 188 x(can)S 188 x(be)S 189 x(re-)S 4198 X 548 y
+(distributed)S 194 x(to)S 195 x(allow)S 193 x(applications)S 195 x(vendors)S
+196 x(to)S 194 x(suppo)S 2 x(rt)S 4198 X 547 y(end-use)S 2 x(r)S 153 x
+(systems)S 154 x(without)S 152 x(DEC)S 153 x(C++)S 152 x(developm)S
+2 x(ent)S 153 x(li-)S 4198 X 548 y(censes)S 150 x(of)S 150 x(their)S
+149 x(own.)S 3600 27402 XY(The)S 211 x(available)S 211 x(docume)S 2 x
+(ntation)S 210 x(provides)S 212 x(compre)S 2 x(hensive)S 3600 X 548 y
+(reference)S 147 x(and)S 146 x(usage)S 147 x(information)S 145 x(for)S
+146 x(all)S 144 x(produ)S 2 x(ct)S 145 x(compo-)S 3600 X 548 y(nents.)S
+199 x(Included)S 150 x(only)S 149 x(as)S 149 x(part)S 149 x(of)S 149 x
+(the)S 149 x(hardcopy)S 150 x(docum)S 2 x(en-)S 3600 X 548 y(tation)S
+190 x(is)S 190 x(a)S 190 x(copy)S 191 x(of)S 191 x(an)S 190 x(authoritative)S
+191 x(book)S 191 x(on)S 191 x(C++,)S 199 x F39(The)S 3600 X 548 y(C++)S
+232 x(Progra)S 2 x(mming)S 234 x(Languag)S 2 x(e)S F38(,)S 253 x(2nd)S
+234 x(edition,)S 253 x(by)S 234 x(Bjarne)S 3600 X 548 y(Stroustrup.)S
+3600 31058 XY(The)S 137 x(docume)S 2 x(ntation)S 136 x(is)S 136 x(provided)S
+137 x(in)S 137 x(both)S 136 x(online)S 137 x(and)S 137 x(hard-)S 3600 X
+548 y(copy)S 231 x(formats.)S 441 x(The)S 230 x(online)S 230 x(docume)S
+2 x(ntation)S 229 x(consists)S 231 x(of)S 3600 X 548 y(Help)S 209 x
+(\211les)S 210 x(included)S 209 x(on)S 210 x(the)S 210 x(media)S 210 x
+(kit,)S 223 x(and)S 210 x(Bookrea)S 2 x(der)S 3600 X 548 y(docume)S
+2 x(nts)S 107 x(included)S 108 x(on)S 107 x(the)S 108 x(OpenVMS)S 108 x
+(Online)S 107 x(Documen-)S 3600 X 548 y(tation)S 149 x(CD-ROM.)S 3600 34166 XY
+F40(Features)S 3600 35082 XY F38(\201)S 441 x(Fast)S 132 x(compilation)S
+132 x(and)S 133 x(increased)S 134 x(code)S 133 x(optimization)S 132 x
+(by)S 4198 X 548 y(directly)S 211 x(translating)S 211 x(C++)S 211 x
+(source)S 212 x(progr)S 2 x(ams)S 212 x(to)S 211 x(Open-)S 4198 X 548 y
+(VMS)S 150 x(V)S -33 x(AX)S 149 x(object)S 150 x(\211les)S 15854 11781 XY
+(\201)S 441 x(Extensive)S 107 x(global)S 108 x(and)S 108 x(local)S 107 x
+(optimizations)S 107 x(of)S 107 x(generated)S 16452 X 548 y(code)S 150 x
+(for)S 150 x(increased)S 151 x(performan)S 2 x(ce)S 150 x(under)S 150 x
+(OpenVMS)S 15854 X 868 y(\201)S 441 x(Option)S 209 x(for)S 209 x(running)S
+211 x(only)S 209 x(the)S 210 x(prepro)S 2 x(cessor)S 210 x(phase)S 211 x
+(of)S 16452 X 548 y(compilation)S 15854 X 869 y(\201)S 441 x(Pragmas)S
+151 x(to)S 149 x(control)S 150 x(compiler)S 150 x(options)S 16452 X
+868 y(\202)S 150 x(Pragmas)S 278 x(to)S 276 x(control)S 277 x(extern)S
+277 x(mode)S 2 x(ls,)S 307 x(sharing)S 278 x(of)S 17050 X 548 y(data)S
+102 x(between)S 102 x(concur)S 2 x(rent)S 102 x(process)S 2 x(es,)S
+111 x(and)S 103 x(structure)S 17050 X 548 y(member)S 151 x(alignment)S
+15854 X 868 y(\201)S 441 x(Separate)S 151 x(and)S 150 x(combined)S 151 x
+(compilation)S 149 x(capabilities)S 15854 X 868 y(\201)S 441 x(Compiler)S
+150 x(generated)S 151 x(listi)S -2 x(ng)S 150 x(\211le)S 149 x(including)S
+150 x(optional:)S 16452 X 869 y(\202)S 150 x(Machine)S 150 x(code)S
+16452 X 868 y(\202)S 150 x(Macro)S 150 x(expan)S 2 x(sion)S 16452 X
+868 y(\202)S 150 x(Compilation)S 149 x(statisti)S -2 x(cs)S 15854 X
+869 y(\201)S 441 x(Data)S 218 x(types)S 218 x(for)S 218 x(numer)S 2 x
+(ic,)S 234 x(nonnum)S 2 x(eric,)S 235 x(and)S 219 x(systems)S 16452 X
+548 y(program)S 2 x(ming:)S 16452 X 868 y(\202)S 150 x(8,)S 149 x(16,)S
+150 x(and)S 150 x(32)S 150 x(bit)S 149 x(signed)S 150 x(and)S 150 x
+(unsigned)S 151 x(integers)S 16452 X 868 y(\202)S 150 x(Single)S 228 x
+(and)S 229 x(double-pr)S 2 x(ecision)S 228 x(\212oating)S 229 x(point)S
+228 x(num-)S 17050 X 548 y(bers)S 156 x(in)S 154 x(V)S -33 x(AX)S 155 x
+(format.)S 216 x(Either)S 155 x(D-\212oat)S 156 x(or)S 155 x(G-\212oat)S
+156 x(may)S 17050 X 548 y(be)S 150 x(used)S 150 x(in)S 149 x(double-p)S
+2 x(recision)S 149 x(format.)S 15854 X 868 y(\201)S 441 x(Integration)S
+194 x(into)S 193 x(the)S 194 x(Program)S 195 x(Development)S 194 x(Environ-)S
+16452 X 548 y(ment:)S 16452 X 869 y(\202)S 150 x(Generation)S 303 x
+(of)S 303 x(complete)S 304 x(debug)S 304 x(and)S 304 x(traceback)S 17050 X
+548 y(records)S 256 x(for)S 256 x(OpenVMS)S 256 x(V)S -33 x(AX)S 255 x
+(symbolic)S 255 x(debug)S 2 x(ger)S 17050 X 548 y(support)S 16452 X
+868 y(\202)S 150 x(Conforms)S 150 x(to)S 149 x(the)S 150 x(OpenVMS)S
+150 x(V)S -33 x(AX)S 150 x(calling)S 149 x(standard)S 16452 X 868 y
+(\202)S 150 x(Access)S 274 x(to)S 274 x(the)S 273 x(OpenVMS)S 275 x
+(Run-time)S 274 x(Library)S 274 x(for)S 17050 X 548 y(general)S 241 x
+(purpose)S 242 x(routines)S 241 x(and)S 241 x(support)S 241 x(of)S 240 x
+(multi-)S 17050 X 548 y(language)S 150 x(environm)S 2 x(ents)S 16452 X
+868 y(\202)S 150 x(Access)S 103 x(to)S 103 x(the)S 102 x(data)S 103 x
+(mana)S 2 x(gement)S 103 x(faciliti)S -2 x(es)S 103 x(of)S 103 x(Open-)S
+17050 X 548 y(VMS)S 150 x(RMS)S 149 x(\(Record)S 151 x(Manage)S 2 x
+(ment)S 150 x(Services\))S 16452 X 869 y(\202)S 150 x(Abili)S -2 x(ty)S
+110 x(to)S 110 x(package)S 111 x(C++)S 109 x(code)S 111 x(as)S 110 x
+(sharea)S 2 x(ble)S 109 x(libraries)S 16452 X 868 y(\202)S 150 x(Abili)S
+-2 x(ty)S 163 x(to)S 163 x(use)S 164 x(additional)S 163 x(class)S 163 x
+(libraries.)S 240 x(The)S 163 x(DEC)S 17050 X 548 y(C++)S 181 x(compiler)S
+183 x(suppor)S 2 x(ts)S 182 x(logical)S 181 x(name)S 184 x(search)S
+184 x(list)S -2 x(s)S 17050 X 548 y(in)S 132 x(conjunction)S 133 x(wit)S
+-2 x(h)S 133 x(the)S 133 x(preproce)S 2 x(ssor)S 133 x(directive)S 132 x
+(#in-)S 17050 X 548 y(clude.)S 24047 38446 XY F40(October)S 151 x(1993)S
+23899 X 548 y(AE-PNA2C-TE)S 13021 X -126 y F207(dt)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique DigitalLogo
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (2) 2
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3600 3002 XY F40(DEC)S 149 x(C++)S 149 x(V)S -25 x(ersion)S 150 x
+(1.2)S 149 x(for)S 150 x(OpenVMS)S 150 x(V)S -33 x(AX)S 23947 X(SPD)S
+149 x(37.39.02)S 4198 4835 XY F38(\202)S 150 x(Support)S 264 x(for)S
+263 x(DEC)S 263 x(Languag)S 2 x(e-Sensitive)S 263 x(Editor)S 264 x(to)S
+4796 X 548 y(provide)S 150 x(error)S 151 x(diagnostics)S 150 x(to)S
+149 x(the)S 150 x(Editor)S 3600 6877 XY F40(Run-time)S 149 x(Library)S
+150 x(Redistribution)S 3600 X 897 y F38(The)S 306 x(DEC)S 305 x(C++)S
+305 x(kit)S 304 x(includes)S 306 x(a)S 306 x(separa)S 2 x(tely)S 305 x
+(packaged)S 3600 X 548 y(saveset)S 258 x(which)S 256 x(contains)S 258 x
+(all)S 256 x(the)S 257 x(run-time)S 258 x(componen)S 2 x(ts)S 3600 X
+548 y(needed)S 186 x(to)S 184 x(execute)S 186 x(program)S 2 x(s)S 184 x
+(developed)S 186 x(with)S 184 x(the)S 184 x(DEC)S 3600 X 548 y(C++)S
+205 x(compiler)S 207 x(and)S 207 x(class)S 206 x(libraries)S 206 x(on)S
+206 x(suppor)S 2 x(ted)S 206 x(Open-)S 3600 X 548 y(VMS)S 186 x(V)S
+-33 x(AX)S 186 x(system)S 187 x(con\211gur)S 2 x(ations.)S 308 x(Digital)S
+185 x(grants)S 187 x(you)S 186 x(a)S 3600 X 548 y(nonexclusive,)S 145 x
+(royalty-free,)S 146 x(worldwide)S 143 x(right)S 143 x(to)S 143 x(repro)S
+2 x(duce)S 3600 X 548 y(and)S 183 x(distribute)S 182 x(this)S 182 x
+(saveset)S 183 x(portion)S 183 x(of)S 182 x(the)S 182 x(DEC)S 182 x
+(C++)S 181 x(kit)S 3600 X 548 y(designated)S 195 x(as)S 194 x(AACR)S
+-8 x(T060.A)S 194 x(\(the)S 194 x("R)S -8 x(TL"\))S 195 x(provided)S
+195 x(that)S 3600 X 548 y(you:)S -847 x 896 y(\201)S 441 x(distribute)S
+206 x(the)S 206 x(entire)S 206 x(R)S -8 x(TL)S 206 x(saveset)S 207 x
+(and)S 207 x(copies)S 206 x(of)S 206 x(its)S 4198 X 548 y(accompa)S
+2 x(nying)S 150 x(documentation;)S 3600 X 797 y(\201)S 441 x(distribute)S
+215 x(the)S 216 x(R)S -9 x(TL)S 216 x(only)S 215 x(in)S 215 x(conjunction)S
+216 x(with)S 215 x(and)S 216 x(as)S 4198 X 548 y(part)S 124 x(of)S 124 x
+(your)S 125 x(software)S 125 x(application)S 124 x(product)S 125 x(which)S
+124 x(is)S 124 x(de-)S 4198 X 548 y(signed)S 108 x(to)S 107 x(operate)S
+108 x(in)S 107 x(the)S 108 x(OpenVMS)S 108 x(V)S -33 x(AX)S 107 x(environm)S
+2 x(ent;)S 3600 X 797 y(\201)S 441 x(do)S 224 x(not)S 223 x(use)S 224 x
+(Digital)S -2 x(')S -8 x(s)S 223 x(name,)S 243 x(logo,)S 242 x(or)S
+223 x(tradema)S 2 x(rks)S 224 x(to)S 4198 X 548 y(market)S 150 x(your)S
+151 x(software)S 149 x(application)S 150 x(product;)S 3600 X 797 y(\201)S
+441 x(include)S 236 x(Digit)S -2 x(al')S -8 x(s)S 235 x(copyright)S
+237 x(notice)S 235 x(for)S 236 x(DEC)S 235 x(C++)S 235 x(on)S 4198 X
+548 y(your)S 127 x(produ)S 2 x(ct)S 126 x(disk)S 127 x(label)S 126 x
+(and/or)S 127 x(on)S 128 x(the)S 126 x(title)S 125 x(page)S 128 x(of)S
+126 x(the)S 4198 X 548 y(documen)S 2 x(tation)S 133 x(for)S 134 x(your)S
+134 x(software)S 134 x(application)S 134 x(product;)S 4198 X 548 y(and)S
+3600 X 797 y(\201)S 441 x(agree)S 158 x(to)S 156 x(indemnify)S -32 x
+(,)S 158 x(hold)S 157 x(harmless,)S 159 x(and)S 158 x(defend)S 157 x
+(Digi-)S 4198 X 548 y(tal)S 126 x(from)S 127 x(and)S 128 x(against)S
+127 x(any)S 127 x(claims)S 127 x(or)S 127 x(lawsuits,)S 130 x(including)S
+4198 X 548 y(attorney')S -8 x(s)S 188 x(fees,)S 197 x(that)S 187 x(arise)S
+189 x(or)S 188 x(result)S 188 x(from)S 188 x(the)S 188 x(use)S 188 x
+(or)S 4198 X 548 y(distribution)S 143 x(of)S 144 x(your)S 145 x(software)S
+145 x(application)S 144 x(product.)S 198 x(Ex-)S 4198 X 548 y(cept)S
+166 x(as)S 167 x(expressly)S 167 x(provided)S 168 x(herein,)S 170 x
+(Digital)S 165 x(grants)S 167 x(no)S 4198 X 548 y(implied)S 173 x(or)S
+175 x(express)S 175 x(license)S 175 x(under)S 175 x(any)S 174 x(of)S
+174 x(its)S 173 x(patents,)S 4198 X 548 y(copyrights,)S 138 x(trade)S
+136 x(secrets,)S 138 x(tradem)S 2 x(arks,)S 138 x(or)S 136 x(any)S 135 x
+(license)S 4198 X 548 y(or)S 150 x(other)S 150 x(proprietary)S 151 x
+(interests)S 149 x(and)S 151 x(rights.)S 3600 25408 XY F40(HARDW)S -26 x
+(ARE)S 149 x(REQUIREMENTS)S 3600 X 897 y F38(Processo)S 2 x(r)S 173 x
+(and/or)S 175 x(hardware)S 175 x(con\211gu)S 2 x(rations)S 173 x(as)S
+174 x(speci\211ed)S 3600 X 548 y(in)S 149 x(the)S 150 x(System)S 150 x
+(Support)S 150 x(Adden)S 2 x(dum)S 150 x(\(SSA)S 150 x(37.39.02-x\).)S
+3600 28347 XY F40(SOFTW)S -25 x(ARE)S 149 x(REQUIREMENTS)S 3600 X 897 y
+F39(For)S 194 x(Systems)S 194 x(Using)S 194 x(T)S -42 x(erminals)S 195 x
+(\(No)S 193 x(DECwindows)S 193 x(Inter-)S 3600 X 548 y(face\):)S 3600 X
+896 y F38(\201)S 441 x(OpenVMS)S 150 x(V)S -33 x(AX)S 150 x(Operating)S
+150 x(System)S 3600 X 897 y F39(For)S 150 x(Workstations)S 150 x(Running)S
+150 x(DECwindows:)S 3600 X 896 y F38(\201)S 441 x(OpenVMS)S 226 x(V)S
+-33 x(AX)S 225 x(Operating)S 226 x(System)S 225 x(\(and)S 227 x(necessary)S
+4198 X 548 y(compone)S 2 x(nts)S 149 x(of)S 150 x(OpenVMS)S 150 x(DECwindows\))S
+3600 X 897 y(Refer)S 113 x(to)S 113 x(the)S 114 x(System)S 114 x(Support)S
+114 x(Addendum)S 115 x(\(SSA)S 113 x(37.39.02-)S 3600 X 548 y(x\))S
+189 x(for)S 188 x(availabilit)S -2 x(y)S 189 x(and)S 189 x(required)S
+189 x(versions)S 189 x(of)S 189 x(prerequisite)S 3600 X 548 y(/optional)S
+132 x(software)S 132 x(and)S 133 x(for)S 132 x(information)S 133 x(regard)S
+2 x(ing)S 132 x(compo-)S 3600 X 548 y(nents)S 150 x(of)S 149 x(OpenVMS)S
+151 x(DECwindows.)S 15854 4834 XY F40(ORDERIN)S -2 x(G)S 149 x(INFORMA)S
+-34 x(TION)S 15854 X 897 y F38(Software)S 150 x(License:)S 199 x(QL-MJ1)S
+2 x(A*-**)S 15854 X 548 y(Software)S 150 x(Media:)S 199 x(QA-MJ1A*)S
+2 x(-**)S 15854 X 548 y(Software)S 150 x(Documentation:)S 199 x(QA-MJ1A*)S
+2 x(-GZ)S 15854 X 548 y(Software)S 150 x(Product)S 150 x(Services:)S
+200 x(QT)S -25 x(-MJ1A*-)S 2 x(**)S 15854 X 896 y(*)S 424 x(Denotes)S
+152 x(variant)S 153 x(\211elds.)S 207 x(For)S 153 x(additional)S 152 x
+(information)S 152 x(on)S 16452 X 548 y(available)S 165 x(licenses,)S
+169 x(services,)S 169 x(and)S 166 x(media,)S 170 x(refer)S 165 x(to)S
+165 x(the)S 16452 X 548 y(appropr)S 2 x(iate)S 149 x(price)S 150 x(book.)S
+15854 10862 XY F40(SOFTW)S -25 x(ARE)S 149 x(LICENSIN)S -2 x(G)S 15854 X
+896 y F38(This)S 117 x(software)S 117 x(is)S 117 x(furnished)S 117 x
+(unde)S 2 x(r)S 117 x(the)S 117 x(licensing)S 117 x(provisions)S 15854 X
+548 y(of)S 142 x(Digit)S -2 x(al)S 142 x(Equipment)S 143 x(Corporation')S
+-8 x(s)S 142 x(Standard)S 144 x(T)S -50 x(erms)S 143 x(and)S 15854 X
+548 y(Conditions.)S 198 x(For)S 146 x(more)S 147 x(information)S 146 x
+(about)S 147 x(Digit)S -2 x(al')S -9 x(s)S 146 x(licens-)S 15854 X 548 y
+(ing)S 150 x(terms)S 150 x(and)S 150 x(policies,)S 149 x(contact)S 150 x
+(your)S 150 x(local)S 149 x(Digital)S 148 x(of)S -8 x(\211ce.)S 15854 X
+897 y F39(License)S 150 x(Mana)S 2 x(gement)S 150 x(Facility)S 148 x
+(Suppor)S 2 x(t)S 15854 X 896 y F38(This)S 215 x(layered)S 216 x(produ)S
+2 x(ct)S 215 x(supports)S 216 x(the)S 215 x(OpenVM)S 2 x(S)S 215 x(License)S
+15854 X 548 y(Manag)S 2 x(ement)S 150 x(Facilit)S -2 x(y)S -33 x(.)S
+15854 X 897 y(License)S 125 x(units)S 124 x(for)S 124 x(this)S 124 x
+(produc)S 2 x(t)S 123 x(are)S 125 x(allocated)S 125 x(on)S 124 x(an)S
+125 x(Unlim-)S 15854 X 548 y(ited)S 149 x(System)S 150 x(Use)S 150 x
+(and)S 150 x(Persona)S 2 x(l)S 149 x(Use)S 149 x(basis.)S 15854 X 897 y
+(Each)S 125 x(Personal)S 125 x(Use)S 124 x(license)S 124 x(allows)S
+124 x(one)S 125 x(identi\211ed)S 124 x(individ-)S 15854 X 547 y(ual)S
+150 x(to)S 149 x(use)S 150 x(the)S 150 x(layered)S 150 x(produc)S 2 x
+(t.)S 15854 X 897 y(For)S 110 x(more)S 111 x(information)S 111 x(on)S
+110 x(the)S 110 x(License)S 111 x(Managem)S 2 x(ent)S 110 x(Facil-)S
+15854 X 548 y(ity)S -34 x(,)S 159 x(refer)S 157 x(to)S 157 x(the)S 157 x
+(OpenVM)S 2 x(S)S 157 x(V)S -34 x(AX)S 157 x(Operating)S 158 x(System)S
+158 x(Soft-)S 15854 X 548 y(ware)S 117 x(Produ)S 2 x(ct)S 116 x(Description)S
+117 x(\(SPD)S 117 x(25.01.xx\))S 118 x(or)S 118 x(the)S 117 x F39(License)S
+15854 X 548 y(Manag)S 2 x(ement)S 129 x(Facility)S 128 x F38(manual)S
+129 x(of)S 129 x(the)S 129 x(OpenVMS)S 130 x(V)S -34 x(AX)S 129 x(Op-)S
+15854 X 548 y(erating)S 150 x(System)S 150 x(docum)S 2 x(entation)S
+149 x(set.)S 15854 23215 XY F40(SOFTW)S -25 x(ARE)S 149 x(PRODUCT)S
+148 x(SER)S -8 x(VICES)S 15854 X 897 y F38(A)S 190 x(variety)S 189 x
+(of)S 190 x(service)S 190 x(options)S 190 x(are)S 191 x(available)S
+189 x(from)S 191 x(Digit)S -2 x(al.)S 15854 X 548 y(For)S 150 x(more)S
+151 x(information,)S 149 x(contact)S 150 x(your)S 150 x(local)S 150 x
+(Digit)S -2 x(al)S 149 x(of)S -8 x(\211ce.)S 15854 26154 XY F40(SOFTW)S
+-25 x(ARE)S 149 x(W)S -24 x(ARRA)S -2 x(NTY)S 15854 X 897 y F38(W)S
+-16 x(arranty)S 136 x(for)S 136 x(this)S 135 x(software)S 136 x(produ)S
+2 x(ct)S 135 x(is)S 135 x(provided)S 137 x(by)S 136 x(Digital)S 15854 X
+548 y(with)S 118 x(the)S 119 x(purch)S 2 x(ase)S 119 x(of)S 119 x(a)S
+120 x(license)S 119 x(for)S 119 x(the)S 119 x(produ)S 2 x(ct)S 119 x
+(as)S 119 x(de\211ned)S 15854 X 548 y(in)S 149 x(the)S 150 x(Software)S
+149 x(W)S -16 x(arranty)S 151 x(Addendum)S 151 x(of)S 149 x(this)S 149 x
+(SPD.)S 15854 29542 XY F42(\207)S 498 x(The)S 149 x(Digital)S 150 x
+(Logo,)S 153 x(Bookre)S -2 x(ader)S -23 x(,)S 154 x(DEC,)S 149 x(DECwind)S
+-2 x(ows,)S 16751 X 498 y(Digital,)S 157 x(OpenV)S -2 x(MS,)S 152 x
+(V)S -29 x(AX,)S 151 x(V)S -29 x(AX)S 152 x(RMS,)S 151 x(and)S 152 x
+(VMS)S 152 x(are)S 16751 X 498 y(trad)S -2 x(emarks)S 132 x(of)S 133 x
+(Digital)S 132 x(Equipment)S 131 x(Corpo)S -2 x(ration.)S 15854 31534 XY
+(\251199)S -2 x(3)S 133 x(Digital)S 133 x(Equipme)S -2 x(nt)S 132 x
+(Corpor)S -2 x(ation.)S 198 x(All)S 134 x(Rights)S 132 x(Reserved)S
+-2 x(.)S 15132 38868 XY F40(2)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Trailer
+%%Pages: 2
+%%BoundingBox: 0 0 612 792
+%%DocumentFonts: DigitalLogo Helvetica
+%%+ Helvetica-Bold Helvetica-Oblique
+%%DocumentNeededFonts: Helvetica Helvetica-Bold
+%%+ Helvetica-Oblique
+%%DocumentProcessColors:
+%%DocumentCustomColors: (BLACK)
+%%CMYKCustomColor: 0.0 0.0 0.0 1.0 (BLACK)
+%
+DVC$PSJob restore
+end %DEC_DVC$dict
+end %Color5044Dict
+%
+%%EndDocument
+EDM_eoj
+%EDMS_Begin_Finishing_Info
+%EDMS_Finishing_Info Document_ID: AE-PNA2C-TE
+%EDMS_Finishing_Info Document_Title: DEC C++ for OpenVMS VAX
+%EDMS_Finishing_Info Document_Title2: SPD 37.39.02
+%EDMS_Finishing_Info Product_Name: DEC C++ V1.2 V/VSPD 37.39.02
+%EDMS_Finishing_Info Product_Version: 1.2
+%EDMS_Finishing_Info Electronic_Format:  Electronic
+%EDMS_Finishing_Info Demand_Printable: Yes
+%EDMS_Finishing_Info Total_Pages: 2
+%EDMS_Finishing_Info Color_Count: 1
+%EDMS_Finishing_Info Text_Ink: 0 Black
+%EDMS_End_Finishing_Info
+%EDMS_Begin_Assembly_Info
+%EDMS_Assembly_Info: Folio_Page: (1)        Ordinal_Page:   1 Colors: Black
+%EDMS_Assembly_Info: Folio_Page: (2)        Ordinal_Page:   2 Colors: Black
+%EDMS_End_Assembly_Info
+%EDMS_Begin_Index_Area
+%EDMS_Index: 9410 411
+%+Header
+%EDMS_Index: 9983 431
+%+Prologue
+%EDMS_Index: 52022 1511
+%+Trailer
+%EDMS_Index: 52397 1528
+%+EDMS_Begin_Finishing_Info
+%EDMS_Index: 52919 1540
+%+EDMS_Begin_Assembly_Info
+%EDMS_Index: 53483 1562           
+%+EOF
+%EDMS_Index: 33524 1234
+%+Page: (1) 1
+%EDMS_Index: 42258 1365
+%+Page: (2) 2
+%EDMS_End_Index_Area
+%%EOF

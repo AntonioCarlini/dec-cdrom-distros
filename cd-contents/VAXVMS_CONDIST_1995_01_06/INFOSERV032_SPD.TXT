@@ -1,0 +1,958 @@
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  InfoServer Software, Version 3.2        SPD 33.20.09
+
+ DESCRIPTION
+
+ InfoServer Software is the software component of a special-purpose hard-
+ ware/software system that makes up an InfoServer Ethernet-based stor-
+ age server. This product supports locally attached SCSI CD-ROMs, SCSI
+ disk drives, magneto-optical drives, and SCSI tape drives.
+
+ The server contains 4 MB of memory, of which 3 MB can be used for cache.
+ The InfoServer 100 and InfoServer 150 system boxes contain either an
+ internal RZ23 (104 MB) or an internal RZ23L (121 MB) drive. The Info-
+ Server 150VXT contains an internal RZ24 (209 MB), or an internal RZ24L
+ (245 MB) drive. All InfoServer 100 and 150 system boxes contain one
+ integral RRD42 CD-ROM drive, and some packages may include external
+ RRD42 CD-ROM drives (600 MB each). The InfoServer 1000 system box by
+ itself does not contain any storage, although certain InfoServer 1000
+ system packages will include CD-ROM drives, hard disks or tapes. Note
+ that either a directly-connected CD-ROM drive or a CD-ROM drive
+ connected to an InfoServer running V3.1 or higher software on the same
+ local area network (LAN) is required for software and function updates.
+
+ The rights to connect to the InfoServer are granted with the InfoSer-
+ ver system license. Supported clients are listed in Table 1 - Client
+ Support Matrix in this Software Product Description (SPD).
+
+ The InfoServer is the server component in a client-server model. To-
+ gether, clients and servers form a LAN-based network in which server-
+ based storage can be accessed from client systems. Virtual disks, both
+ physical disk media and sets of logical disk blocks, can be served to
+ the network by the InfoServer. Client systems running appropriate client
+ software can connect to virtual disks and tape devices served by the
+ InfoServer, and use them as though they were locally attached devices.
+
+                               DIGITAL                 October 1994
+
+                                                         AE-PE58J-TE
+
+ 
+
+ All InfoServer systems, with the exception of the InfoServer 150VXT,
+ are shipped with the Disk Function Access enabled. With this function,
+ clients can access and share CD-ROMs, hard disks, and magneto-optical
+ drives attached to the InfoServer. InfoServer 150VXT variants can be
+ upgraded to this functionality by purchasing a Disk Function Access
+ license and CD-ROM kit as upgrade options. Please refer to the Optional
+ Software section of this SPD.
+
+ With the Tape Function Access option, clients can also share SCSI tape
+ devices attached to the InfoServer. Clients can use this to perform
+ remote incremental backup and software distribution as if they were
+ locally attached. For OpenVMS clients, please note, however, that full
+ standalone backup is not supported. (This is an OpenVMS client lim-
+ itation.) Please refer to the Optional Software section of this SPD.
+
+ Specialized software protocols provide access to the server on the LAN.
+ These protocols are Local Area Transport (LAT) for remote management,
+ LASTport and LASTport/Disk for virtual disk access, LASTport/Tape for
+ SCSI tape access, and Maintenance Operations Protocol (MOP) for down-
+ line loading.
+
+ InfoServer operation across low-speed bridges is possible; however,
+ the underlying LASTport protocol assumes a low rate of packet loss.
+ Therefore, low-speed bridges may cause significant performance degra-
+ dation. For this reason, operation of the InfoServer is supported only
+ over 10 megabit bridges.
+
+ Features
+
+ Preinstallation of InfoServer Software with Simplified Updating
+
+ Customer or field service installation of InfoServer Software on the
+ system is not required. The server boots when powered-on. For the Info-
+ Server 100 and 150 models, the InfoServer software is factory-installed
+ on the internal RZ23/RZ23L/RZ24/RZ24L disk. For the InfoServer 1000,
+ the InfoServer Software is in a FLASH ROM on the system board. A sim-
+ ple server command is provided to update the InfoServer Software from
+ CD-ROM, locally connected or connected to another InfoServer on the
+ same LAN.
+
+                                  2
+
+ 
+
+ Network Updating
+
+ Version 3.2 allows InfoServer managers to update an InfoServer sys-
+ tem from a compact disc mounted on another InfoServer system on the
+ LAN.
+
+ The InfoServer 1000 system FLASH ROM may also be updated by downline
+ loading of an appropriate image via MOP. This image is provided on the
+ InfoServer kernel distribution CD-ROM. The MOP server may be another
+ InfoServer (100, 150, 150VXT or 1000) or an OpenVMS system with an at-
+ tached CD-ROM drive in the same LAN.
+
+ All update operations (FUNCTIONS, MOP, SYSTEM, and VXT) are supported
+ using the BIND and UNBIND commands and the existing UPDATE com-
+ mands.
+
+ Autoconfiguration (Automount)
+
+ The server autoconfigures devices based on the volume label and au-
+ tomatically creates service names for media present on the server. The
+ InfoServer will recognize the following formats (for both single and
+ multi-format CD-ROMs): ISO 9660, High Sierra, ULTRIX UFS, ODS-2, and
+ Apple[R] HFS.
+
+ Local and Remote Management Capability
+
+ The server can be managed by either a locally attached console (not
+ supplied) or a remote LAT terminal. Local and remote console capabil-
+ ities include configuration management, diagnostic information (built-
+ in self-test and diagnostic messages), and server control.
+
+ A local console is not required for the default mode of unattended op-
+ eration, but may be helpful in diagnosing hardware or software prob-
+ lems.
+
+ Password Protected Management Interface
+
+ A password-protected management interface allows control and monitor-
+ ing of server activity, with auto-prompting at any point in the com-
+ mand sequence, command-line recall, and built-in help.
+
+                                  3
+
+ 
+
+ Access Control - Server Access Control
+
+ Every InfoServer, and its corresponding set of clients, is a member
+ of a single LASTport group. A LASTport group is a mechanism used by
+ the InfoServer Software to logically subdivide the InfoServer network.
+ Client systems and InfoServers must belong to the same LASTport group
+ for clients to access virtual disks on the InfoServer. Up to 1,024 LAST-
+ port groups can coexist in a single LAN.
+
+ Access Control - Management Interface Access Control
+
+ o  Password protection
+
+ o  LAT group codes
+
+ Access Control - Device Access Control
+
+ o  Password protection
+
+ o  Concurrent usage quotas - the number of connections allowed to a
+    service or virtual disk can be set. This can be used to manage the
+    number of users allowed to access a given application or data.
+
+ Multiple Read/Write Virtual Disks on a Single Physical Disk
+
+ The InfoServer can serve read/write disk partitions. A partition is
+ a logical subset of a read/write disk. A single disk can be subdivided
+ into several partitions, each of which can be served to the network
+ independently as a virtual disk. The access mode supports a single writer
+ or multiple readers, but not both concurrently (to prevent acciden-
+ tal corruption of data on the disk).
+
+ Read/Write Data Back-Up
+
+ Back-up operations can be performed locally via server commands or re-
+ motely using client-specific utilities.
+
+ InfoServer Tape Function for Remote Back-up
+
+ With the Tape Function Access option, customers can perform back-ups
+ via SCSI tape devices on the InfoServer.
+
+                                  4
+
+ 
+
+ Note: The InfoServer is not meant as an optimal performance controller
+ for all tape devices. Rather, use of the tape function with InfoSer-
+ ver is provided as a means of convenience for sharing a seldom-used
+ and costly device. Many factors, including network load, block size,
+ and additional load on the InfoServer contribute to the overall per-
+ formance characteristics of any given tape operation.
+
+ One InfoServer client at a time can access an SCSI tape device. Once
+ the client has completed the task and disconnects from the device, it
+ becomes available to the other clients on the LAN. For supported de-
+ vices (see Device Support Table 2), the InfoServer will automatically
+ verify firmware revision levels of attached tape devices. InfoServer
+ Software, Version 3.2 supports OpenVMS VAX Version 5.4 and above AND makes
+ the tape backup capabilities available to OpenVMS VAX users at a min-
+ imum of Version 5.4. PLEASE NOTE THAT USERS MUST INSTALL INFOSERVER VMS
+ CLIENT QA-GGWAA-HX FOR TAPE FUNCTIONALITY FOR OPENVMS VERSIONS 5.4 THROUGH 
+ 5.5-N. InfoServer Software Version 3.2 also includes
+ the capability of enabling PC clients with tape backup capabilities
+ to perform backup to tapes attached to the InfoServer using Symantec[R]'s
+ Norton Backup utility (sold separately). InfoServer Client for DOS Ver-
+ sion 2.0, along with InfoServer kernel Version 3.2, supports this ca-
+ pability.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  5
+
+ 
+
+ CD/R Function Access
+
+ Using the InfoServer 1000 as a network storage server, users can ac-
+ cess a CD/R device over the network from a DOS, OpenVMS VAX or AXP,
+ Macintosh[R], or ULTRIX environment. They can create (write) their own
+ CDs in a file format native to their environments without any addi-
+ tional software, or they can use third party formatters to create ISO
+ 9660 CDs from those native environments.
+
+ The InfoServer 1000 CD/R functionality can be used for several appli-
+ cations including: the distribution of volumes of technical manuals,
+ updates of databases, replacement of microfiche, or near-term stor-
+ age of data.
+
+ A CD/R function access license and media/documentation kit are avail-
+ able to use with the InfoServer for compact disc mastering. Additional
+ requirements include: a CD/R device, a hard disk for staging data (1
+ GB recommended), a CD reader, and formatter software for converting
+ files to the ISO 9660 standard.
+
+ File System Independence
+
+ InfoServer is a "virtual device" server. InfoServer does not impose
+ a file system on the virtual devices that it serves, instead the client
+ system interprets the on-disk structure. Multiple on-disk structures
+ can be served on a single InfoServer simultaneously. InfoServer is ca-
+ pable of automatically recognizing ODS-2, High Sierra, ISO 9660, UL-
+ TRIX UFS, and HFS (Apple) disk formats and creating service names which
+ match the volume name. Other disk formats may be named manually through
+ the InfoServer management interface.
+
+ Automatic Failover to Duplicate Media
+
+ The LASTport protocol is designed to allow client systems to perform
+ automatic failover between duplicate media. Failover means that a user
+ connected to a service that becomes unavailable (such as a CD-ROM that
+ is removed from the system) will be automatically connected to an iden-
+ tical service on the same or another InfoServer. If the service is not
+ found, the InfoServer client will return the appropriate message to
+
+                                  6
+
+ 
+
+ the user. The implementation of failover varies from client to client.
+ Refer to Software Requirements, Table 1 - Client Support Matrix.
+
+ Load Balancing
+
+ InfoServer dynamically calculates a service rating for virtual disks
+ based upon load. These ratings are used by some client systems when
+ connections are requested. When the same disk is offered more than once
+ on the network, load balancing is provided. This includes the abil-
+ ity to load balance connections within a single InfoServer when du-
+ plicate virtual disks are present, as well as between multiple Info-
+ Servers with duplicate media on the network. Client systems will se-
+ lect the highest rated service. The implementation of load balancing
+ varies from client to client. Refer to Table 1 - Client Support Ma-
+ trix. Initial System Load
+
+ Some client systems implement Initial System Load (ISL) using a com-
+ bination of server-implemented, down-line load and virtual disk ca-
+ pabilities. This feature eliminates the need for locally attached soft-
+ ware distribution devices for initial system load on those client sys-
+ tems. Please refer to Table 1 - Client Support Matrix in this SPD for
+ client ISL capabilities.
+
+ ISO 9660 Support
+
+ InfoServer Software, Version 3.2 contains OpenVMS savesets necessary
+ to install support for reading ISO 9660 and High Sierra formatted com-
+ pact discs. These savesets can be installed on any system running Open-
+ VMS VAX, Version 5.4, at a minimum, allowing access to ISO 9660 for-
+ matted CD-ROM discs on the InfoServer. Note that this support only en-
+ ables OpenVMS to recognize these formats, not to run any DOS executa-
+ bles. Please note that the ISO 9660 support for OpenVMS becomes a na-
+ tive utility bundled into OpenVMS VAX Version 6.0 and above, and Open-
+ VMS AXP Version 1.0 and above.
+
+ InfoServer Monitor Utility
+
+
+
+
+                                  7
+
+ 
+
+ InfoServer monitor is a utility which runs on VMS systems. This util-
+ ity monitors devices to ensure they remain available when events, such
+ as the following, occur:
+
+ o  A compact disc is replaced with a new disc or volume
+
+ o  Connection is broken between the OpenVMS client and the InfoSer-
+    ver system
+
+ o  Data has been written to an InfoServer hard disk (disk must be re-
+    mounted)
+
+ Note that the InfoServer Monitor Utility is not a supported program
+ at this time.
+
+ Optional Functions Which Increase InfoServer Capabilities
+
+ InfoServer Software, Version 3.2 enables installation of InfoServer
+ functional upgrades from CD-ROMs. As new functions become available,
+ customers can purchase separately and install each function they wish
+ to make available on the LAN. For example, customers can add Tape Func-
+ tion Access to their previously installed base packaged systems by pur-
+ chasing the InfoServer Tape Function Access license and CD-ROM kit (see
+ OPTIONAL SOFTWARE section). They then can install the CD-ROM on their
+ InfoServer, which initializes the tape functionality on the InfoSer-
+ ver.
+
+ SOFTWARE REQUIREMENTS
+
+ Refer to client documentation for specific client features that sup-
+ port InfoServer.
+
+ OpenVMS VAX and AXP Clients
+
+ InfoServer client support for disk services is included in the Open-
+ VMS VAX Operating System, at a minimum of Version 5.4 and OpenVMS AXP
+ Version 1.5 minimum. InfoServer client support for tape services is
+ included in the OpenVMS VAX Operating System at a minimum of Version
+ 6.0. TAPE SERVICES ARE ALSO SUPPORTED IN OPENVMS VERSIONS 5.4 THROUGH 5.5-N
+ WITH INFOSERVER VMS CLIENT SOFTWARE KIT QA-GGWAA-HX.
+ Refer to the OpenVMS VAX Operating System cover letter and the
+
+                                  8
+
+ 
+
+ OpenVMS VAX Operating System, Version 5.4 Software Product Descrip-
+ tion (SPD 25.01.xx) for details of client support and any restrictions.
+ Tape support for OpenVMS AXP is available in the V6.1 release.
+
+ InfoServer Client for ULTRIX
+
+ InfoServer Client for ULTRIX supports ULTRIX clients at a minimum of
+ Version 4.0. With this product, ULTRIX clients are able to access the
+ CD-ROM drives attached to the InfoServer. Client systems can also ac-
+ cess read/write partitions, or winchester or magneto optical drives.
+ Refer to the InfoServer Client for ULTRIX Software Product Descrip-
+ tion (SPD 40.78.xx).
+
+ InfoServer Client for DOS
+
+ The InfoServer Client for DOS includes standard disk services, as well
+ as tape services when used in conjunction with the Norton Backup for
+ Windows[TM] Version 3.0 minimum. Refer to the Client for DOS Software
+ Product Description (SPD 37.32.xx).
+
+ InfoServer Client for DOS comes in two variants as follows:
+
+ 1. The PATHWORKS for DOS (InfoServer) client (formerly DECnet PCSA Client
+    for DOS) is embedded in PATHWORKS at a minimum of Version 4.1. A
+    separate kit is not required for clients at PATHWORKS for DOS, Ver-
+    sion 4.1.
+
+ 2. The InfoServer Client for DOS is a media and documentation kit which
+    can be purchased separately and installed on standalone PC's or PC's
+    that are networked in a Novell[R] environment.
+
+ InfoServer Client for Macintosh
+
+ InfoServer Client for Macintosh supports Macintosh users at a mini-
+ mum of System 6.07. This client includes standard disk services, failover,
+ load- balancing, and a user-friendly user interface. It is available
+ as a separately purchased media and documentation kit.
+
+
+
+                                  9
+
+ 
+
+ ___________________________________________________________________
+
+ Table_1:_Client_Support_Matrix_____________________________________
+
+ Server
+ Capabilities____________________Clients____________________________
+
+                VMS      DEC      DEC     VXT      ULTRIX  MacintoshDOS     AXP
+                V5.x     PATH-    LAT     2000             V6.07,   Novell
+                         WORKS    Term             V4.3    V7.0
+                         for      Svrs
+                         DOS
+
+ Read-write     X5       X        -       X        X       X        X       X5
+ Virtual Disk
+
+ Password-      X        X        -       X        X       X        X       X
+ protected
+ Virtual
+ Disks
+
+ LASTport       X        X        -       X        X       X        X       X
+ Workgroups
+ Failover to    X        X        -       X        X       X        X1      X
+
+ Duplicate
+ Media
+ InfoServer     X2       X        X       X        X       X        -       X
+
+ Management
+ via LAT
+
+ Load-          X        X        -       -        X       X        -       X
+ Balancing
+ Initial        X        -        X3      X        -       -        -       X
+
+ System Load
+ Tape           X4       -        -       -        -       -        -       X6
+
+ Backup_____________________________________________________________
+
+ [1]Non-automatic failover supported
+
+ [2]Requires the optional installation of the LAT upgrade kit (LATU1054.A)
+    available on OpenVMS VAX, Version 5.4-1
+
+                                 10
+
+ 
+
+ [3]Most, but not all terminal servers
+
+ [4]Minimum V2.0 InfoServer Software required. Minimum version of Open-
+     VMS is V5.4.
+
+ [5]For disk reads, minimum version of OpenVMS VAX is V5.4; for disk
+    writes, minimum version of OpenVMS is V5.4-1. For OpenVMS AXP, V1.5
+    is minimum.
+
+ [6]OpenVMS AXP V6.1
+
+ OPTIONAL SOFTWARE
+
+ Function Access Licenses and CD-ROM kits
+
+ InfoServer Tape Function Access may be added to previously installed
+ InfoServer packaged systems at InfoServer Software, minimum Version
+ 2.0. Please refer to the ORDERING INFORMATION section for details.
+
+ InfoServer Disk Function Access may be added to previously installed
+ InfoServer 150VXT packaged systems at InfoServer Software, minimum Ver-
+ sion 2.0. Please refer to the ORDERING INFORMATION section for details.
+
+ InfoServer CD/R Function Access may be added to previously installed
+ InfoServer packaged systems at InfoServer Software, minimum Version
+ 3.1. Refer to the ORDERING INFORMATION section for details. InfoSer-
+ ver 1000 Server Connection Upgrades
+
+ The InfoServer 1000 is shipped from the factory with 50 concurrent con-
+ nections enabled. InfoServer 1000 connection upgrades are upgradable
+ in increments of 50. Please refer to the ORDERING INFORMATION section
+ for details.
+
+ HARDWARE REQUIREMENTS
+
+ InfoServer Software runs on the InfoServer hardware described below:
+
+ o  InfoServer 150 (Disk Serving)
+
+ o  InfoServer 150 Tape Package
+
+ o  InfoServer 150VXT
+
+                                 11
+
+ 
+
+ o  InfoServer 1000
+
+ o  InfoServer Librarian (InfoServer 1000 packaged for CD-ROM sharing)
+
+ o  InfoServer Local Area CD (InfoServer 1000 packaged for ISL)
+
+ o  InfoServer VXT (InfoServer 1000 packaged for VXT server-based con-
+    fig)
+
+ o  InfoServer Scribe (InfoServer 1000 packaged for networked tape backup)
+
+ o  InfoServer Software, Version 3.2 and InfoServer Disk Function Ac-
+    cess software are factory installed on InfoServers and InfoServer
+    1000 packaged systems.
+
+ OPTIONAL HARDWARE
+
+ A maximum of 14 Digital qualified SCSI storage devices per InfoSer-
+ ver 150, 9 Digital qualified SCSI storage devices per InfoServer 100,
+ and 7 Digital qualified SCSI storage devices per InfoServer 1000 are
+ supported providing SCSI bus-length guidelines are observed (this in-
+ cludes the server's integral RZ23L, RZ24, or RZ24L disk).
+
+ ___________________________________________________________________
+
+ Table_2:_Device_Support____________________________________________
+
+ Device_____________________________________________________________
+
+ RZ23        104 MB fixed disk drive, 3.25 inch
+
+ RZ23L       121 MB fixed disk drive, 3.25 inch
+
+ RZ24        209 MB fixed disk drive, 3.25 inch
+
+ RZ24L       245 MB fixed disk drive, 3.25 inch
+
+ RZ25        426 MB fixed disk drive, 3.25 inch
+
+ RZ26/B/L    1.05 GB fixed disk drive, 3.25 inch
+
+ RZ55        322 MB fixed disk drive 5.25 inch
+
+ RZ56        665 MB fixed disk drive, 5.25 inch
+
+ RZ57        1 GB hard disk drive, 5.25 inch
+
+                                 12
+
+ 
+
+
+ ___________________________________________________________________
+
+ Device_____________________________________________________________
+
+ RZ58        1.38 GB fixed disk drive, 5.25 inch
+
+ RZ28        2.1 GB fixed disk drive, 3.5 inch
+
+ TLZ04       1.2 GB, 4mm DAT tape drive
+
+ TLZ06       4.0 GB, 4mm DAT tape drive (software control of com-
+             paction is supported.)
+
+ TZK10       QIC 525 MB, tape drive, SZ03 enclosure
+
+ TZK11       2.0 GB QIC tape drive
+
+ TK50Z-GA    TK50 with SCSI interface
+
+ TKZ09	     8MM HELICAL SCAN TAPE DRIVE
+
+ TZ85        2.4 GB tape drive
+
+ TZ857       Tape Loader
+
+ TZ86        6.0 GB tape drive
+
+ TZ867       42 GB tape loader
+
+ TZ30        95 MB tape drive
+
+ TSZ07       dual density 1600/6250 BPI magnetic tape
+
+ TSZ05       half-inch 1600 BPI magnetic tape
+
+ SZ100-AA    SCSI magazine tape subsystem compatible with TZ85
+             /TZ857, total capacity is 18.2 GB
+
+ SZ106	     SCSI MAGAZINE TAPE SUBSYSTEM, 14.2 BG
+
+ RRD40       600 MB removable read-only CD-ROM
+
+ RRD42       600 MB removable read-only CD-ROM
+
+ RRD43	     600 MB REMOVABLE READ-ONLY CD-ROM, 2X
+
+ RRD44	     600 MB REMOVABLE READ-ONLY CD-ROM, 2X HI PERFORMANCE
+
+ RRW11	     CD-RECORDING DEVICE (INFOSERVER PUBLISHER ONLY)
+
+ TOSHIBA[R]  600 MB read-only CD-ROM
+ 3401B
+
+ Apple[R]    600 MB double-speed removable read-only CD-ROM
+ CD300
+
+ RWZ01       600 MB removable writeable/erasable optical storage,
+             5.25 inch
+
+ RWZ21       600 MB removable writeable/erasable optical storage,
+             3.25 inch
+
+ ALPHATRONIX 600 MB magneto optical storage drive
+ INSPIRE
+
+                                 13
+
+ 
+
+
+ ___________________________________________________________________
+
+ Device_____________________________________________________________
+
+ Sony[R]     CD-recordable device, single, double speed
+ CDW900E
+
+ Sony E1/W1  CD-recordable device, single speed
+
+ Philips     CD-recordable device, double speed
+ CDD521
+
+ JVC XR-     CD-recordable device, single speed
+ 1001_______________________________________________________________
+
+ Any combination of the following devices is supported on the Info-
+ Server_150_packaged_systems:_______________________________________
+
+                 InfoServer 150        InfoServer 100      InfoServer 1000
+
+ Device______Internal_External_______Internal_External______________External
+
+ RZ23        1        12 (SZ03)      1       6 (SZ03)               7
+                                             W/ INT                 (SZ03)
+                                             RRD40
+
+ RZ23/L      1        12 (SZ03)      1       7 (SZ03)               7
+                                                                    (SZ03)
+
+ RZ24/L      1        12 (SZ03)      1       7 (SZ03)               7
+                                                                    (SZ03)
+
+ RZ25        1        12 (SZ03)      0       7 (SZ03)               7
+                                                                    (SZ03)
+
+ RZ26/B/L    0        12 (BA350)     0       7 (BA350)              7
+                                                                    (BA350)
+
+ RZ55        0        12 (3 SZ12s    0       6                      6
+                      /16 per
+                      bus)
+
+ RZ56        0        12 (3 SZ12s    0       3                      3
+                      per bus)
+
+                                 14
+
+ 
+
+
+ ________________InfoServer_150________InfoServer_100______InfoServer 1000
+
+ Device______Internal_External_______Internal_External______________External
+
+ RZ57        0        12 (3 SZ12s    0       3                      3
+                      per bus)
+
+ RZ58        0        12 (3 SZ12s    0       3                      3
+                      per bus)
+
+ RRD40       0        12             1       7 Incl.                7
+                                             INT RRD40
+
+ RRD42       1        10 (5 per      1       5 (7 -                 5 (7 -
+                      bus, 7 -               INFOTOWER)             INFO-
+                      INFOTOWER)                                    TOWER)
+
+ RRD43       1        10 (5 per      1       5 (7 -                 5 (7 -
+                      bus, 7 -               INFOTOWER)             INFO-
+                      INFOTOWER)                                    TOWER)
+
+ RRD44       1        10 (5 per      1       5 (7 -                 5 (7 -
+                      bus, 7 -               INFOTOWER)             INFO-
+                      INFOTOWER)                                    TOWER)
+
+
+ TLZ04*      0        2 (1 per       0       1                      1
+                      bus)
+
+ TLZ06*      0        2 (1 per       0       1                      1
+                      bus)
+
+ TZK10       0        2 (1 per       0       1                      1
+ /TZK11*              bus)
+
+ TK50Z*      0        2 (1 per       0       1                      1
+                      bus)
+
+ TKZ09*      0        2 (1 per       0       1                      1
+                      bus)
+
+
+ TZ85        0        2 (1 per       0       1                      1
+ /TZ86*               bus)
+
+ RWZ01       0        12             0       7                      7
+ /RWZ21*
+
+ ALPHATRONIX 0        12             0       7                      7
+
+ Toshiba[R]  0        12             0       7                      7
+ 3401B
+
+ Apple[R]    0        10             0       5                      5
+ 300
+
+ Philips     0        12             0       7                      7
+ CDD521**
+
+ Sony        0        12             0       7                      7
+ CDW900E**
+
+                                 15
+
+ 
+
+
+ ________________InfoServer_150________InfoServer_100______InfoServer 1000
+
+ Device______Internal_External_______Internal_External______________External
+
+ Sony E1     0        12             0       7                      7
+ /W1**
+
+ JVC XR-     0        12             0       7                      7
+ 1001**
+
+ SZ18A-CA             2                      1                      1
+
+ SZ18A-DA_____________2______________________1______________________1
+
+ *  Tape Function Access software option required
+
+ ** CD/R Tape Function Access software option required
+
+ A BC56H-03 cable is necessary for the first external cable on Info-
+ Server 150 systems.
+
+ An 18-inch SCSI cable (BC19J-1E) is recommended for device intercon-
+ nection.
+
+ The BC16E-XX console cable is provided to attach a console to the Info-
+ Server.
+
+ The BN21-XX high density to high density cable is required for Stor-
+ ageWorks BA350 pedestal series, and for certain CD/R devices.
+
+ ORDERING INFORMATION
+
+ InfoServer 1000 User License Tiers
+
+ The InfoServer 1000 is shipped from the factory with 50 concurrent con-
+ nections enabled. Additional connections can be purchased via the fol-
+ lowing license and CD-ROM kit:
+
+ InfoServer 1000 51-100 connection License:
+ QL-0USA9-AA
+
+ InfoServer 1000 51-100 connections CD kit:
+ QA-0USAA-H8
+
+                                 16
+
+ 
+
+ InfoServer Tape Function Access License/Media Kits
+
+ InfoServer 150 Tape Function Access Traditional
+ License: QL-XZZA9-AA
+
+ InfoServer 150 Tape Function Access CD kit:
+ QA-XZZAA-H8
+
+ InfoServer 1000 Tape Function Access Traditional
+ License: QL-0UVA9-AA
+
+ InfoServer 1000 Tape Function Access CD kit:
+ QA-0UVAA-H8
+
+ InfoServer Disk Function Access License/Media Kits:
+
+ InfoServer 150 Disk Function Access Traditional
+ License: QL-XZYA9-AA
+
+ InfoServer 150 Disk Function Access CD Kit:
+ QA-XZY99-H8
+
+ InfoServer CD Recordable Function Access License/Media Kits:
+
+ InfoServer CD/R Function Access Traditional License:
+ QL-0UWA9-AA
+
+ InfoServer CD/R Function Access CD Kit:
+ QA-0UWAA-H8
+
+ InfoServer Packaged Systems
+
+ InfoServer 150 packaged systems and InfoServer 1000 packaged systems
+ include the InfoServer Software with Server Software license and the
+ InfoServer Disk Function Access software and license. Additionally,
+ Tape Function Access software and a license are included on certain
+ models (see HARDWARE REQUIREMENTS section).
+
+ InfoServer 150VXT systems have been configured for VXT client access
+ only. Other clients may be added by purchasing the Disk Function Ac-
+ cess license and software.
+
+                                 17
+
+ 
+
+ System Documentation: QA-YSHAA-GZ
+
+ Software Product Services: QT-YSHA*-**
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. Integrated
+ System Support Services providing comprehensive hardware and software
+ maintenance services or separate hardware or software maintenance ser-
+ vices are available for the InfoServer. For more information, contact
+ your local Digital office.
+
+ Software Service is covered under the terms and conditions of the In-
+ tegrated Hardware and Software Customer Service Contracts.
+
+ Service for InfoServer Software must be ordered independently of the
+ media delivering updates.
+
+ InfoServer Software Product Services:
+    QT-YSHA*-**
+
+ OpenVMS VAX Consolidated Software Distribution on
+    CD-ROM: QT-VWJ8A-C8
+
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ OpenVMS Online Documentation Library Subscription Service on CD-ROM
+
+
+
+                                 18
+
+ 
+
+ Media containing periodic online updates to the InfoServer system doc-
+ umentation is available through a subscription to the OpenVMS Online
+ Documentation Library Subscription Service (an alternative to Media
+ and Documentation Distribution Service), delivering a new compact disc
+ every other month with the latest online documentation.
+
+ SOFTWARE LICENSING
+
+ InfoServer Server License (QL-YSH99-AA) - This license grants the right
+ to use the InfoServer Software on one InfoServer.
+
+ Client Software License - Included with the Server Software license
+ in the InfoServer 150 and 1000-based packaged systems is the right to
+ use the clients with the InfoServer hardware. There is a limit of 100
+ concurrent connection on the InfoServer 150 and 150VXT systems. For
+ InfoServer 1000 systems, refer to the appropriate server license tier.
+
+ Note: The InfoServer 150VXT packaged systems are licensed for VXT ac-
+ cess only.
+
+ InfoServer Disk Function Access license (QL-XZYA9-AA) grants access
+ to the disk functions of the InfoServer 150 and InfoServer 1000 by any
+ client node.
+
+ InfoServer Tape Function Access license (QL-XZZA9-AA, QL-0UVA9-AA) grants
+ access to the tape functions of the InfoServer 150 and InfoServer 1000,
+ respectively, by any client node.
+
+ InfoServer CD/R Function Access license (QL-0UWA9-AA) grants access
+ to the CD/R functions of the InfoServer 150 and InfoServer 1000 by any
+ client node.
+
+ This product does not provide support for the OpenVMS License Manage-
+ ment Facility. A Product Authorization Key (PAK) is not required for
+ installation or use of this version of the product.
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+                                 19
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ Software accompanying an InfoServer 150 hardware order is covered un-
+ der the terms of the hardware warranty and is warranted to perform ac-
+ cording to the Software Product Description.
+
+ Software purchased separately is warranted only to the extent that it
+ will perform according to the Software Product Description. The me-
+ dia itself carries a one-year warranty. Software carries a standard
+ 90-day software warranty.
+
+ The above information is valid at the time of release. Please contact
+ your local Digital office for the most up-to-date information.
+
+ [R] Apple and Macintosh are registered trademarks of Apple Com-
+    puter, Inc.
+
+ [R] Novell is a registered trademark of Novell, Inc.
+
+ [R] Sony is a registered trademark of Sony Corporation.
+
+ [R] Symantec is a registered trademark of Symantec Corporation.
+
+ [R] Toshiba is a registered trademark of Kabushiki Kaisha Toshiba.
+
+ [TM]Windows is a trademark of Microsoft Corporation.
+
+ [TM]The DIGITAL Logo, DEC, DECnet, Digital, LAT, LASTport, OpenVMS,
+    PATHWORKS, RRD42, RZ, TK, ULTRIX, VAX, and VMS are trademarks
+    of Digital Equipment Corporation.
+
+ ©1994 Digital Equipment Corporation. All Rights Reserved.

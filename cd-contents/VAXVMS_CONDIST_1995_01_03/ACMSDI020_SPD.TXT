@@ -1,0 +1,1220 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  ACMS Desktop                            SPD 34.81.05
+
+ DESCRIPTION
+
+ ACMS Desktop is a layered software product that enables desktop sys-
+ tem users (clients) access to ACMS and ACMSxp host-based (server) trans-
+ action processing applications from the native desktop system envi-
+ ronment. The ACMS Desktop product supports the OpenVMS VAX, OpenVMS
+ AXP, and DEC OSF/1® AXP server platforms. The following chart lists
+ the_clients_and_networks_supported_for_each_of_the_server_platforms.
+
+ Servers___Networks_____Clients_____________________________________
+
+ OpenVMS   DECnet       Microsoft® Windows[TM]
+           TCP/IP       DOS
+           NetWare®     Windows NT[TM]
+           SPX/IPX
+           Dial-in      Macintosh®
+           X.25         OpenVMS
+           AppleTalk®   SCO[TM] UNIX®
+
+ OSF/1     TCP/IP       Microsoft Windows
+                        DOS
+ _______________________OSF/1_______________________________________
+
+ The ACMS Desktop product includes both client and server software com-
+ ponents. The client component includes support libraries and an ap-
+ plication programming interface (API). The API consists of a minimal
+ number of calls that are continually utilized by a variety of desk-
+ top development tools for the creation of desktop client applications
+ and presentation services.
+
+
+                               DIGITAL                      May 1994
+
+                                                         AE-PG9JF-TE
+
+ 
+
+ Features
+
+ ACMS Desktop features are described for the following areas:
+
+ o  Development environment
+
+ o  Run-time system
+
+ o  Network support
+
+ o  Management and control
+
+ o  Documentation
+
+ o  Sample applications
+
+ Included in this product release are one or more UNSUPPORTED software
+ components, which are marked clearly in this Software Product Descrip-
+ tion. These software components are included because they may be use-
+ ful for the user; however, they are not supported by Digital Customer
+ Service Centers. Inclusion of these software components does not con-
+ stitute a commitment from Digital that they will continue to be pro-
+ vided in this product.
+
+ Certain non-Digital (third-party) products can be used in conjunction
+ with this product, and are mentioned in this SPD. Third-party prod-
+ ucts such as those listed are not provided by this product, nor are
+ they directly supported by this product.
+
+ In general, use of any specific third-party products with ACMS Desk-
+ top is not directly supported by Digital. However, appropriate ver-
+ sions of certain third-party products have been tested and certified
+ to be appropriate for use with this version of ACMS Desktop. The Op-
+ tional Software section of this document contains a list of these prod-
+ ucts.
+
+
+
+
+
+                                  2
+
+ 
+
+ Development Environment
+
+ ACMS Desktop provides a set of application programming interfaces, along
+ with support libraries, that allow software programs to interact with
+ ACMS and ACMSxp applications as authenticated clients. These inter-
+ faces allow programmers to write client programs without requiring ex-
+ tensive programming knowledge of network communications or the ACMS
+ or ACMSxp languages.
+
+ ACMS Desktop Clients
+
+ ACMS Desktop provides application programming interfaces for the Mi-
+ crosoft Windows, DOS, Windows NT, Macintosh, OpenVMS, OSF/1, and SCO
+ UNIX environments. These client services allow the desktop program-
+ mer to develop programs that:
+
+ o  Sign in to the ACMS Desktop server for client authentication
+
+ o  Select ACMS tasks for execution under the control of the ACMS Ex-
+    ecution Controller or through the ACMSxp task server
+
+ o  Respond to callbacks from the ACMS or ACMSxp system as part of ACMS
+    task exchange steps (forms processing)
+
+ o  Sign out of the ACMS Desktop server
+
+ Supports Use of Native Windowing and Forms Packages
+
+ Appropriate customer-provided display software can be used on each desk-
+ top. For instance, on the Macintosh operating system, HyperCard® may
+ be used; on DOS, Microsoft Windows may be used. Any such packages must
+ include facilities to call object libraries that provide the ACMS Desk-
+ top client services.
+
+ Nonblocking Execution
+
+ ACMS Desktop clients support nonblocking programs. For event-driven
+ processing environments such as Windows, programs may be structured
+ to include an event-dispatching mechanism and a collection of proce-
+ dures that are invoked by this dispatching mechanism as a result of
+ an event. Ideally, these procedures are written to complete quickly
+ so that other events can be dispatched without delay.
+
+                                  3
+
+ 
+
+ ACMS Desktop client services allow an application to release control
+ to the event-dispatching mechanism without waiting for a response from
+ the ACMS Desktop server. This is important where network traffic is
+ delayed and/or a large amount of processing is performed by the ACMS
+ or ACMSxp application system. ACMS Desktop Portable Client
+
+ The portable client interface provides support for two models of ap-
+ plication development:
+
+ o  Blocking interface where execution of the program is blocked dur-
+    ing execution of the ACMS Desktop servers, for example, Microsoft
+    COBOL on DOS.
+
+ o  Nonblocking event-driven interface to accommodate such nonblock-
+    ing tools as Motif® or Microsoft Windows.
+
+ The services provided by the ACMS Desktop portable client for Microsoft
+ Windows, Windows NT, DOS, OSF/1, SCO UNIX, and OpenVMS are:
+
+ o  acmsdi_call_task - executes an ACMS or ACMSxp task, passing task
+    arguments specified for read, write, or modify access
+
+ o  acmsdi_cancel - cancels a currently executing task (nonblocking only,
+    and not available with ACMSxp)
+
+ o  acmsdi_complete_pp - completes an outstanding exchange step (non-
+    blocking only)
+
+ o  acmsdi_dispatch_message - checks for ACMS Desktop Server messages
+    (nonblocking only)
+
+ o  acmsdi_return_pointer - used by client programs written in Visual
+    Basic® to create pointers to data
+
+ o  acmsdi_sign_in - signs a user in to ACMS Desktop and establishes
+    a session
+
+ o  acmsdi_sign_out - signs a user out of ACMS Desktop and terminates
+    a session
+
+                                  4
+
+ 
+
+ Presentation procedure routines are called automatically by the ACMS
+ Desktop portable client to facilitate forms processing for the desk-
+ top user. These routines, which support blocking or nonblocking ex-
+ ecution, are as follows:
+
+ o  acmsdi_disable - shuts down forms sessions on the desktop in re-
+    sponse to an acmsdi_sign_out service call
+
+ o  acmsdi_enable - initializes data structures that are used by a num-
+    ber of presentation procedures (invoked when a user calls an ACMS
+    or ACMSxp task that includes a form name that has not been previ-
+    ously referenced)
+
+ o  acmsdi_receive - executes forms operations in response to a RECEIVE
+    in a called ACMS or ACMSxp task
+
+ o  acmsdi_request - executes forms operations in response to a REQUEST
+    in a called ACMS task (Note: TDMS is not available with ACMSxp)
+
+ o  acmsdi_send - executes forms operations in response to a SEND in
+    a called ACMS or ACMSxp task
+
+ o  acmsdi_transceive - executes forms operations in response to a TRANSCEIVE
+    in a called ACMS or ACMSxp task
+
+ DOS Memory Models and Modes
+
+ Small-, medium-, and large-memory models are supported for Microsoft
+ Windows and DOS.
+
+ For applications using Microsoft Windows, Enhanced Windows Operating
+ Mode is supported.
+
+ ACMS Desktop Client for Macintosh
+
+ This application programming interface supports the Data Access Man-
+ ager (DAM) facility of the Macintosh operating system. A special DAM
+ device driver (DDEV) provides the following services for client ex-
+ ecution:
+
+ o  DBBreak - cancels a currently executing ACMS task
+
+ o  DBEnd - signs a user out of ACMS
+
+                                  5
+
+ 
+
+ o  DBExec - executes an ACMS task
+
+ o  DBGetConnInfo - returns information about the current state of a
+    given session
+
+ o  DBGetErr - retrieves detailed error information
+
+ o  DBGetItem - retrieves task completion status, returned workspaces,
+    and exchange step data
+
+ o  DBGetSessNum - returns the session number for a given session iden-
+    tifier
+
+ o  DBInit - signs a user in to ACMS
+
+ o  DBSend - prepares elements of a message for transmission to the ACMS
+    system
+
+ o  DBSendItem - prepares elements of a message, including task argu-
+    ments specified for read, write, or modify access, for transmis-
+    sion to the ACMS system
+
+ o  DBState - checks for task execution completion
+
+ o  InitDBPack - loads the Data Access Manager
+
+ These services are synchronous; program control returns only when ser-
+ vice execution is complete. Nonblocking task execution is supported
+ because the DBExec service completes as soon as the task is submit-
+ ted for execution to ACMS. The DBState service is used to poll for task
+ completion.
+
+ Asynchronous parameter block cannot be used with these services.
+
+ Run-Time System
+
+ Desktop Client Run-Time Libraries
+
+
+
+                                  6
+
+ 
+
+ Run-time libraries are provided for the client operating systems to
+ support the execution of client programs that use the ACMS Desktop ser-
+ vices. The ACMS Desktop client for Microsoft Windows includes dynamic-
+ link libraries. (For DECnet, Microsoft Windows clients static-link li-
+ braries are also provided.) The ACMS Desktop client for Macintosh in-
+ cludes external functions for HyperCard and 4th Dimension® applica-
+ tions.
+
+ ACMS Desktop Server
+
+ The ACMS Desktop server is an asynchronous, multithreaded, run-time
+ component residing on any OpenVMS or OSF/1 node, regardless of the lo-
+ cation of ACMS or ACMSxp applications being called by desktop clients.
+ There is generally one ACMS Desktop server on a node. Additional ACMS
+ Desktop servers can be executed to debug tasks. The ACMS Desktop server
+ is an ACMS agent or gateway into ACMS or ACMSxp that performs the fol-
+ lowing functions:
+
+ o  Authenticates desktop clients (ACMS/ACMSxp submitters)
+
+ o  Calls tasks for users; this can include local and remote ACMS task
+    selection
+
+ o  Communicates with the desktop client program as part of task ex-
+    change step (desktop presentation procedure) execution
+
+ o  Provides information to the system manager concerning ACMS Desk-
+    top submitters (ACMS only)
+
+ Network Support
+
+ The following network connectivity software is supported (see Soft-
+ ware Requirements) for desktop nodes connected to a Local Area Net-
+ work (LAN) or a Wide Area Network (WAN):
+
+ o  AppleTalk
+
+ o  DECnet
+
+ o  Dial-in (serial communication)
+
+ o  NetWare SPX/IPX
+
+                                  7
+
+ 
+
+ o  TCP/IP
+
+ o  X.25
+
+ Note: For OpenVMS clients, communication modules are provided for test
+ purposes for TCP/IP and Novell® NetWare but are UNSUPPORTED. For OSF/1
+ servers, TCP/IP is the only supported network protocol.
+
+ Management and Control
+
+ Support Features
+
+ The following features are provided as part of the ACMS Desktop sys-
+ tem:
+
+ o  The ACMS Desktop client services report errors from ACMS or ACM-
+    Sxp back to the desktop client program for local error handling.
+
+ o  The ACMS Desktop client optionally services log error messages to
+    a local desktop device file (available on Microsoft Windows, Win-
+    dows NT, DOS, SCO UNIX, OSF/1, and OpenVMS).
+
+ o  Messages can be protected against sabotage or network corruption
+    by adding Cyclic Redundancy Checking (CRC).
+
+ o  The ACMS Desktop server reports ACMS and desktop client errors to
+    the ACMS software event logger. The ACMS Desktop server for ACM-
+    Sxp outputs error reports to a server-specific log file.
+
+ o  OpenVMS system managers can control desktop client access to ACMS
+    and remove desktop clients from the ACMS system, using standard ACMS
+    utilities.
+
+ o  ACMS Desktop for OpenVMS provides support, through DECtrace, for
+    the display of server event information.
+
+ Programming Services
+
+
+
+                                  8
+
+ 
+
+ The following ACMS Desktop for OpenVMS services are provided on the
+ server system to assist in system management activities:
+
+ o  acmsdi$get_submitter_info - returns information regarding active
+    ACMS Desktop server clients (available on OpenVMS).
+
+    A sample program that uses this service to display all current ACMS
+    Desktop submitters is provided. This sample program is an UNSUP-
+    PORTED software component.
+
+ o  acmsdi_check_version - optional customer-supplied routine that is
+    called by the ACMS Desktop clients to check a version string from
+    the ACMS Desktop server against the client program version (avail-
+    able on Microsoft Windows, Windows NT, DOS, OSF/1, SCO UNIX, and
+    OpenVMS).
+
+ o  acmsdi_get_version - optional customer-supplied routine that is called
+    by the ACMS Desktop server to return a version string to the desk-
+    top program clients (available on OpenVMS).
+
+ Documentation
+
+ ___________________________________________________________________
+ Platforms_Documents________________________________________________
+
+ OpenVMS   Programming and Management Guide
+
+           Installation Guide
+
+           Reference Manual
+
+           Release Notes
+
+           4D Externals User's Guide (online only)
+
+ OSF/1     Application Development Guide
+
+           Installation Guide
+
+ __________Release_Notes____________________________________________
+
+ Application Development Guide
+
+                                  9
+
+ 
+
+ The Application Development Guide describes how to write, develop, and
+ debug desktop client programs using ACMS Desktop client services and
+ how to perform system management tasks on the ACMS Desktop for OSF/1
+ server node that accesses the ACMSxp system. In addition, this man-
+ ual provides the format and syntax of the ACMS Desktop client services
+ and presentation procedures.
+
+ Programming and Management Guide
+
+ The Programming and Management Guide describes how to develop and test
+ client programs that use ACMS Desktop. It includes detailed informa-
+ tion on ACMS Desktop components and functions, design and development
+ guidelines, system management, and interface information.
+
+ Installation Guide
+
+ The Installation Guide describes the installation process, provides
+ instructions for copying and installing client software to desktop sys-
+ tems, and provides directions for running the product's Installation
+ Verification Procedure (IVP).
+
+ Reference Manual
+
+ The Reference Manual is a companion document to the Programming and
+ Management Guide. The document contains a description of the ACMS Desk-
+ top client services and presentation procedures.
+
+ Release Notes
+
+ Release Notes (available online as part of the media kit) contains in-
+ formation specific to this ACMS Desktop release and information added
+ after the production date for the other product documents.
+
+ 4D Externals User's Guide
+
+ 4D Externals User's Guide (available online as part of the media kit,
+ on the Macintosh) contains information on how to use the 4D Externals
+ with ACMS Desktop and 4th Dimension.
+
+
+                                 10
+
+ 
+
+ Sample Applications
+
+ Several sample applications are provided, including sample applica-
+ tions that implement the car rental application (AVERTZ). These sam-
+ ples are shipped on the ACMS and ACMSxp kits for the client platforms
+ that are supported by the product. The samples include all necessary
+ product-executable images as well as source code modules. Inclusion
+ of the source code allows the sample to be used as a template for customer-
+ developed desktop client programs.
+
+ The sample applications include the following components:
+
+ o  DOS client using Microsoft COBOL and Microsoft C
+
+ o  Microsoft Windows client using Microsoft Windows SDK and Microsoft
+    C
+
+ o  Windows NT client using Win32 API
+
+ o  Microsoft Windows client using Visual Basic®
+
+ o  Macintosh client using HyperCard and specialized HyperCard XFCNs,
+    which are implemented in HyperTalk® and Macintosh Programmer's Work-
+    station (MPW[TM]) C
+
+ o  Macintosh client using MPW C and Data Access Manager services
+
+ o  Macintosh client using 4th Dimension and specialized 4th Dimension
+    Externals
+
+ o  Macintosh HyperCard application, which provides a learning tool for
+    ACMS Desktop concepts
+
+ o  Portable client using Motif V1.1, for OSF/1, OpenVMS, and SCO UNIX
+    systems
+
+ o  For ACMS Desktop servers for OpenVMS, application modules using the
+    ACMS Task Definition Language, DECforms forms, and procedure server
+    modules implemented in VAX COBOL and VAX SQL
+
+                                 11
+
+ 
+
+ o  For ACMS Desktop servers for OSF/1, application modules using the
+    STDL language
+
+ The entire sample application is a set of UNSUPPORTED software com-
+ ponents. With the exception of a new set of supported 4th Dimension
+ Externals.
+
+ HARDWARE REQUIREMENTS
+
+ ACMS Desktop Server for OpenVMS and ACMS Desktop Client for
+ OpenVMS
+
+ Processors Supported
+
+ AXP:      DEC 3000 Model 400 AXP Workstation,
+           DEC 3000 Model 400 AXP Server,
+           DEC 3000 Model 500 AXP Workstation,
+           DEC 3000 Model 500 AXP Server
+
+           DEC 4000 Model 610 AXP System
+
+           DEC 7000 Model 610 AXP System
+
+           DEC 10000 Model 610 AXP System
+
+ VAX:      VAXft Model 110,
+           VAXft Model 310,
+           VAXft Model 410,
+           VAXft Model 610,
+           VAXft Model 612
+
+           VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+
+
+
+                                 12
+
+ 
+
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300,
+           VAX 8350, VAX 8500, VAX 8530,
+           VAX 8550, VAX 8600, VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+           VAX-11/730, VAX-11/750,
+           VAX-11/780, VAX-11/785
+
+ MicroVAX: MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100 Model 10/10E,
+           MicroVAX 3100 Model 20/20E,
+           MicroVAX 3100 Model 30,
+           MicroVAX 3100 Model 40,
+           MicroVAX 3100 Model 80,
+           MicroVAX 3100 Model 90,
+           MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+
+
+
+
+                                 13
+
+ 
+
+
+ VAXstation:VAXstation II, VAXstation 2000,
+           VAXstation 3100 Model 30,
+           VAXstation 3100 Model 38,
+           VAXstation 3100 Model 40,
+           VAXstation 3100 Model 48,
+           VAXstation 3100 Model 76,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90,
+           VAXstation 4000 VLC
+
+ VAXserver: VAXserver 3100 Model 10/10E,
+           VAXserver 3100 Model 20/20E,
+           VAXserver 3300, VAXserver 3400, VAXserver 3500,
+           VAXserver 3600, VAXserver 3602, VAXserver 3800,
+           VAXserver 3900
+
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 500
+
+           VAXserver 6000 Model 210,
+           VAXserver 6000 Model 220,
+           VAXserver 6000 Model 310,
+           VAXserver 6000 Model 320,
+           VAXserver 6000 Model 410,
+           VAXserver 6000 Model 420,
+           VAXserver 6000 Model 510,
+           VAXserver 6000 Model 520,
+           VAXserver 6000 Model 610,
+           VAXserver 6000 Model 620,
+           VAXserver 6000 Model 630
+
+ Processors Not Supported:
+
+
+
+                                 14
+
+ 
+
+ MicroVAX I, VAXstation I, VAX-11/725, VAX-11/782, VAXstation 8000
+
+ A minimum of 4 megabytes of memory is recommended. Memory requirements
+ vary depending on the server CPU, the number of clients using the server,
+ and the other applications running on the server.
+
+ ACMS Desktop Server for OSF/1 and ACMS Desktop Client for OSF/1
+
+ Processors Supported
+
+ AXP:      DEC 3000 Model 400 AXP Workstation,
+           DEC 3000 Model 400 AXP Server,
+           DEC 3000 Model 500 AXP Workstation,
+           DEC 3000 Model 500 AXP Server
+
+           DEC 4000 Model 610 AXP System
+
+           DEC 7000 Model 610 AXP System
+
+           DEC 10000 Model 610 AXP System
+
+ ACMS Desktop Client for Microsoft Windows and DOS
+
+ o  An Intel[TM] 80286-, 80386-, or 80486-based personal computer se-
+    lected from the Supported Base Systems chart located in the PATH-
+    WORKS for DOS Software Product Description (SPD 55.07.xx). Microsoft
+    Windows client applications minimally require 80386- or 80486-based
+    systems.
+
+ o  A minimum of 640KB system memory. At least 1 megabyte is strongly
+    recommended. For Microsoft Windows client applications at least 4
+    megabytes is required.
+
+ o  Supported Ethernet controllers for the various supported systems
+    are listed in the Supported Base Systems chart in the PATHWORKS for
+    DOS Software Product Description (SPD 55.07.xx). More than one com-
+    munications device may be installed in a system subject to system
+    limitations. If use of another device is required, the system may
+
+
+                                 15
+
+ 
+
+    need to be rebooted. A device cannot typically be shared with other
+    communications products.
+
+ o  In a PC local area network, at least one base system must have one
+    diskette drive capable of reading 5.25-inch (360KB) diskettes or
+    3.50-inch (720KB) diskettes.
+
+ o  If using dial-in (serial communication), a Hayes®-compatible mo-
+    dem is required.
+
+ ACMS Desktop Client for Windows NT
+
+ o  An Intel 80386- or 80486-based personal computer
+
+ o  Alpha AXP: DECpc 150 AXP Personal Computer
+
+ ACMS Desktop Client for Macintosh
+
+ o  Any Macintosh computer listed in the PATHWORKS for Macintosh Soft-
+    ware Product Description (SPD 31.53.xx).
+
+ ACMS Desktop Client for SCO UNIX
+
+ o  If using Open Desktop[TM], please refer to the Hardware Require-
+    ments section of the Open Desktop Software Product Description (SPD
+    32.57.xx).
+
+ o  If using SCO UNIX System V/386, please refer to the Hardware Re-
+    quirements section of the SCO UNIX System V/386 and SCO UNIX Sys-
+    tem V/386 Development System Software Product Description (SPD 32.52.xx).
+
+
+
+
+
+
+
+
+
+
+                                 16
+
+ 
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster* configuration without restrictions. The Hard-
+ ware Requirements sections of this product's Software Product Descrip-
+ tion and System Support Addendum detail any special hardware required
+ by this product.
+
+ *  V5.x VMScluster configurations are fully described in the VMSclus-
+    ter Software Product Description (SPD 29.78.xx) and include CI, Eth-
+    ernet, and Mixed Interconnect configurations.
+
+ SOFTWARE REQUIREMENTS
+
+ The following are the software requirements for an ACMS Desktop run-
+ time environment.
+
+ ACMS Desktop Server for OpenVMS
+
+ o  OpenVMS AXP Operating System V1.5-V6.1 (SPD 25.01.xx) or OpenVMS
+    VAX Operating System V5.5-V6.1 (SPD 41.87.xx)
+
+ o  ACMS Desktop V2.0 for OpenVMS
+
+ o  ACMS V3.1-V4.0, ACMS Remote Application Access, or ACMS Run-Time
+    (SPD 25.50.xx)
+
+ o  Network Support:
+
+    -  If using DECnet, DECnet-VAX V5.5-V6.1 (SPD 48.48.xx) or DECnet
+       for OpenVMS AXP V1.5-V6.1 (SPD 42.25.xx)
+
+    -  If using PATHWORKS or AppleTalk, reference the PATHWORKS SPD for
+       that client for specific software requirements (for example, for
+       Macintosh client, reference the PATHWORKS for Macintosh SPD)
+
+       *  AppleTalk is only supported in OpenVMS VAX V5.5 environments.
+
+    -  If using TCP/IP, DEC TCP/IP Services for OpenVMS V1.3-V2.0 (SPD
+       25.A4.xx) or DEC TCP/IP Services for OpenVMS AXP V3.0 (SPD 46.46.xx)
+
+                                 17
+
+ 
+
+    -  If using NetWare, an IPX stack must be installed on the ACMS Desk-
+       top server system; this is available as embedded software in sev-
+       eral software products from InterConnections[TM], Inc.
+
+       *  Netware is not supported in OpenVMS VAX V6.1 or OpenVMS AXP
+          environments.
+
+    -  If using dial-in (serial communication), all network components
+       are provided with ACMS Desktop
+
+    -  If using X.25, reference the PATHWORKS X.25 (DOS) V1.0 Software
+       Product Description (SPD 42.73.xx) for specific requirements
+
+ ACMS Desktop Server for OSF/1
+
+ o  DEC OSF/1 Operating System V1.3 (SPD 41.61.03)
+
+ o  ACMS Desktop V1.3 for OSF/1
+
+ o  ACMSxp V1.0 for OSF/1 AXP (SPD 50.66.00)
+
+ ACMS Desktop Client for Microsoft Windows and DOS
+
+ Operating System Support
+
+ o  Microsoft DOS V3.3, V5.0, V6.0
+
+ o  Microsoft Windows V3.0, V3.1
+
+ Network Support
+
+ o  If using DECnet, PATHWORKS for DOS and Windows V4.0-V5.0 (SPD 55.07.xx)
+
+ o  If using TCP/IP, PATHWORKS for DOS (TCP/IP) V2.0 (SPD 33.45.xx) or
+    Windows Sockets (1.1) compatible TCP/IP
+
+ o  If using NetWare, all network components are provided with ACMS Desk-
+    top in order to work with Novell's Netware DOS Client V2.15, V2.2,
+    V3.x, V4.0, or PATHWORKS V5.0 for DOS and Windows
+
+ o  If using dial-in (serial communication), all network components are
+    provided by ACMS Desktop
+
+                                 18
+
+ 
+
+ o  If using X.25 via PATHWORKS, reference the PATHWORKS X.25 (DOS) V1.0
+    Software Product Description (SPD 42.73.xx) for specific hardware
+    requirements
+
+ o  If using X.25 via serial communications, all components are pro-
+    vided with ACMS Desktop
+
+ ACMS Desktop Client for Windows NT
+
+ Operating System Support
+
+ o  Windows NT Operating System V3.1 for Alpha AXP or Intel
+
+ Network Support
+
+ o  If using TCP/IP, Windows NT Windows Sockets for TCP/IP
+
+ o  If using DECnet, PATHWORKS V4.1 for Windows NT (SPD 51.56.xx)
+
+ ACMS Desktop Client for Macintosh
+
+ Operating System Support
+
+ o  Macintosh Operating System V7.0-V7.1
+
+ Network Support
+
+ o  If using DECnet, PATHWORKS for Macintosh V1.1 (SPD 31.53.xx)
+
+    *  AppleTalk is only supported in OpenVMS VAX V5.5 environments.
+
+ o  If using AppleTalk reference the PATHWORKS SPD for that client for
+    specific software requirements
+
+ o  If using TCP/IP, MacTCP® Tool (available with PATHWORKS for Mac-
+    intosh V1.1 or MacX 1.1.7 from Apple® Computer, Inc.)
+
+ o  If using dial-in (serial communication), a serial communication tool
+    is needed (e.g. Serial Tool from Apple)
+
+                                 19
+
+ 
+
+ ACMS Desktop Client for SCO UNIX
+
+ Operating System Support
+
+ o  SCO UNIX System V/386, Release V3.2, Version 4 (SPD 32.52.xx) or
+    Open Desktop Release 1.1 (SPD 32.57.xx)
+
+ Network Support
+
+ o  If using TCP/IP with SCO UNIX, SCO TCP/IP V1.1 (SPD 32.56.xx)
+
+ o  If using DECnet, DECnet for SCO UNIX V1.2 (SPD 34.21.xx)
+
+ ACMS Desktop Client for OpenVMS
+
+ Operating System Support
+
+ o  OpenVMS VAX Operating System V5.5-V6.1 (SPD 25.01.xx) or OpenVMS
+    AXP Operating System V1.5-V6.1 (SPD 41.87.xx)
+
+ Network Support
+
+ o  DECnet-VAX V5.5-V6.1 (SPD 48.48.xx) or DECnet for OpenVMS AXP V1.5-
+    V6.1 (SPD 42.25.xx)
+
+ ACMS Desktop Client for OSF/1
+
+ Operating System Support
+
+ o  DEC OSF/1 Operating System V1.3 (SPD 41.61.03)
+
+ Network Support
+
+ o  If using TCP/IP, all components are provided by the DEC OSF/1 op-
+    erating system
+
+
+
+
+
+                                 20
+
+ 
+
+ OpenVMS Tailoring
+
+ The following OpenVMS classes are required for full functionality of
+ this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Programming Support
+
+ o  System Programming Support
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx).
+
+ OPTIONAL SOFTWARE
+
+ Certain versions of these products depend upon a specific version of
+ the platform operating system. For Digital layered products, refer to
+ the System Support Addendum of the product in question to determine
+ which version is required. For other products, contact the product man-
+ ufacturer.
+
+ ACMS Desktop Server for OpenVMS
+
+ o  DECtrace for VMS V1.2 (SPD 25.G1.xx)
+
+ o  For systems with ACMS, refer to the ACMS Software Product Descrip-
+    tion (SPD 25.50.xx) for complete information on interrelated lay-
+    ered software product version requirements. ACMS Desktop options
+    vary according to which ACMS option is installed on the desktop server
+    system.
+
+
+
+
+
+                                 21
+
+ 
+
+ ACMS Desktop Server for OSF/1
+
+ o  For systems with ACMSxp, refer to the ACMSxp Software Product De-
+    scription (SPD 50.66.00) for complete information on interrelated
+    layered software product version requirements.
+
+ ACMS Desktop Client for Microsoft Windows and DOS
+
+ o  A program module assembler to create the DECnet-DOS programming li-
+    braries and other libraries that create a client program. Assem-
+    blers are available from Microsoft.
+
+ o  C compiler compatible with Microsoft C V6.0, V7.0 or Microsoft Vi-
+    sual C V1.0
+
+ o  Microsoft COBOL V4.0 (Microsoft Corporation). MS®-COBOL is required
+    to modify and relink the command line sample application for DOS.
+
+ o  Microsoft Windows V3.0-V3.1 (Microsoft Corporation)
+
+ o  Microsoft Windows Software Development Kit V3.0-V3.1 (Microsoft Cor-
+    poration)
+
+ o  Visual Basic V1.0-V3.0 (Microsoft Corporation)
+
+ o  TFM V3.1.3
+
+ o  Smalltalk® (ParcPlace® Systems, Inc.)
+
+ o  JAM® V5.02 (JYACC)
+
+ o  Vermont Views® (Vermont Creative Software)
+
+ o  Dialog® V2.2 (Micro Focus, Ltd.)
+
+
+
+
+
+
+                                 22
+
+ 
+
+ ACMS Desktop Client for Macintosh
+
+ o  HyperCard V2.0v2, V2.1 (Apple Computer, Inc.)
+
+ o  Macintosh Programmer's Workstation (MPW) Development Environment
+    V3.2 (Apple Computer, Inc.)
+
+ o  Macintosh Programmer's Workstation C V3.1 (Apple Computer, Inc.)
+
+ o  4th Dimension® V2.3, V3.0 (ACI US Inc.)
+
+ o  Smalltalk (ParcPlace Systems, Inc.)
+
+ o  Open Interface[TM] V1.03 (Neuron Data, Inc.)
+
+ o  Think C V4.0-V4.1 (Symantec® Corporation)
+
+ ACMS Desktop Client for SCO UNIX
+
+ SCO UNIX
+
+ o  SCO TCP/IP Development System, Release 1.1
+
+ o  SCO UNIX System V/386 Development System, Release 3.2, Version 4
+    (SPD 32.52.xx)
+
+ o  DECnet for SCO UNIX Developer Kit (SPD 34.21.xx)
+
+ Open Desktop
+
+ o  Open Desktop Development System, Release 1.1
+
+ o  DECnet for SCO UNIX Developer Kit (SPD 34.21.xx)
+
+ ACMS Desktop Client for OpenVMS
+
+ VAX
+
+ o  DECforms V1.1-V1.4 (SPD 29.90.xx)
+
+ o  VAX C V2.0-V3.2 (SPD 25.38.xx)
+
+ o  CDD/Repository for VMS V5.1-V5.3 (SPD 25.53.xx)
+
+ o  DECset Release 11 for OpenVMS VAX Systems (SPD 27.07.xx)
+
+                                 23
+
+ 
+
+ o  VMS DECwindows Motif V1.1 (SPD 36.09.xx)
+
+ AXP
+
+ o  DECforms V1.4 (SPD 29.90.xx)
+
+ o  DEC C V1.2 for OpenVMS AXP Systems (SPD 42.26.xx)
+
+ o  CDD/Repository V5.3 for OpenVMS AXP Systems (SPD 45.91.xx)
+
+ o  DECset Release 11 for OpenVMS AXP Systems (SPD 42.29.xx)
+
+ o  DECwindows Motif V1.1 for OpenVMS AXP (SPD 42.19.xx)
+
+ ACMS Desktop Client for OSF/1
+
+ o  DEC C++ V1.3 for DEC OSF/1 (SPD 41.91.01)
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ o  9-track 1600 BPI Magtape
+
+ o  TK50 Streaming Tape
+
+ o  CD-ROM
+
+ The software for ACMS Desktop for OpenVMS is available as part of the
+ OpenVMS Consolidated Software Distribution on CD-ROM.
+
+ The documentation for ACMS Desktop for OpenVMS is available as part
+ of the OpenVMS Online Documentation Library on CD-ROM.
+
+
+
+                                 24
+
+ 
+
+ ORDERING INFORMATION
+ ___________________________________________________________________
+ License_Type_______________Part_Number_____________________________
+
+ ACMS Desktop Concurrent    QL-GZGAL-3B
+ Use
+
+ ACMS_Desktop_Personal_Use__QL-GZGAL-2B_____________________________
+
+ ___________________________________________________________________
+ Media and
+ Documentation_Format_______Part_Number_____________________________
+
+ OpenVMS       TK50         QA-GZGAA-H5
+
+               Magtape      QA-GZGAA-HM
+
+ OSF/1_________CD-ROM_______QA-GZGAC-H8_____________________________
+
+ ___________________________________________________________________
+ Documentation_only_________Part_Number_____________________________
+
+ Documentation for OpenVMS  QA-GZGAA-GZ
+
+ Documentation_for_OSF/1____QA-GZGAC-GZ_____________________________
+
+ ___________________________________________________________________
+ Service_Offering___________Part_Number_____________________________
+
+ ACMS Desktop SW Product    QT-GZG**-**
+ Services___________________________________________________________
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ The above information is valid at time of release. Please contact your
+ local Digital office for the most up-to-date information.
+
+
+
+                                 25
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support (LMF)
+
+ This layered product supports the OpenVMS and DEC OSF/1 License Man-
+ agement Facility.
+
+ License units for this product are allocated on a concurrent use and/or
+ personal use basis. Concurrent Use license allows one login to an ACMS
+ Desktop Server. Personal Use license allows one identified individ-
+ ual to do multiple logins to the same ACMS Desktop server.
+
+ For more information on the License Management Facility, refer to ei-
+ ther the OpenVMS Operating System Software Product Description (SPD
+ 25.01.xx), DEC OSF/1 Operating System Software Product Description (SPD
+ 41.61.xx), or the respective operating system documentation.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+
+
+
+
+                                 26
+
+ 
+
+ © 1994 Digital Equipment Corporation.
+ All rights reserved.
+
+ ®  4th Dimension is a registered trademark of ACI US Inc.
+
+ ®  Apple, AppleTalk, HyperCard, HyperTalk, Macintosh, and MacTCP
+    are registered trademarks of Apple Computer, Inc.
+
+ ®  Dialog is a registered trademark of Micro Focus, Ltd.
+
+ ®  Hayes is a registered trademark of Hayes Microcomputer Prod-
+    ucts, Inc.
+
+ ®  JAM is a registered trademark of JYACC.
+
+ ®  Microsoft, MS, and Visual Basic are registered trademarks of
+    Microsoft Corporation.
+
+ ®  Motif and OSF/1 are registered trademarks of Open Software
+    Foundation, Inc.
+
+ ®  NetWare is a registered trademark of Novell, Inc.
+
+ ®  UNIX is a registered trademark of UNIX Systems Laboratories,
+    Inc., a wholly owned subsidiary of Novell, Inc.
+
+ ®  Vermont Views is a registered trademark of Vermont Creative
+    Software.
+
+ [TM]Intel is a trademark of Intel Corporation.
+
+ [TM]InterConnections is a trademark of InterConnections, Inc.
+
+ [TM]MPW is a trademark of Apple Computer, Inc.
+
+ [TM]Open Desktop and SCO are trademarks of Santa Cruz Operations,
+    Inc.
+
+ [TM]Open Interface is a trademark of Neuron Data, Inc.
+
+ [TM]Windows and Windows NT are trademarks of Microsoft Corporation.
+
+ [TM]ACMS, ACMS Desktop, ACMSxp, AXP, CDD/Repository, CI, DEC,
+    DECforms, DECnet, DECnet-DOS, DECset, DECtrace, DECwindows,
+    Digital, MicroVAX, OpenVMS, PATHWORKS, TFM, TK, VAX, VAXft,
+    VAXserver, VAXstation, VAX C, VAX COBOL, VAX SQL, VMS,
+    VMScluster and the DIGITAL logo are trademarks of Digital
+    Equipment Corporation.
+
+                                 27

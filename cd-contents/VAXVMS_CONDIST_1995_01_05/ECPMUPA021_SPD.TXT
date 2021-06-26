@@ -1,0 +1,809 @@
+ 
+
+
+
+
+
+
+    Software    Software    Software
+    Product    Product    Product
+    Description    Description    Description
+
+    ___________________________________________________________________
+
+    PRODUCT NAME: POLYCENTER Capacity Planner,             SPD 36.04.04    PRODUCT NAME: POLYCENTER Capacity Planner,             SPD 36.04.04    PRODUCT NAME: POLYCENTER Capacity Planner,             SPD 36.04.04
+                  Version 2.1                  Version 2.1                  Version 2.1
+
+    OVERVIEW OF THE PRODUCT FAMILY    OVERVIEW OF THE PRODUCT FAMILY    OVERVIEW OF THE PRODUCT FAMILY
+
+    __________ ___________ ________    POLYCENTER Performance Solution                                    is a family of OpenVMS and U*IX lay-
+    ered products that reduces the time and effort required to manage and
+    monitor system performance, as well as plan for future resource re-
+    quirements. The POLYCENTER Performance Solution products can be used
+    with standalone OpenVMS, MIPS[TM] ULTRIX, DEC OSF/1® AXP, and clus-
+    tered systems.
+
+    The POLYCENTER Performance Solution products (formerly known as DECper-
+    formance Solution, or DECps) include:
+
+       __________ ________ _______       POLYCENTER Capacity Planner    o                              predicts OpenVMS system performance lev-
+       els for various workloads and configurations. It is described in
+       this SPD.
+
+       __________ ___________ ____ _________ ___ _______       POLYCENTER Performance Data Collector for OpenVMS    o                                                    gathers and man-
+       ages OpenVMS system data (see SPD 36.02.xx).
+
+       __________ ___________ ____ _________ ___ _____       POLYCENTER Performance Data Collector for UNIX®    o                                                  gathers and man-
+       ages MIPS ULTRIX, DEC OSF/1 AXP, and other U*IX system data (see
+       SPD 46.97.xx).
+
+       __________ ___________ _______ ___ _______       POLYCENTER Performance Advisor for OpenVMS    o                                             analyzes OpenVMS data
+       through the application of expert system technology. It identifies
+       specific performance problems, presents detailed supporting evi-
+       dence, and makes recommendations to improve system performance (see
+       SPD 36.03.xx).
+
+       __________ __________ __________ ___ _______       POLYCENTER Accounting Chargeback for OpenVMS    o                                               VAX generates a re-
+       port of charges based on OpenVMS system resource utilization and
+       user specified resource pricing (see SPD 36.60.xx).
+
+    DESCRIPTION    DESCRIPTION    DESCRIPTION
+
+                                                               May 1994                                                               May 1994                                                               May 1994                                  DIGITAL                                  DIGITAL                                  DIGITAL
+
+                                                            AE-PH6QD-TE                                                            AE-PH6QD-TE                                                            AE-PH6QD-TE
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    POLYCENTER Capacity Planner    POLYCENTER Capacity Planner    POLYCENTER Capacity Planner
+
+    The POLYCENTER Capacity Planner modeling component is used to predict
+    the performance of standalone OpenVMS VAX, OpenVMS AXP, and VMSclus-
+    ter systems, and to determine system performance levels for various
+    workloads and configurations. Performance calculations are based on
+    queuing theory and analytic models.
+
+    The modeling component includes a graphical modeling interface from
+    which "what-if" analyses can be performed. A baseline model is cre-
+    ated from information collected by the POLYCENTER Performance Data Col-
+    lectors. This baseline model becomes the starting point for assess-
+    ing the impact of changes to the configuration or the workloads. Users
+    can add, delete, or change any hardware component or workload, and ex-
+    amine the impact on performance by viewing various performance met-
+    rics, such as: utilization, response times, throughput, queue length,
+    and service time. Models can be saved for further evaluation. The "what-
+    if" analyses form the foundation of capacity plans.
+
+    The POLYCENTER Capacity Planner allows the system manager or planner
+    to define the system's total workload in terms of manageable units.
+    Workloads are expressed as classes that include groups of processes
+    (for both OpenVMS and U*IX with similar characteristics). These classes
+    are used in model generation. Workload classes can be defined accord-
+    ing to users, UICs, process name, account name, and process mode. Sub-
+    classes are a set of transactions under a class. These may be images
+    if the images function as transactions. Workloads are thus able to be
+    expressed as a class/subclass table for transaction performance statis-
+    tics. U*IX subclasses are not supported since a process runs one and
+    only one image (command).
+
+    The POLYCENTER Capacity Planner provides performance information for
+    each supported CPU, HSC, disk, channel, adapter, bridge, router, and
+    interconnect at both current and projected workloads or configurations.
+    This includes support for OpenVMS volume shadowing and disk striping
+    (but not above RAID-1 level).
+
+
+
+
+
+                                     2                                     2                                     2
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    The POLYCENTER Capacity Planner supports the following network pro-
+    tocols:
+
+    o  SCS
+
+    o  NSP/DECnet
+
+    o  OSI/DECnet
+
+    o  TCP/IP
+
+    o  UDP/IP
+
+    o  LAT
+
+    The network subsystem, as it pertains to system-based capacity plan-
+    ning, is the set of network components and protocols for which com-
+    munication of workload traverses selected network path(s) over all ca-
+    pacity planning end-node pairs. The modeling focus of the network sub-
+    system is to support end-to-end response time modeling, network de-
+    vice performance, and client/server capacity planning (extended LAN
+             ___             not    support,     WAN).
+
+    Client/server support is provided in that software servers may be de-
+    fined to serve one or more clients. Multiple levels of software servers
+    are allowed. POLYCENTER Capacity Planner will support capacity plan-
+    ning for environments that include applications whose client/server
+    components are implemented on multiple CPUs.
+
+    The performance statistics are provided in either summary or detailed
+    reports and include:
+
+    o  Resource utilization
+
+    o  Response time
+
+    o  Throughput
+
+    o  Queue length
+
+    o  Service time
+
+                                     3                                     3                                     3
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    POLYCENTER Capacity Planner provides prediction reporting that indi-
+    cates the workload size at which a component will saturate. The re-
+    port shows the system performance at incremental increases of work-
+    load up to the saturation point. The increment steps are 25 percent
+    of initial component utilization. After an increase to 100 percent,
+    only the saturation point is shown.
+
+    The saturation analysis identifies bottlenecks before they occur, al-
+    lowing the system manager to be proactive in eliminating bottlenecks
+    and providing a consistent level of system performance to users.
+
+    Features    Features    Features
+
+    POLYCENTER Capacity Planner provides the user with the capabilities
+    to plan effectively for future computer resource needs:
+
+    o  A graphical modeling interface provides an easy-to-use tool for per-
+       forming multiple "what-if" analyses.
+
+    o  Work performed by OpenVMS systems can be grouped into meaningful
+       categories.
+
+    POLYCENTER Capacity Planner has two portions: the Modeler/Characterizer
+    and the Data Integrator. The Data Integrator compresses performance
+    data collected from one or more nodes by Data Collectors. The Modeler/Characterizer
+    provides the following functions:
+
+    o  Performance modeling is supported for standalone systems with the
+       above operating systems and VMScluster systems.
+
+    o  "What-if" analysis provides performance characteristics of the sys-
+       tem before actual changes are implemented.
+
+    o  Built-in configuration rules assist in modeling and validating sup-
+       ported configurations.
+
+    o  Saturation analysis identifies the workload at which system com-
+       ponents will saturate and performance bottlenecks will occur.
+
+    o  Session journaling and recovery is supported.
+
+    o  CPU priority modeling is supported.
+
+                                     4                                     4                                     4
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    o  Extended LAN protocols and components are supported.
+
+    o  Client/server application environments are supported.
+
+    o  Context-sensitive Help is available.
+
+    Processors That Can Be Modeled    Processors That Can Be Modeled    Processors That Can Be Modeled
+
+    Any number of user-defined CPUs can be modeled.
+
+    ___________________________________________________________________
+    ___________________________________________________________________                              ___ __________                              VAX Processors
+
+      730   4200    6220   6350    6520    6650   8250    8700   9410
+      750   4300    6230   6360    6530    6660   8300    8800   9420
+      780   4400    6240   6410    6540    7610   8350    8810   9430
+      782   4500    6250   6420    6550    7620   8370    8820   9440
+      785   4500A   6260   6430    6560    7630   8500    8830  10610
+     4050   4600    6310   6440    6610    7640   8530    8840  10620
+     4090   4600A   6320   6450    6620    7650   8550    9110  10630
+     4100   4700A   6330   6460    6630    7660   8600    9210  10640
+     4100A  6210    6340   6510    6640    8200   8650    9310  10650
+                                                                10660
+    ___________________________________________________________________
+    ___________________________________________________________________                      _____ ________ _____ __________                      Fault Tolerant VAXft Processors
+
+     ft110  ft310   ft410  ft610   ft612   ft810 ft3000
+    ___________________________________________________________________
+    ___________________________________________________________________                                __________                                VAXstation
+
+    2000   3100    3130   3138    3140    3148   3150    3176   3200
+    3400   3500    3520   3540    4000VLC  4060  4090    8000
+    ___________________________________________________________________
+    ___________________________________________________________________                            ________ __________                            MicroVAX Processors
+
+     2000   3100   3100E  3110E   3120E    3130   3140    3180   3190
+     3300   3400    3500   3600    3800    3900  MV-II
+
+
+
+
+                                     5                                     5                                     5
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    ___________________________________________________________________
+    ___________________________________________________________________                  _____ _______ ___ _______ ___                  Alpha Systems for OpenVMS AXP
+
+    DEC    DEC     DEC    DEC     DEC     DEC    DEC     DEC
+    2000   2000    3000   3000    3000    3000   3000    3000
+    Model  Model   Model  Model   Model   Model  Model   Model
+    300    500     300    300L    300     300    400     500
+                                  LX      X
+    DEC    DEC     DEC    DEC     DEC     DEC    DEC     DEC
+    3000   3000    3000   4000    4000    4000   4000    7000
+    Model  Model   Model  Model   Model   Model  Model   Model
+    500X   600     800    610     620     710    720     610
+    DEC    DEC     DEC    DEC     DEC     DEC    DEC     DEC
+    7000   7000    7000   7000    7000    10000  10000   10000
+    Model  Model   Model  Model   Model   Model  Model   Model
+    620    630     640    650     660     610    620     630
+    DEC    DEC     DEC
+    10000  10000   10000
+    Model  Model   Model
+    ___________________________________________________________________    640    650     660
+
+    Disks That Can Be Modeled    Disks That Can Be Modeled    Disks That Can Be Modeled
+
+    Any number of user-defined disks can be modeled.
+
+    ___________________________________________________________________
+    ___________________________________________________________________                                ____ _____                                Disk Types
+
+    EF51    ESE58    RA81    RRD40S   RF31     RF72    RZ22     RZ28
+    EF52    RA60     RA82    RRD42    RF31F    RFH72   RZ23     RZ55
+    EF53    RA70     RA90    RRD50    RF31T    RF73    RZ23L    RZ56
+    ESE20   RA71     RA92    RD52     RF35     RF73F   RZ24     RZ57
+    ESE20EP RA72     RD31    RD53     RF35F    RM05    RZ24L    RZ58
+    ESE52   RA73     RD32    RD54     RF36     RP06    RZ25     RZ73
+    ESE56   RA80     RRD40   RF30     RF71     RP07    RZ26     RF74
+    ___________________________________________________________________    EZ51    EZ54     EZ58    RZ26B    RZ26L    RZ74
+
+    HSCs That Can Be Modeled    HSCs That Can Be Modeled    HSCs That Can Be Modeled
+
+
+
+                                     6                                     6                                     6
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    ___________________________________________________________________
+    ___________________________________________________________________                                 ___ _____                                 HSC Types
+
+    HSC40   HSC50    HSC60   HSC65    HSC70    HSC90   HSC95
+    ___________________________________________________________________    HSD05   HSJ30    HSJ40
+
+    Adapters That Can Be Modeled    Adapters That Can Be Modeled    Adapters That Can Be Modeled
+
+    ___________________________________________________________________
+    ___________________________________________________________________                               _______ _____                               Adapter Types
+
+    ci750   ci780    cibca-a cibca-b  cibci    cixcd   debna    debni
+    delqa   delqa-t  delua   demfa    demna    deqna   desqa    desva
+    deuna   kfmsa    kfmsa-b kfqsa    lance    sgec    tgec     shac
+    ___________________________________________________________________    deqra
+
+    Interconnects That Can Be Modeled    Interconnects That Can Be Modeled    Interconnects That Can Be Modeled
+
+    ___________________________________________________________________
+    ___________________________________________________________________                            ____________ _____                            Interconnect Types
+
+    CI     DSSI    FDDI   Token Ring      Point-Point    NI (Ethernet)
+    ___________________________________________________________________                                          Link
+
+    Bridges and Routers That Can Be Modeled    Bridges and Routers That Can Be Modeled    Bridges and Routers That Can Be Modeled
+
+    ___________________________________________________________________
+    ___________________________________________________________________                            _______ ___ _______                            Bridges and Routers
+
+    LAN Bridge 100   LAN Bridge 150    LAN Bridge 200
+    DECbridge 90     DECbridge 500     DECbridge 51x
+    DECbridge 52x    DECbridge 600     DECbridge 61x
+    DECbridge 62x    DECrouter 100     DECrouter 150
+    DECrouter 200    DECrouter 250     DECrouter 2000
+    ___________________________________________________________________    DECNIS 500       DECNIS 600
+
+
+
+
+
+
+                                     7                                     7                                     7
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    HARDWARE REQUIREMENTS    HARDWARE REQUIREMENTS    HARDWARE REQUIREMENTS
+
+    __________ __________    Processors Supported:
+
+    VAX:      VAXft Model 110,
+              VAXft Model 310,
+              VAXft Model 410,
+              VAXft Model 610,
+              VAXft Model 612,
+              VAXft Model 810,
+              VAXft Model 3000
+
+              VAX 4000 Model 90 ,
+              VAX 4000 Model 100,
+              VAX 4000 Model 200,
+              VAX 4000 Model 300,
+              VAX 4000 Model 400,
+              VAX 4000 Model 500,
+              VAX 4000 Model 600
+
+              VAX 6000 Model 200 Series,
+              VAX 6000 Model 300 Series,
+              VAX 6000 Model 400 Series,
+              VAX 6000 Model 500 Series,
+              VAX 6000 Model 600 Series
+
+              VAX 7000 Model 600 Series
+
+              VAX 8200, VAX 8250, VAX 8300,
+              VAX 8350, VAX 8500, VAX 8530,
+              VAX 8550, VAX 8600, VAX 8650,
+              VAX 8700, VAX 8800, VAX 8810,
+              VAX 8820, VAX 8830, VAX 8840
+
+
+
+
+
+
+
+
+                                     8                                     8                                     8
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+
+              VAX 9000 Model 110,
+              VAX 9000 Model 210,
+              VAX 9000 Model 300 Series,
+              VAX 9000 Model 400 Series
+
+              VAX 10000 Model 600 Series
+
+              VAX-11/750, VAX-11/780,
+              VAX-11/785
+
+    MicroVAX: MicroVAX II, MicroVAX 2000,
+              MicroVAX 3100 Model 10/10E,
+              MicroVAX 3100 Model 20/20E,
+              MicroVAX 3100 Model 30,
+              MicroVAX 3100 Model 40,
+              MicroVAX 3100 Model 80,
+              MicroVAX 3100 Model 90,
+              MicroVAX 3300, MicroVAX 3400,
+              MicroVAX 3500, MicroVAX 3600,
+              MicroVAX 3800, MicroVAX 3900
+
+    VAXstation:VAXstation II, VAXstation 2000,
+              VAXstation 3100 Model 30,
+              VAXstation 3100 Model 38,
+              VAXstation 3100 Model 40,
+              VAXstation 3100 Model 48,
+              VAXstation 3100 Model 76,
+              VAXstation 3200, VAXstation 3500,
+              VAXstation 3520, VAXstation 3540
+
+              VAXstation 4000 Model 60,
+              VAXstation 4000 Model 90,
+
+
+
+
+
+
+
+
+                                     9                                     9                                     9
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+
+              VAXstation 4000 VLC
+
+    VAXserver: VAXserver 3100 Model 10/10E,
+              VAXserver 3100 Model 20/20E,
+              VAXserver 3300, VAXserver 3400, VAXserver 3500,
+              VAXserver 3600, VAXserver 3602, VAXserver 3800,
+              VAXserver 3900
+
+              VAXserver 4000 Model 400-VLC,
+              VAXserver 4000 Model 200,
+              VAXserver 4000 Model 300,
+              VAXserver 4000 Model 500
+              VAXserver 4000 Model 600
+
+              VAXserver 6000 Model 200 Series,
+
+    Alpha     DEC 3000 Model 300 AXP Workstation,
+    AXP:
+              DEC 3000 Model 300L AXP Workstation,
+              DEC 3000 Model 300 AXP Server,
+              DEC 3000 Model 400 AXP Workstation,
+              DEC 3000 Model 400 AXP Server,
+              DEC 3000 Model 500 AXP Workstation,
+              DEC 3000 Model 500X AXP Workstation,
+              DEC 3000 Model 500 AXP Server,
+              DEC 3000 Model 600 AXP Workstation,
+              DEC 3000 Model 600 AXP Server,
+              DEC 3000 Model 800 AXP Workstation,
+              DEC 3000 Model 800 AXP Server,
+              DEC 4000 Model 610 AXP System,
+              DEC 4000 Model 620 AXP System,
+              DEC 7000 Model 610 AXP System,
+              DEC 7000 Model 620 AXP System,
+              DEC 7000 Model 630 AXP System,
+              DEC 7000 Model 640 AXP System,
+              DEC 7000 Model 650 AXP System,
+
+
+
+
+                                    10                                    10                                    10
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+
+              DEC 7000 Model 660 AXP System,
+              DEC 10000 Model 610 AXP System,
+              DEC 10000 Model 620 AXP System,
+              DEC 10000 Model 630 AXP System,
+              DEC 10000 Model 640 AXP System,
+              DEC 10000 Model 650 AXP System,
+              DEC 10000 Model 660 AXP System
+
+    __________ ___ _________    Processors Not Supported
+
+    MicroVAX I, VAXstation I, VAX-11/725, VAX-11/730, VAX-11/782, VAXs-
+    tation 8000
+
+    Disk Space Requirements (Block Cluster Size = 1):    Disk Space Requirements (Block Cluster Size = 1):    Disk Space Requirements (Block Cluster Size = 1):
+
+    ____ _____ ____________ __ _______ ____    Disk Space Requirements on OpenVMS VAX:
+
+    Disk space required   30,000 blocks
+    for installation:     (15.0 Mbytes)
+    Disk space required   14,000 blocks
+    for use               (7.0 Mbytes)
+    (permanent):
+
+    ____ _____ ____________ __ _______ ____    Disk Space Requirements on OpenVMS AXP:
+
+    Disk space required for   48,000 blocks
+    installation:             (24.0 Mbytes)
+
+    Disk space required for   22,000 blocks
+    use (permanent):          (11.0 Mbytes)
+
+    These counts refer to the disk space required on the system disk where
+    appropriate. The sizes are approximate; actual sizes may vary depend-
+    ing on the user's system environment, configuration, and software op-
+    tions.
+
+
+
+
+
+                                    11                                    11                                    11
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    For installation and permanent disk requirements for the performance
+    data collectors, refer to SPD 36.02.xx for POLYCENTER Performance Data
+    Collector for OpenVMS and to SPD 46.97.xx for POLYCENTER Performance
+    Data Collector for UNIX.
+
+    For more information on the recommended system size for use of POLY-
+    CENTER Capacity Planner, contact your local Digital office.
+
+    CLUSTER ENVIRONMENT    CLUSTER ENVIRONMENT    CLUSTER ENVIRONMENT
+
+    This layered product is fully supported when installed on any valid
+    and licensed VAXcluster* configuration, VMScluster* configuration and
+    standalone OpenVMS VAX and OpenVMS AXP systems without restrictions.
+        ________ ____________        HARDWARE REQUIREMENTS    The                       sections of this product's Software Prod-
+    uct Description detail any special hardware required by this product.
+
+    *  V5.x VAXcluster configurations are fully described in the VAXclus-
+       ter Software Product Description (SPD 29.78.xx) and include CI, Eth-
+       ernet, and Mixed Interconnect configurations. VMScluster Software
+       for OpenVMS AXP configurations are fully described in the VMSclus-
+       ter Software Product Description (SPD 42.18.xx).
+
+    SOFTWARE REQUIREMENTS    SOFTWARE REQUIREMENTS    SOFTWARE REQUIREMENTS
+
+    o  OpenVMS VAX Operating System V5.0 to V5.5-2 and V6.0 to V6.1
+
+    o  OpenVMS AXP V6.1
+
+    The POLYCENTER Performance Data Collector for OpenVMS provides the data
+    required by the Capacity Planner for OpenVMS systems. This data is ac-
+    cessible by the Capacity Planner within a VMScluster, LAN, or WAN.
+
+    DECwindows Motif® V1.1.3 is required for graphical user interface sys-
+    tem use.
+
+    _______ _________    OpenVMS Tailoring
+
+    For OpenVMS systems, the following OpenVMS classes are required for
+    full functionality of this layered product:
+
+    o  OpenVMS Required Saveset
+
+                                    12                                    12                                    12
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    o  Programming Support
+
+    o  System Programming Support
+
+    o  Utilities
+
+    o  Network Support
+
+    For more information on OpenVMS classes and tailoring, refer to the
+    OpenVMS VAX Operating System Software Product Descriptions (SPD 25.01.xx
+    for VAX, 41.87.xx for AXP).
+
+    OPTIONAL SOFTWARE    OPTIONAL SOFTWARE    OPTIONAL SOFTWARE
+
+    o  POLYCENTER Performance Data Collector for OpenVMS, Version 2.1 pro-
+       vides the data required by the POLYCENTER Capacity Planner V2.1 for
+       VAX OpenVMS and OpenVMS AXP systems (SPD 36.02.xx).
+
+    o  VMS DECwindows Motif V1.1.3 is required for POLYCENTER Capacity Plan-
+       ner V2.0 on VAX OpenVMS (SPD 36.09.xx).
+
+    o  DECwindows Motif Version V1.1.3 for OpenVMS AXP is required for POLY-
+       CENTER Capacity Planner V2.1 on OpenVMS AXP (SPD 42.19.xx).
+
+    GROWTH CONSIDERATIONS    GROWTH CONSIDERATIONS    GROWTH CONSIDERATIONS
+
+    The minimum hardware/software requirements for any future version of
+    this product may be different from the requirements for the current
+    version.
+
+    DISTRIBUTION MEDIA    DISTRIBUTION MEDIA    DISTRIBUTION MEDIA
+
+    9-track 1600 BPI Magtape and TK50 Streaming Tape on OpenVMS VAX, and
+    CD-ROM only for OpenVMS AXP.
+
+    This product is also available as part of the OpenVMS VAX and Open-
+    VMS AXP Consolidated Software Distributions on CD-ROM.
+
+
+
+
+                                    13                                    13                                    13
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    ORDERING INFORMATION    ORDERING INFORMATION    ORDERING INFORMATION
+
+    ________ _________    Software Licenses:
+
+    QL-GX3A9-AA (OpenVMS VAX)
+    QL-23MA9-AA (OpenVMS AXP)
+
+    ________ ______    Software Media:
+
+    QA-GX3AA-H* (OpenVMS VAX)
+    QA-23MAA-H8 (OpenVMS AXP)
+
+    ________ ______________    Software Documentation:
+
+    QA-GX3AA-GZ (OpenVMS VAX)
+    QA-23MAA-GZ (OpenVMS AXP)
+
+    ________ _______ _________    Software Product Services:
+
+    QT-GX3A*-** (OpenVMS VAX)
+    QT-23MA*-** (OpenVMS AXP)
+
+    *  Denotes variant fields. For additional information on available li-
+       censes, services, and media, refer to the appropriate price book.
+
+    The above information is valid at time of release. Please contact your
+    local Digital office for the most up-to-date information.
+
+    SOFTWARE LICENSING    SOFTWARE LICENSING    SOFTWARE LICENSING
+
+    The right to use POLYCENTER Capacity Planner is included in the li-
+    cense for previous versions of this software product, formerly called
+    DECperformance Solution Capacity Planner (SPD 36.04.xx), and in the
+    license for VAX Performance Advisor (SPD 27.71.xx). This applies to
+    OpenVMS VAX installations only as POLYCENTER Capacity Planner V1.1 and
+    the VAX Performance Advisor operate solely on that platform.
+
+    For the convenience of Capacity Planner V1.1 customers, Digital has
+    also continued support for the legacy character-cell interface on the
+    OpenVMS VAX platform. The customer can choose to install the graph-
+    ical or character-cell UI or both during installation.
+
+                                    14                                    14                                    14
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+    This software is furnished only under a license. For more information
+    about Digital's licensing terms and policies, contact your local Dig-
+    ital office.
+
+    _______ __________ ________ _______    License Management Facility Support
+
+    This layered product supports the License Management Facilities for
+    OpenVMS.
+
+    License units for this product are allocated on an Unlimited System
+    Use basis.
+
+    For more information on the License Management Facility, refer to the
+    OpenVMS Operating System Software Product Description (SPD 25.01.xx
+    and for AXP SPD 41.87.xx) or the OpenVMS Operating System documenta-
+    tion.
+
+    SOFTWARE PRODUCT SERVICES    SOFTWARE PRODUCT SERVICES    SOFTWARE PRODUCT SERVICES
+
+    A variety of service options are available from Digital. For more in-
+    formation, contact your local Digital office.
+
+    SOFTWARE WARRANTY    SOFTWARE WARRANTY    SOFTWARE WARRANTY
+
+    Warranty for this software product is provided by Digital with the pur-
+    chase of a license for the product as defined in the Software Warranty
+    Addendum of this SPD.
+
+    ®  Motif and OSF/1 are registered trademarks of the Open Software
+       Foundation, Inc.
+
+    ®  UNIX is a registered trademark of Unix System Laboratories,
+       Inc., a wholly-owned subsidiary of Novell, Inc.
+
+    ®  MIPS is a trademark of MIPS Computer Systems Inc.
+
+
+
+
+
+
+                                    15                                    15                                    15
+
+ 
+
+
+
+    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04    POLYCENTER Capacity Planner,                          SPD 36.04.04
+    Version 2.1    Version 2.1    Version 2.1
+
+
+    [TM]The DIGITAL logo, AXP, DATATRIEVE, DEC, DEC Ada, DEC Fortran,
+       DECperformance, DECwindows, Digital, OpenVMS, POLYCENTER,
+       ReGIS, VAX, VAX Ada, VAX BASIC, VAX FORTRAN, VAX LISP, VAX
+       MACRO, VAX Pascal, and VAX Performance Advisor are trademarks
+       of Digital Equipment Corporation.
+
+    ©1994 Digital Equipment Corporation. All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    16                                    16                                    16
