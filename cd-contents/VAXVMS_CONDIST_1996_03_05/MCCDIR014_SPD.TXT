@@ -1,0 +1,946 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ___________________________________________________________________
+
+          PRODUCT NAME:  POLYCENTER Framework, Version 1.4       SPD 32.46.05
+                         (Formerly DECmcc Director)
+
+          INTRODUCTION
+
+          The POLYCENTER Framework is an entry-level POLYCENTER Network Manage-
+          ment Family of Products management system for Digital Equipment Cor-
+          poration's ADVANTAGE-NETWORKS[TM] (DECnet Phase IV, DECnet/OSI, and
+          TCP/IP) environments. The Framework is an extensible platform on which
+          other POLYCENTER products, third-party products, or user-developed
+          management modules can be added.
+
+          The POLYCENTER Framework includes an integrated command set, an
+          object-oriented Management Information Repository, and graphic and
+          command line user interfaces. It enables network operators/managers to
+          perform basic monitoring and control tasks on network or system
+          managed objects that support DECnet Phase IV NICE, DECnet/OSI CMIP,
+          SNMP, or IEEE 802.2/Ethernet/MOP management protocols.
+
+          Available on OpenVMS VAX and RISC ULTRIX platforms, the POLYCENTER
+          Framework software is one in a family of POLYCENTER products based
+          on Digital's Enterprise Management Architecture (EMA). For an
+          overview EMA and POLYCENTER Framework refer to the POLYCENTER Network
+          Management Services SPD 37.20.xx (also known as DECmcc Network
+          Management Services).
+
+
+
+
+
+
+
+
+
+                                        DIGITAL                  January 1995
+
+                                                                  AE-PC7JF-TE
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          DESCRIPTION
+
+          The POLYCENTER Framework software provides an entry-level set of mon-
+          itor and control functions for multi-protocol LAN, Extended LAN, and
+          WAN networks. The POLYCENTER Framework is a competitive SNMP engine
+          which provides a framework upon which developers can build management
+          modules. The product allows the user to layer open, standards-based
+          applications upon it. The POLYCENTER Framework offers a Motif Graph-
+          ical User Interface (GUI) which is the standard, open user interface
+          of choice.
+
+          Consistent with the EMA Director Model, of which it is an implemen-
+          tation, the POLYCENTER Framework consists of four major elements that
+          comprise an extensible management system: Management Modules; an Ex-
+          ecutive; an open Applications Program Interface (API); and a Manage-
+          ment Information Repository (MIR).
+
+          o  Management Modules provide services to users and one another. There
+             are three types of Management Modules:
+
+             -  Access Modules (AMs) provide protocol support for, and manage-
+                ment information about, different classes of managed objects.
+
+             -  Function Modules (FMs) provide services such as object regis-
+                tration, statistics generation, fault detection, and notifica-
+                tion to users and to one another.
+
+             -  Presentation Modules (PMs) provide a consistent user interface
+                for the direct manipulation of managed objects (through AMs) and
+                user access to management operations (through FMs).
+
+          o  The Executive provides system services that enable Management Mod-
+             ules to be installed and used independently or in combination.
+
+          o  The Applications Programming Interface (API) defines how Manage-
+             ment Modules invoke each other's services. The POLYCENTER Frame-
+             work API is open and documented to support Digital, third party,
+             or user-developed modules.
+
+          o  The Management Information Repository (MIR) provides a means to
+             structure and store management information.
+
+                                           2
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+           (Formerly DECmcc Director)
+
+          POLYCENTER Framework Access Modules (AMs)
+
+          POLYCENTER Framework AMs provide access to network and system objects
+          in Digital's ADVANTAGE-NETWORKS and other mixed, multivendor network
+          environments that use the following management protocols: DECnet NICE,
+          DECnet/OSI CMIP, SNMP and IEEE 802.2/Ethernet/MOP.
+
+          o  The DECnet Phase IV AM enables users to manage DECnet Phase IV ob-
+             jects such as nodes, circuits, lines, and adjacencies. With the 
+             DECnet Phase IV AM, users can modify DECnet parameters, set charac-
+             teristics, collect DECnet events, and poll for management data 
+             such as counters or status.
+
+          o  The DECnet/OSI CMIP AM provides management access to DECnet devices
+             that use Digital's implementation of the standard Common Management
+             Information Protocol (CMIP). This version of CMIP, implemented on
+             DECnet/OSI devices, provides management operations and data gath-
+             ering functions for DECnet/OSI networks, including the ability to 
+             sink DECnet events to the POLYCENTER Framework.
+
+          o  The TCP/IP SNMP AM includes support for the following Internet Ad-
+             visory Board (IAB) Simple Network Management Protocol (SNMP) RFCs:
+             1155, 1156, 1157, 1158, 1212, and 1213. This includes full MIB II
+             support in addition to support for on-site enrollment of vendor-
+             specific Enterprise MIBs including:
+
+             -  A MIB translation utility that automatically checks the syntax
+                of the ASN.1 Concise MIB definitions (providing error messages
+                to help identify syntax problems), and translates the data for
+                loading the information into the POLYCENTER Framework Manage-
+                ment Information Repository (MIR).
+
+                -  An event-logging sink for collecting SNMP generic traps (un-
+                   solicited TCP/IP event messages) including: coldStart, warm-
+                   Start, linkDown, linkUp, egpNeighborLoss, authentification-
+                   Failure, and enterpriseSpecific.
+
+                -  Ability to perform GET and SET operations on devices 
+                   supported by SNMP agents.
+
+
+                                           3
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+                -  ICMP ECHO_REQUEST (ping) support for verifying the reacha-
+                   bility of an SNMP managed object at the IP level.
+
+                Note: DEC TCP/IP Services for OpenVMS (UCX) is required for us-
+                ing the TCP/IP SNMP AM on OpenVMS systems.
+
+          o  The IEEE 802.3/Ethernet Station AM enables users to manage at the
+             network interface level any 802.3/Ethernet LAN device that supports
+             MOP REQID, MOP SYSID, MOP Counters, Ethernet V2 Loopback, 
+             IEEE 802.2 XID, or IEEE 802.2 Test.
+
+          o  Circuit AM works as a client of management protocol modules to pro-
+             vide management of circuits connecting endpoints compliant with the
+             Network Management Forum (NMF) definitions. Compliant endpoints in-
+             clude DECnet Phase IV and DECnet OSI nodes and TCP/IP hosts. Ty-
+             ing together circuit, line, link, and other endpoint data, this AM
+             can gather status data and store reference information about sim-
+             ple, point-to-point circuits or complex multi-channel circuits.
+
+          o  The Script AM is a generic access module that executes a script (or
+             command procedure) and propagates the output data back into POLY-
+             CENTER Framework as individual attributes. Once integrated, these
+             attributes can take advantage of the alarming, notification, and
+             recording facilities of POLYCENTER Framework.
+
+          o  The Script AM offers the following advantages:
+
+             -  Allows integration of data into POLYCENTER Framework as 
+                attributes whether from a Structured Query Language (SQL) 
+                command, a system comman, or running a script on a remote 
+                system.
+
+             -  Allows integration of data from an executable for which source
+                code is not available.
+
+
+
+
+
+
+
+
+                                           4
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          POLYCENTER Framework Function Modules (FMs)
+
+          The POLYCENTER Framework provides FMs for registering and organizing
+          managed objects regardless of the management protocol used or object
+          type. This includes support for devices accessible through the Frame-
+          work AMs, other Digital-developed AMs, or AMs developed and supported
+          by third parties and users.
+
+          o  The Registration FM is a generic FM that enables users to enter and
+             manage data identifying each managed object in a network environ-
+             ment. Such information includes object instance data such as net-
+             work names and addresses, and reference information such as device
+             location, software revision levels, and contact names.
+
+          With the Registration FM, users have the option of selecting a local
+          system-level repository or setting up a network-wide,
+          globally-available naming service using Digital's Distributed Name
+          Service (DECdns). With DECdns, users and applications can assign names
+          to resources (such as nodes, bridges, files, domain names, etc.) and
+          then use those resources without having to keep track of physical
+          location or network address. The DECdns option also enables multiple
+          POLYCENTER Frameworks to share the same view of managed objects.
+
+          o  The Domain FM is a generic FM that enables users to assign managed
+             objects into groups called domains. Domains are subsets of the man-
+             aged object configuration that provide user-defined groups that can
+             be based on equipment type (all DECnet nodes, all TCP/IP hosts, all
+             LAN Bridges, etc.), geography (all objects within a LAN, building,
+             campus, or subnet), personnel levels, or any other user-defined
+             object group. Domains can contain or refer to other domains and can
+             be hierarchical or overlapping. Individual managed objects can be
+             contained within multiple domains.
+
+
+
+
+
+
+
+
+
+                                           5
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          POLYCENTER Framework Presentation Modules (PMs)
+
+          The POLYCENTER Framework includes two PMs. The Motif Graphical User
+          Interface/Iconic Map PM provides a graphic interface with pull-down
+          and pop-up menus and monitor windows that consistently present all
+          managed objects and operations to the user. Consistent command
+          syntax is provided by the Forms and Command Line PM.
+
+          o  Capabilities specific to the Motif Graphical User Interface 
+             presentation style include:
+
+             -  Map windows that display the contents of a managed environment
+                (for example, a domain) using icons to represent managed objects
+                and their subordinate or child objects. Users can select icons
+                representing managed objects and initiate management operations
+                from a map window. Several map windows can be displayed at one
+                time, each displaying different views of domains of a managed
+                environment.
+
+             -  A Navigation box and ViewPort window that enable users to view
+                an entire network configuration map at one time. With the View-
+                Port feature, users can navigate to and select a particular por-
+                tion of the total network environment to display in detail in
+                the Map window.
+
+             -  Management windows that enable users to select, perform, and 
+                view the results of management operations. Like map windows, 
+                several different management windows can be displayed 
+                simultaneously.
+
+             -  Graph windows that enable users to select and display real-time
+                or historical numeric attributes, such as counters, graphs or
+                histograms.
+
+             -  A Toolbox window and other customization features that provide
+                users with the ability to create, modify, or delete map icons,
+                connect lines, text, or other items in a map window. Users can
+                create map icons, add geographic maps or other backdrops, and
+                add customized icons to the Toolbox for retrieval and re-use.
+
+
+
+                                           6
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          o  Forms and Command Line PM provides character cell access to POLY-
+             CENTER Framework function and access capabilities. The interface
+             supports two modes: Command Line Mode and Forms Mode.
+
+             -  The Command Line mode enables users to create names or mnemon-
+                ics and use special symbols to reduce data entry and eliminate
+                input errors. It supports command line recall and editing, ab-
+                breviation, online help, symbol substitution, use of control key
+                sequences, line continuation, and the typeahead function.
+
+          Command Line Mode also supports the use of scripts to automate fre-
+          quently used POLYCENTER Framework command sequences. Users can set up
+          initialization files through the Command Line Mode for establishing
+          defaults and executing startup directives. In addition, users can log
+          any command to an output file for storage and review.
+
+             -  The Forms mode provides the basic features of the Command Line
+                mode in addition to a scroll feature that enables users to save
+                up to 500 lines of output from management directives, scroll 
+                through the saved output, and create new directives based on 
+                previous input. The Forms Mode also allows printing and 
+                logging of entries made to the output region.
+
+          Both the Forms Mode and the Command Line Mode, as well as the Iconic
+          Map interface, provide on-line, context-sensitive help.
+
+          POLYCENTER Framework Extensibility
+
+          In addition to providing basic monitoring and control functions as a
+          standalone product, the POLYCENTER Framework software is an extensi-
+          ble management platform to which other POLYCENTER software modules,
+          optional packages, third party, or user-developed Management Modules
+          can be added.
+
+          The POLYCENTER Framework software includes several utilities that en-
+          able on-site enrollment of POLYCENTER Option Packages and Management
+          Modules. Documentation required for third party module enrollment must
+          be supplied by the module developer.
+
+
+
+                                           7
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          Optional packages include generic functional capabilities such as
+          Alarming and Notification, and object specific functions and access
+          modules that support device-specific management protocols.
+
+          Third parties and users can develop software modules for POLYCENTER
+          Network Management Family of Products to provide access to and man-
+          agement functions for any manageable object. Software and documenta-
+          tion for the development of integrated POLYCENTER modules are avail-
+          able as part of the POLYCENTER Framework Developer's Toolkit. For more
+          information about the Developer's Toolkit, refer to SPD 32.49.xx
+
+          The POLYCENTER Framework management access and functions are also the
+          basis for other POLYCENTER Network Management Family of products such
+          as the POLYCENTER Network Manager 200 (formerly called DECmcc BMS) and
+          the POLYCENTER Network Manager 400 (formerly called DECmcc EMS).
+          Please refer to the section Optional Software. Also refer to the
+          POLYCENTER Network Management Services SPD, or the specific SPD for
+          the appropriate POLYCENTER Network Management Family product.
+
+          HARDWARE REQUIREMENTS
+
+          Processors Supported
+
+          OpenVMS-based Processors:
+          
+          VAX:        VAXft Model 410,
+                      VAXft Model 610,
+                      VAXft Model 612
+
+                      VAX 4000 Model 300,
+                      VAX 4000 Model 400,
+                      VAX 4000 Model 500,
+                      VAX 4000 Model 600
+                      VAX 4000 Model 700
+
+                      VAX 6000 Model 400 Series,
+
+
+
+
+                                           8
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+
+                      VAX 6000 Model 500 Series,
+                      VAX 6000 Model 600 Series
+
+                      VAX 7000 Model 600 Series
+
+                      VAX 8200, VAX 8250, VAX 8600,
+                      VAX 8650, VAX 8700, VAX 8800,
+                      VAX 8810, VAX 8820, VAX 8830,
+                      VAX 8840
+
+                      VAX 9000 Model 110,
+                      VAX 9000 Model 210,
+                      VAX 9000 Model 300 Series,
+                      VAX 9000 Model 400 Series
+
+
+          
+          MicroVAX:   MicroVAX 3300, MicroVAX 3400,
+                      MicroVAX 3500, MicroVAX 3600,
+                      MicroVAX 3800, MicroVAX 3900
+
+          
+          VAXstation: VAXstation 3200, VAXstation 3500,
+                      VAXstation 3520, VAXstation 3540
+
+                      VAXstation 4000 Model 60,
+                      VAXstation 4000 Model 90,
+                      VAXstation 4000 Model 90A
+
+          
+          VAXserver:  VAXserver 3400, VAXserver 3500, VAXserver 3600,
+                      VAXserver 3602, VAXserver 3800, VAXserver 3900
+
+                      VAXserver 4000 Model 300,
+
+
+
+                                           9
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+
+                      VAXserver 4000 Model 500
+                      VAXserver 4000 Model 600
+                      VAXserver 4000 Model 700
+
+                      VAXserver 6000 Model 410,
+                      VAXserver 6000 Model 420,
+                      VAXserver 6000 Model 510,
+                      VAXserver 6000 Model 520,
+                      VAXserver 6000 Model 610,
+                      VAXserver 6000 Model 620,
+                      VAXserver 6000 Model 630
+
+          ULTRIX-based Processors: RISC:
+          
+          DECstation: DECstation 5000 Model 120/125/133/150 CX,
+                      DECstation 5000 Model 120/125/133/150 HX,
+                      DECstation 5000 Model 120/125/133/150 MX,
+                      DECstation 5000 Model 120/125/133/150 PX,
+                      DECstation 5000 Model 120/125/133/150 TX,
+                      DECstation 5000 Model 120/125/133/150 PXG,
+                      DECstation 5000 Model 120/125/133/150 PXG+,
+                      DECstation 5000 Model 120/125/133/150 PXG Turbo,
+                      DECstation 5000 Model 120/125/133/150 PXG Turbo+
+
+                      DECstation 5000 Model 200 CX,
+                      DECstation 5000 Model 200 HX,
+                      DECstation 5000 Model 200 MX,
+                      DECstation 5000 Model 200 PX,
+                      DECstation 5000 Model 200 TX,
+                      DECstation 5000 Model 200 PXG,
+                      DECstation 5000 Model 200 PXG+,
+                      DECstation 5000 Model 200 PXG Turbo,
+                      DECstation 5000 Model 200 PXG Turbo+
+
+                      DECstation 5000 Model 240/260 HX,
+
+
+
+
+                                           10
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+
+                      DECstation 5000 Model 240/260 MX,
+                      DECstation 5000 Model 240/260 TX,
+                      DECstation 5000 Model 240/260 PXG+,
+                      DECstation 5000 Model 240/260 PXG Turbo+
+
+          
+          DECsystem:  DECsystem 5000 Model 200,
+                      DECsystem 5000 Model 240,
+                      DECsystem 5100, DECsystem 5400,
+                      DECsystem 5500, DECsystem 5810,
+                      DECsystem 5900
+
+          Processors Not Supported
+
+          MicroVAX I, MicroVAX II, MicroVAX 2000
+
+          MicroVAX 3100 Model 10/10E,
+          MicroVAX 3100 Model 20/20E
+          MicroVAX 3100 Model 30
+          MicroVAX 3100 Model 40
+          MicroVAX 3100 Model 80
+          MicroVAX 3100 Model 90
+
+          VAXstation I, VAXstation II, VAXstation 2000
+
+          VAXstation 3100 Model 30,
+          VAXstation 3100 Model 38,
+          VAXstation 3100 Model 40,
+          VAXstation 3100 Model 48,
+          VAXstation 3100 Model 76
+
+          VAX-11/725, VAX-11/730, VAX-11/750, VAX-11/780, VAX-11/782, VAX-11/785
+
+          VAX 4000 Model 60, VAX 4000 Model 90,
+          VAX 4000 Model 100, VAX 4000 Model 200,
+          VAX 4000 VLC
+
+          VAX 6000
+          Model 200 Series, VAX 6000 Model 300 Series
+
+                                           11
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          VAX 8300, VAX 8350, VAX 8500, VAX 8530, VAX 8550,
+
+          VAX 10000 Model 600 Series
+
+          VAXstation 8000
+
+          VAXft Model 110, VAXft Model 310
+
+          VAXserver 6000 Model 210,
+          VAXserver 6000 Model 220,
+          VAXserver 6000 310,
+          VAXserver 6000 Model 320
+
+          VAXserver 3100, VAXserver 3300, VAXserver 4000 Model 200
+
+          Personal DECstation 5000 Model 20/25 MX,
+          Personal DECstation 5000 Model 20/25 HX,
+          Personal DECstation 5000 Model 20/25 TX,
+          Personal DECstation 5000 Model 20/25 PXG+,
+          Personal DECstation 5000 Model 20/25 PXG Turbo +,
+
+          DECsystem 3100, DECsystem Model 25, DECsystem 2100, DECsystem 5820,
+          DECsystem 5830, DECsystem 5840. DECstation 3100, DECstation Model 3100
+          series.
+
+          MINIMUM RECOMMENDED CONFIGURATION *
+
+          For OpenVMS:
+          
+          Processor Capac-    6 SPECmark
+          ity:
+          Memory Required:    32 MB
+          Disk:               RZ25
+
+          For RISC/ULTRIX:
+
+
+
+
+
+                                           12
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          
+          Processor Capac-    16 SPECmark
+          ity:
+          Memory Required:    48 MB
+          Disk:               RZ56 Disk
+
+          *  Specific network environments may require larger configurations.
+
+          Disk Space Requirements (Block Cluster Size = 1):
+
+          For OpenVMS:
+          
+          Disk space          77,000 blocks on the system disk
+          required for
+          installation and
+          use:
+                              77,000 blocks on the mcc_common disk
+                              154,000 blocks total
+
+          For RISC/ULTRIX:
+          
+          Disk space          89,000 Kbytes
+          required for
+          installation and
+          use:
+
+          The sizes are approximate; actual sizes may vary depending on the
+          user's system environment, configuration, and software options.
+
+          OPTIONAL HARDWARE
+
+          VT1300 and VT2000 Color Terminals are supported.
+
+
+
+
+
+
+                                           13
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          CLUSTER ENVIRONMENT
+
+          This layered product is fully supported when installed on any valid
+          and licensed VAXcluster* configuration without restrictions. The HARD-
+          WARE REQUIREMENTS section details any special hardware required by
+          this product.
+
+          *  V5.x VAXcluster configurations are fully described in the VAXclus-
+             ter Software Product Description (29.78.xx) and include CI, Eth-
+             ernet, and Mixed Interconnect configurations.
+
+          IMPORTANT INTEROPERABILITY INFORMATION FOR OPENVMS USERS ONLY
+
+          Interoperability problems may occur when more than one product con-
+          taining DECthreads is installed on a system. This occurs because some
+          products overwrite the system version of DECthreads. If a product with
+          a different version of DECthreads is installed after POLYCENTER Frame-
+          work, problems may occur.
+
+          POLYCENTER Framework V1.4 is linked with DECthreads V1.0-422. Later
+          versions of DECthreads have a backwards compatible API. Consequently,
+          no problem should result from having a more recent version of
+          DECthreads on the system.
+
+          Only SSB versions of DECthreads are supported.
+
+          SOFTWARE REQUIREMENTS FOR OPENVMS
+
+          For Systems Using Terminals (no DECwindows Motif interface):
+
+          o  OpenVMS VAX Operating System V5.5-2 to V6.1
+
+          For Workstations Running DECwindows Motif:
+
+          o  OpenVMS VAX Operating System V5.5-2 to V6.1
+
+          o  DECwindows Motif V1.1 for OpenVMS V5.5-2
+             DECwindows Motif V1.2 for OpenVMS V6.1
+
+          OpenVMS Tailoring
+
+                                           14
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          For OpenVMS systems, the following OpenVMS classes are required for
+          full functionality of this layered product:
+
+          o  OpenVMS Required Saveset
+
+          o  Network Support
+
+          o  Programming Support
+
+          o  Utilities
+
+          For more information about OpenVMS classes and tailoring, refer to the
+          OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+
+          SOFTWARE REQUIREMENTS FOR RISC/ULTRIX
+
+          For Systems Using Terminals (no Motif interface):
+
+          o  ULTRIX Operating System V4.2, V4.3, V4.3A, V4.4
+
+          For Workstations (both with and without Motif):
+
+          o  ULTRIX Worksystem Software V4.2, V4.3, V4.3A, V4.4
+
+          o  DECwindows Motif V1.1.3 (for Ultrix V4.2, V4.3, 4.3A)
+             DECwindows Motif V1.2 (for Ultrix V4.4)
+
+          RISC/ULTRIX Subsets
+
+          The following Subsets are required for this layered product:
+
+          o  UDTBASE42x, UDTINTLRT42x, (ULTRIX 4.2)
+
+          o  UDTBASE43x, UDTINTLRT43x, (ULTRIX 4.3, 4.3A)
+
+          o  UDTBASE44x, UDTINTLRT44x, (ULTRIX 4.4)
+
+          For more information about ULTRIX Subsets, refer to the ULTRIX Oper-
+          ating System Software Product Description (SPD 26.40.xx).
+
+
+                                           15
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          OPTIONAL SOFTWARE
+
+          For OpenVMS:
+
+          o  DECnet/OSI for OpenVMS VAX V5.5-2 to V6.1: if the Digital
+             Distributed Name Service for VAX (VAXdns) is used, or DECnet 
+             Phase IV or DECnet/OSI nodes are to be managed
+
+          o  A Digital Distributed Name Service (DECdns) Server must be
+             installed somewhere on the network to implement a global naming
+             repository in place of the POLYCENTER Framework local system naming
+             repository
+
+          o  DEC TCP/IP Services for OpenVMS (UCX) V2.x - V3.1 to support SNMP
+             access
+
+          o  POLYCENTER Network Fault Diagnostics Option V1.4 (also called the
+             DECmcc Fault Diagnostics Option Package)
+
+          o  POLYCENTER Extended LAN Manager V1.4 (ELM) AM and FM (also called
+             DECmcc ELM AM and FM)
+
+          o  POLYCENTER Terminal Server Access Module (TSAM) V1.4 (also called
+             the DECmcc TSAM)
+
+          For RISC/ULTRIX:
+
+          o  DECnet/OSI for ULTRIX V5.1A if the Digital Distributed Name 
+             Service for ULTRIX (DECdns for ULTRIX) is used or if 
+             ADVANTAGE-NETWORKS DECnet Phase IV or DECnet/OSI nodes are to be 
+             managed. DECnet/OSI is required for DECdns.
+
+          o  A Digital Distributed Name Service (DECdns) Server must be
+             installed somewhere on the network to implement a global naming
+             repository in place of the POLYCENTER Framework local system naming
+             repository
+
+          o  POLYCENTER Extended LAN Manager V1.4 (ELM) AM and FM (also called
+             DECmcc ELM AM and FM)
+
+          o  POLYCENTER Network Fault Diagnostics Option V1.4 (also known as
+             DECmcc Fault Diagnostics Option Package)
+
+                                           16
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of Digital
+          Equipment Corporation's Standard Terms and Conditions. For more in-
+          formation about Digital's licensing terms and policies, please con-
+          tact your local Digital office.
+
+          LICENSE MANAGEMENT FACILITY
+
+          This layered product supports the OpenVMS and ULTRIX License Manage-
+          ment Facilities (LMF).
+
+          License units for this product are allocated on an Unlimited Use ba-
+          sis.
+
+          Note: To use the POLYCENTER Framework in a Diskless Management System
+          (DMS) environment, the DMS server must be a supported POLYCENTER
+          Framework configuration, including a comparable POLYCENTER Framework
+          license.
+
+          For more information on the License Management Facility, refer to the
+          OpenVMS VAX Operating System SPD (25.01.xx) or the ULTRIX Operating
+          System SPD (26.40.xx).
+
+          For more information about Digital's licensing terms and policies,
+          please contact your local Digital sales office.
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future version of
+          this product may be different from the requirements for the current
+          version.
+
+          DISTRIBUTION MEDIA
+
+          This product is available as part of the OpenVMS VAX and ULTRIX Lay-
+          ered Product Consolidated Distributions on CD-ROM.
+
+          This product is also available on TK50 Streaming Tape
+
+
+                                           17
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          The software documentation for this product is available as part of
+          the OpenVMS VAX Online Documentation Library on CD-ROM.
+
+
+          ORDERING INFORMATION
+
+          For OpenVMS:
+
+          Software Licenses: QL-VM9A9-AA
+          Software Media: QA-VM9AA-H5
+          Software Documentation: QA-VM9AA-GZ
+          Software Product Services: QT-VM9A*-**
+
+          For RISC ULTRIX:
+
+          Software Licenses: QL-GU3A8-AA
+          Software Media: QA-GU3AA-H5
+          Software Documentation: QA-GU3AA-GZ
+          Software Product Services: QT-GU3A*-**
+
+          *  Denotes variant fields. For additional information on available li-
+             censes, services and media, refer to the appropriate price book.
+
+          The above information is valid at time of release. Please contact your
+          local Digital sales office for the most up-to-date information.
+
+          SOFTWARE PRODUCT SERVICES
+
+          A variety of service options are available from Digital. For more in-
+          formation, contact your local Digital office.
+
+          Network Management Services are also available. These include, but are
+          not restricted to, the following:
+
+          o  Network Management Operations Services
+
+          o  Network Management Planning and Design Services
+
+          o  Network Management Implementation Services
+
+          o  Network Management Training
+
+                                           18
+
+ 
+
+
+
+          POLYCENTER Framework, Version 1.4                     SPD 32.46.05
+          (Formerly DECmcc Director)
+
+          For local availability, please contact your Digital Sales Office.
+
+
+          SOFTWARE WARRANTY
+
+          Warranty for this software product is provided by Digital with the
+          pur chase of a license for the product as defined in the Software
+          Warranty Addendum of this SPD.
+
+          The above information is valid at time of release. Please contact your
+          local Digital office for the most up-to-date information.
+          
+          R    Motif is a registered trademark of Open Software Foundation,
+               Inc.
+
+          [TM] The DIGITAL Logo, VAX, MicroVAX, VAXstation, VAXserver, Open-
+               VMS, DECsystem, DECstation, POLYCENTER, DECnet, Ultrix,
+               DECmcc, DECthreads, ADVANTAGE-NETWORKS, and VMS are trade-
+               marks of Digital Equipment Corporation.
+
+          © 1995 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           19

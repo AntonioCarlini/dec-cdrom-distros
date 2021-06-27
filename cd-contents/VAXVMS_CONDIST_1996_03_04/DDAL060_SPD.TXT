@@ -1,0 +1,675 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC Data Distributor Version 6.0        SPD 27.76.09
+                for OpenVMS VAX
+
+ DESCRIPTION
+
+ DEC Data Distributor manages the distribution of relational data. Op-
+ erations called transfers define what data and data definitions are
+ to be moved (the source) and where they are to be moved to (the tar-
+ get). The target need not be on the same system or be the same data
+ management system as the source.
+
+ Distributing data in this way has several benefits, particularly when
+ the target is on a different system from the source:
+
+ o  Users can query a database local to them rather than having to ac-
+    cess a remote database. This provides faster and more regular ac-
+    cess.
+
+ o  Congestion on the source database is reduced as a result of the use
+    of the target.
+
+ Data Sources, Targets and Gateway Dependencies
+
+ The following table lists the DEC Data Distributor sources and tar-
+ gets and the DEC DB Integrator (DBI) gateways, if any, required to ac-
+ cess them.
+
+ ___________________________________________________________________
+
+ Table_1:_DEC_Data_Distributor_Sources_and_Targets__________________
+
+ Data_Manager___Source_Target_DBI_Gateway_Requirement[1]____________
+
+ DEC DB Inte-   Y      Y      -
+ grator[3]
+
+                               DIGITAL                    March 1994
+
+                                                         AE-JA33L-TE
+
+ 
+
+
+ ___________________________________________________________________
+
+ Data_Manager___Source_Target_DBI_Gateway_Requirement[1]____________
+
+ DEC DBMS       Y      N      DBMS
+ DEC Rdb        Y      Y      -
+ DSM            Y      N      DSM
+ IBM DB2[TM]    Y      Y      DB2
+ IBM VSAM       Y      N      RMS
+ ORACLE[R]      Y      Y      ORACLE
+ SYBASE[R]      Y      Y      SYBASE
+ VMS RMS        Y      N      RMS
+ Others[2]______Y______N______Custom_Drivers________________________
+
+ Methods of Data Distribution
+
+ There are three transfer types: extraction, extraction rollup, and repli-
+ cation. For each type of transfer, the source can be all the table def-
+ initions and data within the source database or databases, or a sub-
+ set of those definitions and data.
+
+ Extraction
+
+ ____________________
+ The   use of a particular database or file system as a source or a tar-
+   get depends on the version of the DBI gateway used.  Refer to the OP-
+   TIONAL SOFTWARE section of this SPD for the DBI gateway products and
+
+   versions required to achieve the capabilities listed here.
+ DEC   DB Gateway for Custom Drivers provides tools that enable access
+
+   to data sources that lack turn-key DBI Gateway solutions.
+ Note   that transfer of data to a DEC DB Integrator target database is
+   contingent upon the capabilities of the underlying link databases and
+   the gateways that access them.  For example, if the DEC DB Integra-
+   tor logical database is linked to an IBM DB2 database, which can be
+   a target of Data Distributor transfers, then the transfer to the DEC
+   DB Integrator database can succeed.  By contrast, if for example the
+   logical database is based on links to RMS or VSAM files, which can-
+   not be the target of Data Distributor transfers, the transfer to the
+
+   DEC DB Integrator database would fail.
+
+                                  2
+
+ 
+
+ The target can be a set of tables in any of the target databases iden-
+ tified in Table 1. Each time the transfer executes, the existing data
+ in these tables is deleted and replaced with current data from the source.
+
+ Optionally, the target may be a DEC Rdb database, as opposed to ta-
+ bles in a DEC Rdb database. In this case a new version of the database
+ is created every time the transfer executes.
+
+ Users can update any of the target tables, provided that they have ac-
+ cess privilege to do so. If Data Distributor recreates the database
+ files when the transfer next executes, the user updates will not ap-
+ pear in the target database. If the transfer does not create new database
+ files but the user updates were to transferred tables, the user up-
+ dates will not appear when the table data is refreshed. User updates
+ are preserved when they are to tables not targeted by Data Distrib-
+ utor transfers and the target files are not recreated with each sub-
+ sequent transfer execution.
+
+ Extraction Rollup
+
+ The extraction rollup function has the same range of source databases
+ as the extraction function. However, an extraction rollup has more than
+ one source database. The source databases can be of different types,
+ for example, one DEC Rdb database and one DB2 database.
+
+ The target must be a DEC Rdb database. A new version of the target database
+ is created every time the transfer executes. The result of an extrac-
+ tion rollup, like that of an extraction, can be updated by users, but
+ those updates will not be reflected in the new database created when
+ the next transfer executes.
+
+ Replication
+
+ A replication transfer initially moves all source data to the target.
+ Subsequent executions of a replication transfer post only the changes
+ made to the source database since the last transfer was executed. Data
+ rows deleted on the source database may be deleted on the target or
+ flagged as archived data. The source of a replication transfer must
+
+
+                                  3
+
+ 
+
+ be a DEC Rdb database. The target can be any of the targets identi-
+ fied in Table 1. If necessary, the target can be rebuilt by reinitial-
+ izing the transfer.
+
+ Tables that are targets of replication transfers should not be updated.
+
+ Other Features
+
+ Schedules
+
+ Each transfer may have a schedule that specifies the times and inter-
+ vals at which a transfer will execute. A transfer may also be executed
+ anytime on demand, whether or not a transfer schedule is defined.
+
+ Pre- and Post-Transfer Command Procedures
+
+ A transfer can have associated with it DCL command procedures that ex-
+ ecute before and/or after a transfer executes. Potential uses of such
+ procedures include:
+
+ o  Making the network between the source and target systems available
+
+ o  Notifying users by electronic mail that the transfer has completed
+    and reporting on completion status
+
+ o  Creating indexes on tables in the target database
+
+ Multiple Transfers
+
+ A database can be the source for more than one transfer. For example,
+ a DEC Rdb database could be the source for a replication of some ta-
+ bles, an extraction of some columns from other tables, and also one
+ of the source databases for an extraction rollup including yet another
+ subset of the data.
+
+ Because the target of an extraction or replication can be a set of ta-
+ bles in an existing database, such a database can be the target of more
+ than one transfer. However, it cannot be the target of an extraction
+ rollup, and no table within the database can be the target of more than
+ one transfer.
+
+                                  4
+
+ 
+
+ A database can be both a source and a target database. For example,
+ a database may be the target of a replication transfer, and may also
+ be the source of other replications.
+
+ Centralized Storage of DEC Data Distributor Information
+
+ Transfer and schedule definitions and the status of every transfer are
+ consolidated in a DEC Rdb database known as the transfer database.
+
+ VMScluster systems may contain both VAX and AXP processors. In a sin-
+ gle VMScluster system, VAX computers running DEC Data Distributor and
+ AXP computer systems running DEC Data Distributor share a single cluster-
+ wide transfer database. They also share in the scheduling and execu-
+ tion of transfers.
+
+ Syntax
+
+ DEC SQL includes DEC Data Distributor statements, such as:
+
+ o  CREATE TRANSFER, in which the source and target are specified. Spec-
+    ification of the source includes selecting the tables, and the rows
+    and columns of those tables, to be transferred.
+
+ o  CREATE SCHEDULE, in which the frequency of execution is specified.
+
+ o  SHOW TRANSFER, which displays the definition of the transfer and
+    that of the associated schedule if there is one, and the status of
+    the transfer, including the date and time at which it last executed.
+
+ Security
+
+ To create a transfer, it is necessary to have SELECT access to the source
+ database and to the tables transferred. To create a replication trans-
+ fer, it is also necessary to have CREATE privilege on the source database.
+
+ If the target database is created by DEC Data Distributor, it is cre-
+ ated with the DEC Rdb default protection. If it is necessary to be more
+ restrictive for an extraction or replication, the database can be cre-
+ ated in advance and the target specified as tables within it. Tables
+ are always created with the default protection of the target database
+ system. This can be altered in a posttransfer DCL command procedure.
+
+                                  5
+
+ 
+
+ The data in the transfer database is protected from direct access by
+ users lacking the required privileges.
+
+ Portability and Interoperability
+
+ DEC Data Distributor is available on both OpenVMS VAX and OpenVMS AXP
+ system platforms. DEC Rdb databases, DB Integrator and the DB Inte-
+ grator gateways on both of these platforms provide a wide range of tar-
+ gets and sources for extraction and targets for replication transfers.
+
+ Relationships with Other Products
+
+ DEC Data Distributor requires DEC Rdb. It can be used with any one of
+ the three DEC Rdb packaging options. Sites may use the DEC SQL inter-
+ face to tailor target databases by creating indexes etc.
+
+ Because DEC SQL can perform operations on remote as well as local databases,
+ the operations can be performed from another node on the network to
+ nodes that only have a Run-Time license for the target product.
+
+ If CDD/Repository is present on the target system, data definitions
+ from DEC Rdb target databases can be placed in the dictionary by us-
+ ing the INTEGRATE statement of the DEC SQL utility.
+
+ DEC Data Distributor for OpenVMS VAX can schedule and execute trans-
+ fers between DEC DB Integrator, DEC DB Integrator gateways or DEC Rdb
+ servers running on OpenVMS VAX or OpenVMS AXP systems.
+
+ Where to Install DEC Data Distributor
+
+ It is not necessary to install DEC Data Distributor on every system
+ involved in a transfer. It must be installed on:
+
+ o  The source system of a replication transfer
+
+ o  Either the source or the target system of an extraction or extrac-
+    tion rollup transfer. (It may be installed on both.)
+
+ Limitations
+
+                                  6
+
+ 
+
+ Because DEC Data Distributor uses a cluster-wide transfer database,
+ only one version of DEC Data Distributor is allowed in a VMScluster
+ or VAXcluster system.
+
+ Row selection, conditional and value expressions available in a trans-
+ fer definition are a subset of those supported by the source database
+ management system.
+
+ Indexes, constraints, triggers, collating sequences, stored procedures,
+ external functions and access privileges are not copied from source
+ to target databases.
+
+ DEC Data Distributor does not provide commit-time replication of changes.
+ That is, updates to the source are transferred to the target when a
+ replication transfer executes, not whenever an update transaction is
+ committed on the source database.
+
+ DEC Data Distributor does not support DEC SERdb for Security-Enhanced
+ VMS.
+
+ CONFORMANCE TO STANDARDS
+
+ DEC Data Distributor extends the functions of DEC SQL to cover the sched-
+ uled transfer of data between databases. These functions are not ad-
+ dressed by the current ANSI/ISO standards for SQL.
+
+ HARDWARE REQUIREMENTS
+
+ Processors Supported
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+
+
+
+
+                                  7
+
+ 
+
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300,
+           VAX 8350, VAX 8500, VAX 8530,
+           VAX 8550, VAX 8600, VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+           VAX-11/780, VAX-11/785
+
+ VAXft:    VAXft 3000 Model 110,
+           VAXft 3000 Model 310,
+           VAXft 3000 Model 410,
+           VAXft 3000 Model 610,
+           VAXft 3000 Model 612
+
+
+
+
+
+
+
+
+
+
+
+                                  8
+
+ 
+
+
+ MicroVAX: MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100 Model 10/10E,
+           MicroVAX 3100 Model 20/20E,
+           MicroVAX 3100 Model 30,
+           MicroVAX 3100 Model 40,
+           MicroVAX 3100 Model 80,
+           MicroVAX 3100 Model 90,
+           MicroVAX 3200, MicroVAX 3300,
+           MicroVAX 3400, MicroVAX 3500,
+           MicroVAX 3600, MicroVAX 3800,
+           MicroVAX 3900
+
+ VAXstation:VAXstation II, VAXstation 2000,
+           VAXstation 3100 Model 30,
+           VAXstation 3100 Model 38,
+           VAXstation 3100 Model 40,
+           VAXstation 3100 Model 48,
+           VAXstation 3100 Model 76,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90,
+           VAXstation 4000 VLC
+
+ VAXserver: VAXserver 3100, VAXserver 3200,
+           VAXserver 3300, VAXserver 3400,
+           VAXserver 3500, VAXserver 3600,
+           VAXserver 3800, VAXserver 3900
+
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 400,
+           VAXserver 4000 Model 500,
+           VAXserver 4000 Model 600,
+           VAXserver 4000 Model 700
+
+
+
+                                  9
+
+ 
+
+
+           VAXserver 6000 Model 200 Series,
+           VAXserver 6000 Model 300 Series,
+           VAXserver 6000 Model 400 Series,
+           VAXserver 6000 Model 500 Series,
+           VAXserver 6000 Model 600 Series
+
+           VAXserver 8200,VAXserver 8250,
+           VAXserver 8300,VAXserver 8350,
+           VAXserver 8530,VAXserver 8550,
+           VAXserver 8600,VAXserver 8650,
+           VAXserver 8700,VAXserver 8800,
+           VAXserver 8810,VAXserver 8830,
+           VAXserver 8840
+
+ Unsupported Processors
+
+           MicroVAX I, VAXstation I,
+           VAX-11/730, VAX-11/750
+           VAX-11/725, VAX-11/782,
+           VAXstation 8000
+
+ Processor Restrictions
+
+ o  A TK50 cartridge tape drive, 9-track 1600 BPI magnetic tape drive
+    or CD-ROM drive is required to install this software
+
+ o  A minimum of 4 Mbytes of memory.
+
+ o  ECO level 4 or later and WCS microcode version 123 or later are re-
+    quired for VAX-11/780 or VAX-11/785 processors
+
+ Disk Space Requirements (Block Cluster Size = 1):
+
+ The following counts refer to the disk space required on the system
+ disk. The sizes are approximate; actual sizes may vary depending on
+ the user's system environment, configuration, and software options.
+
+
+
+                                 10
+
+ 
+
+
+ Disk space required for    7,500 blocks
+ installation:
+                            3.8 Mbytes
+
+ Disk space required for    4,500 blocks
+ use (permanent):
+                            2.3 Mbytes
+
+ Other Hardware Required:
+
+ All processors require mass storage units to backup and restore es-
+ tablished databases.
+
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VAXcluster configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section of this product's Software Product Descrip-
+ tion detail any special hardware required by this product.
+
+ Multiple versions of this software cannot be run on a single system,
+ VMScluster system or VAXcluster system at the same time.
+
+ VMScluster configurations are described in the VMScluster Software Prod-
+ uct Description (42.18.xx). VAXcluster systems are described in the
+ VAXcluster Software Product Description (SPD 29.78.xx). These config-
+ urations include CI, Ethernet, and Mixed Interconnect configurations.
+
+ SOFTWARE REQUIREMENTS
+
+ o  OpenVMS VAX Operating System, V5.4 - V6.0
+
+ o  DEC Rdb, Version 6.0, for OpenVMS VAX
+
+    Full Development, Interactive or Run Time Option
+
+
+
+                                 11
+
+ 
+
+ VMS Tailoring:
+
+ The following OpenVMS classes are required for full functionality of
+ this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Programming Support
+
+ o  Secure User's Environment
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx).
+
+ OPTIONAL SOFTWARE
+
+ o  DEC DB Integrator, Version 1.0, for OpenVMS VAX
+
+    To access DEC DB Integrator logical databases residing on the net-
+    work as sources or targets for data transfer. You may use the Full
+    Development, Interactive or Run Time Option.
+
+ o  DECnet-VAX, V5.4 - V6.0
+
+    To transfer data between network nodes
+
+ o  DEC DB Integrator Gateway for DB2, Version 3.0, for OpenVMS VAX
+
+    To access DB2 databases residing on IBM systems as sources or tar-
+    gets for data transfer
+
+ o  DEC DB Integrator Gateway for ORACLE, Version 3.0, for OpenVMS VAX
+
+    To access ORACLE databases residing on the network as sources or
+    targets for data transfer
+
+ o  DEC DB Integrator Gateway for SYBASE, Version 1.0, for OpenVMS VAX
+
+    To access SYBASE databases residing on the network as sources or
+    targets for data transfer
+
+                                 12
+
+ 
+
+ o  DEC DB Integrator Gateway for RMS, Version 3.0, for OpenVMS VAX
+
+    To access VMS RMS files on OpenVMS Systems on the network and VSAM
+    data sets on IBM MVS systems as sources for data extraction
+
+ o  DEC DB Integrator Gateway for Custom Drivers, Version 3.0, for Open-
+    VMS VAX
+
+    To access data sources that lack a turn-key DBI Gateway solution
+    through customer-implemented drivers
+
+ o  DEC DB Integrator Gateway for DSM, Version 1.0
+
+    To access Digital Standard M (DSM) globals as sources for data trans-
+    fer
+
+ o  DEC DB Integrator Gateway for DBMS, Version 1.0, for OpenVMS VAX
+
+    To access DEC DBMS databases as sources for data extraction
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ 9-track 1600 BPI Magtape, TK50 Streaming Tape
+
+ This product is also available as part of the OpenVMS Consolidated Soft-
+ ware Distribution on CD-ROM.
+
+ ORDERING INFORMATION
+
+ ClusterWide Software Licenses: QL-VDRA*-**
+ Software Media: QA-VDRA*-**
+ Software Documentation: QA-VDRAA-GZ
+ Software Product Services: QT-VDRA*-**
+
+                                 13
+
+ 
+
+
+ *  Denotes variant fields. For additional information on available
+    licenses, services and media refer to the appropriate price
+    book.
+
+ The above information is valid at time of release. Please contact your
+ local Digital Office for the most up-to-date information.
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity.
+
+ ClusterWide licenses are available. A ClusterWide license permits the
+ execution of this product by an unlimited number of authorized users.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx)
+ or to the License Management Facility manual of the OpenVMS Operat-
+ ing System documentation set.
+
+ For more information on Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+
+
+
+
+
+                                 14
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ [TM]DB2 is a trademark of International Business Machines Corpora-
+    tion.
+
+ [R] ORACLE is a registered trademark of Oracle Corporation.
+
+ [R] SYBASE is a registered trademark of Sybase, Inc
+
+ [TM]The DIGITAL Logo, AXP, Bookreader, CDD/Repository, CI,
+    ClusterWide, DBMS, DEC, DECnet, Digital, OpenVMS, VAX VAX 11/750,
+    VAX 11/780, VAX 6000, VAX 8200, VAX 8250, VAX 8300, VAX 8350,
+    VAX 8500, VAX 8530, VAX 8550, VAX 9000, VAXstation 4000 VLC,
+    VAXcluster, VAXft, VAXserver, VAXstation, VAX RMS, VMS, VMS RMS
+    and VMScluster are trademarks of Digital Equipment Corporation.
+
+    All other trademarks and registered trademarks are the property
+    of their respective owners.
+
+ ©1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 15

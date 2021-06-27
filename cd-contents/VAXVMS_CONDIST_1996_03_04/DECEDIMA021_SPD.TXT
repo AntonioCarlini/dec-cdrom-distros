@@ -1,0 +1,1301 @@
+ 
+
+
+
+
+
+
+          Software
+          Product
+          Description
+
+          ___________________________________________________________________
+
+          PRODUCT NAME:  DEC/EDI for OpenVMS VAX, Version 2.1A   SPD 31.70.06
+
+          Digital[TM] Equipment Corporation makes no representations that the
+          use of its products in the manner described in this publication will
+          not infringe on existing or future patent rights, nor do the descrip-
+          tions contained in this publication imply the granting of licenses to
+          make, use, or sell equipment or software in accordance with the de-
+          scriptions.
+
+          Possession, use, or copying of the software described in this publi-
+          cation is authorized only pursuant to a valid written license from Dig-
+          ital or an authorized sublicensor.
+
+          © Digital Equipment Corporation 1996
+
+          DESCRIPTION
+
+          DEC/EDI offers application developers all the facilities necessary to
+          EDI-enable Business Applications within an Enterprise. Electronic Data
+          Interchange (EDI) enables users to electronically exchange structured
+          business documents such as Purchase Orders, Dispatch Advice and In-
+          voices with their Trading Partners using International, National and
+          Industry-specific EDI standards. Extensive communication options are
+          also provided to facilitate inter-enterprise communication via EDI VANs
+          or direct with Trading Partners using OSI[R] protocols.
+
+          DEC/EDI uses a Client/Server architecture to provide EDI services to
+          local and remote Business Applications hosted on multi-vendor plat-
+          forms within an enterprise.
+
+
+
+
+
+                                        DIGITAL                  January 1996
+
+                                                                  AE-PBHLG-TE
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          DEC/EDI Application Client
+
+          The DEC/EDI Application Client facilitates the integration of local
+          and remote Business Applications to the DEC/EDI Server, to make them
+          EDI-capable. ObjectBroker (DEC ACA Services) is used to link the lo-
+          cally or remotely installed DEC/EDI Application Clients to the DEC/EDI
+          Server, using either TCP/IP or DECnet communication protocols.
+
+          DEC/EDI Clients are available today for the OpenVMS VAX, OpenVMS AXP
+          and Digital UNIX[R] AXP, HP-UX[R] and IBM[R] AIX[R] platforms. These
+          DEC/EDI Application Clients can interoperate with a DEC/EDI Server run-
+          ning on either OpenVMS VAX or OpenVMS AXP platforms.
+
+          The interface provided by the DEC/EDI Application Client is file-based
+          and allows for the Business Application to POST and FETCH files to and
+          from Trading Partners via the DEC/EDI Server.
+
+          The DEC/EDI Application Clients can be invoked via the Command Line
+          Interface (CLI) and the Application Program Interface (API). The CLI
+          can be run from a suitably coded script file (command file) or invoked
+          interactively.
+
+          The DEC/EDI Application Client also provides the following functions:
+
+          o  Enables local and remote Business Applications to extract document
+             status information via the TRACK Command, from the DEC/EDI Server.
+
+          o  Enable Business Applications to POST and FETCH files to and from
+             other DEC/EDI Application Clients attached to the same DEC/EDI Server.
+             The information exchanged between DEC/EDI Application Clients is
+             mapped from the input format to the recipiant format by using File-
+             Bridge MAPs based on an EDI Message definition.
+
+          o  POST and FETCH documents to and from the DEC/EDI Server and by-pass
+             the Mapping or Mapping and Translation functions, for transmission
+             and receipt to and from trading partners via the DEC/EDI Communi-
+             cation Component.
+
+
+
+
+                                           2
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          DEC/EDI Server
+
+          The DEC/EDI Server consists of the following components which reside
+          on the same node:
+
+          o  DEC/EDI FileBridge Component
+
+          o  DEC/EDI Translation Component
+
+          o  DEC/EDI Communications Component
+
+          o  DEC/EDI Operational Management Component
+
+          FileBridge Component
+
+          FileBridge is a table-driven "MAPPER" with a set of data manipulation
+          operators for selected classes of commonly encountered EDI applica-
+          tion data. This capability is used to convert data from the existing
+          Business Application file format to that required for Translation into
+          the Trading Partner format as well as formatting data received from
+          the trading partner to the file format expected by the Business Ap-
+          plication.
+
+          The Mapping Process consists of:
+
+          o  Data Specification
+
+          The customer defines the application file structure, and parameters
+          for mapping between the application file and the EDI standard through
+          a forms-based user interface. FileBridge then generates a conversion
+          table that is used to map data from/to the application file formats.
+
+          o  User Defined Mapping
+
+          FileBridge allows fields to be moved directly to the destination or
+          to have built-in mathematical/logical/string operations to be performed
+          upon the fields. The user interface guides the user through this pro-
+          cess. The user can define and add code through "hooks" for more com-
+          plex processing.
+
+          o  Data Definition Extracts
+
+                                           3
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          FileBridge also allows for the extraction of Application file record
+          definitions from Oracle[R] CDD/Repository.
+
+          The components of FileBridge are:
+
+          o  FileBridge User Interface (UI)
+
+          The UI consists of a set of menus and forms that allow users to cre-
+          ate, modify, and compile FileBridge tables.
+
+          o  FileBridge Run-time
+
+          The Run-time process uses the information in a compiled FileBridge ta-
+          ble to map data between the Business Application file and the format
+          required for transmission and receipt to and from trading partners.
+
+          Translation Component
+
+          The Translation Component takes data that has come from the Business
+          Application and transforms it into the standard EDI formats required
+          for transmission to the Trading Partner. It also takes incoming EDI
+          data, that has been received from a Trading Partner by the Communi-
+          cations Component, and converts it into the format that is suitable
+          for the Mapper to decode and pass to the Application Client.
+
+          The Translation Component provides the following features:
+
+          o  Support for multiple versions of messages (transactions) and EDI
+             standards
+
+          o  Supports the transmission of 8-bit national character sets
+
+          o  Compliance checking at Trading Partner level
+
+          o  Trading Partner specific Code Translation
+
+          o  User-selectable control number generation
+
+          o  Test transmissions
+
+          o  Event and Error logging
+
+                                           4
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          An editor is provided to enable users to customise the messages de-
+          livered with the product to create new messages for industry specific
+          and Trading Partner specific messages as well as create new messages
+          based on ANSI X12, TDCC, EDIFACT, ODETTE, and TRADACOMS[TM] syntax rules
+          supported by this version of the product. The editor also allows for
+          the creation of new versions of EDI Standard dictionaries.
+
+          Trading Partner agreement details, including the message formats be-
+          ing used, are recorded in the Trading Partner Profiles. The Transla-
+          tion Component uses the information in the Trading Partner Profiles
+          and the Message Database to perform compliance checking and to check
+          the validity of the transaction.
+
+          The Translation Component provides support for the following EDI stan-
+          dards:
+
+          o  EDIFACT
+
+             -  Implements ISO 9735
+
+             -  Supports character set A, lower-case a-z, and 8-bit national char-
+                acter sets.
+
+             -  Supports industry-specific transactions adhering to the EDIFACT
+                ISO 9735 syntax
+
+          o  ANSI X12
+
+             -  Automatic generation of Functional Acknowledgements and recon-
+                ciliation of Functional Acknowledgements
+
+             -  Supports industry-specific transactions adhering to the ANSI X12
+                syntax
+
+          o  TDCC
+
+             -  Supports all modes including UCS/WINS
+
+             -  Automatic generation of Functional Acknowledgements, 997 and 999
+                and reconciliation of Functional Acknowledgements
+
+                                           5
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+             -  Support for the following types of messages is not provided:
+
+                *  Messages which contain two mandatory instances of the same
+                   segment, at the same level, when other segments appear be-
+                   tween the two instances (for example, Transaction 994 and its
+                   use of the K2 segment)
+
+                *  Messages which use EDIFACT enveloping
+
+          o  ODETTE
+
+             -  Support for Version 2.0 of ODETTE
+
+          o  TRADACOMS
+
+             -  Implements the TRADACOMS (October 1989 Update) syntax and mes-
+                sages
+
+          Communications Component
+
+          The Communications Component supports a range of communications op-
+          tions including OSI. It enables users to send EDI transmissions ei-
+          ther through EDI VANs or direct to their Trading Partners.
+
+          The Communications Component provides the following features:
+
+          o  Flexible scheduling using windows and jobs
+
+          o  Priority processing to override the scheduler
+
+          o  User-definable connection and file-based retry limit
+
+          o  Event and Error logging
+
+          The Communications Component Options provided with DEC/EDI are:
+
+          o  X.400 Communications Component
+
+          o  OFTP Communications Component
+
+          o  Bisynchronous and CCITT X.25 Components for VAN Communications
+
+          o  Import/Export Communications Component
+
+                                           6
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          A specific Communications Component license need not be purchased to
+          invoke the Import/Export capability.
+
+          o  X.400 Communication
+
+             -  Supports the CCITT X.435 recommendation, EWOS Kernel Functional
+                Profile (June 1992 /TD 22), for the transmission of EDI messages
+                over the CCITT recommendations for X.400, 1988
+
+             -  Supports both P0 (NIST Special Publication 500-150) and P2 (TE-
+                DIS meeting November 23, 1989) interim recommendations for the
+                transmission of EDI messages over the CCITT recommendations for
+                X.400, 1984 and 1988
+
+             -  Supports enabling or disabling Trading Partner specific trans-
+                missions
+
+             -  Supports user-configurable Trading Partner specific record lengths
+
+             -  Provides global connectivity by facilitating EDI transmissions
+                either directly between Private Management Domains (PRMDs) or
+                via an Administrative Management Domain (ADMD) Relay Service
+
+             -  Supports X.400 Acknowledgement processing
+
+          o  OFTP Communication
+
+             -  Fully supports OD.G4/86/090
+
+             -  Supports Special Logic for incoming transmission
+
+             -  Supports enabling or disabling Trading Partner specific trans-
+                mission
+
+             -  Supports user-configurable Trading Partner specific record lengths
+
+             -  Provides Global connectivity by facilitating EDI transmission
+                directly between Trading Partners over CCITT X.25-based Networks
+
+             -  Supports File Restarts
+
+                                           7
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+             -  Recognises Compressed Data
+
+          o  Bisynchronous and X.25 VAN Communication
+
+             -  Provides connections to EDI VANs via the use of 2780/3780, us-
+                ing the CLEO 3780plus product and CCITT X.25 Protocols.
+
+             -  Supports connections to the
+                GEIS[TM] EDI*EXPRESS[TM], and BT TYMNET[R]
+                EDI*NET[R] Services via the use of the 2780/3780 communication
+                protocol.
+
+             -  Supports connections to the INS[TM]- TRADANET[TM] Service via
+                the use of X.25 Communications protocol
+
+             -  User-configurable Trading Partner specific record lengths
+
+             -  Provides pre-defined jobs to interact with the EDI VAN Service
+                and avoid any user programming
+
+             -  Sends and receives all transmission files in the same connec-
+                tion
+
+          o  Import/Export Communication
+
+             -  Enables the user to implement other means of communicating with
+                Trading Partners
+
+             -  Outgoing and incoming Trading Partner specific transmission files
+                written to user-defined directory
+
+             -  Allows insertion of header details to transmission files
+
+             -  A specific Communications Component license need not be purchased
+                to invoke this facility
+
+
+
+
+
+
+                                           8
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          Operational Management Component
+
+          An extensive set of management functions is provided to enable the user
+          to easily install, configure, and manage an operational EDI system.
+          The Management Component is an integral part of the Application Client,
+          FileBridge, Translation and Communication Components and need not be
+          purchased separately.
+
+          The Management Service commands are invoked using DCL. The appropri-
+          ate form is then displayed on the screen.
+
+          The Management Service provides the following facilities:
+
+          o  Access Control
+
+          o  Processing Control
+
+          o  Organisational Control
+
+          o  Error logging and exception reporting
+
+          o  Access Control
+
+             -  Controls user access to the DEC/EDI system
+
+             -  Users assigned two types of privileges, Administrator or Super-
+                visor
+
+             -  Tools are provided to enable the Administrator to manage the op-
+                erational state of the DEC/EDI system
+
+             -  The Supervisor is provided with tools to monitor the status of
+                documents in the DEC/EDI system
+
+          o  Processing Control
+
+             -  Provides end-to-end audit trail of message status within the DEC/EDI
+                system, including status information from the EDI VAN Services
+
+             -  Provides history files with detailed information to help locate
+                and correct errors
+
+             -  Provides message and transmission file status
+
+                                           9
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+             -  Time stamps each message status
+
+          o  Organisational Control
+
+             -  Provides facilities to monitor the status of the documents in
+                the DEC/EDI system
+
+             -  Provides facilities to archive and retrieve documents which have
+                either been processed successfully or cancelled
+
+             -  Provides facilities to maintain the list of authorised users
+
+             -  Provides facilities to edit and create message format tables
+
+             -  Provides facilities to edit and create Trading Partner profiles
+
+             -  Provides a Configuration Verification Program (CVP) to test the
+                linkages between the DEC/EDI Server and the DEC/EDI Client com-
+                ponents
+
+          o  Error Logging and Exception Reporting
+
+             -  All events and errors are logged and time stamped.
+
+             -  Exception reporting consists of logging errors, display of er-
+                ror message on the Operator Console, and the dispatch of VMS-
+                mail[TM] to the designated EDI System Administrator.
+
+          o  COCKPIT
+
+          DEC/EDI Cockpit, a Graphical User Interface (GUI) running under MS[R]-
+          Windows[TM] is available as an option. The Cockpit provides the fol-
+          lowing functionality:
+
+             -  A "system monitor" function providing graphical display of the
+                status of Messages/Transactions. This display can be updated ei-
+                ther manually or at a pre-defined timing interval
+
+             -  Access to the DEC/EDI Audit trails at the Document and Trans-
+                mission file levels and cross-referencing between Documents and
+                Transmission files
+
+             -  The ability to customise the display of the DEC/EDI Audit trails
+                by defining several "views"
+
+                                           10
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+             -  Access to the FileBridge Audit trails
+
+             -  Access to Error logs
+
+             -  Ability to access Transaction/Message status information from
+                several DEC/EDI Servers.
+
+          DOCUMENTATION
+
+          The DEC/EDI documentation set consists of:
+
+          o  Introduction
+
+          o  Getting Started
+
+          o  Installation
+
+          o  Command Reference
+
+          o  Configuring
+
+          o  Using the Mapper
+
+          o  Mapping Reference
+
+          o  Using the Application Client
+
+          o  Maintaining
+
+          o  Problem Solving
+
+          o  Error Messages
+
+          STANDARDS INDUSTRY PRACTICE CONFORMANCE
+
+          The DEC/EDI product conforms to the following formal industry stan-
+          dards:
+
+          o  ISO 9735 (EDIFACT)
+
+          o  ANSI X12.5 and X12.6
+
+          o  CCITT Recommendation X.435 (EWOS Kernel Functional Profile, June
+             1992 /TD 22 )
+
+                                           11
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          The DEC/EDI product conforms to the following industry Practice:
+
+          o  TRADACOMS (UN/TDI)
+
+          o  TDCC
+
+          o  UCS/WINS
+
+          o  ODETTE
+
+          o  EDIFICE
+
+          o  EANCOM
+
+          o  CEFIC
+
+          o  ODETTE File Transfer Protocol (OFTP) - OD.G4/86/090
+
+          o  X.400 P2 (TEDIS meeting Nov. 23, 1989) and P0 (NIST Special Pub-
+             lication 500-150) for CCITT X.400 1984
+
+          INSTALLATION
+
+          Digital recommends that a customer's first purchase of this software
+          product include Digital Installation Services. These services provide
+          for installation of the software product by an experienced Digital Soft-
+          ware Specialist.
+
+          For subsequent purchases of this product only experienced customers
+          should attempt installation. Digital recommends that all other cus-
+          tomers purchase Digital's Installation Services.
+
+          Customer Responsibilities
+
+          Before installation of the software, the customer must:
+
+          o  Previously have installed all requisite software identified in the
+             Software Requirements section above, and hardware including ter-
+             minals.
+
+          o  Make available for a reasonable period of time, as mutually agreed
+             by Digital and the customer, all hardware, communication facili-
+             ties, and terminals that are to be used during installation.
+
+                                           12
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          o  For verification of installation and connectivity in a multi-node
+             network, designate and provide access to the DEC/EDI Client and Server
+             hosts that has previously been installed by Digital.
+
+          Delays caused by any failure to meet the responsibilities will be charged
+          at the then prevailing rate for time and materials.
+
+          HARDWARE REQUIREMENTS
+
+          PROCESSORS SUPPORTED
+
+          Any VAX system capable of supporting a minimum of 64MB of memory (128MB
+          recommended), 2 Disk Drives (4 recommended) and the hardware controllers
+          for the Communication Option (X.25, X.400, OFTP) chosen by the cus-
+          tomer.
+          DISK SPACE REQUIREMENTS
+
+          ___________________________________________________________________
+
+          Table_1:__Disk_Space_Required_for_Installation_____________________
+
+          DEC/EDI System               81,000 blocks[1]
+                                       (42 Mbytes)
+
+          DEC/EDI Application          7,000 blocks[1]
+          Client                       (4 Mbytes)
+          ___________________________________________________________________
+          [1]Block Cluster Size = 1
+          ___________________________________________________________________
+
+          ___________________________________________________________________
+
+          Table_2:__Disk_space_required_for_use_(permanent)__________________
+
+          DEC/EDI System               122,000 blocks[1]
+                                       (63 Mbytes)
+
+          DEC/EDI Application          3,000 blocks[1]
+          Client                       (2 Mbyte)
+          ___________________________________________________________________
+          [1]Block Cluster Size = 1
+          ___________________________________________________________________
+
+                                           13
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          These counts refer to the disk space required on the system disk. The
+          sizes are approximate; actual sizes may vary depending on the user's
+          system environment, configuration, and software options.
+
+          Additional disk space is required depending on the number of Mapping
+          tables, performance needs, message size and software options.
+
+          Memory Requirements
+
+          The minimum memory supported is 64MB. However, the use of this soft-
+          ware in conjunction with increased memory and multiple disks improves
+          performance. The memory size suggested for most typical hardware con-
+          figurations is at least 128MB (especially when the X.25 and/or X.400
+          products are installed on the same processor).
+
+          OPTIONAL HARDWARE
+
+          Any devices supported by the prerequisite/optional software.
+
+          Bisynchronous Communications for connecting to EDI VANS:
+
+          The CLEO 3780Plus product is required for use with the DEC/EDI Bi-synch
+          communications capability on VAX OpenVMS. Contact the following out-
+          lets to purchase CLEO 3780Plus:
+
+             US: CLEO Communications
+             Telephone: (815) 397 8110
+
+             UK: Interface Systems International
+             Telephone +44 (0)1753 811888
+
+          The following Synchronous modems are recommended for use with the CLEO
+          3870Plus product:
+
+          o  RACAL-datacom 9600 baud modem, V.32 (AT Compatible)
+
+          o  MULTItech Multimodem V.32 (AT Compatible)
+
+          Contact your EDI Service Provider for advice on the protocol supported
+          in your country.
+
+                                           14
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          SOFTWARE REQUIREMENTS
+
+          DEC/EDI Application Client and DEC/EDI Server deployment on the same
+          node:
+
+          o  OpenVMS VAX Operating System V6.2 (SPD 25.01.xx)
+
+          o  DEC ACA Run-time Services (ObjectBroker) for OpenVMS VAX V2.5A (SPD
+             36.06.xx) (optional for customers upgrading from DEC/DI V1.3C)
+
+          o  DECforms Run-time Only System for OpenVMS VAX V2.1, V2.1A (SPD 29.90.xx)
+
+          o  Oracle Rdb Run-time Option for OpenVMS VAX V6.0, V6.1 (SPD 25.59.xx)
+
+          o  DECnet for OpenVMS VAX V6.1, V6.2 (SPD 48.48.xx) for use with Bi-
+             Synch communication.
+
+             or
+
+             DECnet/OSI for OpenVMS VAX V6.2 (SPD 25.03.xx) for use with X.400
+             and OFTP communications
+
+          OPTIONAL
+
+          For remote deployment of DEC/EDI Application Client:
+
+          o  Remote deployment of DEC/EDI Application Client on OpenVMS AXP Sys-
+             tem:
+
+             -  OpenVMS AXP Operating System, V6.2 (SPD 41.87.xx)
+
+             -  DEC/EDI Application Client for OpenVMS AXP V2.1A (SPD 53.14.xx)
+
+             -  DEC ACA run-time Services (ObjectBroker) for OpenVMS AXP V2.5A
+                (SPD 44.12.xx)
+
+             -  DECnet for OpenVMS AXP V6.1, V6.2 (SPD 42.25.xx) and DECnet on
+                the DEC/EDI Server system.
+
+                or
+
+                DECnet/OSI for OpenVMS AXP V6.2 (SPD 42.25.xx) and DECnet/OSI
+
+                                           15
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+                on the DEC/EDI Server system.
+
+                or
+
+                DEC TCP/IP Services for OpenVMS AXP V3.3 (SPD 46.46.xx) and DEC
+                TCP/IP Services on the DEC/EDI Server system.
+
+          o  Remote deployment of DEC/EDI Application Client on OpenVMS VAX sys-
+             tem:
+
+             -  OpenVMS VAX Operating System, V6.2 (SPD 25.01.xx)
+
+             -  DEC/EDI Application Client for OpenVMS VAX V2.1A
+
+             -  DEC ACA run-time Services (ObjectBroker) for OpenVMS VAX V2.5A
+                (SPD 36.06.xx)
+
+             -  DECnet for OpenVMS VAX V6.1, V6.2 (SPD 48.48.xx) on both sys-
+                tems.
+
+                or
+
+                DECnet/OSI for OpenVMS VAX V6.2 (SPD 25.03.xx) on both systems.
+
+                or
+
+                DEC TCP/IP Services for OpenVMS VAX V3.3 (SPD 25.A4.xx) on both
+                systems.
+
+          o  Remote deployment of DEC/EDI Application Client on Digital UNIX AXP
+             system ( with/without additional DEC/EDI Application Clients on Open-
+             VMS):
+
+             -  Digital UNIX AXP Operating System, V3.2B, V3.2C (SPD 41.61.xx)
+
+             -  DEC/EDI Application Client for Digital UNIX AXP V3.0A (SPD 53.50.xx)
+
+             -  DEC ACA run-time Services (ObjectBroker) Digital UNIX AXP V2.5A
+                (SPD 47.07.xx)
+
+             -  Installation of TCP/IP (included with OSF/1 Operating System)
+                on all the DEC/EDI Application Client Platforms and the DEC/EDI
+                Server system
+
+                                           16
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          o  Remote deployment of DEC/EDI Application Client on IBM AIX system
+             ( with/without additional DEC/EDI Application Clients on OpenVMS):
+
+
+             -  IBM AIX Version 3.2
+
+             -  DEC/EDI Application Client for IBM AIX V2.1A (SPD 61.91.xx)
+
+             -  DEC ACA run-time Services (ObjectBroker) for IBM AIX V2.5A (SPD
+                44.14.xx)
+
+             -  Installation of TCP/IP (included with IBM AIX ) on all the DEC
+                /EDI Application Client Platforms and the DEC/EDI Server sys-
+                tem
+
+          o  Remote deployment of DEC/EDI Application Client on HP-UX system (
+             with/without additional DEC/EDI Application Clients on OpenVMS):
+
+             -  HP-UX version 9.0
+
+             -  DEC/EDI Application Client for HP-UX V2.1A (SPD 61.92.xx)
+
+             -  DEC ACA run-time Services (ObjectBroker) for HP-UX V2.5A (SPD
+                44.13.xx)
+
+             -  Installation of TCP/IP (included with HP-UX) on all the DEC/EDI
+                Application Client Platforms and the DEC/EDI Server system
+
+          o  For the use of DEC/EDI OFTP Communication:
+
+             -  DECnet/OSI for OpenVMS VAX V6.2 (SPD 25.03.xx) and a remote node
+                providing X.25 Connector Services
+
+                or
+
+                DECnet/OSI for OpenVMS VAX V6.2 (SPD 25.03.xx) and the X.25 Op-
+                tion
+
+          o  For the use of DEC/EDI Bi-Synch Communication:
+
+             -  CLEO 3780Plus product for OpenVMS VAX V04204, together with the
+                SYNCcable+ cable is required. These can be ordered from:
+
+                   US: CLEO Communications
+
+                                           17
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+                   Telephone: (815) 397 8110
+
+                   UK: Interface Systems International
+                   Telephone +44 (0)1753 811888
+
+             -  For TRADANET VAN:
+
+                   DECnet/OSI for OpenVMS VAX V6.2 (SPD 25.03.xx) and a remote
+                   node providing X.25 Connector Services
+
+                   or
+
+                   DECnet/OSI for OpenVMS VAX V6.2 (SPD 25.03.xx) and the X.25
+                   Option
+
+          For the use of DEC/EDI X.400 Communications, one of the following:
+
+             -  Remote Digital UNIX AXP node supporting MAILbus 400 V1.4 (SPD
+                46.89.xx) and the following prerequisites:
+
+                -  DECnet/OSI for Digital UNIX (SPD 41.92.xx)
+
+                -  DEC X.500 Directory Services (Base Component) for Digital UNIX
+                   AXP (SPD 40.77.xx)
+
+                -  DEC/EDI Server node supporting DECnet/OSI for OpenVMS VAX V6.2
+                   (SPD 25.03.xx)
+
+             -  Remote OpenVMS VAX node supporting MAILbus 400 OpenVMS for V1.4
+                (SPD 42.83.xx) and the following prerequisites:
+
+                -  DECnet/OSI for OpenVMS VAX (SPD 25.03.xx)
+
+                -  DEC X.500 Directory Services (Base Component) for OpenVMS VAX
+                   (SPD 40.77.xx)
+
+                -  DEC/EDI Server node supporting DECnet/OSI for OpenVMS VAX V6.2
+                   (SPD 25.03.xx)
+
+             -  DEC/EDI Server node supporting MAILbus 400 OpenVMS for VAX V1.4
+                (SPD 42.83.xx) and the following prerequisites:
+
+                -  DECnet/OSI for OpenVMS VAX (SPD 25.03.xx)
+
+                -  DEC X.500 Directory Services (Base Component) for OpenVMS VAX
+                   (SPD 40.77.xx)
+
+                                           18
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          For the use of DEC/EDI Cockpit for MS-Windows:
+
+          o  On a suitably configured PC:
+
+             -  MS-DOS[R] V5.0, V6.0 or later
+
+             -  MS-WINDOWS V3.1 or MS-WINDOWS for Workgroups V3.11
+
+             -  DEC ACA Services (ObjectBroker) for MS-WINDOWS, V2.5A (SPD 37.76.xx)
+
+             -  Oracle Rdb ODBC Driver for MS-WINDOWS
+
+             -  PATHWORKS for DOS, V4.1,V5.0, V5.1 (SPD 55.07.xx)
+
+                or
+                Pathworks for DOS V4.1 and PATHWORKS for DOS TCP/IP V2.0 (SPD
+                33.45.xx)
+                or
+                Novell[R] LAN Workplace for DOS with WINSOCK compliant TCP/IP
+                or
+                MS-WINDOWS for Workgroups TCP/IP
+
+          o  For the DEC/EDI Server Node:
+
+             -  DEC/EDI Server running Oracle Rdb SQL/Services
+
+             -  A node on the network running PATHWORKS Server when using PATH-
+                WORKS DECnet or PATHWORKS TCP/IP on the PC
+
+                or
+                A node on the network running Novell Netware Server when using
+                Novell LAN Workplace for DOS on the PC
+                or
+                DEC TCP/IP Services for VAX OpenVMS V3.3 on the DEC/EDI Server
+                when using MS-WINDOWS for Workgroups TCP/IP on the PC
+
+          For OPTIONAL use with DEC/EDI FileBridge:
+
+             Oracle CDD/Repository for OpenVMS VAX V6.1 (SPD 25.53.xx)
+
+
+                                           19
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          SOFTWARE LICENSING
+
+          This software is furnished under the licensing provisions of Digital
+          Equipment Corporation's Standard Terms and Conditions. For more in-
+          formation about Digitals licensing terms and policies, contact your
+          local Digital office.
+
+          Licenses for the DEC/EDI components can be purchased either individ-
+          ually or as a package. The following three packaged license options
+          are available:
+
+          o  DEC/EDI Bi-Synch Package (includes X.25 based connection to INS-
+             TRADANET)
+
+          o  DEC/EDI OFTP Package
+
+          o  DEC/EDI X.400 Package
+
+          In addition to the specific Communications Component, each package li-
+          cense option (UPI= YM7 or YM8 or YM9 ) also includes the Application
+          Client, FileBridge Run-Time and the Translation Component. All the con-
+          stituent components of a packaged license option must be installed on
+          the same processor.
+
+          License Management Facility Support (LMF)
+
+          This layered product supports the OpenVMS License Management Facil-
+          ity.
+
+          License units for this product are allocated on an Unlimited System
+          Use basis only.
+
+          For more information on the License Management Facility, refer to the
+          OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+          or the License Management Facility manual of the OpenVMS Operating Sys-
+          tem documentation set.
+
+          For more information about Digital's licensing terms and policies, con-
+          tact your local Digital office.
+
+
+                                           20
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          CLUSTER ENVIRONMENT
+
+          This layered product is supported when installed on any single node
+          of valid and licensed VMScluster configurations.
+
+          If the Application connecting to the DEC/EDI Application Client is in-
+          stalled on a separate node, then an additional DEC/EDI Application Client
+          needs to be installed on the same node as the Application.
+
+          The HARDWARE REQUIREMENTS sections of this product's Software Prod-
+          uct Description detail any special hardware required by this product.
+
+          VMSCluster configurations are fully described in the VMScluster Soft-
+          ware Product Description (29.78.xx) and include CI, Ethernet, and Mixed
+          Interconnect configurations.
+
+          OPTIONAL SOFTWARE
+
+          The following products can be used with DEC/EDI for OpenVMS VAX V2.1A:
+
+          o  DEC/EDI Cockpit for MS-Windows, Version2.1A (QB-2YNAA-SA)
+
+          o  DEC/EDI Application Client for OpenVMS AXP, Version 2.1A (SPD 53.14.xx)
+
+          o  DEC/EDI Application Client for Digital UNIX AXP, version 3.0A (SPD
+             53.50.xx)
+
+          o  DEC/EDI Application Client for IBM AIX, version 2.1A (SPD 61.91.xx)
+
+          o  DEC/EDI Application Client for HP-UX, version 2.1A (SPD 61.92.xx)
+
+          Certain versions of the following products depend upon a specific ver-
+          sion of the Operating System and DECnet/OSI. Please refer to the SPD
+          of the product in question to determine which version you need:
+
+          o  DEC ACA Services (ObjectBroker) V2.5A
+
+          o  MAILbus 400 Digital UNIX for AXP V1.4
+
+          o  MAILbus 400 OpenVMS for VAX V1.4
+
+                                           21
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          GROWTH CONSIDERATIONS
+
+          The minimum hardware/software requirements for any future version of
+          this product may be different from the requirements for the current
+          version.
+
+          A DEC/EDI system using only the FileBridge Run-Time option may require
+          existing MAPs to re-compiled on a system which includes the FileBridge
+          Development option, with new releases of DEC/EDI.
+
+          DISTRIBUTION MEDIA
+
+          This product is available as part of the OpenVMS Consolidated Soft-
+          ware Distribution on CD-ROM.
+
+          The software documentation for this product is also available as part
+          of the OpenVMS Online Documentation Library on CD-ROM.
+
+          ORDERING INFORMATION
+
+          Software Licenses
+
+          DEC/EDI Application Client License:
+
+          QL-YM2A*-AA    DEC/EDI Application Client
+
+          DEC/EDI Server License:
+
+          QL-23WA*-AA    DEC/EDI FileBridge Development Component
+
+          QL-YM3A*-AA    DEC/EDI Translation Component
+
+          QL-YM4A*-AA    DEC/EDI X.400 Communication
+
+          QL-YM5A*-AA    DEC/EDI OFTP Communication
+
+          QL-YM6A*-AA    DEC/EDI Bi-Synch Communication
+
+          QL-YM7A*-AA    DEC/EDI Bi-Synch Package
+
+          QL-YM8A*-AA    DEC/EDI OFTP Package
+
+          QL-YM9A*-AA    DEC/EDI X.400 Package
+
+                                           22
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          Software Media:
+
+             QA-YM1AA-H*
+
+          Software Documentation:
+
+             QA-YM1AA-GZ
+
+          DEC/EDI Cockpit for MS-Windows:
+
+             QB-2YNAA-SA
+
+          Software Product Services:
+
+          QT-YM2A*-**    DEC/EDI Application Client
+
+          QT-23WA*-**    DEC/EDI FileBridge Development Component
+
+          QT-YM3A*-**    DEC/EDI Translation Component
+
+          QT-YM4A*-**    DEC/EDI X.400 Communications Component
+
+          QT-YM5A*-**    DEC/EDI OFTP Communication
+
+          QT-YM6A*-**    DEC/EDI Bi-Synch Communication
+
+          QT-YM7A*-**    DEC/EDI Bi-Synch Package
+
+          QT-YM8A*-**    DEC/EDI OFTP Package
+
+          QT-YM9A*-**    DEC/EDI X.400 Package
+
+          Each package license option (QL-YM7A*-**, QL-YM8A*-** and QL-YM9A*-
+          **), also includes the following:
+
+          o  DEC/EDI Application Client
+
+          o  DEC/EDI FileBridge Run-Time
+
+          o  DEC/EDI Translation Component
+
+          o  The specified Communication component for installation on a sin-
+             gle node.
+
+          * Denotes variant fields. For additional information on available li-
+          censes, services, and media, refer to the appropriate price book.
+
+          The above information is valid at time of release. Please contact your
+          local Digital office for the most up-to-date information.
+
+                                           23
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+          SOFTWARE PRODUCT SERVICES
+
+          The DEC/EDI Message Updates containing Transactions, Segments, and Data
+          Element Dictionaries for versions of ANSI X12, UCS/WINS, and EDIFACT
+          messages will be made available on a regular basis, to those customers
+          who purchase Layered Product Service for the DEC/EDI.
+
+          A variety of other service options are also available from Digital.
+          For more information, contact your local Digital office.
+
+          SOFTWARE WARRANTY
+
+          The procedures documented in the DEC/EDI documentation must be car-
+          ried out on a regular basis to ensure that DEC/EDI is properly man-
+          aged in a production environment.
+
+          Warranty for this software product is provided by Digital with the pur-
+          chase of a license for the product as defined in the Software Warranty
+          Addendum to this SPD.
+
+          The above information is valid at time of release. Please contact your
+          local Digital office for the most up-to-date information.
+
+          [R]  AT&T ISTEL and EDICT are registered trademarks of AT&T ISTEL
+               Global Messaging Services Limited.
+
+          [R]  TYMNET and EDI*NET are registered trademarks of British
+               Telecommunications Public Liability Company.
+
+          [R]  CLEOplus is a trademark of CLEO Communications Inc.
+
+          [R]  OSI is a registered trademarks of CA Management, Inc.
+
+          [R]  HP and HP-UX are registered trademarks of Hewlett-Packard
+               Company.
+
+          [R]  IBM and AIX are registered trademarks of International Busi-
+               ness Machines Corporation.
+
+          [R]  Microsoft and MS are registered trademarks of Microsoft Cor-
+               poration.
+
+          [R]  Oracle is a registered trademarks of Oracle Corporation.
+
+                                           24
+
+ 
+
+
+
+          DEC/EDI for OpenVMS VAX, Version 2.1A                 SPD 31.70.06
+
+
+
+          [R]  OSF and OSF/1 are registered trademarks of the Open Software
+               Foundation Inc.
+
+          [R]  UNIX is a registered trademark licensed exclusively by X/Open
+               Company Ltd.
+
+          [TM] Windows is a trademark of Microsoft Corporation.
+
+          [TM] GEIS and EDI*EXPRESS are trademarks of General Electric Com-
+               pany of USA.
+
+          [TM] INS and TRADANET are trademarks of International Network
+               Services Limited.
+
+          [TM] TRADACOMS is a trademark of the Article Numbering Associa-
+               tion.
+
+          [TM] Oracle Rdb, Oracle SQL/Services Oracle Rdb run-time option
+               and Oracle CDD/Repository are trademarks of Oracle Corpora-
+               tion.
+
+          [TM] The DIGITAL Logo, Alpha AXP, CI, DEC, DEC/EDI, DECforms,
+               DECnet, DECwindows, MAILbus, MicroVAX, TK, VAX, VAXclus-
+               ter, VAXft, VAXserver, VAXstation, VMSmail, and OpenVMS are
+               trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           25

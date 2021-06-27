@@ -1,0 +1,713 @@
+ 
+
+
+
+
+
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+日本語PrintServer Software for OpenVMS                           SPD 25.C2.04
+   Version 5.0ソフトウェア仕様書
+
+仕様書の包含する範囲
+
+この文書は，日本語OpenVMSのための日本語Print Server Softwareの機能仕様を述
+べたものです。ここでは，標準版PrintServer Softwareの機能については概要のみ
+の記述となりますので，標準版に含まれている基本機能については『PrintServer
+Software Version 5.0 Software Product Description (SPD 27.68.0x)』を参照して
+ください。
+
+1  日本語PrintServerのシステム構成
+
+日本語PrintServer印刷システムは，
+
+   日本語PrintServerハードウェア，
+   サポーティング・ホスト・ソフトウェア
+   プリント・クライアント・ソフトウェア
+
+から構成されます。
+
+サポーティング・ホスト      プリント・クライアント1    プリント・クライアント2
+┌─────────┐  ┌─────────────┐┌───────────┐
+│日本語OpenVMS AXP │  │日本語OpenVMS             ││日本語ULTRIX/UWS      │
+│      または      │  │日本語DECprint Supervisor ││(プリント・クライアン │
+│日本語OpenVMS AXP │  │              for OpenVMS ││ト機能はOSの一部)     │
+└────┬────┘  └──────┬──────┘└────┬──────┘
+          │                          │                        │
+─────┴───┬─────────┴─────┬──────┴── Ethernet
+                  │                              │
+      ┌─────┴─────┐    ┌──────┴──────┐
+      │ 日本語PrintServer 32 │    │ 日本語PrintServer 17/600 │
+      │     ハードウェア     │    │       ハードウェア       │
+      └───────────┘    └─────────────┘
+
+
+                                    DIGITAL                         1994年9月
+
+                                                                  AE-PM1VC-TE
+
+ 
+
+
+ 日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+ Version 5.0ソフトウェア仕様書
+
+
+その主な特徴は，
+
+1. 日本語PrintServerハードウェア
+
+   o  日本語PrintServer 17/600
+
+      -  600ドット/インチおよび400ドット/インチの解像度を持つ中速レーザ・プリ
+         ンタ
+
+      -  43書体の英字アウトライン・フォントと2書体の日本語アウトライン・フォ
+         ントをサポート。オプションで，日本語5書体をサポート
+
+   o  日本語turbo PrintServer (LPS20-GJ)
+
+   o  日本語PrintServer 32 (LPS32-AJ,LPS32-CJ)
+
+   o  日本語PrintServer 40 (LPS40-AJ)
+
+   o  日本語PrintServer 40 Plus (LPS40-DJ)
+
+      -  300ドット/インチの解像度を持つ高速レーザ・プリンタ
+
+      -  29書体の英字アウトライン・フォントと2書体の日本語アウトライン・フォ
+         ントをサポート
+
+日本語PrintServer 17/600ではPostScript[TM](ポストスクリプト)レベル2ソフトウェ
+ア，他の日本語Print Serverではポストスクリプト・レベル1ソフトウェアをそれぞれ
+搭載。制御システム・プログラムに内蔵されたポストスクリプト・インタプリタが(グ
+ラフィック・コントローラを使用して)，ページ・イメージをフレーム・バッファに作
+り出します。
+
+2. サポーティング・ホスト・ソフトウェア
+
+   o  制御システム・プログラムは，日本語PrintServerの起動時に自動的にサポー
+      ティング・ホスト(Ethernet上のOpenVMSノード)からPrintServerにダウンライ
+      ン・ロードされます
+
+   o  サポーティング・ホストから，PrintServerの管理を行うことができます。
+
+3. プリント・クライアント・ソフトウェア
+
+   o  Ethernet上の，どのプリント・クライアント(OpenVMS, ULTRIX/UWS, OSF/1)の
+      ユーザからも印刷が指定できます。OpenVMSでは日本語DECprint Supervisor
+      for OpenVMSが，ULTRIX/UWSではオペレーティング・システムが，OSF/1では日
+      本語PrintServerソフトウェアfor DEC OSF/1システムが，プリント・クライア
+      ント機能を提供します。
+
+   o  ネットワーク・プロトコルとして，OpenVMSおよびULTRIX/UWSからはTCP/IPおよ
+      びDECnetが，OSF/1からはTCP/IPが使用できます。
+
+   o  プリント・クライアント・ユーザに，既存のデータ・タイプをPostScriptに自
+      動的に変換するトランスレータ・ソフトウェアを提供します(プリント・クライ
+      アントのバージョンは必須ソフトウェアを参照してください)。
+
+                                       2
+
+ 
+
+
+日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+Version 5.0ソフトウェア仕様書
+
+
+日本語DECprint Supervisor for OpenVMSについては，「ソフトウェア仕様書(SPD
+26.N3.xx)」を，日本語ULTRIXオペレーティング・システムと日本語UWSについてはそ
+れぞれの「ソフトウェア仕様書(SPD 25.D3.xxおよびSPD 25.D7.xx)」を，日本語DEC
+PrintServerソフトウェアfor DEC OSF/1システムについては，「ソフトウェア仕様書
+(SPD 47.98.xx)」を参照してください。
+
+
+2  製品概要
+
+日本語PrintServer Software for OpenVMSは，日本語PrintServerハードウェア上で動
+作するPrintServerソフトウェアと，日本語PrintServerをホスト上から管理するマネ
+ージメント・クライアント・ユーティリティから構成されます。
+
+1. PrintServerソフトウェア
+
+PrintServerソフトウェアはサポーティング・ホスト上にインストールされ，日本語
+PrintServerハードウェアの電源投入時に，自動的にPrintServerにダウンライン・ロ
+ードされます。このソフトウェアは3つの要素からなります。
+
+   o  通信ソフトウェア：クライアントとPrintServer間の通信を制御します。
+
+   o  コンソール・クライアント・ユーティリティ：LPS40-xxのコンソール・インタ
+      ーフェイス，およびその他のPrintServerプリンタのフロント・パネル・インタ
+      ーフェイスをサポートするソフトウェアです。
+
+   o  ポストスクリプト・ソフトウェア：ポストスクリプトと呼ばれるページ記述言
+      語で書かれた印刷データから，ビットマップ・イメージを作成し，プリント・
+      エンジンに送るソフトウェアです。
+
+      以下にその主な機能を述べます。
+
+      a. 図形描画機能
+
+      b. イメージ描画機能
+
+      c. 文字出力機能
+
+      d. 座標変換機能
+
+      e. 内蔵フォント
+
+      以下のフォントが標準でサポートされています。
+
+      -  日本語PrintServer 17/600では43種，それ以外のPrintServerは29種の英文
+         用アウトライン・フォント
+
+      -  リュウミンL-KL[TM]のJIS非漢字およびJIS第1，第2水準漢字アウトライン・
+         フォント，および半角ローマ字，カタカナ・フォント
+
+      -  中ゴシックBBB[TM]のJIS非漢字およびJIS第1，第2水準漢字アウトライン・
+         フォント，および半角ローマ字，カタカナ・フォント
+
+      オプションで5書体の日本語アウトライン・フォントをサポートしています(日
+      本語PrintServer 17/600プリンタのみ)
+
+                                       3
+
+ 
+
+
+ 日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+ Version 5.0ソフトウェア仕様書
+
+
+2. リモート・コンソール・クライアント・ユーティリティ
+
+リモート・コンソール・クライアント・ユーティリティは，サポーティング・ホス
+ト上で動作します。日本語PrintServer 40 (LPS40-AJ)および日本語PrintServer 40
+plus (LPS40-DJ)のコンソール・インターフェイスと同じインターフェイスで，ホスト
+上からPrintServerの管理を可能にします。
+
+本バージョンより，日本語DECwindows Motif上で動くグラフィカル・ユーザ・インタ
+ーフェイス(GUI)もサポートされます。
+
+3. マネージメント・クライアント・ユーティリティ
+
+マネージメント・クライアント・プロセスはサポーティング・ホスト上でプロセスと
+して稼動し，PrintServerブート時にはPrintServerソフトウェアをダウン・ロード
+し，プリンタの構成サービスも行います。主な機能として次のものがあります。
+
+   o  日本語PrintServerソフトウェアのダウン・ロード
+
+   o  日本語PrintServer 17/600プリンタに対するフォント・フォルティング
+
+   o  PrintServer構成サービス
+
+   o  アカウント情報の管理
+
+   o  ログ情報の管理
+
+3  インストレーション
+
+本ソフトウェアは，弊社ソフトウェア製品のインストールの経験の十分ある方なら，
+容易にインストールできますが，PrintServerハードウェアのインストレーションを含
+めた，当社のインストレーション・サービスをご利用になることをお勧めします。
+
+4  必要なハードウェア
+
+適用されるAlpha AXPプロセッサ
+
+Alpha AXP:
+     DEC 2000モデル300 AXPワークステーション,
+     DEC 2000モデル500 AXPワークステーション,
+
+
+
+
+
+
+
+
+
+                                       4
+
+ 
+
+
+日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+Version 5.0ソフトウェア仕様書
+
+
+
+     DEC 3000モデル300 AXPワークステーション,
+     DEC 3000モデル300L AXPワークステーション,
+     DEC 3000モデル300X AXPワークステーション,
+     DEC 3000モデル300LX AXPワークステーション,
+     DEC 3000モデル400 AXPワークステーション,
+     DEC 3000モデル400 AXPサーバ,
+     DEC 3000モデル500 AXPワークステーション,
+     DEC 3000モデル500 AXPサーバ,
+     DEC 3000モデル500X AXPワークステーション,
+     DEC 3000モデル600 AXPワークステーション,
+     DEC 3000モデル600 AXPサーバ,
+     DEC 3000モデル800 AXPワークステーション,
+     DEC 3000モデル800 AXPサーバ,
+     DEC 4000モデル600 AXPシリーズ,
+     DEC 4000モデル700 AXPシリーズ,
+     DEC 7000モデル600 AXPシリーズ,
+     DEC 10000モデル600 AXPシリーズ
+
+適用されるVAXプロセッサ
+
+VAX:    VAX 4000モデル100,
+        VAX 4000モデル200,
+        VAX 4000モデル300,
+        VAX 4000モデル400,
+        VAX 4000モデル500,
+        VAX 4000モデル600,
+        VAX 4000モデル700,
+        VAX 6000モデル200シリーズ,
+        VAX 6000モデル300シリーズ,
+        VAX 6000モデル400シリーズ,
+        VAX 6000モデル500シリーズ,
+        VAX 6000モデル600シリーズ,
+        VAX 7000モデル600シリーズ,
+        VAX 8200, VAX 8250, VAX 8300,
+        VAX 8350, VAX 8500, VAX 8530,
+        VAX 8550, VAX 8600, VAX 8650,
+        VAX 8700, VAX 8800, VAX 8810,
+        VAX 8820, VAX 8830, VAX 8840,
+        VAX 9000モデル110, VAX 9000モデル210,
+        VAX 9000モデル300シリーズ,
+        VAX 9000モデル400シリーズ,
+        VAX10000モデル600シリーズ,
+        VAXftモデル110, VAXftモデル310,
+        VAXftモデル410, VAXftモデル610,
+
+
+
+                                       5
+
+ 
+
+
+ 日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+ Version 5.0ソフトウェア仕様書
+
+
+
+        VAXftモデル612,
+        VAX-11/750, VAX-11/780, VAX-11/785
+
+MicroVAX:   MicroVAX II, MicroVAX 2000,
+            MicroVAX 3100モデル10/10E,
+            MicroVAX 3100モデル20/20E,
+            MicroVAX 3100モデル30/40,
+            MicroVAX 3100モデル80,
+            MicroVAX 3100モデル90,
+            MicroVAX 3300, MicroVAX 3400,
+            MicroVAX 3500, MicroVAX 3600,
+            MicroVAX 3800, MicroVAX 3900
+
+
+VAXstation: VAXstation II, VAXstation 2000,
+            VAXstation 3100モデル30/40,
+            VAXstation 3100モデル38/48,
+            VAXstation 3100モデル76,
+            VAXstation 3200, VAXstation 3500,
+            VAXstation 3520, VAXstation 3540,
+            VAXstation 4000 VLC,
+            VAXstation 4000モデル60,
+            VAXstation 4000モデル90
+
+VAXserver:  VAXserver 3100, VAXserver 3300
+            VAXserver 3400, VAXserver 3500,
+            VAXserver 3600, VAXserver 3602,
+            VAXserver 3800, VAXserver 3900,
+            VAXserver 4000モデル200,
+            VAXserver 4000モデル300,
+            VAXserver 4000モデル500,
+            VAXserver 6000モデル210,
+            VAXserver 6000モデル220,
+            VAXserver 6000モデル310,
+            VAXserver 6000モデル320,
+            VAXserver 6000モデル410,
+            VAXserver 6000モデル420,
+            VAXserver 6000モデル510,
+            VAXserver 6000モデル520,
+            VAXserver 6000モデル610,
+            VAXserver 6000モデル620,
+            VAXserver 6000モデル630
+
+
+
+
+
+                                       6
+
+ 
+
+
+日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+Version 5.0ソフトウェア仕様書
+
+
+適用されないプロセッサ
+
+o  MicroVAX I
+
+o  VAXstation I
+
+o  VAX-11/725
+
+o  VAX-11/730
+
+o  VAX-11/782
+
+o  VAXstation 8000
+
+その他の必要なハードウェア
+
+o  上記のVAXシステムに対して
+
+   -  DELUS，DEUWA，DEBNT，またはDEBNA    Ethernetコントローラ・インターフェ
+      イス
+
+   -  1600BPI磁気テープ・ドライブまたはTK50，TK70テープ・ドライブ
+
+   -  システム・ディスク
+
+o  MicroVAX，VAXstationに対して
+
+   -  DEQNA，DELQA，DESQA，またはDESVA    Ethernetコントローラ・インターフェ
+      イス
+
+   -  TK50またはTK70テープ・ドライブ
+
+   -  RD54またはRZシステム・ディスク
+
+o  その他
+
+   -  以下の日本語PrintServerハードウェアのうちのどれか1つ以上
+
+      o  日本語PrintServer 17/600
+
+      o  日本語PrintServer 32 (LPS32-AJ,LPS32-CJ)
+
+      o  日本語turbo PrintServer (LPS20-GJ)
+
+      o  日本語PrintServer 40 (LPS40-AJ)
+
+      o  日本語PrintServer 40 Plus (LPS40-DJ)
+
+       注意: LPS40-AJ/LPS40-DJでは，両面印刷はできません。
+
+   -  プリント・クライアント・システム(サポーティング・ホストを兼ねてもよい)
+
+   -  サポーティング・ホスト，クライアント，
+      PrintServerハードウェアを接続するDECnet Ethernetハードウェア(イーサネッ
+      ト・ケーブル，H4000，DELNI，DESTA，Ethernetトランシーバ・ケーブルなど)
+
+                                       7
+
+ 
+
+
+ 日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+ Version 5.0ソフトウェア仕様書
+
+
+必要なディスク容量
+
+(Block Cluster Size=1の場合)
+Alpha AXPおよびVAXシステム
+
+【インストール時:】
+
+ベース・インストレーション      62,000ブロック
+                                (31Mバイト)
+
+オプショナル・フォント・イン    57,000ブロック
+ストレーション                  (28.5Mバイト)
+
+フル・インストレーション        116,000ブロック
+                                (58Mバイト)
+
+【システム運用時:】
+
+ベース・インストレーション      61,000ブロック
+                                (30.5Mバイト)
+
+オプショナル・フォント・イン    54,000ブロック
+ストレーション                  (27Mバイト)
+
+フル・インストレーション        115,000ブロック
+                                (57.5Mバイト)
+
+必要なディスク容量は，インストレーションの種類によって異なります。インストレ
+ーションの種類については，『日本語PrintServer Software for OpenVMSインストレ
+ーション・ガイド』を参照してください。
+
+5  オプション・ハードウェア
+
+PrintServerハードウェアをEthernetに複数接続して，1つのサポーティング・ホスト
+から複数のPrintServerを使用することができます。
+
+6  クラスタ環境
+
+本レイヤード製品は，正規のライセンスを持つクラスタ構成*の上にインストールされ
+ている場合，機能上の制限を受けません。本ソフトウェアで必要とされるハードウェ
+アについては「必要なハードウェア」の項に記述されているとおりです。
+
+*  クラスタ構成については『VAXcluster Software for OpenVMS VAX Software
+   Product Description (SPD 29.78.xx)』または『VMScluster Software for
+   OpenVMS AXP Software Product Description (SPD 42.18.xx)』に詳しく説明
+   されています。また，この構成にはCI, EthernetおよびMixed Interconnect構成が
+   含まれます。
+
+                                       8
+
+ 
+
+
+日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+Version 5.0ソフトウェア仕様書
+
+
+7  必須ソフトウェア
+
+Alpha AXPシステム
+
+ターミナル対応のシステムの場合
+
+o  日本語OpenVMS AXPオペレーティング・システムV1.5，V6.1
+
+日本語DECwindows Motif[R]が動作しているワークステーションの場合
+
+o  日本語OpenVMS AXPオペレーティング・システムV1.5，V6.1
+
+o  日本語DECwindows Motif for OpenVMS AXP V1.2
+
+VAXシステム
+
+ターミナル対応のシステムの場合
+(日本語DECwindowsインターフェイスなし)
+
+o  日本語OpenVMS VAXオペレーティング・システムV5.5，V6.0，V6.1
+
+日本語VWSが動作しているワークステーションの場合
+
+o  日本語OpenVMS VAXオペレーティング・システムV5.5，V6.0，V6.1
+
+o  日本語VMSワークステーション・ソフトウェアV4.4
+
+日本語DECwindowsが動作しているワークステーションの場合
+
+o  日本語OpenVMS VAXオペレーティング・システムV5.5，V6.0，V6.1 (および日本語
+   OpenVMS DECwindowsの必要な構成要素)
+
+日本語DECwindows Motif[R]が動作しているワークステーションの場合
+
+o  日本語OpenVMS VAXオペレーティング・システムV5.5，V6.0，V6.1 (および日本語
+   OpenVMS DECwindowsの必要な構成要素)
+
+o  日本語DECwindows Motif for OpenVMS VAX V1.1〜V1.2
+
+レイヤード・プロダクト
+
+o  DECnet-Phase IVおよびPhase V
+
+o  以下のどれかのプリント・クライアント・ソフトウェアが最低1つ以上，同一のネ
+   ットワークにインストールされていなければなりません。
+
+-  OpenVMSの場合
+
+   o  日本語DECprint Supervisor V1.1 for OpenVMS
+
+-  ULTRIX/UWSの場合
+
+   o  日本語ULTRIX/UWS V4.2，V4.3，V4.4
+
+         VAX:
+            JULPRINT4xx
+
+                                       9
+
+ 
+
+
+ 日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+ Version 5.0ソフトウェア仕様書
+
+
+         RISC:
+            JDTPRINT4xx
+
+
+がインストールされていなければなりません。
+
+   o  OSF/1の場合
+
+      -  日本語PrintServerソフトウェアfor OSF/1 AXPシステム，V4.2
+
+OpenVMSテーラリング
+
+本レイヤード・プロダクトの全機能を得るには，次のOpenVMS構成要素が必要です。
+
+o  OpenVMS Required Saveset
+
+o  Network Support
+
+o  System Programming Support
+
+o  Secure User's Environment
+
+o  Utilities
+
+OpenVMSのクラスおよびテーラリングについては，『OpenVMS VAX Operating System
+Software Product Description (SPD 25.01.xx)』または『OpenVMS AXP Operating
+System Software Product Description (SPD 41.87.xx)』を参照してください。
+
+8  オプション・フォント
+
+オプションで以下5書体の日本語アウトライン・フォントをサポートしています(日本
+語PrintServer 17/600プリンタのみ)。
+
+-  太ミンA101[TM]
+
+-  太ゴB101[TM]
+
+-  じゅん101[TM]
+
+-  見出ミンMA31[TM]
+
+-  見出ゴMB31[TM]
+
+9  オプション・ソフトウェア
+
+なし
+
+10  バージョンアップの考慮
+
+本製品の将来のバージョンでは，必要なハードウェアおよびソフトウェアの最小構成
+が変更されることがあります。
+
+                                      10
+
+ 
+
+
+日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+Version 5.0ソフトウェア仕様書
+
+
+11  提供媒体
+
+Alpha AXPシステム
+
+o  CD-ROM
+
+本製品は『日本語OpenVMS AXPソフトウェア・ライブラリ』としてCD-ROMで提供されま
+す。ブックリーダ形式のオンライン・ドキュメントも提供されます。
+
+VAXシステム
+
+o  TK50ストリーム・テープ
+
+本製品は『日本語OpenVMS VAX Consolidated Software Distribution』の一部として
+CD-ROMでも提供されます。
+
+本製品のソフトウェア・ドキュメントは『日本語OpenVMS VAX Online Documentation
+Library』の一部としてCD-ROMでも提供されます。
+
+12  注文情報
+
+提供されるライセンス，サービスおよび媒体の詳細については，最寄りの日本DECの各
+支店/営業所にお問い合わせください。
+
+13  ソフトウェア・ライセンス
+
+本ソフトウェアは，日本DEC標準販売約款中のライセンス規定に基づいて提供されま
+す。
+
+日本DECのライセンス条件とその方針についての詳細は，最寄りの日本DECの各支店/営
+業所にお問い合わせください。
+
+本ソフトウェアのライセンスは，PrintServerハードウェアに付属しています。このラ
+イセンスにより，PirntServerハードウェアの接続されたローカル・エリア・ネットワ
+ーク上のどれか1つのCPUまたは装置構成から1つのPrintServerに対して本ソフトウェ
+アを使用することができます。
+
+ライセンス管理機能
+
+本レイヤード製品はOpenVMSライセンス管理機能(LMF)をサポートしていません。
+
+14  ソフトウェア製品サービス
+
+日本DECでは，さまざまなサービス・オプションを提供しています。詳細については，
+最寄りの日本DEC各支店/営業所にお問い合わせください。
+
+
+
+                                      11
+
+ 
+
+
+ 日本語PrintServer Software for OpenVMS                          SPD 25.C2.04
+ Version 5.0ソフトウェア仕様書
+
+
+15  保証
+
+本ソフトウェアについては，日本DEC所定のソフトウェア保証基準に定められた保証が
+提供されます。
+
+上記の内容は，リリース時点の情報です。最新の情報については，日本DECの各支
+店/営業所にお問い合わせください。
+
+(c) 1994 Digital Equipment Corporation Japan. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_______________________
+ [TM] PostScript(ポストスクリプト)は，Adobe Systems Incorporated (アドビ シス
+      テムズ社)の登録商標です。
+ [TM] リュウミンL-KL，中ゴシック-BBB，太ミンA101，太ゴB101，じゅん101，見出ミ
+      ンMA31および見出ゴMB31は，株式会社モリサワの商標です。
+ [TM] Motifは，Open Software Foundation社の商標です。
+
+                                      12

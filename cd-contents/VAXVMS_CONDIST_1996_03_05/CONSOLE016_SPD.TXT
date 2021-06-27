@@ -1,0 +1,715 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  POLYCENTER Console Manager, Version 1.6 SPD 42.90.04
+
+ DESCRIPTION
+
+ This SPD describes the following products - POLYCENTER[TM] Console Man-
+ ager for OpenVMS[TM] VAX[TM] (formerly named VAXCluster[TM] Console
+ System) and POLYCENTER Console Manager for OpenVMS Alpha and Digital
+ UNIX[R] (formerly known as DEC[TM] OSF/1[R]).
+
+ POLYCENTER Console Manager V1.5 for RISC ULTRIX[TM] will continue to
+ be supported, but is not upgraded to V1.6. Please see the SPD for POLYCENTER
+ Console Manager V1.5 (42.90.03) for the product description.
+
+ POLYCENTER Console Manager (PCM) is a layered software product which
+ enables a host system to manage, monitor and control client console
+ devices. PCM can support up to 200 systems/devices of any platform type
+ that sends ASCII data over RS232C direct, TELNET or LAT[TM] connec-
+ tions which support XON /XOFF and I/O buffering. PCM also supports the
+ use of a pseudo-terminal interface that provides a "soft" console for
+ use with user-defined application programs.
+
+ Examples of devices which can be managed are:
+
+ o  DECsystem[TM] computers
+
+ o  VAX systems or computers
+
+ o  Third-party systems
+
+ o  PrintServers
+
+ o  LAN bridges
+
+ o  Power distribution and air conditioning units
+
+                               DIGITAL                     June 1995
+
+                                                         AE-PRD4E-TE
+
+ 
+
+ PCM provides a centralized point for system console services. PCM has
+ built in security, restricting full console access to qualified users.
+ The functionality includes:
+
+ o  Shutting down or rebooting the serviced systems, as supported by
+    hardware and/or operating system
+
+ o  Running diagnostics
+
+ o  Performing standalone backup procedures
+
+ o  Viewing console output
+
+ o  Reviewing historical console data
+
+ o  Retrieving historical data for analysis
+
+ o  Searching for console information
+
+ o  Consolidation of data and activities between the PCM system and ser-
+    viced hosts
+
+ o  Scanning of incoming text for significant event information
+
+ o  Event notification services
+
+ o  Graphical iconic display of the serviced systems
+
+ INSTALLATION
+
+ PCM software can be installed on any Digital workstation system or server
+ system as identified in this SPD. The devices serviced by PCM are con-
+ nected to the PCM host platform via:
+
+ o  Direct connection to the PCM host platform using a port of a se-
+    rial line interface device (DHT)
+
+ o  Host-initiated LAT connection to a terminal server which is acces-
+    sible to the PCM host system
+
+ o  Host-initiated TELNET connection to a terminal server which is ac-
+    cessible to the PCM host system
+
+                                  2
+
+ 
+
+ o  A PCM host application program which takes its input from a pseudo-
+    terminal port assigned to PCM
+
+ SOFTWARE COMPONENTS
+
+ PCM consists of the following components:
+
+ o  Console Controller Processes - Manages groups of console lines. The
+    processes log to disk data received on those lines, searching for
+    the occurrence of user-defined text strings which form PCM events.
+    Matches are dispatched to the event notification services process.
+    The console controller processes also control the user connect and
+    monitor functions.
+
+ o  Central Control Coordinator (C3) Interface - An X Window System[TM]
+    (X-Windows) OSF/Motif[R] interface that provides a logical view of
+    the controlled systems. From this interface, system managers can
+    monitor all console activities and respond to events detected on
+    the console. Console events are reflected by the node icons in the
+    display and direct the system manager to systems needing attention.
+    Other interactive interfaces can also be activated from the cen-
+    tral control coordinator Interface.
+
+    Note: Only Color Graphic display terminals are supported.
+
+ o  Full functionality with command line interface.
+
+ o  Monitor Interface - Enables system managers to monitor the serviced
+    systems. It monitors these systems by displaying multiple windows
+    of information. System managers can connect the primary window to
+    a single system or display log data in this window while monitor-
+    ing other nodes. This interface is equivalent to a subset of the
+    C3 interface functionality, but is provided on a character cell ter-
+    minal device.
+
+ o  Connect Interface - Enables system managers to connect to a man-
+    aged system, making their terminal the dedicated console. Once con-
+    nected, all keystrokes, except for the control keys defined to pro-
+    vide the PCM exit, escape and break characters, are transmitted di-
+    rectly to the console line of the node to which PCM is connected.
+
+                                  3
+
+ 
+
+    While connected to serviced system, the system manager sees nor-
+    mal console behavior. The only exceptions to normal behavior are
+    the configurable control characters reserved to enable the oper-
+    ator to escape back to the PCM monitor, exit to the operating sys-
+    tem shell or CLI, and send a break character to the managed sys-
+    tem. This interface is equivalent to a subset of the C3 interface
+    functionality, but is provided on a character cell terminal device.
+
+    Note: More than one system manager can connect to the same serviced
+    system. However, connections made after the first are placed into
+    "Read-Only" mode because PCM is unable to execute commands on that
+    console.
+
+ o  Event Notification Services (ENS) - A suite of applications for in-
+    terfacing with a wide range of communications media for PCM event
+    notification. Event notification services provide a highly flex-
+    ible mechanism for notifying system managers and other operations
+    personnel of events occurring on the serviced systems. The events
+    reported and the notification mechanism are highly customizable to
+    fit the individual requirements of the system management domain.
+
+ o  Callable Interface - An API which allows users to interface their
+    own programs to the event notification services. Only programs writ-
+    ten in C are supported.
+
+ o  Configuration Editor - Allows operations staff to create and main-
+    tain the configuration information.
+
+ o  Configuration Database - Contains information about the users and
+    hosts being serviced by PCM.
+
+ o  Log Files - PCM maintains console, event and time stamp log files
+    as the permanent historical records of console data from the ser-
+    viced systems. These files may be spread over multiple disks for
+    performance improvements.
+
+
+
+
+
+                                  4
+
+ 
+
+ FEATURES
+
+ o  Supports up to 200 console connections to any systems or devices
+    that transmits ASCII data over a RS232 line which supports XON/XOFF
+    and I/O buffering. The maximum supported console terminal speed is
+    19.2K baud.
+
+ o  All data received by PCM from connected systems or devices is logged
+    to a disk file for the respective system or device, and is time stamped
+    by PCM.
+
+ o  Operators can connect to the console port of any system serviced
+    by PCM from any terminal connected to the PCM host.
+
+ o  PCM can control remote systems or devices in a LAN via LAT host-
+    initiated connections over Ethernet using LAT terminal servers.
+
+ o  PCM can control remote systems or devices in a WAN via TELNET con-
+    nections over an internet, using terminal servers which support TELNET
+    connections.
+
+ o  Security is provided to allow the PCM Administrator to restrict user
+    access.
+
+ o  PCM detects events by scanning console text messages and compar-
+    ing them with predefined literal strings or expressions contained
+    in the configuration database.
+
+ o  This graphical display uses color to indicate the severity of an
+    event. It also allows the user to easily access a console by click-
+    ing with a mouse to activate a PCM interface.
+
+ o  Hierarchical display of groups of systems from the C3 interface.
+    Each group is represented by an expandable icon which provides mon-
+    itoring and managing at a higher level. Click on group icon to get
+    system level detail.
+
+ o  C3 interface supports use of Background bitmaps.
+
+ o  Users are alerted of critical system messages by changing icons us-
+    ing six ISO colors or other user-defined actions.
+
+                                  5
+
+ 
+
+ o  Facilities to archive old sections of the PCM log files to another
+    disk.
+
+ o  Conversion utility to aid upgrade from VCS Version 1.4 to PCM Ver-
+    sion 1.6.
+
+ o  Conversion utility to aid upgrade from PCM Version 1.0 to PCM Ver-
+    sion 1.6.
+
+ o  Facilities to provide loose integration with NetView[R] (on the Dig-
+    ital UNIX platform only.)
+
+ o  PCM can be run on more than one node in a VAXcluster. However, only
+    one, cluster-wide, instance of the configuration editor can mod-
+    ify the configuration database, even though two different instances
+    of the database are being edited.
+
+ HARDWARE REQUIREMENTS
+
+ VAX Processors Supported:
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+           VAX 4000 Model 700
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+
+
+
+                                  6
+
+ 
+
+
+           VAX 8200[TM], VAX 8250[TM], VAX 8300[TM],
+           VAX 8350[TM], VAX 850[TM]0, VAX 853[TM]0,
+           VAX 8550[TM], VAX 8600[TM], VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000[TM] Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+ MicroVAX[TMicroVAX 3100 Model 10/10E,
+           MicroVAX 3100 Model 20/20E,
+           MicroVAX 3100 Model 30,
+           MicroVAX 3100 Model 40,
+           MicroVAX 3100 Model 80,
+           MicroVAX 3100 Model 90,
+           MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+ VAXstationVAXstation 3100 Model 30,
+           VAXstation 3100 Model 38,
+           VAXstation 3100 Model 40,
+           VAXstation 3100 Model 48,
+           VAXstation 3100 Model 76,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90
+
+ VAXserver[VAXserver 3100, VAXserver 3300,
+
+
+
+
+                                  7
+
+ 
+
+
+           VAXserver 3400, VAXserver 3500,
+           VAXserver 3600, VAXserver 3602,
+           VAXserver 3800, VAXserver 3900
+
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 500
+           VAXserver 4000 Model 600
+           VAXserver 4000 Model 700
+
+           VAXserver 6000 Model 210,
+           VAXserver 6000 Model 220,
+           VAXserver 6000 Model 310,
+           VAXserver 6000 Model 320,
+           VAXserver 6000 Model 410,
+           VAXserver 6000 Model 420,
+           VAXserver 6000 Model 510,
+           VAXserver 6000 Model 520,
+           VAXserver 6000 Model 610,
+           VAXserver 6000 Model 620,
+           VAXserver 6000 Model 630
+
+ Alpha Processors Supported:
+
+ The PCM software is supported on the following Alpha host platforms,
+ for both OpenVMS Alpha and Digital UNIX system. Where the platform is
+ an Alpha AXP workstation, the workstation must have a color monitor
+ for the graphics display to work.
+
+             DEC 2000 Model 300 AXP Server,
+             DEC 2000 Model 300 AXP Workstation,
+             DEC 2000 Model 500 AXP Server,
+             DEC 2000 Model 500 AXP Workstation,
+
+             DEC 3000 Model 300 AXP Workstation,
+             DEC 3000 Model 300 AXP Server,
+
+
+
+                                  8
+
+ 
+
+
+             DEC 3000 Model 300L AXP Workstation,
+             DEC 3000 Model 300L AXP Server,
+             DEC 3000 Model 400 AXP Workstation,
+             DEC 3000 Model 400 AXP Server,
+             DEC 3000 Model 500 AXP Workstation,
+             DEC 3000 Model 500 AXP Server
+             DEC 3000 Model 500X AXP Workstation,
+             DEC 3000 Model 500X AXP Server
+             DEC 3000 Model 600 AXP Workstation,
+             DEC 3000 Model 600 AXP Server
+             DEC 3000 Model 800 AXP Workstation,
+             DEC 3000 Model 800 AXP Server
+
+             DEC 4000 Model 610 AXP System
+             DEC 4000 Model 710 AXP System
+
+             DEC 7000 Model 610 AXP System
+
+             DEC 10000 Model 610 AXP System
+
+ Managed System Restrictions
+
+ The PCM software cannot currently support a DECstation[TM] system as
+ a managed system. This is due to a feature of the RISC ULTRIX X-Server
+ which can not support the console device being directed to a physi-
+ cal tty port on the system rather than the graphics device.
+
+ Remote system halt requires hardware and/or operating system support
+ to transmit a signal.
+
+ Other Hardware Required
+
+ A CD-ROM drive is required for all platforms.
+
+
+
+
+
+
+                                  9
+
+ 
+
+ Disk Space Requirements
+
+ The tables below summarize the use of disk space by each subset in-
+ cluded with the PCM product on each of the supported platform types.
+
+ The sizes quoted are approximate. The actual sizes may vary depend-
+ ing on the installer's system environment, configuration, and soft-
+ ware options.
+
+ For OpenVMS VAX Systems:
+
+ OpenVMS VAX systems store all the base system files in the disk vol-
+ ume pointed to by the logical name CONSOLE$ROOT. The installer is al-
+ lowed to define this logical name during the product installation.
+
+ ___________________________________________________________________
+ Device_____________________Req.Space_______________________________
+
+ SYS$SYSDEVICE              600 blocks
+ CONSOLE$ROOT_______________59,000_blocks___________________________
+
+ For OpenVMS Alpha Systems:
+
+ OpenVMS VAX systems store all the base system files in the disk vol-
+ ume pointed to by the logical name CONSOLE$ROOT. The installer is al-
+ lowed to define this logical name during the product installation.
+
+ ___________________________________________________________________
+ Device_____________________Req.Space_______________________________
+
+ SYS$SYSDEVICE              600 blocks
+ CONSOLE$ROOT_______________68,000_blocks___________________________
+
+ For Digital UNIX Systems:
+
+ Disk space required for use (permanent):
+
+
+
+
+                                 10
+
+ 
+
+
+ ___________________________________________________________________
+
+ All         Root           /               0    MB
+ DCROSFBASE  Usr            /usr/opt        6    MB
+             Var            /var/opt        0.2  MB
+ DCROSFBIN   Usr            /usr/opt        6    MB
+             Var            /var/opt        0.1  MB
+ DCROSFENS   Usr            /usr/opt        1    MB
+             Var            /var/opt        0.1  MB
+ DCROSFMAN   Usr            /usr/man        0.9  MB
+ DCROSFMAPS  Var            /var/opt       19    MB
+ DCRREL______Usr____________/usr/opt________0.03_MB_________________
+
+ Note: These counts refer to the disk space required for the product base
+ files, it does not take account of the requirements for the log and
+ archive data collected by the PCM software.
+
+ The sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options.
+
+ Memory Requirements
+
+ PCM performance is highly dependent upon the amount of physical mem-
+ ory present. A minimum of 32 MB memory is required. This requirement
+ will increase with the number of serviced systems and the number of
+ concurrent X-Windows run from the PCM software.
+
+ Terminal Server Requirements
+
+ The following terminal servers are supported for providing LAT and TELNET
+ PCM connections:
+
+ ___________________________________________________________________
+ Terminal_Server__LAT________TELNET_________________________________
+
+ DECserver 200    X
+ DECserver 300    X          X
+
+
+                                 11
+
+ 
+
+
+ ___________________________________________________________________
+
+ DECserver 90L    X
+ DECserver 90L+   X
+ DECserver 90TL   X          X
+ DECserver 90M    X          X
+ DECserver 500    X
+ DECserver 550    X
+ DECserver 700    X          X
+ DECserver 900TM  X          X
+ LATprint_________X_________________________________________________
+
+ Note: TELNET Break functionality is only supported on the DECserver[TM]
+ 90TL, DECserver 90M, DECserver 900 and the DECserver 700 with the Net-
+ work Access Software. If using TELNET the terminal server must sup-
+ port the Internet Working Group RFC 859 STATUS option in order to sup-
+ port Line Lost Notification.
+
+ SOFTWARE REQUIREMENTS
+
+ For OpenVMS VAX Systems:
+
+ o  OpenVMS V6.1
+
+ o  OpenVMS V6.2
+
+ o  DEC TCP/IP Services for OpenVMS V3.2 (Optional)
+
+ o  OSF/Motif V1.2
+
+ For OpenVMS Alpha Systems:
+
+ o  OpenVMS V6.1
+
+ o  OpenVMS V6.2
+
+ o  DEC TCP/IP Services for OpenVMS V3.2 (Optional)
+
+ o  TGV Multinet V3.3 Rev A (Optional)
+
+ o  OSF/Motif V1.2
+
+                                 12
+
+ 
+
+ For Digital UNIX Systems:
+
+ o  Digital UNIX V3.0
+
+ o  Digital UNIX V3.2
+
+ o  OSF/Motif V1.2
+
+ o  C++ shareable libraries (no additional PAK required)
+
+ Note: The optional products DEC TCP/IP Services for OpenVMS or TGV Multi-
+ net are required on OpenVMS platforms in order to make use of the TELNET
+ connection mechanism. Only one of the options is required to provide
+ the TELNET support.
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ TK50 and/or CD-ROM, depending on the platform.
+
+ This product is also available as part of the Consolidated Software
+ Distribution on CD-ROM.
+
+ The software documentation for this product is also available as part
+ of the Online Documentation Library on CD-ROM.
+
+ ORDERING INFORMATION
+
+ POLYCENTER Console Manager OpenVMS VAX:
+ Software Capacity Li-      QL-V01A9-AA
+ cense:
+ Software Concurrent Use    QL-V01AA-3B
+ License:
+
+
+                                 13
+
+ 
+
+
+ Media:                     QA-V01AA-H*
+ Hardcopy Documentation:    QA-MU1AA-GZ
+ Software Product Ser-      QT-V01A*-**
+ vices:
+
+ POLYCENTER Console Manager OpenVMS Alpha:
+ Software Capacity Li-      QL-2PCA9-AA
+ cense:
+ Software Concurrent Use    QL-V01AA-3B
+ License:
+ Media:                     Consolidated Distribution
+ Hardcopy Documentation:    QA-MU1AA-GZ
+ Software Product Ser-      QT-2PCA*-**
+ vices:
+
+ POLYCENTER Console Manager Digital UNIX:
+ Software Capacity Li-      QL-2PDA9-AA
+ cense:
+ Software Concurrent Use    QL-2PDAM-3B
+ License:
+ Media:                     Consolidated Distribution
+ Hardcopy Documentation:    QA-MU1AA-GZ
+ Software Product Ser-      QT-2PDA*-**
+ vices:
+
+ Note: The concurrent license part number (QL-V01AA-3B) is shared by POLYCENTER
+ Console Manager on OpenVMS VAX and OpenVMS Alpha platforms.
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS and Digital UNIX License Man-
+ agement Facility.
+
+ License units for this product are allocated on a Capacity and a Con-
+ current Use basis.
+
+ Each Concurrent Use license allows an identified system/device to be
+ monitored/managed by this layered product. The Capacity license sup-
+ ports the monitoring/management of up to 200 devices as supported by
+ the software.
+
+ For more information on the License Management Facility, refer to the
+ relevant Operating System Software Product Description or the Guide
+ to Software Licensing in the Operating System documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ The above information is valid at time of release. Please contact your
+ local Digital office for the most up-to-date information.
+
+
+
+
+                                 15
+
+ 
+
+
+ [R] OSF/1 and OSF/Motif are registered trademarks of the Open Soft-
+    ware Foundation, Inc.
+
+ [R] MultiNet is a registered trademark of TGV, Inc.
+
+ [R] NetView is a registered trademark of International Business
+    Machines Corporation.
+
+ [TM]MIPS is a trademark of MIPS Computer Systems, Inc.
+
+ [TM]UNIX is a registered trademark in the United States and other
+    countries, licensed exclusively through X/Open Company Ltd.
+
+ [TM]X Window System is a trademark of Massachusetts Institute of
+    Technology.
+
+ [TM]Alpha AXP, AXP, DEC, DECserver, DECstation, DECsystem, Digital,
+    LAT, LATprint, MicroVAX, OpenVMS, POLYCENTER, PrintServer, TK,
+    ULTRIX, VAX, VAX 8200, VAX 8250, VAX 8300, VAX 8350, VAX 8500,
+    VAX 8530, VAX 8550, VAX 8600, VAX 9000, VAXcluster, VAXserver,
+    and VAXstation, and the DIGITAL Logo are trademarks of Digital
+    Equipment Corporation.
+
+ ©1995 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 16

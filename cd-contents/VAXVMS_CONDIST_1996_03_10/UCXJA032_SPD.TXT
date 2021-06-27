@@ -1,0 +1,705 @@
+ 
+
+
+
+
+
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2
+ソフトウェア仕様書                                               SPD 28.B4.03
+
+1  概要
+
+日本語DEC TCP/IP Services for OpenVMS VAXは，日本語OpenVMS VAXシステムと，
+UNIX[R] システム，およびTCP/IPプロトコル体系やサン・マイクロシステムズ社の
+NFS[TM] をサポートする他のシステムとの相互運用と資源共用を行うレイヤード・ソ
+フトウェア製品です。
+
+日本語DEC TCP/IP Services for OpenVMS VAXは，ネットワーク・ファイル・アクセ
+ス，リモート・ターミナル・アクセス，リモート・コマンド実行，リモート・プリン
+ト，メール，およびアプリケーション開発の機能を備えています。日本語DEC TCP/IP
+Services for OpenVMS VAXは，略称として「UCX」を使用しています。
+
+2  新規機能
+
+2.1  NFSクライアント
+
+NFS (ネットワーク・ファイル・システム)プロトコルは，リモートにあるホストのフ
+ァイル・システムに対して，ローカルのファイル・システムと同様のアクセスを許可
+します。NFSクライアントの機能を利用すると，OpenVMSユーザは他のシステムに格納
+されたNFSファイルをマウントし，それがローカルのOpenVMSファイルであるかのよう
+にアクセスすることができます。ユーザは，ファイルの作成/削除，読出し/書込み，
+属性設定など，一般的なファイルに関する操作を実行することができます。
+
+2.2  Anonymous FTP
+
+Anonymous FTP (匿名FTP)は，情報を公開し，ネットワーク内で簡単にアクセスできる
+ようにするために使用されます。Anonymous FTPによって，目的のノードにアカウント
+がなくても，ユーザはそのノードからファイルをコピーすることができます。通常，
+ユーザ名anonymousパスワードguestでアクセスすることができます。
+
+3  新規ライセンス
+
+日本語DEC TCP/IP Services for OpenVMS VAXのバージョン3.1から，日本語DEC TCP
+/IP Client for OpenVMS VAXという，低価格のエントリ用クライアント・ライセンス
+が加わりました。このクライアントだけのライセンスには，NFSクライアントの機能
+と，一般的なアプリケーションとプログラミング・インタフェースがすべて含まれて
+います。ただし，NFSサーバ，BINDサーバ，またはリモート・ブート・サーバは，クラ
+
+
+                                    DIGITAL                        1994年12月
+
+                                                                  AE-PUL0D-TE
+
+ 
+
+
+ 日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+イアント・ライセンスには含まれていないので，これらの機能が必要な方は，製品全
+体のライセンスである日本語DEC TCP/IP Servicesを購入する必要があります。
+
+初めにクライアントだけのライセンスを購入し，後から製品全体のライセンスが必要
+な方には，日本語DEC TCP/IP Clientのアップグレード・ライセンスが用意されていま
+す。
+
+4  機能
+
+4.1  インストレーションとコンフィギュレーション
+
+日本語DEC TCP/IP Services for OpenVMS VAX V3.2は，VMSINSTALでインストールされ
+ます。
+
+コンフィギュレーションを容易にするために，日本語DEC TCP/IP Services for
+OpenVMSは，メニュー形式のコンフィギュレーション・プロシージャを提供してい
+ます。このプロシージャによって，ユーザは，使用するサービスとアプリケーション
+だけのコンフィギュレーションを行うことができます。また，個々にメニュー・オプ
+ションを選択しなくても，すべてのクライアント・ソフトウェア構成要素のコンフィ
+ギュレーションをすぐに行うことも可能です。
+
+5  通信機能
+
+通信は，4.3 BSD (Berkeley Software Distribution)に基づいており，以下のプロト
+コルと機能を実装しています。
+
+o  TCP (トランスミッション・コントロール・プロトコル)
+
+o  IP (インターネット・プロトコル)
+
+o  ICMP (インターネット制御メッセージ・プロトコル)
+
+o  ARP (アドレス解決プロトコル)
+
+o  UDP (ユーザ・データグラム・プロトコル)
+
+o  RIP (経路選択情報プロトコル)
+
+o  Ethernetサポート
+
+o  FDDIサポート
+
+o  Auxiliary (AUX)サーバ(inetd)，およびセキュリティ，イベント・ロギングなどの
+   強化機能
+
+
+
+
+                                       2
+
+ 
+
+
+日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+5.1  FDDI (光ファイバ分散データ・インタフェース)サポート
+
+FDDIは，光ファイバによるネットワーク・テクノロジのためのANSI規格です。その伝
+送率は，毎秒100メガビットと規定されています。日本語DEC TCP/IP Services for
+OpenVMS VAX は，以下の構成で日本語OpenVMS VAXシステムと他のホストとのTCP/IP通
+信を可能にすることで，このテクノロジを利用します。
+
+o  同一のFDDIネットワーク上
+
+o  FDDI/Ethernetブリッジ経由
+
+o  ルータ経由
+
+また，OpenVMS VAXホストは，FDDIネットワークと複数のEthernetとのInternetゲート
+ウェイとして作動することができます。
+
+FDDIコントローラの管理は，TCP/IPネットワーク管理インタフェースの中に統合され
+ています。
+
+5.2   Auxiliaryサーバ(inetd)
+
+inetdソフトウェアは，初めに4.3 BSDで提供されたTCP/IPサービス・ディスパッチャ
+です。
+
+この機能を使用することで，アプリケーションの開発が一段と簡素化され，システム
+で同時に実行させるサーバ・プロセスの数を減らすことで負荷が軽減します。
+
+日本語DEC TCP/IP Services for OpenVMS VAXは，以下のinetd機能を実装していま
+す。
+
+o  外部からのコネクション要求に従って，適切なアプリケーション・サービスを開始
+   する。これは，UNIXでのinetdと同じ方法で，動的なプロセス生成を制御する。
+
+o  サービス・データベースを提供する。
+
+o  セキュリティ機能を提供する。
+
+o  イベント・ロギングを可能にする。
+
+5.3  BINDサーバ
+
+BINDサーバは，ドメイン・ネーム・システムのホスト名をIPアドレスに変換します。
+ネットワーク管理者は，OpenVMS VAXホストに，プライマリ・サーバ，セカンダリ・
+サーバ，キャッシュ専用サーバを作成することで，BINDデータベースの設定を行いま
+す。BINDサーバは，BINDサーバに対してホスト名からアドレスへの変換を要求するク
+ライアントでのBIND機能であるBINDリゾルバを補完します。
+
+
+                                       3
+
+ 
+
+
+ 日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+5.4  リモート・ブート
+
+リモート・ブートは，OpenVMS VAXをブート・サーバにすることで，ディスクレス・ク
+ライアントのリモート・ホスト・ブートを行います。この機能は，BOOTPプロトコルと
+TFTPプロトコルを使用して，ブート要求とブート・ファイルのダウンロードを行いま
+す。
+
+5.5  コマンドによるUCXの管理
+
+UCX管理機能は，UCXソフトウェア構成要素の制御とモニタと行うために，DCLに類似し
+たコマンドを提供します。
+
+5.6   SNMP (簡易ネットワーク管理プロトコル)エージェント
+
+SNMPは，TCP/IPネットワーク管理のためのインターネット標準プロトコルです。SNMP
+エージェントは，ネットワーク管理ディレクタと通信を行って，ネットワークの動作
+状況についての情報を提供します。SNMP内で，MIB II(管理情報ベース第2バージョン)
+変数がサポートされています。
+
+
+5.7  セキュリティとネットワーク・アクセス制御
+
+システム管理者は，ネットワーク・セキュリティ機能を使用することで，リモートの
+Internetホストからの日本語OpenVMS VAXシステムへのアクセスを制御します。
+
+5.8  アプリケーション・プログラミング・インタフェース
+
+日本語DEC TCP/IP Services for OpenVMS VAXバージョン3.2には，以下のアプリケー
+ション・プログラミング・インタフェースが用意されています。
+
+-  Cソケット・プログラミング・インタフェース
+
+C言語でTCP/IPのネットワーク・アプリケーションを開発するためのBerkeleyソケッ
+ト・プログラミング・インタフェースを提供します。
+
+-  QIOプログラミング・インタフェース
+
+任意のOpenVMS VAX言語でTCP/IPのネットワーク・アプリケーションを開発するための
+QIOプログラミング・インタフェースを提供します。
+
+-  SRIQIOインタフェース
+
+SRIQIOインタフェースのエミュレーションを提供します。
+
+-  Sun[R]RPCと，それに付随するXDRおよびポートマップ機能
+
+Sunリモート・プロシージャ・コール(SunRPC)はUCXプログラミング・インタフェース
+に含まれています。SunRPCライブラリは，RPC関数呼出しライブラリ，ポートマップ・
+モジュール，およびXDR(外部データ表現)ルーチンを含みます。
+
+                                       4
+
+ 
+
+
+日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+5.9  アプリケーション
+
+アプリケーションには，一般のエンドユーザ用プロトコルとして，ファイル転送，リ
+モート・ログイン，リモート・コマンド処理，リモート・プリント，メール交換が用
+意されています。
+
+o  FTP (ファイル転送プロトコル)
+
+FTPは，ファイル転送のためのインターネット・アプリケーション・プロトコルです。
+FTPによって，ユーザは，リモート・ホストとの双方向のファイル転送を行うことがで
+きます。
+
+o  Telnet
+
+Telnetは，リモート・ログインのためのインターネット・アプリケーション・プロト
+コルです。Telnetでは，OpenVMS VAXのユーザのリモート・システムへのログインと，
+リモート・ユーザのOpenVMS VAXシステムへのログインが可能です。
+
+Telnetは，キャラクタ・ターミナル・モードとライン・モードの両方をサポートして
+います。また，ユーザが，同時に複数のTelnetセッションを張ることも可能です。
+
+o  Telnet 3270
+
+Telnet 3270では，OpenVMS VAXシステムからリモートのIBMシステムに，3270形式のタ
+ーミナル・インタフェースでTelnetコネクションを張ることが可能です。
+
+o  Berkeleyリモート・コマンド(rlogin,rsh,rexec)
+
+日本語DEC TCP/IP Services for OpenVMS VAXは，広く一般に使用されているUNIXリモ
+ート・ログイン(rlogin)，リモート・シェル(rsh)，リモート実行(rexec)サービスを
+実装しています。
+
+リモート・ログイン(rlogin)は，Telnetと同様に，ユーザがリモート・システムにロ
+グインし，リモート・ユーザがOpenVMS VAXシステムにログインする機能を提供しま
+す。
+
+rshは，OpenVMS VAXユーザがリモート・システム上でコマンドを実行し，リモート・
+ユーザがOpenVMS VAXシステム上でDCLコマンドを実行する機能を提供します。ユーザ
+のパスワードまたはプロキシー・アクセスに基づいた認証機能があります。
+
+o  リモート・プリント
+
+日本語DEC TCP/IP Services for OpenVMS VAXは，以下のリモート・プリント・サービ
+スを提供します。
+
+OpenVMS VAXユーザは，LPDプロトコルを使用して，リモート・システムでのファイル
+の印刷を DCL形式のPRINTコマンドで実行することができます。
+
+同様に，リモート・ユーザは，LPDプロトコルを使用して，OpenVMS VAXシステムにフ
+ァイルを印刷することができます。
+
+この他に，OpenVMS VAXユーザは，TELNETプリント・シンビオントを使用して，リモー
+ト・システムにファイルを印刷することもできます。
+
+o  SMTP(簡易メール転送プロトコル)
+
+                                       5
+
+ 
+
+
+ 日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+SMTPは，メール用のインターネット・アプリケーション・プロトコルです。ユーザ
+は，リモート・ホストとの電子メールの送受信を行うことができます。
+
+o  漢字フィルタ
+
+TELNET，FTP，SMTP，およびリモート・プリントの各アプリケーションにおいて，漢字
+フィルタの使用が可能です。
+
+5.10  NFS(ネットワーク・ファイル・システム)
+
+NFSソフトウェアは，ネットワーク・ファイル・システム(NFS) V2.0プロトコル仕様を
+サポートしています。NFSは，クライアントがリモート・ファイル・サービスに透過的
+にアクセスすることができるアプリケーション層のプロトコルです。
+
+NFSサーバ・ソフトウェアは，OpenVMS VAXおよびUNIXでのファイルの集中的なデータ
+格納機能を提供することで，クライアント間のデータ共有を支援します。NFSサーバ・
+ソフトウェアは，以下の2種類のファイル・アクセス形態をリモート・クライアントに
+提供します。
+
+o  OpenVMS VAXファイルへのアクセス
+
+o  UNIXオペレーティング・システムとの互換性を持つファイルへのアクセス
+
+5.11  自動マウント
+
+日本語DEC TCP/IP Services for OpenVMS VAXは，NFS AUTOMOUNTコマンドを実装して
+おり，必要に応じて透過的にNFSファイル・システムのマウントとマウントの解除を行
+うことができます。このコマンドは，特に頻繁にアクセスする必要のないファイル・
+システムやディレクトリのマウントを行うときに有用です。
+
+5.12  並列処理が可能なファイル変換
+
+OpenVMS VAXと他のシステムとの相互運用性を最大限に生かすために，ファイル変換を
+しながら順次読出しが可能なNFSプロトコルの機能を提供しています。
+
+5.13  PC-NFSサーバ
+
+リモートPCユーザは，OpenVMS VAXからNFSファイルのマウントとアクセスをすること
+ができます。UCXプロキシー・データベースを使用することによって，リモートPCユー
+ザのUID/GID確認と認証機能が確立されます。アクセスが確立すると，ユーザはPC-NFS
+プリント・メカニズムによって，ファイルの印刷を行うことができます。
+
+5.14  PATHWORKSの統合
+
+日本語DEC TCP/IP Services for OpenVMS VAX V3.2製品は，PATHWORKSとTCP/IPとの
+さらに進んだ統合を提供するために，PATHWORKS IPドライバをサポートしています
+(PATHWORKSのバージョンは5以降が必要です)。
+
+                                       6
+
+ 
+
+
+日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+6  必要なハードウェアの最小構成
+
+適用プロセッサ
+
+VAX:
+        VAXftモデル110
+        VAXftモデル310
+        VAXftモデル410
+        VAXftモデル610
+        VAXftモデル612
+        VAXftモデル810
+
+        VAX 4000モデル100
+        VAX 4000モデル200
+        VAX 4000モデル300
+        VAX 4000モデル500
+        VAX 4000モデル600
+        VAX 4000モデル700
+
+        VAX 6000モデル200シリーズ
+        VAX 6000モデル300シリーズ
+        VAX 6000モデル400シリーズ
+        VAX 6000モデル500シリーズ
+        VAX 6000モデル600シリーズ
+
+        VAX 7000-600シリーズ
+
+        VAX 9000モデル110
+        VAX 9000モデル210
+        VAX 9000モデル300シリーズ
+        VAX 9000モデル400シリーズ
+
+        VAX 8200, VAX 8250, VAX 8300, VAX 8350
+        VAX 8500, VAX 8530, VAX 8550, VAX 8600
+        VAX 8650, VAX 8700, VAX 8800, VAX 8810
+        VAX 8820, VAX 8830, VAX 8840, VAX 8842
+        VAX 8974, VAX 8978
+
+        VAX 10000-600シリーズ
+        VAX 10000-700シリーズ
+
+        VAX-11/750, VAX011/780, VAX-11/785
+
+MicroVAX:
+
+
+
+
+                                       7
+
+ 
+
+
+ 日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+
+        MicroVAX II, MicroVAX 2000,
+        MicroVAX 3100モデル10/10E,
+        MicroVAX 3100モデル20/20E,
+        MicroVAX 3100モデル30,
+        MicroVAX 3100モデル40,
+        MicroVAX 3100モデル80,
+        MicroVAX 3100モデル90,
+        MicroVAX 3300, MicroVAX 3400,
+        MicroVAX 3500, MicroVAX 3600,
+        MicroVAX 3800, MicroVAX 3900
+
+VAXstation:
+        VAXstation II, VAXstation 2000,
+        VAXstation 3100モデル30,
+        VAXstation 3100モデル38,
+        VAXstation 3100モデル40,
+        VAXstation 3100モデル48,
+        VAXstation 3100モデル76,
+        VAXstation 3200, VAXstation 3500,
+        VAXstation 3520, VAXstation 3540
+
+        VAXstation 4000モデル60,
+        VAXstation 4000モデル90,
+        VAXstation 4000 VLC
+
+VAXserver:
+        VAXserver 3100, VAXserver 3300,
+        VAXserver 3400, VAXserver 3500,
+        VAXserver 3600, VAXserver 3602,
+        VAXserver 3800, VAXserver 3900
+
+        VAXserver 4000モデル200,
+        VAXserver 4000モデル300,
+        VAXserver 4000モデル500
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       8
+
+ 
+
+
+日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+
+        VAXserver 6000モデル210,
+        VAXserver 6000モデル220,
+        VAXserver 6000モデル310,
+        VAXserver 6000モデル320,
+        VAXserver 6000モデル410,
+        VAXserver 6000モデル420,
+        VAXserver 6000モデル510,
+        VAXserver 6000モデル520,
+        VAXserver 6000モデル610,
+        VAXserver 6000モデル620,
+        VAXserver 6000モデル630
+
+        VAXserver 9000シリーズ
+
+日本語OpenVMS VAX オペレーティング・システムのバージョンによって，適用プロセ
+ッサが異なることがあります。
+
+適用されないプロセッサ
+
+   VAX-11/725
+   VAX-11/730
+   VAX-11/782
+   MicroVAX I
+   VAXstation I
+   VAXstation 8000
+
+他に必要なハードウェア
+
+以下に示すコントローラ・インタフェースのいずれかが必要です。
+
+     DEUNA      UNIBUS用Ethernetコントローラ。
+     DELUA      UNIBUS用Ethernetコントローラ。リビジョン・レベルF1以降が必
+                要。
+     DEBNI      VAX BI通信用Ethernetコントローラ。
+     DEMNA      XMIシステムをEthernetおよびIEEE 802.3ローカル・エリア・ネット
+                ワークに接続するハイパフォーマンス・ネットワーク・アダプタ。
+     DESVA      Ethernetコントローラ・インタフェース。
+     DEBNA      VAX BI通信用Ethernetコントローラ。
+     DEQNA      Qバス用Ethernetコントローラ。リビジョン・レベルK3以降が必要。
+     DELQA      Qバス用Ethernetコントローラ。DEQNAの後継コントローラである。
+                リビジョン・レベルC3以降が必要。
+     DESQA      S-BOX構成のためのQバス用Ethernetコントローラ。
+     SGEC       VAX 4000システム用Ethernetアダプタ。
+     DEMFA      DEC FDDIコントローラ400 (XMI-to-FDDIアダプタ)。
+     DEFTA      TURBO-channelシステムをANSI FDDIローカル・エリア・ネットワー
+                クに接続するハイパフォーマンス・ネットワーク・アダプタ。
+
+                                       9
+
+ 
+
+
+ 日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+
+     DEMNA      XMIシステムをEthernetおよびIEEE 802.3ローカル・エリア・ネット
+                ワークに接続するハイパフォーマンス・ネットワーク・アダプタ。
+
+日本語DEC TCP/IP Services for OpenVMSは1つのEthernetインタフェースを他のDECの
+ネットワーク製品(DECnetなど)と共有することができます。
+
+必要なディスク容量(ブロック・クラスタ・サイズ= 1)
+
+グローバル・ページ      8100
+グローバル・セクショ    42
+ン
+インストレーション時    13600ブロック(7000キロバイト)
+に必要なディスク領域
+実行時に必要なディス    12600ブロック(6500キロバイト)
+ク領域
+
+これらの数値は，システム・ディスクに必要なディスク容量です。この容量は概算で
+あり，実際に必要な容量は，システム環境，コンフィギュレーション，ソフトウェ
+ア・オプションによって異なります。
+
+7  クラスタ環境
+
+本レイヤード製品は，正規のライセンスを持つ
+VAXcluster*構成にインストールされている場合には，機能上の制約は受けません。こ
+の製品で，必要なハードウェアの制限事項については，本ソフトウェア仕様書の「必
+要なハードウェアの最小構成」を参照してください。
+
+*  VAXclusterのV5.xとV6.xの構成，および，CI，Ethernet，Mixed Interconnect構成
+   については，VAXcluster Software Product Description (29.78.xx)に記載されて
+   います。
+
+8  必要なソフトウェア
+
+日本語DEC TCP/IP Services for OpenVMS VAXの全機能を得るには，日本語OpenVMS
+VAXオペレーティング・システムのバージョン5.5〜6.1が必要です。
+
+日本語DEC TCP/IP Services for OpenVMSのクライアント・アクセスには，NFS V2.0に
+規定されたプロトコルとRFC (Request for Comments)に定義されたすべてのTCP/IPプ
+ロトコルをサポートするUNIXオペレーティング・システムが必要です。
+
+8.1  OpenVMSテーラリング
+
+日本語OpenVMS VAX V5.5〜V6.1のシステムにおいて，本レイヤード製品のすべての機
+能を利用するには，以下のVMSクラスが必要です。
+
+o  VMS必須セーブセット
+
+o  プログラミング・サポート
+
+                                      10
+
+ 
+
+
+日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+o  BLISS必須ファイル(プログラム開発の場合)
+
+VMSクラスおよびテーラリングについての詳細は，VMS Operating Ssystem Software
+Product Description (SPD 25.01.xx)を参照してください。
+
+9  バージョンアップの考慮
+
+本製品の将来のバージョンでは，必要なハードウェアおよびソフトウェアの最小構成
+が変更されることがあります。
+
+
+10  提供媒体
+
+-  9トラック1600 BPI磁気テープ
+
+-  TK50ストリーム・テープ
+
+-  CD-ROM
+
+11  注文情報
+
+最寄りの日本DECの各支店/営業所にお問合せください。
+
+12  ソフトウェア・ライセンス
+
+本ソフトウェアは，日本DEC標準販売約款中のライセンス規定に基づいて提供されま
+す。日本DECのライセンス条件とその方針についての詳細は，最寄りの日本DECの各支
+店/営業所にお問合せください。
+
+13  ソフトウェア製品サービス
+
+日本DECでは，様々なサービス・オプションを提供しています。詳細については，最寄
+りの日本DEC各支店/営業所にお問合せください。
+
+14  保証
+
+本ソフトウェアについては，日本DEC所定のソフトウェア保証基準に定められた保証が
+提供されます。
+
+15  付録A
+
+日本語DEC TCP/IP Services for OpenVMSのNFS構成要素は，以下に示すクライアント
+との相互運用がテストされています。
+
+o  Sun Microsystems SunOS
+
+o  Hewlett-Packard[R] HP[R]-UX
+
+o  IBM[R] AIX[R]
+
+                                      11
+
+ 
+
+
+ 日本語DEC TCP/IP Services for OpenVMS VAX Version 3.2   ソフトウェア仕様書03
+
+
+
+o  Apple[R] A/UX[R]
+
+o  Santa Cruz Operation SCO[TM] UNIX
+
+日本DECは，これらのクライアントとの接続をサポートします。オペレーティング・シ
+ステム自体についてはサポートしません。
+
+上記の情報は，今回のリリースに限って有効です。以後の情報については，最寄りの
+日本DECの各支店/営業所にお問合せください。
+
+(c) 1994 Digital Equipment Corporation Japan. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_______________________
+
+  [R] Hewlett-Packard，HPは米国Hewlett-Packard社の商標です。
+
+  [R] AIX，IBMは米国International Business Machines社の商標です。
+  [R] UNIXはX/Openカンパニーリミテッドがライセンスしている米国ならびに他の国に
+
+      おける登録商標です。
+  [R] Sunは米国Sun Microsystems社の商標です。
+
+ [TM] NFSは米国Sun Microsystems社の商標です。
+
+  [R] A/UX，Appleは米国Apple Computer社の商標です。
+
+ [TM] SCOは米国Santa Cruz Operations社の商標です。
+
+                                      12

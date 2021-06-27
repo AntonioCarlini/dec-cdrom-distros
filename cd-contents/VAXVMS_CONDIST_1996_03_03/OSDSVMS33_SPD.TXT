@@ -1,0 +1,624 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC OSDS-Optical Storage Desktop Software    SPD 47.45.03 
+                for OpenVMS VAX, Version 3.3
+
+ DESCRIPTION
+
+ The DEC Optical Storage Desktop Software for OpenVMS (DEC OSDS) prod-
+ uct provides OpenVMS applications and users the functionality neces-
+ sary to access multifunction and Write Once Read Many (WORM) stand-
+ alone (e.g. desktop) optical drives using the conventional device, file,
+ and record access services provided by the OpenVMS operating system.
+ In most cases no changes will be required to existing applications that
+ use magnetic disk storage.
+
+ The OpenVMS VAX version of DEC OSDS provides local access to rewritable,
+ WORM (Write Once, Read Many), and multifunction drives. The OpenVMS
+ AXP version of DEC OSDS provides access to RWZ52 drives using rewritable
+ media only at this time. In addition, presently, ONLY DEC OSDS Ver-
+ sion 3.2 is available for OpenVMS AXP users.
+
+ Pseudo Device Representation
+
+ DEC OSDS allows the OpenVMS host to view the platter inserted into the
+ optical disk as a virtual disk device. For single-headed drives, this
+ translates to one virtual disk device for each optical disk surface.
+ The optical drive, therefore, appears to applications as a virtual disk
+ device, or a pseudo-device. Excluding those functions that are unique
+ to the optical technology, the pseudo-device emulates the operation
+ of a conventional OpenVMS magnetic disk.
+
+ Volume Access
+
+
+
+                               DIGITAL                   August 1995
+
+                                                         AE-PXYHD-TE
+
+ 
+
+ Volumes in an optical disk drive used with DEC OSDS are accessed us-
+ ing the same techniques that are used to access conventional OpenVMS
+ disks. The standard OpenVMS INITIALIZE command is used to prepare each
+ side of an optical disk cartridge for use and the standard OpenVMS MOUNT
+ command is used to make the volume known to OpenVMS. WORM (Write Once)
+ volumes can only be "initialized" once, whereas rewritable volumes,
+ like magnetic disks, can be "initialized" multiple times.
+
+ File Access
+
+ Files on devices under control of DEC OSDS are accessed using the same
+ techniques that are used to access conventional OpenVMS files. Once
+ a volume has been mounted, files may be opened, read, written, and closed
+ using the conventional OpenVMS system services and run-time library
+ functions. Write Once (WORM) volumes use the WORMS-11® file system.
+ Rewritable volumes use the FILES-11 file system.
+
+ DEC OSDS provides essentially transparent access using standard Open-
+ VMS commands and I/O statements from application programs. DEC OSDS
+ supports all OpenVMS commands and their library routine equivalents,
+ such as, but not limited to:
+
+    INITIALIZE *
+    MOUNT
+    DISMOUNT
+    ALLOCATE
+    DEALLOCATE
+    CREATE
+    CREATE/DIRECTORY
+    DIRECTORY
+    COPY
+    EDIT
+    OPEN
+    READ
+    CLOSE
+    DIFFERENCE
+    RENAME
+    PURGE **
+    DELETE **
+
+                                  2
+
+ 
+
+    BACKUP
+    WRITE
+    APPEND
+
+ *  This command can only be used once with WORM media.
+
+ ** These commands can be used with WORM media but will not free up ad-
+    ditional disk space as with rewritable media.
+
+ HARDWARE REQUIREMENTS
+
+ It is extremely important to understand all the hardware requirements,
+ including the type of SCSI adapter required and the optical drive to
+ be supported, before identifying the processor on which to run this
+ software product.
+
+ AXP Processors Supported with DEC OSDS, Version 3.2:
+ 
+
+ DEC       Model 300, Model 500
+ 2000:
+
+ 
+
+ DEC       Model 300, Model 300L, Model 300LX
+ 3000:
+           Model 400, Model 400S,
+           Model 500, Model 500S,
+           Model 500X, Model 500V, Model 600,
+           Model 600S, Model 800, Model 800S
+           Model 900
+
+ 
+
+ DEC       Model 600 series [1]
+ 4000:     Model 700 [1]
+
+ ____________________
+ Model   600 series and 700 requires the AXPDRIV02_061 patch for Open-
+ VMS 6.1 and does not work with OpenVMS 1.5
+
+                                  3
+
+ 
+
+
+           
+
+
+
+ DEC       Model 600 series
+ 7000:
+           Model 700 series
+
+
+ DEC       Model 600 series
+ 10000:
+
+
+
+ DEC       Model 200
+ 10004:
+
+
+
+ AlphaStation: AlphaStation 200 Models 4/166, 4/233[2]
+               AlphaStation 400 Model 4/233[2]
+
+ 
+
+ AlphaServer :AlphaServer 1000 Model 4/200
+             :AlphaServer 2000 Model 4/200
+             :AlphaServer 2100 Models 4/200, 4/275[3]
+
+ VAX Processors Supported with DEC OSDS, Version 3.3:
+ 
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+
+ ____________________
+   AlphaStation 200:  Models 4/166 and 4/233 and AlphaStation 400:  Model
+   4/233 requires drive to be connected via the imbedded SCSI.
+
+   AlphaServer  2100:  models 4/200 and 4/275 are not supported with the
+   KZPSA adapter.  However, the PB2HA-SA, KZPAA or Native SCSI adapters
+   may be used.  If the Native SCSI adapter is used the processor must
+   be set to run slow SCSI and the AXPDRIV02_061 patch for OpenVMS 6.1
+   must be installed.
+
+                                  4
+
+ 
+
+
+           VAX 4000 Model 400,
+           VAX 4000 Model 500, 500A,
+           VAX 4000 Model 600, 600A,
+           VAX 4000 Model 700A
+
+ 
+
+ Micro/VAX: Micro/VAX II,
+           Micro/VAX 3100 Model 10/10E,
+           Micro/VAX 3100 Model 20/20E,
+           Micro/VAX 3100 Model 30,
+           Micro/VAX 3100 Model 40,
+           Micro/VAX 3100 Model 80,
+           Micro/VAX 3100 Model 90,
+           Micro/VAX 3300, Micro/VAX 3400,
+           Micro/VAX 3500, Micro/VAX 3600,
+           Micro/VAX 3800, Micro/VAX 3900
+
+ 
+
+ VAXstation: VAXstation 3100 Model 30,
+             VAXstation 3100 Models 38, 40, 48, 76,
+             VAXstation 4000 VLC,
+             VAXstation 4000 Model 60,
+             VAXstation 4000 Model 90
+
+
+
+ VAXserver: VAXserver 3100 Model 10/10E,
+            VAXserver 3100 Model 20/20E,
+            VAXserver 3300, VAXserver 3400, VAXserver 3500,
+            VAXserver 3600, VAXserver 3602, VAXserver 3800,
+            VAXserver 3900,
+            VAXserver 4000 Model 200,
+            VAXserver 4000 Model 300,
+            VAXserver 4000 Model 500
+
+                                  5
+
+ 
+
+
+           
+
+ VAX Processors Not Supported
+ 
+
+ Micro/VAX: Micro/VAX I, Micro/VAX 2000
+
+ VAXstation: VAXstation I, VAXstation II,
+             VAXstation 2000,
+             VAXstation 3200, VAXstation 3500,
+             VAXstation 3520, VAXstation 3540,
+
+ 
+
+ VAX:      VAXft Model 110,
+           VAXft Model 310,
+           VAXft Model 410,
+           VAXft Model 610,
+           VAXft Model 612
+
+ 
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300,
+           VAX 8350, VAX 8500, VAX 8530,
+           VAX 8550, VAX 8600, VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+
+
+
+                                  6
+
+ 
+
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+           VAX-11/725, VAX-11/730,
+           VAX-11/750, VAX-11/780,
+           VAX-11/782, VAX-11/785
+
+ 
+
+ VAXserver: VAXserver 6000 Model 210,
+            VAXserver 6000 Model 220,
+            VAXserver 6000 Model 310,
+            VAXserver 6000 Model 320,
+            VAXserver 6000 Model 410,
+            VAXserver 6000 Model 420,
+            VAXserver 6000 Model 510,
+            VAXserver 6000 Model 520,
+            VAXserver 6000 Model 610,
+            VAXserver 6000 Model 620,
+            VAXserver 6000 Model 630
+
+ SUPPORTED HARWARE
+
+ Following are the specific SCSI adapters and the optical drives sup-
+ ported by DEC OSDS Version 3.3. The EISA and PCI based SCSI controllers
+ are also supported by DEC OSDS, Version 3.2 for OpenVMS AXP.
+
+ Other Hardware Required - Connectivity/Adapters:
+
+ o  SCSI Interface: A SCSI interface (direct or via a supported adapter)
+    is required for use of any of the supported drives. The following
+    list are the only adapters supported for use with this product.
+
+       Q-bus Interface: Digital's KZQSA Q-bus-to-SCSI adapter board is
+
+                                  7
+
+ 
+
+       required for DEC OSDS to manage optical drives on Q-bus proces-
+       sors.
+       EISA-based SCSI Controller: The DEC 2000 Model 300 AXP system
+       requires Digital's PB2HA-SA optional SCSI controller for DEC OSDS
+       to manage more than two direct-connected optical SCSI devices
+       on this system.
+       PCI-based SCSI Controller: The AlphaServer systems 1000 Model
+       4/200 and 2000 Model 4/200 must connect to Digital's KZPAA SCSI
+       controller.
+       XMI-bus Adapter: Digital's KZMSA XMI-to-SCSI adapter is required
+       for DEC OSDS to manage optical drives on XMI-bus AXP processors.
+       Note that only rewritable media is currently supported on AXP
+       systems, and that the KZMSA adapter is not supported on VAX pro-
+       cessors.
+
+ Other Hardware Required - Supported Optical Drives
+
+ For OpenVMS AXP processors, the DEC Optical Storage Desktop Software
+ for OpenVMS supports the following specific 5.25-inch optical drive.
+ Rewritable media only is currently supported by DEC OSDS for this drive.
+
+ o  Digital RWZ52 5.25-inch multifunction drive
+
+ For OpenVMS VAX processors, DEC OSDS supports the following specific
+ 5.25-inch multifunction and 12-inch WORM optical drives. Rewritable
+ (5.25-inch) and Write Once (WORM) (5.25-inch and 12-inch) media are
+ supported by the software. The RWZ52 drive is unsupported without the
+ DEC OSDS software, unless it is connected to an HSC.
+
+ o  Digital RWZ52 5.25-inch multifunction drive
+
+ o  Digital RVZ72 12-inch WORM drive
+
+ o  LMSI 4100 12-inch WORM drive
+
+
+
+
+
+
+                                  8
+
+ 
+
+ Disk Space Requirements (1 Block = 512 Bytes):
+ eightpointss
+
+ Disk space required for    15,000 blocks
+ VAX installation:
+                            (7.7 Mbytes)
+ Disk space required for    3,500 blocks
+ VAX use:
+                            (1.75 Mbyte)
+
+ Disk space required for    15,000 blocks
+ AXP installation:
+                            (7.7 Mbytes)
+ Disk space required for    3,000 blocks
+ AXP use:
+                            (1.5 Mbyte)
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options.
+
+ The minimum memory supported is 16 Mbytes for VAX systems and 32 Mbytes
+ for AXP systems. The use of this software in conjunction with increased
+ memory capability improves performance. The memory size suggested for
+ most typical VAX hardware configurations is at least 32 Mbytes.
+
+ SOFTWARE REQUIREMENTS
+
+ o  OpenVMS VAX Operating System V5.5-2 - V6.1
+
+       NOTE: Although the RWZ52 drive can operate in rewritable mode
+       under OpenVMS VAX 6.1 without DEC OSDS, this is not recommended
+       and unsupported. However, DEC OSDS is not required and MUST not
+       be used with RWZ52 drives connected to HSC devices.
+
+ o  OpenVMS AXP Operating System V1.5 - V6.1-1H2 for AXP systems ex-
+    cept the DEC 2000/300
+
+
+
+                                  9
+
+ 
+
+ o  OpenVMS AXP Operating System V1.5H1 - V6.1-1H2 for the DEC 2000/300
+    system
+
+ ORDERING INFORMATION
+
+ Software Licenses:
+
+
+ QL-0U9A9-AA      For one stand-alone 5.25-inch optical disk drive
+ QL-0UAA9-AA      For one stand-alone 12-inch optical disk drive
+
+ Software Media and Documentation:
+
+
+ QA-0U9AA-H*      TK50 or MagTape for OpenVMS VAX
+
+ QA-0U9AA-H8      CD-ROM for OpenVMS VAX
+
+ This product is also available as part of the OpenVMS VAX Consolidated
+ Software Distribution on CD-ROM.
+
+
+
+ QA-0U9AB-H8      CD-ROM for OpenVMS AXP
+
+ This product is also available as part of the OpenVMS AXP Consolidated
+ Software Distribution on CD-ROM.
+
+ Software Documentation:
+
+
+ QA-0U9AA-GZ      Documentation for OpenVMS VAX
+
+ QA-0U9AB-GZ      Documentation for OpenVMS AXP
+
+ The software documentation for this product is also available as part
+ of the OpenVMS VAX Online Documentation Library on CD-ROM, and the Open-
+ VMS AXP Online Documentation Library on CD-ROM.
+
+ Software Installation Services:
+
+                                 10
+
+ 
+
+
+
+ QT-0U9A9-I9      For all OSDS licenses
+
+ Software Product Services:
+ eightpointss
+
+ QT-0U9A9-**      For 5.25-inch stand-alone drive license
+
+ QT-0UAA9-**      For 12-inch stand-alone drive license
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support:
+
+ DEC Optical Storage Desktop Software for OpenVMS supports the Open-
+ VMS License Management Facility.
+
+ License units for DEC Optical Storage Desktop Software for OpenVMS are
+ allocated to a single drive according to the type (5.25-inch or 12-
+ inch form factor) of drive being used, on an Unlimited System Use ba-
+ sis.
+
+ License units for DEC Optical Storage Desktop Software for OpenVMS are
+ useable on either VAX or AXP systems running the OpenVMS operating sys-
+ tem.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ or the OpenVMS AXP Operating System Software Product Description (SPD
+ 41.87.xx), or the License Management Facility manual of the appropri-
+ ate version (VAX or AXP) of the OpenVMS Operating System documenta-
+ tion sets.
+
+                                 11
+
+ 
+
+ CLUSTER ENVIRONMENT
+
+ DEC Optical Storage Desktop Software for OpenVMS is not required, but
+ highly recommended when using RWZ52 drives with ONLY rewritable me-
+ dia on OpenVMS VAX systems (not AXP systems) when connected to a sup-
+ ported system running OpenVMS VAX 6.1 via a supported SCSI connection
+ /adapter. All RWZ52 direct connect standalone systems running Open-
+ VMS VAX 6.0 and below require DEC Optical Storage Desktop Software for
+ OpenVMS. Only OpenVMS VAX 6.1 is supported with RWZ52 drives in MSCP
+ served cluster configurations. DEC Optical Storage Desktop Software
+ for OpenVMS is not required and MUST not be used with RWZ52 drives con-
+ nected to HSC devices.
+
+ NOTE: DEC Optical Storage Desktop Software for OpenVMS is required when
+ using RWZ52 drives with WORM media in any configuration, including clus-
+ ters. WORM volumes (media) is available only to the host node to which
+ the optical drive is connected. They are not available to nor useable
+ by the rest of the VAXcluster. WORM volumes are also not supported on
+ the HSC-to-SCSI adapter.
+
+ VAXcluster configurations are fully described in the VAXcluster Soft-
+ ware Product Description (29.78.xx) and include CI, Ethernet, and Mixed
+ Interconnect configurations.
+
+ OpenVMS TAILORING CLASSES
+
+ The following OpenVMS classes are required for full functionality of
+ DEC Optical Storage Desktop Software for OpenVMS:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ or the OpenVMS AXP Operating System Software Product Description (SPD
+ 41.87.xx).
+
+                                 12
+
+ 
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ For OpenVMS VAX systems:
+
+ 9-track 1600 BPI Magnetic Tape, TK50 Streaming Tape, CD-ROM
+
+ The software documentation for this product is also available as part
+ of the OpenVMS VAX Online Documentation Library on CD-ROM.
+
+ For OpenVMS AXP systems:
+
+ CD-ROM
+
+ This product is also available as part of the OpenVMS AXP Consolidated
+ Software Distribution on CD-ROM.
+
+ The software documentation for this product is also available as part
+ of the OpenVMS AXP Online Documentation Library on CD-ROM.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+ eightpointss
+
+ ®  WORMS-11 is a registered trademark of Perceptics Corporation.
+
+
+                                 13
+
+ 
+
+
+ [TM]The DIGITAL Logo, DEC, Micro/VAX, OpenVMS, Q-bus, TK, VAX,
+    VAXft, VAXserver, and VAXstation are trademarks of Digital
+    Equipment Corporation.
+
+ ®  LMSI is a registered trademark of Philips LMS Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 14

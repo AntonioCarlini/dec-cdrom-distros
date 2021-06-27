@@ -1,0 +1,920 @@
+ 
+
+
+
+
+
+
+           Software
+           Product
+           Description
+
+           _________________________________________________________
+
+           PRODUCT NAME:  DECprint Printing Services     SPD 32.41.03
+                          for VMS, Version 4.1 
+
+          DESCRIPTION
+
+           DECprint Printing Services for VMS is a layered product re-
+           quired by suitably configured VMS systems to access 
+           PostScript[R][1] based print devices. (See the SOFTWARE WARRANTY 
+           section for non-Digital PostScript device exclusions.)
+
+           DECprint Printing Services software consists of the follow-
+           ing components:
+
+           o  A print symbiont that processes print requests from the
+              host on which it resides.
+
+           o  Communication software to transmit the request and as-
+              sociated data over the Ethernet to a remote PrintServer
+              printer via DECnet.
+
+           o  Translators to convert ANSI Text and Sixel Graphics, ReGIS,
+              HP[R] PCL level IV, Tektronix[R] 4010/4014, and DDIF Bitonal
+              Image files into the PostScript language.
+
+           o  A collection of optional ALL-IN-1 Scripts and a WPS-PLUS
+              Printer Table file that enhances compatibility between
+              ALL-IN-1, WPS-PLUS, and Digital PostScript printers. ALL-IN-1
+              /WPS-PLUS users can access the many unique features of
+              these printers, such as duplex printing on the PrintServer
+              20. PrintServer printer performance is greatly improved
+              for ALL-IN-1 multiple selection and print operations. Sup-
+              port for LN03 font cartridge emulation is also included.
+           _________________
+         [1] Postscript is a device-independent page description lan-
+             guage that has the ability to describe the appearance of
+
+             text, images, and graphic material on the printed page.
+
+                                    DIGITAL             October 1991
+
+                                                         AE-PC25D-TE
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           o  A series of PostScript tools for creator software sup-
+              port. These include a PostScript error handler and Font
+              Encoding Vectors for the ISO Latin Alphabet Number 1 (ISO
+              8859/1) and Digital Multinational Character Set for all
+              of the built-in PostScript fonts except the Symbol font.
+
+           DECprint Printing Services software must be installed on each
+           system that provides print services to its users of PostScript
+           printers.
+
+           LN03 Image Printers are direct-connected to specific work-
+           station configurations only. Refer to the LN03 Image Sup-
+           port Software Software Product Description (SPD 31.52.xx)
+           for LN03 Image Printer requirements.
+
+           A system running DECprint Printing Services software can trans-
+           mit print requests to any PrintServer printer on the net-
+           work that is defined in its network database. A system run-
+           ning DECprint Printing Services software can transmit print
+           requests to any desktop PostScript printer in the local area
+           network that is connected to a LAT based terminal server.
+
+           Note: VAX PrintServer Supporting Host Software (SPD 27.68.xx)
+           is a companion product to this software for PrintServer de-
+           vice operation.
+
+           Features
+
+           Print Symbiont
+
+           All VMS systems require the installation of this software
+           product to process print requests to the supported print-
+           ers.
+
+           The /PARAMETERS qualifier in the PRINT command passes printer
+           specific parameters to the print symbiont for processing.
+           Not all parameters are supported on all print devices. These
+           parameters are as follows:
+
+
+
+                                       2
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           o  Data_Type - Specifies the type of data in the print job.
+              If necessary, the print symbiont uses a translator to con-
+              vert the data to PostScript data syntax.
+
+           o  Messages - Specifies the disposition of messages gener-
+              ated by the print job as either saved in a log file or
+              printed at the end of the job.
+
+           o  Layup_Definition - Specifies the name of a file that con-
+              tains all of the page layup features (Borders, Margins,
+              Margin Alternation, Pages Per Sheet, First Page, Page Or-
+              der and Page Grid) except Number_Up.
+
+           o  Number_Up - Specifies the maximum number of pages that
+              should be printed on a sheet.
+
+           o  Page_Limit - Specifies the first and last pages of the
+              job to be printed.
+
+           o  Page_Orientation - Specifies the orientation of printed
+              output on the page (portrait or landscape).
+
+           o  Page_Size - Specifies the size of the logical pages be-
+              ing printed.
+
+           o  Sheet_Size - Specifies the physical size of the sheets
+              to be printed.
+
+           o  Sheet_Count - Specifies the number of times each sheet
+              is to be printed (uncollated copies only).
+
+           o  Input_Tray - Specifies the printer input tray that will
+              supply the paper or medium for this job.
+
+           o  Output_Tray - Specifies the printer output tray where the
+              printed output will be deposited.
+
+           o  Sides - Specifies whether the layout of a page is sim-
+              plex, duplex or tumble.
+
+           o  Fonts_Used - Specifies the soft font module(s) to be loaded
+              before the LN03 ANSI file containing font selection com-
+              mands is submitted to the ANSI Translator.
+
+                                       3
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           o  Tab - Specifies emulation of the LN03 Set Terminal/Tab
+              command.
+
+           The /SETUP qualifier may be used to send specified modules
+           from a device control library to the printer. These modules
+           may be encoded in ANSI, PCL, or PostScript.
+
+           The print symbiont also supplies accounting information for
+           each print job as follows: sheets of paper printed, the num-
+           ber of RMS Gets, and the number of QIO Writes.
+
+           LN03 Emulation Features
+
+           LN03 Emulation applies only to printing ANSI files and has
+           two major components:
+
+           1. LN03 Font Cartridge Emulation is intended to emulate font
+              cartridges on the LN03 printer. The file must contain font
+              selection commands, and the FONTS_USED parameter spec-
+              ifies the soft font module(s) to be loaded into the printer
+              in order to print the file.
+
+           2. PRTSMB Emulation provides further LN03 printer emulation.
+              These functions emulate VMS PRTSMB, including the fol-
+              lowing:
+
+              o  Margins, as specified by DEFINE/FORM/MARGIN
+
+              o  Page setup, as specified by DEFINE/FORM/PAGE_SETUP
+
+              o  Wrap and truncate, as specified by options to DEFINE
+                 /FORM
+
+              o  Page headers, as specified by PRINT/HEADER
+
+              o  Double spacing, as specified by PRINT/SPACE
+
+           Translators
+
+
+
+                                       4
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           Translator software allows users to print documents with graphic
+           protocols other than the native language of the printer by
+           translating the designated protocol into PostScript. The trans-
+           lators are invoked by the print symbiont at print time through
+           the /PARAMETERS switch of the PRINT command or by submis-
+           sion to a translator-specific queue.
+
+           The translators provided convert the following data types
+           into PostScript:
+
+           o  ANSI
+
+           o  ReGIS
+
+           o  Tektronix 4010/4014
+
+           o  DDIF (Bitonal Image subset only)
+
+           o  HP PCL Level IV
+
+           ANSI text and Sixel graphics are compatible with the LN03.
+           Documents containing LN03 font cartridge commands will be
+           properly translated if the system also has the appropriate
+           optional LN03 Soft Font kit installed, and the appropriate
+           Fonts_Used parameter is provided, or by submitting to a queue
+           associated with that parameter.
+
+           Note: The ScriptPrinter and DEClaser printers contain less
+           PostScript virtual memory than the PrintServer printers. Files
+           utilizing LN03 downline loadable font storage may experi-
+           ence differences in output between a PrintServer printer,
+           the ScriptPrinter printer, and the DEClaser printer.
+
+           PostScript Tools
+
+           PostScript tools consist of the following:
+
+           o  A PostScript error handler which prints the last partial
+              page of output as well as information to help identify
+              the error. This information includes the error name, the
+              PostScript operator that encountered the error, the operand
+
+                                       5
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+              stack, and the graphics state of the machine at the time
+              of the error.
+
+           o  Font Encoding vectors for the ISO Latin Alphabet Number
+              1 (ISO 8859/1) and Digital Multinational Character Set
+              are provided for all of the built-in fonts.
+
+           NON-Digital PRINTING DEVICES
+
+           Digital makes no representation relative to the use of this
+           product to drive PostScript devices not listed in the SSA.
+           The customer drives PostScript devices not listed in the SSA
+           at their own risk.
+
+           INSTALLATION
+
+           Only customers with knowledge of VMS generic and execution
+           print queues in clustered and non-clustered environments and,
+           if operating in a DECserver environment, knowledge of DEC-
+           server management, should attempt installation of this soft-
+           ware product.
+
+           Digital recommends that all other customers purchase Dig-
+           ital Installation Services. These services provide for the
+           installation of the software product and Digital PostScript
+           Printer hardware by an experienced Digital Specialist.
+
+           Customer Responsibilities
+
+           Before installation of the software, the customer must:
+
+           o  Previously have installed all prerequisite software and
+              hardware.
+
+           o  Obtain, install, and demonstrate as operational any equip-
+              ment and facilities necessary to interface to Digital's
+              communication equipment.
+
+
+
+
+                                       6
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           o  Make available for a reasonable period of time, as mu-
+              tually agreed upon by Digital and the customer, all hard-
+              ware, communication facilities and terminals that are to
+              be used during installation.
+
+
+           Installation of DECprint Printing Services software will con-
+           sist of the following:
+
+           o  Verification that a complete set of DECprint Printing Ser-
+              vices software media and documentation has been received.
+
+           o  Verification that all hardware and software prerequisites
+              have been met and the equipment is operational.
+
+           o  Installation of DECprint Printing Services software on
+              one system.
+
+           o  Verification that DECprint Printing Services software has
+              been correctly installed by running the Installation Ver-
+              ification Procedure.
+
+           o  Modification of the DECnet databases to add the PrintServer
+              node name and address.
+
+           o  Modification of the VMS start-up files to automate the
+              startup of print queues.
+
+           Should a Digital specialist be required to modify the pre-
+           viously installed software parameters, a separate time and
+           materials charge will apply.
+
+           HARDWARE REQUIREMENTS
+
+           VAX, MicroVAX, VAXserver, or VAXstation configuration as spec-
+           ified in the System Support Addendum (SSA 32.41.03-x) and
+           at least one of the supported printers.
+
+
+
+
+                                       7
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           SOFTWARE REQUIREMENTS*
+
+           VMS Operating System
+           Desktop-VMS
+
+           For LN03Q Configurations only:
+
+           LN03 Image Support Software (License is included with the
+           purchase of LN03Q)
+
+           For PrintServer Printer Configuration only:
+
+           DECnet-VAX
+           VAX PrintServer Supporting Host Software
+
+           *  Refer to the System Support Addendum (SSA 32.41.03-x) for
+              availability and required versions of prerequisite/optional
+              software.
+
+           ORDERING INFORMATION
+
+           Software Licenses: QL-YNCA*-**
+           Software Media: QA-YNCA*-**
+           Software Documentation: QA-YNCAA-GZ
+           Software Product Services: QT-YNCA*-**
+
+           *  Denotes variant fields. For additional information on avail-
+              able licenses, services, and media, refer to the appro-
+              priate price book.
+
+           SOFTWARE LICENSING
+
+           This software is furnished under the licensing provisions
+           of Digital Equipment Corporation's Standard Terms and Con-
+           ditions. For more information about Digital's licensing terms
+           and policies, contact your local Digital office.
+
+
+
+
+
+                                       8
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+           This license permits execution of the DECprint Printing Ser-
+           vices for VMS V4.1 software on any processor (i.e., VAX com-
+           puter) or VAXcluster within a LAN for purposes of control-
+           ling:
+
+           o  One identified PostScript printer (each license permits
+              the execution of the software for one printer only) and
+
+           o  Any PostScript printer controlled by that processor or
+              VAXcluster pursuant to a DECprint Printing Services for
+              VMS, V4.0 license, and
+
+           o  Any Digital PostScript printer (model numbers LN03R, LN03Q,
+              LPS20, LPS40, LPS40+) purchased by licensee prior to March
+              31, 1991.
+
+           No upgrade license is required to use the DECprint Print-
+           ing Services for VMS, V4.1, software to control a printer
+           previously controlled by DECprint Printing Services for VMS,
+           V4.0.
+
+           The license to use this software is included with the print-
+           ers listed in the System Support Addendum.
+
+           SOFTWARE PRODUCT SERVICES
+
+           A variety of service options are available from Digital. For
+           more information, contact your local Digital office.
+
+           SOFTWARE WARRANTY
+
+           Warranty for this software product is provided by Digital
+           with the purchase of a license for the product as defined
+           in the Software Warranty Addendum of this SPD only when the
+           product is used to drive a PostScript device listed in the
+           SSA.
+
+
+
+
+
+                                       9
+
+ 
+
+
+
+           DECprint Printing Services for VMS,         SPD 32.41.03
+           Version 4.1
+
+
+           [R] PostScript is a registered trademark of Adobe Systems
+               Inc.
+
+           [R] HP PCL level IV and LaserJet are registered trade-
+               marks of Hewlett-Packard Corporation.
+
+           [R] Tektronix is a registered trademark of Tektronix,
+               Inc.
+
+           [R] Colormate PS is a registered trademark of NEC.
+
+           [TM]The DIGITAL Logo, All-IN-1, CI, DEC, DECimage, DE-
+               Claser, DECnet, DECnet-VAX, DECprint, DECserver,
+               DECstation, DECsystem, DELNI, DELUA, DEQNA, DESTA,
+               DECwindows, DDIF, LAT, LN03, LN03 ScriptPrinter, Mi-
+               croVAX, MUXserver, PrintServer, ReGis, ThinWire, TK,
+               VAX, VAXcluster, VAXft, VAXserver, VAXstation, and
+               VMS are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      10
+ 
+
+
+
+
+
+
+           System
+           Support
+           Addendum
+
+           _________________________________________________________
+           _________________________________________________________
+
+           PRODUCT NAME:  DECprint Printing Services   SSA 32.41.03-A
+                          for VMS, Version 4.1 
+
+           HARDWARE REQUIREMENTS
+
+           Processors Supported
+
+           VAX:     VAXft 3000 Model 310,
+                    VAX 4000 Model 200,
+                    VAX 4000 Model 300,
+                    VAX 6000 Model 200 Series,
+                    VAX 6000 Model 300 Series,
+                    VAX 6000 Model 400 Series,
+                    VAX 6000 Model 500 Series
+
+                    VAX 8200, VAX 8250, VAX 8300, VAX 8350,
+                    VAX 8500, VAX 8530, VAX 8550, VAX 8600,
+                    VAX 8650, VAX 8700, VAX 8800, VAX 8810,
+                    VAX 8820, VAX 8830, VAX 8840
+
+                    VAX 9000-210, VAX 9000 Model 400 Series
+
+                    VAX-11/750, VAX-11/780, VAX-11/785
+
+           MicroVAX:  MicroVAX II, MicroVAX 2000,
+                      MicroVAX 3100, MicroVAX 3300,
+                      MicroVAX 3400, MicroVAX 3500,
+                      MicroVAX 3600, MicroVAX 3800,
+                      MicroVAX 3900
+
+
+
+
+                                    DIGITAL             October 1991
+
+                                                         AE-PC26E-TE
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+
+           VAXstation:VAXstation II, VAXstation 2000,
+                      VAXstation 3100 Series, VAXstation 3200,
+                      VAXstation 3500, VAXstation 3520,
+                      VAXstation 3540
+
+           VAXserver: VAXserver 3100, VAXserver 3300,
+                      VAXserver 3400, VAXserver 3500,
+                      VAXserver 3600, VAXserver 3602,
+                      VAXserver 3800, VAXserver 3900
+
+                      VAXserver 4000 Model 200,
+                      VAXserver 4000 Model 300
+
+                      VAXserver 6000-210, VAXserver 6000-220,
+                      VAXserver 6000-310, VAXserver 6000-320,
+                      VAXserver 6000-410, VAXserver 6000-420,
+                      VAXserver 6000-510, VAXserver 6000-520
+
+           Processors Not Supported
+
+           MicroVAX I, VAXstation I, VAX-11/725, VAX 11/730, VAX 11/782,
+           VAXstation 8000
+
+           Processor Restrictions:
+
+           A TK50 Tape Drive is required for standalone MicroVAX 2000
+           and VAXstation 2000 systems.
+
+           Other Hardware Required:
+
+           At least one Digital Postscript[R] printer, as follows:
+
+           o  ScriptPrinter (LN03R)
+
+           o  LN03 Image Printer (LN03Q)
+
+           o  DEClaser 1150 (LN07R)
+
+           o  DEClaser 2150 (LN05R)
+
+           o  DEClaser 2250 (LN06R)
+
+                                       2
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+           o  DEClaser 3250 (LN08R)
+
+           o  PrintServer 20
+
+           o  Turbo PrintServer 20
+
+           o  PrintServer 40
+
+           o  PrintServer 40 Plus
+
+           o  Colormate PS[R]
+
+           For DEClaser, ScriptPrinter, and Colormate PS Printer Con-
+           figurations:
+
+           o  At least one printer:
+
+              -  Colormate PS printer
+
+              -  DEClaser 1150 printer
+
+              -  DEClaser 2150 printer
+
+              -  DEClaser 2250 printer
+
+              -  DEClaser 3250 printer
+
+              -  ScriptPrinter printer
+
+           o  Serial Interface via RS232 or MMJ with Adapter.
+
+           o  One of the following serial interfaces is required:
+
+              -  DHV11 (9600 baud)
+
+              -  DZQ11 (9600 baud)
+
+              -  DLV11 (9800 baud)
+
+              -  DHU11 (9600 baud)
+
+              -  DMZ32 (4800 baud)
+
+              -  DMF32 (9600 baud)
+
+              -  DMB32 (9600 baud)
+
+              -  DECserver 100 (9600 baud)
+
+                                       3
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+              -  DECserver 200/MC (19.2K baud)
+
+              -  DECserver 250 (19.2K baud)
+
+              -  DECserver 300 (19.2K baud)
+
+              -  DECserver 500 (9600 baud)
+
+              -  DECserver 550 (9600 baud)
+
+              -  MUXserver 100 (19.2K baud)
+
+              -  MUXserver 300 (19.2K baud)
+
+              -  CVAX serial interface (CXA16, CXB16, CX08, DZQ-11) (9600
+                 baud)
+
+              -  DECserver 90L
+
+           o  The printer's communications interface must be set for
+              8-bit, no parity communications, XON/XOFF flow control.
+
+           o  For DEClaser 2000 series, a PostScript cartridge, and a
+              minimum of two megabytes of memory for the DEClaser 2150
+              and three megabytes of memory for the DEClaser 2250.
+
+           For LN03Q Image printer configurations:
+
+           o  At least one LN03 Image Printer (LN03Q).
+
+           o  A minimum of 9 megabytes of memory for the VAX host. 13
+              megabytes of memory is recommended for enhanced perfor-
+              mance.
+
+           o  LNV21 Qbus controller card
+
+           For PrintServer Configurations Only:
+
+           o  A valid PrintServer printer and supporting host software
+              configuration
+
+           o  An Ethernet Controller Interface for the client system
+
+                                       4
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+           o  An Ethernet physical channel for the printer, and one of
+              the following:
+
+              -  Ethernet transceiver (H4000 or H4004)
+
+              -  Local Network Interconnect (DELNI)
+
+              -  ThinWire Ethernet Station Adapter (DESTA)
+
+              -  ThinWire Interconnect (DEMPR)
+
+           Disk Space Requirements (Block Cluster Size = 1):
+
+           Disk space required for     4,500 blocks
+           installation:
+                                       (2.3 Mbytes)
+
+           Disk space required for
+           use (permanent):
+           With ALL-IN-1 compatibil-   4,500 blocks
+           ity kit:
+                                       (2.3 Mbytes)
+           Without ALL-IN-1 compati-   2,500 blocks
+           bility kit:
+                                       (1.3M btyes)
+
+           These counts refer to the disk space required on the sys-
+           tem disk. The sizes are approximate; actual sizes may vary
+           depending on the user's system environment, configuration,
+           and software options.
+
+           OPTIONAL HARDWARE
+
+           The DEClaser 2250 printer supports an optional envelope power
+           feeder.
+
+
+
+
+
+
+                                       5
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+           CLUSTER ENVIRONMENT
+
+           This layered product is fully supported when installed on
+           any valid and licensed VAXcluster* configuration without re-
+           strictions. The HARDWARE REQUIREMENTS sections of this prod-
+           uct's Software Product Description and System Support Ad-
+           dendum detail any special hardware required by this prod-
+           uct.
+
+           *  V5.x VAXcluster configurations are fully described in the
+              VAXcluster Software Product Description (29.78.xx) and
+              include CI, Ethernet and Mixed Interconnect configura-
+              tions.
+
+           SOFTWARE REQUIREMENTS
+
+           For Systems Using Terminals (No DECwindows Interface):
+
+           VMS Operating System V5.3 - V5.4
+           Desktop-VMS V1.0 - V1.1
+
+           VMS Tailoring:
+
+           For VMS V5.x systems, the following VMS classes are required
+           for full functionality of this layered product:
+
+           o  VMS Required Saveset
+
+           o  Network Support (for PrintServer support)*
+
+           o  Secure User's Environment
+
+           o  Utilities (for support of DECserver connected printers)*
+
+           o  DECwindows Application Files (for printing DDIF encoded
+              bitonal images)*
+
+           *  These are optional features; installations that do not
+              use these features do not need to install the tailoring
+              classes indicated.
+
+                                       6
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+           For more information on VMS classes and tailoring, refer to
+           the VMS Operating System Software Product Description (SPD
+           25.01.xx).
+
+           For PrintServer Configurations Only:
+
+           o  DECnet-VAX V5.3 - V5.4
+
+           o  VAX PrintServer Supporting Host Software V4.0 installed
+              on one system on the same Ethernet.
+
+           For LN03 Image Devices:
+
+           o  Image Printer Support Software
+
+           o  VMS Tailoring Class: DECwindows applications programming
+
+           OPTIONAL SOFTWARE
+
+           o  VAX Distributed Queuing Service V1.1
+
+           o  DECimage Application Services V2.0
+
+           o  DECimage Scan Software for VMS V2.0
+
+           o  LN03 Soft Font Kits
+
+           GROWTH CONSIDERATIONS
+
+           The minimum hardware/software requirements for any future
+           version of this product may be different from the require-
+           ments for the current version.
+
+           DISTRIBUTION MEDIA
+
+           9-track 1600 BPI Magtape (PE), TK50 Streaming Tape
+
+
+
+
+
+                                       7
+
+ 
+
+
+
+           DECprint Printing Services for VMS,       SSA 32.41.03-A
+           Version 4.1
+
+           ORDERING INFORMATION
+
+           Software Licenses: QL-YNCA*-**
+           Software Media: QA-YNCA*-**
+           Software Documentation: QA-YNCAA-GZ
+           Software Product Services: QT-YNCA*-**
+
+           *  Denotes variant fields. For additional information on avail-
+              able licenses, services, and media, refer to the appro-
+              priate price book.
+
+           The above information is valid at time of release. Contact
+           your local Digital office for the most up-to-date informa-
+           tion.
+
+           [R] PostScript is a registered trademark of Adobe Systems
+               Incorporated.
+
+           [R] HP PLC level IV and Laser Jet are registered trade-
+               marks of Hewlett-Packard Corporation.
+
+           [R] Tektronix is a registered trademark of Tektronix,
+               Inc.
+
+           [R] Colormate PS is a registered trademark of NEC.
+
+           [TM]The DIGITAL Logo, ALL-IN-1, CI , DEC, DECimage, DE-
+               Claser, DECnet, DECnet-VAX, DECprint, DECserver,
+               DECstation, DECsystem, DELNI, DELua, DEQNA, DESTA,
+               DECwindows, DDIF, LAT, LN03, LN03 ScriptPrinter, Mi-
+               croVAX, MUXserver, PrintServer, ReGis, Thin Wire, TK,
+               VAX, VAXcluster, VAXft, VAXserver, VAXstation, and
+               VMS are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+                                       8

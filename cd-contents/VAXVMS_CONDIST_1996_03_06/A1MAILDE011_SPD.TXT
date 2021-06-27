@@ -1,0 +1,924 @@
+ 
+
+
+
+
+
+
+     Software-
+     Produktbeschreibung
+
+     ________________________________________________________________
+
+     Produktname:  ALL-IN-1 MAIL/DEUTSCH für VMS,        SPD 44.02.00
+     Version 1.1
+
+     BESCHREIBUNG
+
+     ALL-IN-1 MAIL ist ein elektronisches Postsystem, das den interna-
+     tionalen Nachrichtenstandards nach CCITT-Empfehlung X.400 P2 ent-
+     spricht. Die Benutzer von ALL-IN-1 MAIL können untereinander Nach-
+     richten oder Dateien austauschen und finden auch auf unterschied-
+     lichen Systemen eine einheitliche Benutzeroberfläche in einer 
+     Client/Server-Implementierung.
+
+     Da ALL-IN-1 MAIL auf dem VAX Message Router von Digital Equipment
+     (SPD 26.33.xx) basiert, kann es mit allen MAILbus-Gateways und Zu-
+     satzprodukten in Verbindung treten.
+
+     ALL-IN-1 MAIL ist eine Client/Server-Implementierung, die Video Ter-
+     minals, DOS[1]-PCs, Microsoft[R] Windows[TM], Apple[R]-Macintosh[R]-PCs,
+     DECwindows VMS-Workstations und andere X11-Anzeigegeräte unterstützt.
+     ALL-IN-1 MAIL ermöglicht die Aufrüstung für Benutzer von VMS Per-
+     sonal Mail Utility (VMSmail) oder DECwindows VMSmail.
+
+     ALL-IN-1 MAIL ist vollkommen unabhängig vom integrierten Büroinfor-
+     mationssystem ALL-IN-1. Zur Verfügung stehen auch DOS- und DECwindows-
+     Clients, die mit der Basis des integrierten Büroinformationssystems
+     ALL-IN-1 direkt verbunden sind und den ALL-IN-1 MAIL Server nicht
+     brauchen. Weitere Hinweise finden Sie in den Software-Produkt-
+     beschreibungen (SPD 50.20.xx) und ALL-IN-1-Dienste für DECwindows 
+     (SPD 33.22.xx).
+
+     ___________________
+   [1]  In dieser Software-Produktbeschreibung werden unter der Bezeich-
+       nung DOS folgende Betriebssysteme zusammengefaßt:  PC Disk Ope-
+       rating System von IBM[R], MS-DOS[R] von Microsoft Corporation und 
+       COMPAQ-DOS von COMPAQ[R] Computer Corporation.
+
+                                  DIGITAL              September 1992
+
+                                                          AE-PT46A-TE
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Die Client-Software stellt dem Benutzer die jeweiligen Dienste zur
+     Verfügung, ist in der Regel auf einem intelligenten Terminal gespei-
+     chert und nützt die hohe Arbeitsgeschwindigkeit des lokalen Rech-
+     ners. Die VMS-Clients (für Video Terminals oder DECwindows-Geräte)
+     laufen auf VMS und müssen sich innerhalb desselben Knotens oder 
+     VAXclusters wie der Server befinden.
+
+     Clients sind mit dem ALL-IN-1 MAIL Server verbunden, der Netzwerk-
+     Zustelldienste in regionalen und überregionalen Bereich durchführt.
+
+     Der Datentransport zwischen ALL-IN-1 MAIL Servern und ALL-IN-1 MAIL,
+     sowie anderen Anwendungen erfolgt in der Phase II von ALL-IN-1 über
+     den VAX Message Router. Auf Wunsch können weitere Gateways mit dem
+     VAX Message Router verbunden werden, wenn dies für den Versand der
+     elektronischen Post in einem heterogenen Netzwerk erforderlich ist.
+
+     Der Anwender kann eine intelligente Datenstation in einem Büro, ei-
+     nen Videoterminal zu Hause oder einen DOS-Laptop oder Notebook un-
+     terwegs benutzen. Client-Software steht für alle drei Systeme zur
+     Verfügung - wobei immer dieselben Server-Dateien der Mailbox benutzt
+     werden können.
+
+     ALL-IN-1 MAIL hält sich an das NIST-Profil (National Institute for
+     Science and Technology) der CCITT X.400-Empfehlungen aus 1984. Die
+     bereitgestellten Nachrichtendienste entsprechen dem Niveau eines
+     E-Mail-Subsystems des integrierten Büroinformationssystems ALL-IN-1,
+     plus eigene Zusatzdienste von von X.400 und ALL-IN-1 MAIL.
+
+     Dieses Dokument beschreibt drei der Komponenten der ALL-IN-1 MAIL-
+     Produktfamilie: den Server, dem Client für Video Terminals und den
+     Client für DECwindows. Weitere Informationen zu anderen verfügba-
+     ren Komponenten entnehmen Sie der ALL-IN-1 MAIL Produkt-Familie Software-
+     Produktbeschreibung (SPD 31.51.xx).
+
+     Merkmale
+
+
+
+
+                                     2
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Kompatibilität mit VMSmail
+
+     Benutzer können sich problemlos von VMSmail nach ALL-IN-1 MAIL be-
+     wegen. Die Schnittstellen sind logische Erweiterungen der VMSmail-
+     Schnittstelle, und die Befehle und Dienste sind vertraut. Adressen-
+     und Verteilerlisten können in ALL-IN-1 MAIL verwendet werden. Von
+     den in VMS residierenden Clients können Kurznamen-Logicals verwen-
+     det werden. Die meisten Adressen, die in VMSmail-Verteilerlisten ver-
+     wendet werden, können in ALL-IN-1 MAIL eingesetzt werden, mit den
+     ähnlichen Einschränkungen, wie sie bei Verwendung einer solchen Li-
+     ste von einem anderen Knoten gelten. (Siehe die Produktdokumenta-
+     tion für weitere Details.)
+
+     Es ist keine Ablage-Konvertierung der beiden auf VMS-basierenden Schnitt-
+     stellen notwendig. Eine einmalige Ablage-Konvertierung ist erfor-
+     derlich, um VMSmail-Nachrichten vom PC aus zugänglich zu machen.
+
+     Über das VAX Message Router VMSmail Gateway können Nachrichten mit
+     VMSmail auf demselben System oder einem anderen Standort im DECnet-
+     Netzwerk ausgetauscht werden. Diese Funktion ist im Softwarepaket
+     ALL-IN-1 MAIL Wide Area Network Server inkludiert oder kann als Pro-
+     grammerweiterung dazugekauft werden.
+
+     Benutzer können einen Editor zur Verwendung in ALL-IN-1 MAIL bestim-
+     men. Alle unter VMSmail aufgerufenen und eingeleiteten Editoren kön-
+     nen von ALL-IN-1 MAIL aufgerufen und eingeleitet werden.
+
+     Kompatibilität mit ALL-IN-1
+
+     Über den VAX Message Router können unter Beibehaltung des Adressie-
+     rungsformats Nachrichten mit dem intergrierten Büroinformationssy-
+     stem ALL-IN-1 ausgetauscht werden.
+
+     Die Dienste von ALL-IN-1 MAIL sind mit den Diensten im E-Mail-Subystem
+     ALL-IN-1 kompatibel. So werden etwa Empfangsbestätigungen von bei-
+     den Systemen wechselseitig ausgestellt. Neue, in den CCITT-Empfehlungen
+     X.400 P2 definierte Merkmale können in beiden Produkten später in-
+     kludiert werden.
+
+                                     3
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Verteilerlisten, die im integrierten Büroinformationssystem ALL-IN-1
+     angelegt wurden, können auch in ALL-IN-1 MAIL benutzt werden. Da-
+     bei gelten dieselben Einschränkungen wie beim Versand einer Liste
+     an einen anderen ALL-IN-1-Knoten. Weitere Hinweise dazu finden Sie
+     in den Benutzerhandbüchern dieser Anwendungen. Die Adressierungs-
+     formate des Büroinformationssystems ALL-IN-1 können auch in ALL-IN-1
+     MAIL benutzt werden, allerdings mit Ausnahme von Adressen, die Ver-
+     knüpfungen mit anderen Protokollen enthalten (Unterstrich zu Beginn
+     der Zeichenkette).
+
+     X.400 Nachrichtenweiterleitung
+
+     Der Austausch mit anderen ALL-IN-1 MAIL Bereichen und Diensten, die
+     den internationalen Empfehlungen X.400 P2 entsprechen, ist möglich.
+     Für die Einhaltung dieser Regeln wird in den USA und in Europa ge-
+     sorgt.
+
+     In ALL-IN-1 MAIL wird jedes Kunden-Netzwerk als "Bereich" bezeich-
+     net. Innerhalb eines Kunden-Netzwerks werden Nachrichten überall dort
+     über DECnet transportiert, wo ein solches Netz besteht. Wenn die Da-
+     ten über ein X.400-Netz eines anderen Herstellers transportiert wer-
+     den sollen, ist ein OSI Networking Stack und das VAX Message Rou-
+     ter X.400 Gateway (MRX) erforderlich.
+
+     Der OSI-Nachrichtenaustausch erfordert mindestens ein MRX Gateway
+     in jedem Digital-Bereich (in der Regel eines pro Kunden-Netzwerk).
+     Genauere Angaben zu den Hardware- und Software-Erfordernissen fin-
+     den Sie in der Software-Produktbeschreibung für das VAX Message Rou-
+     ter X.400 Gateway (SPD 27.50.xx).
+
+     Unterstützung heterogener Netzwerke
+
+     MAILbus verfügt über eine Reihe von handelsüblichen Gateways und ein
+     Gateway-Entwicklungsprogramm, mit dem andere Gateways für den Nach-
+     richtenaustausch mit Mailsystemen anderer Hersteller entworfen wer-
+     den können. Die Hardware- und Softwareerfordernisse entnehmen Sie
+     der Software-Produktbeschreibung (SPD) der entsprechenden Produkte.
+
+
+                                     4
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Directory Services
+
+     ALL-IN-1 MAIL benutzt die unternehmensweiten Directory Services (DDS)
+     von Digital Equipment als Benutzer-Adressenverzeichnis. Dieses über
+     den VAX Message Router allgemein zugängliche Verzeichnis verbindet
+     ALL-IN-1 MAIL, das integrierte Büroinformationssystem ALL-IN-1, die
+     Gateways und alle anderen Agents, die Directory Services nutzen.
+
+     Das DDS-Verzeichnis wird von einem Benutzer bei der Adressierung ei-
+     nes Begleitschreibens oder der Eingabe eines Eintrags in das Per-
+     sönliche Adreßbuch (PAB) verwendet. Das PAB ist ein integrierter Be-
+     standteil von ALL-IN-1 MAIL. Es befindet sich im Mail-Account der
+     einzelnen Teilnehmer oder ist auf dem lokalen Datenträger des Cli-
+     ents gespeichert. Ein PAB-Eintrag wird mit einem Kurznamen aufge-
+     rufen, den jeder Teilnehmer erhält. Die Verteilerlisten können eben-
+     falls Kurznamen enthalten.
+
+     Das DDS-Verzeichnis ist ein Element des Netzwerks und daher nur ver-
+     fügbar, wenn die Verbindung zum Server besteht. Wenn Nachrichten auf
+     einer Workstation ohne Verbindung zum Server hergestellt werden, kann
+     der Teilnehmer lokal gespeicherte Kurznamen oder Verteilerlisten be-
+     nutzen oder die volle Adresse eingeben.
+
+     Verteilerlisten
+
+     Verteilerlisten sind einfache Textdateien, die im Mail-Bereich des
+     Benutzers gespeichert sind. Diese Verteilerlisten können von einer
+     Gruppe von Teilnehmern über die VMS Access Control Funktionen ge-
+     meinsam benutzt werden.
+
+     Ablegen von Nachrichten
+
+     In ALL-IN-1 MAIL besteht die Ablage aus Fächern und Ordnern und er-
+     möglicht den Zugriff auf RMS-Dateien. Die Ablage ähnelt der in VMS-
+     mail. Ein DECwindows-Gerät mit lokaler Speicherung kann, zusätzlich
+     zu den Fächern auf dem Server, ein oder mehrere Fächer in dem lo-
+     kalen Gerät haben.
+
+     Auf VMS-basierende Fächer können von einer Gruppe von Benutzern ge-
+     meinsam genutzt werden, wobei die Privilegien der einzelnen Benut-
+     zer von den VMS-Zugriffsteuerungen definiert werden.
+
+                                     5
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Suche nach Nachrichten
+
+     Die Suche nach Nachrichten kann nach bestimmten, vom Benutzer ein-
+     gegebenen Kriterien unter Verwendung der Einträge im Nachrichten-
+     kopf oder im Ablagesystem erfolgen.
+
+     Dateiformate
+
+     Wie unten beschrieben kann eine Auswahl von verschiedenen Editoren
+     mit der jeweiligen Schnittstelle verwendet werden. Der dem DECwindow-
+     Gerät entsprechende Editor wird ein anderer als der für ein Video
+     Terminal sein. Verschiedene Editoren bedingen unterschiedliche Datei-
+     formate. ALL-IN-1 MAIL kann verschiedene Dateiformate verarbeiten
+     und führt Konfigurationen durch, um die größtmögliche Lesbarkeit der
+     Nachrichten zu gewährleisten. Das System bearbeitet automatisch Nach-
+     richten in ASCII, DDIF, WPS-PLUS und DX, und führt Formatier- und
+     Konvertierroutinen durch, die der Compound Document Architecture von
+     Digital Equipment (CDA) entsprechen.
+
+     Der Client kann so eingestellt werden, daß er Anzeigen oder Anwen-
+     dungen aufruft, die auf dem Dateityp der jeweiligen Anlage basie-
+     ren.
+
+     Ab Version 1.1 kann ALL-IN-1 MAIL auch so eingestellt werden, daß
+     automatische Konvertierungen von Nachrichtenbestandteilen erfolgen,
+     die mit der Nachricht mitgeliefert werden. Dazu werden die als Zu-
+     satzausstattung erhältlichen VMS-residenten Konvertierungsdienste
+     wie die CDA Converter Library for VMS (SPD 31.31.xx) von Digital Equip-
+     ment oder andere Konvertierungsprozeduren anderer Hersteller, etwa
+     KEYpak[R] for VMS (SPD 32.71.xx), verwendet. Die Zusatzausstattung muß
+     dazugekauft werden. Die Benutzer können ihre bevorzugten Dateifor-
+     mate im Benutzerprofil speichern.
+
+     Informationen zur Übertragung bestimmter Dateiformate, vor allem über
+     Gateways, erhalten Sie bei der für Sie zuständigen Geschäftsstelle
+     von Digital Equipment.
+
+     Beim Austausch von DDIF-Dokumenten mit dem ALL-IN-1 integrierten Büro-
+     system können Probleme auftreten. Kontaktieren Sie in diesem Fall
+     die für Sie zuständige Geschäftsstelle von Digital Equipment.
+
+                                     6
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Hilfe
+
+     Hilfe zu ALL-IN-1 MAIL erhalten die Benutzer über die Online-Hilfe.
+     Sie enthält die wichtigsten Informationen zu den jeweiligen Funk-
+     tionen und erspart das Nachschlagen im Benutzerhandbuch.
+
+     Drucken
+
+     ALL-IN-1 MAIL nutzt die Standard-VMS-Druckfunktionen von Digital Equip-
+     ment, die in VMS bereitgestellt werden. Der Benutzer kann den Ziel-
+     drucker und die Optionen definieren.
+
+     Nachrichtenfunktionen
+
+     Benutzer können Nachrichten mit den entsprechenden Kommandos erstel-
+     len, lesen und versenden. Die Nachrichten können Informationen in
+     mehreren Dateiformaten enthalten, etwa im Document Interchange For-
+     mat für zusammengesetzte Dokumente (DDIF) von Digital Equipment.
+
+     Die Nachrichten können an einen anderen Empfänger weitergeleitet wer-
+     den. Anlagen zu der Nachricht können sein: eine andere Nachricht,
+     ein Dokument in Dateiform, oder auch Binärdateien.
+
+     Die Beantwortung einer Nachricht ist einfach. Das System sendet die
+     Antwort automatisch an den Absender der Originalnachricht. Der Be-
+     nutzer kann dem Absender, allen Empfängern der Originalnachricht oder
+     allen Adressaten in einer Antwortliste antworten.
+
+     Nachrichten können weltweit an Benutzer in jeder gültigen MAILbus-
+     Destination versandt werden (z.B. VMSmail, ULTRIX mail, X.400, etc.).
+     Die Dateiformate werden unter Umständen von Gateways oder User Agents
+     verändert, um die Nachricht für den Empfänger lesbar zu machen. Nicht
+     alle Dateiformate werden von allen Gateways oder User Agents unter-
+     stützt. Um daher eine optimale Lesbarkeit der versandten Nachrich-
+     ten zu gewährleisten, muß bei der Einrichtung des Netzwerks große
+     Sorgfalt angewendet werden.
+
+
+
+                                     7
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Benachrichtigungen
+
+     Versand- und Empfangmarkierungen können der Nachricht beigegeben wer-
+     den. Diese Markierungen bewirken die Erstellung einer Benachrich-
+     tigung, die an den Absender gesandt wird, wenn die Nachricht zuge-
+     stellt oder empfangen wurde.
+
+     Direktverständigung beim Eintreffen neuer Nachrichten
+
+     Es besteht die Möglichkeit, beim Eintreffen neuer Nachrichten dem
+     Benutzer eine Direktverständigung zukommen zu lassen.
+
+     Umleiten von Nachrichten
+
+     Der Benutzer kann verlangen, daß alle eintreffenden Nachrichten au-
+     tomatisch an eine andere Adresse weitergesandt werden.
+
+     Priorität beim Versand
+
+     Die Benutzer können für den Versand der Nachricht eine Priorität wählen.
+     Dabei kann definiert werden, ob die Nachricht eilig, normal oder nicht
+     dringend ist.
+
+     Klassifizierung der Nachrichten
+
+     Der Benutzer kann dem Empfänger durch eine Reihe von Hinweisen mit-
+     teilen, welche Klassifizierung die Nachricht hat: Wichtigkeit (hoch,
+     mittel, niedrig), Vertraulichkeit (nicht eingeschränkt, persönlich,
+     privat, unternehmensintern).
+
+     Die Nachricht kann mit Ablaufdaten versehen werden, die das auto-
+     matische Löschen nach einer bestimmten Frist ermöglichen.
+
+     Diese Felder können auch zum Auffinden von Nachrichtenklassen in der
+     Ablage verwendet werden.
+
+
+
+
+                                     8
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Systembetreuung
+
+     Die lokale Systembetreuung für das Mailsystem ist minimal und weit-
+     gehend automatisiert. Der Systembetreuer oder Systemverwalter ist
+     nur für die Öffnung eines Standard-VMS-Benutzerkontos erforderlich.
+     Wenn der Benutzer zum ersten Mal auf ALL-IN-1 MAIL zugreift, wer-
+     den grundlegende Setup-Funktionen automatisch durchgeführt. Die mei-
+     sten Routinefunktionen können von den Benutzern durchgeführt wer-
+     den.
+
+     Die Dateipflege erfolgt ohne spezielle Dienstprogramme. Die Benut-
+     zerbereiche auf dem Server werden mit den Standardprogrammen von VMS
+     gesichert. Die Pflege der auf VMS basierenden Dateistrukturen, die
+     dem Benutzer zur Verfügung stehen, kann von ihm selbst durchgeführt
+     werden.
+
+     Die Systembetreuung im Mailsystem hält sich an das koordinierte Be-
+     treuungssystem, das von der MAILbus-Produktfamilie benutzt wird. Der
+     ALL-IN-1 MAIL Server verfügt über ein Systembetreuungsprogramm, mit
+     dem Konfigurationsänderungen durchgeführt und die Zustände des Mail-
+     systems geprüft werden können. Wenn dieses Programm über VMS 
+     SYSMAN aufgerufen wird, können die Vorgänge zentral verwaltet werden.
+
+     Internationalisierung
+
+     ALL-IN-1 MAIL ist für den mehrsprachigen Betrieb vorgesehen. Es kann
+     in einem mehrsprachigen Netzwerk eingerichtet werden und auf einem
+     einzelnen Serversystem in mehreren Sprachen betrieben werden. Für
+     weitere Informationen siehe "Hardware- und Softwareumgebung 
+     SSA 44.02.00-A)". Die Client-Software von ALL-IN-1 MAIL für VMS ist 
+     in mehreren Sprachen vorhanden.
+
+     Clients in anderen Sprachen erhalten Sie unter folgenden Bestell-
+     nummern:
+
+          ALL-IN-1 MAIL for        SPD 39.59.00
+          VMS
+
+
+                                     9
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+
+          ALL-IN-1 MAIL/DANSK      SPD 27.H8.00
+          for VMS
+
+          ALL-IN-1 MAIL/ESPAÑOL    SPD 27.H7.00
+          para VMS
+
+          ALL-IN-1 MAIL/FRANÇAIS   SPD 44.03.00
+          pour VMS
+
+          ALL-IN-1 MAIL/ITALIANO   SPD 44.04.00
+          per VMS
+
+          ALL-IN-1 MAIL/NEDERLANDS SPD 27.H9.00
+          voor VMS
+
+          ALL-IN-1 MAIL/SVENSKA    SPD 44.05.00
+          för VMS
+
+     ALL-IN-1 MAIL Dokumentation
+
+     Anwendungsanleitungen werden mit dem Client-Paket mitgeliefert. Die
+     Server-Datenträger enthalten Angaben zur Systembetrteuung sowie Software-
+     und Installationshinweise für den Server und für die DECwindows-
+     und Video Terminal-Clients.
+
+     Softwarepaket
+
+     ALL-IN-1 MAIL für Video Terminals, ALL-IN-1 MAIL für VMS DECwindows
+     und ALL-IN-1 MAIL Server für VMS sind Softwares, die auf VMS basie-
+     ren.
+
+     ALL-IN-1 MAIL für Video Terminals
+
+     ALL-IN-1 MAIL für Video Terminals ähnelt VMSmail, kommuniziert aber
+     direkt mit dem Message Router und verwendet ein vielschichtiges Pro-
+     gramm, das den gesamten Bereich von Postsystemen abdeckt. Dieser 
+     Client befindet sich auf demselben Knoten wie der ALL-IN-1 MAIL-Server.
+     Er ermöglicht normalen Terminals den gleichen Zugriff auf die Lei-
+     stungen von ALL-IN-1 MAIL. Da er den Server mit den anderen ALL-IN-1
+
+                                    10
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     MAIL Clients teilt, kann er als Heimarbeitsplatz für Benutzer mit
+     stärkeren Desktop-Geräten verwendet werden.
+
+     Kompatibilität mit VMSmail
+
+     Benutzer können von VMS Personal Mail Utility (VMSmail) nach ALL-IN-1
+     MAIL für Video Terminals wechseln. Die Befehlszeile-Schnittstelle
+     ist eine logische Erweiterung der VMSmail-Befehlsschnittstelle, und
+     Befehle und Dienstleistungen in ALL-IN-1 MAIL für Video Terminals
+     werden vertraut sein. Adressen, Kurznamen-Logicals und Verteiler-
+     listen, die in VMSmail verwendet werden, können auch in ALL-IN-1 MAIL
+     für Video Terminals eingesetzt werden.
+
+     ALL-IN-1 MAIL für Video Terminals kann Nachrichten in der vorhan-
+     denen VMSmail-Ablage finden und lesen, und sie in die ALL-IN-1 MAIL-
+     Ablage kopieren.
+
+     Editoren
+
+     Der Standardeditor ist ein einfacher Texteditor.
+
+     Unter VMS stehen dem Benutzer eine Reihe von Digital-Equipment-Editoren
+     und Textverarbeitungsprogrammen anderer Hersteller zur Verfügung.
+     Jeder Editor, der von VMSmail aufgerufen werden kann, kann auch von
+     ALL-IN-1 MAIL aufgerufen werden.
+
+     ALL-IN-1 MAIL für VMS DECwindows
+
+     ALL-IN-1 MAIL für VMS DECwindows ist eine DECwindows-Anwendung der
+     Client-Softwarekomponente von ALL-IN-1 MAIL. Sie entspricht dem DECwin-
+     dows Style Guide und kann sowohl von einer Workstation, die ein Teil
+     desselben lokalen VAXcluster wie die Server-Software ist, verwen-
+     det werden, als auch überregional unter Verwendung eines X11-Anzeige-
+     Servers, der von Digital Equipment unterstützt wird.
+
+
+
+
+
+                                    11
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Zugriff von anderen Ebenen
+
+     Da ALL-IN-1 MAIL den DECwindows-Standards entspricht, können Benut-
+     zer von Geräten, denen X-Servers zur Verfügung stehen, auf die Mail-
+     Software zugreifen. In diesem Fall werden die Nachrichtenerstellung
+     und -speicherung nicht im Desktop-Gerät ausgeführt, sondern auf der
+     ALL-IN-1 Mail-Ebene. Die Fensteranzeige führt das Desktop-Gerät durch.
+     Diese Funktion ermöglicht Zugriff für zusätzliche Desktop-Geräte,
+     die den DECwindows-Standards entsprechen.
+
+     Kompatibilität mit VMSmail und DECwindows VMSmail
+
+     Benutzer können von VMS Personal Mail Utility (VMSmail) oder DECwin-
+     dows VMSmail nach ALL-IN-1 MAIL für DECwindows wechseln. Die Schnitt-
+     stelle ähnelt der DECwindows VMSmail-Schnittstelle, und Befehle und
+     Dienstleistungen in ALL-IN-1 MAIL für DECwindows werden vertraut sein.
+     Adressen, Kurznamen-Logicals und Verteilerlisten, die in VMSmail ver-
+     wendet werden, können auch in ALL-IN-1 MAIL für DECwindows einge-
+     setzt werden.
+
+     ALL-IN-1 MAIL für DECwindows kann Nachrichten von der vorhandenen
+     VMSmail-Ablage in die ALL-IN-1 MAIL-Ablage kopieren.
+
+     Editoren
+
+     Der Standardeditor ist ein einfacher Texteditor.
+
+     Unter DECwindows stehen dem Benutzer eine Reihe von Digital-Equipment-
+     Editoren und Textverarbeitungsprogrammen anderer Hersteller zur Ver-
+     fügung. Jeder Editor, der von DECwindows VMSmail aufgerufen werden
+     kann, kann auch von ALL-IN-1 MAIL für DECwindows aufgerufen werden,
+     wie z.B. Editoren wie DECwrite.
+
+     MINDEST-HARDWAREKONFIGURATION
+
+     Prozessoren und/oder Hardware-Konfigurationen laut "Hardware- und
+     Softwareumgebung SSA 44.02.00-A".
+
+
+                                    12
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     SOFTWARE-ERFORDERNISSE
+
+     Damit der ALL-IN-1 MAIL Server für VMS einen oder mehrere Clients
+     unterstützt, und für die ALL-IN-1 MAIL für Video Terminals:
+
+     o  VMS Betriebssystem
+
+     o  DECnet-VAX
+
+     Der ALL-IN-1 MAIL Server übermittelt Nachrichten an alle Benutzer
+     der unterschiedlichsten ALL-IN-1 MAIL Clients, die diesen einen Ser-
+     ver benutzen. Daher können die Benutzer auf einem einzigen VAXclu-
+     ster oder LAN Nachrichten über einen einzigen ALL-IN-1 MAIL Server
+     austauschen.
+
+     Der VAX Message Router wird benötigt, um Nachrichten mit Benutzern
+     von anderen Servern oder anderen elektronischen Postsystemen aus-
+     zutauschen. Der Message Router kann sich auf demselben Knoten wie
+     der ALL-IN-1 MAIL Server oder auf einem anderen DECnet-Knoten be-
+     finden. Um mit VMSmail-Benutzern zu kommunizieren, wird auch ein VMS-
+     mail Gateway benötigt.
+
+     Gateway
+
+     Da der Message Router mit dem VMSmail Gateway geliefert wird, wählen
+     Sie EINES der folgenden Pakete:
+
+     o  VAX Message Router
+        or
+
+     o  VAX Message Router VMSmail Gateway
+
+     PATHWORKS für VMS und/oder PATHWORKS für Macintosh (VMS-Komponenten)
+     sind auf VMS erforderlich, um DOS- und/oder Macintosh-Clients, die
+     PATHWORKS verwenden, als Verbindung zwischen Client und Server zu
+     unterstützen. (Weitere Informationen siehe die Software-Produktbeschreibung
+     für die entsprechenden Client-Komponenten.)
+
+
+                                    13
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Die meisten Kofigurationen benötigen einen Message Router, und alle
+     Standorte, die von einem VMS-Produkt stammen oder mit einem inter-
+     agieren, benötigen das VMSmail Gateway. Das ALL-IN-1 MAIL Wide Area
+     Network Server-Paket kombiniert diese Software-Komponenten mit dem
+     ALL-IN-1 MAIL Server.
+
+     Für den Client ALL-IN-1 MAIL für VMS DECwindows auf der
+     Workstation:
+
+     o  VMS Betriebssystem (und notwendige Komponenten von VMS DECwin-
+        dows)
+
+     o  DECnet-VAX
+
+     Informationen über die Verfügbarkeit und benötigte Versionen von er-
+     forderlicher bzw. optionaler Software sowie über Komponenten von VMS
+     DECwindows enthält die "Hardware- und Softwareumgebung SSA 44.02.00-
+     A".
+
+     Landesspezifische Software
+
+     Informationen zu landesspezifischen Änderungen dieser Software fin-
+     den Sie in der "Hardware- und Softwareumgebung SSA 44.02.00-A".
+
+     BESTELLINFORMATION
+
+     Der Betrieb dieses Produkts benötigt einen ALL-IN-1 MAIL Server und
+     zumindest einen ALL-IN-1 MAIL Client.
+
+     Server-Optionen:
+
+     Wählen Sie eine der folgenden Server-Optionen:
+
+     ALL-IN-1 MAIL Lokaler Netzwerk-Server:
+
+     Dieses Paket ist für Anwendungen bestimmt, bei denen Post nicht außer-
+     halb eines bestimmten Servers versendet wird, oder bei denen ein Mes-
+     sage Router bereits vorhanden ist:
+
+                                    14
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     Softwarelizenz und Datenträger (nur TK50):
+        QB-YFTA9-AA
+     Software-Dienstleistungen: QT-YCZA*-**
+
+     Dieses Paket enthält Lizenz, Datenträger und Dokumentation für den
+     auf einer einzelnen CPU implementierten ALL-IN-1 MAIL-Server.
+
+     Wählen Sie dieses Produkt, um den ALL-IN-1 MAIL-Server auf einem Kno-
+     ten, VAXlcuster oder lokalen Netzwerk zu implementieren, bei dem der
+     Message Router bereits lizenziert ist, oder wenn es nicht notwen-
+     dig ist, es mit einem anderen Knoten bzw. mit einem anderen Post-
+     system zu verbinden.
+
+     ALL-IN-1 MAIL Fernbetrieb-Netzwerk-Server:
+
+     Dieses Paket ist für Mehrfach-Server-Konfigurationen, oder wenn im
+     Zusammenhang mit anderen Postsystemen gearbeitet wird:
+
+     Softwarelizenz: QL-YFUA9-J*
+     Software-Dienstleistungen: QT-YCZA*-**
+
+     Dieses Paket enthält Lizenzen für ALL-IN-1 MAIL-Server, Message Rou-
+     ter, VMSmail Gateway und Message Router X.400 Gateway. Der Aktua-
+     lisierungsdienst für Datenträger und Dokumentation für diese Kom-
+     ponenten muß getrennt erworben werden, abhängig von den zu imple-
+     mentierenden Komponenten: Siehe das Dienstleistungsangebot für ALL-IN-1
+     MAIL-Server für VMS, sowie für eines der beiden Gateway-Pakete: Mes-
+     sage Router VMSmail Gateway (SPD 26.33.xx) oder Message Router X.400
+     Gateway (SPD 27.50.xx). Die Dienstleistung für eines der Gateways
+     beinhaltet auch die für den Message Router.
+
+     Software-Datenträger: QA-YFUAA-**
+
+     Dieses Paket enthält Datenträger und Dokumentation für ALL-IN-1 MAIL-
+     Server, Message Router, und VMSmail Gateway. Datenträger und Doku-
+     mentation für den Message Router X.400 Gateway muß getrennt erwor-
+     ben werden.
+
+
+                                    15
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     ALL-IN-1 MAIL-Server für VMS:
+
+     Softwarelizenzen: QL-YCZ99-**
+     Software-Datenträger: QA-YCZA*-**
+     Softwaredokumentation: QA-YCZAA-GZ
+     Software-Dienstleistungen: QT-YCZA*-**
+
+     Das Datenträgerpaket enthält Datenträger und Dokumentation für den
+     Server, und nur die Datenträger (keine Dokumentation oder Lizenz)
+     für DECwindows- und Video Terminal-Clients. Siehe Client-Optionen
+     für Lizenz-Informationen über diese Clients.
+
+     Wählen Sie dieses Paket, um Lizenzen und Datenträger getrennt zu be-
+     stellen, oder um Lizenzen für mehr als einen CPU in einen VAXclu-
+     ster aufzunehmen.
+
+     Client-Optionen:
+
+     ALL-IN-1 MAIL für VMS DECwindows:
+
+     Softwarelizenzen: QL-VZ7G*-**
+     Software-Datenträger: In den Server-Datenträger enthalten
+     Softwaredokumentation: QA-VZ7GA-GZ
+     Software-Dienstleistungen: QT-VZ7G*-**
+
+     ALL-IN-1 MAIL für Video Terminals:
+
+     Softwarelizenzen: QL-YHSA9-**
+     Software-Datenträger: In den Server-Datenträger enthalten
+     Softwaredokumentation: QA-YHSAA-GZ
+     Software-Dienstleistungen: QT-YHSA*-*
+
+     *  Dieses Zeichen steht für variable Felder. Zusätzliche Hinweise
+        über verfügbare Lizenzen, Dienstleistungen und Datenträger fin-
+        den Sie in der entsprechenden Preisliste.
+
+     Die vorstehenden Informationen gelten zum Zeitpunkt der Veröffent-
+     lichung. Wenn Sie die neuesten Informationen erhalten möchten, wen-
+     den Sie sich an die zuständige Geschäftsstelle von Digital Equip-
+     ment.
+
+                                    16
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     SOFTWARELIZENZIERUNG
+
+     Diese Softwareprodukte werden im Rahmen der Lizenzbestinmmungen der
+     Allgemeinen Geschäftsbedingungen von Digital Equipment geliefert.
+     Wenn Sie weitere Informationen über die Lizenzvergabe von Digital
+     Equipment benötigen, wenden Sie sich an die für Sie zuständige Ge-
+     schäftsstelle von Digital Equipment.
+
+     Licence Management Facility Support
+
+     Die auf VMS basierenden Produkte unterstützen die VMS License Ma-
+     nagement Facility.
+
+     Lizenzeinheiten für den ALL-IN-1 MAIL Server werden auf einer Ba-
+     sis des unbeschränkten Systemgebrauchs plus persönlicher Gebrauch
+     zugeteilt.
+
+     Lizenzeinheiten für die ALL-IN-1 MAIL Clients werden auf einer Ba-
+     sis des unbeschränkten Systemgebrauchs plus persönlicher Gebrauch
+     zugeteilt.
+
+     Dieses Produkt bietet eine Lizenz für den persönlichen Gebrauch. Jede
+     Lizenz für den persönlichen Gebrauch erlaubt einen identifizierten
+     Benutzer.
+
+     Das ALL-IN-1 MAIL Wide Area Network Server-Paket vergibt Lizenzen
+     für seine Komponenten auf der Basis des Cluster-Bereichs.
+
+     Weiter Informationen über die Lizenzverwaltung siehe die VMS Betriebs-
+     system-Software-Produktbeschreibung (SPD 25.01.xx) oder das Handbuch
+     License Management Facility des Dokumentationssatzes für das VMS Be-
+     triebssystem.
+
+     Wenn Sie weitere Informationen über die Lizenzvergabe von Digital
+     Equipment benötigen, wenden Sie sich an die für Sie zuständige Ge-
+     schäftsstelle von Digital Equipment.
+
+
+
+                                    17
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+     DIENSTLEISTUNGEN
+
+     Digital Equipment bietet umfangreiche Software-Dienstleistungspakete
+     an. Für weitere Informationen wenden Sie sich bitte an die für Sie
+     zuständige Geschäftsstelle von Digital Equipment.
+
+     SOFTWAREGEWÄHRLEISTUNG
+
+     Art, Umfang und Dauer der Softwaregewährleistung sind in den All-
+     gemeinen Geschäftsbedingungen der Digital Equipment GmbH geregelt.
+
+     [R]  Apple, AppleTalk und Macintosh sind Warenzeichen von Apple
+          Computer, Inc.
+
+     [R]  COMPAQ ist ein Warenzeichen von COMPAQ Computer Corpora-
+          tion.
+
+     [R]  IBM und PROFS sind Warenzeichen von International Business
+          Machines Corporation.
+
+     [R]  KEYpak ist ein Warenzeichen von Keyword Office Technolo-
+          gies, Ltd.
+
+     [R]  MCI und MCI Mail sind Warenzeichen von MCI Communications
+          Corporation.
+
+     [R]  MS, MS-DOS und Microsoft sind Warenzeichen von Microsoft
+          Corporation.
+
+     [R]  TYMNET ist ein Warenzeichen von British Telecommunications
+          PLC.
+
+     [TM] Intel ist ein Warenzeichen von Intel Corporation.
+
+     [TM] Windows ist ein Warenzeichen von Microsoft Corporation.
+
+
+
+
+                                    18
+
+ 
+
+
+     ALL-IN-1 MAIL für VMS, Version 1.1                 SPD 44.02.00
+
+
+
+
+     [TM] Das DIGITAL Logo, ALL-IN-1, CDA, CI, DECnet, DECwindows,
+          DECwrite, DX, MicroVAX, MicroVMS, PATHWORKS, TK, ULTRIX,
+          VAX, VAXcluster, VAXserver, VAXstation, VMS und VT sind
+          Warenzeichen von Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    19
