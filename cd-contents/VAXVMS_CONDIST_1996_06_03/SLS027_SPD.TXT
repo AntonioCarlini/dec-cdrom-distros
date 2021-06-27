@@ -1,0 +1,870 @@
+ 
+
+
+                               DIGITAL
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  Storage Library System                           SPD
+ 29.67.13               for OpenVMS Version 2.7
+
+ DESCRIPTION
+
+ Data center managers face three storage management problems: system
+ backup and restore complexity, effective file archiving and retrieval,
+ and lack of online data storage capacity. The Storage Library System
+ (SLS) for OpenVMS helps the storage administrator solve these prob-
+ lems.
+
+ SLS for OpenVMS manages tape volumes through the volume life cycle,
+ automates backups, provides for system and user archiving, and makes
+ it easy to find files stored on tapes. SLS for OpenVMS also provides
+ a remote backup facility, and is therefore a major component in "lights
+ out" data center operations.
+
+ Key Features
+
+ SLS for OpenVMS provides the following important file archiving and
+ backup capabilities:
+
+ o  Automatic, flexible scheduling of backup operations
+
+ o  Centralized services for user-requested backup and archiving op-
+    erations
+
+ o  Support for remote backup and archiving operations directly between
+    disks and tape drives located on different systems within a DEC-
+    net network without staging data across disks
+
+                                                          April 1996
+
+                                                         AE-LB73P-TE
+
+ 
+
+ o  Online maintenance of information about backed up and archived files
+    and volumes; this allows quick retrieval of the files or restora-
+    tion of disk volumes without the user having to know the names of
+    the tape volumes on which the data was saved
+
+ o  Support for OpenVMS on VAX (Versions 5.5-2 through 6.2) and Alpha
+    (Version 6.1 and 6.2) systems in both mixed-interconnect and mixed
+    architecture VMSclusters
+
+ o  Integration with RMU/BACKUP and RMU/RESTORE, allowing backup and
+    restore of Oracle Rdb[TM] databases using SLS managed media
+
+ o  Effective use of all media capacity by appending multiple sets of
+    backed up or archived files to the same volume or volume set
+
+ o  Direct positioning to the start of each save set file during a re-
+    store operation using saved information about the tape position of
+    each save set file
+
+ o  DCL and menu interfaces with online help for users, operators, and
+    storage administrators
+
+ o  Customization features to meet a variety of operational and site
+    requirements
+
+ SLS for OpenVMS provides the following important media and device man-
+ agement capabilities:
+
+ o  Support for unattended backup operations using a variety of auto-
+    mated loaders, such as TA90, TA90E, Tx8n7, TL810 family, TL820 fam-
+    ily, the RV64 optical jukebox, the StorageTek[R] automated cartridge
+    server (Wolfcreek silo); for a complete list, see the device sup-
+    port tables at the end of this document.
+
+ o  Support for Tx8n7 and Tx8n5 automatic tape cartridge loaders as ei-
+    ther direct slot robotic devices or as gravity loaders (stackers)
+
+ o  Media life cycle control including maintenance of volume retention
+    period, availability status, location, and scheduling of dates when
+    volumes are to move offsite and return
+
+                                  2
+
+ 
+
+ o  Maintenance of counters for each volume noting the number of times
+    a volume has been mounted and the number of errors associated with
+    the volume; these counters are used to schedule volume cleaning when
+    the counters exceed threshold values
+
+ o  Control of media allocation based on customer-defined media pools
+
+ o  Ability to print external tape labels in a customizable format
+
+ o  Built-in report generation and custom report generation capabil-
+    ity
+
+ o  Security features to prevent unauthorized media or device use
+
+ o  "Round robin" device allocation to distribute drive usage among avail-
+    able tape drives
+
+ o  In a VMScluster environment, automatic failure recovery from the
+    loss of a processor to allow continuous access to the SLS for Open-
+    VMS media databases
+
+ Supported Media and Devices
+
+ SLS for OpenVMS software manages the media and devices for all OpenVMS-
+ supported reel-to-reel and cartridge tape drives, the RV20 write-once
+ optical disk drive, and the RV64 optical disk jukebox.
+
+ For a comprehensive list of devices SLS supports, see the device ta-
+ bles at the end of this document.
+
+ Remote Device Facility (RDF[TM])
+
+ The Remote Device Facility (RDF) software is distributed within the
+ SLS for OpenVMS software. It is optionally installed during the SLS
+ software installation procedure. No additional license is needed for
+ RDF, when used within the bounds of SLS.
+
+ RDF allows SLS to access a tape or RV60-type optical disks from other
+ OpenVMS nodes across the DECnet network for backup and archive oper-
+ ations. RDF includes of the following components:
+
+                                  3
+
+ 
+
+ o  RDF servers that execute tape I/O requests on behalf of a remote
+    client. Servers are located on systems that have tape drives at-
+    tached or on systems that can access drives through the OpenVMS TM-
+    SCP Server.
+
+ o  RDF clients that provide the communications interface between ap-
+    plications reading or writing data to a tape drive and to the RDF
+    servers.
+
+ SLS for OpenVMS software makes access to remote tape drives transpar-
+ ent to SLS backup and archive operations by issuing RDF commands as
+ appropriate if a designated tape drive is a remote one. SLS for Open-
+ VMS software also manages volume load requests to remote systems to
+ allow unattended backups or to communicate with a console operator.
+ SLS for OpenVMS makes no direct use of the remote disk capabilities
+ inherent in RDF.
+
+ OPTIONS
+
+ To support a variety of configuration requirements, six SLS for Open
+ VMS license options are available:
+
+    SLS for OpenVMS VAX
+    SLS for OpenVMS Alpha
+    SLS for OpenVMS VAX REMOTE
+    SLS for OpenVMS Alpha REMOTE
+    SLS for OpenVMS VAX ACS
+    SLS for OpenVMS Alpha ACS
+
+ SLS for OpenVMS VAX and SLS for OpenVMS Alpha
+
+ SLS for OpenVMS software provides full functionality, as described above,
+ to users on the node or VMScluster on which SLS is executing. A node
+ or VMScluster executing SLS for OpenVMS software provides media man-
+ agement services for itself and for any "client nodes" connected to
+ it. At least one SLS for OpenVMS license in the network is required
+ for use of the SLS for OpenVMS product.
+
+
+
+                                  4
+
+ 
+
+ SLS for OpenVMS software manages the following:
+
+ o  The "SLS for OpenVMS volume database," an RMS file which describes
+    all removable storage media (volumes) known to SLS for OpenVMS soft-
+    ware.
+
+ o  "SLS for OpenVMS history files" in which information about user files
+    backed up or archived under SLS for OpenVMS control at the local
+    node is recorded.
+
+ o  The "SLS for OpenVMS magazine database," an RMS file which describes
+    all magazines (Tx8n7, TL820) and the cartridges contained in them.
+
+ SLS for OpenVMS VAX REMOTE and SLS for OpenVMS Alpha REMOTE
+
+ SLS for OpenVMS REMOTE software provides backup scheduling and archiv-
+ ing services for the node or VMScluster on which it is executing, and
+ acts as a client of another node executing SLS for OpenVMS software
+ when it requires media management services.
+
+ A node or VMScluster executing SLS for OpenVMS REMOTE software in com-
+ munication with another node or VMScluster executing SLS for OpenVMS
+ software provides users with the full functionality described above.
+
+ Like SLS for OpenVMS software, SLS for OpenVMS REMOTE software main-
+ tains "SLS for OpenVMS history files" in which it records information
+ about user files backed up or archived locally under its control. The
+ node executing SLS for OpenVMS REMOTE software communicates using DEC-
+ net software to a "server node" running SLS software. The "server node"
+ maintains the SLS for OpenVMS media database. The SLS for OpenVMS me-
+ dia database contains information about volume location and pool ac-
+ cess authorization.
+
+ Each SLS for OpenVMS REMOTE node must be connected to a server node
+ executing SLS software for media management services. Any number of
+ SLS for OpenVMS REMOTE nodes may be connected to a single SLS for Open-
+ VMS node.
+
+ SLS for OpenVMS VAX ACS and SLS for OpenVMS Alpha ACS
+
+                                  5
+
+ 
+
+ SLS for OpenVMS ACS supports the StorageTek 4400 automated cartridge
+ server. This license is required in order to interface the StorageTek
+ ACS to SLS for OpenVMS.
+
+ The SLS ACS license is loaded in the system together with either the
+ SLS or SLS REMOTE licenses.
+
+ HARDWARE REQUIREMENTS
+
+ SLS supports the VAX and Alpha processors that OpenVMS supports. For
+ a detailed list of VAX processors supported by OpenVMS, see the Open-
+ VMS VAX Operating System Software Product Description (SPD 25.01.41).
+ For a detailed list of Alpha processors supported by OpenVMS, see the
+ OpenVMS Alpha Operating System Software Product Description (SPD 41.87.04).
+
+ As with OpenVMS, the following processors are not supported:
+
+    MicroVAX I
+    VAXstation I
+    VAX-11/725
+    VAX-11/782
+    VAXstation 8000
+
+ Processor Restrictions:
+
+ A TK50 Tape Drive is required for standalone MicroVAX 2000 and VAXs-
+ tation 2000 systems.
+
+ A minimum system configuration includes:
+
+ o  4 MB memory
+
+ o  One or more tape drives
+
+ o  Disk drive, recognized by OpenVMS as having a Files-11 structure
+
+ o  Any other minimum configuration requirements for the OpenVMS Op-
+    erating system
+
+
+                                  6
+
+ 
+
+ MAGAZINE LOADERS
+
+ SLS supports unattended robotic load and unload operations on certain
+ models of the Tx8n7 and Tx8n5 family of tape drives, the TL810 fam-
+ ily, the TL820 family, and the StorageTek silos. These devices can han-
+ dle single volumes or magazines containing multiple volumes (for the
+ Tx8n7, Tx8n5, and TL820). SLS can directly load and unload any of the
+ tape cartridges under software control.
+
+ For a detailed list of the devices SLS supports, including informa-
+ tion about controllers, adapters, and specific firmware requirements
+ for the devices, see the tables at the end of this document.
+
+ SOFTWARE REQUIREMENTS
+
+ Operating System:
+
+    OpenVMS VAX Operating System, Versions 5.5-2, and 6.1 through 6.2
+    OpenVMS Alpha Operating System, Version 6.1 and 6.2
+
+ Layered Products:
+
+    DECnet Phase IV for OpenVMS VAX
+    DECnet Phase IV for OpenVMS Alpha
+
+ SLS for OpenVMS node:
+
+ ___________________________________________________________________
+           Without
+ __________RDF________With_RDF______________________________________
+
+ Peak      9,000      (client and server) 10,200 blocks (5.1 MB)
+ (during   blocks
+ instal-   (4.5 MB)
+ lation):
+
+ Net       7,800      8,400 blocks (4.2 MB)
+ (perma-   blocks
+ nent):____(3.9_MB)_________________________________________________
+
+ SLS for OpenVMS REMOTE node:
+
+                                  7
+
+ 
+
+
+ __________Without__________________________________________________
+ __________RDF________With_RDF______________________________________
+
+ Peak      8,700      (client and server) 9,800 blocks (4 MB)
+ (during   blocks
+ instal-   (4.4 MB)
+ lation):
+
+ Net       7,100      7,900 blocks (4.0 MB)
+ (perma-   blocks
+ nent):____(3.6_MB)_________________________________________________
+
+ Disk space required by the SLS for OpenVMS media database and history
+ files:
+
+ The SLS for OpenVMS media database is present only on nodes execut-
+ ing SLS for OpenVMS software (i.e., not on nodes executing SLS for Open-
+ VMS REMOTE software). The disk space required by the SLS for OpenVMS
+ media database depends on the number of pieces of media to be managed.
+ During installation, the storage administrator may designate the disk
+ on which the SLS for OpenVMS media database is to be kept. For enhanced
+ data safety, the SLS for OpenVMS media database may be stored on a shad-
+ owed disk.
+
+ SLS for OpenVMS history files are present on any node executing ei-
+ ther SLS for OpenVMS software or SLS for OpenVMS REMOTE software. The
+ disk space required by a SLS history file depends on the number of files
+ to be tracked by SLS for OpenVMS software. During installation, the
+ storage administrator may designate the disk on which SLS for Open-
+ VMS history files are to be kept. For enhanced data safety, the SLS
+ for OpenVMS history files may be stored on a shadowed disk.
+
+ Total Disk Space Requirement for SLS for OpenVMS Software:
+
+ Execution of SLS for OpenVMS software requires approximately 8,400 blocks
+ (the number of blocks occupied by SLS for OpenVMS and RDF software)
+ plus one block for every piece of media it manages plus one block for
+ every six files it tracks.
+
+                                  8
+
+ 
+
+ Example: Assume that there are 1,500 pieces of media under management
+ by SLS for OpenVMS software and that 60,000 files are tracked. The space
+ required is:
+
+ SLS for       8,400 blocks
+ OpenVMS
+ software:
+
+ Media         1,500 blocks
+ database:
+
+ History       10,000 blocks
+ files:
+
+ TOTAL         19,900 blocks (10.0 MB)
+
+ Total Disk Space Requirement for SLS for OpenVMS REMOTE software:
+
+ Execution of SLS for OpenVMS REMOTE software requires 7,900 blocks (the
+ number of blocks occupied by SLS for OpenVMS REMOTE and RDF software)
+ plus one block for every six files it tracks.
+
+ Example: Assume that there are 60,000 files known to SLS for OpenVMS
+ REMOTE software. The disk space required is:
+
+ SLS for       7,900 blocks
+ OpenVMS
+ REMOTE
+ software:
+
+ History       10,000 blocks
+ files:
+
+ TOTAL         17,900 blocks (8.0 MB)
+
+ In addition to the disk space specified above, adequate disk storage
+ must be available on the host system to accommodate history files if
+ that option is selected.
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options.
+
+                                  9
+
+ 
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster* configuration without restrictions. The HARD-
+ WARE REQUIREMENTS sections of this product's Software Product Descrip-
+ tion and System Support Addendum detail any special hardware required
+ by this product.
+
+ * V5.x VMScluster configurations are fully described in the VMSclus-
+ ter Software Product Description (29.78.xx) and include CI, Ethernet,
+ and Mixed Interconnect configurations.
+
+ Software Requirements
+
+ Operating System:
+
+ OpenVMS VAX Operating System V5.5-2 - V6.2
+
+ OpenVMS Alpha Operating System V6.1 - V6.2
+
+ Layered Products:
+
+ DECnet Phase IV for OpenVMS VAX V5.5-2 - V6.2
+
+ DECnet Phase IV for OpenVMS Alpha V6.1 - V6.2
+
+ OpenVMS Tailoring:
+
+ For OpenVMS systems, the following OpenVMS classes are required for
+ full functionality of this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Programming Support
+
+ o  Utilities
+
+ o  System Programming Support
+
+ o  Secure User's Environment
+
+ o  Network Support
+
+                                 10
+
+ 
+
+ OPTIONAL SOFTWARE
+
+ VAX Jukebox Control Software (JCS) V1.0 is required to use SLS with
+ an RV64 optical jukebox.
+
+ The Digital Cartridge Server Component (DCSC) for OpenVMS software is
+ required for the StorageTEK silo.
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+ DISTRIBUTION MEDIA
+
+ 9-track 1600 BPI Magtape, TK50 Streaming Tape
+
+ This product is also available as part of the OpenVMS Consolidated Soft-
+ ware Distribution on CD-ROM.
+
+ This product is available on the Digital CD-ROM Software Library for
+ OpenVMS Alpha.
+
+ ORDERING INFORMATION
+
+ VAX:
+
+ SLS for OpenVMS VAX:
+
+    Software Licenses: QL-0L7A*-AA
+    Software Media and Documentation: QA-0L7AA-H*
+    Software Documentation: QA-0L7AA-GZ
+    Software Product Services: QT-0L7A*-L9
+    Software Update Licenses: QL-0L7A*-RA
+    Software Consulting Service: QS-0L7AA-5Z
+    Software Consulting PLUS Service: QS-0L7AA-5X
+
+
+
+                                 11
+
+ 
+
+ SLS for OpenVMS VAX REMOTE:
+
+    Software Licenses: QL-YE8A*-AA
+    Software Media: Distributed on SLS for OpenVMS Media
+    Software Documentation: Covered in the documentation for SLS for
+    OpenVMS
+    Software Product Services: Provided in the services offering for
+    SLS for OpenVMS
+    Software Update Licenses: QL-YE8A*-RA
+    Software Consulting Service: Covered under SLS for OpenVMS Consult-
+    ing Services
+
+ SLS for OpenVMS VAX ACS:
+
+    Software Licenses: QL-MW1A9-AA
+    Software Media: Distributed on SLS for OpenVMS Media
+    Software Documentation: Covered in the documentation for SLS for
+    OpenVMS
+    Software Product Services: QT-MW1A9-L9
+    Software Update Licenses: QL-MW1A9-RA
+
+ * Denotes variant fields. For additional information on available li-
+ censes, services, and media, refer to the appropriate price book.
+
+ Alpha:
+
+ SLS for OpenVMS Alpha:
+
+    Software Licenses: QL-0YPA*-AA
+    Software Media and Documentation: QA-0YPAA-H*
+    Software Documentation: QA-0YPAA-GZ
+    Software Product Services: QT-0YPA9-L9
+    Software Update Licenses: QL-0YPA*-RA
+    Software Consulting Service: Covered under SLS for OpenVMS Consult-
+    ing Services
+    Software Consulting PLUS Service: Covered under SLS for OpenVMS Con-
+    sulting PLUS Service
+
+ SLS for OpenVMS Alpha REMOTE:
+
+    Software Licenses: QL-0YQA*-AA
+
+                                 12
+
+ 
+
+    Software Media: Distributed on SLS for OpenVMS Media
+    Software Documentation: Covered in the documentation for SLS for
+    OpenVMS Alpha
+    Software Product Services: Provided in the services offering for
+    SLS for OpenVMS Alpha
+    Software Update Licenses: QL-0YQA*-RA
+    Software Consulting Service: Covered under SLS for OpenVMS Consult-
+    ing Services
+
+ SLS for OpenVMS Alpha ACS:
+
+    Software Licenses: QL-0YRA9-AA
+    Software Media: Distributed on SLS for OpenVMS Media
+    Software Documentation: Covered in the documentation for SLS for
+    OpenVMS Alpha
+    Software Update Licenses: QL-0YRA9-RA
+    Software Product Services: Covered under SLS for OpenVMS Consult-
+    ing Services
+
+ * Denotes variant fields. For additional information on available li-
+ censes, services, and media, refer to the appropriate price book.
+
+ Note: It is recommended that first time SLS for OpenVMS users purchase
+ the Consulting Service for SLS for OpenVMS or Consulting PLUS Service
+ for SLS for OpenVMS.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ SLS for OpenVMS, SLS for OpenVMS REMOTE, and SLS for OpenVMS ACS sup-
+ port the OpenVMS License Management Facility.
+
+
+
+                                 13
+
+ 
+
+ For more information on the OpenVMS License Management Facility, re-
+ fer to the OpenVMS Operating System Software Product Description (SPD
+ 25.01.xx) or the OpenVMS License Management Facility manual of the Open-
+ VMS Operating System documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ DEVICE SUPPORT TABLES
+
+ SLS supports a large array of storage devices, ranging from single-
+ tape drives to automated optical and tape jukeboxes, listed in Tables
+ 1 and 2. Table 3 provides important information about those devices,
+ including firmware revision levels and other restrictions.
+
+ The tables identify devices by Digital-known identifiers. If you use
+ third-party products that contain Digital drives, those drives are shown
+ in the tables under the Digital name.
+
+ If you have devices not shown on the list, SLS may still support them.
+ Digital continually tests its software on additional devices that may
+ not have been added to this list. If you have a question about a par-
+ ticular device, contact Digital customer support.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ ___________________________________________________________________
+
+ Table_1:_SCSI_Devices_Supported____________________________________
+
+ Adapter
+ /Controller- SCSI                  HSCnn
+ >___________InternalKZQSA___HS10n__K.SCSI__HSJnn__HSDnn____________
+
+ Devices
+
+ TLZ04       X       X
+
+ TLZ06/07    X       X              X       X      X
+
+ TSZ05       X       X              X
+
+ TSZ07       X       X              X       X      X
+
+ TZ30/50     X       X
+
+ TZ85        X       X
+
+ TZ86/87     X       X              X       X      X
+ /87N
+
+ TZ88N       X       X                      X
+
+ Robotics
+
+ TLZ6L       X       X              X       X      X
+
+ TLZ7L       X       X
+
+ TL810/812   X       X              X       X
+
+ TL820/822   X       X              X       X      X
+ /826
+
+ TZ857       X       X
+
+ TZ867       X       X              X       X      X
+
+ TZ875/875N  X       X              X       X      X
+
+ TZ877/877N  X       X              X       X      X
+
+ TZ885/887___X_______X______________________X_______________________
+
+                                 15
+
+ 
+
+ ___________________________________________________________________
+
+ Table_2:_DSA_Devices_Supported_____________________________________
+
+ Adapter                                           HSCnn
+ /Controller- DSSI                                         Q-
+ >___________Internal________KFQSA__KFMSA___KFMSB__K.SI____BUS____KDM70
+
+ Devices
+
+ TA77/78                                           X              X
+ /79
+
+ TA80/81                                           X       X      X
+ /81+
+
+ TA85/86                                           X              X
+
+ TA90/E                                            X              X
+
+ TA91/92                                           X              X
+
+ TF70        X
+
+ TF85/86     X               X      X
+
+ TK50/70                                                   X
+
+ Robotics
+
+ TA857/867                                         X              X
+
+ TF857/867   X               X      X
+
+ STK ACS                                           X
+ 4400
+
+ Optical_Devices
+
+ RV20                                                      X
+
+ RV64[1]                                                   X
+ ___________________________________________________________________
+ [1]Supported only on OpenVMS Version 5.5-2. This device is not
+ supported on OpenVMS Version 6.1 or later.
+ ___________________________________________________________________
+
+                                 16
+
+ 
+
+ ___________________________________________________________________
+
+ Table_3:_Footnotes_to_Device_Tables________________________________
+
+ Item________Information____________________________________________
+
+ SCSI        Native SCSI bus from VAX3100, VAX4000, Alpha 3000, and
+ Internal    Alpha 4000 series machines
+
+ KZQSA       QBUS-SCSI adapter (VAX)
+
+ KZMSA       XMI-SCSI adapter (Alpha)
+
+ KZBSA       BI-SCSI adapter
+
+ HSCnn       CRONIC 840 required for robotic control (nn=40, 60,
+ (K.SCSI)    70, 90, 95)
+
+ HSJnn       nn=30, 40; HSOF Version 2.5 required for loader sup-
+             port
+
+             HSOF Version 2.7 is required for the TZ88/885/887N and
+             the TL812/22/26.
+
+ HSDnn       nn=30, 40; HSOF Version 2.5 required for loader sup-
+             port
+
+             HSOF Version 2.7 is required for the TZ88/885/887N and
+             the TL812/22/26.
+
+ DSSI        Native DSSI bus on VAX 4000 and Alpha 4000 class ma-
+ Internal    chines
+
+ KFQSA       QBUS-DSSI adapter
+
+ KFMSA       XMI-DSSI adapter (VAX)
+
+ KFBSA       BI-DSSI adapter (Alpha)
+
+ KDM70       XMI-STI adapter
+
+ TL820       Does not support multi-cabinet TL820s
+
+ TZ875N,     For HSJ and HSD controllers, requires TZ87 firmware
+ TZ877N      version 40 or higher
+
+                                 17
+
+ 
+
+
+ ___________________________________________________________________
+
+ Item________Information____________________________________________
+
+ STK ACS     Connections are via HSC and TC44 or via KCM44
+ 4400_______________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 18
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ ___________________________________________________________________
+
+ [TM] CI, DEC, DECnet, Digital, MicroVAX, OpenVMS, RV20, TK, TMSCP,
+     VAX, VAX RMS, VAXft, VMScluster, and the DIGITAL logo are
+     trademarks of Digital Equipment Corporation.
+
+ [TM] Oracle Rdb is a trademark of the Oracle Corporation.
+
+ [TM] RDF is a trademark of Touch Technologies, Inc.
+
+ [R] StorageTek is a registered trademark of Storage Technology
+     Corporation.
+
+ ©1995 Digital Equipment Corporation.
+ All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 19

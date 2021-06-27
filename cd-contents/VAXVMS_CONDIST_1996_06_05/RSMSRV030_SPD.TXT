@@ -1,0 +1,981 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  POLYCENTER Software Distribution,     SPD 29.59.05
+                Version 3.0
+
+ DESCRIPTION
+
+ POLYCENTER Software Distribution (PSD) is an OpenVMS and ULTRIX lay-
+ ered product that permits a system manager to manage a number of com-
+ puter systems efficiently.
+
+ PSD uses the DECnet network to automate the recurring system manage-
+ ment tasks of:
+
+ o  Software distribution and installation - both operating systems (Open-
+    VMS AXP and OpenVMS VAX only) and applications (all Clients)
+
+ o  File backup and restore
+
+ o  System administration (OpenVMS VAX and OpenVMS AXP systems)
+
+ For flexibility in configuration, the clients and servers of PSD are
+ available as separately licensed products:
+
+ o  OpenVMS VAX Server
+
+ o  OpenVMS AXP Server
+
+ o  OpenVMS VAX Client
+
+ o  OpenVMS AXP Client
+
+ o  ULTRIX VAX Client
+
+ o  ULTRIX RISC Client
+
+ POLYCENTER Software Distribution OpenVMS Server
+
+                               DIGITAL                      May 1994
+
+                                                         AE-LB72F-TE
+
+ 
+
+ The Server software runs on OpenVMS VAX and OpenVMS AXP and maintains
+ Client software and administrative information, maintains libraries
+ of application software, directs the installation of software, sched-
+ ules file backups, and receives file backups.
+
+ Additionally, for OpenVMS VAX and OpenVMS AXP Clients, the Server pro-
+ vides remote maintenance of user accounts, directories, DECnet prox-
+ ies, licenses, and libraries of operating systems.
+
+ The Server license includes the right to install the OpenVMS Client
+ on the same node.
+
+ Server software can be installed on a cluster and configured to use
+ the distributed resources available to all nodes that share the clus-
+ ter alias. Alternatively, the Server software can be configured to op-
+ erate on a single, specified node in the cluster. Configuring the Server
+ for operation on a single cluster-member restricts the use of PSD and
+ the associated workload to a single node.
+
+ Configuring the Server for full VMScluster system operation allows more
+ efficient use of cluster-wide resources, providing redundancy and load
+ balancing with minimum manager preparation and effort. In this con-
+ figuration, all members of the cluster who share the cluster alias will
+ share the work.
+
+ Typical networks would have one or more PSD Servers, each serving a
+ number of Clients. It is possible to have multiple Servers for a given
+ set of Clients. In such a case, one Server is designated for manage-
+ ment operations and the others are Software Library Servers or Backup
+ Target Servers, or combination Software Library/Backup Target Servers.
+
+ POLYCENTER Software Distribution OpenVMS Clients
+
+ These products provide OpenVMS systems with the ability to receive soft-
+ ware, including operating systems, distributed from a PSD Server. They
+ also permit files to be backed up to and restored from a Server.
+
+ POLYCENTER Software Distribution ULTRIX Clients
+
+
+                                  2
+
+ 
+
+ These products provide ULTRIX systems with the ability to receive soft-
+ ware distributed from a PSD Server. Operating systems cannot be in-
+ stalled on ULTRIX Clients. These products also permit files to be backed
+ up to and restored from a Server.
+
+ Features
+
+ Software Distribution and Installation
+
+ The Software Distribution Services (SDS) component of the PSD Server
+ installs software on Clients. PSD stores copies of applications for
+ both OpenVMS and ULTRIX and operating systems for OpenVMS systems in
+ a library on the Server, and uses the DECnet network to distribute soft-
+ ware automatically to the Client during the installation process.
+
+ Note: Software that is installed using SDS remains subject to any li-
+ censing restrictions associated with that software.
+
+ Application Software Installation
+
+ PSD provides users with the ability to take applications from a li-
+ brary Server and install those applications on one or more Clients.
+ Application software is installed on the Client using the standard in-
+ stallation utility for that system (for OpenVMS systems, VMSINSTAL or
+ POLYCENTER Software Installation (PCSI); for ULTRIX systems, setld).
+
+ An Application Sets feature provides for the creation and manipula-
+ tion of "sets" of related applications. The concept of Application Sets
+ makes performing operations on an entire set of applications as easy
+ as performing operations on a single application.
+
+ PSD provides users with the ability to manage and enforce application
+ prerequisites. Applications may be stored in the library along with
+ information on the software prerequisites for the application. Upon
+ request to install an application, PSD automatically verifies that it
+ has installed all of the software prerequisites on the Client. If any
+ prerequisite software is not present on the Client, PSD automatically
+ installs it.
+
+ Restrictions
+
+                                  3
+
+ 
+
+ For OpenVMS:
+
+ SDS can install any OpenVMS application that can be installed using
+ the VMSINSTAL utility or the PCSI utility and conforms to the follow-
+ ing rules:
+
+ o  The application's installation procedure must conform to the guide-
+    lines presented in the OpenVMS Developer's Guide to VMSINSTAL or
+    the POLYCENTER Software Installation Utility Developer's Guide.
+
+ o  The application must be installable while VMSINSTAL or PCSI is run-
+    ning as a noninteractive process. In addition, the application must
+    be installable using a VMSINSTAL auto-answer file or a PCSI con-
+    figuration file.
+
+ SDS executes VMSINSTAL or PCSI as a detached process. Therefore, any
+ application installation procedure that performs terminal-related ac-
+ tivities (such as SET TERMINAL) or modifies its execution based on pro-
+ cess mode (such as INTERACTIVE or BATCH) may fail.
+
+ The application installation procedure must not depend on local con-
+ ditions such as node name or pre-existing files.
+
+ For ULTRIX:
+
+ SDS can install any ULTRIX application that can be installed using the
+ setld utility. The setld program does not permit the installation of
+ subsets that cannot fit into the available disk space.
+
+ Application subset naming has changed as of ULTRIX V4.0. The version
+ labeling used by SDS supports only this new naming convention. ULTRIX
+ applications present in SDS libraries prior to RSM V2.3 will not work;
+ however, applications prior to ULTRIX V4.0 can be reinstalled if needed
+ with a modified use of the subset version naming.
+
+ All NFS file systems should be dismounted before using setld with the
+ -a, -d, and -l options.
+
+ Operating System Software Installation - OpenVMS (VAX and AXP Clients
+ Only)
+
+                                  4
+
+ 
+
+ PSD can install an OpenVMS operating system on a PSD Client. Using this
+ capability, managers of PSD Servers can take a VAX, VAXstation, Mi-
+ croVAX, VAXserver, AXP Workstation, AXP Server, or AXP system, con-
+ nect it to an Ethernet network, and have a preconfigured operating sys-
+ tem transmitted over the Ethernet and installed on the PSD Client.
+
+ The system manager selects a FETCHed operating system from the SDS li-
+ brary for downloading; it must be a version of OpenVMS that supports
+ the system to be initial system loaded (ISLed). Once designated for
+ ISLing, the Client is booted from the Ethernet and the Client system
+ is downloaded.
+
+ Restrictions
+
+ For the installation of operating system software, both the PSD Server
+ and its Client must be on the same Local Area Network, or a copy of
+ the operating system software image must reside on an InfoServer or
+ local disk drive (such as a CD-ROM player) on the same LAN as the Client.
+
+ File Backup and Restore
+
+ The Backup and Restore Services (BRS) component provides scheduled file
+ backups from PSD Clients to PSD Servers. BRS also has the ability to
+ restore files that it backed up.
+
+ Backups are scheduled by creating a Server database entry for each backup
+ task required for each Client. This entry defines all of the attributes
+ of the backup task, such as the frequency of the backup (daily, weekly,
+ monthly), the style of backup (incremental or full), the files to be
+ backed up, and whether to store the backed up data on disk or tape.
+
+ Restrictions
+
+ When restoring to a Client from a tape backup, POLYCENTER Software Dis-
+ tribution copies the information to be restored to a Server disk prior
+ to transferring this information to the Client. There must be suffi-
+ cient disk space on the Server for this operation.
+
+ In order for PSD to perform an image restore of a Client, that Client
+ must have at least two writable storage devices.
+
+                                  5
+
+ 
+
+ For ULTRIX:
+
+ Backups on ULTRIX systems use the native backup utilities (dump and
+ tar) in multiuser mode, and these utilities are subject to certain lim-
+ itations. Specifically, any user or system activity that modifies files
+ while they are being backed up may corrupt the backup. Digital rec-
+ ommends that non-image backups be performed whenever possible, because
+ during non-image backups PSD uses the tar utility, which is less vul-
+ nerable to corruption problems.
+
+ System Administration
+
+ The Client Administrative Services (CAS) component of the PSD Server
+ provides remote management of user accounts, directories, and prox-
+ ies on OpenVMS Clients. It provides a mechanism for maintaining con-
+ sistent logical names, symbol names, and DECnet node names across the
+ set of Clients. Also, it maintains and distributes OpenVMS license in-
+ formation for Clients and checks security of DECnet and guest accounts
+ on Clients.
+
+ Restrictions
+
+ There is no command line interface to this component of PSD.
+
+ Additional Features
+
+ Multiple Server Type
+
+ Each PSD environment contains one and only one Management Server. The
+ Management Server performs centralized PSD operation while other servers
+ may contain the SDS library or receive backup output files. While no
+ architectural limitations exist on the number of other Servers the Man-
+ agement Server can use, practical considerations influence the per-
+ formance of the Management Server. A general suggestion for maintain-
+ ing satisfactory performance is to configure a maximum of four other
+ Servers to assist the Management Server.
+
+ Menu and Command Line User Interface
+
+
+                                  6
+
+ 
+
+ This version of PSD supports both a menu-style and a command line in-
+ terface. The menu interface helps the user to correctly structure PSD
+ command lines.
+
+ Groups
+
+ In many situations, a number of computer systems perform similar tasks.
+ These systems typically use the same software and can operate on the
+ same backup schedule. PSD's Group feature permits all of these sys-
+ tems to be referenced by a single group name. An operation on a Group
+ is performed on each system in the group.
+
+ Management of LMF licenses
+
+ PSD provides the ability to create and maintain an OpenVMS License Man-
+ agement database on the Management Server for each OpenVMS Client. PSD
+ can then transmit this database to the OpenVMS Client and install it
+ as a Secondary LMF Database. This feature is supported only for Open-
+ VMS Clients (VAX and AXP).
+
+ Configuration
+
+ PSD supports a single level of Server hierarchy. Therefore, each POLYCENTER
+ Software Distribution environment must contain one and only one Man-
+ agement Server. While no architectural limitations exist on the num-
+ ber of clients any Server can serve, practical considerations such as
+ Server processor type and available disk space influence Server per-
+ formance. A general suggestion for maintaining satisfactory perfor-
+ mance is to configure the Management Server to serve a maximum of ap-
+ proximately 40 clients. If you use several Management Servers, par-
+ tition the Client population into distinct management domains, with
+ one management domain for each Management Server.
+
+ Other Servers are Target Servers, Library Servers, combined Target and
+ Library Servers, or any combination of these. You can add as many other
+ Servers as you need.
+
+
+
+
+                                  7
+
+ 
+
+ PSD uses extensively the facilities provided by the operating system
+ on which it runs and is highly dependent upon the configuration of the
+ base operating system. You must maintain operating system files where
+ they were placed during installation. Also, search lists should not
+ be created which prevent PSD from accessing these files in the stan-
+ dard locations. All modifications to operating system data files (i.e.,
+ DECnet databases, user authorization files, etc.) should be done us-
+ ing the operating system provided utilities or as described in the ap-
+ propriate documentation.
+
+ HARDWARE REQUIREMENTS
+
+ A VAX or Alpha AXP processor is required in the network for the PSD
+ Server. Processor and/or hardware configurations are supported as fol-
+ lows:
+
+ For OpenVMS AXP Systems
+
+ Processors Supported:
+
+ Alpha AXP:  DEC 3000 Model 400 AXP Workstation,
+             DEC 3000 Model 400 AXP Server,
+             DEC 3000 Model 500 AXP Workstation,
+             DEC 3000 Model 500 AXP Server
+
+             DEC 4000 Model 610 AXP System
+
+             DEC 7000 Model 610 AXP System
+
+             DEC 10000 Model 610 AXP System
+
+
+
+
+
+
+
+
+
+
+                                  8
+
+ 
+
+ For OpenVMS VAX Systems
+
+ Processors Supported:
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+
+           VAXft Model 110,
+           VAXft Model 310,
+           VAXft Model 410,
+           VAXft Model 610,
+           VAXft Model 612
+
+           VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series,
+           VAX 6000 Model 600 Series
+
+           VAX 7000 Model 600 Series
+
+           VAX 8200, VAX 8250, VAX 8300,
+           VAX 8350, VAX 8500, VAX 8530,
+           VAX 8550, VAX 8600, VAX 8650,
+           VAX 8700, VAX 8800, VAX 8810,
+           VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300 Series,
+           VAX 9000 Model 400 Series
+
+           VAX 10000 Model 600 Series
+
+
+
+                                  9
+
+ 
+
+
+           VAX-11/730, VAX-11/750,
+           VAX-11/780, VAX-11/785
+
+ MicroVAX: MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100 Model 10/10E,
+           MicroVAX 3100 Model 20/20E,
+           MicroVAX 3100 Model 30,
+           MicroVAX 3100 Model 40,
+           MicroVAX 3100 Model 80,
+           MicroVAX 3100 Model 90,
+           MicroVAX 3300, MicroVAX 3400,
+           MicroVAX 3500, MicroVAX 3600,
+           MicroVAX 3800, MicroVAX 3900
+
+ VAXstation:VAXstation II, VAXstation 2000,
+           VAXstation 3100 Model 30,
+           VAXstation 3100 Model 38,
+           VAXstation 3100 Model 40,
+           VAXstation 3100 Model 48,
+           VAXstation 3100 Model 76,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90,
+           VAXstation 4000 VLC
+
+ VAXserver: VAXserver 3100 Model 10/10E,
+           VAXserver 3100 20/20E,
+           VAXserver 3300, VAXserver 3400, VAXserver 3500,
+           VAXserver 3600, VAXserver 3602, VAXserver 3800,
+           VAXserver 3900
+
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+
+
+
+
+                                 10
+
+ 
+
+
+           VAXserver 4000 Model 500
+
+           VAXserver 6000 Model 210,
+           VAXserver 6000 Model 220,
+           VAXserver 6000 Model 310,
+           VAXserver 6000 Model 320,
+           VAXserver 6000 Model 410,
+           VAXserver 6000 Model 420,
+           VAXserver 6000 Model 510,
+           VAXserver 6000 Model 520,
+           VAXserver 6000 Model 610,
+           VAXserver 6000 Model 620,
+           VAXserver 6000 Model 630
+
+ Processors Not Supported:
+
+ MicroVAX I, VAXstation I, VAX-11/725, VAX-11/782, VAXstation 8000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 11
+
+ 
+
+ For ULTRIX/VAX Systems
+
+ Processors Supported:
+
+ VAX:      VAX 6000 Model 200 Series,
+           VAX 6000 Model 300 Series,
+           VAX 6000 Model 400 Series,
+           VAX 6000 Model 500 Series
+
+           VAX 8200, VAX 8250, VAX 8300, VAX 8350, VAX 8500, VAX
+           8530, VAX 8550, VAX 8600, VAX 8650, VAX 8700, VAX 8800,
+           VAX 8810, VAX 8820, VAX 8830, VAX 8840
+
+           VAX 9000 Model 110,
+           VAX 9000 Model 210,
+           VAX 9000 Model 300,
+           VAX 9000 Model 410 Series,
+           VAX 9000 Model 420
+
+           VAX-11/750, VAX-11/780, VAX-11/785
+
+ MicroVAX: MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100, MicroVAX 3300,
+           MicroVAX 3400, MicroVAX 3500,
+           MicroVAX 3600, MicroVAX 3800,
+           MicroVAX 3900
+
+ VAXstation:VAXstation II, VAXstation II/GPX,
+           VAXstation 2000, VAXstation 3100,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+ VAXserver: VAXserver 100, VAXserver 2000,
+           VAXserver 3100, VAXserver 3300,
+           VAXserver 3400, VAXserver 3500,
+           VAXserver 3600, VAXserver 3602,
+           VAXserver 3800, VAXserver 3900
+
+
+
+                                 12
+
+ 
+
+
+           VAXserver 6000 Model 210,
+           VAXserver 6000 Model 220,
+           VAXserver 6000 Model 310,
+           VAXserver 6000 Model 320,
+           VAXserver 6000 Model 410,
+           VAXserver 6000 Model 420,
+           VAXserver 6000 Model 510,
+           VAXserver 6000 Model 520
+
+ For ULTRIX/RISC Systems
+
+ Processors Supported:
+
+ DECstation:DECstation 2100, DECstation 3100,
+           DECstation 3100s
+
+           Personal DECstation 5000 Model 20/25 HX,
+           Personal DECstation 5000 Model 20/25 MX,
+           Personal DECstation 5000 Model 20/25 TX,
+           Personal DECstation 5000 Model 20/25 PXG+,
+           Personal DECstation 5000 Model 20/25 PXG Turbo+
+
+           DECstation 5000 Model 120/125/133 CX,
+           DECstation 5000 Model 120/125/133 HX,
+           DECstation 5000 Model 120/125/133 MX,
+           DECstation 5000 Model 120/125/133 PX,
+           DECstation 5000 Model 120/125/133 TX,
+           DECstation 5000 Model 120/125/133 PXG,
+           DECstation 5000 Model 120/125/133 PXG+,
+           DECstation 5000 Model 120/125/133 PXG Turbo,
+           DECstation 5000 Model 120/125/133 PXG Turbo+
+
+           DECstation 5000 Model 200 CX,
+           DECstation 5000 Model 200 HX,
+           DECstation 5000 Model 200 MX,
+           DECstation 5000 Model 200 PX,
+
+
+
+                                 13
+
+ 
+
+
+           DECstation 5000 Model 200 TX,
+           DECstation 5000 Model 200 PXG,
+           DECstation 5000 Model 200 PXG+,
+           DECstation 5000 Model 200 PXG Turbo,
+           DECstation 5000 Model 200 PXG Turbo+
+
+           DECstation 5000 Model 240 HX,
+           DECstation 5000 Model 240 MX,
+           DECstation 5000 Model 240 TX,
+           DECstation 5000 Model 240 PXG+,
+           DECstation 5000 Model 240 PXG Turbo+
+
+ DECsystem: DECsystem 3100,
+           DECsystem 5000 Model 25,
+           DECsystem 5000 Model 200,
+           DECsystem 5000 Model 240,
+           DECsystem 5100, DECsystem 5400,
+           DECsystem 5500, DECsystem 5810,
+           DECsystem 5820, DECsystem 5830,
+           DECsystem 5840, DECsystem 5900
+
+ Processor Restrictions:
+
+ Operating System Installation (Initial System Load) for Clients is sup-
+ ported on the following processor types under OpenVMS VAX and AXP sys-
+ tems only:
+
+ Alpha AXP:  DEC 3000 Model 400 AXP Workstation,
+             DEC 3000 Model 400 AXP Server,
+             DEC 3000 Model 500 AXP Workstation,
+             DEC 3000 Model 500 AXP Server
+
+             DEC 4000 Model 610 AXP System
+
+ MicroVAX: MicroVAX II, MicroVAX 2000,
+           MicroVAX 3100, MicroVAX 3300,
+           MicroVAX 3400, MicroVAX 3500,
+
+
+                                 14
+
+ 
+
+
+           MicroVAX 3600, MicroVAX 3800,
+           MicroVAX 3900
+
+ VAXstation:VAXstation II, VAXstation II/GPX,
+           VAXstation 2000, VAXstation 3100,
+           VAXstation 3200, VAXstation 3500,
+           VAXstation 3520, VAXstation 3540
+
+           VAXstation 4000 Model 60,
+           VAXstation 4000 Model 90,
+           VAXstation 4000 VLC
+
+ VAXserver: VAXserver 3100, VAXserver 3300,
+           VAXserver 3400, VAXserver 3500,
+           VAXserver 3600, VAXserver 3602,
+           VAXserver 3800, VAXserver 3900
+
+           VAXserver 4000 Model 200,
+           VAXserver 4000 Model 300,
+           VAXserver 4000 Model 500
+
+ VAX:      VAX 4000 Model 100,
+           VAX 4000 Model 200,
+           VAX 4000 Model 300,
+           VAX 4000 Model 400,
+           VAX 4000 Model 500,
+           VAX 4000 Model 600
+
+ Other Hardware Required:
+
+ As required to support DECnet.
+
+ Disk Space Requirements (Block Cluster Size = 1)
+
+ To install the PSD management server on an AXP system, the system disk
+ must have one of the two following amounts of free disk blocks on the
+ system disk:
+
+
+                                 15
+
+ 
+
+ o  84,000 blocks, to install the entire kit, including ISL suport for
+    operating systems fetched with PSD Version 2.4 software
+
+ o  21,000 blocks, to install without any of the optional features
+
+ For permanent use on an AXP system, the management server requires the
+ all of the following:
+
+ o  18,000 blocks on the system device
+
+ o  3,000 blocks on the system device or other device specified dur-
+    ing installation
+
+ o  21,000 blocks on the system device or other device specified dur-
+    ing installation, for ISL support for VAX operating systems fetched
+    with PSD Version 2.4 software
+
+ o  42,000 blocks on the system device or other device specified dur-
+    ing installation, for ISL support for AXP operating systems fetched
+    with PSD Version 2.4 software
+
+ To install the PSD management server on a VAX system, one of follow-
+ ing amounts of free disk blocks is required on the system disk:
+
+ o  80,000 blocks, if AXP operating system load support is required
+
+ o  17,000 blocks, to install without any of the optional features
+
+ For permanent use on a VAX system, the management server requires the
+ all of the following:
+
+ o  17,000 blocks of disk space on the system device
+
+ o  3,000 blocks on the system device or other device specified dur-
+    ing installation
+
+ o  21,000 blocks on the system device or other device specified dur-
+    ing installation, for ISL support for VAX operating systems fetched
+    with PSD Version 2.4 software version 2.4
+
+ o  42,000 blocks on the system device or other device specified dur-
+    ing installation, for ISL support for AXP operating systems fetched
+    with PSD version 2.4
+
+                                 16
+
+ 
+
+ For OpenVMS Client:
+
+ Disk space required     1,900 blocks
+ for installation:
+
+ Disk space required     1,900 blocks
+ for use (permanent):
+
+ For ULTRIX Client:
+
+ Disk space required     100 Kbytes (VAX)
+ for installation:
+                         300 Kbytes (RISC)
+
+ Disk space required     275 Kbytes (VAX)
+ for use (permanent):
+                         470 Kbytes (RISC)
+
+ Temporary disk space    1.2 Mbytes (RISC)
+ required during SDS
+ operations:
+                         830 Kbytes (VAX)
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options selected.
+
+ CLUSTER ENVIRONMENT
+
+ OpenVMS Server
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster configuration with the following restriction:
+ The Initial System Load is performed from a single node, chosen dur-
+ ing product configuration, which enables service to receive boot re-
+ quests.
+
+ The HARDWARE REQUIREMENTS section of this product's Software Product
+ Description details any special hardware required by the product.
+
+                                 17
+
+ 
+
+ OpenVMS Client
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section of this product's Software Product Descrip-
+ tion details any special hardware required by this product.
+
+ The PSD Server must be licensed on all members of the VMScluster sys-
+ tem that share the cluster alias.
+
+ o  VMScluster configurations are fully described in the VAXcluster Soft-
+    ware Product Description (29.78.07) and include CI, Ethernet, and
+    Mixed Interconnect configurations.
+
+ SOFTWARE REQUIREMENTS
+
+ PSD Clients require that there be at least one PSD Server on a VAX or
+ AXP in the network.
+
+ Server Software
+
+ For OpenVMS VAX Systems:
+
+ o  VAX/VMS Version 5.4 or higher
+
+ o  OpenVMS VAX Operating System, Version 6.0 or higher
+
+ o  DECnet-VAX, Version 5.4 or higher
+
+ Server Software
+
+ For OpenVMS AXP Systems:
+
+ o  OpenVMS AXP Operating System, Version 1.5 or higher
+
+    Note: PSD Initial System Load (ISL) is not supported for OpenVMS AXP
+    V1.5, but is supported by OpenVMS AXP V6.1 or higher.
+
+ o  DECnet for OpenVMS AXP
+
+                                 18
+
+ 
+
+ Client Software
+
+ For OpenVMS VAX Systems:
+
+ o  VAX/VMS Version 5.4 or higher
+
+ o  OpenVMS VAX Operating System, Version 6.0 or higher
+
+ For OpenVMS AXP Systems:
+
+ o  OpenVMS AXP Operating System, Version 1.5 or higher
+
+ o  DECnet for OpenVMS AXP
+
+ For ULTRIX Systems (RISC and VAX):
+
+ o  ULTRIX Operating System, Version 4.2 or higher
+
+ o  DECnet-ULTRIX Version 4.2
+
+ OpenVMS Tailoring
+
+ For OpenVMS systems, the following OpenVMS classes are required for
+ full functionality of this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Secure User's Environment
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ operating system Software Product Description.
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+                                 19
+
+ 
+
+ DISTRIBUTION MEDIA
+
+ TK50 Streaming Tape
+
+ This product is also available as part of the OpenVMS Consolidated Soft-
+ ware Distribution on CD-ROM.
+
+ The software documentation for these products is also available as part
+ of the OpenVMS Online Documentation Library on CD-ROM.
+
+ ORDERING INFORMATION
+
+ Server (OpenVMS AXP)
+
+ Software License: QL-2Q5A*-**
+ Software Documentation (hardcopy): QA-B13AA-GZ
+ Software Product Services: QT-2Q5A*-**
+
+ Server (OpenVMS VAX)
+
+ Software License: QL-B13A*-**
+ Software Media/Documentation (CD-ROM):
+    QA-03XAA-H8
+ Software Media (TK50): QA-B13A*-**
+ Software Documentation (hardcopy): QA-B13AA-GZ
+ Software Media/Documentation Update (TK50):
+    QA-B13AA-H5
+ Software Product Services: QT-B13A*-**
+
+ Customers wishing to add an AXP Client to a Server running PSD ear-
+ lier than V2.4 need to update the Server to V2.4 either through a ser-
+ vice contract or via an update license and H-kit purchase.
+
+ Client
+
+ Software Licenses:
+    OpenVMS VAX Client: QL-B14A*-**
+    OpenVMS AXP Client: QL-0EFA*-**
+    ULTRIX/VAX Client: QL-VWWA*-**
+    ULTRIX/RISC Client: QL-GUXA*-**
+
+                                 20
+
+ 
+
+ No separate media/documentation kit is required. Client software and
+ documentation are included with Server software and documentation.
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ The above information is valid at time of release. Please contact your
+ local Digital office for the most up-to-date information.
+
+ SOFTWARE LICENSING
+
+ The licensing terms are based on ClusterWide licensing in which the
+ license applies to a purchase power rating rather than a specific CPU.
+ Customers continue to receive the right-to-use software on nodes within
+ a cluster system. The PSD Server must be licensed on all members of
+ the VMScluster system that share the cluster alias. In this case, the
+ VMScluster license would be restricted to the rating purchased rather
+ than the total rating of the VMScluster system, unless the entire VM-
+ Scluster system shared the cluster alias.
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+ License Management Facility Support
+
+ The PSD OpenVMS VAX Server, PSD OpenVMS Client, and PSD ULTRIX/RISC
+ Client layered products support the OpenVMS License Management Facil-
+ ity.
+
+ License units for this product are allocated on a CPU-capacity basis.
+
+ For more information on the License Management Facility, refer to the
+ appropriate operating system Software Product Description or documen-
+ tation.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+
+                                 21
+
+ 
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ [TM]The DIGITAL Logo, Alpha AXP, AXP, CI, ClusterWide, DEC, DEC-
+    net, DECstation, DECsystem, Digital, InfoServer, MicroVAX,
+    OpenVMS, POLYCENTER, TK, ULTRIX, VAX, VAXcluster, VMScluster,
+    VAXft, VAXserver, VAXstation, and VMS are trademarks of Digital
+    Equipment Corporation.
+
+ © 1994 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 22

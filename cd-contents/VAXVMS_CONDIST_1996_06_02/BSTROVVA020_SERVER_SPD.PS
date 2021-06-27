@@ -1,0 +1,1638 @@
+%!PS-Adobe-3.0
+%%Title: BSO_SPD
+%%Creator: VAX DOCUMENT V2.1-1
+%%Copyright: 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.
+%%+All Rights Reserved.
+%%CreationDate: Tue Dec  6 1994 15:51:54
+%%For: OSAP        
+%%BoundingBox: (atend)
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%DocumentFonts: (atend) 
+%%DocumentNeededFonts: (atend) 
+%%DocumentProcSets: Underlay Color5044
+%%DocumentSuppliedProcSets: Underlay Color5044
+%%DocumentProcessColors: (atend)
+%%DocumentCustomColors: (atend)
+%%EndComments
+%
+%%BeginResource: procset Underlay
+%%CreationDate: (2/10/92)
+%
+% In VAX DOCUMENT V2.1-1, simple EPSF files up to 65,000 bytes long
+% may be an underlay. Define the EPSF as a PostScript proceedure
+% called /UNDERLAY and prefix to DOCUMENT's PS output  For example:.
+% /UNDERLAY ( EPSF code here ) cvx def
+%
+% To create a "Preliminary" underlay change /UNDERLAY* to /UNDERLAY
+/UNDERLAY* (
+  /Note (Preliminary) def
+  /NoteSize 120 def
+  /NoteFont /Helvetica findfont NoteSize scalefont def
+  /Note where { pop Note length 0 gt {
+    /NoteWidth NoteFont setfont Note stringwidth pop def
+    PaperWidth 36 mul PaperHeight 36 mul moveto
+    PaperHeight PaperWidth atan rotate
+    NoteWidth -2 div NoteSize .729 mul -2 div rmoveto 
+    Note true charpath .075 setseparationgray fill
+  }if  }if
+) cvx def
+%%EndResource
+%
+%%BeginResource: procset Color5044
+%%CreationDate: (1/21/91)
+%%Version:1.0 3
+%Implementation of Adobe 5044 color specification
+%/ndf allows command override during color separation
+/Color5044Dict 100 dict def
+Color5044Dict begin
+/bdf {bind def} def
+/ndf
+  {1 index where
+    {pop pop pop
+    }
+    {dup xcheck
+      {bind} if
+    def
+    }
+    ifelse
+  } bdf
+/setcmykcolor
+  {1 exch sub
+  3 
+    {dup 5 -1 roll sub 0 2 copy lt
+      {exch} if
+    pop exch
+    } repeat
+  pop setrgbcolor
+  }ndf
+/setcmykcoloroverprint
+  {4
+    {dup -1 eq
+      {pop 0} if
+      4 1 roll
+    } repeat
+  setcmykcolor
+  } ndf
+/findcmykcustomcolor
+  {5 /packedarray where
+    {pop packedarray
+    }
+    {array astore readonly
+    }
+    ifelse
+  } ndf
+/setcustomcolor
+  {exch aload pop pop
+  4
+    {4 index mul 4 1 roll
+    } repeat
+  setcmykcolor pop
+  } ndf
+/setseparationgray
+  {1 exch sub systemdict /setgray get exec
+  } ndf
+/setoverprint {pop} ndf
+/currentoverprint false ndf
+%CMYK multi-proc colorimage
+/colorimage
+  {4 ne
+    {(\nUnsupported number of colors for colorimage.\n) print flush quit
+    } if
+  not
+    {(\nSingle procedure form  colorimage unsupported.\n) print flush quit
+    } if
+  save 20 dict begin /&saveobj exch def
+  /&Kproc exch def /&Yproc exch def /&Mproc exch def /&Cproc exch def
+    {&Cproc &Mproc &Yproc &Kproc
+    /&K exch def /&Y exch def /&M exch def /&C exch def
+    0 1 &K length 1 sub
+      {/&i exch def
+      &K &i 255
+      &C &i get 30 mul
+      &M &i get 59 mul add
+      &Y &i get 11 mul add
+      &K &i get 100 mul add
+      100 idiv
+      dup 255 gt
+        {pop 255} if
+      sub put
+      } for
+    &K
+    } image
+  &saveobj end restore
+  } ndf
+/customcolorimage
+  {pop systemdict /image get exec
+  } ndf
+/separationimage
+  {systemdict /image get exec
+  } ndf
+end
+%%EndResource
+Color5044Dict begin
+%
+/DEC_DVC$dict 300 dict def
+DEC_DVC$dict begin
+%
+/DVC$PSJob save def
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+}def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+% Exit page (temporarily) to add fonts/characters.
+/XP { }def
+% 
+% Resume page
+/RP { }def
+%
+% End Page: EP
+/EP {DVC$PSPage restore}def
+%
+% Purge fonts to reclaim VM
+/PF {
+  currentoverprint
+  currentrgbcolor
+  EP			%Does restore
+  PageSetup     %Does save
+  setrgbcolor
+  setoverprint
+}def
+%
+% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+%
+/Yadjust {Ymax exch sub} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto
+} def
+%
+/R {						% Draw a rectangle
+  /ht exch def  /wd exch def   gsave
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill grestore wd 0 rmoveto
+}def
+%
+%Setup Page Media:  <paper-height> <paper-width> PM
+/PM {
+  /Xmax exch Resolution mul def
+  /Ymax exch Resolution mul def
+  /UNDERLAY where {
+    pop
+    /eps_save save def		% save before EPSF underlay
+    Resolution 72 div dup scale % Revert coords to points
+    count array astore /DVCstack exch def % save op stack
+    /dict_count countdictstack def % # of dicts
+    userdict begin		% default dict
+    /showpage {}def		% disable showpage
+    0 setgray
+      {UNDERLAY} stopped {(Error executing /UNDERLAY)== quit}if
+    countdictstack dict_count sub {end} repeat % clean up dict stack
+    clear DVCstack aload pop	% restore op stack
+    eps_save restore		% restore after EPSF
+  }if
+  PageSetup
+}def
+%
+%Setup page coordinates
+/PageSetup
+{
+  /DVC$PSPage save def
+  PortraitMode not {PaperWidth 0 translate  90 rotate} if
+  /Xpos 0 def
+  /Ypos 0 def
+}def
+%
+% Begin EPS file: <xoffset> <yoffset> SPB
+/SPB {
+  Yadjust transform		% convert from DVC to device coords
+  EP				% page-level restore
+  /eps_save save def		% save before EPSF
+  Resolution 72 div dup scale 	% Revert coords to points
+  itransform			% convert position back to points  
+  translate			% set position for EPSF
+  PortraitMode not {90 rotate} if % rotate for EPSF
+  count array astore /DVCstack exch def	% save op stack
+  /dict_count countdictstack def % # of dicts
+  userdict begin		% default dict
+  /showpage {}def		% disable showpage
+  0 setgray
+}def
+%
+% End EPS file
+/SPE {
+  countdictstack dict_count sub {end} repeat % clean up dict stack
+  clear DVCstack aload pop	% restore op stack
+  eps_save restore		% restore after EPSF
+  PageSetup			% restore DVC coords
+}def
+%
+% Print-Page Routine: <Page #> PP
+/PP {
+  gsave
+  showpage
+  grestore
+}def
+%
+/DMF {		%  /font-name <point-size> DMF
+  exch findfont exch scalefont setfont
+}def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def
+  /namstr exch cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+}def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+}def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+}def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+}def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+}def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+}def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+}def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+}def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div}def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+}def
+/RunLengthToRasters {
+  % none yet
+}def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+}def
+%
+/int-dict-name {int (-dict) concatnam}def
+/int-dict {int (-dict) concatnam cvx load}def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      }def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+}def 
+/PXLF { true  DefinePXLFont}def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont}def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+}def
+%
+/CKSZ {abs 127 le and}def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if}def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+}def
+%
+% set color routine: Color# SC
+/SC {ColorPalette exch get 1.0 setcustomcolor}bind def
+%
+%%EndProlog
+
+
+%%BeginSetup
+/PxlResolution 300 def
+/Resolution 3600 def
+/RasterScaleFactor PxlResolution Resolution div def
+/PortraitMode true def
+/PaperWidth 8.500 def
+/PaperHeight 11.000 def
+72 Resolution div dup scale
+
+%>  Postamble of file BSODOC$COMMON:[BSO_VV.SPD]BSO_SPD.DVI_PS.
+% DefineFont:F207 Category:15 Pointsize:24
+% DownloadPSFont
+%!PS-Adobe-2.0
+%%Title: PostScript Digital Logo Font, v1.1
+%%Creator: Ned Batchelder
+%%CreationDate: 9-Nov-87
+%%DocumentFonts: Symbol
+%%DocumentSuppliedFonts: DigitalLogo
+%%EndComments
+%
+%		    DIGITAL INTERNAL USE ONLY
+% 
+% INTRODUCTION:
+% This rendition of the Digital logo was prepared by Ned Batchelder using 
+% Adobe Illustrator and hand manipulation of the resulting PostScript code.
+% Photographic masters of the logo were obtained from David Comberg in the
+% Graphic Design Group. Additional consultation was provided by Elliot
+% Hendrickson, one of the original designers of the logo.
+% 
+% USE:
+% This file defines a new PostScript font, called /DigitalLogo. It consists
+% of three characters. (d) is the entire Digital logo, (t) is a small
+% trademark symbol, and (T) is a large trademark symbol. The font is designed
+% so that the argument to scalefont is the height of the logo. There is no
+% extra white space around the logo at all. The trademarks are designed to be
+% shown right after the logo, and they align themselves. The only correct
+% strings to show with this font are (d), (dt), and (dT). There is an entry
+% (named GapWidth) in the font dictionary which gives the unscaled width of
+% the gap between the blocks. This distance is given because it is used as a
+% unit to determine how much space to leave around the logo.
+% 
+% HISTORY:
+% The logo was designed in 1957 by Elliot Hendrickson, who was then working
+% as an independent designer. He was contracted by DEC to do a brochure, and
+% DEC wanted a logo to accompany it. The logo up to then had been the letters
+% DEC in blocks the shape of the plug-in cards that DEC had been producing.
+% Elliot re-worked the logo, incorporating letters which were hand-drawn for 
+% the purpose by Arthur Hover(?). The logo has been maintained since then in 
+% conventional technology, ie, film masters. There was at least one reworking 
+% of the logo at some point.
+% 
+% The masters I received had a number of interesting features. The boxes were
+% not all the same width, and there seemed to be no logic to which boxes were
+% wider. The 'g' was the narrowest, and the 'i' and 'l' were second widest.
+% Also, the two 'i's were not exactly the same shape. On ten-inch masters,
+% (one box to an 8½x11 sheet), the boxes were not rectangles, but were very
+% slightly tapered in wierd ways. I assume that the tapering is the result of
+% too many reproductions, but the difference in widths may have been
+% deliberate at some time. Elliot reports that when he drew it, all boxes
+% were the same width. I have retained the different widths in my version,
+% since the experts I had at hand did not seem to think I should make them
+% uniform.
+% 
+% Please feel free to use this logo, but keep in mind the following:
+% 
+% 1. This code is for INTERNAL USE ONLY.
+% 2. I am not entirely happy with the final shapes of the letters, and am
+% hoping to improve them. Please allow for future updates to this code.
+% 3. Only use this logo within the guidelines of the Corporate Identity
+% program. If you use this font precisely as is, you can't get in much
+% trouble. Don't take the shapes and do strange things with them. 
+% In particular, the Identity states that the logo is a one-color logo: The
+% letters are actually holes in the blocks, through which the background can
+% be seen. Do not modify this code so that the letters are always white.
+% 
+% Edit history:
+% 
+% 21-Sep-87 nmb	    Created as a standalone file with demo.
+%  6-Nov-87 nmb	    Converted to font form.
+%  9-Nov-87 nmb	    Removed // uses for compatibility with LW Classics
+%
+
+%%BeginFont: DigitalLogo
+10 dict begin
+
+/FontInfo 3 dict def
+FontInfo begin
+    /Notice
+(The Digital logo is a registered trademark of Digital Equipment Corporation.)
+    def
+    /FullName (Digital logo) def
+    /version (1.1) def
+    end
+
+/FontType 3 def				% This is a user-defined font
+/FontMatrix matrix def			% Use an identity transform
+/FontBBox [ 0 0 3.383 1 ] def		% Logo itself is biggest
+/GapWidth .070 def			% The width of the gap between boxes
+
+/Encoding 256 array def
+0 1 255 { Encoding exch /.notdef put } bind for
+
+Encoding
+dup (d) 0 get /DEC-logo put		% (d) gives logo
+dup (t) 0 get /smalltrademark put	% (t) gives small trademark
+    (T) 0 get /largetrademark put	% (T) gives large trademark
+
+/Work 15 dict def			% for doing work in font.
+
+/BuildChar {
+    exch begin				% Use the font dictionary
+	Work begin
+	    Encoding exch get		% Look up the character name
+	    load			% Pull out the procedure
+	    exec			% Run it.
+	    end				% Work
+	end				% fontdict
+    } bind def
+
+Work begin
+
+/.notdef {} def
+
+%
+% - `DEC-logo' -
+%
+% Images a DEC logo with the lower left corner at the current origin, with a
+% height of one unit, in the current color.
+% 
+
+/m /moveto load def
+/l /lineto load def
+/c /curveto load def
+
+/DEC-logo {
+    3.383 0 0 0 3.383 1 setcachedevice
+    {	% D
+	% d counter
+	.2930 .3513 m
+	.2932 .3217 .2587 .2758 .2167 .2757 c
+	.1719 .2759 .1280 .3165 .1280 .3977 c
+	.1280 .4801 .1718 .5225 .2153 .5227 c
+	.2587 .5225 .2932 .4760 .2930 .4407 c
+	closepath
+	% d outside
+	.2953 .5787 m
+	.2953 .7600 l
+	.3843 .7600 l
+	.3843 .1960 l
+	.2923 .1960 l
+	.2923 .2220 l
+	.2848 .2144 .2531 .1813 .1990 .1813 c
+	.1426 .1812 .0417 .2282 .0417 .3977 c
+	.0417 .5414 .1171 .6157 .2067 .6157 c
+	.2399 .6157 .2725 .6039 .2953 .5787 c
+	closepath
+	% d box
+	.432 0.0 m
+	.432 1.0 l
+	.000 1.0 l
+	.000 0.0 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	.927 0.0 m
+	.927 1.0 l
+	.502 1.0 l
+	.502 0.0 l
+	closepath
+	% i body
+	.6695 .196 m
+	.6695 .600 l
+	.7595 .600 l
+	.7595 .196 l
+	closepath
+	% i dot
+	.6695 .655 m
+	.6695 .755 l
+	.7595 .755 l
+	.7595 .655 l
+	closepath
+	} exec
+    {	% G
+	% g counter
+	1.2813 .4478 m
+	1.2813 .4837 1.2409 .5208 1.2035 .5208 c
+	1.1713 .5208 1.1215 .5003 1.1215 .4084 c
+	1.1215 .3105 1.1827 .2962 1.2030 .2962 c
+	1.2433 .2962 1.2813 .3239 1.2813 .3667 c
+	closepath
+	% g box
+	0.997 1.0 m
+	1.415 1.0 l
+	1.415 0.0 l
+	0.997 0.0 l
+	closepath
+	% g outside
+	1.2822 .5609 m
+	1.2729 .5742 1.2424 .6044 1.1988 .6044 c
+	1.1311 .6043 1.0367 .5652 1.0367 .3955 c
+	1.0368 .2617 1.1437 .2168 1.1876 .2168 c
+	1.2350 .2167 1.2702 .2443 1.2798 .2547 c
+	1.2798 .2126 l
+	1.2798 .1815 1.2479 .1511 1.1945 .1511 c
+	1.1485 .1512 1.1437 .1807 1.1437 .1953 c
+	1.0497 .1953 l
+	1.0497 .1486 1.0798 .0804 1.1888 .0803 c
+	1.2864 .0803 1.3186 .1176 1.3325 .1316 c
+	1.3442 .1434 1.3617 .1758 1.3617 .2017 c
+	1.3617 .6 l
+	1.2823 .6 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	1.910 0.0 m
+	1.910 1.0 l
+	1.485 1.0 l
+	1.485 0.0 l
+	closepath
+	% i body
+	1.6525 .196 m
+	1.6525 .6 l
+	1.7425 .6 l
+	1.7425 .196 l
+	closepath
+	% i dot
+	1.6525 .655 m
+	1.6525 .755 l
+	1.7425 .755 l
+	1.7425 .655 l
+	closepath
+	} exec
+    {	% T
+	% t
+	2.2128 .7525 m
+	2.1305 .7525 l
+	2.1305 .6071 l
+	2.0874 .6071 l
+	2.0874 .5396 l
+	2.1305 .5396 l
+	2.1305 .2852 l
+	2.1305 .2367 2.1554 .1986 2.2248 .1987 c
+	2.2573 .1987 2.2560 .1985 2.2842 .2034 c
+	2.2842 .2874 l
+	2.2658 .2842 2.2601 .2829 2.2511 .2832 c
+	2.2338 .2837 2.2128 .2898 2.2128 .3206 c
+	2.2128 .5395 l
+	2.2780 .5395 l
+	2.2780 .6071 l
+	2.2128 .6071 l
+	closepath
+	% t box
+	2.404 0.0 m
+	1.980 0.0 l
+	1.980 1.0 l
+	2.404 1.0 l
+	closepath
+	} exec
+    {	% A
+	% a box
+	2.474 0.0 m
+	2.474 1.0 l
+	2.888 1.0 l
+	2.888 0.0 l
+	closepath
+	% a outside
+	2.5439 .4728 m
+	2.6210 .4728 l
+	2.6210 .5138 2.6422 .5353 2.6826 .5353 c
+	2.7470 .5354 2.7449 .5067 2.7448 .4708 c
+	2.7050 .4553 2.7087 .4557 2.6480 .4419 c
+	2.5709 .4241 2.5237 .3911 2.5236 .3112 c
+	2.5237 .2331 2.5793 .1914 2.6420 .1915 c
+	2.7048 .1914 2.7178 .2117 2.7438 .2290 c
+	2.7438 .1978 l
+	2.8422 .1978 l
+	2.8190 .2352 2.8251 .2425 2.8249 .2706 c
+	2.8250 .2926 2.8249 .5080 2.8249 .5080 c
+	2.8250 .5507 2.8028 .5768 2.7883 .5855 c
+	2.7521 .6071 2.7074 .6097 2.6826 .6098 c
+	2.5945 .6096 2.5438 .5653 2.5439 .4728 c
+	closepath
+	% a counter
+	2.7448 .3946 m
+	2.7448 .3401 l
+	2.7448 .3152 2.7145 .2670 2.6550 .2669 c
+	2.6260 .2668 2.6098 .2883 2.6097 .3162 c
+	2.6098 .3442 2.6335 .3657 2.6536 .3697 c
+	2.6745 .3739 2.7226 .3862 2.7448 .3946 c
+	closepath
+	} exec
+    {	% L
+	% l box
+	3.383 0.0 m
+	3.383 1.0 l
+	2.958 1.0 l
+	2.958 0.0 l
+	closepath
+	% l
+	3.1255 .196 m
+	3.1255 .765 l
+	3.2155 .765 l
+	3.2155 .196 l
+	closepath
+	} exec
+    fill
+    } bind def
+
+%
+% % pct `trademark' --
+%
+% Borrow the sans-serif trademark symbol from /Symbol. AFM file says:
+%	C 228 ; WX 786 ; N trademarksans ; B 5 293 725 673 ;
+% We scale it down to pct percent of the height of the logo and superscript 
+% it some, and voila!
+%
+
+/trademark {
+    /s exch .380 div def
+    /w s .725 mul .070 add def
+    /u 1 .673 s mul sub def
+    w 0 0 u w 1 setcachedevice
+    /Symbol findfont s scalefont setfont
+    .070 u m					% Superscript it
+    (\344) show
+    } bind def
+
+% 
+% These are two different trademarks (just different sizes).
+%
+
+/smalltrademark { .15 trademark } def
+/largetrademark { .25 trademark } def
+
+end						% Work dictionary
+
+currentdict					% Get the font dict
+end						% Close it up
+/DigitalLogo exch definefont pop		% Define the font.
+
+%%EndFont
+% EndDownloadPSFont
+/F207 1200.0 /DigitalLogo DPSF
+% DefineFont:F46 Category:10 Pointsize:6
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F46 300.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F39 Category:10 Pointsize:9
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F39 450.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F38 Category:10 Pointsize:9
+/F38 450.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+
+%Spot color array for this job
+/ColorPalette [
+0.0 0.0 0.0 1.0 (BLACK) findcmykcustomcolor
+] def
+
+%%EndSetup
+%
+%%Page: (1) 1
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 4995 XY F16(Software)S 3899 6240 XY(Produ)S 2 x(ct)S 3899 7485 XY
+(Description)S 3899 X 748 y 23316 204 R 3899 9006 XY F36(PRODUC)S -2 x
+(T)S 167 x(NAME:)S 763 x(BASEstar)S 165 x(Open)S 167 x(Server)S 24083 X
+(SPD)S 166 x(47.87.01)S 8924 X 632 y(V)S -27 x(ersion)S 167 x(2.0)S
+3899 11346 XY F40(DESCRIPTI)S -2 x(ON)S 3899 X 899 y F38(BASEstar)S
+228 x(Open)S 228 x(software)S 228 x(facili)S -2 x(tates)S 228 x(the)S
+228 x(integration)S 228 x(of)S 3899 X 548 y(manufacturing)S 214 x(applications)S
+213 x(and)S 214 x(plant)S 213 x(equipment.)S 390 x(Ac-)S 3899 X 548 y
+(celerated)S 124 x(developm)S 2 x(ent)S 124 x(of)S 123 x(integrated)S
+124 x(manu)S 2 x(facturing)S 124 x(sys-)S 3899 X 548 y(tems)S 199 x
+(is)S 199 x(assured)S 200 x(through)S 200 x(an)S 199 x(architecture)S
+200 x(that)S 199 x(also)S 199 x(en-)S 3899 X 548 y(courage)S 2 x(s)S
+149 x(consistency)S 151 x(of)S 149 x(application)S 149 x(developm)S
+2 x(ent.)S 3899 X 899 y(BASEstar)S 240 x(Open)S 241 x(takes)S 240 x
+(advan)S 2 x(tage)S 240 x(of)S 240 x(the)S 240 x(client/server)S 3899 X
+548 y(computing)S 219 x(architecture.)S 404 x(While)S 217 x(the)S 218 x
+(server)S 219 x(software)S 218 x(li-)S 3899 X 548 y(brary)S 117 x(supplies)S
+117 x(all)S 115 x(supported)S 117 x(services,)S 124 x(the)S 116 x(client)S
+115 x(software)S 3899 X 547 y(library)S 115 x(allows)S 114 x(client)S
+115 x(applications)S 115 x(to)S 114 x(access)S 116 x(the)S 115 x(same)S
+116 x(ser-)S 3899 X 548 y(vices)S 131 x(from)S 131 x(any)S 131 x(network)S
+131 x(Node)S 130 x(on)S 131 x(which)S 131 x(BASEstar)S 131 x(Cli)S -2 x
+(ent)S 3899 X 548 y(is)S 211 x(installed.)S 384 x(Client)S 210 x(and)S
+213 x(server)S 212 x(comm)S 2 x(unications)S 212 x(wit)S -2 x(hin)S
+3899 X 548 y(BASEstar)S 186 x(Open)S 187 x(are)S 187 x(provided)S 187 x
+(through)S 188 x(TCP/IP)S 185 x(network)S 3899 X 548 y(commun)S 2 x
+(ications.)S 3899 X 899 y(For)S 146 x(a)S 146 x(description)S 147 x
+(of)S 145 x(the)S 146 x(BASEstar)S 147 x(Open)S 146 x(Client)S 145 x
+(product,)S 3899 X 548 y(refer)S 150 x(to)S 149 x(SPD)S 150 x(47.80.01)S
+3899 X 899 y(BASEstar)S 139 x(Open)S 138 x(software)S 139 x(provides)S
+139 x(services)S 140 x(that)S 138 x(allow)S 137 x(a)S 3899 X 548 y(compre)S
+2 x(hensive)S 104 x(suppo)S 2 x(rt)S 103 x(for)S 104 x(manufac)S 2 x
+(turing)S 104 x(application)S 103 x(in-)S 3899 X 548 y(tegration,)S
+134 x(device)S 130 x(connection,)S 134 x(and)S 131 x(control)S 130 x
+(of)S 130 x(plant)S 130 x(equip-)S 3899 X 548 y(ment.)S 3899 X 899 y
+(The)S 149 x(software)S 149 x(opera)S 2 x(tes)S 149 x(in)S 148 x(a)S
+149 x(distributed)S 149 x(proce)S 2 x(ssing)S 149 x(envi-)S 3899 X 548 y
+(ronmen)S 2 x(t)S 136 x(and)S 136 x(its)S 136 x(application)S 136 x
+(integration)S 137 x(features)S 137 x(include:)S 3899 X 899 y(\201)S
+441 x(Collecti)S -2 x(on,)S 290 x(mana)S 2 x(gement,)S 290 x(and)S 263 x
+(distribution)S 262 x(of)S 261 x(plant)S 4497 X 547 y(data)S 3899 X
+800 y(\201)S 441 x(Automatic)S 111 x(noti\211cation)S 112 x(of)S 111 x
+(signi\211cant)S 112 x(\(and)S 113 x(critical\))S 110 x(plant)S 4497 X
+548 y(events)S 3899 X 799 y(\201)S 441 x(Exchange)S 175 x(of)S 174 x
+(Packets)S 174 x(of)S 174 x(data)S 174 x(via)S 174 x(peer-to-p)S 2 x
+(eer)S 174 x(com-)S 4497 X 548 y(munication)S 3899 X 799 y(\201)S 441 x
+(Facilit)S -2 x(ies)S 199 x(for)S 199 x(allowing)S 198 x(the)S 199 x
+(synchro)S 2 x(nization)S 198 x(of)S 199 x(manu-)S 4497 X 548 y(facturing)S
+149 x(applications)S 3899 X 899 y(In)S 230 x(addition,)S 250 x(BASEstar)S
+231 x(Open)S 231 x(has)S 231 x(the)S 231 x(capability)S 230 x(of)S 230 x
+(al-)S 3899 X 548 y(lowing)S 170 x(applications)S 170 x(distributed)S
+170 x(across)S 172 x(dif)S -9 x(ferent)S 171 x(network)S 3899 X 548 y
+(Nodes)S 150 x(to)S 149 x(use)S 150 x(globally-de\211ne)S 2 x(d)S 149 x
+(objects.)S 3899 X 899 y(Device)S 132 x(integration)S 133 x(software)S
+132 x(provides)S 134 x(services)S 133 x(to)S 132 x(access)S 3899 X 548 y
+(and)S 167 x(control)S 167 x(plant)S 167 x(\212oor)S 167 x(equipme)S
+2 x(nt)S 166 x(based)S 168 x(on)S 167 x(proprietary)S 3899 X 548 y(and)S
+153 x(standard)S 2 x(s)S 152 x(comm)S 2 x(unication)S 152 x(protocols.)S
+209 x(Speci\211c)S 153 x(com-)S 3899 X 548 y(munication)S 191 x(services)S
+191 x(are)S 192 x(provided)S 191 x(through)S 192 x(speci\211c)S 191 x
+(De-)S 3899 X 548 y(vice)S 171 x(Access)S 173 x(Software)S 171 x(\(DAS\))S
+172 x(modules.)S 265 x(The)S 172 x(DAS)S 171 x(mod-)S 3899 X 548 y(ules)S
+150 x(require)S 150 x(separa)S 2 x(te)S 149 x(licences)S 150 x(from)S
+150 x(BASEstar)S 150 x(Open.)S 16153 11332 XY F40(Features)S 16153 12263 XY
+F39(Application)S 149 x(Integration)S 16153 13193 XY F38(\201)S 441 x
+(Data)S 149 x(Manage)S 2 x(ment)S 16751 X 831 y(BASEstar)S 215 x(Open)S
+216 x(Data)S 215 x(Services)S 216 x(provide)S 217 x(a)S 215 x(standard)S
+16751 X 548 y(mechanism)S 200 x(for)S 199 x(de\211ning,)S 211 x(organ)S
+2 x(izing,)S 210 x(and)S 199 x(accessing)S 16751 X 548 y(data)S 120 x
+(in)S 119 x(a)S 120 x(distributed)S 120 x(manufactur)S 2 x(ing)S 119 x
+(environm)S 2 x(ent)S 120 x(from)S 16751 X 548 y(a)S 115 x(variety)S
+115 x(of)S 114 x(source)S 2 x(s)S 114 x(including)S 115 x(plant)S 115 x
+(devices)S 115 x(and)S 116 x(area,)S 16751 X 547 y(plant,)S 149 x(and)S
+150 x(work)S 150 x(cell)S 149 x(applications.)S 16751 X 831 y(BASEstar)S
+343 x(Open)S 344 x(de\211nes)S 344 x(discrete)S 343 x(data)S 344 x(elements)S
+16751 X 548 y(\()S(Data_Points)S(\))S 136 x(to)S 136 x(manag)S 2 x(e)S
+136 x(manufacturing)S 137 x(information.)S 16751 X 548 y(Data_Point)S
+134 x(de\211nitions)S 134 x(can)S 135 x(be)S 135 x(of)S 134 x(various)S
+135 x(types,)S 137 x(rang-)S 16751 X 548 y(ing)S 191 x(from)S 193 x
+(scalar)S 192 x(data)S 192 x(elements)S 192 x(to)S 192 x(user-de\211)S
+2 x(ned)S 192 x(data)S 16751 X 548 y(structures.)S 198 x(This)S 145 x
+(maximizes)S 146 x(the)S 146 x(\212exibilit)S -2 x(y)S 145 x(of)S 145 x
+(data)S 146 x(def-)S 16751 X 548 y(initi)S -2 x(on)S 150 x(and)S 150 x
+(acquisition.)S 16751 X 831 y(Since)S 187 x(each)S 187 x(Data_Point)S
+187 x(is)S 186 x(referenc)S 2 x(ed)S 187 x(by)S 187 x(name,)S 197 x
+(ap-)S 16751 X 548 y(plications)S 140 x(become)S 142 x(independen)S
+2 x(t)S 140 x(of)S 140 x(their)S 140 x(data)S 141 x(sources)S 16751 X
+548 y(and,)S 167 x(conseque)S 2 x(ntly)S -34 x(,)S 166 x(do)S 164 x
+(not)S 163 x(require)S 164 x(alteration)S 163 x(as)S 164 x(data)S 16751 X
+548 y(sources)S 116 x(change.)S 189 x(In)S 114 x(addition,)S 121 x(simple)S
+115 x(Data_Points)S 115 x(can)S 16751 X 548 y(have)S 224 x(a)S 224 x
+(prede\211n)S 2 x(ed)S 224 x(value)S 224 x(speci\211ed)S 224 x(at)S
+224 x(startup)S 224 x(time.)S 16751 X 547 y(Data)S 148 x(Services)S
+150 x(allow)S 148 x(applications)S 149 x(to)S 149 x(de\211ne)S 150 x
+(and)S 150 x(man-)S 16751 X 548 y(age)S 150 x(datapoints.)S 16751 X
+831 y(Each)S 112 x(Data_Point)S 111 x(can)S 113 x(be)S 112 x(associated)S
+112 x(with)S 111 x(one)S 112 x(or)S 112 x(more)S 16751 X 548 y(T)S -17 x
+(riggers.)S 199 x(A)S 146 x(T)S -16 x(rigger)S 147 x(de\211nes)S 147 x
+(a)S 147 x(relationship)S 146 x(between)S 147 x(a)S 16751 X 548 y(Data_Point,)S
+234 x(a)S 218 x(\211lter)S -25 x(,)S 235 x(and)S 218 x(an)S 219 x(event.)S
+404 x(Each)S 219 x(time)S 217 x(the)S 16751 X 548 y(value)S 253 x(of)S
+252 x(a)S 253 x(triggered)S 253 x(Data_Point)S 252 x(change)S 2 x(s,)S
+278 x(associ-)S 16751 X 548 y(ated)S 152 x(\211lter)S 152 x(express)S
+2 x(ions)S 152 x(are)S 153 x(evaluated.)S 207 x(Whene)S 2 x(ver)S 152 x
+(the)S 16751 X 548 y(Boolean)S 224 x(result)S 224 x(of)S 223 x(an)S
+225 x(evaluated)S 224 x(\211lter)S 224 x(expression)S 225 x(is)S 16751 X
+548 y(TRUE,)S 148 x(the)S 150 x(associated)S 150 x(Event)S 150 x(is)S
+149 x(declared.)S 16751 X 831 y(One)S 155 x(or)S 155 x(more)S 155 x
+(versions)S 156 x(of)S 155 x(a)S 154 x(Data_Point)S 155 x(value)S 155 x
+(can)S 155 x(be)S 16751 X 548 y(stored.)S 416 x(In)S 221 x(addition)S
+222 x(to)S 222 x(the)S 221 x(value,)S 240 x(each)S 223 x(Data_Point)S
+16751 X 548 y(version)S 132 x(includes)S 131 x(the)S 131 x(time)S 131 x
+(when)S 132 x(the)S 131 x(Data_Point)S 131 x(value)S 16751 X 547 y(changed)S
+151 x(and)S 150 x(its)S 149 x(status)S 149 x(at)S 150 x(that)S 149 x
+(time.)S 16751 X 831 y(A)S 141 x(new)S 142 x(version)S 143 x(is)S 141 x
+(generated)S 143 x(each)S 143 x(time)S 141 x(the)S 142 x(value)S 142 x
+(of)S 141 x(a)S 16751 X 548 y(Data_Point)S 136 x(chang)S 2 x(es.)S 195 x
+(A)S 137 x(user)S 138 x(can)S 137 x(reque)S 2 x(st)S 136 x(the)S 137 x
+(curre)S 2 x(nt)S 16751 X 548 y(version,)S 191 x(and)S 182 x(thus)S
+183 x(the)S 182 x(curre)S 2 x(nt)S 182 x(value,)S 190 x(or)S 183 x(alternatively)S
+16751 X 548 y(the)S 149 x(value)S 150 x(associated)S 151 x(wit)S -2 x
+(h)S 150 x(any)S 150 x(cached)S 151 x(version.)S 16153 X 831 y(\201)S
+441 x(Event)S 149 x(Services)S 16751 X 831 y(BASEstar)S 170 x(Open)S
+171 x(Event)S 171 x(Services)S 171 x(allow)S 170 x(users)S 171 x(to)S
+170 x(sub-)S 16751 X 548 y(scribe)S 284 x(to)S 284 x(one)S 284 x(or)S
+284 x(more)S 285 x(Events.)S 602 x(Events)S 284 x(are)S 285 x(oc-)S
+16751 X 548 y(currence)S 2 x(s)S 319 x(that)S 320 x(are)S 320 x(of)S
+320 x(interest)S 320 x(to)S 319 x(an)S 320 x(application)S 24346 37998 XY
+F40(January)S 150 x(1995)S 24148 X 548 y(AE-Q1QEB-TE)S 13320 X -127 y
+F207(dt)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique DigitalLogo
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (2) 2
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2554 XY F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x(r)S
+24246 X(SPD)S 149 x(47.87.01)S 3899 X 548 y(V)S -25 x(ersion)S 150 x
+(2.0)S 4497 4373 XY F38(program)S 2 x(\202threshold)S 166 x(exceed)S
+2 x(ing,)S 169 x(alarms,)S 170 x(job)S 165 x(comple-)S 4497 X 548 y
+(tion,)S 260 x(and)S 240 x(so)S 239 x(on.)S 468 x(Users)S 240 x(de\211ne)S
+240 x(the)S 239 x(occurr)S 2 x(ence)S 240 x(of)S 4497 X 548 y(such)S
+139 x(Events)S 138 x(and)S 139 x(specify)S 138 x(the)S 139 x(context)S
+138 x(information)S 139 x(that)S 4497 X 548 y(should)S 137 x(be)S 138 x
+(passed.)S 196 x(This)S 137 x(context)S 137 x(information)S 138 x(can)S
+137 x(also)S 4497 X 547 y(include)S 149 x(data)S 150 x(and)S 150 x(their)S
+150 x(types.)S 4497 X 853 y(T)S -50 x(o)S 160 x(be)S 161 x(noti\211ed)S
+160 x(of)S 160 x(the)S 160 x(occurr)S 2 x(ence)S 161 x(of)S 159 x(a)S
+161 x(speci\211c)S 160 x(Event,)S 4497 X 548 y(the)S 291 x(application)S
+291 x(must)S 292 x(issue)S 292 x(a)S 291 x(subscription)S 292 x(to)S
+291 x(the)S 4497 X 548 y(Event.)S 4497 X 852 y(When)S 194 x(an)S 194 x
+(Event)S 194 x(is)S 194 x(declared,)S 205 x(Event)S 194 x(Services)S
+195 x(create)S 4497 X 548 y(and)S 159 x(deliver)S 158 x(the)S 159 x
+(noti\211cations)S 158 x(that)S 158 x(can)S 159 x(be)S 159 x(received)S
+159 x(by)S 4497 X 548 y(subscribers.)S 302 x(A)S 183 x(single)S 183 x
+(Event)S 184 x(declaration)S 184 x(can)S 184 x(gener-)S 4497 X 548 y
+(ate)S 115 x(many)S 117 x(noti\211cations)S 116 x(on)S 116 x(a)S 116 x
+(one-to-ma)S 2 x(ny)S 116 x(relationship,)S 4497 X 548 y(depending)S
+151 x(on)S 150 x(the)S 149 x(numb)S 2 x(er)S 150 x(of)S 149 x(active)S
+149 x(subscr)S 2 x(iptions.)S 3899 X 853 y(\201)S 441 x(Packet)S 150 x
+(Services)S 4497 X 852 y(BASEstar)S 192 x(Open)S 192 x(Packet)S 192 x
+(Services)S 193 x(allow)S 191 x(users)S 193 x(to)S 191 x(di-)S 4497 X
+548 y(rectly)S 183 x(exchang)S 2 x(e)S 183 x(Packets)S 184 x(of)S 183 x
+(information.)S 301 x(T)S -25 x(wo)S 183 x(users)S 4497 X 548 y(can)S
+128 x(establish)S 127 x(direct)S 128 x(commu)S 2 x(nication)S 127 x
+(through)S 129 x(a)S 128 x(Port)S 128 x(to)S 4497 X 548 y(be)S 162 x
+(used)S 164 x(to)S 162 x(send)S 163 x(a)S 163 x(Packet,)S 165 x(and)S
+163 x(to)S 163 x(which)S 162 x(a)S 162 x(user)S 164 x(can)S 4497 X 548 y
+(connect)S 150 x(to)S 149 x(receive)S 151 x(it.)S 4497 X 853 y(A)S 195 x
+(Packet)S 195 x(contains)S 196 x(a)S 195 x(descr)S 2 x(ipti)S -2 x(on)S
+196 x(of)S 195 x(information)S 196 x(that)S 4497 X 547 y(must)S 174 x
+(be)S 174 x(exchan)S 2 x(ged.)S 272 x(Each)S 175 x(Packet)S 174 x(input)S
+174 x(and)S 174 x(output)S 4497 X 548 y(parameter)S 151 x(is)S 149 x
+(described)S 151 x(by)S 150 x(a)S 150 x(datatype.)S 4497 X 853 y(BASEstar)S
+246 x(Open)S 246 x(delivers)S 247 x(a)S 246 x(Packet)S 246 x(to)S 246 x
+(a)S 246 x(Port)S 246 x(in)S 246 x(a)S 4497 X 548 y(protocol-indepen)S
+2 x(dent)S 173 x(manne)S 2 x(r)S 173 x(and)S 174 x(also)S 173 x(independe)S
+2 x(nt)S 4497 X 548 y(of)S 149 x(the)S 150 x(location)S 149 x(of)S 149 x
+(the)S 150 x(users)S 150 x(and)S 151 x(Ports)S 149 x(involved.)S 3899 X
+852 y(\201)S 441 x(Application)S 149 x(Services)S 4497 X 853 y(BASEstar)S
+161 x(Open)S 162 x(Application)S 161 x(Services)S 162 x(provide)S 163 x
+(all)S 160 x(the)S 4497 X 548 y(functions)S 194 x(required)S 196 x(to)S
+194 x(manag)S 2 x(e)S 194 x(and)S 196 x(coordinate)S 195 x(man-)S 4497 X
+548 y(ufacturing)S 185 x(applications.)S 304 x(These)S 185 x(applications)S
+185 x(may)S 185 x(be)S 4497 X 548 y(standalone)S 147 x(or)S 146 x(distributed)S
+146 x(across)S 147 x(the)S 146 x(Nodes)S 146 x(of)S 146 x(a)S 146 x
+(net-)S 4497 X 548 y(work.)S 4497 X 852 y(Application)S 128 x(Services)S
+129 x(allow)S 127 x(users)S 129 x(to)S 128 x(organ)S 2 x(ize)S 128 x
+(applica-)S 4497 X 548 y(tion)S 132 x(activiti)S -2 x(es)S 133 x(into)S
+132 x(hierarchical)S 133 x(structures)S 133 x(that)S 132 x(suppor)S
+2 x(t)S 4497 X 548 y(the)S 144 x(execution)S 146 x(startup)S 144 x(and)S
+146 x(shutdown)S 145 x(of)S 144 x(synchr)S 2 x(onized)S 4497 X 548 y
+(activiti)S -2 x(es,)S 150 x(and)S 150 x(user-de)S 2 x(\211ned)S 150 x
+(error)S 151 x(recover)S 2 x(y)S 149 x(policies.)S 4497 X 853 y(An)S
+144 x(application)S 144 x(Activity)S 144 x(can)S 145 x(be)S 144 x(executed)S
+2 x(,)S 145 x(suspende)S 2 x(d,)S 4497 X 548 y(resumed)S 2 x(,)S 113 x
+(and)S 105 x(terminated.)S 184 x(All)S 104 x(Activit)S -2 x(y)S 105 x
+(states)S 104 x(are)S 105 x(mon-)S 4497 X 547 y(itored.)S 322 x(If)S
+190 x(an)S 191 x(Activity)S 189 x(\(or)S 192 x(Node\))S 191 x(fails,)S
+200 x(several)S 191 x(recov-)S 4497 X 548 y(ery)S 152 x(policies)S 151 x
+(can)S 152 x(be)S 152 x(applied.)S 204 x(For)S 152 x(instance,)S 152 x
+(in)S 151 x(case)S 153 x(of)S 4497 X 548 y(Node)S 176 x(failure,)S 182 x
+(an)S 177 x(application)S 176 x(can)S 177 x(be)S 176 x(restarted)S 177 x
+(on)S 177 x(an)S 4497 X 548 y(alternative)S 149 x(Node.)S 3899 X 853 y
+(\201)S 441 x(Application)S 149 x(Development)S 150 x(Suppor)S 2 x(t)S
+4497 X 852 y(T)S -50 x(o)S 132 x(assist)S 131 x(in)S 132 x(developing)S
+132 x(applications,)S 135 x(especially)S 132 x(when)S 4497 X 548 y(debugging)S
+192 x(or)S 192 x(troubleshoo)S 2 x(ting,)S 201 x(a)S 191 x(Source)S
+193 x(T)S -17 x(race)S 192 x(T)S -50 x(ool)S 4497 X 548 y(is)S 145 x
+(provided.)S 199 x(This)S 145 x(tool)S 146 x(is)S 145 x(used)S 147 x
+(internally)S 145 x(by)S 146 x(BASEstar)S 4497 X 548 y(Open)S 202 x
+(and)S 203 x(is)S 201 x(also)S 203 x(available)S 202 x(to)S 201 x(users)S
+204 x(for)S 202 x(monitoring)S 4497 X 548 y(the)S 149 x(execution)S
+150 x(\212ow)S 150 x(of)S 149 x(an)S 150 x(application.)S 4497 X 853 y
+(T)S -17 x(race)S 209 x(faciliti)S -2 x(es)S 209 x(can)S 209 x(be)S
+209 x(dynamically)S 209 x(enabled)S 209 x(or)S 209 x(dis-)S 4497 X 548 y
+(abled)S 193 x(by)S 194 x(specifying)S 194 x(dif)S -9 x(ferent)S 194 x
+(granularity)S 194 x(levels;)S 214 x(it)S 193 x(is)S 4497 X 548 y(not)S
+124 x(required)S 125 x(that)S 124 x(the)S 124 x(user)S 125 x(stops)S
+125 x(and)S 125 x(restarts)S 125 x(the)S 124 x(trac-)S 4497 X 548 y
+(ing)S 223 x(proce)S 2 x(ss.)S 422 x(The)S 224 x(output)S 224 x(of)S
+224 x(the)S 224 x(trace)S 224 x(tool)S 223 x(can)S 225 x(be)S 16751 4373 XY
+(routed)S 172 x(to)S 171 x(several)S 171 x(kinds)S 172 x(of)S 171 x
+(output)S 171 x(devices\202m)S 2 x(emory)S -32 x(,)S 16751 X 548 y(\211les,)S
+149 x(terminals,)S 149 x(and)S 151 x(so)S 149 x(on.)S 16153 5962 XY
+F39(Device)S 149 x(Integration)S 16153 7003 XY F38(\201)S 441 x(Device)S
+149 x(Manag)S 2 x(ement)S 16751 7944 XY(BASEstar)S 153 x(Open)S 154 x
+(software)S 153 x(enables)S 154 x(applications)S 153 x(to)S 152 x(in-)S
+16751 X 548 y(teract)S 145 x(with)S 145 x(plant)S 145 x(devices)S 146 x
+(without)S 145 x(knowledge)S 146 x(of)S 145 x(phys-)S 16751 X 548 y
+(ical)S 135 x(device)S 137 x(characteristics)S 137 x(such)S 136 x(as)S
+137 x(location,)S 138 x(protocol,)S 16751 X 548 y(or)S 126 x(device)S
+126 x(speci\211c)S 126 x(data)S 125 x(formats.)S 192 x(Physical)S 125 x
+(devices)S 127 x(are)S 16751 X 548 y(modeled)S 211 x(in)S 209 x(compliance)S
+210 x(with)S 209 x(the)S 210 x(MMS)S 210 x(standard)S 211 x(\202)S 16751 X
+548 y(Message)S 116 x(Manufacturing)S 115 x(Speci\211cation)S 115 x
+(ISO)S 113 x(9506.)S 188 x(De-)S 16751 X 548 y(vices)S 178 x(are)S 179 x
+(accessed)S 179 x(through)S 180 x(speci\211c)S 178 x(Device)S 179 x
+(Access)S 16751 X 548 y(software)S 199 x(\(DAS\))S 199 x(which)S 198 x
+(provides)S 200 x(opera)S 2 x(tions)S 198 x(such)S 200 x(as)S 16751 X
+548 y(reading)S 134 x(and)S 134 x(writing)S 133 x(of)S 133 x(simple)S
+134 x(and)S 134 x(structured)S 135 x(data)S 134 x(via)S 16751 X 548 y
+(speci\211c)S 150 x(device)S 150 x(protocols.)S 16153 13817 XY(\201)S
+441 x(Device)S 149 x(Access)S 151 x(Software)S 149 x(\(DAS\))S 16751 14759 XY
+(Dif)S -10 x(ferent)S 262 x(manu)S 2 x(facturing)S 262 x(devices)S 262 x
+(use)S 262 x(dif)S -8 x(ferent)S 261 x(ser-)S 16751 X 548 y(vices)S
+184 x(and)S 186 x(commun)S 2 x(ication)S 184 x(protocols)S 185 x(to)S
+184 x(conne)S 2 x(ct)S 184 x(to)S 184 x(a)S 16751 X 548 y(computer)S
+175 x(system.)S 274 x(These)S 175 x(services)S 175 x(and)S 174 x(comm)S
+2 x(unica-)S 16751 X 547 y(tion)S 149 x(protocols)S 150 x(are)S 150 x
+(control)S 150 x(vendor)S 151 x(propr)S 2 x(ietary)S -34 x(.)S 16751 17344 XY
+(BASEstar)S 119 x(Open)S 119 x(DAS)S 119 x(software)S 119 x(addres)S
+2 x(ses)S 119 x(proprietary)S 16751 X 548 y(commun)S 2 x(ication)S 163 x
+(speci\211cations)S 165 x(to)S 163 x(access)S 165 x(device)S 164 x(con-)S
+16751 X 548 y(trollers)S 127 x(that)S 127 x(are)S 128 x(available)S
+127 x(on)S 128 x(the)S 128 x(market)S 128 x(from)S 128 x(multiple)S
+16751 X 548 y(control)S 150 x(vendors.)S 16751 19929 XY(Device)S 169 x
+(Access)S 171 x(Software)S 170 x(for)S 170 x(many)S 171 x(leading)S
+170 x(industrial)S 16751 X 548 y(control)S 150 x(devices)S 150 x(is)S
+149 x(available)S 149 x(through)S 151 x(Digital.)S 16153 21419 XY(\201)S
+441 x(Data)S 149 x(Collection)S 16751 22360 XY(BASEstar)S 121 x(Open)S
+121 x(software)S 120 x(collects)S 120 x(data)S 121 x(from)S 121 x(plant)S
+121 x(de-)S 16751 X 548 y(vices)S 197 x(on)S 198 x(reque)S 2 x(st)S
+197 x(from)S 198 x(the)S 197 x(host)S 198 x(Node)S 198 x(\(solicited\),)S
+209 x(at)S 16751 X 548 y(prede\211ne)S 2 x(d)S 165 x(intervals)S 165 x
+(\(polling\),)S 168 x(or)S 165 x(when)S 166 x(generated)S 166 x(by)S
+16751 X 548 y(a)S 149 x(device)S 150 x(\(unso)S 2 x(lici)S -2 x(ted\).)S
+16751 24945 XY(Polling)S 104 x(is)S 104 x(a)S 105 x(means)S 106 x(to)S
+105 x(collect)S 104 x(data)S 105 x(by)S 106 x(reading)S 105 x(speci\211ed)S
+16751 X 548 y(address)S 150 x(registers)S 150 x(in)S 149 x(the)S 149 x
+(mem)S 2 x(ory)S 149 x(of)S 149 x(a)S 150 x(program)S 2 x(mable)S 16751 X
+548 y(device)S 213 x(at)S 212 x(pre-de\211n)S 2 x(ed)S 213 x(intervals.)S
+387 x(T)S -50 x(o)S 213 x(do)S 212 x(so,)S 228 x(the)S 213 x(ap-)S 16751 X
+548 y(plication)S 198 x(is)S 198 x(required)S 200 x(to)S 199 x(de\211ne)S
+200 x(a)S 199 x(set)S 199 x(of)S 198 x(Data_Points)S 16751 X 548 y(\(Polling_Sets\))S
+142 x(from)S 142 x(which)S 142 x(data)S 142 x(need)S 143 x(to)S 141 x
+(be)S 143 x(collected.)S 16751 28079 XY(In)S 176 x(addition,)S 183 x
+(BASEstar)S 177 x(Open)S 178 x(can)S 177 x(receive)S 178 x(unsolicited)S
+16751 X 548 y(data)S 105 x(directly)S 105 x(from)S 106 x(plant)S 105 x
+(equipment)S 106 x(devices,)S 114 x(thus)S 105 x(elim-)S 16751 X 548 y
+(inating)S 148 x(the)S 149 x(process)S 2 x(ing)S 148 x(overh)S 2 x(ead)S
+149 x(involved)S 149 x(in)S 149 x(continu-)S 16751 X 547 y(ous)S 150 x
+(polling.)S 16153 30664 XY(\201)S 441 x(BASEstar)S 150 x(Classic)S 149 x
+(Device)S 149 x(Connectivity)S 149 x(integration)S -191 y F46(1)S 16751 31605 XY
+F38(BASEstar)S 172 x(Open)S 172 x(for)S 171 x(OpenVMS)S 173 x(V)S -33 x
+(AX)S 171 x(includes)S 172 x(a)S 171 x(sub-)S 16751 X 548 y(set)S 174 x
+(of)S 173 x(BASEstar)S 175 x(Classic)S 173 x(to)S 174 x(enable)S 175 x
+(the)S 174 x(use)S 175 x(of)S 173 x(many)S 16751 X 548 y(of)S 166 x
+(the)S 167 x(DASes)S 167 x(available)S 167 x(through)S 168 x(the)S 166 x
+(BASEstar)S 168 x(Clas-)S 16751 X 548 y(sic)S 152 x(DCM)S 153 x(connectivity)S
+-33 x(.)S 209 x(For)S 153 x(more)S 154 x(information,)S 154 x(refer)S
+154 x(to)S 16751 X 548 y(the)S 165 x(BASEstar)S 166 x(Classic)S 165 x
+(for)S 166 x(OpenVMS)S 167 x(Software)S 165 x(Prod-)S 16751 X 548 y
+(uct)S 149 x(Description)S 150 x(\(SPD)S 149 x(33.17.xx\).)S 16153 35258 XY
+3324 24 R 16153 35604 XY F46(1)S 174 x 126 y(Feature)S 100 x(avail)S
+2 x(able)S 100 x(only)S 101 x(with)S 100 x(BASEs)S 2 x(tar)S 99 x(Open)S
+100 x(on)S 100 x(OpenVMS)S 100 x(V)S -22 x(AX,)S 101 x(V)S -16 x(ersion)S
+100 x(5.5-2.)S 15431 38419 XY F40(2)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (3) 3
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2554 XY F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x(r)S
+24246 X(SPD)S 149 x(47.87.01)S 3899 X 548 y(V)S -25 x(ersion)S 150 x
+(2.0)S 3899 4387 XY F39(Con\211guration)S 150 x(Mana)S 2 x(gement)S
+3899 5380 XY F38(\201)S 441 x(Named)S 150 x(Objects)S 4497 X 894 y(The)S
+290 x(BASEstar)S 291 x(Open)S 290 x(environm)S 2 x(ent)S 290 x(is)S
+290 x(a)S 290 x(collection)S 4497 X 548 y(of)S 294 x(named)S 295 x(objects)S
+295 x(which)S 294 x(represe)S 2 x(nt)S 294 x(plant)S 294 x(devices)S
+4497 X 548 y(and)S 254 x(Data_Points\202alarms,)S 281 x(data)S 254 x
+(status,)S 279 x(produ)S 2 x(ction)S 4497 X 548 y(counts,)S 194 x(and)S
+186 x(so)S 185 x(on.)S 307 x(Manufacturing)S 186 x(applications)S 186 x
+(can)S 4497 X 548 y(therefore)S 189 x(access)S 190 x(these)S 189 x(resour)S
+2 x(ces)S 189 x(using)S 189 x(meaningful)S 4497 X 548 y(functional)S
+122 x(name)S 2 x(s,)S 128 x(rather)S 123 x(than)S 124 x(in)S 122 x(a)S
+124 x(system-depe)S 2 x(ndent)S 4497 X 548 y(manner)S 189 x(which)S
+187 x(would)S 187 x(require)S 2 x(,)S 196 x(for)S 187 x(instance,)S
+197 x(informa-)S 4497 X 548 y(tion)S 149 x(on)S 150 x(physical)S 150 x
+(locations.)S 4497 X 894 y(BASEstar)S 116 x(Open)S 117 x(objects)S 116 x
+(reside)S 117 x(in)S 116 x(Domains.)S 189 x(Domains)S 4497 X 548 y(are)S
+210 x(hierarchically)S 210 x(linked)S 210 x(to)S 209 x(form)S 210 x
+(a)S 210 x(BASEstar)S 210 x(Open)S 4497 X 548 y(Realm.)S 280 x(Several)S
+177 x(Realms)S 177 x(can)S 178 x(be)S 177 x(active)S 176 x(at)S 177 x
+(the)S 176 x(same)S 4497 X 548 y(time.)S 3899 X 894 y(\201)S 441 x(Local)S
+150 x(and)S 150 x(Remote)S 150 x(Objects)S 149 x(Access)S 4497 X 894 y
+(BASEstar)S 244 x(Open)S 245 x(objects)S 245 x(can)S 245 x(be)S 245 x
+(directly)S 244 x(accessed)S 4497 X 548 y(wit)S -2 x(hin)S 175 x(a)S
+176 x(Realm)S 175 x(by)S 175 x(using)S 176 x(the)S 175 x(object')S -9 x
+(s)S 175 x(full)S 174 x(pathnam)S 2 x(e.)S 4497 X 548 y(The)S 135 x
+(full)S 133 x(pathnam)S 2 x(e)S 134 x(includes)S 135 x(the)S 135 x(local)S
+135 x(name)S 135 x(prece)S 2 x(ded)S 4497 X 548 y(by)S 229 x(the)S 228 x
+(relevant)S 229 x(Domain)S 229 x(name)S 2 x(s.)S 436 x(Alternatively)S
+-34 x(,)S 248 x(the)S 4497 X 548 y(user)S 150 x(can)S 149 x(set)S 149 x
+(the)S 149 x(default)S 149 x(Domain)S 149 x(and)S 150 x(access)S 150 x
+(objects)S 4497 X 548 y(in)S 227 x(that)S 227 x(Domain)S 228 x(using)S
+228 x(local)S 227 x(name)S 2 x(s,)S 247 x(and)S 228 x(objects)S 228 x
+(in)S 4497 X 548 y(lower)S 149 x(Domains)S 150 x(using)S 150 x(partial)S
+149 x(pathnam)S 2 x(es.)S 3899 X 894 y(\201)S 441 x(System)S 150 x(Con\211guration)S
+150 x(and)S 151 x(T)S -17 x(uning)S 4497 X 894 y(BASEstar)S 159 x(Open)S
+159 x(software)S 159 x(provides)S 160 x(comma)S 2 x(nd)S 159 x(proce-)S
+4497 X 547 y(dures)S 131 x(that)S 130 x(can)S 131 x(be)S 130 x(used)S
+131 x(to)S 130 x(tune)S 131 x(object)S 130 x(con\211gur)S 2 x(ations.)S
+4497 X 548 y(A)S 133 x(system)S 134 x(manag)S 2 x(er)S 134 x(can)S 134 x
+(use)S 134 x(the)S 133 x(sugges)S 2 x(ted)S 133 x(values)S 134 x(as)S
+4497 X 548 y(guidelines)S 110 x(in)S 109 x(setting)S 110 x(parame)S
+2 x(ter)S 109 x(values)S 111 x(to)S 109 x(optimize)S 110 x(the)S 4497 X
+548 y(usage)S 150 x(of)S 150 x(system)S 150 x(resourc)S 2 x(es.)S 3899 X
+894 y(\201)S 441 x(Logging)S 4497 X 894 y(In)S 348 x(addition)S 348 x
+(to)S 348 x(error)S 349 x(and)S 349 x(diagnostic)S 348 x(information,)S
+4497 X 548 y(BASEstar)S 290 x(Open)S 291 x(allows)S 289 x(the)S 290 x
+(logging)S 290 x(of)S 290 x(signi\211cant)S 4497 X 548 y(Events.)S 227 x
+(For)S 159 x(instance,)S 161 x(the)S 159 x(creation)S 160 x(of)S 158 x
+(an)S 160 x(object)S 158 x(de\211-)S 4497 X 548 y(nition.)S 3899 26129 XY
+F39(BASEstar)S 150 x(Open)S 150 x(Interfaces)S 3899 27122 XY F38(The)S
+121 x(BASEstar)S 121 x(Open)S 121 x(Server)S 121 x(provide)S 2 x(s)S
+120 x(the)S 121 x(followi)S -2 x(ng)S 121 x(inter-)S 3899 X 548 y(faces:)S
+3899 28664 XY(\201)S 441 x(Application)S 149 x(Program)S 2 x(ming)S
+150 x(Interface)S 149 x(\(API\))S 4497 X 894 y(The)S 178 x(BASEstar)S
+178 x(Open)S 179 x(API)S 178 x(provides)S 179 x(callable)S 177 x(services)S
+4497 X 548 y(for)S 132 x(creating)S 133 x(new)S 132 x(applications)S
+132 x(and)S 133 x(integrating)S 133 x(existing)S 4497 X 548 y(manufacturing)S
+151 x(applications.)S 3899 X 894 y(\201)S 441 x(Command)S 151 x(Line)S
+149 x(Interface)S 150 x(\(CLI\))S 4497 X 894 y(The)S 211 x(BASEstar)S
+212 x(Open)S 212 x(CLI)S 211 x(is)S 211 x(a)S 212 x(comman)S 2 x(d)S
+211 x(line)S 211 x(inter-)S 4497 X 548 y(face)S 127 x(for)S 126 x(use)S
+128 x(by)S 127 x(system)S 127 x(mana)S 2 x(gers,)S 131 x(proce)S 2 x
+(ss)S 127 x(and)S 127 x(man-)S 4497 X 548 y(ufacturing)S 207 x(engineer)S
+2 x(s,)S 221 x(and)S 208 x(application)S 207 x(progr)S 2 x(ammers)S
+4497 X 548 y(to)S 192 x(con\211gur)S 2 x(e)S 193 x(and)S 193 x(manage)S
+194 x(BASEstar)S 193 x(objects.)S 329 x(Com-)S 4497 X 548 y(mands)S
+216 x(are)S 216 x(provided)S 217 x(for)S 216 x(performing)S 216 x(gener)S
+2 x(al)S 215 x(opera-)S 4497 X 548 y(tions)S 215 x(such)S 216 x(as)S
+215 x(BASEstar)S 216 x(Open)S 216 x(object)S 215 x(con\211gura)S 2 x
+(tion)S 4497 X 548 y(and)S 150 x(manage)S 2 x(ment.)S 16153 4387 XY
+(\201)S 441 x(Graphic)S 150 x(Con\211guration)S 150 x(Utili)S -2 x(ty)S
+149 x(\(GCU\))S 16751 X 832 y(A)S 188 x(Graphic)S 189 x(Con\211guration)S
+189 x(Util)S -2 x(ity)S 188 x(is)S 188 x(available)S 188 x(with)S 187 x
+(the)S 16751 X 548 y(Server)S 193 x(kits.)S 327 x(It)S 191 x(is)S 192 x
+(a)S 192 x(graph)S 2 x(ical)S 191 x(tool)S 192 x(intended)S 193 x(for)S
+192 x(con-)S 16751 X 548 y(\211guring)S 199 x(objects)S 199 x(in)S 198 x
+(the)S 199 x(Perman)S 2 x(ent)S 198 x(Object)S 199 x(Database)S 16751 X
+548 y(\(PODB\).)S 149 x(Depending)S 150 x(on)S 150 x(the)S 150 x(operating)S
+150 x(system,)S 150 x(it)S 149 x(is:)S 16751 X 831 y(\203)S 348 x(VMS)S
+330 x(DECwindows)S 329 x(Motif-based)S 330 x(on)S 330 x(OpenVMS)S 17348 X
+548 y(V)S -33 x(AX)S 150 x(and)S 150 x(OpenVMS)S 151 x(Alpha)S 16751 X
+832 y(\203)S 348 x(OSF/Motif-based)S 150 x(on)S 150 x(OSF/1)S 149 x
+(AXP)S 16751 X 832 y(By)S 165 x(using)S 166 x(this)S 164 x(Con\211gur)S
+2 x(ation)S 165 x(Util)S -2 x(ity)S -34 x(,)S 169 x(the)S 165 x(user)S
+167 x(can)S 165 x(cre-)S 16751 X 548 y(ate,)S 317 x(modify)S -33 x(,)S
+318 x(delete)S 284 x(and)S 285 x(renam)S 2 x(e)S 284 x(BASEstar)S 285 x
+(Open)S 16751 X 548 y(PODB)S 135 x(objects.)S 194 x(The)S 136 x(user)S
+136 x(can)S 136 x(also)S 136 x(display)S 135 x(the)S 136 x(graph-)S
+16751 X 548 y(ical)S 149 x(layout)S 149 x(of)S 149 x(the)S 150 x(BASEstar)S
+150 x(Open)S 150 x(con\211gur)S 2 x(ation.)S 16153 12482 XY F40(Development)S
+149 x(and)S 150 x(Runtime)S 149 x(V)S -25 x(ersions)S 16153 13413 XY
+F38(Users)S 185 x(who)S 185 x(intend)S 184 x(to)S 185 x(develop)S 185 x
+(BASEstar)S 185 x(Open)S 185 x(applica-)S 16153 X 548 y(tions)S 213 x
+(wil)S -2 x(l)S 213 x(need)S 214 x(the)S 213 x(BASEstar)S 213 x(Open)S
+214 x(developme)S 2 x(nt)S 212 x(ver-)S 16153 X 548 y(sion.)S 339 x
+(This)S 196 x(will)S 195 x(allow)S 195 x(C)S 196 x(language)S 198 x
+(program)S 2 x(s)S 196 x(containing)S 16153 X 548 y(BASEstar)S 113 x
+(Open)S 114 x(API)S 113 x(calls)S 112 x(to)S 113 x(be)S 114 x(compiled)S
+114 x(and)S 113 x(linked)S 113 x(with)S 16153 X 548 y(the)S 169 x(BASEstar)S
+168 x(Open)S 169 x(libraries.)S 256 x(Users)S 169 x(who)S 169 x(already)S
+170 x(have)S 16153 X 548 y(available)S 170 x(a)S 171 x(compiled)S 171 x
+(and)S 171 x(linked)S 170 x(BASEstar)S 171 x(Open)S 170 x(appli-)S 16153 X
+548 y(cation)S 149 x(only)S 150 x(need)S 151 x(a)S 149 x(runtime)S 150 x
+(version)S 151 x(of)S 149 x(BASEstar)S 150 x(Open.)S 16153 17632 XY
+F40(Documentation)S 16153 18564 XY F38(BASEstar)S 116 x(Open)S 116 x
+(Server)S 117 x(includes)S 116 x(the)S 116 x(followi)S -2 x(ng)S 116 x
+(docum)S 2 x(en-)S 16153 X 548 y(tation:)S 16153 20043 XY(\201)S 441 x
+F39(BASEstar)S 124 x(Open)S 124 x(Introduction)S 125 x F38(provides)S
+125 x(an)S 124 x(overview)S 125 x(of)S 16751 X 548 y(the)S 149 x(services)S
+151 x(and)S 150 x(concepts)S 151 x(wit)S -2 x(hin)S 150 x(BASEstar)S
+150 x(Open.)S 16153 X 832 y(\201)S 441 x F39(BASEstar)S 178 x(Open)S
+178 x(Reference)S 179 x(Guide)S 178 x F38(provides)S 179 x(the)S 178 x
+(def-)S 16751 X 548 y(initi)S -2 x(on)S 217 x(and)S 217 x(speci\211cation)S
+218 x(of)S 216 x(the)S 217 x(object)S 216 x(mode)S 2 x(l)S 216 x(wit)S
+-2 x(hin)S 16751 X 548 y(BASEstar)S 150 x(Open.)S 16153 X 832 y(\201)S
+441 x F39(BASEstar)S 198 x(Open)S 199 x(Application)S 198 x(Progr)S
+2 x(amming)S 199 x(Interface)S 16751 X 548 y F38(provides)S 153 x(the)S
+153 x(speci\211cation)S 153 x(of)S 152 x(the)S 153 x(callable)S 152 x
+(interface)S 153 x(to)S 16751 X 548 y(access)S 150 x(BASEstar)S 150 x
+(Open)S 150 x(services.)S 16153 X 832 y(\201)S 441 x F39(BASEstar)S
+164 x(Open)S 164 x(Command)S 165 x(Languag)S 2 x(e)S 163 x(Interface)S
+164 x F38(pro-)S 16751 X 548 y(vides)S 135 x(the)S 135 x(speci\211cation)S
+135 x(of)S 134 x(the)S 135 x(comma)S 2 x(nd)S 135 x(line)S 134 x(interface)S
+16751 X 548 y(to)S 149 x(access)S 151 x(BASEstar)S 150 x(Open)S 150 x
+(services.)S 16153 X 831 y(\201)S 441 x F39(BASEstar)S 237 x(Open)S
+237 x(Con\211gur)S 2 x(ation)S 236 x(Utili)S -2 x(ty)S 237 x(User)S
+17 x(')S -9 x(s)S 237 x(Guide)S 16751 X 548 y F38(provides)S 179 x(information)S
+178 x(on)S 178 x(how)S 178 x(to)S 178 x(con\211gu)S 2 x(re)S 178 x(BASEstar)S
+16751 X 548 y(Open)S 186 x(objects)S 187 x(through)S 187 x(the)S 186 x
+(supported)S 188 x(graphical)S 186 x(user)S 16751 X 548 y(interface.)S
+16153 X 832 y(\201)S 441 x F39(BASEstar)S 132 x(Open)S 133 x(Manag)S
+2 x(ement)S 133 x(Guide)S 132 x F38(provides)S 133 x(the)S 132 x(in-)S
+16751 X 548 y(formation)S 220 x(to)S 219 x(manage)S 221 x(the)S 219 x
+(BASEstar)S 220 x(Open)S 220 x(environ-)S 16751 X 548 y(ment.)S 16153 X
+832 y(\201)S 441 x F39(BASEstar)S 253 x(Open)S 254 x(Messa)S 2 x(ges)S
+253 x F38(provides)S 255 x(the)S 253 x(de\211nition)S 16751 X 548 y
+(and)S 224 x(the)S 224 x(description)S 224 x(of)S 224 x(BASEstar)S 224 x
+(Open)S 224 x(error)S 225 x(mes-)S 16751 X 548 y(sages)S 150 x(and)S
+150 x(sugge)S 2 x(sted)S 149 x(solutions.)S 16153 X 832 y(\201)S 441 x
+(An)S 167 x(installat)S -2 x(ion)S 167 x(guide)S 167 x(speci\211c)S
+168 x(to)S 166 x(each)S 168 x(operating)S 168 x(sys-)S 16751 X 548 y
+(tem)S 136 x(version,)S 140 x(for)S 136 x(installi)S -2 x(ng)S 137 x
+(BASEstar)S 137 x(Open)S 137 x(on)S 136 x(the)S 137 x(se-)S 16751 X
+548 y(lected)S 174 x(operating)S 175 x(system.)S 273 x(It)S 173 x(provides)S
+175 x(instructions)S 174 x(on)S 16751 X 548 y(how)S 178 x(to)S 178 x
+(install)S 177 x(BASEstar)S 178 x(Open)S 178 x(and)S 179 x(platform-spec)S
+2 x(i\211c)S 16751 X 548 y(information.)S 15431 38419 XY F40(3)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (4) 4
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2554 XY F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x(r)S
+24246 X(SPD)S 149 x(47.87.01)S 3899 X 548 y(V)S -25 x(ersion)S 150 x
+(2.0)S 3899 4373 XY F38(\201)S 441 x F39(Release)S 128 x(Notes)S 128 x
+F38(describes)S 130 x(new)S 128 x(features)S 129 x(provided)S 129 x
+(with)S 4497 X 548 y(BASEstar)S 236 x(Open)S 237 x(Server)S 237 x(and)S
+236 x(details)S 236 x(any)S 237 x(functional)S 4497 X 548 y(and)S 150 x
+(docume)S 2 x(ntation)S 149 x(errors.)S 3899 6862 XY(\201)S 441 x(Software)S
+149 x(Product)S 150 x(Description\202this)S 150 x(docume)S 2 x(nt)S
+3899 8354 XY(BASEstar)S 104 x(Open)S 105 x(Server)S 105 x(for)S 104 x
+(OpenVMS)S 105 x(V)S -34 x(AX)S 104 x(also)S 104 x(provides)S 3899 X
+548 y(the)S 149 x(following)S 149 x(manuals:)S 3899 10395 XY(\201)S
+441 x F39(BASEstar)S 103 x(Open)S 104 x(Guide)S 104 x(to)S 103 x(DCM-Modeled)S
+105 x(Device)S 103 x(Con-)S 4497 X 548 y(nectivity)S 127 x F38(provides)S
+128 x(instructions)S 128 x(on)S 128 x(how)S 128 x(to)S 128 x(use)S 128 x
+(BASEs-)S 4497 X 548 y(tar)S 149 x(Classic)S 149 x(for)S 150 x(OpenVMS)S
+150 x(V)S -33 x(AX)S 150 x(Device)S 149 x(Connectivity)S -33 x(.)S 3899 12883 XY
+(\201)S 441 x F39(DEComni)S 198 x(API)S 199 x(for)S 199 x(OpenVMS)S
+200 x(V)S -25 x(AX)S 199 x(ODS)S 198 x(Guide)S 199 x F38(pro-)S 4497 X
+548 y(vides)S 245 x(the)S 244 x(speci\211cation)S 245 x(for)S 245 x
+(the)S 245 x(DEComni)S 244 x(Directory)S 4497 X 548 y(Services.)S 3899 15472 XY
+(BASEstar)S 140 x(Open)S 140 x(Server)S 141 x(for)S 140 x(OSF/1)S 139 x
+(also)S 140 x(provides)S 141 x(the)S 140 x(fol-)S 3899 X 548 y(lowing)S
+149 x(manual:)S 3899 17512 XY(\201)S 441 x F39(DEComni)S 177 x(API)S
+177 x(for)S 178 x(OSF/1)S 177 x(AXP)S 178 x(ODS)S 177 x(Guide)S 177 x
+F38(provides)S 4497 X 548 y(the)S 111 x(speci\211cation)S 113 x(for)S
+112 x(the)S 111 x(DEComni)S 112 x(Directory)S 112 x(Services.)S 3899 20151 XY
+F40(INST)S -34 x(ALLA)S -34 x(TION)S 3899 21643 XY F38(Before)S 174 x
+(attempting)S 173 x(to)S 172 x(install)S 172 x(the)S 173 x(software,)S
+179 x(the)S 173 x(customer)S 3899 X 548 y(must)S 199 x(have)S 200 x
+(all)S 198 x(the)S 199 x(prerequ)S 2 x(isit)S -2 x(e)S 199 x(hardwar)S
+2 x(e)S 199 x(and)S 199 x(software)S 3899 X 548 y(installed.)S 428 x
+(Digit)S -2 x(al)S 226 x(recomm)S 2 x(ends)S 227 x(that)S 225 x(a)S
+227 x(customer)S 18 x(')S -9 x(s)S 226 x(\211rst)S 3899 X 548 y(purchas)S
+2 x(e)S 113 x(of)S 113 x(this)S 113 x(software)S 114 x(include)S 113 x
+(Digital)S 112 x(Installation)S 113 x(Ser-)S 3899 X 548 y(vices.)S 3899 25328 XY
+(Connectivity)S 132 x(to)S 132 x(all)S 132 x(other)S 133 x(Nodes)S 133 x
+(within)S 132 x(the)S 132 x(network)S 133 x(is)S 132 x(the)S 3899 X
+548 y(respons)S 2 x(ibil)S -2 x(ity)S 196 x(of)S 196 x(the)S 196 x(customer)S
+-23 x(.)S 339 x(Delays)S 196 x(caused)S 197 x(by)S 197 x(any)S 3899 X
+548 y(failure)S 164 x(to)S 165 x(meet)S 165 x(these)S 165 x(respon)S
+2 x(sibili)S -2 x(ties)S 164 x(will)S 163 x(be)S 165 x(charge)S 2 x
+(d)S 165 x(at)S 3899 X 547 y(the)S 149 x(preva)S 2 x(ili)S -2 x(ng)S
+150 x(rate)S 150 x(for)S 150 x(time)S 149 x(and)S 150 x(materials.)S
+3899 29062 XY F40(SUPPORTED)S 148 x(VERSIONS)S 3899 30554 XY F38(This)S
+124 x(SPD)S 124 x(covers)S 125 x(the)S 124 x(following)S 123 x(versions)S
+126 x(of)S 124 x(the)S 124 x(BASEstar)S 3899 X 548 y(Open)S 150 x(Server)S
+151 x(product:)S 3899 32595 XY(\201)S 441 x(BASEstar)S 150 x(Open)S
+150 x(Server)S 150 x(for)S 150 x(OpenVMS)S 150 x(V)S -33 x(AX)S 150 x
+(V2.0A)S 3899 33988 XY(\201)S 441 x(BASEstar)S 150 x(Open)S 150 x(Server)S
+150 x(for)S 150 x(OpenVMS)S 150 x(Alpha)S 150 x(V2.0)S 3899 35381 XY
+(\201)S 441 x(BASEstar)S 150 x(Open)S 150 x(Server)S 150 x(for)S 150 x
+(OSF/1)S 149 x(AXP)S 150 x(V2.0A)S 16153 4386 XY F40(HARDW)S -26 x(ARE)S
+149 x(REQUIREMENTS)S 16153 5519 XY F39(Processo)S 2 x(rs)S 149 x(Suppor)S
+2 x(ted)S 16153 6651 XY F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x
+(r)S 149 x(for)S 150 x(OpenVMS)S 150 x(V)S -33 x(AX:)S 16153 X 784 y
+F38(V)S -33 x(AX)S 118 x(process)S 2 x(ors)S 119 x(supporting)S 119 x
+(OpenVMS)S 119 x(V)S -33 x(AX)S 119 x(V)S -25 x(ersion)S 119 x(5.5-)S
+16153 X 548 y(2)S 150 x(and)S 150 x(V)S -25 x(ersion)S 150 x(6.1,)S
+150 x(except)S 150 x(the)S 149 x(following:)S 16153 9116 XY F39(Processo)S
+2 x(rs)S 149 x(Not)S 149 x(Suppo)S 2 x(rted)S 16153 10597 XY F42(V)S
+-30 x(AX:)S 19142 X(V)S -30 x(AX\2031)S -31 x(1)S(/725)S 19142 11531 XY
+(V)S -30 x(AX\2031)S -31 x(1)S(/730)S 19142 12464 XY(V)S -30 x(AX\2031)S
+-31 x(1)S(/750)S 19142 13398 XY(V)S -30 x(AX\2031)S -31 x(1)S(/782)S
+16153 14879 XY(MicroV)S -30 x(AX:)S 19142 X(MicroxV)S -30 x(AX)S 133 x
+(I)S 16153 16361 XY(V)S -30 x(AXstation:)S 19142 X(V)S -30 x(AXstation)S
+131 x(I)S 19142 X 734 y(V)S -30 x(AXstation)S 131 x(8000)S 16153 X 834 y
+F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x(r)S 149 x(for)S 150 x
+(OpenVMS)S 150 x(Alpha:)S 16153 X 784 y F38(AXP)S 233 x(proces)S 2 x
+(sors)S 234 x(supporting)S 234 x(OpenVMS)S 235 x(Alpha)S 233 x(V)S -24 x
+(ersion)S 16153 X 548 y(6.1)S -623 x 20393 Y F40(BASEstar)S 150 x(Open)S
+149 x(Serve)S 2 x(r)S 149 x(for)S 150 x(OSF/1:)S 16153 X 784 y F38(AXP)S
+149 x(proce)S 2 x(ssors)S 150 x(suppor)S 2 x(ting)S 149 x(OSF/1)S 149 x
+(AXP)S 149 x(V)S -24 x(ersion)S 150 x(3.0)S 16153 22908 XY F40(DISK)S
+148 x(SP)S -33 x(ACE)S 149 x(REQUIREMENTS)S 16153 24987 XY(BASEstar)S
+150 x(Open)S 149 x(for)S 150 x(OpenVMS)S 150 x(V)S -33 x(AX)S 16153 25921 XY
+F38(Disk)S 149 x(space)S 150 x(requ)S 2 x(ired)S 149 x(for)S 150 x(installati)S
+-2 x(on:)S 16153 27053 XY(\201)S 441 x(30,000)S 150 x(blocks)S 16153 28186 XY
+(Disk)S 149 x(space)S 150 x(requ)S 2 x(ired)S 149 x(for)S 150 x(use)S
+150 x(\(perm)S 2 x(anent\):)S 16153 29319 XY(\201)S 441 x(28,100)S 150 x
+(blocks)S 16153 31049 XY F40(BASEstar)S 150 x(Open)S 149 x(for)S 150 x
+(OpenVMS)S 150 x(Alpha)S 16153 31983 XY F38(Disk)S 149 x(space)S 150 x
+(requ)S 2 x(ired)S 149 x(for)S 150 x(installati)S -2 x(on:)S 16153 33115 XY
+(\201)S 441 x(60,000)S 150 x(blocks)S 16153 34248 XY(Disk)S 149 x(space)S
+150 x(requ)S 2 x(ired)S 149 x(for)S 150 x(use)S 150 x(\(perm)S 2 x(anent\):)S
+16153 35381 XY(\201)S 441 x(50,000)S 150 x(blocks)S 15431 38419 XY F40
+(4)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (5) 5
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2554 XY F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x(r)S
+24246 X(SPD)S 149 x(47.87.01)S 3899 X 548 y(V)S -25 x(ersion)S 150 x
+(2.0)S 3899 4386 XY(BASEstar)S 150 x(Open)S 149 x(for)S 150 x(OSF/1)S
+149 x(Alpha)S 3899 X 697 y F38(Disk)S 113 x(space)S 114 x(required)S
+115 x(for)S 113 x(installati)S -2 x(on)S 114 x(and)S 114 x(subsequ)S
+2 x(ent)S 113 x(use:)S 3899 X 897 y(\201)S 441 x(120)S 150 x(Mbytes)S
+3899 X 897 y(These)S 133 x(values)S 133 x(do)S 133 x(not)S 133 x(include)S
+132 x(disk)S 133 x(space)S 133 x(required)S 134 x(for)S 133 x(us-)S
+3899 X 548 y(ing)S 149 x(suppo)S 2 x(rted)S 149 x(relational)S 150 x
+(databases.)S 3899 X 896 y(The)S 149 x(values)S 150 x(refer)S 150 x
+(to)S 149 x(the)S 149 x(disk)S 149 x(space)S 150 x(require)S 2 x(d)S
+149 x(on)S 149 x(the)S 150 x(sys-)S 3899 X 548 y(tem)S 154 x(disk.)S
+213 x(The)S 154 x(sizes)S 154 x(are)S 155 x(approxima)S 2 x(te;)S 155 x
+(actual)S 154 x(sizes)S 155 x(may)S 3899 X 548 y(vary)S 130 x(depend)S
+2 x(ing)S 129 x(on)S 130 x(the)S 129 x(user)S 18 x(')S -9 x(s)S 130 x
+(system)S 130 x(environme)S 2 x(nt,)S 132 x(con-)S 3899 X 548 y(\211guration,)S
+150 x(and)S 150 x(software)S 150 x(options.)S 3899 11459 XY F40(SOFTW)S
+-25 x(ARE)S 149 x(REQUIR)S -2 x(EMENTS)S 3899 13302 XY(BASEstar)S 150 x
+(Open)S 149 x(Serve)S 2 x(r)S 149 x(for)S 150 x(OpenVMS)S 150 x(V)S
+-33 x(AX)S 3899 14249 XY F38(\201)S 441 x(OpenVMS)S 335 x(V)S -33 x
+(AX)S 335 x(Operating)S 335 x(System)S 336 x(V5.5-2)S 335 x(\(SPD)S
+4497 X 548 y(25.01.xx\),)S 150 x(V6.1)S 3899 X 896 y F39(Layered)S 151 x
+(Products:)S 3899 X 897 y F38(\201)S 441 x(DEC)S 272 x(TCP/IP)S 273 x
+(Services)S 274 x(for)S 274 x(OpenVMS)S 275 x(V)S -25 x(ersion)S 274 x
+(3.1)S 4497 X 548 y(\(SPD)S 149 x(25.A4.xx\))S 3899 X 797 y(\201)S 441 x
+(DEC)S 199 x(RdB)S 200 x(for)S 200 x(OpenVMS)S 201 x(V)S -33 x(AX)S
+200 x(is)S 200 x(required)S 201 x(for)S 200 x(appli-)S 4497 X 548 y
+(cations)S 227 x(which)S 227 x(make)S 229 x(use)S 227 x(of)S 227 x(the)S
+228 x(Permane)S 2 x(nt)S 227 x(Object)S 4497 X 548 y(Database)S 150 x
+(\(PODB\).)S 3899 X 897 y(For)S 137 x(systems)S 138 x(using)S 137 x
+(DECwi)S -2 x(ndows)S 138 x(terminals)S 137 x(the)S 136 x(following)S
+3899 X 548 y(software)S 150 x(is)S 149 x(also)S 149 x(required)S 2 x
+(:)S 3899 X 896 y(\201)S 441 x(VMS)S 150 x(DECwi)S -2 x(ndows)S 150 x
+(Motif)S 149 x(\(SPD)S 150 x(36.09.xx\))S 3899 22867 XY F40(BASEstar)S
+150 x(Open)S 149 x(Serve)S 2 x(r)S 149 x(for)S 150 x(OpenVMS)S 150 x
+(Alpha)S 3899 23813 XY F38(\201)S 441 x(OpenVMS)S 150 x(Alpha)S 150 x
+(Operating)S 150 x(System)S 150 x(V6.1)S 3899 X 897 y F39(Layered)S
+151 x(Products:)S 3899 X 896 y F38(\201)S 441 x(DEC)S 148 x(TCP/IP)S
+149 x(Services)S 150 x(for)S 150 x(OpenVMS)S 150 x(V3.1)S 3899 X 797 y
+(\201)S 441 x(DEC)S 148 x(RdB)S 150 x(for)S 150 x(OpenVMS)S 150 x(Alpha)S
+150 x(V6.0)S 149 x(\(optional\))S 3899 27898 XY F40(BASEstar)S 150 x
+(Open)S 149 x(Serve)S 2 x(r)S 149 x(for)S 150 x(OSF/1)S 149 x(AXP)S
+3899 28844 XY F38(\201)S 441 x(OSF/1)S 149 x(AXP)S 149 x(Operating)S
+150 x(System)S 150 x(V3.0)S 3899 30339 XY F40(GROWTH)S 148 x(CONSIDERA)S
+-35 x(TIONS)S 3899 X 896 y F38(The)S 184 x(minimum)S 185 x(hardware/software)S
+185 x(requirem)S 2 x(ents)S 184 x(for)S 184 x(any)S 3899 X 548 y(future)S
+158 x(version)S 160 x(of)S 158 x(this)S 157 x(produ)S 2 x(ct)S 158 x
+(may)S 159 x(be)S 159 x(dif)S -9 x(ferent)S 158 x(from)S 159 x(the)S
+3899 X 548 y(requireme)S 2 x(nts)S 149 x(for)S 150 x(the)S 149 x(curre)S
+2 x(nt)S 149 x(version.)S 16153 4386 XY F40(DISTRIB)S -2 x(UTION)S 148 x
+(MEDIA)S 16153 5323 XY F38(This)S 193 x(product)S 193 x(is)S 193 x(available)S
+193 x(on)S 193 x(the)S 193 x(Digital)S 191 x(CD-ROM)S 192 x(Lay-)S 16153 X
+548 y(ered)S 145 x(Products)S 144 x(Software)S 144 x(Library)S 145 x
+(\(Consolidated)S 144 x(Software)S 16153 X 548 y(distribution\))S 107 x
+(for)S 108 x(OSF/1)S 106 x(AXP)S -57 x(,)S 107 x(OpenVMS)S 108 x(Alpha)S
+108 x(and)S 108 x(Open-)S 16153 X 548 y(VMS)S 150 x(V)S -33 x(AX.)S
+149 x(It)S 149 x(is)S 149 x(also)S 149 x(available)S 150 x(for:)S 16153 7903 XY
+(\201)S 441 x(BASEstar)S 154 x(Open)S 154 x(Server)S 155 x(for)S 154 x
+(OpenVMS)S 154 x(V)S -33 x(AX)S 154 x(on)S 154 x(TK50)S 16751 X 548 y
+(Streaming)S 150 x(tape)S 16153 9986 XY F40(ORDERI)S -2 x(NG)S 149 x
+(INFORMA)S -34 x(TION)S 16153 10923 XY F39(BASEstar)S 241 x(Open)S 240 x
+(Server)S 242 x(for)S 240 x(OpenVMS)S 241 x(V)S -24 x(AX)S 240 x(Develop-)S
+16153 X 548 y(ment)S 150 x(Option:)S 16153 12407 XY F38(Software)S 149 x
+(Licenses)S 151 x(\(unlimited)S 149 x(use\):)S 200 x(QL-0X7A*)S 2 x
+(-AA)S 16153 X 589 y(Software)S 149 x(Licenses)S 151 x(\(concur)S 2 x
+(rent)S 150 x(use\):)S 199 x(QL-0X7AA-)S 2 x(3B)S 16153 X 588 y(Software)S
+149 x(Docume)S 2 x(ntation:)S 198 x(QA-0X7AA-GZ)S 16153 X 588 y(Software)S
+149 x(Media:)S 200 x(QA-0X7AA-**)S 16153 X 588 y(Software)S 149 x(Produ)S
+2 x(ct)S 149 x(Services:)S 200 x(QT)S -25 x(-0X7A*-*)S 2 x(*)S 16153 15697 XY
+F39(BASEstar)S 117 x(Open)S 118 x(Server)S 118 x(for)S 117 x(OpenVMS)S
+118 x(V)S -25 x(AX)S 117 x(Runtime)S 117 x(Op-)S 16153 X 548 y(tion:)S
+-848 x 17181 Y F38(Software)S 149 x(Licenses)S 151 x(\(unlimited)S 149 x
+(use\):)S 200 x(QL-0X6A*)S 2 x(-AA)S 16153 X 589 y(Software)S 149 x
+(Licenses)S 151 x(\(concur)S 2 x(rent)S 150 x(use\):)S 199 x(QL-0X6AA-)S
+2 x(3B)S 16153 X 588 y(Software)S 149 x(Docume)S 2 x(ntation:)S 198 x
+(QA-0X6AA-GZ)S 16153 X 588 y(Software)S 149 x(Media:)S 200 x(QA-0X6AA-**)S
+16153 X 588 y(Software)S 149 x(Produ)S 2 x(ct)S 149 x(Services:)S 200 x
+(QT)S -25 x(-0X6A*-*)S 2 x(*)S 16153 20471 XY F39(BASEstar)S 195 x(Open)S
+195 x(Server)S 196 x(for)S 194 x(OpenVMS)S 196 x(Alpha)S 195 x(Develop-)S
+16153 X 548 y(ment)S 150 x(Option:)S 16153 21955 XY F38(Software)S 149 x
+(Licenses)S 151 x(\(unlimited)S 149 x(use\):)S 200 x(QL-0X9A*)S 2 x
+(-AA)S 16153 X 589 y(Software)S 149 x(Licenses)S 151 x(\(concur)S 2 x
+(rent)S 150 x(use\):)S 199 x(QL-0X9AA-)S 2 x(3B)S 16153 X 588 y(Software)S
+149 x(Docume)S 2 x(ntation:)S 198 x(QA-0X9AA-GZ)S 16153 X 588 y(Software)S
+149 x(Produ)S 2 x(ct)S 149 x(Services:)S 200 x(QT)S -25 x(-0X9A*-*)S
+2 x(*)S 16153 24657 XY F39(BASEstar)S 216 x(Open)S 215 x(Server)S 217 x
+(for)S 215 x(OpenVM)S 2 x(S)S 215 x(Alpha)S 215 x(Runtime)S 16153 X
+548 y(Option:)S 16153 26141 XY F38(Software)S 149 x(Licenses)S 151 x
+(\(unlimited)S 149 x(use\):)S 200 x(QL-0X8A*)S 2 x(-AA)S 16153 X 588 y
+(Software)S 149 x(Licenses)S 151 x(\(concur)S 2 x(rent)S 150 x(use\):)S
+199 x(QL-0X8AM)S 2 x(-3B)S 16153 X 589 y(Software)S 149 x(Docume)S 2 x
+(ntation:)S 198 x(QA-0X8AA-GZ)S 16153 X 588 y(Software)S 149 x(Produ)S
+2 x(ct)S 149 x(Services:)S 200 x(QT)S -25 x(-0X8A*-*)S 2 x(*)S 16153 28842 XY
+F39(BASEstar)S 224 x(Open)S 224 x(Server)S 225 x(for)S 224 x(OSF/1)S
+223 x(AXP)S 223 x(Developme)S 2 x(nt)S 16153 X 548 y(Option:)S 16153 30327 XY
+F38(Software)S 149 x(Licenses)S 151 x(\(unlimited)S 149 x(use\):)S 200 x
+(QL-0XBA*-)S 2 x(AA)S 16153 X 588 y(Software)S 149 x(Licenses)S 151 x
+(\(concur)S 2 x(rent)S 150 x(use\):)S 199 x(QL-0XBAM)S 2 x(-3B)S 16153 X
+588 y(Software)S 149 x(Docume)S 2 x(ntation:)S 198 x(QA-0XBAA-GZ)S 16153 X
+589 y(Software)S 149 x(Produ)S 2 x(ct)S 149 x(Services:)S 200 x(QT)S
+-25 x(-0XBA*-**)S 16153 33028 XY F39(BASEstar)S 124 x(Open)S 125 x(Server)S
+125 x(for)S 124 x(OSF/1)S 124 x(AXP)S 124 x(Runtime)S 124 x(Option:)S
+16153 33965 XY F38(Software)S 149 x(Licenses)S 151 x(\(unlimited)S 149 x
+(use\):)S 200 x(QL-0XAA*-)S 2 x(AA)S 16153 X 588 y(Software)S 149 x
+(Licenses)S 151 x(\(concur)S 2 x(rent)S 150 x(use\):)S 199 x(QL-0XAAM)S
+2 x(-3B)S 16153 X 588 y(Software)S 149 x(Docume)S 2 x(ntation:)S 198 x
+(QA-0XAAA-GZ)S 16153 X 589 y(Software)S 149 x(Produ)S 2 x(ct)S 149 x
+(Services:)S 200 x(QT)S -25 x(-0XAA*-**)S 15431 38419 XY F40(5)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (6) 6
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2554 XY F40(BASEstar)S 150 x(Open)S 149 x(Serve)S 2 x(r)S
+24246 X(SPD)S 149 x(47.87.01)S 3899 X 548 y(V)S -25 x(ersion)S 150 x
+(2.0)S 3899 4373 XY F38(The)S 199 x(above)S 200 x(information)S 199 x
+(is)S 199 x(valid)S 199 x(at)S 198 x(the)S 199 x(time)S 199 x(of)S 199 x
+(release.)S 3899 X 548 y(Please)S 153 x(contact)S 153 x(your)S 154 x
+(local)S 152 x(Digital)S 151 x(of)S -8 x(\211ce)S 154 x(for)S 152 x
+(the)S 153 x(most)S 154 x(up-)S 3899 X 548 y(to-date)S 150 x(information.)S
+3899 6963 XY F40(SOFTW)S -25 x(ARE)S 149 x(LICENSIN)S -2 x(G)S 3899 X
+897 y F38(This)S 219 x(software)S 219 x(is)S 218 x(furnished)S 220 x
+(only)S 219 x(under)S 220 x(a)S 220 x(license.)S 407 x(For)S 3899 X
+548 y(more)S 255 x(information)S 255 x(about)S 255 x(Digit)S -2 x(al')S
+-9 x(s)S 255 x(licensing)S 254 x(terms)S 255 x(and)S 3899 X 547 y(policies,)S
+281 x(contact)S 257 x(your)S 256 x(local)S 256 x(Digit)S -2 x(al)S 256 x
+(of)S -8 x(\211ce.)S 518 x(BASEstar)S 3899 X 548 y(Open)S 150 x(Server)S
+151 x(is)S 149 x(licensed)S 150 x(in)S 149 x(the)S 149 x(following)S
+149 x(package)S 2 x(s:)S 3899 X 897 y(\201)S 441 x(BASEstar)S 154 x
+(Open)S 154 x(Server)S 155 x(Developmen)S 2 x(t)S 153 x(License)S 155 x
+(which)S 4497 X 548 y(enables)S 204 x(software)S 204 x(developers)S
+205 x(to)S 203 x(integrate)S 204 x(manufac-)S 4497 X 548 y(turing)S
+149 x(applications)S 150 x(and)S 150 x(devices.)S 3899 X 797 y(\201)S
+441 x(BASEstar)S 207 x(Open)S 208 x(Server)S 208 x(Runtime)S 207 x(License)S
+208 x(which)S 207 x(al-)S 4497 X 548 y(lows)S 223 x(applications)S 224 x
+(and)S 224 x(devices)S 225 x(that)S 223 x(are)S 225 x(already)S 224 x
+(in-)S 4497 X 548 y(tegrated)S 209 x(wit)S -2 x(h)S 209 x(BASEstar)S
+208 x(Open)S 209 x(software)S 208 x(to)S 208 x(run)S 209 x(in)S 208 x
+(a)S 4497 X 548 y(BASEstar)S 150 x(Open)S 150 x(environmen)S 2 x(t.)S
+3899 X 896 y(License)S 187 x(units)S 186 x(for)S 187 x(BASEstar)S 187 x
+(Open)S 187 x(Server)S 187 x(allow)S 186 x(for)S 187 x(de-)S 3899 X
+548 y(velopment)S 140 x(and)S 140 x(runtime)S 140 x(kits,)S 141 x(and)S
+140 x(are)S 140 x(allocated)S 140 x(for)S 139 x(either)S 3899 X 548 y
+(`)S -9 x(`Concurren)S 2 x(t)S 149 x(Use')S -9 x(')S 375 x(or)S 377 x
+(`)S -9 x(`Unlimit)S -2 x(ed)S 150 x(System)S 150 x(Use')S -8 x('.)S
+375 x(Each)S 3899 X 548 y(`)S -9 x(`Concurren)S 2 x(t)S 149 x(Use')S
+-9 x(')S 218 x(license)S 218 x(allows)S 218 x(up)S 218 x(to)S 218 x
+(250)S 219 x(BASEstar)S 3899 X 548 y(Open)S 178 x(Data_Points)S 178 x
+(to)S 177 x(be)S 178 x(used.)S(`)S -8 x(`Unlimit)S -2 x(ed)S 150 x(System)S
+150 x(Use')S -8 x(')S 3899 X 548 y(licenses)S 150 x(are)S 150 x(based)S
+151 x(on)S 150 x(Digit)S -2 x(al')S -9 x(s)S 150 x(3-tier)S 150 x(licensing)S
+149 x(policy)S -33 x(.)S 16153 6216 XY F40(SOFTW)S -25 x(ARE)S 149 x
+(PRODUCT)S 148 x(SER)S -8 x(VICES)S 16153 X 896 y F38(A)S 189 x(variety)S
+190 x(of)S 190 x(service)S 190 x(options)S 190 x(are)S 191 x(available)S
+189 x(from)S 190 x(Digital.)S 16153 X 548 y(For)S 150 x(more)S 151 x
+(information,)S 149 x(contact)S 150 x(your)S 150 x(local)S 149 x(Digital)S
+148 x(of)S -8 x(\211ce.)S 16153 9155 XY F40(SOFTW)S -25 x(ARE)S 149 x
+(W)S -24 x(ARRA)S -2 x(NTY)S 16153 X 896 y F38(W)S -16 x(arranty)S 136 x
+(for)S 136 x(this)S 135 x(software)S 136 x(produc)S 2 x(t)S 135 x(is)S
+135 x(provided)S 137 x(by)S 136 x(Digital)S 16153 X 548 y(with)S 200 x
+(the)S 202 x(purchas)S 2 x(e)S 201 x(of)S 201 x(a)S 202 x(license)S
+201 x(for)S 202 x(the)S 201 x(prod)S 2 x(uct)S 201 x(as)S 202 x(de-)S
+16153 X 548 y(\211ned)S 200 x(in)S 198 x(the)S 199 x(Digital)S 197 x
+(Standard)S 200 x(T)S -50 x(erms)S 200 x(and)S 200 x(Conditions)S 199 x
+(of)S 16153 X 548 y(this)S 149 x(SPD.)S 16153 X 897 y(The)S 108 x(above)S
+108 x(information)S 107 x(is)S 107 x(valid)S 107 x(at)S 107 x(time)S
+107 x(of)S 107 x(release.)S 186 x(Please)S 16153 X 548 y(contact)S 169 x
+(your)S 170 x(local)S 168 x(Digital)S 167 x(of)S -8 x(\211ce)S 169 x
+(for)S 169 x(the)S 169 x(most)S 169 x(up-to-da)S 2 x(te)S 16153 X 548 y
+(information.)S 16153 X 896 y(\251)S 221 x(1995)S 221 x(Digital)S 219 x
+(Equipment)S 221 x(Corporation.)S 413 x(All)S 219 x(rights)S 221 x(re-)S
+16153 X 548 y(served.)S 16153 X 897 y F42(\207)S 498 x(The)S 135 x(DIGIT)S
+-29 x(AL)S 135 x(Logo,)S 135 x(BASEstar)S 135 x(Classic,)S 138 x(BASEstar)S
+135 x(Open)S -2 x(,)S 17050 X 498 y(Bookr)S -2 x(eader)S -23 x(,)S 147 x
+(DEC,)S 144 x(DEComn)S -2 x(i,)S 148 x(DECosap)S -2 x(,)S 148 x(DECstat)S
+-2 x(ion,)S 17050 X 498 y(DECsystem,)S 136 x(DECnet)S -2 x(,)S 138 x
+(Digital,)S 137 x(MicroV)S -30 x(AX,)S 136 x(TK,)S 137 x(OpenVMS)S 17050 X
+498 y(are)S 131 x(trade)S -2 x(marks)S 133 x(of)S 132 x(Digital)S 133 x
+(Equipmen)S -2 x(t)S 133 x(Corp)S -2 x(oration)S -2 x(.)S 15431 38419 XY
+F40(6)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Trailer
+%%Pages: 6
+%%BoundingBox: 0 0 612 792
+%%DocumentFonts: DigitalLogo Helvetica
+%%+ Helvetica-Bold Helvetica-Oblique
+%%DocumentNeededFonts: Helvetica Helvetica-Bold
+%%+ Helvetica-Oblique
+%%DocumentProcessColors:
+%%DocumentCustomColors: (BLACK)
+%%CMYKCustomColor: 0.0 0.0 0.0 1.0 (BLACK)
+%
+DVC$PSJob restore
+end %DEC_DVC$dict
+end %Color5044Dict
+%
+%%EOF

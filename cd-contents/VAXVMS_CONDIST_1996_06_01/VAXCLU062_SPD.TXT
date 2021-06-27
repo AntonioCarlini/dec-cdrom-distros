@@ -1,0 +1,1291 @@
+
+
+
+
+
+
+
+     Software
+     Product
+     Description
+
+     ___________________________________________________________________
+
+     PRODUCT NAME:  OpenVMS Cluster Software, Version 6.2   SPD 29.78.09
+
+     This Software Product Description describes the following products:
+
+     o  VMScluster Software for OpenVMS Alpha
+
+     o  VAXcluster Software for OpenVMS VAX
+
+     o  OpenVMS Cluster Client Software for Alpha
+
+     o  OpenVMS Cluster Client Software for VAX
+
+     Except where noted the features described in this SPD apply equally
+     to Alpha and VAX systems. OpenVMS Cluster Software licenses and part
+     numbers are architecture specific; please refer to the Ordering 
+     Information section of this SPD for further details.
+
+     DESCRIPTION
+
+     OpenVMS Cluster Software is an OpenVMS System Integrated Product 
+     (SIP). It provides a highly integrated OpenVMS computing environment
+     distributed over multiple Alpha and VAX CPUs. In this SPD, this 
+     environment is referred to as a VMScluster.
+
+     CPUs in a VMScluster system can share processing, mass storage 
+     (including system disks), and other resources under a single OpenVMS 
+     security and management domain. Within this highly integrated environ-
+     ment, CPUs retain their independence because they use local, memory-
+     resident copies of the OpenVMS operating system. Thus, VMScluster CPUs
+     can boot and shut down independently while benefiting from common 
+     resources.
+
+
+
+
+                                   DIGITAL                      May 1995
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     Applications running on one or more CPUs in a VMScluster system 
+     access shared resources in a coordinated manner. VMScluster software 
+     components synchronize access to shared resources, allowing multiple 
+     processes on any CPU in the VMScluster to perform coordinated, 
+     shared data updates.
+
+     Because resources are shared, VMScluster systems offer higher avail-
+     ability than standalone CPUs. Properly configured VMScluster systems
+     can withstand the shutdown or failure of various components. For 
+     example, if one CPU in a VMScluster is shut down, users can log in to
+     another CPU to create a new process and continue working. Because mass
+     storage can be shared clusterwide, the new process is able to access
+     the original data. Applications can be designed to survive these 
+     events automatically.
+
+     All VMScluster systems have the following software features in
+     common:
+
+     o  The OpenVMS operating system and VMScluster software allow all CPUs
+        to share read and write access to disk files in a fully coordinated
+        environment. Application programs can specify the level of clus-
+        terwide file sharing that is required; access is then coordinated
+        by the OpenVMS Extended QIO Processor (XQP) and Record Management
+        Services (RMS). Coherency of multi-CPU configurations is 
+        implemented by VMScluster software, using a flexible and 
+        sophisticated per-CPU voting mechanism.
+
+     o  Shared batch and print queues are accessible from any CPU in the
+        VMScluster system. The OpenVMS queue manager controls clusterwide
+        batch and print queues, which can be accessed by any CPU. Batch 
+        jobs submitted to clusterwide queues are routed to any available 
+        CPU so the batch load is shared.
+
+     o  The OpenVMS Lock Manager System Services operate in a clusterwide
+        manner. These services allow reliable coordinated access to any 
+        resource and provide signaling mechanisms at the system and process
+        level across the whole VMScluster system.
+
+     o  All physical disks and tapes in a VMScluster system can be made 
+        accessible to all CPUs.
+
+                                      2
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  Process information and control services are available clusterwide
+        to application programs and system utilities.
+
+     o  Configuration command procedures assist in adding and removing CPUs
+        and in modifying their configuration characteristics.
+
+     o  The dynamic Show Cluster utility displays the status of VMSclus-
+        ter hardware components and communication links.
+
+     o  A fully automated clusterwide data and application caching feature
+        enhances system performance and reduces I/O activity.
+
+     o  Standard OpenVMS system management and security features work in
+        a clusterwide manner so that the entire VMScluster system operates
+        as a single security and management domain.
+
+     o  The VMScluster software dynamically balances the interconnect I/O
+        load in VMScluster configurations that include multiple intercon-
+        nects.
+
+     o  Multiple VMScluster systems can be configured on a single or
+        extended local area network (LAN). LANs and the LAN adapters used 
+        for VMScluster communications can be used concurrently by other
+        network protocols.
+
+     o  The optionally installable DECamds availability management tool al-
+        lows system managers to monitor and manage resource availability
+        in real time on all the members of a VMScluster.
+
+     o  Cross-architecture satellite booting permits VAX boot nodes to
+        provide boot service to Alpha satellites and Alpha boot nodes to 
+        provide boot service to VAX satellites.
+
+     o  System services are provided that enable applications to automat-
+        ically detect changes in VMScluster membership.
+
+     Definitions
+
+     The following terms are used frequently throughout this SPD:
+
+     o  Boot node - A CPU that is both a MOP server and a disk server. A
+        boot node can fully service satellite boot requests.
+
+                                      3
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  CPU (central processing unit) - An Alpha family or VAX family com-
+        puter running the OpenVMS operating system. A CPU comprises one or
+        more processors and operates as a VMScluster node. A VMScluster 
+        node can be referred to as VMScluster member.
+
+     o  Disk server - A CPU that uses the OpenVMS MSCP server to make disks
+        to which it has direct access available to other CPUs in the 
+        VMScluster system.
+
+     o  HSC, HSJ - An intelligent mass storage controller subsystem that
+        connects to the CI.
+
+     o  HSD - An intelligent mass storage controller subsystem that 
+        connects to the DSSI.
+
+     o  HSZ - An intelligent mass storage controller subsystem that 
+        connects to the SCSI.
+
+     o  Maintenance Operations Protocol (MOP) server - A CPU that services
+        satellite boot requests to provide the initial LAN downline load
+        sequence of the OpenVMS operating system and VMScluster software.
+        At the end of the initial downline load sequence, the satellite 
+        uses a disk server to perform the remainder of the OpenVMS 
+        booting process.
+
+     o  Mixed-architecture VMScluster system - A VMScluster system that is
+        configured with both VAX and Alpha CPUs.
+
+     o  MSCP (Mass Storage Control Protocol) - A message-based protocol for
+        controlling Digital Storage Architecture (DSA) disk storage 
+        subsystems. The protocol is implemented by the OpenVMS DUDRIVER 
+        device driver.
+
+     o  Satellite - A CPU that is booted over a LAN using a MOP server and
+        disk server.
+
+     o  Star coupler - A common connection point for all CI connected CPUs
+        and HSC and HSJ controllers.
+
+     o  Tape server - A CPU that uses the OpenVMS TMSCP Server to make 
+        tapes to which it has direct access available to other CPUs in 
+        the VMScluster system.
+
+                                      4
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  TMSCP (Tape Mass Storage Control Protocol) - A message-based pro-
+        tocol for controlling DSA tape-storage subsystems. The protocol is
+        implemented by the OpenVMS TUDRIVER device driver.
+
+     o  Vote - CPUs in a VMScluster system may be configured to provide 
+        votes that are accumulated across the multi-CPU environment. Each 
+        CPU is provided with knowledge of how many Votes are necessary to 
+        meet a quorum before distributed shared access to resources is 
+        enabled. A VMScluster system must be configured with at least 
+        one voting CPU.
+
+     o  Multi-host - A configuration in which more than one CPU is 
+        connected to a single DSSI or SCSI bus.
+
+     o  Single-host - A configuration in which a single CPU is connected
+        to a DSSI or SCSI bus.
+
+     VMScluster Client
+
+     VMScluster configurations may be configured with CPUs that operate,
+     and are licensed, explicitly as client systems. VMScluster Client 
+     licensing is separately orderable, and is also provided as part of the
+     Digital NAS 150 layered product package. VMScluster Client CPUs 
+     contain full VMScluster functionality as described in this SPD, with
+     the following exceptions:
+
+     o  VMScluster Client CPUs may not provide Votes towards the operation
+        of the VMScluster system.
+
+     o  VMScluster Client CPUs may not MSCP serve disks, nor TMSCP serve
+        tapes.
+
+     Interconnects
+
+     VMScluster systems are configured by connecting multiple CPUs with a
+     communications medium, referred to as an interconnect. VMScluster 
+     nodes communicate with each other using the most appropriate 
+     interconnect available. In the event of interconnect failure, 
+     VMScluster software automatically uses an alternate interconnect 
+     whenever possible. VMScluster software supports any combination of 
+     the following interconnects:
+
+     o  Computer Interconnect (CI)
+
+                                      5
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  Digital Storage Systems Interconnect (DSSI)
+
+     o  Small Computer Storage Interconnect (SCSI)
+
+     o  Fiber Distributed Data Interface (FDDI)
+
+     o  Ethernet
+
+     CI and DSSI are highly optimized, special-purpose interconnects for
+     CPUs and storage subsystems in VMScluster configurations.
+
+     SCSI is an industry standard storage interconnect. Multiple CPUs may
+     be configured on a single SCSI bus, thereby providing multi-host 
+     access to SCSI storage devices. Note that the SCSI bus is not used for
+     CPU to CPU communication. Consequently CPUs connected to a multi-host
+     SCSI bus must also be configured with another of the interconnects 
+     listed above in order to provide CPU to CPU communication.
+
+     Ethernet and FDDI are industry-standard, general-purpose communica-
+     tions interconnects that can be used to implement a LAN. Except where
+     noted, VMScluster support for both of these LAN types is identical.
+
+     VMScluster configurations may be configured using Wide Area Network-
+     ing (WAN) infrastructures such as DS3 and ATM. Connectivity to these
+     media is achieved with FDDI bridges.
+
+     Configuration Rules
+
+     o  The maximum number of CPUs supported in a VMScluster system is 96.
+
+     o  Every CPU in a VMScluster system must be connected to every other
+        CPU via any of the supported VMScluster interconnects 
+        (see Table 1).
+
+     o  VAX-11/7xx, VAX 6000, VAX 7000, VAX 8xxx, VAX 9000, and VAX 10000
+        series CPUs require a system disk that is accessed via a local 
+        controller or through a local CI or DSSI connection. These CPUs
+        cannot be configured to boot as satellite nodes.
+
+     o  All CPUs connected to a CI or DSSI must be configured as VMSclus-
+        ter members. VMScluster members configured on a CI or DSSI will be-
+        come members of the same VMScluster (this is imposed automatically
+        by the VMScluster software). All CPUs connected to a multi-host 
+        SCSI bus must be configured as members of the same VMScluster.
+
+                                      6
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  A VMScluster system can include any number of star couplers. The
+        number of CI adapters supported by different CPUs can be found in
+        Table 2 in this SPD. The number of star couplers that a CPU can be
+        connected to is limited by the number of adapters it is configured
+        with.
+
+     o  The maximum number of CPUs that can be connected to a star coupler
+        is 16, regardless of Star Coupler size.
+
+     o  The KFQSA Q-bus-to-DSSI adapter does not support VMScluster com-
+        munication to other CPUs on the DSSI; CPUs using this adapter must
+        include another interconnect for VMScluster communication.
+
+     o  The maximum number of CPUs that can be connected to a DSSI is 4.
+        Depending on CPU model it may not be possible to configure four 
+        CPUs on a common DSSI bus, due to DSSI bus cable length 
+        restrictions.
+        Refer to the specific CPU system configuration manuals for further
+        information.
+
+     o  The maximum number of CPUs that can be connected to a SCSI bus is
+        2.
+
+     o  The maximum number of multi-host SCSI buses that a CPU may be
+        connected to is 2.
+
+     o  VMScluster CPUs that are configured using WAN interconnects must
+        adhere to the detailed line specifications described in the Open
+        VMS Version 6.2 New Features Manual. The maximum CPU separation is
+        150 miles.
+
+     o  A single time-zone setting must be used by all CPUs in a VMSclus-
+        ter system.
+
+     o  A VMScluster system can be configured with a maximum of one quo-
+        rum disk. A quorum disk cannot be a member of an OpenVMS volume set
+        or of a shadow set created by the Volume Shadowing for OpenVMS 
+        product.
+
+     o  A system disk can contain only a single version of the OpenVMS op-
+        erating system and is architecture specific. For example, OpenVMS
+        Alpha Version 6.2 cannot coexist on a system disk with OpenVMS VAX
+        Version 6.2.
+
+                                      7
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  HSJ and HSC series disks and tapes can be dual pathed between con-
+        trollers on the same or different star couplers. The HSD30 series
+        disks and tapes can be dual pathed between controllers on the same
+        or different DSSI interconnects. Such dual pathing provides 
+        enhanced data availability using an OpenVMS automatic recovery 
+        capability called failover. Failover is the ability to use an 
+        alternate hardware path from a CPU to a storage device when a 
+        failure occurs onthe current path. The failover process is 
+        transparent to applications. Dual pathing between an HSJ or HSC 
+        and a local controller is not permitted. When two local 
+        controllers are used for dual pathing, each controller must be 
+        located on a separate CPU of the same architecture.
+
+     o  Disks and tapes can be dual pathed between pairs of HSZ40 
+        controllers that are connected to the same SCSI bus. 
+        Failover is accomplished using the HSZ40's transparent failover 
+        capability.
+
+     o  OpenVMS operating system and layered-product installations and 
+        upgrades cannot be performed across architectures. OpenVMS Alpha 
+        software installations and upgrades must be performed using an 
+        Alpha system with direct access to its system disk. OpenVMS VAX 
+        software installations and upgrades must be performed using a 
+        VAX system with direct access to its system disk.
+
+     o  Ethernet LANs and the protocols that use them must conform to the
+        IEEE[R] 802.2 and IEEE[R] 802.3 standards. Ethernet LANs must also
+        support Ethernet Version 2.0 packet formats.
+
+     o  FDDI LANs and the protocols that use them must conform to the 
+        IEEE[R] 802.2, ANSI X3.139-1987, ANSI X3.148-1988, and 
+        ANSI X3.166-1990 standards.
+
+     o  VMScluster systems support up to 4 LAN adapters per CPU for 
+        VMScluster communications.
+
+     o  LAN segments can be bridged to form an extended LAN (ELAN). The 
+        ELAN must conform to IEEE[R] 802.1D, with the following 
+        restrictions:
+
+        -  All LAN paths used for VMScluster communication must operate 
+           with a nominal bandwidth of at least 10 megabits per second.
+
+                                      8
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+        -  The ELAN must be capable of delivering packets that use the 
+           padded Ethernet Version 2.0 packet format and the FDDI 
+           SNAP/SAP packet format.
+
+        -  The ELAN must be able to deliver packets with a maximum data 
+           field length of at least 1080 bytes.[1]
+
+        -  The maximum number of bridges between any two end nodes is 7.
+
+        -  The maximum transit delay through any bridge must not exceed 2
+           seconds.
+
+        -  The ELAN must provide error-detection capability between end 
+           nodes that is equivalent to that provided by the Ethernet and 
+           FDDI data link frame-check sequences.
+
+     o  The packet-retransmit timeout ratio for VMScluster traffic on the
+        LAN from any CPU to another must be less than 1 timeout in 1000 
+        transmissions.
+
+     Recommendations
+
+     The optimal VMScluster system configuration for any computing envi-
+     ronment is based on requirements of cost, functionality, performance,
+     capacity, and availability. Factors that impact these requirements 
+     include:
+
+     o  Applications in use
+
+     o  Number of users
+
+     o  Number and models of CPUs
+
+     o  Interconnect and adapter throughput and latency characteristics
+
+     o  Disk and tape I/O capacity and access time
+
+     o  Number of disks and tapes being served
+
+     ____________________
+   [1] In the padded Ethernet format, the data field follows the two-byte
+       length field.  These two fields together comprise the LLC data field
+       in the 802.3 format.
+
+                                      9
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  Interconnect utilization
+
+     Digital recommends VMScluster system configurations based on its 
+     experience with the VMScluster software product. The customer should 
+     evaluate specific application dependencies and performance 
+     requirements to determine an appropriate configuration for the 
+     desired computing environment.
+
+     When planning a VMScluster system, consider the following recommen-
+     dations:
+
+     o  VMScluster CPUs should be configured using interconnects that pro-
+        vide appropriate performance for the required system usage. In gen-
+        eral, use the highest performance interconnect possible. CI, DSSI,
+        and FDDI are the preferred interconnects between powerful CPUs.
+
+     o  Although VMScluster systems can include any number of system disks,
+        consider system performance and management overhead in determin-
+        ing their number and location. While the performance of configu-
+        rations with multiple system disks may be higher than with a sin-
+        gle system disk, system management efforts increase in proportion
+        to the number of system disks.
+
+     o  Data availability and I/O performance are enhanced when multiple
+        VMScluster nodes have direct access to shared storage; whenever 
+        possible, configure systems to allow direct access to shared 
+        storage in favor of OpenVMS MSCP served access. Multiaccess CI, 
+        DSSI, and SCSI storage provides higher data availability than 
+        singly accessed, local controller-based storage. Additionally, 
+        dual pathing of disks between local or HSC/HSJ/HSD storage 
+        controllers enhances data availability in the event of 
+        controller failure.
+
+     o  VMScluster systems can enhance availability by utilizing redundant
+        components, such as additional CPUs, storage controllers, disks,
+        and tapes. Extra peripheral options, such as printers and termi-
+        nals, can also be included. Multiple instances of all VMScluster
+        interconnects (CI, DSSI, SCSI, Ethernet, and FDDI) are supported.
+
+
+
+
+                                      10
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  To enhance resource availability, VMSclusters that implement satel-
+        lite booting should use multiple boot servers. When a server fails
+        in configurations that include multiple servers, satellite access
+        to multipath disks will fail over to another path. Disk servers 
+        shouldbe the most powerful CPUs in the VMScluster and should use 
+        the highest bandwidth LAN adapters available.
+
+     o  The performance of an FDDI LAN varies with each configuration. When
+        an FDDI is used for VMScluster communications, the ring latency 
+        when the FDDI ring is idle should not exceed 400 microseconds. 
+        This ring latency translates to a cable distance between end 
+        nodes of approximately 40 kilometers.
+
+     o  The ELAN must provide adequate bandwidth, reliability, and low 
+        delay in order to optimize the operation of the VMScluster. The
+        average LAN segment utilization should not exceed 60% for any 
+        10-second interval. If ELAN performance degrades to the point 
+        where nodes cannot communicate every 3 seconds, then nodes may 
+        leave the VMScluster. The effective performance of the ELAN can 
+        be increased by following these guidelines:
+
+        -  Configure high-performance nodes with multiple LAN adapters 
+           connected to different LAN segments.
+
+        -  Minimize the number of bridges on the path between nodes that
+           communicate frequently, such as satellites and their boot 
+           servers.
+
+        -  Use bridges to isolate and localize the traffic between nodes
+           that communicate with each other frequently. For example, use
+           bridges to separate the VMScluster from the rest of the ELAN and
+           to separate nodes within a cluster that communicate frequently
+           from the rest of the VMScluster.
+
+        -  Use FDDI on the communication paths that have the highest per-
+           formance requirements. The NISCS_MAX_PKTSZ system parameter can
+           be adjusted to use the full FDDI packet size. Ensure that the
+           ELAN path supports a data field of at least 4470 bytes end to
+           end, or the ELAN path sets the priority field to zero in the 
+           FDDI frame-control byte on the destination FDDI link.
+
+        -  Minimize the packet delay between end nodes.
+
+                                      11
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  The RAID level 1 storage functionality of Volume Shadowing for 
+        OpenVMS provides the following advantages:
+
+        -  Enhanced data availability in the event of disk failure
+
+        -  Enhanced read performance with multiple shadow-set members
+
+        For more information, refer to the Volume Shadowing for OpenVMS 
+        Software Product Description.
+
+     o  The DECram for OpenVMS software product can be used to create very
+        high-performance, memory-resident RAM disks. Refer to the DECram
+        for OpenVMS Software Product Description for additional informa-
+        tion.
+
+     DECamds Features
+
+     VMScluster Software incorporates the features of a real-time monitor-
+     ing, investigation, diagnostic, and system management tool that can
+     be used to improve system availability.
+
+     The DECamds availability management tool contains a console and an 
+     OpenVMS device driver. The console is a DECwindows Motif[R] based 
+     application that allows system managers to display windows showing 
+     processes, quotas, disks, locks, memory, and I/O activity in the 
+     VMScluster. The Motif[R] display may be directed to any X-compatible
+     display. The driver is a data collector that runs on the monitored 
+     VMScluster members. Console application and driver software is 
+     provided for Alpha and VAX systems.
+
+     HARDWARE SUPPORT
+
+     CPU support
+
+     Any Alpha or VAX CPU, as documented in the OpenVMS Operating System
+     Version 6.2 Software Product Description (SPD 25.01.xx), can be used
+     in a VMScluster.
+
+
+
+                                      12
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+     Interconnect support
+
+     Table 1 shows which processors are supported on which interconnects
+     and whether the processor can be booted as a satellite node over that
+     interconnect. All CPUs can service satellite boot requests over a LAN
+     interconnect (FDDI or Ethernet).
+
+     Note: Note that levels of interconnect support and LAN booting capa-
+     bilities are continuously being increased. In many cases these addi-
+     tional capabilities result from hardware option and system console
+     microcode enhancements, and are not dependent on OpenVMS software.
+     Refer to the appropriate hardware option and system documentation for
+     the most up-to-date information.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      13
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     ___________________________________________________________________
+
+     Table 1:
+
+     CPU             CI      DSSI    SCSI[8] FDDI       Ethernet
+
+     AlphaServer     Yes[1]  Yes     -       Yes+Sat[2] Yes[3]
+     8400
+
+     AlphaServer     -       Yes     -       Yes        Yes
+     8200
+
+     DEC 7000,       Yes     Yes     -       Yes+Sat[3] Yes
+     10000
+
+     DEC 4000        -       Yes     -       Yes        Yes+Sat
+
+     DEC 3000        -       -       -       Yes+Sat[4] Yes+Sat
+
+     AlphaServer     -       Yes     Yes[7]  Yes+Sat[5] Yes+Sat
+     2100
+
+     AlphaServer     -       Yes     Yes[7]  Yes        Yes+Sat
+     1000, 2000
+
+     AlphaServer     -       -       Yes[7]  Yes        Yes+Sat
+     400
+
+     AlphaStation    -       -       Yes[7]  Yes        Yes+Sat
+     200, 250,
+     400
+
+     DEC 2000        -       -       -       Yes        Yes+Sat
+
+     VAX 6000,       Yes     Yes     -       Yes        Yes
+     7000, 10000
+
+     VAX 8xxx,       Yes     -       -       -          Yes
+     9xxx, 11/xxx
+
+     VAX 4xxx[6]     -       Yes     -       Yes        Yes+Sat
+
+     VAX 2xxx,       -       -       -       -          Yes+Sat
+     3xxx[6]
+     ___________________________________________________________________
+     [1]Each "Yes" means that this CPU is supported on this interconect-
+     but cannot be booted as a satellite over this interconnect
+     [2]Each "Yes+Sat" means that this CPU is supported on this inter-
+     connect and can be booted as a satellite node over this interconnect
+     [3]Using DEMFA only
+     [4]Using DEFTA only
+     [5]Using DEFEA only
+     [6]Some models may provide slightly different interconnect support,
+     refer to the system specific hardware manual for complete details
+     [8]This column refers to multi-host SCSI connectivity. Refer to
+     the appropriate system documentation for information regarding
+     single-host connectivity to SCSI buses
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+
+     CI Adapter support
+
+     VMScluster nodes can be configured with multiple CI adapters.
+     Table 2 shows the types of adapters that are supported by each
+     CPU. There can only be one type of adapter configured on a CPU;
+     the maximum quantity of each type is noted in the table. The CI
+     adapters in a CPU can connect to the same, or different, star
+     couplers.
+
+     Note: The CIBCA-A adapter cannot coexist with a KFMSA adapter on
+     the same CPU.
+
+     Note: The CIBCA-A and CIBCA-B are different.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      15
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     ___________________________________________________________________
+
+     Table 2:
+
+                                       CIBCA-    CIBCA-
+     CPU Type        CI750 CI780 CIBCI A         B         CIXCD
+
+     AlphaServer     -     -     -     -         -         10
+     8400
+
+     DEC 7000,       -     -     -     -         -         10
+     10000
+
+     VAX 11/750      1     -     -     -         -         -
+
+     VAX 11/780,     -     1     -     -         -         -
+     11785
+
+     VAX 6000        -     -     -     1         4         4
+
+     VAX 82xx,       -     -     1     1         1         -
+     83xx
+
+     VAX 86xx        -     2     -     -         -         -
+
+     VAX 85xx,       -     -     1     1         2         -
+     8700, 88xx
+
+     VAX 9000        -     -     -     -         -         6
+
+     VAX 7000,       -     -     -     -         -         10
+     10000
+
+     LAN Adapter support
+
+     VMScluster systems can use all Ethernet and FDDI LAN adapters
+     supported by OpenVMS Version 6.2 for access to Ethernet and FDDI
+     interconnects. Refer to the OpenVMS Operating System for VAX and
+     Alpha, SPD for more information.
+
+     The DEFZA FDDI adapter is supported on VAX systems only.
+
+
+                                      16
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+     DSSI support
+
+     Any mix of Alpha and VAX DSSI adapters may be configured on a
+     common DSSI bus. Refer to the appropriate hardware manuals for
+     specific adapter and configuration information. The following
+     points provide general guidelines for configurations:
+
+     o  Configure VAX 6000, VAX 7000, VAX 10000 systems with KFMSA
+        adapters.
+
+     o  Configure DEC 7000, DEC 10000, AlphaServer 8400 XMI systems
+        with KFMSB adapters.
+
+     o  Up to 6 KFMSA/Bs may be configured on an XMI bus. Up to 12
+        KFMSA/Bs may be configured in a system.
+
+     o  Configure the AlphaServer systems shown in Table 1 with KFESB
+        adapters. The AlphaServer 2100 may also be configured with
+        KFESA adapters. AlphaStation systems may not be configured with
+        KFESA/B.
+
+     o  Up to three CPUs may be configured on a DSSI when a KFMSB,
+        KFESA or KFESB is present on the bus.
+
+     o  Up to 4 KFESBs may be configured on a system. Up to 2 KFESAs
+        may be configured on a system. A mix of 1 KFESB and 1 KFESA may
+        be configured on a system.
+
+     o  Because the DEC 4000 DSSI adapter terminates the DSSI bus, only
+        two DEC 4000s may be configured on a DSSI.
+
+     Peripheral Option and Storage Controller support
+
+     VMScluster systems can use all peripheral options and storage
+     subsystems supported by OpenVMS Version 6.2. Refer to the OpenVMS
+     Operating System for VAX and Alpha SPD for more information.
+
+     Multi-Host SCSI Hardware Support
+
+     OpenVMS Cluster Software, Version 6.2, provides support for multi-
+     host SCSI configurations using a restricted range of Alpha systems
+     and SCSI adapters, devices, and controllers. Single-host SCSI
+     support is provided for an extensive range of systems and SCSI
+     adapters, devices and controllers. For further information on
+
+                                      17
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     the complete range of SCSI support please refer to the OpenVMS
+     Operating System for VAX and Alpha SPD.
+
+     Table 1 shows which systems may be configured on a multi-host SCSI
+     bus. These systems must use their embedded system SCSI adapters or
+     optional KZPAA adapters to connect to a multi-host SCSI bus. (Any
+     supported SCSI adapter may be used to connect to a single-host
+     SCSI bus.)
+
+     Note that optional KZPAA adapters are recommended for connection
+     to multi-host buses. Usage of KZPAA adapters simplifies SCSI 
+     cabling, and also leaves the embedded system SCSI bus available for
+     tape drives, floppies, and CD-ROMs.
+
+     Multi-host SCSI configurations may include DWZZA single-ended
+     SCSI to fast wide differential SCSI converters. These provide
+     additional SCSI cable length and access to HSZ40 controllers.
+
+     The following storage devices may be configured on multi-host SCSI
+     buses:
+
+     o  RZ28
+
+     o  RZ28B
+
+     o  RZ26
+
+     o  RZ26L
+
+     o  RZ29B
+
+     Tape drives, floppies, and CD-ROMs may not be configured on multi-
+     host SCSI buses. Configure these devices on single-host SCSI
+     buses.
+
+     Multi-host SCSI buses must adhere to all SCSI-II specifications.
+     Rules regarding cable length and termination must be carefully
+     complied with. Refer to the SCSI-II specification, or the OpenVMS
+     V6.2 Release Notes for further information.
+
+
+                                      18
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     Multi-host SCSI buses may be configured with any appropriately
+     compliant SCSI-II disk. SCSI disk requirements are fully docu-
+     mented in the the OpenVMS V6.2 Release Notes.
+
+     Star Coupler Expander
+
+     A CI star coupler expander (CISCE) can be added to any star cou-
+     pler to increase its connection capacity to 32 ports. The maximum
+     number of CPUs that can be connected to a star coupler is 16, 
+     regardless of the number of ports.
+
+     DECamds Console
+
+     Digital recommends that the availability management console run
+     on a standalone workstation with a color monitor. However, it
+     can also run on a workstation that is configured as a VMScluster
+     member, or on a nonworkstation system using DECwindows to direct
+     the display to an X-based display.
+
+     SOFTWARE REQUIREMENTS
+
+     o  OpenVMS Operating System Version 6.2
+
+        Refer to the OpenVMS Operating System for VAX and Alpha, 
+        Version 6.2 Software Product Description (SPD 25.01.xx) for more
+        information.
+
+     The ability to have more than one version of OpenVMS in a VMSclus-
+     ter allows upgrades to be performed in a staged fashion so that
+     continuous VMScluster system operation is maintained during the
+     upgrade process. Only one version of OpenVMS can exist on any 
+     system disk; multiple versions of OpenVMS in a VMScluster require
+     multiple system disks. Also note that system disks are archi-
+     tecture specific - OpenVMS Alpha and OpenVMS VAX cannot coexist
+     on the same system disk. The coexistence of multiple versions of
+
+
+
+
+
+
+                                      19
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     OpenVMS in a VMScluster configuration is supported according to
+     the following conditions:
+
+        -  Warranted support is provided for mixed-architecture
+           VMSclusters in which all Alpha and VAX systems are running
+           OpenVMS Version 6.2
+
+           Warranted support means that Digital has fully qualified
+           the two architectures coexisting in a VMScluster and will
+           answer any problems identified by customers using these
+           configurations.
+
+        -  Migration support is provided for VMSclusters running
+           OpenVMS Version 6.2 and OpenVMS Versions 1.5 (Alpha), 5.5-2
+           & 6.0 (VAX), and V6.1 (Alpha & VAX).
+
+           Migration support means that Digital has qualified the two
+           architectures/versions for use together in configurations
+           that are migrating in a staged fashion to a higher version
+           of OpenVMS or to Alpha systems. Digital will answer problem
+           reports submitted about these configurations. However, in
+           exceptional cases, Digital may recommend that you move your
+           system to a warranted configuration as part of the solution.
+
+     Note that Digital does not support the use of more than two 
+     versions of OpenVMS software in a VMScluster at a time.
+
+     Digital recommends that all Alpha and VAX systems in a VMScluster
+     run the latest version of OpenVMS.
+
+     o  DECnet software
+
+        DECnet software is not required in a VMScluster configuration.
+        However, DECnet software is necessary if the following features
+        are required:
+
+        o  Inter-node process to process communication using DECnet
+           mailboxes
+
+
+
+                                      20
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     o  The Monitor utility with the CLUSTER class or /NODE qualifier
+
+        Refer to the appropriate DECnet Software Product Description
+        for further information.
+
+     o  DECamds Availability Manager
+
+        The DECamds Availability Manager requires DECwindows Motif[R]
+        Version 1.2-3 for OpenVMS (SPD 42.19.xx).
+
+     OPTIONAL SOFTWARE
+
+     For information about VMScluster support for optional software
+     products, refer to the VMScluster Support section of the Software
+     Product Descriptions for those products.
+
+     Optional products that may be useful in VMScluster systems 
+     include:
+
+     o  Volume Shadowing for OpenVMS (SPD 27.29.xx)
+
+     o  StorageWorks RAID Software for OpenVMS (SPD 46.49.xx)
+
+     o  DECram for OpenVMS (SPD 34.26.xx)
+
+     o  POLYCENTER Performance Data Collector for OpenVMS (SPD 36.02.xx)
+
+     o  POLYCENTER Performance Advisor for OpenVMS (SPD 36.03.xx)
+
+     o  VAXcluster Console System (SPD 27.46.xx)
+
+     o  Business Recovery Server (SPD 35.05.xx)
+
+     GROWTH CONSIDERATIONS
+
+     The minimum hardware and software requirements for any future
+     version of this product may be different than the requirements for
+     the current version.
+
+                                      21
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     DISTRIBUTION MEDIA
+
+     OpenVMS Cluster Software Version 6.2 is distributed on the same
+     distribution media as the OpenVMS Operating System Version 6.2.
+     Refer to the OpenVMS Operating System for VAX and Alpha SPD for
+     more information.
+
+     ORDERING INFORMATION
+
+     OpenVMS Cluster Software is orderable as follows:
+
+     Every server (non-client) Alpha system in a VMScluster configuration
+     requires:
+
+     o  VMScluster Software for OpenVMS Alpha, Version 6.2
+
+        o  Software Licenses: QL-MUZA*-AA
+
+        o  Software Product Services: QT-MUZA*-**
+
+     Every server (non-client) VAX system in a VMScluster configuration
+     requires:
+
+     o  VAXcluster Software for OpenVMS VAX, Version 6.2
+
+        o  Software Licenses: QL-VBRA*-AA
+
+        o  Software Product Services: QT-VBRA*-**
+
+     Every Alpha client system in a VMScluster configuration requires:
+
+     o  OpenVMS Cluster Client Software for Alpha, Version 6.2
+
+        o  Software Licenses: QL-3MRA*-AA
+
+        o  Software Product Services: QT-3MRA*-**
+
+     Every VAX client system in a VMScluster configuration requires:
+
+     o  OpenVMS Cluster Client Software for VAX, Version 6.2
+
+        o  Software Licenses: QL-3MSA*-AA
+
+                                      22
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+        o  Software Product Services: QT-3MSA*-**
+
+     *  Denotes variant fields. For additional information on available
+        licenses, services, and media, refer to the appropriate price
+        book.
+
+     The right to the functionality of the OpenVMS Cluster Availability
+     Manager (DECamds) is included in all the above licenses.
+
+     DOCUMENTATION
+
+     The VMScluster Systems for OpenVMS manual, the Guidelines for 
+     VMScluster Configurations and the DECamds User's Guide are included
+     in the OpenVMS Version 6.2 hardcopy documentation as part of the
+     Full Documentation Set.
+
+     Refer to the OpenVMS Operating System for VAX and Alpha Version
+     6.2 Software Product Description for additional information about
+     OpenVMS documentation and ordering information.
+
+     Specific terms and conditions regarding documentation on media
+     apply to this product. Please refer to Digital's terms and condi-
+     tions of sale, as follows:
+
+     "A software license provides the right to read and print software
+     documentation files provided with the software distribution kit
+     for use by the licensee as reasonably required for licensed use of
+     the software. Any hard copies or copies of files generated by the
+     licensee must include Digital's copyright notice. Customization
+     or modifications, of any kind, to the software documentation files
+     are not permitted.
+
+     Copies of the software documentation files, either hardcopy or
+     machine readable, may only be transferred to another party in
+     conjunction with an approved relicense by Digital of the software
+     to which they relate."
+
+
+
+
+
+                                      23
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+
+     SOFTWARE LICENSING
+
+     This software is furnished under the licensing provisions of 
+     Digital Equipment Corporation's Standard Terms and Conditions. For
+     more information about Digital's licensing terms and policies,
+     contact your local Digital office.
+
+     License Management Facility Support
+
+     The OpenVMS Cluster Software product supports the OpenVMS License
+     Management Facility (LMF).
+
+     License units for this product are allocated on an Unlimited 
+     System Use basis.
+
+     For more information about the License Management Facility, refer
+     to the OpenVMS Operating System for VAX and Alpha Software Product
+     Description (SPD 25.01.xx) or documentation set.
+
+     SOFTWARE PRODUCT SERVICES
+
+     A variety of service options are available from Digital. For more
+     information, contact your local Digital office.
+
+     SOFTWARE WARRANTY
+
+     Warranty for this software product is provided by Digital with the
+     purchase of a license for the product as defined in the Software
+     Warranty Addendum of this SPD.
+
+     The above information is valid at time of release. Please contact
+     your local Digital office for the most up-to-date information.
+
+
+
+
+
+
+
+
+
+                                      24
+
+
+
+
+
+     OpenVMS Cluster Software, Version 6.2                 SPD 29.78.09
+
+    © 1995 Digital Equipment Corporation.
+       All rights reserved.
+
+     [TM] AlphaServer, AlphaStation, BI, Business Recovery Server, CI,
+          DECamds, DECchip, DECnet, DECram, DECwindows, DELUA, DEUNA,
+          Digital, DSSI, HSC, HSC40, HSC50, HSC60, HSC70, HSC90, HSJ,
+          HSZ, MicroVAX, MicroVAX II, MSCP, OpenVMS, POLYCENTER, Q-bus,
+          RA, RZ, StorageWorks, TA, TMSCP, TURBOchannel, UNIBUS, VAX,
+          VAX 6000, VAX 9000, VAX-11/750, VAX-11/780, VAXstation, 
+          VAXcluster, VMScluster XMI, and the DIGITAL logo are trademarks
+          of Digital Equipment Corporation.
+
+     IEEE is a registered trademark of the Institute of Electrical and
+     Electronic Engineers, Inc.
+
+     Motif is a registered trademark of the Open Software Foundation,
+     Inc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      25
