@@ -366,6 +366,13 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 		}
 	}
 
+	// Checking for a known file always requires an MD5 checksum. Under the current conditions, that cannot be avoided.
+	if spd.md5Checksum == "" {
+		md5Hash := md5.Sum(bytes)
+		spd.md5 = true
+		spd.md5Checksum = hex.EncodeToString(md5Hash[:])
+	}
+
 	// Find the subdirectory, which can be decoded into a CDROM disc identifier
 	_, last_path := path.Split(strings.TrimSuffix(file_dir, "/"))
 
@@ -383,6 +390,11 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 			knownSpd.ID = "FAILED"
 		}
 		return knownSpd, true
+	} else {
+		if verbose {
+			fmt.Println("file not known about: ", spdFilename, "checksum: ", spd.md5Checksum)
+		}
+
 	}
 	// Eliminate any trailing System Support Addendum text that may be appended.
 	// Everything from the first occurrence of
