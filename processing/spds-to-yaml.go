@@ -67,6 +67,7 @@ import (
 	"os"
 	"path"
 	"regexp"
+	"runtime/pprof"
 	"sort"
 	"strconv"
 	"strings"
@@ -128,6 +129,7 @@ func main() {
 	cdromsFilename := flag.String("cdroms", "", "filepath of the input file that describes the known CDROM discs")
 	monthsFilename := flag.String("months", "months.yaml", "filepath of YAML file that provides month name to month number in various languages")
 	manuallyHandledFilename := flag.String("manual", "", "filepath of YAML file that provides manually derived data for some SPD files")
+	cpuProfile := flag.String("cpu-profile", "", "filepath to which a cpu profile will be written")
 	flag.Parse()
 
 	args_error := false
@@ -151,6 +153,18 @@ func main() {
 	if len(inputFiles) == 0 {
 		fmt.Println("At least one input file is required.")
 		os.Exit(3)
+	}
+
+	if *cpuProfile != "" {
+		f, err := os.Create(*cpuProfile)
+		if err != nil {
+			log.Fatal("could not create CPU profile: ", err)
+		}
+		defer f.Close()
+		if err := pprof.StartCPUProfile(f); err != nil {
+			log.Fatal("could not start CPU profile: ", err)
+		}
+		defer pprof.StopCPUProfile()
 	}
 
 	pathToCDROM := build_path_to_CDROM_map(*cdromsFilename)
@@ -396,23 +410,12 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 		}
 
 	}
-	// Eliminate any trailing System Support Addendum text that may be appended.
-	// Everything from the first occurrence of
-	//    System
-	//    Support
-	//    Addendum
-	// is eliminated.
-	spd_text := string(bytes)
-	re_ssa := regexp.MustCompile(`(?ms)(\A.*?)(^\s*System\s*$\s*Support\s*$\s*Addendum\s*$.*)`)
-	drop_ssa := re_ssa.FindAllStringSubmatch(spd_text, -1)
-	if len(drop_ssa) > 0 {
-		spd_text = drop_ssa[0][1]
-	}
+
+	// Remove any potential (trailing) SSA text
+	spd_text := eliminateSSA(bytes)
 
 	// Find the SPD ID and the SPD title
-	re_spaces := regexp.MustCompile(`\s+`)
 	product_text, spd_marker := find_product_text(spd_text)
-	re_spd := regexp.MustCompile(`(?ms)` + spd_marker + `:?\s+([A-Z0-9]{1,2}(?:\.|-)[A-Z0-9]{1,2}(?:\.|-)[A-Z0-9]{1,2})`)
 	if len(product_text) == 0 {
 		spd.Notes = spdFilename
 	} else {
@@ -420,10 +423,12 @@ func analyse_spd_file(spdFilename string, pathToCDROM PathToCDROM, monthNamesToD
 		if verbose {
 			fmt.Println("Found text: [" + raw_title + "]")
 		}
+		re_spd := regexp.MustCompile(`(?ms)` + spd_marker + `:?\s+([A-Z0-9]{1,2}(?:\.|-)[A-Z0-9]{1,2}(?:\.|-)[A-Z0-9]{1,2})`)
 		spd_matches := re_spd.FindAllStringSubmatch(raw_title, -1)
 		if len(spd_matches) == 1 {
 			raw_spd := spd_matches[0][0]
 			spd.ID = spd_matches[0][1]
+			re_spaces := regexp.MustCompile(`\s+`)
 			spd.Title = strings.TrimSpace(re_spaces.ReplaceAllLiteralString(strings.ReplaceAll(raw_title, raw_spd, ""), " "))
 			// VAX EDI (UK) SPD contains this extra waring text in the title. Simply remove it unconditionally.
 			spd.Title = strings.ReplaceAll(spd.Title, "This product is normally supplied in the U.K. only. For availability and conditions of supply in other countries, please contact the local DIGITAL office.", "")
@@ -559,6 +564,43 @@ func build_CDROM_identifier(path string, pathToCDROM PathToCDROM) string {
 		result = cdrom.Title + " " + build_CDROM_month_year_date(cdrom.Date) + " Disc " + strconv.Itoa(cdrom.Number) + " of " + strconv.Itoa(cdrom.Total)
 	}
 	return result
+}
+
+// Eliminate any trailing System Support Addendum text that may be appended to the SPD file we wish to analyse.
+// Everything beyond the first occurrence of
+//    System
+//    Support
+//    Addendum
+// is eliminated.
+//
+// Do this by looking for successive lines that (after removal of white space) consist of just the words "system", "support" and "addendum".
+// Any intervening text should cause the match to fail and return to looking for a line of just "System"
+// Doing this "manually" proves to be quicker than using a regexp!
+// fileContents is a byte array of the entire SPD file.
+// The return value is a multiline string of the file contents up to the "Addendum" line
+func eliminateSSA(fileContents []byte) string {
+	var partialSpdText strings.Builder
+	scanner := bufio.NewScanner(strings.NewReader(string(fileContents)))
+	const (
+		seenNothing  = iota
+		seenSYSTEM   = iota
+		seenSUPPORT  = iota
+		seenAddendum = iota
+	)
+	ssaScanState := seenNothing
+	for scanner.Scan() {
+		partialSpdText.WriteString(scanner.Text() + "\n")
+		if strings.ToUpper(strings.TrimSpace(scanner.Text())) == "SYSTEM" {
+			ssaScanState = seenSYSTEM
+		} else if (ssaScanState == seenSYSTEM) && (strings.ToUpper(strings.TrimSpace(scanner.Text())) == "SUPPORT") {
+			ssaScanState = seenSUPPORT
+		} else if (ssaScanState == seenSUPPORT) && (strings.ToUpper(strings.TrimSpace(scanner.Text())) == "ADDENDUM") {
+			break
+		} else {
+			ssaScanState = seenNothing
+		}
+	}
+	return partialSpdText.String()
 }
 
 // Find the title part of the SPD. This lies between two key phrases that depend on the SPD language.
@@ -772,6 +814,6 @@ func build_CDROM_month_year_date(yyyy_mm string) string {
 
 // Replace multiple spaces, newline and CR with a single space
 func TrimSpacesAndNewLines(s string) string {
-	re := regexp.MustCompile(` +|\r|\n`)
-	return re.ReplaceAllString(s, " ")
+	re_collapse_wsp := regexp.MustCompile(` +|\r|\n`)
+	return re_collapse_wsp.ReplaceAllString(s, " ")
 }
