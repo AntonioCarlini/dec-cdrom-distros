@@ -1,0 +1,446 @@
+
+                              DIGITAL
+
+Software
+Product
+Description
+
+______________________________________________________________________
+
+PRODUCT NAME: Volume Shadowing for OpenVMS, Version 7.0 SPD 27.29.13 
+
+Note: This is the Software Product Description (SPD) for the following
+two products:
+
+o  Volume Shadowing for OpenVMS VAX
+
+o  Volume Shadowing for OpenVMS Alpha
+
+Except where specifically noted, the features described in this SPD
+apply to both products. The license and part number information is 
+architecture specific. Please refer to the Ordering Information section
+of this SPD for further details.
+
+DESCRIPTION
+
+Volume Shadowing for OpenVMS is a System Integrated Product (SIP) that
+runs on the VAX and Alpha families of processors. Volume Shadowing for
+OpenVMS implements a RAID Level 1 storage strategy that provides high
+data availability for disk devices by preventing data loss resulting
+from media deterioration or controller or device failure. It prevents
+storage subsystem component failures from interrupting system or 
+application operations.
+
+Volume shadowing, sometimes referred to as disk mirroring, maintains
+redundant copies of data on a collection of disks (one copy per disk)
+called a shadow set. Shadow sets consist of one, two, or three 
+compatible disk volumes or shadow set members. This duplication of data
+provides enhanced data availability; if data is recorded on multiple
+disk volumes, it remains accessible if one volume becomes unavailable.
+Disk read and write operations continue transparently with the remaining
+members of the shadow set.
+
+                                                      December 1995
+
+                                                        AE-PY1JD-TE
+
+ 
+
+Because a shadow set is made up of multiple disks containing the same
+data, the Volume Shadowing for OpenVMS software can read data from any
+member of the shadow set. For each read operation, the Volume Shadowing
+for OpenVMS software determines which disk to read from using an
+algorithm that maximizes performance. Volume Shadowing for OpenVMS
+ensures that disk write operations are duplicated on all shadow
+set members. For maximum performance, Volume Shadowing for OpenVMS 
+ensures that shadow set write operations are issued to shadow set 
+members in parallel.
+
+If some data on a shadow set member becomes unreadable, the shadowing
+software can read the data from another available member. Additionally,
+with DIGITAL Storage Architecture (DSA) disks, the member
+with unreadable data can be repaired by rewriting the data to good,
+replacement areas provided on each disk. Small Computer Systems 
+Interface (SCSI) devices certified by Digital for use with volume
+shadowing support data repair. For other SCSI devices, replacement and
+repair algorithms are device specific.
+
+OpenVMS VAX and Alpha system disks and any Files-11 On-Disk Structure
+2 (ODS-2) data disks that are certified by Digital can be volume 
+shadowed. Spiralog data disks can also be volume shadowed. For more 
+information, refer to the Hardware Requirements section of this SPD.
+
+Volume Shadowing for OpenVMS implements a host-based (phase II) 
+approach to shadowing disk devices. Previous versions of Volume 
+Shadowing for OpenVMS VAX also implemented a controller-based (phase I)
+approach to disk shadowing. Phase I is no longer available or supported.
+
+For the purposes of this document, the term CPU is used to refer to
+a single VAX or Alpha computer, containing one or more processors. A
+CPU can be a standalone system or a member of a VMScluster system. The
+term VMScluster refers to a cluster that may contain a mix of VAX 
+systems and Alpha systems configured together.
+
+Volume Shadowing for OpenVMS supports clusterwide shadowing of 
+Digiital SCSI and DSA disk storage systems. Specifically, this 
+implementation supports:
+
+o  HSC, HSD, HSF, HSJ, HSZ, and K.SCSI controlled disks
+
+                                 2
+
+ 
+
+o  All DSA and Digital SCSI adapters and controllers that are locally
+   connected to a CPU
+
+o  RF-series controllers and disks connected to the
+   Digital Storage Systems Interconnect (DSSI)
+
+Volume Shadowing also supports OpenVMS MSCP served DSA and Digital SCSI
+disks located within any supported VMScluster configuration. Volume
+Shadowing for OpenVMS allows the shadowing of disks that are accessible
+from the system on which shadowing is installed. An OpenVMS system
+parameter enables shadowing at system initialization.
+
+Configuration Overview
+
+Volume Shadowing for OpenVMS requires a minimum of one CPU, a disk 
+controller, and a disk unit that is either DSA compliant or SCSI 
+compliant. Although only one disk is required, there must be two or more 
+disks in a shadow set in order to maintain multiple copies of the same data.
+This protects against failure or deterioration of a single volume.
+
+Using two controllers provides a further guarantee of data availability
+in the event that a single controller fails. VMScluster systems
+can be configured with multiple CPUs, interconnects, controllers, and
+disks; the resulting configurations can provide extremely high data
+availability.
+
+Shadow Set Membership
+
+A shadow set can have one, two, or three members. After the failure
+of one member of a two-member shadow set, the shadow set can continue
+operation with the remaining member.
+
+Shadow set members can be added to or removed from the shadow set at
+any time without affecting system or user operation.
+
+A disk can be removed from the shadow set either by operator command
+or automatically by the shadowing software. An inoperative disk is 
+removed from the shadow set automatically; operator intervention is not
+required.
+
+                                 3
+
+ 
+
+A disk is added to a shadow set on explicit operator command only. The
+shadowing software ensures that data on the newly added disk is made
+consistent with the other member(s) by means of a copy operation. Full
+read and write access to the shadow set continues while the copy 
+operation is in progress.
+
+Transparency to the End User
+
+To users and application programs, Volume Shadowing for OpenVMS trans-
+parently combines the physical members of a given shadow set into a
+single virtual disk. The shadow set virtual disk acts as a single disk;
+user or application program modifications are not necessary to 
+propagate write data to all of the members of a shadow set; Volume
+Shadowing for OpenVMS software propagates the data to all shadow set
+members automatically. Similarly, user and application read operations
+to the virtual disk are transparently routed to the optimal physical
+shadow set member.
+
+Volume Shadowing for OpenVMS is invisible to application programs and
+users. All commands and programming language features that address data
+on unshadowed disks can be used unchanged to address data on shadowed
+disks.
+
+Compatibility
+
+Volume Shadowing for OpenVMS Alpha is compatible and can operate with
+Volume Shadowing for OpenVMS VAX. The use of both products in a mixed-
+architecture VMScluster (VAX and Alpha machines clustered together)
+can enable the sharing of data disks between VAX and Alpha systems.
+System disks can be shared among VAX nodes or Alpha nodes in a VMScluster.
+A single system disk, however, cannot be shared for booting between
+VAX and Alpha systems in a VMScluster because booting is architecture 
+specific.
+
+
+
+
+
+
+
+                                 4
+
+ 
+
+Configuration Limits
+
+Volume Shadowing for OpenVMS supports a maximum of 400 disks in 
+multimember (2 or 3 member) shadow sets on a single VMScluster. An
+unlimited number of single member shadow sets are allowed on the same
+VMScluster. These limits are independent of controller and device type.
+
+Configuration Restrictions
+
+Controller-based Volume Shadowing for OpenVMS VAX is no longer available.
+One member of a former phase I shadow set can be mounted to form a
+phase II shadow set, and thus allow access to the data.
+
+All members of a given shadow set must have the same disk geometry (same
+number of sectors, tracks, and cylinders) and have the same LBNs 
+(logical block numbers). For example, two RA92s could form a shadow set.
+An RZ28 and an RZ28B could also form a shadow set.
+
+Shadow set members cannot have hardware write protection enabled. 
+Hardware write protection stops volume shadowing software from 
+maintaining identical volumes.
+
+Volume Shadowing for OpenVMS does not support shadow sets mounted with
+the /FOREIGN qualifier.
+
+Volume Shadowing for OpenVMS provides support for Digital SCSI disks
+and controllers. It is also possible to use shadowing with third-party
+SCSI disks that have READL (read long) and WRITEL (write long) 
+commands implemented and that use the OpenVMS SCSI disk driver. Features
+are restricted when SCSI disks that do not support READL and WRITEL
+are shadowed; disk bad-block errors resulting from the use of these
+disks can cause members to be removed from the shadow set. By default,
+the OpenVMS Mount utility does not permit SCSI disks to become 
+members of a shadow set if they do not implement READL and WRITEL. This
+behavior can be overridden with the MOUNT qualifier /NO_FORCED_ERROR,
+but to do so places the data on these disks in jeopardy.
+
+
+
+
+                                 5
+
+ 
+
+HARDWARE REQUIREMENTS
+
+Volume Shadowing for OpenVMS does not depend on specific hardware in
+order to operate. All shadowing functions can be performed on any 
+supported CPU. Members of a shadow set can be located on any single CPU
+or anywhere in a VMScluster system. There are no restrictions on the
+location of shadow set members beyond the valid disk configurations
+defined in the OpenVMS Operating System Software Product Description
+(SPD 25.01.xx) and the OpenVMS Cluster Software Product Description
+(SPD 29.78.xx).
+
+Disk Controller Support
+
+Volume Shadowing for OpenVMS supports all disk controllers listed as
+supported in the OpenVMS Operating System Software Product Description
+(SPD 25.01.xx).
+
+Disk Drive Support
+
+Volume Shadowing for OpenVMS supports all disk drives listed as 
+supported in the OpenVMS Operating System Software Product Description
+(SPD 25.01.xx), with the following constraints and exceptions:
+
+o  RF35 and RF73 disk devices must use at minimum firmware version T392F.
+
+o  RF36 and RF74 disk devices must use at minimum firmware version V427P.
+
+o  KDM70 controllers must be at minimum microcode revision 4.3.
+
+o  RZ disks attached to a local VAX SCSI controller on VAX 4000 and
+   VAX 3000 series systems have limited error-handling capabilities.
+   Note that these configurations provide full data replication.
+
+VMScluster Environment
+
+Volume Shadowing for OpenVMS is fully supported in a VMScluster when
+installed on any valid and licensed configuration. Volume Shadowing
+for OpenVMS allows shadowing of disks that are locally connected to
+
+
+                                 6
+
+ 
+
+the VAX or Alpha system on which this software is installed. In 
+addition, Volume Shadowing for OpenVMS allows a user on the OpenVMS
+system to shadow disks connected to other VAX or Alpha systems within the
+VMScluster.
+
+A VMScluster quorum disk cannot be shadowed.
+
+For additional information, refer to the OpenVMS Cluster Software 
+Product Description (SPD 29.78.xx).
+
+SOFTWARE REQUIREMENTS
+
+Volume Shadowing for OpenVMS Version 7.0 is a System Integrated
+Product that requires OpenVMS Version 7.0.
+
+For additional information, and minimum software and firmware 
+revisions for storage subsystems, refer to the OpenVMS Operating System
+Software Product Description (SPD 25.01.xx).
+
+OPTIONAL SOFTWARE
+
+Optional products that may be useful when running Volume Shadowing for
+OpenVMS include:
+
+o  OpenVMS Cluster Software (SPD 29.78.xx)
+
+o  DECram for OpenVMS
+
+o  VAXsimPLUS
+
+o  StorageWorks RAID Software for OpenVMS (SPD 46.49.xx)
+
+GROWTH CONSIDERATIONS
+
+The minimum hardware and software requirements for any future version
+of this product may be different from the requirements for the 
+current version.
+
+
+
+                                 7
+
+ 
+
+DISTRIBUTION AND INSTALLATION
+
+Volume Shadowing for OpenVMS Version 7.0 is a System Integrated 
+Product that is distributed and installed with the OpenVMS operating 
+system Version 7.0.
+
+ORDERING INFORMATION
+
+For Volume Shadowing on OpenVMS VAX:
+
+o  Software Capacity Licenses: QL-AB2A*-**
+
+o  Software Per-Disk Licenses: QL-2A1AA-3B
+
+o  Software Documentation: QA-AB2AA-GZ
+
+o  Software Product Services: QT-AB2A*-**
+
+For Volume Shadowing on OpenVMS Alpha:
+
+o  Software Capacity Licenses: QL-2A1A*-**
+
+o  Software Per-Disk Licenses: QL-2A1AA-3B
+
+o  Software Documentation: QA-AB2AA-GZ
+
+o  Software Product Services: QT-2A1A*-**
+
+*  Denotes variant fields. For additional information about available
+   licenses, services, and media, refer to the appropriate price book.
+
+SOFTWARE LICENSING
+
+This software is furnished under the licensing provisions of Digital
+Equipment Corporation's Standard Terms and Conditions.
+
+License Management Facility Support:
+
+Volume Shadowing for OpenVMS supports the OpenVMS License Management
+Facility (LMF).
+
+Licenses for Volume Shadowing for OpenVMS are sold on either a 
+capacity or a per-disk basis.
+
+                                 8
+
+ 
+
+A capacity license allows a varying number of disks to be shadowed on
+a single CPU, up to the maximum specified in the Configuration 
+Limits section. When using a capacity licensing scheme in a VMScluster,
+every CPU in a VMScluster that mounts a shadow set must have a 
+properly sized Volume Shadowing for OpenVMS capacity license installed.
+
+Alternatively, licenses are available on a per-disk basis using 
+concurrent user licensing. With this type of licensing, one per-disk 
+license is required for every disk that may become a member of a shadow
+set. The per-disk license is attached to a particular disk during the
+MOUNT process. That disk can then be included in a shadow set by any
+OpenVMS VAX member or OpenVMS Alpha member of the VMScluster with 
+access to that disk.
+
+Both methods of licensing can coexist in a single VMScluster.
+
+For more information about the License Management Facility, refer to
+the OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+or the OpenVMS License Management Utility Manual in the OpenVMS doc-
+umentation set.
+
+For more information about Digital's licensing terms and policies, 
+contact your local Digital office.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of service options are available from Digital. For more 
+information, contact your local Digital office.
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by Digital with the 
+purchase of a license for the product as defined in the Software Warranty
+Addendum of this SPD.
+
+The previous information is valid at time of release. Please contact
+your local Digital office for the most up-to-date information.
+
+
+
+                                 9
+
+ 
+
+© 1995 Digital Equipment Corporation.
+  All rights reserved.
+
+[TM] The DIGITAL logo, DECram, Digital, DSSI, HSC, HSC40, HSC50,
+     HSC60, HSC65, HSC70, HSC90, HSC95, KDM, MSCP, OpenVMS, 
+     OpenVMS Volume Shadowing, RA, RF, RZ, StorageWorks, VAX, 
+     VAXcluster, VAXsimPLUS, and VMScluster are trademarks of Digital
+     Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                10
