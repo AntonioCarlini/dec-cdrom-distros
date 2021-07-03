@@ -1,0 +1,372 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC Signaling System 7 (DECss7) for OpenVMS[*],  SPD
+ 34.19.00                Version 2.1
+
+ DESCRIPTION
+
+ DEC Signaling System 7 (DECss7) is a communication product. It allows
+ VAX-based telecommunication applications to be connected to Signal-
+ ing System Number 7 networks that conform to CCITT Blue-Book Recom-
+ mendations (1988), or ANSI.
+
+ Environment
+
+ DECss7 provides end-node connectivity to a Signaling System 7 network.
+ The connectivity can be used to provide "Home Location Registers" (HLR),
+ "Authentication Centers" (AUC) or "Equipment Identity Registers" (EIR)
+ in Mobile Networks, and "Service Control Points" (SCP) in Intelligent
+ Networks.
+
+ Components
+
+ DECss7 implements the following functions:
+
+ o  Message Transfer Part Level 1 (MTP1)
+
+    For connection to the signaling network, DECss7 uses the standard
+    Digital synchronous DSV11 Communications Controller with an exter-
+    nal clock. Bit-rates up to 64 Kb/s are supported. One active chan-
+    nel per DSV11 is supported, and a Front-End Processor can support
+    a maximum of 2 DSV11s.
+
+    V.35 and V.36/V.11 physical connections are available. E1 and T1
+    connections can be provided with the use of a multiplexer.
+
+ ____________________
+
+ The   terms OpenVMS and VMS refer to the OpenVMS operating system.
+
+                               DIGITAL                   August 1992
+
+                                                         AE-PHT5A-TE
+
+ 
+
+ o  Message Transfer Part Level 2 (MTP2)
+
+    DECss7 implements the Basic Error Correction method. For CCITT, only
+    Discard is implemented. For ANSI, both Discard and Accept are im-
+    plemented.
+
+ o  Message Transfer Part Level 3 (MTP3)
+
+    Discrimination: DECss7 implements end-node functions; DECss7 rec-
+    ognizes itself as a single Point-Code.
+
+    Distribution: DECss7 implements a single User-Part: SCCP.
+
+    Routing: Associated and Quasi-Associated modes are supported. The
+    maximum number of Destination Point-Codes (DPC) is parametrable at
+    configuration (no logical limitation). There may be up to 16 Routes
+    per DPC with a single LinkSet per Route. The way load-sharing or
+    priority resolution are performed across Routes for a DPC or across
+    Links for a LinkSet is settable during operation.
+
+    Congestion: No procedure implemented.
+
+    Traffic Management: MTP Restart is not implemented. All other pro-
+    cedures are implemented.
+
+    Link Management: DECss7 implements the basic link management pro-
+    cedures.
+
+    Route Management: Reception of Transfer Allowed/Prohibited messages
+    is processed. Transfer Restricted messages are handled in ANSI, but
+    not in CCITT. The Route-Set-Test procedure is implemented.
+
+    Testing and Maintenance: DECss7 implements the procedures described
+    in the Q.707 Recommendation. This is used for putting links into
+    service and processing Adjacent Signaling Point Restart procedures.
+
+ o  Signaling Connection Control Part (SCCP)
+
+    DECss7 implements the two connectionless classes: Class 0 and Class
+    1 (sequenced).
+
+    No Global Title translation is performed, however Global Title ad-
+    dressing is supported.
+
+                                  2
+
+ 
+
+ o  Transaction Capabilities Application Part (TCAP)
+
+    DECss7 implements both the structured dialogue and unidirectional
+    options.
+
+ o  Management
+
+    Any component of DECss7 is an entity that may be controlled and mon-
+    itored: in particular, the applicable measurements specified in the
+    Q.791 Recommendation are made accessible or may be deduced; sim-
+    ilarly, any event (e.g., link failure) may be reported.
+
+    For the design of the management structure of DECss7, the Digital
+    Enterprise Management Architecture (EMA) (Director/Entity Frame-
+    work) is used.
+
+ Application Programming Interface
+
+ The DECss7 application interface allows an application to open or close
+ TCAP dialogues, to exchange components, and to handle special condi-
+ tions which occur asynchronously during a dialogue.
+
+ The procedures of the interface are mapped on the TCAP primitives and
+ consist of a library of routines (requests and indications) linked to
+ the application software.
+
+ It is offered under the OpenVMS Operating System and can be called us-
+ ing any programming language.
+
+ Management Programming Interface
+
+ This interface allows a management application to access the inter-
+ nal functions of DECss7 to control and monitor them.
+
+ It consists of a library of routines accessible under the OpenVMS Op-
+ erating System and can be called using any programming language.
+
+ DECss7 is shipped with a basic management application allowing it to
+ configure and start a platform; it offers a command-line human inter-
+ face.
+
+ SCCP Management Messages Interface
+
+                                  3
+
+ 
+
+ Similar to the Management Programming Interface, this interface is a
+ set of routines allowing an application to send or receive SCCP Man-
+ agement Messages, exchanged with the signaling network or remote net-
+ work users.
+
+ Distributed Implementation
+
+ DECss7 is designed to run on a distributed processing structure. The
+ links of a LinkSet may be distributed across several Front-End Pro-
+ cessors while having the same Signaling Point Code value. These Front-
+ End Processors are interconnected, via Ethernet, with one or more Back-
+ End Processors. Applications run on these Back-End processors. A given
+ application, identified by its SubSystem Number, may have several copies
+ running on different Back-End Processors. DECss7 is not supported on
+ configurations which use an Ethernet bridge. Performance
+
+ When run on the Front-End based on the VAX 4000-300 processor (refer
+ to the HARDWARE REQUIREMENTS section), DECss7 has a throughput of 120
+ incoming application-level Message Signal Units per second (MSU/s) and
+ 120 outgoing MSU/s; this amount of traffic may correspond to one or
+ two active links per Front-End.
+
+ Please contact your local Digital office for information on the per-
+ formance of DECss7 on other 4000 series machines.
+
+ The mean round-trip delay for a loop-back above the TCAP Application
+ Programming Interface is 70ms. This does not include any delay due to
+ the application itself.
+
+ Dimensioning
+
+ The sizing and configuring of a DECss7 platform depends on the num-
+ ber of links required, performance goals, availability requirements,
+ and the size of the application. For more information, contact your
+ local Digital office.
+
+ Modifications to the Product
+
+
+
+                                  4
+
+ 
+
+ DECss7 may be adapted to most of the country/operator specific inter-
+ pretations of the Signaling System 7 protocol. The following is a list
+ of possible modifications:
+
+ o  Message Transfer Part Level 3 (MTP3)
+
+    Have DECss7 recognize itself as several Point-Code values (aliases).
+
+    Implement international or national congestion procedures.
+
+    Process the Transfer Restricted procedure. Process the Transfer Con-
+    trolled procedure assuming former finalization of Blue-Books rec-
+    ommendation.
+
+    Implement MTP Restart procedure when finalized by CCITT.
+
+    Comply with 1984 (Red Books) or even 1980 (Yellow Books) CCITT Rec-
+    ommendations.
+
+ o  Signaling Connection Control Part (SCCP)
+
+    Have an extensive Global Title translation, either based on algo-
+    rithm or tables. In case of tables, they may be modified through
+    the Management Programming Interface.
+
+ o  Management
+
+    In general, any specific requirement on measurements or event re-
+    porting may be implemented.
+
+ o  Application Programming Interface
+
+    Offer to the programmer the SCCP Primitives of Service (X.213-like)
+    instead of or in addition to the TCAP Application Programming In-
+    terface. This is applicable in the Back-End processor.
+
+ o  SCCP Management Messages Interface
+
+    Offer this interface as part of the Application Programming Inter-
+    face.
+
+ o  Distribution
+
+    Have a monolithic (single CPU) implementation of the whole proto-
+    col.
+
+                                  5
+
+ 
+
+ For more information, contact your local Digital office.
+
+ Using a customized DECss7 requires the customer and Digital to jointly
+ plan a set of Customer Services.
+
+ INSTALLATION
+
+ Digital recommends that the customer's first purchase of this prod-
+ uct include Digital Installation Services.
+
+ HARDWARE REQUIREMENTS
+
+ Front-End Processors
+
+ The DECss7 product is qualified to run on Front-End processors , based
+ on the VAX 4000 series of machines. For more information, refer to the
+ System Support Addendum (SSA 34.19.00-x).
+
+ Back-End Processors
+
+ Processor and/or configurations as specified in the System Support Ad-
+ dendum (SSA 34.19.00-x).
+
+ SOFTWARE REQUIREMENTS
+
+ Front-End
+
+ OpenVMS Operating System
+
+ VAX Wide Area Network Device Drivers License
+
+ Back-End
+
+ OpenVMS Operating System
+
+ Refer to the System Support Addendum (SSA 34.19.00-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+
+
+                                  6
+
+ 
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-GUTA9-J*
+
+ Software Media and Documentation: QA-GUTAA-H5
+
+ Software Documentation: QA-GUTAA-GZ
+
+ Software Product Services: QT-GUTA9-L*
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ The DECss7 licensing fee is calculated by using the "clusterwide" tiers
+ algorithm and is based on the amount of "units" of license rating ac-
+ cumulated by the Back-End Processors.
+
+ The right to use DECss7 on the Front-End Processors is included with
+ the DECss7 Back-End Processor License.
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+ or the License Management Facility Manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+                                  7
+
+ 
+
+
+
+ SOFTWARE PRODUCT SERVICES
+
+ Consulting services relating to this product, and services to provide
+ implementation of particular customer-specific variants to the stan-
+ dard product are available. A variety of service options are avail-
+ able from Digital. For more information, contact your local Digital
+ office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+
+ 
+
+ [TM]The DIGITAL Logo, CI, DEC, DECss7, MicroVAX, OpenVMS, Q-bus,
+    TK, VAX, VAXcluster, VAXft, VAXserver, VAXstation, and VMS are
+    trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  8

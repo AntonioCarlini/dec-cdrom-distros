@@ -1,0 +1,668 @@
+ 
+
+
+                               DIGITAL
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  POLYCENTER HSM for OpenVMS Version 2.0A SPD 46.38.07
+
+ PRODUCT DESCRIPTION
+
+ HSM for OpenVMS is a layered software product that extends the Open-
+ VMS file system to allow efficient management of infrequently accessed
+ (dormant) data. HSM migrates dormant data from online storage to less
+ expensive nearline or offline (shelf) storage. The movement of dor-
+ mant data to shelf storage is called shelving. The shelved data can
+ be automatically and transparently returned to online storage when needed.
+ HSM will also save valuable backup time, since the shelved data is al-
+ ready located on secure, removable media.
+
+ New features in HSM Version 2.0 for OpenVMS include:
+
+ o  Tape Repack *
+
+ o  Backup via Shelving
+
+ o  Multiple Catalog Support
+
+ o  The ability to move data between archive classes
+
+ o  Shelving performance enhancements
+
+ o  Catalog analysis and repair
+
+ * The tape repacking feature of HSM V2.0A requires MDMS V2.8 and uses
+ components of the Save Set Manager (SSMgr) product. The SSMgr V1.3-
+ 1 kit needs to be installed; however the SSMgr license is not required
+ for HSM use. The SSMgr license is required if the product is to be used
+ independently of HSM.
+
+                                                        October 1996
+
+                                                         AE-PWNTH-TE
+
+ 
+
+ HSM for OpenVMS Operation
+
+ HSM operates in Basic or Plus Mode. Basic mode uses its own media man-
+ ager and supports a limited number of tape devices. Plus mode allows
+ the use of advanced storage devices. If used for remote tape devices,
+ Plus Mode requires the Remote Device Facility[TM] (RDF) software. See
+ the OPTIONAL SOFTWARE section for details.
+
+ New and frequently accessed files remain online while older and less
+ active files are automatically, or manually, shelved in accordance with
+ user-defined policies. The movement of files between the online, near-
+ line, and offline areas is transparent to users and applications. The
+ directory information and file headers for shelved files are maintained
+ on online storage devices while the data itself is on the shelf de-
+ vice. When access is needed to the shelved data, HSM automatically re-
+ turns it to online storage. The file attributes may be viewed and mod-
+ ified without bringing the data back online.
+
+ Control over the execution of the shelving process is either explicit
+ or implicit. Explicit shelving is a process that has been started in
+ response to a DCL command. The command can be issued directly to the
+ OpenVMS Operating System or executed in an OpenVMS command procedure.
+ Implicit shelving is a process that has been started by HSM in response
+ to a trigger event or policy.
+
+ The transparent management of HSM is set through HSM policies which:
+
+ o  Specify which files are or are not to be shelved
+
+ o  Set a high water mark on the online storage to automatically trig-
+    ger shelving of dormant data
+
+ o  Set a low water mark as a space recovered goal when your files are
+    shelved
+
+ o  Specify which processes should cause automatic unshelving
+
+
+
+
+                                  2
+
+ 
+
+ HSM policies use predefined selection algorithms or scripts contain-
+ ing HSM-specific commands to shelve or unshelve files in response to
+ trigger events. Trigger events are situations that, when set by an HSM
+ policy, cause HSM to move files to shelf storage. Examples of specific
+ trigger events are listed below:
+
+ o  Volume occupancy full
+
+ o  Disk quota exceeded
+
+ o  High water mark reached
+
+ o  Scheduled policy execution
+
+ Trigger events, used in conjunction with appropriately designed se-
+ lection criteria, free up enough online disk space to satisfy the pol-
+ icy goal.
+
+ The selection criteria include definitions that determine the appro-
+ priate files to be shelved in response to the need for shelving. Ex-
+ amples of selection criteria include:
+
+ o  Least recently used and size combination
+
+ o  Least recently used
+
+ o  According to a user-defined script
+
+ HSM for OpenVMS supports file access to shelved files on client sys-
+ tems where access is through DFS, NFS, or PATHWORKS.
+
+ HARDWARE REQUIREMENTS
+
+ HSM for OpenVMS runs on the VAX and Alpha processors supported by Open-
+ VMS. For a detailed list of VAX processors supported by OpenVMS, see
+ the OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx).
+ For a detailed list of Alpha processors supported by OpenVMS, see the
+ OpenVMS Alpha Operating System Software Product Description (SPD 41.87.xx).
+
+
+                                  3
+
+ 
+
+ Devices Supported:
+
+ o  Supported tape devices, including Digital Linear Tape (DLT) load-
+    ers, and large tape libraries, such as the TL810 and TL820, as spec-
+    ified in the device support tables.
+
+ o  RW500 series optical libraries
+
+ The optical libraries are supported in the same manner as disks. Both
+ disks and optical libraries can serve as volatile (staging) or non-
+ volatile (shelving) HSM caches.
+
+ OSMS is required when using Optical Libraries. See the OPTIONAL SOFT-
+ WARE section for details.
+
+ o  Remote Tapes
+
+ Remote tapes are supported through the use of the RDF utility in Plus
+ mode only. See the OPTIONAL SOFTWARE section for details
+
+ Device Restrictions:
+
+ HSM does not provide shelving support for the following:
+
+ o  Read-only devices such as CD-ROMs, or any disk that is software locked
+    or write-protected
+
+ o  Any device that is not flagged as a disk device in OpenVMS system
+    calls
+
+ A minimum system configuration to run HSM for OpenVMS includes:
+
+ o  16 MB memory
+
+ o  One or more CD-ROM drives in the VMScluster
+
+ o  One or more disk drives supported by OpenVMS
+
+
+
+                                  4
+
+ 
+
+ Disk Space Requirements (Block Cluster Size = 1)
+
+ ___________________________________________________________________
+             Blocks
+ Item________Needed___Description___________________________________
+
+ Install     28,000   Temporary block for installation
+ Kit
+
+ HSM Soft-   15,000*  Permanent blocks for software
+ ware
+
+ Catalog     100,000  Catalog grows at the average rate of 1.25
+                      blocks for each file copy shelved. Digital
+                      recommends that 100,000 blocks be set aside
+ _____________________initially_for_each_catalog____________________
+
+ *Note: 9K blocks reside on the system disk; remainder optionally on
+ another device
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options.
+
+ SOFTWARE REQUIREMENTS
+
+ o  OpenVMS Operating System V6.1 or V6.2
+
+ o  HSM Basic Mode does not require any other software other than the
+    OpenVMS Operation System.
+
+ o  HSM Plus Mode requires MDMS V2.5B or newer software, or SLS V2.5B
+    or newer software. An MDMS or SLS license is not required for HSM
+    use. This license is required only if MDMS or SLS is to be used in-
+    dependently of HSM.
+
+ o  The tape repacking feature of HSM V2.0A requires MDMS V2.8 and uses
+    components of the Save Set Manager (SSMgr) V1.3-1 product. The SS-
+    Mgr kit needs to be installed; however, the SSMgr license is not
+    required for HSM use. The SSMgr license is required if the SSMgr
+    product is to be used independently of HSM.
+
+                                  5
+
+ 
+
+ Note: The Guide to Operations manual for HSM, MDMS, and SSMgr is found
+ in the on-line documentation CD-ROM and may be ordered separately in
+ hard copy format.
+
+ SOFTWARE LICENSING
+
+ HSM for OpenVMS is licensed according to the amount of online stor-
+ age customers may free up through shelving files. One base license,
+ which includes 20 GB of storage capacity, is required for each VMSclus-
+ ter. Base licenses are available for all-VAX clusters, all-Alpha clus-
+ ters, and mixed architecture clusters. The base license is included
+ in the 140GB, 280GB and 1000GB capacity packages.
+
+ Additional storage capacity is licensed by purchasing one or more ca-
+ pacity licenses. Users who want to have virtually unlimited storage
+ capacity, with respect to current system capabilities, can purchase
+ the unlimited capacity license.
+
+ Note: In order to purchase concurrent upgrade licenses, users must show
+ proof that they previously purchased at least the same number of con-
+ current licenses.
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's standard terms and conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ OPTIONAL SOFTWARE
+
+ o  OSMS (Optical Storage Management Software) V3.3 is required for use
+    with RW500-series optical libraries. OSMS is described in Software
+    Product Description #47.46.
+
+ o  SLS Version 2.5B or higher can be used in conjunction with HSM for
+    an integrated Backup and HSM environment. SLS contains the media
+    management software (MDMS) and is described in Software Product De-
+    scription #29.67.
+
+
+
+                                  6
+
+ 
+
+ o  Remote access to tape devices in Plus Mode requires the Remote De-
+    vice Facility[TM] (RDF). RDF may be obtained by:
+
+    -  Purchase of SLS Version 2.5B or newer
+
+    -  Purchase of an RDF license directly from Touch Technologies, Inc.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity.
+
+ For more information on the OpenVMS License Management Facility, re-
+ fer to the OpenVMS Operating System Software Product Description or
+ the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section details any special hardware required by this
+ product.
+
+ VMScluster configurations are described in the VMScluster Software Prod-
+ uct Description (SPD 29.78.xx) and include CI, Ethernet, and Mixed In-
+ terconnect configurations.
+
+ OpenVMS Tailoring
+
+ For OpenVMS V6.x systems, the following classes are required for full
+ functionality of this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Programming Support
+
+ o  Utilities
+
+ o  System Programming Support
+
+ o  Secure User's Environment
+
+                                  7
+
+ 
+
+ o  Network Support
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx).
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware and software requirements for any future version
+ of this product may be different from the requirements for the cur-
+ rent version.
+
+ DISTRIBUTION MEDIA
+
+ This layered product is available as part of the OpenVMS Consolidated
+ Software Distribution on CD-ROM.
+
+ ORDERING INFORMATION
+
+ Base Licenses:
+
+ VAX only Cluster           QL-0NXA9-AA
+
+ VAX license update ser-    QT-0NXA9-L9
+ vice
+
+ Alpha only Cluster         QL-3J1A9-AA
+
+ Alpha license update       QT-3J1A9-L9
+ service
+
+ Mixed Cluster              QP-03PAA-01
+
+ Concurrent Use Capacity
+ Licenses:
+
+ 20 GB                      QL-2AWAA-3B
+
+ 140 GB                     QP-03TAA-01
+
+ 280 GB                     QP-03TAA-02
+
+ 500GB                      QL-2AWAA-3G
+
+ 1000GB                     QP-03TAA-03
+
+                                  8
+
+ 
+
+
+ Unlimited TB               QL-2AWAA-3H
+
+ OpenVMS Software Media:
+
+ VAX Software Products      QA-VWJ8A-A8
+ CD-ROM
+
+ VAX On-Line Documentation  QA-VYR8A-G8
+ CD-ROM
+
+ VAX Media and Documenta-   QA-YL48A-H8
+ tion CD-ROM
+
+ Alpha Software Products    QA-4KL8A-A8
+ CD-ROM
+
+ Alpha On-Line Documenta-   QA-4KM8A-G8
+ tion CD-ROM
+
+ Alpha Media and Documen-   QA-03XAA-H8
+ tation CD-ROM
+
+ Hard Copy Documentation
+ Kits
+
+ HSM Documentation Kit      QA-0NXAA-GZ
+
+ SSMgr Documentation Kit    QA-2YBAA-GZ
+
+ OpenVMS Software One Year
+ Subscription Services
+
+ VAX Software Media CD-ROM  QT-VWJ8A-C8
+
+ VAX On-Line Documentation  QT-VYR8A-C8
+ CD-ROM
+
+ VAX Media and Documenta-   QT-YL48A-C8
+ tion CD-ROM
+
+ Alpha Software Media       QT-4KL8A-C8
+ CD-ROM
+
+ Alpha On-Line Documenta-   QT-4KM8A-C8
+ tion CD-ROM
+
+ Alpha Media and Documen-   QT-03XAA-C8
+ tation CD-ROM
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+                                  9
+
+ 
+
+ SOFTWARE PRODUCT SERVICES
+
+ In addition to the media services listed above, a software license up-
+ date service is also available from Digital. For more information, con-
+ tact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ The above information is valid at time of release. Please contact your
+ local Digital office for the most up-to-date information.
+
+ [R] Motif is a registered trademark of Open Software Foundation,
+     Inc.
+
+ [TM] The DIGITAL Logo, Alpha, AXP, CI, Digital, MicroVAX, OpenVMS,
+     TK, VAX, VMScluster, VAXft, VAXserver, and VAXstation are
+     trademarks of Digital Equipment Corporation.
+
+ [TM] Remote Device Facility (RDF) is a trademark of Touch Technolo-
+     gies, Inc.
+
+ ©1996 Digital Equipment Corporation. All rights reserved.
+
+ DEVICE SUPPORT TABLES
+
+ HSM supports the nearline and offline devices listed in Tables 1 and
+ 2 with the specified adapter/controller. Items marked with an X are
+ supported in both HSM Basic and HSM Plus modes. Items marked with a
+ P are supported only in HSM Plus Mode. Support for any particular de-
+ vice and adapter/controller configuration is subject to the controller
+ and operating system SPDs. Table 3 describes the adapters/controllers
+ and any device restrictions.
+
+ The tables identify devices by Digital-known identifiers. If you use
+ third-party products that contain Digital drives, those drives are shown
+ in the tables under the Digital name.
+
+                                 10
+
+ 
+
+ If you have devices not shown on the list, contact your local Digi-
+ tal Customer Support center. Digital continually tests its software
+ on additional devices that may not have been added to this list.
+
+ Note: The STK 9360 Wolfcreek Silo is supported in Plus Mode when ac-
+ cess from VAX and Alpha machines is configured according to the man-
+ ufacturer's directions.
+
+ ___________________________________________________________________
+
+ Table_1:_SCSI_Devices_Supported____________________________________
+
+ Adapter
+ /Controller- SCSI           HSCnn
+ >___________InternalKZQSA___K.SCSI_HSJnn___HSDnn___________________
+
+ Devices
+
+ TLZ04       X       X
+
+ TLZ06       X       X       X      X       X
+
+ TLZ07       X       X              X       X
+
+ TSZ05       X       X
+
+ TSZ07       X       X       X      X       X
+
+ TZ30/50     X       X
+
+ TZ85        X       X
+
+ TZ86/87     X       X       X      X       X
+ /87N
+
+ TZ88        X       X       X      X       X
+
+ TKZ60       X       X       X      X       X
+
+ Robotics
+
+ TLZ6L       X       X       X
+
+ TLZ7L       X       X
+
+ TL810       P       P       P      P       P
+
+ TL812       P       P       P      P       P
+
+ TL820       P       P       P      P       P
+
+ TL822       P       P       P      P       P
+
+                                 11
+
+ 
+
+
+ ___________________________________________________________________
+
+ Adapter
+ /Controller- SCSI           HSCnn
+ >___________InternalKZQSA___K.SCSI_HSJnn___HSDnn___________________
+
+ TL826       P       P       P      P       P
+
+ TZ857       X       X
+
+ TZ867       X       X       X      X       X
+
+ TZ875/875N  X       X       X      X       X
+
+ TZ877/877N  X       X       X      X       X
+
+ TZ885/887___X_______X______________X_______________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 12
+
+ 
+
+ ___________________________________________________________________
+
+ Table_2:_DSA_Devices_Supported_____________________________________
+
+ Adapter                                           HSCnn
+ /Controller- DSSI                                         Q-
+ >___________Internal________KFQSA__KFMSA___KFMSB__K.SI____BUS____KDM70
+
+ Devices
+
+ TA77/78                                           X              X
+ /79
+
+ TA80/81                                           X       X      X
+ /81+
+
+ TA85/86                                           X              X
+
+ TA90/E                                            X              X
+
+ TA91/92                                           X              X
+
+ TF70        X
+
+ TF85/86     X               X      X       X
+
+ TK50/70                                                   X
+
+ Robotics
+
+ TA857/867                                         X
+
+ TF857/867   X               X      X
+
+ STK ACS                                           P
+ 4400
+
+ Optical_Devices
+
+ RV20                                                      P
+
+ RV64______________________________________________________P________
+
+ ___________________________________________________________________
+
+ Table_3:_Footnotes_to_Device_Tables________________________________
+
+ Item________Information____________________________________________
+
+ SCSI        Native SCSI bus from VAX3100, VAX4000, Alpha 3000, and
+ Internal    Alpha 4000 series machines
+
+                                 13
+
+ 
+
+
+ ___________________________________________________________________
+
+ Item________Information____________________________________________
+
+ KZQSA       QBUS-SCSI adapter (VAX)
+
+ KZMSA       XMI-SCSI adapter (Alpha)
+
+ KZBSA       BI-SCSI adapter
+
+ HSCnn       CRONIC 840 required for robotic control (nn=40, 60,
+ (K.SCSI)    70, 90, 95)
+
+ HSJnn       nn=30, 40; HSOF Version 2.5 required for loader sup-
+             port
+
+ HSDnn       nn=30, 40; HSOF Version 2.5 required for loader sup-
+             port
+
+ DSSI        Native DSSI bus on VAX 4000 and Alpha 4000 class ma-
+ Internal    chines
+
+ KFQSA       QBUS-DSSI adapter
+
+ KFMSA       XMI-DSSI adapter (VAX)
+
+ KFBSA       BI-DSSI adapter (Alpha)
+
+ KDM70       XMI-STI adapter
+
+ TL820       Does not support multi-cabinet TL820s
+
+ TZ875/875N  For HSJ and HSD controllers, requires TZ87 firmware
+             version 40 or higher
+
+ TZ877/877N  For HSJ and HSD controllers, requires TZ87 firmware
+ ____________version_40_or_higher___________________________________
+
+
+                                 14
