@@ -1,0 +1,500 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  VAX Message Router/P Gateway, Version 1.3        SPD
+ 28.94.03
+
+ DESCRIPTION
+
+ VAX Message Router/P Gateway (MRP) is a network server layered soft-
+ ware product that resides on an OpenVMS[TM] VAX[TM] system providing
+ interconnection between MAILbus[TM], Digital Equipment Corporation's
+ Message Router based electronic message transfer service, and IBM[R]'s
+ OfficeVision/VM[TM] (OV/VM) systems in an SNA network. Through MRP,
+ users of Digital office automation systems such as DEC MAILworks[TM]
+ and ALL-IN-1[TM] Integrated Office System can send and receive mes-
+ sages, documents, and binary files (MS-DOS[R] files for example) to
+ and from users of IBM OV/VM office systems. Simple messages (Notes)
+ may be exchanged with users of IBM's CMS systems.
+
+ VAX Message Router/P Gateway provides both address and content con-
+ version for messages and documents passed between the Digital[TM] and
+ the IBM OV/VM networks. In this way, users are not required to learn
+ any new commands or procedures except the new addresses representing
+ the users of the other network(s) with whom they can now communicate
+ by means of MRP. MRP connects to an IBM OV/VM host system and other
+ OV/VM nodes have access to the Digital network through their RSCS con-
+ nections over the SNA network to that IBM host. No Digital software
+ is required to be installed on the IBM system to accomplish these trans-
+ fers. With some restrictions, MRP allows users of IBM OV/VM office sys-
+ tems to communicate through MAILbus to other networks including X.400
+ public messaging services.
+
+ Message address conversion is accomplished through the Directory Ser-
+ vice (DDS) function of Message Router. Each Digital user sending and
+ receiving mail to and from IBM users must be registered in DDS and as-
+ signed an "alias" or virtual address for the OV/VM network. Limited
+ one-way message transfer from MAILbus to IBM is possible without user
+
+                               DIGITAL                 December 1993
+
+                                                         AE-KT27D-TE
+
+ 
+
+ registration in DDS. The recipient (addressee) list of a single mes-
+ sage and stored distribution lists can include both Digital and IBM
+ users. Delivery Confirmation and Non-Delivery Notification messages
+ are supported.
+
+ During MRP configuration, a number of options for message content con-
+ version may be chosen on a per-OV/VM node basis. To preserve maximum
+ revisable content, documents from the Digital network can be converted
+ to IBM's DCA Revisable Format. Where users of IBM systems only have
+ access to simple text editors, conversions of all messages and doc-
+ uments can be made to OV/VM Note format or DCF Final format. This op-
+ tion is available on a per destination OV/VM node basis and should also
+ be chosen to support the sending of CMS Notes to IBM VM systems where
+ OV/VM has not been installed. Digital text messages with one or more
+ attached text documents may be concatenated into a single document for
+ transfer to the OV/VM network. Alternatively messages containing mul-
+ tiple attachments from the Digital MAILbus network can be separated
+ into multiple individual messages by MRP for onward transmission to
+ a OV/VM system since the IBM network does not support messages with
+ more than one attachment. The product documentation describes the ca-
+ pabilities and limitations regarding this functionality.
+
+ Binary non-text file types, identified in the Digital network as DEC-
+ bodypart 7 (FOREIGN) or DECbodypart 11 (MS-DOS), will be transferred
+ unconverted to the IBM OV/VM network. Such files sent from a Digital
+ to an IBM OV/VM network will lose their Digital RMS attributes. This
+ binary file transfer capability is primarily intended for the trans-
+ fer of MS-DOS files between the Digital and IBM networks. Files tagged
+ as DCA RFT files (for example, a document created on a PC based word
+ processing system) can be identified in the OV/VM network as a DCA RFT
+ document. Not all Digital User Agents and Gateways can append these
+ tags to DECbodypart 7 or DECbodypart 11 files. Multiple binary files
+ attached to a single message may be passed to the IBM environment as
+ multiple messages. These conversion options are chosen during MRP con-
+ figuration.
+
+
+
+
+
+                                  2
+
+ 
+
+ Content and identity conversions for Digital to IBM transfers are sum-
+ marized in the following table. Conversions options are chosen on a
+ per OV/VM destination node basis; for example, all messages to users
+ on a particular OV/VM system will have the selected conversions per-
+ formed on them.
+
+ ___________________________________________________________________
+
+ Table_1:___________________________________________________________
+
+ Digital
+ Message          Default           Optional
+ Format___________Conversion________Conversion______________________
+
+ Simple Mail      OV/VM Note        DCA RFT or DCF Final
+ Message
+ (ASCII,
+ WPS-PLUS[TM],
+ DECdx[TM])
+
+ Simple Mail      OV/VM Note        DCA RFT, DCF Final or PC FILE
+ Messages with                      FLAG A
+ lines longer
+ than 80 charac-
+ ters
+ (ASCII,
+ WPS-PLUS,
+ DECdx)
+
+ Document         DCA RFT Docu-     OV/VM Note or DCF Final
+ (ASCII, DECdx,   ment
+ WPS-PLUS, DDIF
+ Text)
+
+ Binary File      No conversion
+ with RFT Tag     (DCA RFT)
+ (DECbodypart 7)
+
+ Binary File      No conversion
+ with no Tag      (UNKNOWN1)
+ (DECbodypart 7
+ or_11)_____________________________________________________________
+
+                                  3
+
+ 
+
+ Note:
+
+  o  "UNKNOWN1" type files appears to OV/VM users as type "OTHER."
+
+  o  Conversions to DCA RFT Level 3 Final Document format (RFT-F) are
+    not supported, conversions to DCA RFT are to DCA RFT Draft format
+    only.
+
+ Messages and documents from the IBM OV/VM network in DCA RFT format
+ may be converted to DECdx format or remain in DCA RFT format as a DEC-
+ bodypart 7 with an RFT tag. Not all versions of Digital User Agents
+ and Gateways support this tagging scheme. Other text and document file
+ types are converted to ASCII while the remainder are passed through
+ the MRP Gateway unconverted and identified as DECbodypart 7 or DECbodypart 11
+ files, and are assigned RMS fixed length 512 byte records. Binary file
+ transfer from OV/VM may be disabled during MRP configuration.
+
+ Content and identity conversion for IBM to Digital transfers are sum-
+ marized in the following table. Conversion options are chosen on a per
+ Gateway basis.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  4
+
+ 
+
+ ___________________________________________________________________
+
+ Table_2:___________________________________________________________
+
+ IBM OV/VM        Default           Optional
+ Message_Format___Conversion________Conversion______________________
+
+ CMS and OV/VM    ASCII Mail
+ Notes            Message
+ and CMS files
+
+ DCA RFT Doc-     DECdx Document    No conversion - Binary File
+ ument (Level                       with RFT Tag (DECbodypart 7)
+ 3 Final and
+ Draft)
+
+ DCF Final Form   ASCII Document
+ Documents
+
+ DCF Draft        ASCII Document
+ Documents        stripped of
+                  embedded format
+                  controls
+
+ PRINT files      ASCII File
+
+ PC FILE FLAG A   ASCII File
+
+ All other file   No conversion     No Conversion - Binary File
+ types            - Binary File     (DECbodypart 11)
+                  (DECbody part     or Rejected - Non-Delivery
+ _________________7)________________Notice_returned_to_Sender_______
+
+ Note: A OV/VM document with an accompanying message becomes a MAILbus
+ message with an attached document.
+
+ ALL-IN-1 Integrated Office System can automatically convert DECdx for-
+ mat to WPS-PLUS format. Other Digital user agents and MAILbus Gate-
+ ways can convert DECdx format to a format appropriate to their func-
+ tion. Since the capabilities of each vendor's word processing systems
+ are not identical and some control information is not transmitted, not
+ all attributes and functions are converted. The MRP product documen-
+ tation lists the restrictions. Users are responsible for understand-
+ ing the capabilities of destination systems when sending binary files.
+
+                                  5
+
+ 
+
+ Binary file transfer should not be used with ALL-IN-1 Integrated Of-
+ fice System, Version 2.2 or earlier nor with VMSmail (the OpenVMS Mail
+ Utility), Version 5.1 or earlier.
+
+ A single MRP installation will support messaging services between an
+ SNA based network of IBM OV/VM systems and a MAILbus network of Dig-
+ ital OpenVMS VAX systems and between the OV/VM network and any other
+ messaging network connected to that MAILbus network. Service levels
+ obtained in this latter case will depend on the characteristics of the
+ other network.
+
+ To provide connection to MAILbus, the VAX Message Router software is
+ required by and included with the software license and media kit for
+ VAX Message Router/P Gateway.
+
+ INSTALLATION
+
+ MRP forms only one part of a distributed multi-vendor electronic mes-
+ saging application. Important activities such as coordination with other
+ messaging components, modification of the IBM system parameters, and
+ the creation or update of subscriber entries in the directory service
+ must precede the installation of this product. Digital offers a num-
+ ber of services to assist customers with these tasks. Refer to the SOFT-
+ WARE PRODUCT SERVICES section for more information.
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Digital's Installation Services can be purchased as a separate ser-
+ vice.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Previously have installed all prerequisite hardware including ter-
+    minals.
+
+                                  6
+
+ 
+
+ o  Obtain, install and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment.
+
+ o  Demonstrate equivalency of operation for modems other than Bell Sys-
+    tem 201C, 208A or 209A type modems, or, in Europe, PTT approved modems.
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the DECnet SNA Gateway or
+    VMS/SNA and VAX Message Router/P.
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during the installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rates for time and materials.
+
+ Successful use of this product requires:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the installation activities.
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support the DECnet SNA Gateway or VMS/SNA and
+    VAX Message Router/P Gateway.
+
+ HARDWARE REQUIREMENTS
+
+ Processors and/or hardware configuration as specified in the System
+ Support Addendum (SSA 28.94.03-x).
+
+ Either a DECnet SNA Gateway system and OpenVMS VAX Load Host system
+ in a DECnet[TM] Ethernet local area network or, for single VAX sys-
+ tem connection to IBM, communications interfaces appropriate to the
+ VAX processor used, as specified in the Other Hardware Required sec-
+ tion of the System Support Addendum (SSA 28.94.03-x).
+
+
+
+                                  7
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ OpenVMS Operating System
+
+ DECnet[TM]-VAX or DECnet/OSI for OpenVMS
+
+ DECnet SNA Application Programming Interface for OpenVMS
+
+ VAX Message Router (included in the software license and media kit for
+ VAX Message Router/P Gateway)
+
+ For DECnet Ethernet Local Area Networks:
+
+ DECnet SNA Gateway for Channel Transport,
+
+ or
+
+ DECnet SNA Gateway for Synchronous Transport
+
+ For Single VAX System Connection to IBM:
+
+ VMS/SNA and
+
+ VAX WAN Device Drivers Kit
+
+ Refer to the System Support Addendum (SSA 28.94.03-x) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-VCGA*-**
+ Software Media: QA-VCGA*-**
+ Software Documentation: QA-VCGA*-GZ
+ Software Product Services: QT-VCGA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ VAX Message Router/P Gateway software license and media kit include
+ the software license and media kit for the required VAX Message Router
+ software.
+
+                                  8
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. A separate product authorization key (PAK) is not provided for
+ or required by the VAX Message Router product which is licensed and
+ distributed with the VAX Message Router/P Gateway.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ MAILbus products are components of larger distributed messaging ap-
+ plications, which may involve multiple vendors' systems in multiple
+ locations. Digital offers a number of consulting services to assist
+ customers in the planning, installation, management of these messag-
+ ing applications and related directory services, integration of PC-
+ based messaging systems, and the provision of network wide directory
+ services.
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+
+
+
+
+
+                                  9
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ Warranty Limitations
+
+ Digital has designed this product in accordance with the information
+ provide in the following IBM standards publications:
+
+ o  Document Content Architecture: Revisable Form Text (SC23-0758-1)
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ (includes 30xx and 43xx series) class processor systems configured to
+ support the versions and releases of the OV/VM program product shown
+ in Table 3. While this software may function correctly with other equip-
+ ment and software, Digital cannot offer its standard warranty and sup-
+ port services for this software, unless it has been tested by Digi-
+ tal with such equipment and software configurations.
+
+ VAX Message Router/P Gateway, Version 1.3 has been tested and certi-
+ fied against the following IBM software configurations:
+
+ ___________________________________________________________________
+
+ Table_3:___________________________________________________________
+
+ Software_Product____Version_Release_Modification_Level_____________
+
+ VM/ESA              1       1       1
+
+ VTAM for VM/ESA     3       4       1
+
+ RSCS                3       1       0
+
+ OfficeVision/VM     1       2       0
+
+ DISPLAYWRITE/370    2       2       0
+
+ DCF_________________1_______4_______0______________________________
+
+                                 10
+
+ 
+
+ Previous versions of VAX Message Router/P Gateway provided connection
+ to IBM's now discontinued Professional Office System (PROFS[R]) sys-
+ tems. While this functionality has not been removed from MRP, Digi-
+ tal can no longer guarantee support for this configuration since IBM
+ itself has withdrawn support for PROFS.
+
+ Absolute fidelity between an original document and the resulting doc-
+ ument as printed or displayed by the receiving system is not guaran-
+ teed. The differences between vendors' approaches to word processing
+ systems, the transformations required for the transfer and printing
+ of a document and the types of printer used may all affect the result-
+ ing printed document.
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+
+ [R] IBM and PROFS are registered trademarks of International Busi-
+    ness Machines Corporation.
+
+ [R] MS-DOS is a registered trademark of Microsoft Corporation.
+
+ [TM]OfficeVision/VM is a trademark of International Business Ma-
+    chines Corporation.
+
+ [TM]The DIGITAL Logo, ALL-IN-1, CI, DEC, DECdx, DEC MAILworks, DEC-
+    net, DECwindows, Digital, MAILbus, MicroVAX, OpenVMS, RA, RL,
+    TK, ULTRIX, VAX, VAXcluster, VAXft, VAXserver, VAXstation, VMS,
+    and WPS-PLUS are trademarks of Digital Equipment Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+                                 11

@@ -1,0 +1,645 @@
+ 
+
+ This SPD describes Digital SNA Printer Emulator for OpenVMS, which is
+ available for the OpenVMS VAX and OpenVMS AXP platforms. All infor-
+ mation applies to both platforms unless otherwise indicated.
+
+ DESCRIPTION
+
+ Digital SNA Printer Emulator for OpenVMS (PrE) is an OpenVMS layered
+ software product that allows suitably configured OpenVMS systems within
+ a DECnet or TCP/IP network or running VMS/SNA software to receive print-
+ able data from IBM[R] host-based applications. These applications will
+ originally have been developed to produce output for an IBM 3287 printer
+ in system mode that is connected to an IBM 3274 cluster controller in
+ a Systems Network Architecture (SNA) networking environment. Access
+ from the IBM system to OpenVMS systems is via one of the following prod-
+ ucts:
+
+ o  TCP/IP or DECnet connections:
+
+    o  DEC SNA Peer Server
+
+    o  DEC SNA Domain Gateway
+
+ o  DECnet-only connections
+
+    o  DECnet SNA Gateway for Synchronous Transport
+
+    o  DECnet SNA Gateway for Channel Transport
+
+    o  VMS/SNA - an OpenVMS VAX layered product that supports users on
+       the system where VMS/SNA is running
+
+ In an actual IBM 3287 environment, data transfer is one way (from host
+ to printer) and generates hard copy. The PrE Access software will al-
+ low OpenVMS users to direct the received output either to be printed
+ via the OpenVMS Print Symbiont or spooled to a disk file.
+
+ Features
+
+ The following is a summary of functions provided by PrE:
+
+ o  PrE is configured and controlled via a Digital Command Language (DCL)
+    style interface for ease of use.
+
+                                                       February 1996
+
+                                                         AE-DE55H-TE
+
+ 
+
+ o  PrE can accept data in SNA Character String (SCS) format (LU Type
+    1) and 3270 Data Stream format (LU Type 3).
+
+ o  PrE recognizes the following 3270 Data Stream orders:
+
+       CR - Carriage Return
+       DUP - Duplicate (converted to a semicolon)
+       EM - End Message
+       EUA - Erase Unprotected to Address
+       FF - Form-feed
+       FM - Field Mark (converted to an asterisk)
+       GE - Graphics Escape (converted to a hyphen)
+       NL - Newline
+       PT - Program Tab
+       RA - Repeat to Address
+       SBA - Set Buffer Address
+       SF - Start Fields
+
+ o  PrE supports the following 3270 Data Stream commands:
+
+       WRITE
+       ERASE/WRITE
+       ERASE/WRITE ALTERNATE
+       ERASE ALL UNPROTECTED
+
+ o  PrE will recognize the following SNA Character String orders:
+
+       BS - Backspace
+       CR - Carriage Return
+       FF - Form-feed
+       GE - Graphics Escape (converted to a hyphen)
+       HT - Horizontal Tab
+       IRS - Inter Record Separator
+       LF - Linefeed
+       NL - Newline
+       SHF - Set Horizontal Format
+       SVF - Set Vertical Format
+       TRN - Transparency
+       VCS - Vertical Channel Select
+       VT - Vertical Tab
+
+                                  2
+
+ 
+
+ o  PrE accepts but ignores the following SNA Character String orders:
+
+       BEL - Bell
+       ENP - Enable Presentation
+       INP - Inhibit Presentation
+       SLD - Set Line Density
+
+ o  PrE supports the 3287 printer Program Attention (PA1 and PA2) keys
+    and the CANCEL PRINT key using commands entered at the user inter-
+    face.
+
+ o  PrE does not support the Printer Authorization Matrix feature, and
+    it does not emulate the 3287's REPRINT key function.
+
+ o  PrE supports 1-255 copies of the print job to be printed.
+
+ o  PrE supports a maximum of 127 sessions simultaneously.
+
+ o  PrE supports the ability to submit a print job for another user.
+    The print job will run exactly as if that user submitted the re-
+    quest. Accounting information is logged to that user's account. The
+    user name string can be 1 to 12 characters in length and should be
+    a valid username on the system.
+
+ o  PrE supports multiple form types. The form type is specified by us-
+    ing either a numeric value or a form name. These form types can re-
+    fer to the print image width, length or type of paper. Codes for
+    these form types are installation-defined.
+
+ o  PrE supports the ability to change queue name, forms, number, num-
+    ber of copies, user name and choice of deleting the output stream
+    files without stopping the session.
+
+ o  PrE supports the deletion of output files that are spooled to print-
+    ers as a user-selectable setting.
+
+ o  PrE provides an option to send an INIT SELF request to the IBM ap-
+    plication.
+
+
+                                  3
+
+ 
+
+ o  PrE supports LU security through the ability to specify a password
+    for providing additional security to access the LU. This feature
+    is supported in the DECnet SNA Gateway for Synchronous Transport,
+    the DECnet SNA Gateway for Channel Transport, the DEC SNA Domain
+    Gateway for Channel Transport, and VMS/SNA V2.0.
+
+ INSTALLATION
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Have previously installed all requisite hardware including termi-
+    nals and SNA gateway products;
+
+ o  Obtain, install, and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment;
+
+ o  Demonstrate equivalency of operation for modems other than Bell Sys-
+    tem 201C, 208A or 209A, AT&T[R] 2596 or 2556, Data Phone[R] II (2096A,
+    Digital 2500, or equivalent) type modems or, in Europe, PTT approved
+    modems;
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the SNA gateway or VMS/SNA
+    product and PrE;
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rate for time and materials.
+
+                                  4
+
+ 
+
+ Successful use of this product requires that:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the preinstallation activities.
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support either the SNA gateway or VMS/SNA soft-
+    ware and the PrE software.
+
+ WARRANTY LIMITATIONS
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ and IBM System/390 (includes 9xxx, 30xx, and 43xx series) class pro-
+ cessor systems configured with the following IBM software. While this
+ software may function correctly with other IBM software and equipment,
+ and with software other than that supported by IBM, Digital cannot of-
+ fer its standard warranty for this software unless it has been tested
+ with such equipment and software configurations.
+
+ The PrE software interoperates with the following IBM software:
+
+ ___________________________________________________________________
+ Software
+ Product_______Version_Release______________________________________
+
+ CICS/ESA      3       3.0
+               4       1.0
+
+ IMS/VS        4       1.0
+               5       1.0
+
+ RSCS          3       1.0
+
+ JES328X       2       1.0
+
+ NetView[R]    2       4.0
+ ______________3_______1.0__________________________________________
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+ information regarding listed configurations.
+
+                                  5
+
+ 
+
+ Refer to the SNA Gateway Software Product Descriptions (SPD 29.76.xx,
+ SPD 25.C6.xx, or SPD 38.69.xx) or the VMS/SNA Software Product Descrip-
+ tion (SPD 27.01.xx) for additional information on supported IBM op-
+ erating systems, access methods and communications front end software.
+
+ PREREQUISITE SUPPORT
+
+ For Digital SNA Printer Emulator for OpenVMS to be Digital-supported,
+ the customer must have a Digital-supported SNA gateway or VMS/SNA con-
+ figuration.
+
+ HARDWARE REQUIREMENTS
+
+ Alpha AXP Processors Supported:
+
+ AlphaSerAlphaServer   4/166
+         400           4/266
+
+         AlphaServer   4/200
+         1000
+
+         AlphaServer   4/233
+         2000
+
+         AlphaServer   4/233
+         2100          5/250
+
+         AlphaServer   5/300
+         8200
+
+         AlphaServer   5/300
+         8400
+
+ AlphaStaAlphaStation  4/100
+         200           4/166
+                       4/233
+
+         AlphaStation  4/233
+         250
+
+         AlphaStation  4/266
+         400
+
+                                  6
+
+ 
+
+
+         AlphaStation  4/266
+         600
+
+ Alpha:  DEC 2000      Model 200 AXP Server
+
+         DEC 3000      Model 300 AXP Workstation
+                       Model 300L AXP Workstation
+                       Model 300LX AXP Workstation
+                       Model 400 AXP Server
+                       Model 400 AXP Workstation
+                       Model 500 AXP Server
+                       Model 500 AXP Workstation
+                       Model 500X AXP Workstation
+
+         DEC 4000      Model 600 Series
+                       Model 700 Series
+
+         DEC 7000      Model 600 Series
+
+         DEC 10000     Model 600 Series
+
+ VAX Processors Supported:
+
+ VAX:    VAXft 3000    Model 110
+                       Model 310
+                       Model 410
+                       Model 610
+                       Model 612
+
+         VAX 4000      Model 100A
+                       Model 200
+                       Model 300
+                       Model 400
+                       Model 500
+                       Model 600
+
+         VAX 6000      Model 200 Series
+                       Model 300 Series
+                       Model 400 Series
+                       Model 500 Series
+                       Model 600 Series
+
+                                  7
+
+ 
+
+
+         VAX 7000      Model 600 Series
+                       Model 700 Series
+
+         VAX 8XXX      VAX 8200, VAX 8250, VAX 8300, VAX 8350,
+                       VAX 8500, VAX 8530, VAX 8550, VAX 8600,
+                       VAX 8650, VAX 8700, VAX 8800, VAX 8810, VAX
+                       8820, VAX 8830, VAX 8840
+
+         VAX 9000      Model 110
+                       Model 210
+                       Model 300 Series
+                       Model 400 Series
+
+         VAX 10000     Model 600 Series
+
+ MicroVAX:MicroVAX II
+
+         MicroVAX
+         2000
+
+         MicroVAX      Model 10/10E
+         3100          Model 20/20E
+                       Model 30
+                       Model 40
+                       Model 80
+                       Model 90
+                       Model 95
+                       Model 96
+
+         MicroVAX
+         3200
+
+         MicroVAX
+         3300
+
+         MicroVAX
+         3400
+
+         MicroVAX
+         3500
+
+         MicroVAX
+         3600
+
+                                  8
+
+ 
+
+
+         MicroVAX
+         3800
+
+         MicroVAX
+         3900
+
+ VAXstatiVAXstation
+         II
+
+         VAXstation
+         2000
+
+         VAXstation    Model 30
+         3100          Model 38
+                       Model 40
+                       Model 48
+                       Model 76
+
+         VAXstation
+         3200
+
+         VAXstation
+         3500
+
+         VAXstation
+         3520
+
+         VAXstation
+         3540
+
+         VAXstation    Model 60
+         4000          Model 90
+                       Model 95
+                       Model 96
+                       VLC
+
+ VAXserveVAXserver     Model 10/10E
+         3100
+
+         VAXserver     Model 200
+         4000          Model 300
+                       Model 400
+                       Model 500
+                       Model 600
+
+                                  9
+
+ 
+
+
+         VAXserver     Model 210
+         6000          Model 220
+                       Model 310
+                       Model 320
+                       Model 410
+                       Model 420
+                       Model 510
+                       Model 520
+                       Model 610
+                       Model 620
+                       Model 630
+
+         VAXserver     8200, 8250, 8300, 8350, 8530, 8550, 8650,
+         8XXX          8700, 8800, 8810, 8820, 8830, 8840
+
+ Processors Not Supported:
+
+ VAX-11
+ /725, VAX-11/750, VAX-11/785, VAX-11/788
+
+ Processor Restrictions:
+
+ A TK50 Tape Drive is required for standalone MicroVAX 2000 and VAXs-
+ tation 2000 systems.
+
+ Block Space Requirements:
+
+ ___________________________________________________________________
+ Task______VAX____________Alpha_____________________________________
+
+ Installati1711 blocks    2119 blocks (1.06 MB)
+           (856 KB)
+
+ Permanent_574_blocks_____1037_blocks_______________________________
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximations; actual sizes may vary depending on the user's
+ system environment, configuration, and software options selected.
+
+                                 10
+
+ 
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section details any special hardware required by this
+ product.
+ VMScluster configurations are described in the VMScluster Software Prod-
+ uct Description (SPD 42.18.xx) and include CI, Ethernet, and Mixed In-
+ terconnect conffigurations.
+
+ SOFTWARE REQUIREMENTS*
+
+ For Alpha Systems:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  DECnet for OpenVMS (SPD 42.25.xx)
+
+ o  Digital TCP/IP Services for OpenVMS Alpha (SPD 46.46.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx)
+       or
+
+ o  DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx)
+       or
+
+ o  DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ o  DEC SNA Peer Server (SPD 51.08.xx)
+
+ For VAX Systems in a DECnet SNA Gateway Environment:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  DECnet-VAX (SPD 48.48.xx)
+
+ o  Digital TCP/IP Services for OpenVMS VAX (SPD 25.A4.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx)
+       or
+
+                                 11
+
+ 
+
+ o  DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx)
+       or
+
+ o  DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ o  DEC SNA Peer Server (SPD 51.08.xx)
+
+ For VAX Systems in a VMS/SNA Environment:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2 or 7.0
+    (SPD 25.01.xx)
+
+ o  VMS/SNA Software (SPD 27.01.xx)
+
+ OpenVMS Tailoring:
+
+ The following OpenVMS classes are required for full functionality of
+ this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS Operating System for VAX and Alpha Software Product Descrip-
+ tion (SPD 25.01.xx).
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the minimum requirements for the
+ current version.
+
+
+
+
+
+
+                                 12
+
+ 
+
+ ORDERING INFORMATION
+
+ For OpenVMS Alpha Systems:
+
+ Software Licenses: QL-10TA*-**
+ Software Documentation: QA-044AA-GZ
+ Software Product Services: QT-10TA*-**
+
+ Media and documentation for this product are available on the Digi-
+ tal CD-ROM Software Library for OpenVMS AXP. Documentation in hard-
+ copy format can be ordered separately.
+
+ For OpenVMS VAX Systems:
+
+ Software Licenses: QL-044A*-**
+ Software Media: QA-044A*-**
+ Software Documentation: QA-044AA-GZ
+ Software Product Services: QT-044A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services and media refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital's
+ Standard Terms and Conditions. For more information about Digital's
+ licensing terms and policies, contact your local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. License units for this product are allocated on a CPU-capacity
+ basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ the OpenVMS AXP Operating System Software Product Description (SPD 41.87.xx),
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+                                 13
+
+ 
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ [R] AT&T and Data Phone are registered trademarks of American Tele-
+    phone and Telegraph Company.
+
+ [R] IBM and NetView are registered trademarks of International
+    Business Machines Corporation.
+
+ [TM]The DIGITAL Logo, Alpha AXP, AXP, CI, DEC, DECnet, Digital,
+    MicroVAX, OpenVMS, TK, VAX, VAXft, VAXserver, VAXstation, VMS,
+    and VMScluster are trademarks of Digital Equipment Corporation.
+
+ © 1993 Digital Equipment Corporation. All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 14

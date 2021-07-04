@@ -1,0 +1,448 @@
+ 
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  VAX Message Router/S Gateway, Version 1.3        SPD
+ 29.24.03
+
+ DESCRIPTION
+
+ VAX Message Router/S Gateway (MRS) is a network server layered soft-
+ ware product that resides on an OpenVMS[TM] VAX[TM] system providing
+ interconnection between MAILbus[TM], Digital Equipment Corporation's
+ Message Router based electronic message transfer service, and IBM[R]'s
+ Systems Network Architecture Distribution Services (SNADS). Through
+ MRS, users of Digital office automation systems such as DEC MAILworks[TM]
+ or ALL-IN-1[TM] Integrated Office System can send and receive messages,
+ documents, notes, and binary files (for example, MS-DOS[R] files) to
+ and from users of IBM office systems, such as Personal Services/CICS
+ or OfficeVision[TM]/MVS.
+
+ VAX Message Router/S Gateway provides both address and content con-
+ version for messages and documents passed between the Digital and IBM
+ office networks. In this way, users are not required to learn new com-
+ mands or procedures except the new addresses representing the users
+ of the other network(s) with whom they can now communicate by means
+ of MRS. MRS connects to an IBM DISOSS system, which contains the host
+ implementation of SNADS. Other SNADS nodes have access to the Digi-
+ tal network through their SNA connections to that IBM host. No Dig-
+ ital software is required to be installed on the IBM system to accom-
+ plish these transfers. With some restrictions, MRS allows users of those
+ IBM office systems to communicate through MAILbus to other networks
+ including X.400 public messaging services.
+
+ Message address conversion is accomplished through the Directory Ser-
+ vice (DDS) function of Message Router. Each Digital user sending and
+ receiving mail to and from IBM users must be registered in DDS and as-
+ signed an "alias" or virtual address for the SNADS network. Limited
+ one-way message transfer from MAILbus to IBM is possible without user
+
+                               DIGITAL                 December 1993
+
+                                                         AE-KX36D-TE
+
+ 
+
+ registration in DDS. The recipient (addressee) list of a single mes-
+ sage and stored distribution lists can include both Digital and IBM
+ users. Delivery Confirmation and Non-Delivery Notification messages
+ are supported.
+
+ During MRS configuration, a number of options for message content con-
+ version may be chosen on a per-gateway basis. To preserve maximum re-
+ visable content, messages and documents from the Digital network can
+ be converted to IBM's DCA Revisable Format. Where users of IBM sys-
+ tems only have access to simple text editors, conversions can be made
+ to IBM's DCA Final Format or to DISOSS Note format. Digital text mes-
+ sages with one or more attached text documents may be concatenated into
+ a single document for transfer to the SNADS network. Alternatively mes-
+ sages containing multiple attachments from the Digital MAILbus net-
+ work can be separated into multiple individual messages by MRS for on-
+ ward transmission to the SNADS network since the IBM network does not
+ support messages with more than one attachment. The product documen-
+ tation describes the capabilities and limitations regarding this func-
+ tionality.
+
+ Binary non-text file types, identified in the Digital network as DEC-
+ bodypart 7 (FOREIGN) or DECbodypart 11 (MS-DOS), will be transferred
+ unconverted to the IBM SNADS network. Such files, sent from a Digi-
+ tal to an IBM SNADS network, will lose their Digital RMS attributes.
+ Binary file transfer is primarily intended for the transfer of MS-DOS
+ files between the Digital and IBM networks. Files tagged as DCA files
+ (for example, a document produced on a PC word processing system) can
+ be identified in the SNADS network as a DCA document. Not all Digi-
+ tal User Agents and Gateways can append these tags to DECbodypart 7
+ or DECbodypart 11 files. Multiple binary files attached to a single
+ message may be passed to the IBM environment as multiple messages. These
+ conversion options are chosen during MRS configuration.
+
+
+
+
+
+
+
+
+                                  2
+
+ 
+
+ Content and identity conversion for Digital to IBM transfers are sum-
+ marized in the following table:
+
+ ___________________________________________________________________
+
+ Table_1:___________________________________________________________
+
+ Digital
+ Message          Default           Optional
+ Format___________Conversion________Conversions_____________________
+
+ Simple Mail      DISOSS Note       DCA RFT Document or DCA FFT
+ Messages                           Document
+ (ASCII,
+ WPS-PLUS[TM],
+ DECdx[TM])
+
+ Documents        DCA RFT Docu-     DCA FFT Document or DISOSS Note
+ (ASCII,          ment
+ WPS-PLUS, DECdx
+ DDIF Text)
+
+ Binary Files     DCA RFT Docu-
+ with RFT Tag     ment
+ (DECbodypart 7
+ or 11)
+
+ Binary File      DCA FFT Docu-
+ with FFT Tag     ment
+ (DECbodypart 7
+ or 11)
+
+ Other Binary     SNADS Binary
+ File (DEC-       (OOOE)
+ bodypart 7 or
+ 11)________________________________________________________________
+
+ Messages, DISOSS Notes and documents from the IBM SNADS network in DCA
+ RFT or FFT Format may be converted to DECdx format or remain in DCA
+ Format as a DECbodypart 7 with an RFT or FFT tag respectively. Not all
+ versions of Digital User Agents and Gateways support this tagging scheme.
+
+                                  3
+
+ 
+
+ Other files are passed through unconverted and identified as DECbody-
+ part 7 or DECbodypart 11 files and are assigned RMS fixed length 512
+ byte records. Binary file transfer from SNADS may be disabled during
+ MRS configuration.
+
+ Content and identity conversion for IBM to DEC transfers are summa-
+ rized in the following table:
+
+ ___________________________________________________________________
+
+ Table_2:___________________________________________________________
+
+ IBM
+ Message          Default           Optional
+ Format___________Conversion________Conversions_____________________
+
+ OV/MVS Message   ASCII
+
+ DISOSS Note      DECdx             Binary File with FFT Tag (DEC-
+ or DCA FFT                         bodypart 7)
+ Document
+
+ DCA RFT          DECdx             Binary File with RFT Tag (DEC-
+                                    bodypart 7)
+
+ SNADS Binary     Binary File       Binary File (DECbodypart 11) or
+ File (000E)      (DECbodypart 7)   Rejected, Non-Delivery Notice
+                                    returned to Sender
+
+ Other files      Rejected, Non-
+                  Delivery Notice
+                  returned to
+ _________________Sender____________________________________________
+
+ ALL-IN-1 Integrated Office System can automatically convert DECdx for-
+ mat to WPS-PLUS format. Other Digital user agents and MAILbus Gate-
+ ways can convert DECdx format to a format appropriate to their func-
+ tion. Since the capabilities of each vendor's word processing systems
+ are not identical, and since some control information is not trans-
+ mitted, not all attributes and functions are converted. The MRS prod-
+ uct documentation lists the restrictions. Users are responsible for
+
+                                  4
+
+ 
+
+ understanding the capabilities of destination systems when sending bi-
+ nary files. Binary file transfer should not be used with ALL-IN-1 In-
+ tegrated Office System, Version 2.2 or earlier or VMSmail (the Open-
+ VMS Mail Utility), Version 5.1 or earlier.
+
+ A single MRS installation will support messaging services between a
+ SNADS network of IBM office systems and a MAILbus network of Digital
+ OpenVMS systems and between the SNADS network and any other messag-
+ ing network connected to that MAILbus. Service levels obtained in the
+ latter case will depend on the characteristics of this other network.
+
+ To provide connection to MAILbus, the VAX Message Router software is
+ required by and included with the software license and media kit for
+ VAX Message Router/S Gateway.
+
+ INSTALLATION
+
+ MRS forms only one part of a distributed multi-vendor electronic mes-
+ saging application. Important activities, such as coordination with
+ other messaging components, modification of the IBM system parameters
+ and the creation or update of subscriber entries in the directory ser-
+ vice, must precede the installation of this product. Digital offers
+ a number of services to assist customers with these tasks. Refer to
+ the SOFTWARE PRODUCT SERVICES section of this SPD for more informa-
+ tion.
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Digital's Installation Services can be purchased as a separate ser-
+ vice.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Previously have installed all prerequisite hardware including ter-
+    minals.
+
+                                  5
+
+ 
+
+ o  Obtain, install and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment.
+
+ o  Demonstrate equivalency of operation for modems other than Bell Sys-
+    tem 201C, 208A or 209A type modems, or, in Europe, PTT approved modems.
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the DECnet SNA Gateway or
+    VMS/SNA and VAX Message Router/S.
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during the installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rates for time and materials.
+
+ Successful use of this product requires:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the installation activities.
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support the DECnet SNA Gateway or VMS/SNA and
+    VAX Message Router/S Gateway.
+
+ HARDWARE REQUIREMENTS
+
+ Processors and/or hardware configuration as specified in the System
+ Support Addendum (SSA 29.24.03-x).
+
+ Either a DECnet SNA Gateway system and VAX/VMS Load Host system in a
+ DECnet[TM] Ethernet local area network or, for single VAX system con-
+ nection to IBM, communications interfaces appropriate to the VAX pro-
+ cessor used, as specified in the Other Hardware Required section of
+ the System Support Addendum (SSA 29.24.03-x).
+
+
+
+                                  6
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ OpenVMS Operating System
+
+ DECnet[TM]-VAX or DECnet/OSI for OpenVMS
+
+ DECnet SNA APPC/LU6.2 Programming Interface for OpenVMS
+
+ VAX Message Router (included in the software license and media kit for
+ VAX Message Router/S Gateway)
+
+ For DECnet Ethernet Local Area Networks:
+
+ DECnet SNA Gateway for Channel Transport, or
+
+ DECnet SNA Gateway for Synchronous Transport
+
+ For Single VAX System Connection to IBM:
+
+ VMS/SNA and
+
+ VAX WAN Device Drivers Kit
+
+ Refer to the System Support Addendum (SSA 29.24.03-X) for availabil-
+ ity and required versions of prerequisite/optional software.
+
+ ORDERING INFORMATION
+
+ Software Licenses: QL-VDUA*-**
+ Software Media: QA-VDUA*-**
+ Software Documentation: QA-VDUA*-GZ
+ Software Product Services: QT-VDUA*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ VAX Message Router/S Gateway software license and media kit include
+ the software license and media kit for the required VAX Message Router
+ software.
+
+                                  7
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital
+ Equipment Corporation's Standard Terms and Conditions. For more in-
+ formation about Digital's licensing terms and policies, contact your
+ local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. A separate Product authorization key (PAK) is not provided for
+ or required by the VAX Message Router product which is licensed and
+ distributed with the VAX Message Router/S Gateway.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ MAILbus products are components of larger distributed messaging ap-
+ plications, which may involve multiple vendors' systems in multiple
+ locations. Digital offers a number of consulting services to assist
+ customers in the planning, installation and management of these mes-
+ saging applications and related directory services, integration of PC-
+ based messaging systems and the provision of network wide directory
+ services.
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+
+
+
+
+
+                                  8
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ Warranty Limitations
+
+ Digital has designed this product in accordance with the information
+ provided in the following IBM standards publications:
+
+ 1. Document Interchange Architecture: Concepts and Structures (SC23-
+    0759-0)
+
+ 2. Document Interchange Architecture: Interchange Document Profile Ref-
+    erence (SC23-0764-0)
+
+ 3. Document Content Architecture: Final Form Text (SC23-0757-1)
+
+ 4. Document Content Architecture: Revisable Form Text (SC23-0758-1)
+
+ 5. Systems Network Architecture: Format and Protocol Reference Man-
+    ual: Distribution Services (SC30-3098-2)
+
+ VAX Message Router/S Gateway does not implement all the functions de-
+ scribed in the SNADS reference documentation. Only those functions re-
+ quired for interoperation with DISOSS are supported.
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ (includes 30XX and 43XX series) class processor systems configured to
+ support the versions and releases of the DISOSS program product shown
+ below. While this software may function correctly with other equip-
+ ment and software, Digital cannot offer its standard warranty and sup-
+ port services for this software unless it has been tested by Digital
+ with such equipment and software configurations.
+
+ VAX Message Router/S Gateway, Version 1.3 has been tested and certi-
+ fied against the following IBM software configurations:
+
+                                  9
+
+ 
+
+ ___________________________________________________________________
+
+ Table_3:___________________________________________________________
+
+ Software_Product__Version____Release____Modification_Level_________
+
+ MVS/ESA           4          3          0
+
+ CICS              3          3          0
+
+ DISOSS/370        3          4          0
+
+ OV/MVS            1          2          0
+
+ DISPLAYWRITE/370__2__________2__________0__________________________
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+ information regarding listed configurations.
+
+ Absolute fidelity between an original document and the resulting doc-
+ ument as printed or displayed by the receiving system is not guaran-
+ teed. The differences between vendors' approaches to word processing
+ systems, the transformations required for the transfer and printing
+ of a document and the types of printers used may all affect the re-
+ sulting printed document.
+
+ [R] IBM and PROFS are registered trademarks of International Busi-
+    ness Machines Corporation.
+
+ [R] MS-DOS is a registered trademark of Microsoft Corporation.
+
+ [TM]OfficeVision is a trademark of International Business Machines
+    Corporation.
+
+ [TM]The DIGITAL Logo, ALL-IN-1, CI, DEC, DECdx, DEC MAILworks, DEC-
+    net, DECwindows, Digital, MAILbus, MicroVAX, OpenVMS, RA, RL,
+    TK, ULTRIX, VAX, VAXcluster, VAXft, VAXserver, VAXstation, VMS,
+    and WPS-PLUS are trademarks of Digital Equipment Corporation.
+
+                                 10

@@ -1,0 +1,843 @@
+ 
+
+ This SPD describes Digital SNA 3270 Terminal Emulator for OpenVMS, which
+ is available for the OpenVMS VAX and OpenVMS Alpha platforms. All in-
+ formation applies to both platforms unless otherwise indicated.
+
+ DESCRIPTION
+
+ The Digital SNA 3270 Terminal Emulator for OpenVMS (3270 TE) is a lay-
+ ered software product that allows users of a VTxxx terminal (or other
+ Digital terminal or personal computer in VT100, VT200 or VT300 mode)
+ on suitably configured OpenVMS systems within a DECnet or TCP/IP net-
+ work to interactively access IBM[R] host-based applications. These ap-
+ plications have been originally developed for IBM 3270 display sta-
+ tions in a Systems Network Architecture (SNA) networking environment.
+ Access to the IBM host-based applications system from OpenVMS systems
+ is via one of the following products:
+
+ o  TCP/IP or DECnet connections:
+
+    o  DEC SNA Peer Server
+
+    o  DEC SNA Domain Gateway
+
+ o  DECnet only connections:
+
+    o  DECnet SNA Gateway for Synchronous Transport
+
+    o  DECnet SNA Gateway for Channel Transport
+
+    o  VMS/SNA - an OpenVMS VAX layered product that supports users on
+       the system where VMS/SNA is running
+
+ In normal operation, an IBM system transfers a formatted screen, much
+ like a "form", to the 3270 block mode terminal and the user fills in
+ any data required by the "form". When complete, the form is transmit-
+ ted to the IBM host as a single unit. This mechanism is emulated with
+ a Digital character mode terminal by buffering the "form" in the DEC-
+ net host's memory and displaying it on the terminal. When the screen
+ "form" is complete, it is sent to the IBM host system via the SNA gate-
+ way or VMS/SNA product.
+
+                                                       February 1996
+
+                                                         AE-EX18I-TE
+
+ 
+
+ Translation tables on the respective systems convert ASCII terminal
+ input (either Digital Multinational Character Set or National Replace-
+ ment Character Set) to a subset of IBM multinational EBCDIC code for
+ transfer through either the SNA gateway or VMS/SNA product. These trans-
+ lation tables may be modified to fit non-standard character sets.
+
+ Users invoke the 3270 utility using the local OpenVMS system's com-
+ mand language, including qualifiers to specify the target IBM system
+ and system resources. While the emulation utility is operating, the
+ terminal screen is formatted like a 3270 display. When the user has
+ finished work on the IBM system, the 3270 emulator is dismissed and
+ the terminal is "restored" as an OpenVMS command terminal.
+
+ The 3270 Terminal Emulator supports emulation of the following fea-
+ tures of an IBM 3270 Display Station when attached to an IBM 3274 1C
+ controller with the following features:
+
+ -  Category A terminal adapter (for 32 terminals)
+
+ -  Configuration support D
+
+ -  Common communications adapter
+
+ -  External modem interface
+
+    IBM 3178 Display station with the following features:
+
+ -  87-key keyboard with 24 program function (PF) keys and 3 program
+    assist (PA) keys
+
+ -  Audible alarm
+
+ -  Up to 1920 characters
+
+ -  Protected and unprotected fields
+
+ -  Local and host copy and printer order FF (form-feed)
+
+ -  Alphanumeric and numeric data
+
+ -  Intensified display, display, and non-display characters
+
+ -  Auto-repeat keys (as available as a VT100 keyboard SET-UP feature)
+
+ -  Click and ALT CURSR (as available through the VT100 SET-UP feature)
+
+                                  2
+
+ 
+
+ -  SYS REQ (Allows user to switch between SSCP-LU and LU-LU sessions)
+
+    Unsupported features of the IBM 3178 display station are:
+
+ -  Selector pen, Security lock, magnetic strip card and operator iden-
+    tification card reader
+
+ -  <-! (new line) as auto-repeat keys
+
+ -  <!<! (fast left) and !>!> (fast right) keys
+
+ -  TEST REQ or TEST, IDENT, DEV CNCL and CURSR BLINK functions
+
+ -  Structured fields
+
+ -  Blinking fields
+
+ -  Local function keys (keys that when operated, do not transmit any
+    interface codes to the host applications) other than those supported
+    as VT100/VT200/VT300 SET-UP features
+
+    IBM 3180 display station with the following features:
+
+ -  87-key keyboard with 24 program function (PF) keys and 3 program
+    assist (PA) keys
+
+ -  Audible alarm
+
+ -  Up to 3564 characters
+
+ -  Protected and unprotected fields
+
+ -  Local and host copy and printer order FF (form-feed)
+
+ -  Alphanumeric and numeric data
+
+ -  Intensified display, display and non-display characters
+
+ -  Auto-repeat keys (as available, as a VT keyboard SET-UP feature)
+
+ -  Click and ALT CURSR (as available, as a VT keyboard SET-UP feature)
+
+ -  SYS REQ (Allows user to switch between SSCP-LU and LU-LU sessions)
+
+                                  3
+
+ 
+
+    Unsupported features of the IBM 3180 display:
+
+ -  Selector pen, security lock, magnetic strip card and operator
+
+ -  <-! (new line) as an auto-repeat key
+
+ -  <!<! (fast left) and !>!> (fast right) keys
+
+ -  TEST REQ or TEST, IDENT, DEV CNCL and CURSR BLINK functions
+
+ -  Structured fields
+
+ -  Blinking fields
+
+ -  3270 Extended Data Stream
+
+ -  Local function keys (keys that when operated, do not transmit any
+    interface codes to the host applications) other than those supported
+    as VT100/VT200/VT300 SET-UP features
+
+    IBM 3278 display station Models 1, 2, 3, 4, and 5 with the follow-
+    ing features:
+
+ -  87-key keyboard with 24 program function (PF) keys and 3 program
+    assist (PA) keys
+
+ -  Audible alarm
+
+ -  Protected and unprotected fields
+
+ -  Local and host copy and printer order FF (form-feed)
+
+ -  Alphanumeric and numeric data
+
+ -  Intensified display, display and non-display characters
+
+ -  Auto-repeat keys (as available as a VT keyboard SET-UP feature)
+
+ -  Click and ALT CURSR (as available, as a VT keyboard SET-UP feature)
+
+ -  SYS REQ (Allows user to switch between SSCP-LU and LU-LU sessions)
+
+    Screen sizes supported by the various models of 3278 are:
+
+    Model 1 - Up to 960 characters
+    Model 2 - Up to 1920 characters
+
+                                  4
+
+ 
+
+    Model 3 - Up to 2560 characters
+    Model 4 - Up to 3440 characters
+    Model 5 - Up to 3564 characters
+
+    Unsupported features of the IBM 3278 display station models 1, 2,
+    3, 4, 5 are:
+
+ -  Selector pen, security lock, magnetic strip card and operator iden-
+    tification card reader
+
+ -  <! (new line) as an auto-repeat key
+
+ -  <!<! (fast left) and !>!> (fast right) keys
+
+ -  TEST REQ or TEST, IDENT, DEV CNCL and CURSR BLINK functions
+
+ -  Structured fields
+
+ -  Blinking fields
+
+ -  Local function keys (keys that when operated, do not transmit any
+    interface codes to the host applications) other than those supported
+    as VT100/VT200/VT300 SET-UP features
+
+ -  Field inherit keys
+
+ -  Programmed symbol selection keys
+
+ This product has been designed such that it can be used with most IBM
+ applications, however, those applications written using features not
+ supported by the emulator (e.g. 3270 Extended Data Stream) must be mod-
+ ified.
+
+ A readily available on-line HELP facility provides information on keys
+ with altered 3270-oriented functions. The status line as implemented
+ on an actual 3270 display is not supported, however much of the same
+ information is reported on a special status line which may be over-
+ laid on the VT200's 24th line. In addition, the OpenVMS system man-
+ ager has the ability to re-map certain IBM key functions onto differ-
+ ent locations on the Digital keyboard.
+
+                                  5
+
+ 
+
+ Features of Version 1.5
+
+ o  3270 TE V1.5 allows, on supported SNA gateways and VMS/SNA systems,
+    secured LUs (Logical Units) to be accessed via a password.
+
+ o  3270 TE V1.5 allows up to 16 alphanumeric characters to be coded
+    in the ACCESS-NAME parameter.
+
+ o  3270 TE V1.5 provides the ability to display status information on
+    the hardware status line when using a VT device (or VT emulator)
+    that supports the hardware status line.
+
+ o  3270 TE V1.5 supports Digital's License Management Facility.
+
+ Source Code
+
+ Sources of message files are available only for translation to lan-
+ guages other than English. Source code will not be distributed for gen-
+ eral purposes.
+
+ INSTALLATION
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Have previously installed all requisite hardware including termi-
+    nals and SNA gateway products.
+
+ o  Obtain, install, and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment.
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the SNA gateway or VMS/SNA
+    product and 3270 TE.
+
+                                  6
+
+ 
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rate for time and materials.
+
+ Successful use of this product requires that:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the pre-installation activities.
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support either the SNA gateway or VMS/SNA soft-
+    ware and the 3270 TE software.
+
+ WARRANTY LIMITATIONS
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ and IBM System/390 (includes 9xxx, 30xx, and 43xx series) class pro-
+ cessor systems configured with the following IBM software. While this
+ software may function correctly with other IBM software and equipment,
+ and with software other than that supported by IBM, Digital cannot of-
+ fer its standard warranty for this software unless it has been tested
+ with such equipment and software configurations.
+
+ The 3270 TE software interoperates with the following IBM software:
+
+ ___________________________________________________________________
+ Software Prod-
+ uct______________Version___Release_________________________________
+
+ CICS/MVS         2         1.2
+
+ CICS/ESA         3         3.0
+                  4         1.0
+
+
+                                  7
+
+ 
+
+
+ Software_Prod-_____________________________________________________
+ uct______________Version___Release_________________________________
+
+ IMS/VS           4         1.0
+                  5         1.0
+
+ NetView          2         4.0
+                  3         1.0
+
+ TSO/E ESA        2         4.0
+                            5.0
+
+ VM/ESA_CMS_______1_________2.1_____________________________________
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+ information regarding listed configurations.
+
+ PREREQUISITE SUPPORT
+
+ For Digital SNA 3270 Terminal Emulator for OpenVMS to be Digital-supported,
+ the customer must have a Digital-supported SNA gateway or VMS/SNA con-
+ figuration.
+
+ HARDWARE REQUIREMENTS
+
+ Processors Supported:
+
+ AlphaSerAlphaServer   4/166
+         400           4/266
+
+         AlphaServer   4/200
+         1000
+
+         AlphaServer   4/233
+         2000
+
+         AlphaServer   4/233
+         2100          5/250
+
+         AlphaServer   5/300
+         8200
+
+                                  8
+
+ 
+
+
+         AlphaServer   4/300
+         8400
+
+ AlphaStaAlphaStation  4/100
+         200           4/166
+                       4/233
+
+         AlphaStation  4/233
+         250
+
+         AlphaStation  4/266
+         400
+
+         AlphaStation  5/266
+         600
+
+ Alpha:  DEC 2000      Model 200 AXP Server
+
+         DEC 3000      Model 300 AXP Workstation
+                       Model 300L AXP Workstation
+                       Model 300LX AXP Workstation
+                       Model 400 AXP Server
+                       Model 400 AXP Workstation
+                       Model 500 AXP Server
+                       Model 500 AXP Workstation
+                       Model 500X AXP Workstation
+
+         DEC 4000      Model 600 Series
+                       Model 700 Series
+
+         DEC 7000      Model 600 Series
+
+         DEC 10000     Model 600 Series
+
+ VAX:    VAX 4000      Model 100A
+                       Model 200
+                       Model 300
+                       Model 400
+                       Model 500
+                       Model 600
+
+                                  9
+
+ 
+
+
+         VAX 6000      Model 200 Series
+                       Model 300 Series
+                       Model 400 Series
+                       Model 500 Series
+                       Model 600 Series
+
+         VAX 7000      Model 600 Series
+                       Model 700 Series
+
+         VAX 8XXX      VAX 8200, VAX 8250, VAX 8300, VAX 8350,
+                       VAX 8500, VAX 8530, VAX 8550, VAX 8600,
+                       VAX 8650, VAX 8700, VAX 8800, VAX 8810, VAX
+                       8820, VAX 8830, VAX 8840
+
+         VAX 9000      Model 110
+                       Model 210
+                       Model 300 Series
+                       Model 400 Series
+
+         VAX 10000     Model 600 Series
+
+         VAXft 3000    Model 110
+                       Model 310
+                       Model 410
+                       Model 610
+                       Model 612
+
+ MicroVAX:MicroVAX II
+
+         MicroVAX
+         2000
+
+         MicroVAX      Model 10/10E
+         3100          Model 20/20E
+                       Model 30
+                       Model 40
+                       Model 80
+                       Model 90
+                       Model 95
+                       Model 96
+
+                                 10
+
+ 
+
+
+         MicroVAX
+         3200
+
+         MicroVAX
+         3300
+
+         MicroVAX
+         3400
+
+         MicroVAX
+         3500
+
+         MicroVAX
+         3600
+
+         MicroVAX
+         3800
+
+         MicroVAX
+         3900
+
+ VAXstatiVAXstation
+         II
+
+         VAXstation
+         2000
+
+         VAXstation    Model 30
+         3100          Model 38
+                       Model 40
+                       Model 48
+
+         VAXstation
+         3200
+
+         VAXstation
+         3500
+
+         VAXstation
+         3520
+
+         VAXstation
+         3540
+
+                                 11
+
+ 
+
+
+         VAXstation    Model 60
+         4000          Model 90
+                       Model 95
+                       Model 96
+                       VLC
+
+         VAXstation
+         8000
+
+ VAXserveVAXserver     Model 10/10E
+         3100          Model 20/20E
+
+         VAXserver
+         3200
+
+         VAXserver
+         3300
+
+         VAXserver
+         3400
+
+         VAXserver
+         3500
+
+         VAXserver
+         3600
+
+         VAXserver
+         3602
+
+         VAXserver
+         3800
+
+         VAXserver
+         3900
+
+         VAXserver     Model 200
+         4000          Model 300
+                       Model 400
+                       Model 500
+                       Model 600
+
+                                 12
+
+ 
+
+
+         VAXserver     Model 210
+         6000          Model 220
+                       Model 310
+                       Model 320
+                       Model 410
+                       Model 420
+                       Model 510
+                       Model 520
+                       Model 610
+                       Model 620
+                       Model 630
+
+         VAXserver     8200, 8250, 8300, 8350, 8530, 8550, 8650,
+         8XXX          8700, 8800, 8810, 8820, 8830, 8840
+
+ Processors Not Supported:
+
+ VAX-11
+ /730, VAX-11/750, VAX-11/780, VAX-11/785
+
+ Processor Restrictions:
+
+ A TK50 Tape Drive is required for standalone MicroVAX 2000 and VAXs-
+ tation 2000 systems.
+
+ DISK SPACE REQUIREMENTS
+
+ For Alpha-Based Systems:
+
+ Disk space required for   1518 blocks (759 Kbytes)
+ installation
+
+ Disk space required for   684 blocks (342 Kbytes)
+ use (permanent)
+
+ For VAX-Based Systems:
+
+ Disk space required for   1179 blocks (590 Kbytes)
+ installation
+
+                                 13
+
+ 
+
+
+ Disk space required for   345 blocks (173 Kbytes)
+ use (permanent)
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximations; actual sizes may vary depending on the user's
+ system environment, configuration, and software options selected.
+
+ Terminal Requirements:
+
+ o  A digital terminal capable of VT100, VT200, VT300, or VT400 com-
+    patibility (e.g., VT102, VT2xx, VT3xx). Refer to the OPTIONAL HARD-
+    WARE section.
+
+ o  The Advanced Video Option (AVO) is required on the VT100 and the
+    equivalent on other terminals for some 3270 Terminal Emulation fea-
+    tures.
+
+ OPTIONAL HARDWARE
+
+ Terminals:
+ The following is a list of Digital-supplied terminals which have been
+ tested and are supported in VT100 mode by the 3270 Terminal Emulator
+ Software:
+
+ o  VT100 with Advanced Video Option (AVO)
+
+ o  VT102
+
+ o  VT220, VT240, VT241
+
+ o  VT320, VT330, VT340, VT341
+
+ o  VT400
+
+ The following is a list of Digital-supplied terminals which have been
+ tested and are supported in VT200 mode by the 3270 Terminal Emulator
+ Software:
+
+ o  VT220, VT240, VT241
+
+ The following is a list of Digital-supplied terminals which have been
+ tested and are supported in VT300 mode by the 3270 Terminal Emulator
+
+                                 14
+
+ 
+
+ Software (emulation status information will be displayed on the hard-
+ ware status line):
+
+ o  VT320, VT330, VT340, VT341
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster[*] configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section of this SPD detail any special hardware re-
+ quired by this product.
+ SOFTWARE REQUIREMENTS
+
+ For Alpha Systems:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  DECnet for OpenVMS (SPD 42.25.xx)
+
+ o  Digital TCP/IP Services for OpenVMS Alpha (SPD 46.46.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ o  DEC SNA Peer Server (SPD 51.08.xx)
+
+ For VAX Systems:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  DECnet-VAX (SPD 48.48.xx)
+
+ o  Digital TCP/IP Services for OpenVMS VAX (SPD 25.A4.xx)
+
+ ____________________
+ VMScluster   configurations are fully described in the VMScluster Soft-
+   ware Product Description (42.18.xx) and include CI, Ethernet, and Mixed
+
+   Interconnect configurations.
+
+                                 15
+
+ 
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ o  DEC SNA Peer Server (SPD 51.08.xx)
+
+ For VAX Systems in a VMS/SNA Environment:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  VMS/SNA Software (SPD 27.01.xx)
+
+ OpenVMS Tailoring: The following OpenVMS classes are required for full
+ functionality of this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS Operating System for VAX and Alpha Software Product Descrip-
+ tion (SPD 25.01.xx).
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the minimum requirements for the
+ current version.
+ DISTRIBUTION MEDIA
+
+ For Alpha Systems:
+ Media and documentation for this product are available on the Digi-
+ tal CD-ROM Software Library for OpenVMS AXP. Documentation in hard-
+ copy format can be ordered separately.
+
+ For VAX Systems:
+
+ Tape: 9-track 1600 BPI Magtape, TK50 Streaming Tape
+
+                                 16
+
+ 
+
+ This product is also available as part of the OpenVMS Consolidated Soft-
+ ware Distribution on CD-ROM. The software documentation for this prod-
+ uct is also available as part of the OpenVMS Online Documentation Li-
+ brary on CD-ROM.
+
+ ORDERING INFORMATION
+
+ Digital SNA 3270 Terminal Emulator for OpenVMS, Version 1.6
+
+ For OpenVMS Alpha systems:
+
+ Software Licenses: QL-10ZA*-**
+ Software Documentation: QA-454AA-GZ
+ Software Product Services: QT-10ZA*-**
+
+ For OpenVMS VAX systems:
+
+ Software Licenses: QL-454A*-**
+ Software Media: QA-454A*-**
+ Software Documentation: QA-454AA-GZ
+ Software Product Services: QT-454A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services and media refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital's
+ Terms and Conditions. For more information about Digital's licensing
+ terms and policies, contact your local Digital office.
+
+ LICENSE MANAGEMENT FACILITY SUPPORT
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. License units for this product are allocated on a CPU-capacity
+ basis.
+
+
+
+
+                                 17
+
+ 
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ the OpenVMS AXP Operating System Software Product Description (SPD 41.87.xx),
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in this SPD.
+
+ [TM] The Digital Logo, DEC, Digital, AXP, DECnet, MicroVAX, Open-
+     VMS, TK, VAX, VAXserver, VAXstation, VMS, and VT are trade-
+     marks of Digital Equipment Corporation.
+
+ [R] IBM is a registered trademark of International Business Ma-
+     chines Corporation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 18
