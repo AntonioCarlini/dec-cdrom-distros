@@ -1,0 +1,830 @@
+Software
+Product
+Information
+___________________________________________________________________
+
+PRODUCT NAME:  DSM for OpenVMS Version 6.6
+
+
+Part Number: IS-DSMIB-VM           o Language elements that implement
+                                     a subset of the OpenVMS I/O op-
+This Software Product Information    tions for the support of termi-
+sheet describes two products: DSM    nals, including foreign terminals,
+for OpenVMS Alpha and DSM for Open-  magnetic tape devices, mailboxes,
+VMS VAX (DSM).                       and OpenVMS RMS sequential, rel-
+                                     ative, and indexed sequential files.
+DSM for OpenVMS[TM] is an imple-     The use of DECnet, DEC TCP/IP Ser-
+mentation of the ANSI Standard Spec- vices for OpenVMS (UCX), Wollon-
+ification for M (X11.1-1990) that    gong WIN/TCP, and TCPware[TM] for
+is layered on the OpenVMS[TM] op-    OpenVMS for remote file access and
+erating system. It is a high-level   task-to-task communication is also
+programming language and a multi-    possible.
+user data management system in which An I/O command interface to DEC
+many users can share a common databasTCP/IP Services for OpenVMS (UCX),
+DSM software supports a superset     Wollongong WIN/TCP, and TCPware[TM]
+of the ANSI M specification and fullyfor OpenVMS.. This allows appli-
+uses the capabilities of the Open-   cation software to access TCP/IP
+VMS operating system.                network devices using M OPEN, USE,
+                                     READ, WRITE, and CLOSE commands.
+
+DSM Language                         o An Interface to DECwindows Sys-
+                                       tem and DECimage Application Ser-
+The DSM language couples the flex-     vices software.
+ible processing of variable length   o A maximum routine line length of
+string data with a high-performance    512 characters.
+database system, making interac-     o MDC Type A Language Extensions.
+tive database application systems
+easier to implement and maintain.    o Routine source code protection.
+The DSM language includes the fol-   o Flexible device control mnemonic
+lowing extensions to the ANSI Stan-    space definition and management
+dard M Specification:                  for use with the M WRITE / and READ
+                                       / syntax.
+
+o A 512-character maximum string      o Visual M[TM] remote application
+  strength for global variables and     server support.
+  a 32,767-character maximum string   o DEC DB Integrator Gateway for DSM[TM]
+  length for local variables.           support for Open M/SQL[TM].
+
+o A 245-character maximum string      In addition to supporting the call-
+  length for subscripted local and    ing of user-written procedures writ-
+  global variable names.              ten in other programming languages,
+                                      DSM software includes built-in in-
+o Commands and functions to load,     terfaces to selected OpenVMS sys-
+  save, and edit DSM routines.        tem services and run-time library
+
+                                                                October, 1996
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+routines. This gives the DSM lan-     Database Sharing in a
+guage the ability to mount and dis-   VMScluster Environment
+mount disk or magnetic tape vol-      In OpenVMS configurations that sup-
+umes, spawn DCL subprocesses, ma-     port a VMScluster[TM] environment,
+nipulate logical names, and call      the DSM for OpenVMS software al-
+mathematical and text manipulation    lows volume sets to be mounted and
+functions, or editors.                made accessible to all members of
+
+For high run-time efficiency, the     a VMScluster environment.
+DSM language is implemented as a      The globals and routines resident
+pre-compiler that generates inter-    within the cluster-mounted volume
+mediate code. During the precom-      sets are accessible in the same man-
+pilation process, which is invis-     ner as a locally mounted volume set.
+ible to the user, DSM software per-   Each cluster member maintains and
+forms operations that optimize sub-   updates a memory disk buffer cache
+sequent run-time execution. For ex-   for the cluster-mounted volume set.
+ample, precompilation strips com-     VMScluster software coordinates the
+ments, checks syntax, optimizes la-   access and update of physical disk
+bel references, and transforms nu-    blocks.
+meric constants into an internal
+representation.                       DSM configurations can also be run
+                                      in heterogeneous VMScluster envi-
+Global Variables                      ronments consisting of VAX and Al-
+                                      pha CPUs.
+The DSM language allows symbolic
+reference to hierarchical arrays      M Windowing Application
+called global variables (or sim-      Programming Interface
+ply globals) that can be accessed
+concurrently by many users of a DSM   The DSM product includes an imple-
+application. DSM software provides    mentation of the standard M Win-
+a high-performance implementation     dowing Application Programming In-
+of global variables using multi-      terface (MWAPI). MWAPI provides a
+way trees.                            high level and portable method of
+DSM stores global variables and DSM   creating a graphical user inter-
+routines on data structures called    face (GUI) for DSM applications.
+DSM volume sets. Each is comprised
+of up to eight logical volumes. Vol-  Distributed Data Processing
+umes in a DSM volume set can be ei-   DSM applications can access glob-
+ther files on an OpenVMS volume or    als either locally or on a remote
+disk packs mounted as foreign Open-   system. The DSM software supports
+VMS volumes. In a DSM run-time en-    remote access to globals through
+vironment, up to 31 volume sets can   a DSM-specific Distributed Data Pro-
+be present simultaneously.            cessing (DDP) protocol.
+
+Through translation tables, you can   Distributed global access can be
+map portions of globals across any    done either explicitly, through the
+number of volume sets. You can change extended DSM global syntax, or trans-
+and update the translation table      parently to DSM applications through
+mappings without bringing down the    a system of global translation. Op-
+configuration to which they apply.    tionally, the DSM environment man-
+You can also use the translation      ager can specify the replication
+tables for more than one config-      of one or more globals across sev-
+uration.                              eral systems.
+
+
+                                           2
+
+ 
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+DSM software implements this high-    for VA Fileman and DASL and also
+performance protocol on Ethernet      allowed users to create their own
+in a manner compatible with DSM for   M routine drivers for custom data
+DEC OSF/1 AXP (SPD 47.60.xx). (The    dictionaries. DSM for OpenVMS in-
+operating system is now called Dig-   cludes an M routine driver, %MSQL,
+ital UNIX.)                           that provides a read/insert/update
+This allows the user to set up DSM    /delete interface for InterSystems'
+networks consisting of any combi-     Open M/SQL. This new Open M/SQL in-
+nation of Alpha processors, DEC-      terface is compatible with Digi-
+station or DECsystem processors,      tal Equipment Corporation's NSDS
+and VAX processors. The DDP auto-     Version 3.0C and later.
+configuration facility automati-
+cally updates the software tables     After-Image Journaling
+of members of a DDP network when
+a new system goes on or off line.     DSM supports a journaling facil-
+                                      ity to provide a record on secondary
+DSM software also supports DDP over   storage of all operations that mod-
+DECnet Phase IV logical links. This   ify the database (SET and KILL of
+allows remote global access between   global variables). Journaling can
+VAX and Alpha systems in a wide area  be done on a global-by-global ba-
+network. DDP over DECnet Phase V      sis or for a whole DSM environment.
+networks is not supported.            In the event of database degrada-
+In addition, DSM supports DDP over    tion, it is possible to restore the
+DEC TCP/IP Services for OpenVMS (UCX) current database from a full backup
+and TCPware[TM] for OpenVMS.          and the journal files using a de-
+                                      journaling utility.
+DSM allows users to modify all DDP
+communications characteristics (ex-
+cept for the DDP node name) in a      Before-Image Journaling
+running DSM configuration. Modi-      DSM software provides a journal-
+fications users make to DDP com-      ing capability that records the phys-
+munications characteristics become    ical image of a database block be-
+active after they stop and start      fore modifications have been made.
+DDP. Users do not have to shut down   This facility preserves database
+and restart the configuration.        integrity in the event of a CPU fail-
+                                      ure. The physical before-image jour-
+DEC DB Integrator Gateway for         nal contains only a very small num-
+DSM                                   ber of blocks and is used to quickly
+                                      roll back any operations in progress
+The DEC DB Integrator Gateway is      at the time of the failure. The op-
+a general-purpose database tool that  erations protected are SETs to glob-
+supplies access and data integra-     als that result in a database block
+tion among a wide variety of re-      split, or KILLs that result in a
+lational databases. The DEC DB In-    database block merge.
+tegrator Gateway for DSM supplies
+relational access to a DSM database.
+In DEC DB Integrator terms, DSM sup-  Transaction Processing
+plies a non-SQL data service (NSDS)   DSM provides extensions to the ANSI
+drive as the interface between the    M language that allow programmers
+DB Integrator and the DSM database.   to group global accesses into well-
+Previously, DSM supported data-dict-  defined transaction recovery units.
+ionaries specific M data and          The use of transaction recovery units 
+metadata drivers
+
+                                           3
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+gives application designers the abil-Cwindows System Interface
+ity to create highly reliable and  DSM provides a complete binding for
+efficient fault-tolerant applica-  the DSM language to the DECwindows
+tion systems.                      system. The binding is implemented
+
+Database updates made within the   as three separate external call pack-
+context of a recovery unit are treaages, which provide an M interface
+as a single unit of work. On con-  to the XTOOLKIT, XMOTIF, and XMO-
+clusion of a recovery unit, DSM en-TIF Resource Manager program li-
+sures that updates are either com- braries. The binding conforms to
+mitted entirely or not at all. If  the proposed ANSI M Standard Spec-
+a failure occurs during recovery   ification.
+unit processing, any partial up-   An additional package provides data
+dates made to the database are rollmanipulation primitives for allo-
+back so that the database is re-   cating and modifying X Window data
+stored to its original state be-   structures. These packages give the
+fore the recovery unit began.      programmer complete access to X Win-
+
+Through the conventional use of thedow procedures for creating sophis-
+M LOCK command and the application ticated graphical user interfaces.
+of the recovery unit commands, pro-
+grammers can construct database trans-et of sample M programs is pro-
+actions that exhibit the transac-  vided with complete documentation
+tion processing properties of atom-of the interface.
+
+icity, consistency, isolation, and
+durability (ACID properties).      Incremental Backup/Restore
+
+DSM supports rollback of recovery  DSM provides an Incremental Backup
+units through a system of before-  Utility (^BACKUP) for use with the
+image and after-image journal filesDSM database. The ^BACKUP Utility
+Transaction recovery unit process- backs up only those blocks that have
+ing is supported on database vol-  been modified since the last backup.
+ume sets that are mounted locally. Because modified blocks usually con-
+DSM does not support transaction   stitute a small portion of an en-
+processing on volume sets mounted  tire DSM database, the ^BACKUP Util-
+cluster-wide across multiple nodes ity represents a major reduction
+within a VMScluster environment.   in the time required for backup and
+
+Recovery of updates made to databasese amount of backup storage re-
+that are shared using DSM Distributedired.
+Data Processing (DDP) is not sup-  The ^BACKUP Utility implements a
+ported within a transaction recov- multi-phase backup. The initial phases
+ery unit.                          allow database read and write op-
+
+                                         erations to occur unrestricted on
+Mountable Database Sets            both locally mounted and cluster-
+DSM allows you to mount and dis-   mounted volume sets. The last phase
+mount individual database sets whileemporarily inhibits database op-
+a configuration is still running.  erations for a short period to es-
+This facility reduces system down  tablish a final consistency check
+time for activities such as extend-point.
+
+ing volume sets, adding volumes to Full database backup of DSM for Open-
+a volume set, or adding new appli- VMS volume set files is accomplished
+cations and volume sets to a run-  using the OpenVMS Backup utility.
+ning configuration.                Restoration of an incremental backup
+
+                                           4
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+is accomplished using the Incre-      o Windows 95[TM]
+mental Restore Utility to apply an
+incremental backup file onto a fully  Using Visual M, you can integrate
+restored primary database. The backup Visual Basic[TM] programs with DSM
+media supported by the ^BACKUP Util-  Applications operating in a DSM for
+ity is OpenVMS sequential disk files. OpenVMS environment to create dis-
+                                      tributed client-server applications.
+
+Callable Routines Interface
+                                      Security Audit Facility
+The callable routines interface al-
+lows routines written in software     The Security Audit facility allows
+languages that run under the Open-    application developers to imple-
+VMS operating system to directly      ment a strategy supporting C2 re-
+call the DSM shareable image. This    quirements while still ensuring that
+capability gives programs written     site personnel can perform their
+in languages such as FORTRAN, C,      duties. Through the Security Au-
+PASCAL, and others complete read      dit facility, system managers can
+and write access to globals res-      monitor programmer activity by record-
+ident in a DSM volume set. Func-      ing events in the OpenVMS Security
+tions such as global set, kill, get   Audit Log File. Using the OpenVMS
+or lock to a DSM database can be      Audit Analysis utility (ANALYZE/AUDIT),
+accomplished using many OpenVMS lay   they can periodically review the
+ered languages. Also, external pro-   Security Audit Log File.
+grams can declare recovery units,
+access the DSM local symbol table,
+and execute M code.                   Open M/WebLink
+
+The following functions are avail-    DSM can function as a database for
+able to external programs:            World Wide Web applications through
+                                      Open M/WebLink, the Universal Net-
+o Callable interface initialization   work Gateway for M. Open M/WebLink
+and rundown                           uses the TCP/IP TELNET remote lo-
+
+o Global database access              gin and communications protocol to
+o Declare recovery unit (start, com-  provide a high-performance data-
+mit, abort)                           exchange mechanism between a DSM
+                                      and a World Wide Web server.
+
+o LOCK command
+
+o Local symbol access                 Utilities
+
+o M command and routine execution     The DSM product provides applica-
+                                      tion and system level utilities writ-
+Visual M Remote Application           ten in the DSM language. Applica-
+Server Support                        tion level utilities help the DSM
+DSM for OpenVMS can function as a     programmer develop and maintain ap-
+remote application server to In-      plication software and data. For
+terSystems' Visual M[TM]. Visual      example, there are utilities to edit
+M is a graphical M interface run-     and display DSM routines and glob-
+ning on any of the following Mi-      als.
+crosoft Windows Platforms:            System level utilities allow the
+o Windows 3.1[TM]                     management of a DSM application en-
+                                      vironment. The system manager can
+o Windows NT[TM]                      create and extend DSM volume sets,
+
+                                           5
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+specify DSM configuration param-      developed using DASL software and
+eters such as access control (se-     are stored as DSM routines.
+curity), the number of concurrent     The DASL package includes six ma-
+DSM jobs and disk buffers, define     jor modules, each representing a
+DSM command line defaults, estab-     group of related functions that pro-
+lish DDP links and control jour-      grammers use to develop applica-
+naling. For increased efficiency      tions.
+of routine calling, the system man-
+ager can map a selected set of DSM    o The Data Dictionary defines and
+application routines in a shared        documents the application database.
+virtual memory section, resulting     o The Screen Driver contains options
+in higher application throughput.       to develop and modify screen dis-
+
+Include with the system level util-   plays for data entry, menus, and
+ities is a new performance moni-      help text.
+toring facility. This facility, ^PMF, The Report Driver contains options
+is a complete set of performance      to define and modify application
+monitoring tools that can summa-      reports.
+rize DSM performance metrics acrosso  The Query Driver contains options
+multiple nodes of a VMScluster.       to define tables for the DASL database
+                                      and create queries to extract data
+DSM Application Software              from the tables. The DASL Query
+Library (DASL)                        Driver conforms to the syntax of
+                                      the ANSI Standard Database Lan-
+DSM includes the DSM Application      guage SQL (Structured Query Lan-
+Software Library (DASL) software.     guage).
+
+The DASL software is an applica-      o The Development Environment per-
+tion creation tool that combines        forms a variety of development tasks
+a Data Dictionary, Screen (form)        such as specifying application pa-
+Compiler, Report Compiler, and an       rameters, or creating an inter-
+end-user SQL-compliant Query Driver.    national application using the DASL
+DASL software uses code generation      Language Utilities.
+techniques to transform DASL com-     o The Application Environment pro-
+mands and SQL statements into ef-       vides facilities for controlling
+ficient M code.                         the application's run-time envi-
+DASL software is a set of menu-driven   ronment such as a security sys-
+tools designed for developers of        tem, message center, query database,
+interactive applications. The DASL      and error logging.
+package automates many of the tasks
+involved in defining and document-    Source Code Information
+ing a database: generating data in-   DSM provides example files for writ-
+put, menu, and help text screens,     ing external routines and exter-
+designing reports for data output,    nal package tables in the SYS$EXAMPLES
+and creating tables for database      directory. Examples of programs us-
+queries.                              ing the callable routines inter-
+The DASL package is fully integrated  face are also supplied. This source
+with DSM. Therefore, DASL software    code is provided on an as is ba-
+provides both 4GL and 3GL capabil-    sis without any warranty of any kind,
+ities within a single environment.    either expressed or implied.
+
+Users interact with DASL software
+through menus and screens that were
+
+                                           6
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+Hardware Requirements
+Processors Supported:                         Digital 2100 Server
+                                              Model A600MP
+
+For Alpha Systems:                            AlphaServer 400 4/166
+
+                                              AlphaServer 1000 4
+Alpha:     DEC pc 150 AXP Server              /200
+
+DEC 2000 Models 300                           AlphaServer 2000 4
+/500 Server                                   /233
+
+DEC 3000 Model 300                            AlphaServer 2100 4
+Server                                        /233
+
+DEC 3000 Model 300L                           AlphaStation 400 4
+System                                        /166
+
+DEC 3000 Model 300X                           AlphaStation 400 4
+System                                        /266
+
+DEC 3000 Model 400                            AlphaStation 250 4
+Workstation                                   /233
+
+DEC 3000 Model 400 S                          AlphaStation 200 4
+Server                                        /166
+
+DEC 3000 Model 500                            AlphaStation 200 4
+Workstation                                   /100
+
+DEC 3000 Model 500S
+Server
+DEC 3000 Model 500X                           For VAX Systems:
+Workstation
+
+DEC 3000 Model 600                            VAX:       
+                                              VAXft Model 110
+
+Workstation                                   VAXft Model 310
+
+DEC 3000 Model 600S                           VAXft Model 410
+
+Server                                        VAXft Model 610
+
+DEC 3000 Model 800                            VAXft Model 612
+Workstation
+
+DEC 3000 Model 800S                           VAX 4000 Model 100
+Server
+DEC 4000 Model 600                            VAX 4000 Model 200
+
+System                                        VAX 4000 Model 300
+
+DEC 4000 Model 700                            VAX 4000 Model 400
+
+System                                        VAX 4000 Model 500
+
+AlphaServer 8400 5                            VAX 4000 Model 600
+/300
+
+DEC 7000 Model 600                            VAX 6000 Model 200
+System                                        Series
+
+DEC 10000 Model 600                           VAX 6000 Model 300
+System                                        Series
+
+AlphaServer 8200 5                            VAX 6000 Model 400
+/300                                          Series
+
+Digital 2100 Server                           VAX 6000 Model 500
+Model A500MP                                  Series
+
+                                           7
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+VAX 6000 Model 600                            MicroVAX 3100 Model
+Series                                        80
+
+                                               MicroVAX 3100 Model
+VAX 7000 Model 600                             90
+
+Series                                         MicroVAX 3300, Mi-
+                                               croVAX 3400
+
+VAX 8200, VAX 8250,                            MicroVAX 3500, Mi-
+VAX 8300                                       croVAX 3600
+
+VAX 8350, VAX 8500,                            MicroVAX 3800, Mi-
+VAX 8530                                       croVAX 3900
+
+VAX 8550, VAX 8600,
+VAX 8650                                       VAXstation:VAXstation II, VAXs-
+VAX 8700, VAX 8800,                            tation 2000
+
+VAX 8810                                       VAXstation 3100 Model
+VAX 8820, VAX 8830,                            30
+
+VAX 8840                                       VAXstation 3100 Model
+                                               38
+
+VAX 9000 Model 110                             VAXstation 3100 Model
+                                               40
+VAX 9000 Model 210                             VAXstation 3100 Model
+
+VAX 9000 Model 300                             48
+Series                                         VAXstation 3100 Model
+
+VAX 9000 Model 400                             76
+Series                                         VAXstation 3200,
+
+                                               VAXstation 3500
+
+VAX 10000 Model 600                            VAXstation 3520,
+Series                                         VAXstation 3540
+
+VAX 9000 Model 400                             VAXstation 4000 Model
+Series                                         60
+
+                                               VAXstation 4000 Model
+VAX-11/730, VAX-11                             90
+
+/750                                           VAXstation 4000 VLC
+
+VAX-11/780, VAX-11
+/785                                           VAXserver: VAXserver 3100 Model
+
+                                               10/10E
+
+MicroVAX:  MicroVAX II, MicroVAX               VAXserver 3100 Model
+2000                                           20/20E
+
+MicroVAX 3100 Model                            VAXserver 3300,
+10/10E                                         VAXserver 3400,
+
+MicroVAX 3100 Model                            VAXserver 3500
+20/20E                                         VAXserver 3600,
+
+MicroVAX 3100 Model                            VAXserver 3602,
+30                                             VAXserver 3800
+
+MicroVAX 3100 Model                            VAXserver 3900
+40
+
+                                           8
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+                                     Disk Space Requirements (Block Clus-
+VAXserver 4000 Model                 ter Size = 1):
+200                                  For Alpha Sys-
+
+VAXserver 4000 Model                 tems:
+300                                  DSM only:
+
+VAXserver 4000 Model                 For installation:   39500 blocks
+500
+                                     For use (perma-     26000 blocks
+                                     nent):
+
+VAXserver 6000 Model                 With DASL only:
+210                                  For installation:   61500 blocks
+
+VAXserver 6000 Model                 For use (perma-     39500 blocks
+220                                  nent):
+
+VAXserver 6000 Model                 With MWAPI only:
+310                                  For installation:   43000 blocks
+
+VAXserver 6000 Model                 For use (perma-     27500 blocks
+320                                  nent):
+
+VAXserver 6000 Model                 With DEC DBI
+410                                  Gateway:
+
+VAXserver 6000 Model                 For installation:   39500 blocks
+420                                  For use (perma-     26000 blocks
+
+VAXserver 6000 Model                 nent):
+510                                  With DASL and
+
+VAXserver 6000 Model                 MWAPI:
+520                                  For installation:   65000 blocks
+
+VAXserver 6000 Model                 For use (perma-     40500 blocks
+610                                  nent):
+
+VAXserver 6000 Model                 With all previous
+620                                  options:
+
+VAXserver 6000 Model                 For installation:   66000 blocks
+630                                  For use (perma-     41500 blocks
+
+Processors Not Supported:            nent):
+
+                                     For VAX Systems:
+MicroVAX I     VAXstation I          DSM only:
+
+VAX-11/725     VAX-11/782            For installation:   28000 blocks
+
+VAXstation                           For use (perma-     24000 blocks
+8000                                 nent):
+
+Processor Restrictions:              With DASL only:
+                                     For installation:   50000 blocks
+o A TK50 Tape Drive is required for  For use (perma-     38500 blocks
+  standalone MicroVAX 2000 and VAXs  nent):
+  tation 2000 systems.
+                                     With MWAPI:
+o A system configuration must have   For installation:   30500 blocks
+  memory of 2MB of physical stor-
+  age.                               For use (perma-     25500 blocks
+                                     nent):
+
+                                           9
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+                                      OpenVMS Tailoring
+With DEC DBI                          The following OpenVMS classes are
+Gateway:                              required for full functionality of
+
+For installation:  28000 blocks       this layered product:
+
+For use (perma-    24000 blocks       o OpenVMS Required Saveset
+nent):
+With DASL and                         o System Programming Support
+
+MWAPI:                                o Miscellaneous Files
+
+For installation:  52500 blocks       o Utilities
+
+For use (perma-    39500 blocks       o Network Support (if DECnet DDP ca-
+nent):                                  pability is required)
+
+With all previous                     o Programming Support
+options:
+For installation:  53000 blocks       o DECwindows Motif (if DECwindows
+For use (perma-    39500 blocks         Motif support is required)
+nent):
+
+These counts refer to the disk space   Optional Software
+required on the system disk. The       For Alpha Systems:
+sizes are approximate; actual sizes    o DECwindows Motif for OpenVMS Al-
+may vary depending on the user's         pha V1.1
+system environment, configuration,
+and software options.                  o DEC TCP/IP Services for OpenVMS
+                                         V3.0 or greater
+Cluster Environment                    o WIN/TCP V5.2[TM]
+
+DSM for OpenVMS is fully supported     o TCPware for OpenVMS V5.0 or greater
+when installed on any valid and li-    o DECimage Application Services for
+censed VMScluster[1] configuration,      VMS[2]
+without restrictions. The Hardware For   VAX Systems:
+Requirements sections of this prod-
+uct's Software Product Information     o VMS DECwindows Motif V1.0
+detail any special hardware require    o DEC TCP/IP Services for OpenVMS
+by this product.                         VAX V2.0 or greater
+
+                                       o WIN/TCP V5.2[TM]
+Software Requirements                  o TCPware[TM] for OpenVMS V5.0 or
+
+For Alpha Systems:                       greater
+
+OpenVMS Alpha Operating System V6.1    o DECimage Application Services for
+or greater                               VMS2
+
+For VAX Systems:
+OpenVMS VAX Operating System V6.1      Growth Considerations
+or greater                             The minimum hardware/software re-
+                                       quirements for any future version
+__________                             of this product may be different
+[1] VMScluster configurations are      from the requirements for the cur-
+fully described in the VMScluster      rent version.
+
+Software Product Description (29.78.xx)______
+and include CI, Ethernet, and Mixed[2] Any version compatible with the
+Interconnect configurations.           version of DECwindows used.
+
+                                           10
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+
+Distribution Media                    License Management Facility
+
+DSM for OpenVMS is distributed by     This layered product supports the
+both InterSystems Corporation and     OpenVMS License Management Facil-
+Digital Equipment Corporation.        ity (LMF). License units for this
+                                      product are allocated on a Concur-
+                                      rent Use basis. Each Concurrent Use
+DSM for OpenVMS VAX and DSM for Open- Liccense allows any one DSM process
+VMS Alpha are available from In-      at a time to use the layered prod-
+terSystems Corporation on CD-ROM,     uct.
+
+9-track 1600 BPI Magtape, TLZ06 cart  For more information about the Open-
+tridge, and TK50 Streaming Tape.      VMS License Management Facility,
+                                      refer to the appropriate OpenVMS
+DSM for OpenVMS VAX is available      Operating System Software Product
+from Digital Equipment Corporation    Description or documentation or con-
+on 9-track 1600 BPI Magtape or TK50   tact InterSystems Corporation, One
+Streaming Tape. It is also avail-     Memorial Drive, Cambridge, MA 02142
+able as part of the OpenVMS Con-      at 617-621-0600.
+solidated Software Distribution on
+CD-ROM.
+                                      Software Warranty
+
+DSM for OpenVMS Alpha is available    Warranty for this software prod-
+from Digital Equipment Corporation    uct is provided by InterSystems with
+only on the Digital CD-ROM Soft-      the purchase of a license for the
+ware Library for OpenVMS Alpha.       product.
+
+                                      Motif is a registered trademark of
+Ordering Information                  Open Software Foundation Inc., li-
+                                      censed by Digital.
+
+Please contact InterSystems Cor-      TCPware for OpenVMS is a trademark
+poration, One Memorial Drive, Cam-    of Process Software Corporation.
+bridge, MA 02142 at 617-261-0600      DSM for OpenVMS VAX is a trademark
+for more information.                 of InterSystems Corp.
+
+                                      DSM for OpenVMS Alpha is a trade-
+Order Processing                      mark of InterSystems Corp.
+
+For questions about orders, con-      WIN/TCP is a trademark of The Wol-
+tact InterSystems Corporation, One    longong Group.
+
+Memorial Drive, Cambridge, MA 02142   Alpha, DASL, DEC, DECimage, DEC-
+at 617-577-3600.                      net, DECstation, DECsystem, DECwin-
+                                      dows, OpenVMS, Digital UNIX, VAX,
+                                      VMScluster, VAXstation, OpenVMS,
+Software Licensing                    VMS RMS, VMScluster, DEC TCP/IP for
+                                      OpenVMS (UCX) and the DIGITAL logo
+                                      are trademarks of Digital Equip-
+For more information about the li-    ment Corporation.
+censing terms and policies, con-
+tact InterSystems Corporation, One    All other trademarks and registered
+Memorial Drive, Cambridge, MA 02142   trademarks are the property of their
+at 617-261-0600.                      respective owners.
+
+                                           11
+
+ 
+
+
+
+
+DSM for OpenVMS Version 6.6
+
+
+© InterSystems Corporation, 1996.
+All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           12

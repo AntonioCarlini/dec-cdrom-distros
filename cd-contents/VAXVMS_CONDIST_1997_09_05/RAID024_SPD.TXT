@@ -1,0 +1,400 @@
+ 
+
+
+                               DIGITAL
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  StorageWorks RAID Software              SPD 46.49.05
+                for OpenVMS, Version 2.4
+
+ DESCRIPTION
+
+ StorageWorks[R] RAID Software for OpenVMS[R] is a software product that
+ uses RAID technology to manage groups of disk drives as arrays. The
+ product supports RAID Level 0 arrays (Disk striping) for enhanced I/O
+ performance and RAID Level 5 arrays (Disk striping with parity) for
+ enhanced data availability on both VAX[R] and Alpha platforms. RAID
+ Software also allows partitioning or segmentation of a RAID Array into
+ multiple virtual devices.
+
+ StorageWorks RAID Software for OpenVMS Capabilities and Features
+
+ StorageWorks RAID Software for OpenVMS manages groups of between 1 and
+ 32 physical disks (between 3 and 32 for RAID Level 5) as arrays. Ap-
+ plications use a virtual disk as if it were a physical disk.
+
+ A total of 50 such arrays per VMScluster system are supported, in any
+ mixture of RAID Level 0 and RAID Level 5.
+
+ StorageWorks RAID virtual disks may be accessed directly from any mem-
+ ber of a VMScluster system for which a valid license is in effect. (All
+ VMScluster systems may access virtual disks created using the Stor-
+ age Concurrent Use license QL-0MGAA-3B.) Virtual disks may not be MSCP[R]
+ served.
+
+ The disks in a StorageWorks RAID Software for OpenVMS array may be of
+ different types, although disks of a single type are recommended for
+ consistent performance and optimal use of storage capacity.
+
+                                                          April 1997
+
+                                                         AE-Q1GDG-TE
+
+ 
+
+ StorageWorks RAID Software for OpenVMS virtual disks may not be used
+ to boot the OpenVMS Operating System, nor may they serve as VMSclus-
+ ter quorum disks. They may, however, contain OpenVMS page and swap files.
+
+ StorageWorks RAID Software for OpenVMS may be used in conjunction with
+ OpenVMS Volume Shadowing (Phase II only). OpenVMS shadow sets may be
+ StorageWorks RAID Software for OpenVMS array members (RAID Level 0 only),
+ however, virtual disks may not be members of OpenVMS shadow sets.
+
+ A RAID Level 0 array whose members are shadow sets is a high perfor-
+ mance, high data availability storage solution for most applications.
+ Single-member shadow sets may also be used as RAID array members so
+ that the VAXsimPLUS autocopy feature may be employed as a failure pro-
+ tection mechanism.
+
+ Partitioning is the process of dividing a RAID array into one or more
+ RAID virtual devices. The RAID Software allows you to specify how many
+ partitions are to be used in a given RAID array and how large each par-
+ tition should be. One or more partitions can be created on a single-
+ member RAID Level 0 array or multiple-member RAID Level 0 or RAID Level
+ 5 arrays. The Maximum number of partitions for any array is 64.
+
+ Features Applicable to RAID Level 0 Arrays
+
+ The usable capacity of RAID Level 0 array is approximately given by:
+
+    Usable Capacity = N * 0.99 * CS
+    Where N is the number of physical disks in the array.
+    CS is the storage capacity of the smallest disk in the array.
+
+ The purpose of RAID Level 0 technology is to provide I/O intensive ap-
+ plications with greater I/O performance from a given I/O hardware con-
+ figuration than would normally be achieved by using the disks as in-
+ dividual volumes. This is also referred to as Disk Striping. Depend-
+ ing on the application, enhanced I/O performance may be delivered as:
+
+ o  more I/O requests serviced per unit time due to probabilistic load
+    balancing, or
+
+
+                                  2
+
+ 
+
+ o  higher data transfer rate due to concurrent transfer of data to or
+    from more than one disk to satisfy a single request.
+
+ Features Applicable to RAID Level 5 Arrays
+
+ The usable capacity of RAID Level 5 array is approximately given by:
+
+    Usable Capacity = (N-1) * 0.99 * CS
+    Where N is the number of physical disks in the array.
+    CS is the capacity of the smallest disk in the array.
+
+ StorageWorks RAID Software for OpenVMS protects against loss of data
+ and loss of data accessibility due to the failure of any single disk
+ in a RAID Level 5 array. If a disk in a RAID Level 5 array fails, Stor-
+ ageWorks RAID Software for OpenVMS provides continued service to ap-
+ plications by regenerating the failed disk's data using information
+ from the array's remaining disks. (For full protection against loss
+ of data availability due to single hardware failures, StorageWorks RAID
+ Software for OpenVMS software can be used in conjunction with redun-
+ dant hardware and supporting software throughout the system.)
+
+ While a RAID Level 5 array is reduced by a failed disk, data can be
+ read and written, but no redundancy is provided. A second disk fail-
+ ure while an array is reduced prevents application access to the data
+ stored on the array, and may result in data loss.
+
+ StorageWorks RAID Software for OpenVMS reconstructs the contents of
+ a failed disk if a replacement disk is assigned to it. Reconstruction
+ does not interrupt application access to data on the array, although
+ performance may be affected. Replacement disks may either be assigned
+ to StorageWorks RAID Software for OpenVMS by the storage administra-
+ tor (using a DCL command) or they may be placed in a spareset asso-
+ ciated with one or more RAID Level 5 arrays. If a disk in a RAID Level
+ 5 array with an associated spareset fails, StorageWorks RAID Software
+ for OpenVMS automatically acquires a replacement disk from the spare-
+ set and performs reconstruction without storage administrator inter-
+ vention.
+
+
+
+                                  3
+
+ 
+
+
+ Using StorageWorks RAID Software for OpenVMS
+
+ To use StorageWorks RAID Software for OpenVMS, the storage adminis-
+ trator first creates an array using DCL functions supplied with the
+ software. This destroys any data previously stored on the disks and
+ creates the data structures required to manage the array. The member
+ disks of a StorageWorks RAID Software for OpenVMS array are ODS-2 struc-
+ tured volumes, so OpenVMS mechanisms protect against inadvertent mis-
+ use of members for the life of the array.
+
+ Each virtual disk created by StorageWorks RAID Software for OpenVMS
+ is a single management entity. The storage administrator should use
+ appropriate storage management procedures (e.g., backups) with vir-
+ tual disks, which can be considerably larger than typical physical disks.
+ Once a collection of physical disks is bound into an array, it is not
+ possible to retrieve data directly from the array's individual mem-
+ ber disks.
+
+ Performance of StorageWorks RAID Software for OpenVMS
+
+ The primary purpose of StorageWorks RAID for OpenVMS RAID Level 0 ar-
+ rays is to enhance application performance by improving I/O request
+ processing and/or data transfer rate. RAID Level 0 technology normally
+ implies a reduction in data reliability. The storage administrator can
+ improve data reliability by increasing backup frequency or using Stor-
+ ageWorks RAID Software for OpenVMS in conjunction with Volume Shad-
+ owing for OpenVMS.
+
+ The primary purpose of StorageWorks RAID Software for OpenVMS RAID Level
+ 5 arrays is to improve data reliability. It may provide the secondary
+ benefit of improved performance (due to load balancing) for applica-
+ tions whose I/O workload consists largely of reading data. For appli-
+ cations with mostly write I/O workloads, StorageWorks RAID Software
+ for OpenVMS RAID Level 5 arrays may provide lower I/O performance than
+ conventional disks because it must update redundant information each
+ time an application writes data.
+
+
+
+                                  4
+
+ 
+
+ The storage administrator should understand application I/O charac-
+ teristics and weigh the relative priorities of performance, equipment
+ cost, and data reliability to determine whether StorageWorks RAID Soft-
+ ware for OpenVMS is appropriate for use with a given application.
+
+ HARDWARE REQUIREMENTS
+
+ StorageWorks RAID Software for OpenVMS is supported when used with the
+ VAX and Alpha processors and VMScluster systems supported by OpenVMS.
+ See the Software Requirements section for the supported OpenVMS ver-
+ sions. StorageWorks RAID Software may be installed in a VMScluster con-
+ figuration of any size supported by OpenVMS Software, but the Stor-
+ ageWorks RAID Software has been qualified to run on a maximum of 20
+ nodes within a single VMScluster configuration.
+
+ StorageWorks RAID Software for OpenVMS requires a minimum of 1 (for
+ RAID Level 0) or 3 (for RAID Level 5) and a maximum of 32 physical disks
+ for each array. Up to 50 arrays may be created in a single VMSclus-
+ ter system. Disks, storage elements, (and the subsystem configurations
+ that contain them) are supported by the OpenVMS Operating System Ver-
+ sions listed above through the following device drivers shown in Ta-
+ ble 1.
+
+ ___________________________________________________________________
+
+ Table_1:_Supporting_Device_Drivers_________________________________
+
+ Device
+ Drivers___Description______________________________________________
+
+ DUDRIVER  For Digital Storage Architecture (DSA) disks, including
+           MSCP-served Disks.
+
+ DKDRIVER  For SCSI disks
+
+ DRDRIVER  For StorageWorks RAID Array 200 series controllers, also
+ __________known_as_SWXCR___________________________________________
+
+
+
+                                  5
+
+ 
+
+ ___________________________________________________________________
+
+ Table_2:_Disk_Space_Requirements___________________________________
+
+ Disk_Space_______VAX-based_________Alpha-based_____________________
+
+ During instal-   3500 blocks       5000 blocks (2.44 megabytes)
+ lation           (1.70 megabytes)
+
+ For permanent    2500 blocks       4000 blocks (1.85 megabytes)
+ use______________(1.22_megabytes)__________________________________
+
+ SOFTWARE REQUIREMENTS
+
+ StorageWorks RAID Software for OpenVMS requires the OpenVMS VAX Op-
+ erating System (Version 5.5, 5.5-1, 5.5-2, 6.0, 6.1, 6.2, 7.0,and 7.1)
+ or OpenVMS Alpha (Versions 1.5, 6.1, 6.2, 7.0 and 7.1) as a prereq-
+ uisite. No other prerequisite software is required.
+ Mixed-architecture VMScluster systems (i.e. containing both VAX and
+ Alpha systems) are supported as long as all VMScluster members are run-
+ ning compatible versions of the OpenVMS operating system supported by
+ StorageWorks RAID Software. For a chart of the compatible versions of
+ the operating systems, refer to the VAXcluster Software for OpenVMS
+ VAX Software Product Description (SPD 29.78.xx) and the VMScluster Soft-
+ ware for OpenVMS Alpha Software Product Description (SPD 42.18.xx).
+
+ In order to bind StorageWorks RAID arrays, all physical disks that com-
+ prise the RAID arrays must be accessible, (local or MSCP served), on
+ all nodes in a VMScluster having the RAID software running.
+
+ If RAID Level 0 arrays with OpenVMS shadow sets as members are required,
+ a valid OpenVMS Volume Shadowing license must be in effect on every
+ VMScluster node running the StorageWorks RAID Software. Shadow sets
+ may not be used as members of RAID Level 5 arrays.
+
+
+
+
+
+
+                                  6
+
+ 
+
+ DISTRIBUTION MEDIA
+
+    TK50 Streaming Tape
+    1600 bpi Magtape
+
+ This layered product is also available as part of the OpenVMS Consol-
+ idated Software Distribution on CD-ROM for VAX (QA-VWJ8A-A8) and on
+ the Digital CD-ROM Software Library for OpenVMS Alpha (QA-03XAA-H8).
+
+ ORDERING INFORMATION
+
+ Two licensing options are available:
+
+ RAID Array Access License:
+
+    VAX: QL-0MHA*-AA
+    Alpha: QL-2YFA*-AA
+
+ This license option provides the purchaser with the right to use the
+ StorageWorks RAID Software for OpenVMS on a single VAX or Alpha sys-
+ tem to create and use up to the supported number (50) of RAID arrays.
+ One RAID Array Access License is required for each VAX or Alpha sys-
+ tem in a VMScluster system on which StorageWorks RAID Software for Open-
+ VMS is to execute.
+
+ Storage Concurrent Use License:
+    QL-0MGAA-3B
+
+ This license option provides the purchaser with the right to include
+ a single disk, storage element, or shadow set in an array. One Stor-
+ age Concurrent Use License is required for each disk, storage element,
+ or shadow set to be included in a StorageWorks RAID Software for Open-
+ VMS array. Once an array is created, it may be accessed by any VMSclus-
+ ter VAX or Alpha system.
+
+ For purposes of the Storage Concurrent Use License, the measure of use
+ is equal to a single disk, storage element, or shadow set to be in-
+ cluded in an array, no matter how many VMScluster CPUs have access to
+ that array. Each shadow set used as a member of a RAID Level 0 array
+
+                                  7
+
+ 
+
+ requires a single Concurrent Use License, regardless of the number of
+ physical disks in the shadow set.
+
+ Disks, storage elements, and shadow sets that are members of spare-
+ sets do not require Storage Concurrent Use Licenses.
+
+ Media:
+
+    VAX: QA-0MGAA-H5
+    VAX: QA-0MGAA-HM
+
+ Documentation:
+
+    VAX: QA-0MGAA-GZ
+    Alpha: QA-0MGAA-GZ
+
+ Software Product Services:
+
+    Array Access (VAX): QT-0MHA*-**
+    Array Access (Alpha): QT-2YFA*-**
+    Storage: QT-0MGA*-**
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license.
+
+ StorageWorks RAID Software V2.4, and continuing with future releases,
+ the right to use the RAID Level 0 function of the StorageWorks RAID
+ Software is included in the license for POLYCENTER Striping for Open-
+ VMS VAX. This applies to OpenVMS VAX installations only as POLYCEN-
+ TER Striping operates solely on that platform.
+
+ When an Update License is required for StorageWorks RAID Software and
+ the license that granted the right to use the product is POLYCENTER
+ Striping, the customer should purchase the POLYCENTER Striping Update
+ License.
+
+ For more information about Digital's licensing terms and conditions,
+ contact your local Digital office.
+
+ License Management Facility Support
+
+                                  8
+
+ 
+
+ StorageWorks RAID Software for OpenVMS software uses the OpenVMS Li-
+ cense Management Facility.
+
+ License Units for the StorageWorks RAID Software for OpenVMS RAID Ar-
+ ray Access License are allocated on a CPU-capacity basis.
+
+ License Units for the StorageWorks RAID Software for OpenVMS Storage
+ Concurrent Use License are independent of CPU capacity. One Storage
+ Concurrent Use License is required for each disk, storage element, or
+ shadow set included in an array, no matter how many VMScluster CPUs
+ have access to the array.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx)
+ or the OpenVMS Operating System documentation.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of software product service options are available from Dig-
+ ital. For more information, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty of this software is provided by Digital with the purchase of
+ license for the product as defined in the Software Warranty Addendum
+ of this SPD.
+
+ [TM]The Digital logo, DEC, Digital, MSCP, OpenVMS, StorageWorks,
+    TK, VAX, and VMScluster are trademarks of Digital Equipment
+    Corporation.
+
+ All other trademarks and registered trademarks are the property of their
+ respective holders.
+
+ © 1997 Digital Equipment Corporation. All rights reserved.
+
+
+
+
+
+                                  9
