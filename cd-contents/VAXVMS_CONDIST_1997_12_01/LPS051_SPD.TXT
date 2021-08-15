@@ -1,0 +1,2069 @@
+ 
+
+Software
+Product
+Description
+
+___________________________________________________________________
+
+PRODUCT NAME:  PrintServer Software                    SPD 48.09.07
+
+July, 1995
+
+OVERVIEW
+
+PrintServer Software provides printing services across a wide range
+of operating environments to Digital's PrintServer printers. This Soft-
+ware Product Description (SPD) summarizes the functions of the soft-
+ware; however, the feature set for each platform may vary. These ex-
+ceptions are noted throughout the SPD. The platforms supported at the
+release of this document are:
+
+o  HP-UX[R]
+
+o  IBM[R]-AIX[R]
+
+o  NetWare[R]
+
+o  OpenVMS VAX and AXP
+
+o  OSF/1[R] AXP (Digital UNIX)
+
+o  Silicon Graphics[R] IRIX
+
+o  Sun[R] Solaris
+
+o  SunOS
+
+o  ULTRIX
+
+o  Windows NT[TM]
+
+This SPD documents PrintServer Software, V5.1, features for the HP-
+UX, IBM-AIX, NetWare, OpenVMS, OSF/1, Silicon Graphics IRIX, Sun So-
+laris, SunOS, Windows NT, and ULTRIX operating environments and PrintServer
+Software, V4.2, features for the SCO UNIX, SCO UNIX/DECadvantage, and
+AT&T Unison operating environments. Versions of PrintServer Software
+
+                              DIGITAL                  14-June-1995
+
+ 
+
+earlier than V5.1 may not support all currently shipping PrintServer
+printers. See the SPD for the software version that you plan to use
+for a list of supported printers.
+
+DESCRIPTION
+
+PrintServer Software is a layered product that enables one or both of
+the following:
+
+o  Suitably configured systems to communicate in an Ethernet network
+   to a PrintServer 17, PrintServer 17/600, PrintServer 20, turbo PrintServer
+   20, PrintServer 32, PrintServer 32 plus, or PrintServer 40 plus printer.
+   Users in an Ethernet network can communicate with, print to, mon-
+   itor, and gather accounting information from any of these PrintServer
+   printers. These are called the supporting host services.
+
+o  Suitably configured systems in an Ethernet local area network (LAN)
+   to initialize (boot) and provide support functions for the PrintServer
+   17, PrintServer 17/600, PrintServer 20, turbo PrintServer 20, PrintServer
+   32, PrintServer 32 plus, and PrintServer 40 plus. Users in an Eth-
+   ernet LAN can initialize (boot) and provide print client services
+   to any of these PrintServer printers.
+
+In general, there are two primary components included in PrintServer
+Software: print client software and supporting host software.
+
+Print Client Software
+
+Print client software consists of the following components:
+
+o  Print filters or interface programs to process requests from one
+   or more printer queues.
+
+o  Network software to transmit print requests and associated data over
+   the Ethernet network to a remote PrintServer printer. OpenVMS, UL-
+   TRIX, and Windows NT clients support both DECnet and TCP/IP pro-
+   tocols. All other UNIX and NetWare clients support only TCP/IP.
+
+o  Translators that automatically convert file formats into the PostScript[R]
+   page description language.
+
+                                 2
+
+ 
+
+o  Event logging that captures error and status information and de-
+   livers it to specified users and/or operators.
+
+o  Print client and local accounting for tracking printer usage.
+
+o  Online help or manual pages providing help for the user.
+
+o  Installation scripts and/or instructions.
+
+The print client software must reside on each system or file server
+that prints directly or provides distributed printing services for other
+systems (remote spooling) to Digital's PrintServer printers. A sys-
+tem running the print client software can transmit print requests to
+any suitably configured PrintServer printer defined in the system's
+network database.
+
+The maximum number of print clients that can be connected to a PrintServer
+is as follows.
+
+o  PrintServer 20 series - 16 simultaneous client connections
+
+o  PrintServer 32 series - 16 simultaneous client connections
+
+o  PrintServer 40 plus - 16 simultaneous client connections
+
+o  PrintServer 17 series - depends on amount of memory in the printer
+
+Supporting Host Software
+
+Supporting host software consists of the following components:
+
+o  PostScript and PCL interpreters.
+
+o  Printer Status Manager (PRISM).
+
+o  A primary boot system image file that is downloaded into the PrintServer
+   printer when the printer is powered on or remotely triggered.
+
+o  A management client that loads the secondary boot files and printer
+   configuration files and provides for the capture and storage of cen-
+   tralized accounting and event log information from the printer.
+
+                                 3
+
+ 
+
+o  A remote management utility that allows remote monitoring and man-
+   aging of a PrintServer printer from a terminal, workstation, or PC
+   on either a print client or supporting host system (except for Win-
+   dows NT).
+
+o  PrintServer system software that provides communications services,
+   remote management services, and PostScript and PCL interpreters.
+   The interpreters process PostScript and PCL commands and generate
+   imaging data for the printer controller.
+
+If multiple PrintServer printers reside on the same LAN, one or more
+supporting hosts can be used to load and/or manage them. A single sup-
+porting host can service any number of PrintServer printers; conversely,
+a number of supporting hosts can service a single printer to provide
+a high degree of fault tolerance.
+
+Print Client Features
+
+The print client features described in this SPD are available for the
+following platforms: HP-UX, IBM-AIX, NetWare, OSF/1, SCO UNIX, SCO UNIX
+/DECadvantage, Silicon Graphics IRIX, Solaris, SunOS, ULTRIX, and Win-
+dows NT.
+In a NetWare operating environment, the print client requires bindery
+emulation to be enabled for all NetWare 4.nn servers that are to be
+used with this software. Bindery emulation is enabled by default in
+some 4.nn installations.
+
+In an OpenVMS operating environment, the print client software is pro-
+vided through DECprint Supervisor for OpenVMS. The media and documen-
+tation for DECprint Supervisor for OpenVMS are bundled with the PrintServer
+Software for OpenVMS (and available separately). Refer to the Soft-
+ware Product Description (SPD 44.15.nn) for more information on DECprint
+Supervisor for OpenVMS.
+
+In an ULTRIX operating environment, the print client software is pro-
+vided through the ULTRIX operating system. The license to use this soft-
+ware is bundled with the ULTRIX operating system.
+
+Printer Interface
+
+                                 4
+
+ 
+
+PrintServer Software provides an interface to your operating system.
+The interface transmits print requests over the Ethernet network to
+the printer and relays system messages from the printer to the spool-
+ing system and/or requesting user.
+
+PrintServer Software allows users to print non-PostScript documents
+(with the exception of PCL5) by translating the text into PostScript.
+Translation can be requested explicitly on the command line or per-
+formed automatically when the document is printed. PCL5 files are sent
+directly to the PrintServer 17 family of printers, turbo PrintServer
+20, and PrintServer 32 plus printers without translation. ASCII trans-
+lation is provided for all operating environments. ANSI translation
+is provided for the OpenVMS, OSF/1, and ULTRIX operating environments.
+
+In a Windows NT operating environment and in applications, transla-
+tion occurs automatically when your application submits a print job
+to the spooling system. The spooling system provides the printer with
+all the fonts required to print the job successfully.
+
+The NetWare operating environment provides a PrintServer-specific Printer
+Description File (PDF) containing modes and functions to select var-
+ious PrintServer features and options.
+
+Print drivers for Macintosh[TM] systems and Microsoft[R] Windows[TM]
+3.1 are also provided. The drivers allow you to:
+
+o  Print PostScript and PCL jobs faster
+
+o  Use two or more paper trays, print duplex (two-sided), and incor-
+   porate print enhancement technologies
+
+o  Save PostScript and PCL files in a variety of portable formats
+
+o  Maintain separate printer settings for each PostScript printer, mak-
+   ing it easy to use two or more PostScript printers with the same
+   computer
+
+o  Use PostScript Level 1 and Level 2
+
+
+                                 5
+
+ 
+
+In a SCO UNIX/DECadvantage operating environment, an interface pro-
+gram allows users to print images (CCITT Group 3 and Group 4) at near
+engine speed on the PostScript Level 1 versions of the following print-
+ers: PrintServer 17, turbo PrintServer 20, and PrintServer 32 print-
+ers.
+
+In an ULTRIX/VAX operating environment, ANSI, TEKTRONIX[R], and ReGIS
+translators are also provided. Refer to the Software Product Descrip-
+tion (SPD 26.40.nn) for more information.
+
+The following table illustrates the more popular print options pro-
+vided:
+
+___________________________________________________________________
+This
+Feature_____Selects________________________________________________
+
+data        The type of data in the print job.
+type
+input       The printer input tray that supplies the paper or
+tray        other media for this job.
+sides       Simplex (one-sided) or duplex (two-sided) printing.
+number      The number of page images to be printed per side of
+up          paper.
+output      The printer output tray.
+tray
+sheet       The physical size of the sheets to be printed. This
+size        option also selects the appropriate input tray.
+sheet       The number of copies of each sheet to be printed.
+count______________________________________________________________
+
+To print ASCII text in NetWare and UNIX environments, you can use the
+following features:
+
+
+
+
+
+
+
+                                 6
+
+ 
+
+
+This_______________________________________________________________
+Feature_______Does_the_Following___________________________________
+
+tab width     Expands tab characters to use spaces. The default
+              tab width is 8 spaces.
+indent        Selects the number of spaces to indent horizontally
+              on each page.
+literal       Prints the file exactly as it appears, including
+              nonprinting characters imaged in a printable manner.
+cwidth        Prints output using a page width of x column charac-
+              ters. The default is an 80-column page width.
+rlength       Prints job using a page length of x lines. The de-
+______________fault_is_a_66-line_page_length.______________________
+
+Many of the options above are supported through applications with na-
+tive support in some operating systems.
+
+In UNIX environments, the output can be directed not only to a print
+queue, but also to a file for printing later on a Digital PostScript
+printer.
+
+Supporting Host Features
+
+The supporting host features are described below:
+
+PostScript
+
+PostScript is a device-independent, page description language that de-
+scribes the appearance of text, images, and graphic material on the
+printed page.
+
+The PostScript language's page description capabilities include the
+following features, which can be used in any combination:
+
+o  Arbitrary shapes constructed from straight lines, arcs, and cubic
+   curves. Such shapes can self-intersect and contain disconnected sec-
+   tions and holes.
+
+
+                                 7
+
+ 
+
+o  Painting primitives that permit a shape to be outlined with lines
+   of any thickness, filled with any gray shade, or used as a clip-
+   ping path to crop any other graphics.
+
+o  Text fully integrated with graphics. Text characters are treated
+   as graphical shapes that can be operated on by any PostScript graph-
+   ics operator.
+
+o  Sampled images derived from natural sources or generated synthet-
+   ically. The PostScript graphics model allows sampled images at any
+   resolution and with a variety of dynamic ranges, and it provides
+   a number of facilities to control the rendering of images on the
+   PrintServer printer.
+
+o  A general coordinate system facility that supports all combinations
+   of linear transformations including translation, scaling, rotation,
+   reflection, and skewing. These transformations apply uniformly to
+   all elements of a page description, including text, graphical shapes,
+   and sampled images.
+
+o  A rendering algorithm, DECimage Plus, that enhances the quality of
+   natural (halftone) images when printed on laser printers.
+
+PostScript Level 2 extends the functional range of the PostScript lan-
+guage by adding new features designed to more conveniently and effi-
+ciently describe the appearance of the page. PostScript Level 2 fea-
+tures include:
+
+o  Form and pattern caching, which drastically reduces print times where
+   repetitive elements, such as corporate logos or accent bars, are
+   printed on successive pages.
+
+o  ATM font rendering, which provides higher quality and is notably
+   faster than the rendering mechanism in PostScript Level 1.
+
+o  Data-compression and decompression filters for several industry-
+   standard formats (i.e. CCITT Group 3 and Group 4), which enable much
+   faster data transmission times and reduces storage requirements for
+   PostScript files.
+
+                                 8
+
+ 
+
+o  Improved printer-based memory management, which facilitates the print-
+   ing of complex pages in less time.
+
+PostScript Level 2 is provided for the PrintServer 17 family of print-
+ers, turbo PrintServer 20 (with firmware version 3.7 and a minimum of
+16 MB of memory), and PrintServer 32 plus printers. (PostScript Level
+2 is provided for the turbo PrintServer 20 and the PrintServer 32 plus
+printers for those platforms that offer the V5.1 version of PrintServer
+software). PostScript Level 1 is provided for all other Digital PrintServer
+printers.
+
+PCL5
+
+PCL5 interpretation is provided for the PrintServer 17 (with at least
+12 MB memory), PrintServer 17/600, turbo PrintServer 20, and PrintServer
+32 plus printers in HP-UX, IBM-AIX, NetWare, OpenVMS, OSF/1, Silicon
+Graphics IRIX, Solaris, SunOS, and Windows NT operating environments.
+[Note: PrintServer 17/600 PostScript Level 2 printers that use SNMP
+and PCL5 require 20 MB memory.]
+
+The PCL5 interpreter supports HP LaserJet IIIsi emulation as described
+in the HP PCL5 Printer Language Technical Reference Manual and as im-
+plemented in the HP LaserJet IIIsi printer. PCL5 files are passed di-
+rectly to the PCL5 interpreter in the printer and processed for print-
+ing (versus being translated on the host system). PCL5 supports in-
+terpretation and the printing of both 300 and 600 dpi files.
+
+PrintServer Software allows users to print PCL5 documents on PrintServer
+17, PrintServer 17/600, turbo PrintServer 20, and PrintServer 32 plus
+printers. Interpretation is performed in the printer (versus being trans-
+lated on the host system) when the document is printed.
+
+Resident scaleable typefaces include:
+
+o  Univers[R] Medium
+
+o  Univers Medium Italic
+
+o  Univers Bold
+
+o  Univers Bold Italic
+
+                                 9
+
+ 
+
+o  Times[R] Medium
+
+o  Times Medium Italic
+
+o  Times Bold
+
+o  Times Bold Italic
+
+o  Univers Condensed[R]
+
+o  Univers Condensed Italic
+
+o  Univers Condensed Bold
+
+o  Univers Condensed Bold Italic
+
+o  ITC Zapf Dingbats[R]
+
+Bitmap font support includes:
+
+o  Courier[R] 10 pitch 12 point (italic, bold)
+
+o  Courier 12 pitch 10 point (italic, bold)
+
+o  Line Printer 16.66 pitch 8.5 point (landscape, portrait)
+
+Image Printing
+
+An image PDL is provided for the turbo PrintServer 20 and PrintServer
+32 printers in an OpenVMS operating environment and for the PrintServer
+17, turbo PrintServer 20, and PrintServer 32 printers in the SCO UNIX
+/DECadvantage operating environment. (Image printing for PostScript
+Level 2 printers is handled by the PostScript Level 2 interpreter.)
+The image PDL greatly reduces the printing time on PostScript Level
+1 printers for Digital Document Interchange Format (DDIF) compressed
+bitonal image files, such as those created by certain scanning devices.
+The use of the image PDL passes files directly to the image decompres-
+sion chip in the printer, bypassing and eliminating conversion to PostScript.
+
+The image PDL provides the following features:
+
+o  Uses the printer's hardware decompression capability for faster print-
+   ing
+
+                                10
+
+ 
+
+o  Automatically rotates and crops images to fit paper size and ori-
+   entation
+
+o  Automatically scales 200 dpi A-size images to 300 dpi A-size im-
+   ages
+
+o  Supports CCITT compression standards: CCITT G42D, CCITT G31D, and
+   CCITT G32D
+
+o  Supports different media sizes, depending on the PrintServer printer
+
+Remote Management Services
+
+A management facility enables the remote management and monitoring of
+the PrintServer printers. There are two levels of command:
+
+o  Unprivileged - Anyone may use these commands.
+
+o  Privileged - You must enter a password to use these commands.
+
+Unprivileged commands include:
+
+___________________________________________________________________
+Command_______Function_____________________________________________
+
+configuration Displays the PrintServer configuration
+exit          Exits the utility
+help          Provides help on commands
+jobs          Shows the jobs printing to the printer
+netstat       Shows the current status of the Internet subsystem
+permissions   Shows the current network access control restric-
+              tions
+privs         Enters privileged mode
+showq         Same function as "jobs"
+status        Shows the status of PrintServer system components
+versions      Displays the version numbers of each system compo-
+              nent
+?             Displays a list of commands available in current
+______________mode_________________________________________________
+
+Privileged commands include:
+
+                                11
+
+ 
+
+
+___________________________________________________________________
+
+abort         Aborts the specified job
+accept        Enables job acceptance
+continuous    Continuously prints jobs
+exit          Exits privileged mode
+newfile       Creates a new accounting or event log file or both
+next          Causes the next job to print from single job mode
+reconfigure   Causes the PrintServer printer to reload its config-
+              uration parameters
+reject        Disables job acceptance
+repeat        Sets the repeat interval for the next command
+single        Enables single job mode, causing the printer to
+              pause between print jobs
+reboot________Remotely_reboots_the_PrintServer_printer_____________
+
+The remote management facility is available in the following styles:
+
+o  GUI interface for Motif platforms
+
+o  A command-line interface for character-cell terminals
+
+o  A Windows interface for PC platforms (monitoring only for PC plat-
+   forms)
+
+The PrintServer 17, PrintServer 17/600, PrintServer 20, turbo PrintServer
+20, PrintServer 32, and PrintServer 32 plus printers have front pan-
+els with a 2 x 24 character LCD display that provides system status
+information. Front panel status messages can be displayed in English,
+French, German, Dutch, Swedish, Portuguese, Spanish, Italian, or Nor-
+wegian. (The remote console is not available for Windows NT.)
+
+PRISM
+
+The Printer Status Manager (PRISM) allows you to monitor all supported
+PrintServer printers on your network. PRISM displays the current sta-
+tus of the printers, such as printing, processing, out of paper, or
+jammed. This saves you from having to check the front panel of each
+printer or the remote console facility for printer status. PRISM en-
+ables you to:
+
+                                12
+
+ 
+
+o  Select the printers you wish to monitor
+
+o  Group the printers by floor, building, printer type, etc.
+
+o  Identify problems at a glance using colors to indicate problem sever-
+   ity
+
+o  Determine printer status
+
+Simple Network Management Protocol
+
+SNMP allows network managers to integrate PrintServer printers into
+SNMP-based network management programs. PrintServer Software supports
+an SNMP agent for all PrintServer printers, except the PrintServer 40
+series, PrintServer 20, and Printserver 17 with 8 MB of memory. The
+agent supports MIB-II.
+
+Centralized Event Logging
+
+PrintServer Software logs events ranging from successful completion
+of jobs to hardware errors. Events can be recorded in an event log file
+on a management client system. Management clients on multiple systems
+can simultaneously receive event logging data from a single PrintServer
+printer. These events are also displayed on remote management termi-
+nals and the PrintServer 40 local console. A subset of event messages
+is displayed on the remote console and front panel of the PrintServer
+17, PrintServer 17/600, PrintServer 20, turbo PrintServer 20, PrintServer
+32, and PrintServer 32 plus printers. The command to display logging
+information on the remote console is a privileged command in a Win-
+dows environment.
+
+Centralized Accounting
+
+Similar to event logging, accounting information is sent to any man-
+agement client that requests accounting data upon connecting to a PrintServer
+printer. PrintServer Software contains its own accounting utility, pro-
+viding the system manager with a convenient way to analyze and report
+printer usage or cross-charge users and departments for printer us-
+age.
+
+                                13
+
+ 
+
+The accounting utility prepares usage reports for a specific PrintServer
+printer on a per-user and per-host basis. Accounting information in-
+cludes user name, originating host, total number of sheets and sides
+printed, sheet size, and printer CPU time. The utility allows the sys-
+tem manager to assign cost to the number of sheets printed, the num-
+ber of sides printed, and/or CPU time used. The utility also allows
+for reporting to begin from a specific date. In addition, data is stored
+in a specific format to allow third-party applications to read and/or
+manipulate information.
+
+The accounting utility is not available in an AT&T Unison operating
+environment because the Unison operating system controls accounting.
+
+Controlled Access to a PrintServer Printer
+
+PrintServer Software provides a convenient way to control network ac-
+cess to a PrintServer printer. Access to the printer is specified in
+the printer configuration file by either "allowing" or "denying" ac-
+cess by a client host. The "allow" option allows specified DECnet area
+numbers or node addresses and Internet host addresses, networks, or
+subnetwork numbers to communicate with the PrintServer printer. The
+"deny" option prohibits nodes, areas, hosts, networks, and subnetworks
+from communicating with the printer.
+
+Downloading the PrintServer Image
+
+A PrintServer printer is booted in two phases: the primary boot and
+the secondary boot. During the primary boot, a supporting host down-
+loads the system image upon receipt of a MOP, bootp, or uniboot pro-
+tocol load request by the printer. If multiple supporting hosts are
+designated to boot the printer, the first system to respond to the printer
+load request provides the primary boot. Once the primary boot has been
+completed, a management client connects to the printer to perform the
+secondary boot.
+
+The secondary boot involves downloading configuration and setup files
+and system process image files.
+
+
+
+                                14
+
+ 
+
+PrintServer 40 plus printers require the MOP protocol to boot. MOP is
+available on Digital's ULTRIX and OpenVMS operating systems. All other
+PrintServer printers accept MOP or bootp.
+
+turbo PrintServer 20 printers require controller firmware V3.1 or higher
+when booted by HP-UX, IBM-AIX, SCO UNIX, SCO UNIX/DECadvantage, Sil-
+icon Graphics IRIX, and Solaris systems, or if the printer is booted
+by bootp and accessed by DECnet systems.
+
+PrintServer 20 printers must be booted by an OpenVMS, OSF/1, SunOS,
+or ULTRIX system.
+
+In a NetWare or Windows NT operating environment, turbo PrintServer
+20 and PrintServer 32 series printers with PostScript Level 1 require
+boot firmware V3.6 or higher. PrintServer 17 printers require boot firmware
+V2.1 or higher. turbo PrintServer 20 and PrintServer 32 series print-
+ers with PostScript Level 2 and the memory option board require boot
+firmware V3.7. Firmware upgrade kits are available.
+
+PrintServer System and Imaging Components
+
+PrintServer Software and process image components are the software el-
+ements that are downloaded to, and run within, a PrintServer printer.
+This software consists of the following parts:
+
+o  Communications software that accepts print and/or control data from
+   Internet or DECnet client hosts and passes print data to the imag-
+   ing software (PostScript or PCL5 interpreters). This software also
+   passes system messages from the imaging software to the appropri-
+   ate print client and/or management client and provides remote man-
+   agement services.
+
+o  Imaging software that interprets data from the communications soft-
+   ware, builds the corresponding bitmaps, and sends those bitmaps to
+   the print engine to be converted to printed output.
+
+The imaging software also passes any system messages from the print
+engine or interpreter to the communications software, which passes these
+messages to the appropriate print, remote management, and/or manage-
+ment clients running on client hosts.
+
+                                15
+
+ 
+
+The imaging software includes an interpreter based on the Adobe[R] PostScript
+Page Description Language and resident typefaces. The PostScript Level
+1 interpreter includes 29 resident typefaces. The PostScript Level 2
+interpreter includes either 29 or 43 resident typefaces, depending on
+the memory configuration of the printer. PostScript Level 2 support
+is provided for the PrintServer 17 family of printers, turbo PrintServer
+20, and PrintServer 32 plus printers in HP-UX, IBM-AIX, NetWare, Win-
+dows NT, OpenVMS, OSF/1, Silicon Graphics IRIX, Solaris, SunOS, and
+ULTRIX operating environments at this time. The resident typefaces are
+documented below.
+
+Typefaces for PostScript Level 1 printers include:
+
+o  Courier (regular, Bold, Oblique, Bold Oblique)
+
+o  Helvetica[R] (regular, Bold, Oblique, Bold Oblique)
+
+o  ITC Avant Garde Gothic[R] (Book, Book Oblique, Demi, Demi Oblique)
+
+o  ITC Lubalin Graph[R] (Book, Book Oblique, Demi, Demi Oblique)
+
+o  ITC Souvenir[R] (Demi, Demi Italic, Light, Light Italic)
+
+o  New Century Schoolbook (Roman, Bold, Italic, Bold Italic)
+
+o  Times[R] (Roman, Bold, Italic, Bold Italic)
+
+o  Symbol
+
+The PrintServer 17 with 12 MB memory, the PrintServer 17/600 with 16
+MB of memory, the turbo PrintServer 20 (with at least 16 MB of mem-
+ory), and the PrintServer 32 plus (with at least 16 MB of memory) also
+include the following PostScript Level 2 typefaces:
+
+o  ITC Bookman[R] (Demi, Demi Italic, Light, Light Italic)
+
+o  Helvetica Narrow (Regular, Bold, Oblique, Bold Oblique)
+
+o  Palatino[R] (Roman, Bold, Italic, Bold Italic)
+
+o  ITC Zapf[R] Chancery Medium Italic
+
+o  Zapf Dingbats
+
+                                16
+
+ 
+
+PostScript Compatibility Module
+
+At boot time, a PostScript compatibility module is automatically loaded
+into the PrintServer printer. This file allows the correct emulation
+and printing of PostScript extensions found in other PostScript de-
+vices (e.g. Apple[R] LaserWriter[R]).
+
+Feature Summary
+
+The tables on the following pages summarize the PrintServer Software
+features by computing platform.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                17
+
+ 
+
+___________________________________________________________________
+
+Table_1:_Summary_of_PrintServer_Software_Features__________________
+
+                                                                 Unison
+
+Feature______________OpenVMS____ULTRIX_____SunOS______OSF/1______(V.50)
+
+Access Restric-      Yes        Yes        Yes        Yes        Yes
+tions
+
+Accounting           Yes        Yes        Yes        Yes        Yes
+
+ANSI translation     Yes        Yes        No         No         No
+
+ASCII transla-       Yes        Yes        Yes        Yes        Yes[3]
+tion
+
+Auto Data Sens-      Yes[5]     Yes[1]     Yes[1]     Yes[1]     Yes[1][3]
+ing
+
+Copies               Yes        Yes        Yes        Yes        Yes[3]
+
+Event Logging        Yes        Yes        Yes        Yes        Yes
+
+Form Length          Yes[5]     Yes        Yes        Yes        No
+/Width Ctrl
+
+Green-Bar emula-     Yes[5]     No         No         No         No
+tion
+
+Header/Banner        Yes        Yes        Yes        Yes        Yes[3]
+Page
+
+Image/DDIF           Yes[5][6]  No         No         No         No
+Translation[7]
+
+Input Tray           Yes        Yes        Yes        Yes        Yes
+Failover[8]
+
+Input Tray Se-       Yes        Yes        Yes        Yes        Yes
+lection
+
+Job Status Mes-      Yes        Yes        Yes        Yes        Yes
+sages
+
+Layup                Yes[5]     Yes        No         No         No
+
+Literal              Yes        Yes        Yes        Yes        Yes[3]
+
+LPD                  Yes        Yes        Yes        Yes        Yes
+
+Margins              Yes        Yes        Yes        Yes        Yes[3]
+/Indentation
+
+Number Up            Yes[5]     Yes        Yes        Yes        No
+
+On-line Help         Yes        Yes        Yes        Yes        Yes
+
+Output Tray          Yes        Yes        Yes        Yes        Yes[3]
+
+Selection
+
+Page Limit           Yes[5]     Yes        No         No         No
+
+Page Orientation     Yes        Yes        Yes        Yes        Yes[3]
+
+Page Size            Yes        Yes        Yes        Yes        Yes[3]
+
+PCL5[8]              Yes        No         Yes        Yes        No
+
+PostScript Level     Yes        Yes        Yes        Yes        Yes[6]
+1[6]
+
+PostScript Level     Yes        Yes        Yes        Yes        Yes
+2[8]
+
+Printer Status       Yes        Yes        Yes        Yes        Yes
+Messages
+
+PRISM                Yes        Yes        Yes        Yes        No
+
+ProPrinter emu-      Yes[5]     No         No         No         No
+lation
+
+Remote Mgmt          Yes        Yes        Yes        Yes        Yes
+Console
+
+Resource Load-       Yes        Yes        Yes        Yes        Yes
+ing[2]
+
+Sheet Count          Yes        Yes        Yes        Yes        Yes[3]
+
+Sheet Size           Yes[5]     Yes        Yes        Yes        Yes[3]
+
+Sides                Yes        Yes        Yes        Yes        Yes[3]
+
+SNMP-MIB2            Yes        Yes        Yes        Yes        Yes
+
+Tab Width            Yes        Yes        Yes        Yes        Yes[3]
+___________________________________________________________________
+[1]Auto Data Sensing for ASCII, PCL5, and PostScript
+[2]Support for downloading of forms, signatures, letterhead, etc
+[3]Native support through the operating system
+[5]DECprint Supervisor for OpenVMS - PLUS License is required
+[6]turbo PrintServer 20 and PrintServer 32 only
+[7]Through PrintServer HW decompression chip
+[8]PrintServer 17 family only
+
+ 
+
+___________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                19
+
+ 
+
+___________________________________________________________________
+
+Table_2:_Summary_of_PrintServer_Software_Features__________________
+
+                                                          DECadvantage
+                                IBM-       SCO UNIX
+Feature______________HP-UX______AIX________(V4.2)_________(V4.2)___      Netware        NT
+
+Access Restric-      Yes        Yes        Yes            Yes            Yes            Yes
+tions
+
+Accounting           Yes        Yes        Yes            Yes            Yes            Yes
+
+ANSI translation     No         No         No             No             No             No
+
+ASCII transla-       Yes        Yes        Yes            Yes            Yes            Yes
+tion
+
+Auto Data Sens-      Yes[1]     Yes[1]     Yes[1]         Yes[1]         Yes[1]         Yes
+ing
+
+Copies               Yes        Yes        Yes            Yes            Yes            Yes
+
+Event Logging        Yes        Yes        Yes            Yes            Yes            Yes
+
+Form Length          Yes        Yes        Yes            Yes            Yes            No
+/Width Ctrl
+
+Green-Bar emula-     No         No         No             No             No             No
+tion
+
+Header/Banner        Yes        Yes        Yes            Yes            Yes            Yes
+Page
+
+Image/DDIF           No         No         No             Yes            No             No
+Translation[4]
+
+Input Tray           Yes        Yes        No             No             Yes            No
+Failover[8]
+
+Input Tray Se-       Yes        Yes        Yes            Yes            Yes            Yes
+lection
+
+Job Status Mes-      Yes        Yes        Yes            Yes            Yes            Yes
+sages
+
+Layup                No         No         No             No             No             No
+
+Literal              Yes        Yes        Yes            Yes            Yes            No
+
+LPD                  Yes        Yes        Yes            Yes            Yes            Yes
+
+Margin/Indentation   Yes        Yes        Yes            Yes            Yes            No
+
+Number Up            Yes        Yes        Yes            Yes            Yes            No
+
+On-line Help         Yes        Yes        Yes            Yes            No             Yes
+
+Output Tray          Yes        Yes        Yes            Yes            Yes            Yes
+Selection                       20
+
+Page Limit           No         No         No             No             No             Yes
+
+Page Orientation     Yes        Yes        Yes            Yes            Yes            Yes
+
+Page Size            Yes        Yes        Yes            Yes            Yes            Yes[3]
+
+PCL5                 Yes[8]     Yes[8]     No             No             Yes            No
+
+PostScript Level     Yes[6]     Yes[6]     Yes[6]         Yes[6]         Yes[6]         Yes[6]
+1
+
+PostScript Level     Yes[8]     Yes[8]     No             No             Yes            Yes
+2
+
+Printer Status       Yes        Yes        Yes            Yes            Yes            Yes
+Messages
+
+PRISM                Yes        Yes        Yes            No             Yes            Yes
+
+ProPrinter           No         No         No             No             No             No
+
+Remote Mgmt          Yes        Yes        Yes            Yes            Yes            No
+Console
+
+Resource Load-       Yes        Yes        Yes            Yes            Yes            No
+ing[2]
+
+Sheet Count          Yes        Yes        Yes            Yes            Yes            No
+
+Sheet Size           Yes        Yes        Yes            Yes            Yes            Yes[3]
+
+Sides                Yes        Yes        Yes            Yes            Yes            Yes
+
+SNMP-MIB2            Yes        Yes        Yes            Yes            Yes            Yes
+
+Tab Width            Yes        Yes        Yes            Yes            Yes            No
+___________________________________________________________________
+[1]Auto Data Sensing for ASCII, PCL5, and PostScript
+[2]Support for downloading of forms, signatures, letterhead, etc
+[3]Native support through the operating system
+[4]Through PrintServer HW decompression chip
+[6]turbo PrintServer 20 and PrintServer 32 only
+[8]PrintServer 17 family only
+
+ 
+
+___________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                21
+
+ 
+
+___________________________________________________________________
+
+Table_3:_Summary_of_PrintServer_Software_Features__________________
+
+Feature______________Solaris____Silicon_Graphics___________________
+
+Access Restric-      Yes        Yes
+tions
+
+Accounting           Yes        Yes
+
+ANSI translation     No         No
+
+ASCII transla-       Yes        Yes
+tion
+
+Auto Data Sens-      Yes[1]     Yes[1]
+ing
+
+Copies               Yes        Yes
+
+Event Logging        Yes        Yes
+
+Form Length          Yes        Yes
+/Width Ctrl
+
+Green-Bar emula-     No         No
+tion
+
+Header/Banner        Yes        Yes
+Page
+
+Image/DDIF           No         No
+Translation[4]
+
+Input Tray           Yes        Yes
+Failover[8]
+
+Input Tray Se-       Yes        Yes
+lection
+
+Job Status Mes-      Yes        Yes
+sages
+
+Layup                No         No
+
+Literal              Yes        Yes
+
+LPD                  Yes        Yes
+
+Margin/Indentation   Yes        Yes
+
+Number Up            Yes        Yes
+
+On-line Help         Yes        Yes
+
+Output Tray          Yes        Yes
+Selection
+
+Page Limit           No         No
+Page Orientation     Yes        Yes
+
+Page Size            Yes        Yes
+
+PCL5[8]              Yes        Yes
+
+PostScript Level     Yes[6]     Yes[6]
+1
+
+PostScript Level     Yes        Yes
+2[8]
+
+Printer Status       Yes        Yes
+Messages
+
+PRISM                Yes        Yes
+
+ProPrinter           No         No
+
+Remote Mgmt          Yes        Yes
+Console
+
+Resource Load-       Yes        Yes
+ing[2]
+
+Sheet Count          Yes        Yes
+
+Sheet Size           Yes        Yes
+
+Sides                Yes        Yes
+
+SNMP-MIB2            Yes        Yes
+
+Tab Width            Yes        Yes
+___________________________________________________________________
+[1]Auto Data Sensing for ASCII, PCL5, and PostScript
+[2]Support for downloading of forms, signatures, letterhead, etc
+[4]Through PrintServer HW decompression chip
+[6]turbo PrintServer 20 and PrintServer 32 only
+[8]PrintServer 17 family only
+
+ 
+
+___________________________________________________________________
+
+INSTALLATION
+
+PrintServer Software is classified as customer installable. Soft-
+ware consulting services are available for those customers who
+desire installation, parroting, or any special customization of
+the software, or installation of the PrintServer printer.
+
+HARDWARE REQUIREMENTS
+
+A. The following processors are supported in an HP-UX[R] operating
+   environment:
+
+               HP[R] 9000 Model 700
+               HP 9000 Model 800
+
+B. The following processors are supported in an IBM[R] -AIX[R]
+   operating environment:
+
+               IBM RS6000
+
+C. The following processors are supported in a NetWare operating
+   environment:
+
+               Intel[TM] 386/486
+               Intel X86 compatible
+
+D. The following processors are supported in the OpenVMS operating
+   environment:
+
+
+
+
+
+
+
+
+
+
+                                23
+
+ 
+
+
+   Alpha :    DEC 2000 Model 300 AXP Workstation DEC 2000 Model
+              500 AXP Workstation DEC 3000 Model 300 AXP Worksta-
+              tion DEC 3000 Model 300L AXP Workstation DEC 3000
+              Model 400 AXP Workstation
+              DEC 3000 Model 400 AXP Server
+              DEC 3000 Model 500 AXP Workstation
+              DEC 3000 Model 500 AXP Server
+              DEC 3000 Model 600 AXP Workstation
+              DEC 3000 Model 600 AXP Server
+              DEC 3000 Model 800 AXP Workstation
+              DEC 3000 Model 800 AXP Server
+
+              DEC 4000 Model 610 AXP System
+              DEC 4000 Model 710 AXP System
+
+              DEC 7000 Model 610 AXP System
+
+              DEC 10000 Model 610 AXP System
+
+   VAX:       VAXft 3000 Model 110
+              VAXft 3000 Model 310
+              VAXft 3000 Model 410
+              VAXft 3000 Model 610
+              VAXft 3000 Model 612
+
+              VAX 4000 Model 100
+              VAX 4000 Model 200
+              VAX 4000 Model 300
+              VAX 4000 Model 500
+              VAX 4000 Model 600
+              VAX 4000 Model 700A
+
+
+
+
+
+
+
+
+                                24
+
+ 
+
+
+              VAX 6000 Model 200 Series
+              VAX 6000 Model 300 Series
+              VAX 6000 Model 400 Series
+              VAX 6000 Model 500 Series
+              VAX 6000 Model 600 Series
+
+              VAX 7000 Model 600 Series
+
+              VAX 8200, VAX 8250, VAX 8300
+              VAX 8350, VAX 8530
+              VAX 8550, VAX 8600, VAX 8650
+              VAX 8700, VAX 8800, VAX 8810
+              VAX 8820, VAX 8830, VAX 8840
+
+              VAX 9000 Model 110
+              VAX 9000 Model 210
+              VAX 9000 Model 300 Series
+              VAX 9000 Model 400 Series
+
+              VAX-11/750, VAX-11/780
+              VAX-11/785
+
+   MicroVAX:  MicroVAX II, MicroVAX 2000
+              MicroVAX 3100 Model 10/10E
+              MicroVAX 3100 Model 20/20E
+              MicroVAX 3100 Model 30
+              MicroVAX 3100 Model 40
+              MicroVAX 3100 Model 80
+              MicroVAX 3100 Model 90
+              MicroVAX 3300, MicroVAX 3400
+              MicroVAX 3500, MicroVAX 3600,
+              MicroVAX 3800, MicroVAX 3900
+
+
+
+
+
+
+
+                                25
+
+ 
+
+
+   VAXstation:VAXstation II
+              VAXstation 2000
+              VAXstation 3100 Model 30
+              VAXstation 3100 Model 38
+              VAXstation 3100 Model 40
+              VAXstation 3100 Model 48
+              VAXstation 3100 Model 76
+              VAXstation 3200
+              VAXstation 3500
+              VAXstation 3520
+              VAXstation 3540
+
+              VAXstation 4000 Model 60
+              VAXstation 4000 Model 90
+              VAXstation 4000-VLC
+
+   VAXserver: VAXserver 3100
+              VAXserver 3300
+              VAXserver 3400
+              VAXserver 3500
+              VAXserver 3600
+              VAXserver 3602
+              VAXserver 3800
+              VAXserver 3900
+
+              VAXserver 4000 Model 200
+              VAXserver 4000 Model 300
+              VAXserver 4000 Model 500
+
+
+
+
+
+
+
+
+
+
+
+                                26
+
+ 
+
+
+              VAXserver 6000 Model 210
+              VAXserver 6000 Model 220
+              VAXserver 6000 Model 310
+              VAXserver 6000 Model 320
+              VAXserver 6000 Model 410
+              VAXserver 6000 Model 420
+              VAXserver 6000 Model 510
+              VAXserver 6000 Model 520
+              VAXserver 6000 Model 610
+              VAXserver 6000 Model 620
+              VAXserver 6000 Model 630
+
+E. The following processors are supported in an OSF/1 operating
+   environment:
+
+   Alpha       DEC 2000 Model 300 AXP Workstation
+   AXP:        DEC 3000 Model 300 AXP Server
+               DEC 3000 Model 400 AXP Workstation
+               DEC 3000 Model 400 AXP Server
+               DEC 3000 Model 500 AXP Workstation
+               DEC 3000 Model 500 AXP Server
+               DEC 3000 Model 600 AXP Workstation
+               DEC 3000 Model 600 AXP Server
+               DEC 3000 Model 800 AXP Workstation
+               DEC 3000 Model 800 AXP Server
+
+               DEC 4000 Model 600 AXP System
+               DEC 4000 Model 700 AXP System
+
+               DEC 7000 Model 600 AXP System
+
+               DEC 10000 Model 600 AXP System
+
+F. The following processors are supported in a SCO UNIX operating
+   environment:
+
+               Intel 386/486-based PCs
+
+
+                                27
+
+ 
+
+G. The following processors are supported in a SCO UNIX/DECadvantage
+   operating environment:
+
+               applicationDEC 400xP
+               applicationDEC 433mP
+               DECpc 425ST
+               DECpc 450ST
+
+H. The following processors are supported in the Silicon Graphics
+   IRIX operating environment:
+
+               MIPS R4000
+
+I. The following processors are supported in the Solaris operating
+   environment:
+
+               Sun SPARCstation[TM]
+               Sun SPARCserver[TM]
+               Intel-compatible PCs
+
+J. The following processors are supported in the SunOS operating
+   environment:
+
+               Sun-4[TM] systems
+               Sun SPARCstation[TM]
+               Sun SPARCserver[TM]
+
+K. The following processors are supported in the ULTRIX operating
+   environment:
+
+   VAX:        VAX 6000 Model 200 Series
+               VAX 6000 Model 300 Series
+               VAX 6000 Model 400 Series
+               VAX 6000 Model 500 Series
+
+               VAX 8200, VAX 8250, VAX 8300
+               VAX 8350, VAX 8500, VAX 8530
+               VAX 8550, VAX 8600, VAX 8650
+               VAX 8700, VAX 8800, VAX 8810
+               VAX 8820, VAX 8830, VAX 8840
+
+                                28
+
+ 
+
+
+               VAX 9000 Model 110
+               VAX 9000 Model 210
+               VAX 9000 Model 300
+               VAX 9000 Model 410 Series
+               VAX 9000 Model 420
+
+               VAX-11/750, VAX-11/780
+               VAX-11/785
+
+   MicroVAX:   MicroVAX II
+               MicroVAX 2000
+               MicroVAX 3100
+               MicroVAX 3300
+               MicroVAX 3400
+               MicroVAX 3500
+               MicroVAX 3600
+               MicroVAX 3800
+               MicroVAX 3900
+
+   VAXserver:  VAXserver 100
+               VAXserver 2000
+
+               VAXserver 3100
+               VAXserver 3300
+               VAXserver 3400
+               VAXserver 3500
+               VAXserver 3600
+               VAXserver 3602
+               VAXserver 3800
+               VAXserver 3900
+
+
+
+
+
+
+
+
+
+                                29
+
+ 
+
+
+               VAXserver 6000 Model 210
+               VAXserver 6000 Model 220
+               VAXserver 6000 Model 310
+               VAXserver 6000 Model 320
+               VAXserver 6000 Model 410
+               VAXserver 6000 Model 420
+               VAXserver 6000 Model 510
+               VAXserver 6000 Model 520
+
+   DECstation: DECstation 3100s
+
+               Personal DECstation 5000 Model 20/25 HX
+               Personal DECstation 5000 Model 20/25 MX
+               Personal DECstation 5000 Model 20/25 TX
+               Personal DECstation 5000 Model 20/25 PXG+
+               Personal DECstation 5000 Model 20/25 PXG Turbo+
+
+               DECstation 5000 Model 120/125/133 CX
+               DECstation 5000 Model 120/125/133 HX
+               DECstation 5000 Model 120/125/133 MX
+               DECstation 5000 Model 120/125/133 PX
+               DECstation 5000 Model 120/125/133 TX
+               DECstation 5000 Model 120/125/133 PXG
+               DECstation 5000 Model 120/125/133 PXG+
+               DECstation 5000 Model 120/125/133 PXG Turbo
+               DECstation 5000 Model 120/125/133 PXG Turbo+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                30
+
+ 
+
+
+               DECstation 5000 Model 200 CX
+               DECstation 5000 Model 200 HX
+               DECstation 5000 Model 200 MX
+               DECstation 5000 Model 200 PX
+               DECstation 5000 Model 200 TX
+               DECstation 5000 Model 200 PXG
+               DECstation 5000 Model 200 PXG+
+               DECstation 5000 Model 200 PXG Turbo
+               DECstation 5000 Model 200 PXG Turbo+
+
+               DECstation 5000 Model 240 HX
+               DECstation 5000 Model 240 MX
+               DECstation 5000 Model 240 TX
+               DECstation 5000 Model 240 PXG+
+               DECstation 5000 Model 240 PXG Turbo+
+
+   DECsystem:  DECsystem 5000 Model 25
+               DECsystem 5000 Model 200
+               DECsystem 5000 Model 240
+               DECsystem 5100
+               DECsystem 5400
+               DECsystem 5500
+               DECsystem 5810
+               DECsystem 5820
+               DECsystem 5830
+               DECsystem 5840
+
+L. The following processors are supported in the Unison operating
+   environment (for PrintServer Software, V5.0):
+
+               Sun-4 systems
+               Sun SPARCstation
+               Sun SPARCserver
+
+
+
+
+
+
+                                31
+
+ 
+
+M. Processors supported in a Windows NT operating environment in-
+   clude all Windows NT supported processors except IBM Power PC.
+   A list of supported Windows NT platforms is in the Microsoft
+   Windows NT Hardware Compatibility List.
+
+PrintServer Software can be installed on those processors listed
+above that meet the following criteria:
+
+o  Ethernet controller interface
+
+o  TK50 or TK70 tape drive, CD-ROM drive, QIC cartridge tape
+   drive, DAT tape drive, or 3.5" floppy drive
+
+o  System disk
+
+The PrintServer Software requires a minimum of one PrintServer
+printer (PrintServer 17, PrintServer 17/600, PrintServer 20,
+turbo PrintServer 20, PrintServer 32, PrintServer 32 plus, or
+PrintServer 40 plus) to be connected to the Ethernet physical
+channel.
+
+PrintServer 20, turbo PrintServer 20, PrintServer 32, PrintServer
+32 plus, and PrintServer 40 plus printers require a transceiver
+cable and an Ethernet transceiver (H4005), Local Network Intercon-
+nect (DELNI), or ThinWire Ethernet Station Adapter (DECXM-AA).
+
+PrintServer 17 and PrintServer 17/600 printers allow for direct
+connection to ThickWire and ThinWire Ethernet interfaces. With the
+optional communications card, the PrintServer 17 and PrintServer
+17/600 printers can be connected directly to ThinWire or Twisted
+Pair (10baseT) Ethernet. Please note that although both Ethernet
+cards (Thick/ThinWire and Thin/Twisted Pair) have two interfaces,
+only one is active at a time.
+
+
+
+
+
+
+
+                                32
+
+ 
+
+Disk Space Requirements:
+
+___________________________________________________________________
+             For Instal-
+Platform_____lation__________Permanent_Use_________________________
+
+HP-UX        15.0 MB         15.0 MB
+IBM-AIX      15.0 MB         15.0 MB
+IRIX         15.0 MB         15.0 MB
+NetWare      12.0 MB         12.0 MB
+OpenVMS      11.5 MB[1]      11.0 MB[1]
+OSF/1        15.0 MB         15.0 MB
+SCO UNIX     8.0 MB          7.5 MB
+SCO UNIX     8.2 MB          7.4 MB
+/DECadvantage
+Solaris      15.0 MB         15.0 MB
+SunOS        15.0 MB         15.0 MB
+ULTRIX       15.0 MB[1]      15.0 MB[1]
+Unison       7.0 MB          7.0 MB
+Windows      15 MB           15 MB
+NT
+___________________________________________________________________
+[1]supporting_host_software_only___________________________________
+
+These counts represent the maximum storage required; actual stor-
+age requirements vary depending on the local system environment,
+configuration, and software options selected.
+
+At least one Digital PrintServer printer must be installed. The
+following printers are supported by this software product:
+
+o  PrintServer 17
+
+o  PrintServer 17/600
+
+o  PrintServer 20
+
+o  turbo PrintServer 20
+
+o  PrintServer 32
+
+                                33
+
+ 
+
+o  PrintServer 32 plus
+
+o  PrintServer 40 plus
+
+___________________________________________________________________
+
+Table_4:_Summary_of_Printer_Memory_Requirements_-_July_1995________
+
+                                                                               Image
+                               PostScript  PostScript  PCL5        SNMP-       Print-
+Printer____________Memory______Level_1_____Level_2_____Fonts_______MIB2        ing         LPD      Comments
+
+PrintServer 17     8 MB        No          Yes         No          No          No          Yes      Not
+                                                                                                    full
+                                                                                                    client
+                                                                                                    con-
+                                                                                                    nec-
+                                                                                                    tions
+                   12 MB       No          Yes         Yes         Yes         No          Yes
+                   16 MB       No          Yes         Yes         Yes         No          Yes
+                   20 MB       No          Yes         Yes         Yes         No          Yes
+                   24 MB       No          Yes         Yes         Yes         No          Yes
+                   32 MB       No          Yes         Yes         Yes         No          Yes
+PrintServer        16 MB       No          Yes         Yes w       Yes w       No          Yes      Notfull
+17/600                                                 /out        /out                             client
+                                                       SNMP        PCL &                            con-
+                                                                   fonts                            nec-
+                                                                                                    tions
+                   20 MB                   Yes         Yes         Yes         No          Yes      Minimum
+                                                                                                    mem-
+                                                                                                    ory
+                                                                                                    for
+                                                                                                    A4
+                                                                                                    pa-
+                                                                                                    per
+                   24 MB                   Yes         Yes         Yes         No          Yes
+                   32 MB                   Yes         Yes         Yes         No          Yes
+PrintServer 32     12 MB       Yes         No          No          Yes         Yes         Yes
+
+
+                                34
+
+ 
+
+
+Table_4_(Cont.):_Summary_of_Printer_Memory_Requirements_-_July_____
+_________________1995______________________________________________
+
+                                                                               Image
+                               PostScript  PostScript  PCL5        SNMP-       Print-
+Printer____________Memory______Level_1_____Level_2_____Fonts_______MIB2        ing         LPD      Comments
+
+                   16 MB       No          Yes         Yes         Yes         No          Yes
+                   20 MB       No          Yes         Yes         Yes         No          Yes
+                   24 MB       No          Yes         Yes         Yes         No          Yes
+                   32 MB       No          Yes         Yes         Yes         No          Yes
+PrintServer 20     12 MB       Yes         No          No          No          No          Yes
+turbo              12 MB       Yes         No          No          Yes         Yes         Yes
+PrintServer
+20
+                   16 MB       No          Yes         Yes         Yes         No          Yes
+                   20 MB       No          Yes         Yes         Yes         No          Yes
+                   24 MB       No          Yes         Yes         Yes         No          Yes
+                   32 MB       No          Yes         Yes         Yes         No          Yes
+PrintServer 40     8 MB        Yes         No          No          No          No          Yes
+plus_______________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                35
+
+ 
+
+SOFTWARE REQUIREMENTS
+
+___________________________________________________________________
+Vendor__________Required_Software_&_Version________________________
+
+AT&T Unison     SunOS, V4.1, 4.1.1, 4.1.2, and 4.1.3
+Digital         OpenVMS VAX, V5.5-2 and 6.0
+                OpenVMS AXP, V1.5
+                DECprint Supervisor for OpenVMS, V1.1[1]
+Digital         OSF/1, V2.0, V2.1, V3.0, V3.2
+Digital         ULTRIX, V4.2 and higher
+                print client subsets enabled in ULTRIX O/S
+HP              HP-UX, V9.05
+IBM             IBM-AIX, V3.2
+Microsoft[R]    Windows NT, V3.1, V3.5, V3.51
+Novell[R]       NetWare, V3.11, 3.12, 4.0, V4.01, V4.02, V4.1
+                [Bindery Emulation Mode enabled for V4.nn]
+SCO             SCO UNIX, V3.2.2 and 3.2.4
+                SCO TCP/IP
+SCO UNIX        SCO UNIX, V3.2.4
+/DECadvantage   WIN/TCP for Streams, or
+                WIN/TCP for ELP
+                DECadvantage, V1.0
+Silicon         IRIX 5.2
+Graphics
+Sun             Solaris/SPARC 2.3, V2.4
+                Solaris/INTEL 2.4
+Sun             SunOS, V4.1.2, and 4.1.3
+___________________________________________________________________
+[1]Some features described in this SPD require DCPS V1.1 for im-
+plementation_in_an_OpenVMS_operating_environment.__________________
+
+
+
+
+
+
+
+
+
+                                36
+
+ 
+
+SOFTWARE LICENSING
+
+This software is furnished only under a license. For more infor-
+mation about Digital's licensing terms and policies, contact your
+local Digital office.
+
+Binary License
+
+A license to use the binary format of the PrintServer Software is
+included with each PrintServer printer. This license gives users
+the right to:
+
+o  Use the print client and remote management facility on a single
+   CPU and copy this software for use on any CPU on the LAN that
+   requires access to a PrintServer printer.
+
+o  Use the booting components of the supporting host software on
+   a single CPU and copy this software on one additional CPU (for
+   back-up purposes) on the LAN.
+
+Update License
+
+Non-service customers must purchase an update license prior to
+purchasing media and documentation for a new version of this soft-
+ware. The update license grants the rights to purchase, install,
+and execute this software.
+
+License Management Facility Non-Support
+
+PrintServer Software license applies to the PrintServer printer on
+which the software runs, not to service host node machines in the
+network.
+
+This product does not provide support for Digital's License Man-
+agement Facility. A Product Authorization Key (PAK) is not re-
+quired for installation or use of this version of the product.
+
+
+
+
+                                37
+
+ 
+
+OPTIONAL SOFTWARE
+
+Distributed Queueing Services (DQS)
+Certain versions of this product depend upon a specific version
+of the operating system. Please refer to the SPD of the product in
+question to determine which version you need.
+
+GROWTH CONSIDERATIONS
+
+The minimum hardware/software requirements for any future version
+of this product may be different from the requirements for the
+current version.
+
+DISTRIBUTION MEDIA
+
+Depending on your operating system, PrintServer Software may be
+available on the following media.
+
+CD-ROM
+DAT streaming tape
+QIC24 streaming tape
+TK50 streaming tape
+720K 3.5" diskette
+1.44 MB 3.5" diskette
+
+This product is also available as part of the OpenVMS Consolidated
+Software Distribution, OSF/1 Consolidated Software Distribution,
+ULTRIX Consolidated Software Distribution, and NAS 300 CD-ROMs.
+
+ORDERING INFORMATION
+
+A license for the PrintServer Software is included with each Digi-
+tal PrintServer printer.
+
+
+
+
+
+
+
+                                38
+
+ 
+
+
+___________________________________________________________________
+
+PrintServer SW License       QL-0V9A9-AA
+PrintServer SW Update        QL-0V9A9-RA
+License____________________________________________________________
+
+___________________________________________________________________
+Media and
+Documentation___Format________Part_Number__________________________
+
+HP-UX           CD-ROM        QA-0V9AD-H8
+                DAT           QA-0V9AD-HP
+IBM-AIX         QIC           QA-0V9AE-HP
+                3.5"          QA-0V9AE-HB
+                Diskette
+IRIX            CDROM         QA-0V9AQ-H8
+NetWare         3.5"          QA-0V9AG-HC
+                Diskette
+OpenVMS         CD-ROM        QA-0V9AA-H8
+                TK50          QA-0V9AA-H5
+OSF/1           CD-ROM        QA-0V9AJ-H8
+SCO UNIX        QIC           QA-0V9AF-HP
+                CD-ROM        QA-0V9AF-H8
+                3.5"          QA-0V9AF-HC
+                Diskette
+SCO UNIX        QIC           QA-0V9AM-HP
+/DECadvantage
+Solaris         CDROM         QA-0V9AK-H8
+                QIC           QA-0V9AK-HP
+SunOS           CD-ROM        QA-0V9AC-H8
+                QIC24         QA-0V9AC-HP
+ULTRIX          TK50          QA-0V9AB-H5
+Unison          QIC24         QA-0V9AL-HP
+Windows_NT______CD-ROM________QA-0V9AH-H8__________________________
+
+
+
+
+
+                                39
+
+ 
+
+
+___________________________________________________________________
+
+Documentation for HP-UX:     QA-0V9AD-GZ
+Documentation for IBM-       QA-0V9AE-GZ
+AIX:
+Documentation for IRIX:      QA-0V9AQ-GZ
+Documentation for OSF/1:     QA-0V9AJ-GZ
+Documentation for Open-      QA-0V9AA-GZ
+VMS:
+Documentation for SCO        QA-0V9AF-GZ
+UNIX:
+Documentation for SCO        QA-0V9AM-GZ
+UNIX
+/DECadvantage:
+Documentation for So-        QA-0V9AK-GZ
+laris:
+Documentation for SunOS:     QA-0V9AC-GZ
+Documentation for ULTRIX:    QA-0V9AB-GZ
+Documentation for Unison:    QA-0V9AL-GZ
+Documentation for Windows    QA-0V9AH-GZ
+NT:________________________________________________________________
+
+___________________________________________________________________
+Service_Offering_____________Part_Number___________________________
+
+PrintServer SW Product       QT-0V9**-**
+Services___________________________________________________________
+
+*  Denotes variant fields. For additional information on available
+   licenses and media, refer to the appropriate price book.
+
+SOFTWARE PRODUCT SERVICES
+
+A variety of consulting service options are available. For more
+information, please contact your local Digital office.
+
+
+
+
+                                40
+
+ 
+
+SOFTWARE WARRANTY
+
+Warranty for this software product is provided by Digital with the
+purchase of a license for the product as defined in the Software
+Warranty Addendum of this SPD.
+
+[R]  Adobe and PostScript are registered trademarks of Adobe Sys-
+     tems Inc.
+
+[R]  AIX and IBM are registered trademarks of International Busi-
+     ness Machines Corporation.
+
+[R]  Apple and LaserWriter are registered trademarks of Apple
+     Computer, Inc.
+
+[R]  AT&T is a registered trademark of American Telephone and
+     Telegraph Company.
+
+[R]  Helvetica, Palatino, Times, Univers, and Univers Condensed
+     are registered trademarks of Allied Corporation.
+
+[R]  HP and HP-UX are registered trademarks of Hewlett-Packard
+     Company.
+
+[R]  ITC Avant Garde Gothic, ITC Bookman, ITC Lubalin Graph, ITC
+     Souvenir, ITC Zaph Chancery, and ITC Zaph Dingbats are regis-
+     tered trademarks of International Typeface Corporation.
+
+[R]  Microsoft is a registered trademark of Microsoft Corporation.
+
+[R]  NetWare and Novell are registered trademarks of Novell, Inc.
+
+[R]  OSF/1 is a registered trademark of Open Software Foundation,
+     Inc.
+
+[R]  TEKTRONIX is a registered trademark of Tektronix, Inc.
+
+[R]  Silicon Graphics and IRIX are registered trademarks of Sili-
+     con Graphics Inc.
+
+[R]  Sun and SunOS are registered trademarks of Sun Microsystems,
+     Inc.
+
+[R]  UNIX is a registered trademark of UNIX System Laboratories,
+     Inc. a wholly-owned subsidiary of Novell, Inc.
+
+[TM] SCO is a trademark of Santa Cruz Operations, Inc.
+
+                                41
+
+ 
+
+
+[TM] Windows and Windows NT are trademarks of Microsoft Corpora-
+     tion.
+
+[TM] The DIGITAL Logo, ALL-IN-1, AXP, DEC, DECadvantage, DECim-
+     age, DEClaser, DECnet, DECprint, Digital, LN03, OpenVMS,
+     PrintServer, ReGIS, ULTRIX, VAX, and WPS-PLUS are trademarks
+     of Digital Equipment Corporation.
+
+©1995 Digital Equipment Corporation. All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                42

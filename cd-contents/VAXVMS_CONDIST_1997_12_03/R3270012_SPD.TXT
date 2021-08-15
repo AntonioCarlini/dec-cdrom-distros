@@ -1,0 +1,499 @@
+ 
+
+
+
+                                     DIGITAL
+
+
+
+         Software
+         Product
+         Description
+
+         ________________________________________________________________
+
+         PRODUCT NAME: Digital SNA 3270 Application Services,   SPD 38.70.05
+                       Version 1.2
+
+         DESCRIPTION
+
+         The Digital SNA 3270 Application Services layered software product
+         is a member of the Digital SNA Programming Access Routines family
+         of products. This family of layered software products consists of
+         a variety of programming access routines that enable communications
+         between IBM and Digital applications.
+
+         The Digital SNA 3270 Application Services software provides a library
+         of callable routines and other components for building OpenVMS
+         and Digital UNIX applications that support processing of IBM 3270
+         data streams. When used with the Digital SNA Domain Gateway, these
+         3270 data stream applications can be accessed from SNA networked 3270
+         block mode terminal and PC users. Refer to the Digital SNA Domain
+         Gateway Software Product Description (SPD 38.69.xx) for more 
+         information.
+
+         The Digital SNA 3270 Application Services software provides the 
+         following components:
+
+         o  An application programming interface (API) for developing 3270
+            data stream applications
+
+         o  An OpenVMS print symbiont for printing ASCII files on SNA-attached
+            LU Type 1 or Type 3 printers and non-SNA-attached LU Type 0 
+            printers (OpenVMS only)
+
+         o  DECforms (V1.4) support for building forms-oriented applications
+            for 3270 terminals (OpenVMS only)
+
+         o  A mechanism for testing applications without an SNA network
+
+
+                                                                July 1996
+
+                                                              AE-PN5QF-TE
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         Application Programming Interface
+
+         The 3270 Application Services API provides a library of routines for
+         developing 3270 data stream applications. These applications can be
+         SNA LU Type 1, 2, or 3 applications or non-SNA LU Type 0 applications.
+         They can serve as the primary logical unit (PLU) and activate
+         a session with the remote 3270 device as the secondary logical
+         unit (SLU) in the SNA network.
+
+         The API is callable from any OpenVMS language conforming to the 
+         OpenVMS calling standard on OpenVMS systems, and from the C language 
+         on Digital UNIX systems.
+
+         The application that calls the Digital SNA 3270 Application Services
+         API is responsible for generating and interpreting all 3270 data 
+         streams. The API provides the following features:
+
+         o  Receives incoming LU Type 0, 1, 2, and 3 connections
+
+         o  Initiates outgoing LU Type 0, 1, 2, and 3 connections
+
+         o  Establishes and terminates sessions
+
+         o  Transmits and receives data
+
+         o  Implements the protocols for chaining, bracketing, responses, and
+            session and data flow control
+
+         o  On Digital UNIX, the API is Pthreads safe
+
+         o  Supports TCP/IP and DECnet on Digital UNIX and OpenVMS
+
+         The API provides integrated block mode access and VT emulation. In
+         this way, applications written to use the API can also be run 
+         interactively by 3270 users while running MEP VT. See the Optional 
+         Products section of this SPD for a description of the MEP VT product.
+
+         Print Symbiont (OpenVMS only)
+
+         The 3270 Application Services software provides a 3270 OpenVMS print
+         symbiont for printing local ASCII files on an SNA-attached LU Type
+         1 or Type 3 printer or a non-SNA-attached LU Type 0 printer from an
+         OpenVMS print queue.
+
+         The 3270 OpenVMS print symbiont allows system managers to initiate
+         and start OpenVMS print queues. Users can print files on SNA-attached
+         printers. The following features are available for OpenVMS users:
+
+         o  Burst, flag, and trailer pages
+
+         o  Print form specification
+
+                                        2
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         o  Automatic session establishment, retry on error
+
+         o  LU Type 1 printer console commands
+
+         o  DCL queue management commands
+
+         Other features of the print symbiont include:
+
+         o  Prints all types of sequential RMS files, including FORTRAN and
+            Print file types, except for non-PRN VFC files.
+
+         o  Data can be sent to the printer untranslated and unformatted. This
+            is useful if the printer is an ASCII printer attached to the SNA
+            network. This is supported for LU Type 1 printers only.
+
+         o  Symbiont can either pass through escape sequences or strip them
+            out.
+
+         o  Translation can be controlled on a queue-by-queue basis. In this
+            way, sites that need to use multiple translation tables are 
+            accommodated.
+
+         o  Certain IBM applications keep the printers bound unless they get
+            a NOTIFY indication in the C(D)INIT. Connections are now queued
+            until the application unbinds.
+
+         o  The symbiont uses the FORM qualifier to set the size of the 
+            margins. Text that goes beyond those margins is truncated.
+
+         DECforms for 3270 Terminals (OpenVMS only)
+
+         Digital SNA 3270 Application Services provides support for the 
+         DECforms (V1.4) product to enable the development of forms-oriented 
+         applications that can be accessed by SNA networked 3270 terminal and 
+         PC users. These DECforms applications can be developed without 
+         knowledge of 3270 Data Stream, SNA, or the Digital SNA Application 
+         Services software. DECforms is Digital's implementation of the 
+         ANSI/ISO standard for a Form Interface Management System (FIMS). 
+         Refer to the DECforms Software Product Description (SPD 29.90.xx) for 
+         additional information.
+
+
+
+
+
+                                        3
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         Application Testing Tools
+
+         The Digital SNA Domain Gateway is required for 3270 access; however,
+         a 3270 Terminal Emulator provides a method for preliminary testing
+         of incoming sessions by emulating the SLU side of a session. For 
+         example, testing can be done with the DECnet/SNA 3270 Terminal Emulator
+         for OpenVMS (SPD 26.84.xx) or the DECwindows DECnet/SNA 3270 Terminal
+         Emulator for OpenVMS (SPD 31.58.xx).
+
+         The Digital SNA 3270 Application Services SNALOG trace utility 
+         provides debugging facilities to debug applications layered on Digital
+         SNA 3270 Application Services.
+
+         Thread Safe
+
+         Under Digital UNIX, the interface is fully thread safe and can be
+         used by a multithreaded program.
+
+         OPTIONAL PRODUCTS
+
+         MEP VT for Digital SNA 3270 Application Services (OpenVMS VAX only)
+
+         The INTEGRATA MEP VT is an OpenVMS terminal emulation software package
+         that allows 3270 users to access unmodified applications on OpenVMS
+         systems. MEP VT provides full-screen access to OpenVMS applications,
+         including ALL-IN-1, existing OpenVMS based customer applications,
+         and utilities such as OpenVMS Mail.
+
+         In addition, the 3270 user can run 3270-ready API applications in
+         block mode from the MEP VT. This provides the benefits of block mode
+         access while accessing the program through a VT emulation terminal
+         session.
+
+         MEP VT for Digital SNA 3270 Application Services is a worldwide Digital
+         Distributed and Supported (DDS) product from INTEGRATA, AG, Tubingen
+         Germany. Refer to SPD 44.00.xx for additional information.
+
+         INSTALLATION
+
+         Digital recommends that a customer's first purchase of this soft-
+         ware product include Digital Installation Services. These services
+         provide for installation of the software product by an experienced
+         Digital Software Specialist.
+
+
+                                        4
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         Customer Responsibilities
+
+         Before installation of the software, the customer must:
+
+         o  Previously have installed all requisite hardware, including 
+            terminals.
+
+         o  Have demonstrated, to Digital's satisfaction, any necessary IBM
+            host software that will be communicating with the SNA gateway.
+
+         o  Make available for a reasonable period of time, as mutually agreed
+            by Digital and the customer, all hardware, communications 
+            facilities, and terminals that are to be used during installation.
+
+         Installation service is available on a time and material basis. Contact
+         your local Digital office for more detailed information.
+
+         HARDWARE REQUIREMENTS
+
+         For a complete list of required hardware, refer to the OpenVMS 
+         Operating System for VAX and Alpha Software Product Description 
+         (SPD 25.01.xx).
+
+         Disk Space Requirements
+
+         For OpenVMS Systems:
+
+         Disk space required for installation:        7,100 blocks
+                                                     (3,550 Kbytes)
+
+         Disk space required for use (permanent):     4,600 blocks
+                                                     (2,300 Kbytes)
+
+         For Digital UNIX Systems:
+
+         Disk space required for use (permanent):     2,000 Kbytes
+
+         These counts refer to the disk space required on the system disk.
+         The sizes are approximate; actual sizes may vary depending on the
+         user's system environment, configuration, and software options.
+
+
+                                        5
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         OpenVMS Tailoring (OpenVMS only)
+
+         The following OpenVMS classes are required for full functionality
+         of this layered product:
+
+         o  OpenVMS Required Saveset
+
+         o  Network Support
+
+         o  Utilities
+
+         o  Programming Support
+
+         For more information on OpenVMS classes and tailoring, refer to the
+         OpenVMS Operating System for VAX and Alpha Software Product Description
+         (SPD 25.01.xx).
+
+         SOFTWARE REQUIREMENTS
+
+         For OpenVMS Systems:
+
+         o  OpenVMS Operating System for VAX and Alpha V6.1 or higher
+
+         o  DECnet/OSI for OpenVMS Alpha V6.1 or higher, DECnet for OpenVMS
+            V6.1 or higher, DECnet-VAX V6.1, or DECnet/OSI for OpenVMS VAX
+            V6.1
+
+         For Digital UNIX Systems:
+
+         o  Digital UNIX V3.2
+
+         o  DECnet/OSI for Digital UNIX V3.2
+
+         OPTIONAL SOFTWARE
+
+         The following products are available on OpenVMS VAX only:
+
+         o  MEP VT for 3270 Application Services, V3.0
+
+         GROWTH CONSIDERATIONS
+
+         The minimum hardware/software requirements for any future version of
+         this product may be different from the requirements for the current
+         version.
+
+         DISTRIBUTION MEDIA
+
+         This product is available as part of the OpenVMS Consolidated Software
+         Distribution on CD-ROM, and the Digital UNIX Consolidated Software
+         Distribution CD-ROM. This product is also available on TK50 Streaming
+         Tape for OpenVMS VAX systems.
+
+                                        6
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         ORDERING INFORMATION
+
+
+         Software Licenses:
+
+         Development System (OpenVMS VAX systems):
+
+         QL-MKJA9-J* (Unlimited System Use)
+         QL-MKJAA-3B (Concurrent Use)
+         QL-MKJAA-2B (Personal Use)
+
+         Development System (OpenVMS Alpha systems):
+
+         QL-2FKA*-AA (Traditional)
+         QL-2FKAA-3B (Concurrent Use)
+         QL-2FKAA-2B (Personal Use)
+
+         Development System (Digital UNIX systems):
+
+         QL-2UAA*-AA (Traditional)
+
+         Runtime System (OpenVMS VAX systems):
+
+         QL-MKKA9-J* (Unlimited System Use)
+         QL-MKKAA-3B (Concurrent Use)
+
+         Runtime System (OpenVMS Alpha systems):
+
+         QL-2FLA*-AA (Traditional)
+         QL-2FLAA-3B (Concurrent Use)
+
+         Runtime System (Digital UNIX systems):
+
+         QL-2UBA*-** (Traditional)
+
+         Software Media: QA-MKJAA-**
+
+         Software Documentation: QA-MKJAA-GZ
+
+         Software Product Services: QT-MKJA*-** or
+         QT-MKKA*-**
+
+         The Runtime System uses the same software Media and Documentation
+         as the Development System. QA-MKJ**-** part numbers must be ordered
+         when ordering QL-MKK**-** licenses. There are separate Software Product
+         Services for the two products QT-MKJA*-** and QT-MKKA*-** respectively.
+
+         *  Denotes variant fields. For additional information on available
+            licenses, services, and media, refer to the appropriate price book.
+
+                                        7
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+         SOFTWARE LICENSING
+
+         This software is furnished only under a license. For more information
+         about Digital's licensing terms and policies, contact your local
+         Digital office.
+
+         License Management Facility Support
+
+         This layered product supports the OpenVMS and Digital UNIX License
+         Management Facilities.
+
+         License units for this product are allocated on an Unlimited System
+         Use plus Personal Use and Concurrent Use basis.
+
+         This layered product offers a Personal Use license. Each Personal
+         Use license allows one identified individual to use the layered 
+         product.
+
+         This layered product offers a Concurrent Use license. Each Concurrent
+         Use license allows any one individual at a time to use the layered
+         product.
+
+         For more information on the License Management Facility, refer to
+         the OpenVMS Operating System for VAX and Alpha Software Product 
+         Description (SPD 25.01.xx) or the Digital UNIX Operating System 
+         Software Product Description (SPD 41.61.xx).
+
+         For more information about Digital's licensing terms and policies,
+         contact your local Digital office.
+
+         SOFTWARE PRODUCT SERVICES
+
+         A variety of service options are available. For more information about
+         these or other services, please contact your local Digital office.
+
+         SOFTWARE WARRANTY
+
+         Warranty for this software product is provided by Digital with the
+         purchase of a license for the product as defined in the Software 
+         Warranty Addendum of this SPD.
+
+
+
+                                        8
+
+ 
+
+
+
+         Digital SNA 3270 Application Services,             SPD 38.70.05
+         Version 1.2
+
+
+
+         [R] IBM is a registered trademark of International Business
+             Machines Corporation.
+
+         [R] UNIX is a registered trademark in the United States and
+             other countries, licensed exclusively through X/Open Company
+             Ltd.
+
+         [TM]ALL-IN-1, DEC, DECforms, DECnet, DECnet-VAX, DECwindows,
+             Digital, OpenVMS, TK, VAX, VMS, VT, and the DIGITAL logo are
+             trademarks of Digital Equipment Corporation.
+
+         © Digital Equipment Corporation 1996. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        9
