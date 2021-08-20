@@ -52,7 +52,7 @@
 //   such that I've yet to find a safe and reliable way of detecting it.
 // o Japanese language SPDs fail validation as their character set is not recognised.
 // o Some files fail validation even though they could be detected with further work (e.g. DECISIONES011_SPD.TXT) but it seems simpler to catch those at the end of the process and
-//   handle them manuall if necessary.
+//   handle them manually if necessary.
 
 package main
 
@@ -743,7 +743,7 @@ func build_month_names_to_digits_map(monthsYAMLFilename string) MonthNameToNumbe
 }
 
 // Construct a map of checksum => CDROM object.
-// This is used to identify SPD files that have been manually determined of
+// This is used to identify SPD files that have been manually determined or
 // are known to be unable to be parsed.
 func build_checksum_to_SpdEntry_map(filename string) ChecksumToCDROM {
 	checksumToCDROM := make(ChecksumToCDROM)
