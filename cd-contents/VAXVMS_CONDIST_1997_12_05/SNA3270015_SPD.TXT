@@ -1,0 +1,409 @@
+ 
+
+ This SPD describes DECnet SNA 3270 Data Stream Programming Interface
+ for OpenVMS, which is available for the OpenVMS VAX and OpenVMS AXP
+ platforms. All information applies to both platforms unless otherwise
+ indicated.
+
+ DESCRIPTION
+
+ DECnet SNA 3270 Data Stream Programming Interface for OpenVMS (3270
+ DS) is a layered software product that allows user-written applica-
+ tions running on suitably configured OpenVMS systems within a DEC-
+ net network or on suitably configured OpenVMS systems within a VMS/SNA
+ en- vironment to exchange messages with cooperating applications in
+ an IBM[R] host. The 3270 DS software exists in the OpenVMS system as
+ a share- able image. Access between the cooperating Digital and IBM
+ applica- tions is via one of the following products:
+
+ o  DECnet SNA Gateway for Synchronous Transport
+
+ o  DECnet SNA Gateway for Channel Transport
+
+ o  DEC SNA Domain Gateway for Channel Transport
+
+ o  VMS/SNA - an OpenVMS VAX layered product that supports users on the
+    system where VMS/SNA is running
+
+ The 3270 DS programming interface is a collection of subroutines that
+ provide an easy-to-use interface for the SNA Gateway or VMS/SNA ap-
+ plication programmer who has a specific need to interface to an IBM
+ application subsystem which uses LU Type 2 (LU2) protocol. The prod-
+ uct can be used with many types of applications. As an example, a cus-
+ tomized 3270 terminal emulator application can be written by a user
+ and layered on top of 3270 DS. Applications can be event driven or syn-
+ chronous in nature with no loss in available functions.
+
+ Features
+
+ The 3270 DS product is designed to insulate the OpenVMS application
+ programmer from the inner workings of the SNA network environment as
+ much as possible, thus allowing the user to concentrate on solving the
+
+                                                          April 1996
+
+                                                         AE-ET78H-TE
+
+ 
+
+ application problem. The product performs the following SNA functions
+ on the user's behalf:
+
+ o  Receives and interprets the bind
+
+ o  Accepts the bind and starts the session
+
+ o  Maintains the state machines for chaining, bracketing, and data flow
+    control
+
+ o  Processes an Unbind Type 2 automatically
+
+ As a result, the OpenVMS user is required to perform a minimum of SNA
+ functions including processing the CLEAR and CANCEL functions and han-
+ dling contention.
+
+ This product is a set of subroutines used to perform such functions
+ as establishing sessions, sending data, receiving data, and discon-
+ necting sessions. In addition, the 3270 DS interface may be used to
+ interpret the 3270 data stream and build a screen image. The OpenVMS
+ application is then free to interact with the screen image.
+
+ The 3270 DS product allows two modes of connection: Data Stream Mode
+ and Field Mode.
+
+ Data Stream Mode
+
+ Data Stream Mode provides a means to send and receive uninterpreted
+ 3270 data streams as defined by IBM. In this mode, all SNA specific
+ functions are performed by the interface. For example, the OpenVMS ap-
+ plication is not required to handle chaining, brackets, RUs, or RHs.
+ At the same time, this mode allows the interface to provide the Open-
+ VMS application with the complete 3270 data stream. It is the Open-
+ VMS user's responsibility to interpret the outbound data stream for
+ 3270 orders and commands, and to build and manipulate a screen image
+ (if desired). Similarly, it is the OpenVMS user's responsibility to
+ build the inbound data stream from his own screen image or from some
+ other data structure.
+
+
+                                  2
+
+ 
+
+ An OpenVMS application which needs to use extended attributes must use
+ a Data Stream Mode connection. Extended attributes are extensions to
+ the basic field attributes, namely:
+
+ o  Extended highlighting (blink, reverse video, underscore)
+
+ o  Color
+
+ o  Programmed symbols (selectable symbol set)
+
+ o  Screen partitions and windows
+
+ Field Mode
+
+ Field Mode performs a presentation service to provide a screen image
+ interface. The screen image may be read field by field, or accessed
+ directly. The interface interprets 3270 commands and orders in an out-
+ bound data stream to build the screen. In addition, it produces an
+ in- bound 3270 data stream from the updated screen image.
+
+ As with the Data Stream Mode, Field Mode insulates the OpenVMS user
+ from the SNA protocol. Extended attributes are not supported by the
+ Field Mode connection.
+
+ Asynchronous Event Notification
+
+ The 3270 DS product provides a mechanism for an OpenVMS user appli-
+ cation to receive control when an asynchronous "network event" occurs
+ such as disconnection of a DECnet logical link, an SNA circuit fail-
+ ure, or the receipt of an Unbind Type 2 from IBM. The OpenVMS appli-
+ cation is called at a notification entry point defined by the appli-
+ cation at connection time; an indication of the event that occurred
+ is reported.
+
+ User Interface
+
+ Users of the 3270 DS product should be experienced OpenVMS applica-
+ tion programmers. They can use any of the OpenVMS programming languages
+ which conform to the OpenVMS Calling Standard to create application
+ programs which interact with application programs on an IBM system.
+ The user documentation provides example segments written in the fol-
+ lowing languages:
+
+                                  3
+
+ 
+
+ o  MACRO-32
+
+ o  BLISS-32 Implementation Language
+
+ o  C
+
+ o  COBOL
+
+ o  FORTRAN
+
+ o  PASCAL
+
+ o  PL/I
+
+ The users of the 3270 DS product are not required to have extensive
+ knowledge of SNA.
+
+ Features of Version 1.5
+
+ o  OpenVMS 3270 DS V1.5 supports Digital's License Management Facil-
+    ity.
+
+ o  OpenVMS 3270 DS V1.5 allows, on supported SNA gateways and VMS/SNA
+    systems, secured Logical Unit (LU) access via the SNA3270$REQUEST_
+    CONNECT procedure call.
+
+ INSTALLATION
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Have previously installed all requisite hardware including termi-
+    nals and SNA gateway products.
+
+ o  Obtain, install, and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment.
+
+                                  4
+
+ 
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the SNA gateway or VMS/SNA
+    and the 3270 DS Programming Interface.
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rate for time and materials.
+
+ Successful use of this product requires that:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the pre-installation activities.
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support either the SNA gateway or VMS/SNA and
+    the 3270 DS Programming Interface.
+
+ WARRANTY LIMITATIONS
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ and IBM System/390 (includes 9xxx, 30xx, and 43xx series) class pro-
+ cessor systems configured with the following IBM software. While this
+ software may function correctly with other IBM software and equipment,
+ and with software other than that supported by IBM, Digital cannot of-
+ fer its standard warranty for this software unless it has been tested
+ with such equipment and software configurations.
+
+ The 3270 DS software interoperates with the following IBM software:
+
+
+
+
+
+
+
+                                  5
+
+ 
+
+
+ Software___________________________________________________________
+ Product_______Version____Release___________________________________
+
+ CICS/DOS/VS   1          7.0
+
+ CICS/MVS      2          1.2
+
+ CICS/ESA      3          1.1
+                          2.0
+                          3.0
+
+ IMS/VS        2          2.0
+
+ NetView       2          2.0
+                          3.0
+
+ TSO/E ESA     2          3.0
+                          4.0
+
+ OfficeVision  1          2.0
+ /MVS
+
+ CMS           3          5.0
+                          6.0
+                          7.0
+                          8.0
+                          9.0
+               4          2.0
+ _________________________3.0_______________________________________
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+ information regarding listed configurations.
+
+ PREREQUISITE SUPPORT
+
+ A Network Profile and a DECnet Customer Support Plan (where appropri-
+ ate) must be prepared jointly by Digital and the customer covering all
+ OpenVMS nodes that wish to install the 3270 DS Programming Interface.
+ In order for this product to be Digital supported, the customer must
+ have a Digital supported SNA gateway or VMS/SNA configuration.
+
+                                  6
+
+ 
+
+ To have a Digital supported SNA gateway configuration or VMS/SNA con-
+ figuration, purchase of the Transport Orientation/Installation Ser-
+ vice (QSF0x-SZ) is REQUIRED in conjunction with the customer's first
+ purchase of the SNA gateway.
+
+ HARDWARE REQUIREMENTS
+
+ For AXP Systems:
+
+ o  AXP processor as specified in the System Support Addendum (SSA 26.87.06-
+    x).
+
+ o  Any properly configured SNA gateway as specified in the System Sup-
+    port Addendum (SSA 26.87.06-x).
+
+ For VAX Systems:
+
+ o  VAX, MicroVAX, VAXstation, or VAXserver configuration as specified
+    in the System Support Addendum (SSA 26.87.06-x).
+
+ o  Any properly configured SNA gateway as specified in the System Sup-
+    port Addendum (SSA 26.87.06-x). An alternative is to run VMS/SNA
+    software on the same VAX system as the 3270 DS product.
+
+ SOFTWARE REQUIREMENTS
+
+ For AXP Systems:
+
+ o  OpenVMS AXP Operating System (SPD 41.87.xx)
+
+ o  DECnet for OpenVMS (SPD 42.25.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ For VAX Systems in a DECnet SNA Gateway Environment:
+
+ o  OpenVMS VAX Operating System (SPD 25.01.xx)
+
+ o  DECnet-VAX (SPD 48.48.xx)
+
+                                  7
+
+ 
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ For VAX Systems in a VMS/SNA Environment:
+
+ o  OpenVMS VAX Operating System (SPD 25.01.xx)
+
+ o  VMS/SNA Software (SPD 27.01.xx)
+
+ ORDERING INFORMATION
+
+ DECnet SNA 3270 Data Stream Programming Interface for OpenVMS, Ver-
+ sion 1.4
+
+ For OpenVMS AXP systems:
+
+ Software Licenses: QL-10XA*-**
+ Software Documentation: QA-363AA-GZ
+ Software Product Services: QT-10XA*-**
+
+ Media and documentation for this product are available on the Digi-
+ tal CD-ROM Software Library for OpenVMS AXP. Documentation in hard-
+ copy format can be ordered separately.
+
+ For OpenVMS VAX systems:
+
+ Software Licenses: QL-363A*-**
+ Software Media: QA-363A*-**
+ Software Documentation: QA-363AA-GZ
+ Software Product Services: QT-363A*-**
+
+ * Denotes variant fields. For additional information on available li-
+ censes, services and media refer to the appropriate price book.
+
+
+
+
+
+
+                                  8
+
+ 
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital's
+ Terms and Conditions. For more information about Digital's licensing
+ terms and policies, contact your local Digital office. LICENSE MAN-
+ AGEMENT FACILITY SUPPORT
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. License units for this product are allocated on a CPU-capacity
+ basis. For more information on the License Management Facility, re-
+ fer to the OpenVMS VAX Operating System Software Product Description
+ (SPD 25.01.xx), the OpenVMS AXP Operating System Software Product De-
+ scription (SPD 41.87.xx), or the License Management Facility manual
+ of the OpenVMS Operating System documentation set.
+
+ For more information about Digital's licensing terms and policies, con-
+ tact your local Digital office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available. For more information on
+ these or other services, please contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ [TM] The Digital Logo, Digital, DEC, DECnet, AXP, OpenVMS, VAX, and
+ VMS are trademarks of Digital Equipment Corporation.
+
+ [R] IBM is a registered trademark of Internation Business Machines Cor-
+ poration.
+
+ 8
+
+
+
+
+                                  9
