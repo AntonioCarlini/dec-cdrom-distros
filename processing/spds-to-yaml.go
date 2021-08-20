@@ -616,7 +616,7 @@ func find_product_text(spd_text string) (string, string) {
 	provisional_match := ""
 
 	// Match against an English language SPD
-	re_text_eng := regexp.MustCompile(`(?msi)PRODUCT\s+NAME\s*:(.*?)DESCRIPTION`)
+	re_text_eng := regexp.MustCompile(`(?msi)PRODUCT\s+NAME\s*:(.*?)(DESCRIPTION|INTRODUCTION|OVERVIEW|This SPD|Note:)`)
 	matches := re_text_eng.FindAllStringSubmatch(spd_text, -1)
 	if len(matches) > 0 {
 		text := matches[0][1]
