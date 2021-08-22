@@ -1,0 +1,1095 @@
+ 
+
+
+
+
+
+
+                                    DIGITAL
+
+Software
+Product
+Description
+
+_____________________________________________________________________________
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+   ソフトウェア仕様書
+
+1  仕様書の包含する範囲
+
+この文書は，日本語DECprint Supervisorソフトウェアの機能仕様を述べたものです。
+本ソフトウェアは，日本語OpenVMSシステムから弊社指定の日本語PostScript[TM] (ポ
+ストスクリプト)プリンタをアクセスするために必要なレイヤード・ソフトウェアで
+す。
+
+ 注意: ポストスクリプト言語は，テキスト，イメージおよびグラフィックをページ上
+で混在させて表現ができる，装置に依存しないページ記述言語です。
+
+ここでは，標準版DECprint Supervisor for OpenVMSに追加，拡張された日本語処
+理の機能仕様についてのみ記述していますので，標準版に含まれる基本機能につ
+いては『DECprint Supervisor for OpenVMS Software Product Description (SPD
+44.15.xx)』を参照してください。
+
+2  プロダクト構成
+
+日本語DECprint Supervisorファミリは，以下のプロダクトから構成されています。
+
+■日本語DECprint Supervisor for OpenVMS, Base (DCPS-Base)
+
+ポストスクリプト・ファイルおよびANSI/漢字テキスト・ファイルを，弊社の日本語ポ
+ストスクリプト・プリンタに印刷する機能を提供します。これらのプリンタに対して
+は，トレイの選択，両面印刷，印刷フォーマットの指定などの特別な機能をサポート
+します。DCPS-BaseはネイティブPCL5インタプリタをもつプリンタに対しては，PCL5フ
+ァイルの印刷もサポートします。サポートするプリンタについて詳しくは，「その他
+の必要なハードウェア」を参照してください。このプロダクトのライセンスは，日本
+語OpenVMSオペレーティング・システムに含まれています。
+
+■日本語DECprint Supervisor for OpenVMS, Open (DCPS-Open)
+
+ポストスクリプト・ファイルおよびANSI/漢字テキスト・ファイルを，弊社以外の特定
+の日本語ポストスクリプト・プリンタに印刷する機能を提供します。これらのプリン
+タに対しては，トレイの選択，両面印刷や印刷フォーマットの指定などの特別な機能
+もサポートします。DCPS-OpenはネイティブPCL5インタプリタを持つプリンタに対し
+ては，PCL5ファイルの印刷もサポートします。サポートするプリンタについて詳しく
+は，「その他の必要なハードウェア」を参照してください。このプロダクトのライセ
+ンスは，別途購入していただく必要があります。
+
+                                                                    1996年2月
+
+                                                                  AE-PZCDD-TE
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+■日本語DECprint Supervisor for OpenVMS, Plus (DCPS-Plus)
+
+さまざまなデータ構文のファイルの印刷機能を提供します(「第5節,高度な印刷機能」
+を参照してください)。DCPS-Plusでは，自動データ・タイプ検出，高速イメージ印
+刷，および一般的なプリンタ言語の数種類に対するトランスレータなど，高度な印刷
+機能を使用することができます。このプロダクトのライセンスは，別途購入していた
+だく必要があります。弊社以外の特定の日本語ポストスクリプト・プリンタで高度な
+印刷を行う場合は，DCPS-OpenおよびDCPS-Plus両方のライセンスが必要となります。
+
+3  ソフトウェア構成
+
+日本語DECprint Supervisorは，以下のソフトウェア要素から構成されています。
+
+o  プリント・シンビオント
+
+ホスト上に存在し，印刷要求を処理します。
+
+o  ネットワーク・ソフトウェア
+
+以下のプロトコルを介してプリンタを制御し，データを送ります。
+
+   -  Ethernet上のTCP/IPおよびDECnet (プリンタ制御プロトコルとしてCPAP(Common
+      Printer Access Protocol)を使用)
+
+   -  EthernetまたはLocalTalk上のAppleTalk
+
+   -  LAT
+
+   -  シリアル・ライン
+
+o  トランスレータ
+
+ポストスクリプト以外のデータ構文のファイルをポストスクリプト言語に変換しま
+す。
+
+o  ALL-IN-1スクリプトとWPS-PLUSプリンタ・テーブル
+
+ALL-IN-1，WPS-PLUSと弊社のポストスクリプト・プリンタとの互換性を拡張するため
+の設定ファイル群。LN03フォント・カートリッジのエミュレーションのサポートも含
+まれます。これらのファイル群は，  ALL-IN-1バージョン2.3 および2.4のために提
+供されています。  ALL-IN-1バージョン3.0 ではこれらのファイル群をすでに含んで
+いるため，必要ありません。このソフトウェア要素は特に日本語対応はしていませ
+ん。＊
+
+＊ 日本語DECprint Supervisor for OpenVMS AXP
+   システムでは，これらの機能は利用できません。
+
+o  ポストスクリプト・ツール
+
+ポストスクリプト・エラー・ハンドラ，ISO Latin1エンコーディング・ベクタ，DEC
+multinationalエンコーディング・ベクタなど，ポストスクリプト・アプリケーション
+のために役立つポストスクリプト・プロシージャ。
+
+                                       2
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+日本語ポストスクリプト・プリンタへのプリント・キューを作成する各ノードには，
+日本語DECprint Supervisorソフトウェアがインストールされていなければなりま
+せん。DCPS-Openライセンスは，弊社以外の日本語ポストスクリプト・プリンタへの
+プリント・キューがあるすべてのシステムに登録されている必要があります。しか
+し，弊社以外のプリンタへ印刷をするDCPS-Openに相当する機能は，PATHWORKS for
+OpenVMSによって提供されており，PATHWORKSサーバを通してのみ使用する場合，個別
+にDCPS-Openライセンスを購入する必要はありません。DCPS-Plus機能を利用するキュ
+ーを持つ各ノードは，弊社のプリンタに接続しているか，弊社以外のプリンタに接続
+しているかにかかわらず，DCPS-Plusライセンスが必要です。弊社以外のプリンタでサ
+ポートされる高度な印刷機能を使用するためには，DCPS-OpenとDCPS-Plusの両方のラ
+イセンスが必要です。
+
+ 注意: PrintServerを利用するためには，Ethernet上のいずれかのシステムに日本語
+PrintServer Software (旧名称，日本語DEC PrintServerサポーティング・ホスト・ソ
+フトウェア)が必要です。このソフトウェアについては，『ソフトウェア仕様書(SPD
+25.C2.xx，SPD 47.98.xxまたはSPD 25.M2.xx)』を参照してください。
+
+4  基本的な印刷機能
+
+基本的な印刷機能は，弊社の日本語ポストスクリプト・プリンタについてはDCPS-
+Base，弊社以外の特定の日本語ポストスクリプト・プリンタについてはDCPS-Openライ
+センスがあれば利用することができます。
+
+o  ポストスクリプト・ファイルの印刷
+
+プリント・シンビオントは，ポストスクリプト・ファイルを変換せずにそのままプリ
+ンタに渡します。このため，印刷されるポストスクリプト・ファイルはプリンタが理
+解できるポストスクリプト言語で記述されていなければなりません。ポストスクリプ
+ト・ファイルは，DATA_TYPE=POSTSCRIPTパラメータを指定することにより印刷できま
+す。
+
+o  ANSIおよび漢字テキスト・ファイルの印刷
+
+日本語DECprint Supervisorでは，ANSIおよび漢字テキスト・ファイルをポストスクリ
+プト・プリンタで印刷できます。このため，以下のデータ・タイプをDATA_TYPEパラメ
+ータで指定できます。
+
+ANSI:
+   テキストおよびsixelイメージからなるLN03/LN05互換データ・タイプ
+
+KANJI:
+   漢字LN03/LN05互換データ・タイプ
+   (DEC漢字1983年版対応)
+
+KANJI78:
+   漢字LN03/LN05互換データ・タイプ
+   (DEC漢字1978年版対応)
+
+LA_KANJI:
+   漢字LA86/LA280/LA380互換データ・タイプ
+
+                                       3
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+o  給紙トレイの選択
+
+INPUT_TRAY，SHEET_SIZEまたはPAGE_SIZEパラメータによって，給紙トレイを選択する
+ことができます。
+
+o  排紙トレイの選択
+
+OUTPUT_TRAYパラメータによって，排紙トレイを選択することができます。
+
+o  ページの印刷方向の指定
+
+PAGE_ORIENTATIONパラメータによって，ページの印刷方向(ポートレート/ランドスケ
+ープ)を指定することができます。この指定は，ポストスクリプト・ファイル以外にの
+み有効です。
+
+o  SIDESの指定
+
+片面印刷，両面印刷，タンブル印刷をSIDESパラメータで指定することができます。
+
+o  フォントの指定
+
+FONTS_USEDパラメータによって，ANSIテキストの印刷に先立ってトランスレータにロ
+ードするフォントを指定できます。
+
+    注意: このためのソフト・フォントは別売りで，英語版のみです。
+
+o  印刷フォーマットの指定
+
+/HEADER，/FORM，/SPACE，/FEED修飾子およびTABパラメータによって，テキスト・フ
+ァイルの印刷フォーマットを制御することができます。また，DEFINE/FORMで設定され
+るマージンやページ設定モジュール，および自動改行の制御機能も利用することがで
+きます。
+
+o  NUMBER_UPパラメータ
+
+NUMBER_UPパラメータによって，複数の論理ページを1枚の用紙に印刷することができ
+ます。
+
+o  ページ・レイアウト機能
+
+LAYUP_DEFINITIONパラメータで，ページ・レイアウト機能を直接指定することができ
+ます。ページ・レイアウト機能としては，ページ境界，用紙マージン，1ページおきの
+マージン切り替え，1枚の用紙のページ数，最初のページ，ページの順序およびページ
+格子の指定を行うことができます。レイアップ・オプションは，LAYUP_DEFINITIONパ
+ラメータに対する引数として直接指定するか，またはレイアップ定義ファイルに記述
+することによって間接的に指定することができます。
+
+o  PAGE_LIMITパラメータ
+
+PAGE_LIMITパラメータによって，印刷されるページの範囲を指定することができま
+す。
+
+o  自動的なスケール
+
+PAGE_SIZEとSHEET_SIZEパラメータで違うサイズが指定された場合，用紙内に論理ペー
+ジがおさまるよう自動的にスケールされます。
+
+                                       4
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+o  複写
+
+SHEET_COUNTパラメータによって，各用紙を指定枚数だけ複写することができます。
+
+o  ステータスやエラー・メッセージの通知
+
+ユーザの端末，プリント・ジョブのトレーラー・ページやログ・ページ，ログ・ファ
+イルおよびオペレータ・コンソールに対してステータスやエラー・メッセージの通知
+を行うことができます。
+
+o  装置制御モジュールの利用
+
+ポストスクリプトまたはテキスト構文のデータ・タイプで，  /SETUP修飾子による装
+置制御モジュールが使用できます。ポストスクリプト・モジュールには，プリンタで
+使用可能なオペレータを含むことができます。テキスト構文のモジュールには，ANSI
+シーケンスを含むことができます。
+
+o  アカウンティング機能
+
+各プリント・ジョブに対して，印刷された用紙の枚数，RMSのGETサービスの回数，QIO
+サービスの回数などの会計情報を提供することができます。
+
+o  PCL5インタプリタへのアクセス
+
+特定のプリンタに対してネイティブなPCL5インタプタへのアクセスを提供します。ネ
+イティブPCL5インタプリンタをサポートするプリンタは，「その他の必要なハードウ
+ェア」に一覧表示してあります。
+
+o  AppleTalk
+
+AppleTalkで接続されたプリンタに対して，DCPS機能へのアクセスを提供します
+
+o  TCP/IPでのPrintServerプリンタへの接続
+
+CPAPプロトコルを使用してTCP/IP上で，PrintServerプリンタをサポートします(TCP
+/IP Services for OpenVMSが必要です)。
+
+ 注意: すべてのポストスクリプト・プリンタが，すべての機能をサポートするわけで
+はありません。
+
+5  高度な印刷機能
+
+DCPS-Plusライセンスは，弊社および弊社以外の特定の日本語ポストスクリプト・プリ
+ンタに対して，高度な印刷機能を提供します。弊社以外のプリンタに対しては，さら
+にDCPS-Openライセンスが必要です。
+
+o  自動データ・タイプ検出および切り替え機能
+
+日本語DECprint Supervisorでは，自動的に印刷ファイルのデータ・タイプを決定し，
+そのデータ・タイプに従ったポストスクリプト形式への変換および印刷を行うことが
+できます。もしデータ・タイプが決定できないときは，DATA_TYPE=AUTOMATICに対する
+デフォルトとして設定されているデータ・タイプで処理を開始します。
+
+                                       5
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+ファイルの途中でポストスクリプト・コードを検出した場合は，そこからポストスク
+リプト・データ・タイプに切り替えて処理を続行します。このようなファイル途中で
+のデータ・タイプの自動切り替えは，1つの印刷ファイルについて1度しか許されませ
+ん。ポストスクリプト・データ・タイプへの切り替えは，DCPSがファイルを処理する
+ためにネイティブ・プリンタ・インタプリンタを使用しているときにはできません。
+
+o  さまざまなファイルの印刷
+
+ポストスクリプト以外のさまざまなデータ構文のファイルを，ポストスクリプト・プ
+リンタに印刷できます。このため，構文の種別に応じたトランスレータが提供されて
+います。
+
+TEK4014:
+   Tektronix[TM] 4010/4014互換データ・タイプ
+
+TEK_KANA:
+   カタカナ文字セットTektronix互換データ・タイプ
+
+REGIS:
+   ReGISグラフィックス・データ・タイプ
+
+REGIS_KANJI:
+   VT284漢字ReGISグラフィックス・データ・タイプ(85カラム設定対応)
+
+REGIS_KANJI80:
+   VT284漢字ReGISグラフィックス・データ・タイプ(80カラム設定対応)
+
+注意: 日本語DECprint Supervisor for OpenVMS AXPシステムでは，TEK_KANA，REGIS_
+KANJI，REGIS_KANJI80の各データ・タイプはサポートされません。
+
+DDIF:
+   DDIFデータ・タイプ(2値イメージ・サブセットのみ)
+
+PCL:
+   PCL[TM]  レベル4データ・タイプ(HP[TM] LaserJet[TM] IIDで使用)
+
+PROPRINTER:
+   IBM ProPrinter[TM] XL24データ・タイプ
+
+LIST:
+   プレーン漢字テキスト・ファイルを書式化して番号を入れるLISTトランスレータ。
+   このトランスレータは各行に番号をふり，背景にグレイ・バーを入れ，ファイル名
+   とページ番号をつけます。
+
+これらのデータ・タイプは，DATA_TYPEパラメータによって指定できます。
+
+o  装置制御モジュールの利用
+
+/SETUP修飾子によって，すべてのデータ・タイプで装置制御モジュールが利用できま
+す。ANSIモジュールはANSIシーケンスを含むことができます。また，PCLモジュールは
+バイナリ・フォント・データを含むことができます。
+
+o  イメージ・ファイルの印刷
+
+                                       6
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+プリンタのもっとも高速なイメージ印刷機能(ポストスクリプト・レベル1インタプ
+リタ，ポストスクリプト・レベル2インタプリタ，またはイメージPDL)を利用して，
+(DDIF2値イメージ・ファイルを印刷する)PrintServerプリンタはイメージを印刷する
+ことができます。
+
+
+6  弊社以外のプリンタ装置
+
+日本語DECprint Supervisor for OpenVMS, Openでは，弊社以外の特定の日本語ポスト
+スクリプト・プリンタを，DCPS-Baseライセンスを持つ弊社の日本語ポストスクリプ
+ト・プリンタと同じようにサポートします。
+
+その他の必要なハードウェアには，サポートされている弊社以外の日本語ポストスク
+リプト・プリンタが記述されています。日本DECでは，日本語DECprint Supervisorに
+よって，SPDに記述されていないポストスクリプト・プリンタを使用するための説明は
+行いません。SPDに記述されていないポストスクリプト・プリンタの，DCPS-Openライ
+センスによる利用については保証できません。
+
+7  インストレーション
+
+本ソフトウェアを初めてお買いになるお客様には，弊社のインストレーション・サー
+ビスのご利用をお勧めします。このサービスでは，DECのインストレーション・スペシ
+ャリストがソフトウェア製品のインストレーションを行います。
+
+お客様自身でインストールされる場合は，クラスタまたは非クラスタ環境でのOpenVMS
+プリント・キューの設定の知識，また，DECserver環境での印刷の場合はDECserverの
+管理についての知識のある方がインストールすべきです。それ以外のお客様は，プリ
+ンタ・ハードウェアのインストレーションを含めた，弊社のインストレーション・サ
+ービスをご利用になることをお勧めします。
+
+8  必要なハードウェア
+
+適用されるAlphaプロセッサ
+
+Alpha:
+     DEC 2000モデル300 Alphaシステム,
+     DEC 2000モデル500 Alphaシステム
+
+
+
+
+
+
+
+
+
+
+
+                                       7
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+
+     DEC 3000モデル300 Alphaワークステーション,
+     DEC 3000モデル300Lワークステーション,
+     DEC 3000モデル300Xワークステーション,
+     DEC 3000モデル300LX Alphaワークステーション,
+     DEC 3000モデル700ワークステーション,
+     DEC 3000モデル900ワークステーション,
+     DEC 3000モデル400 Alphaワークステーション,
+     DEC 3000モデル400 Alphaサーバ,
+     DEC 3000モデル500 Alphaワークステーション,
+     DEC 3000モデル500 Alphaサーバ,
+     DEC 3000モデル500X Alphaワークステーション,
+     DEC 3000モデル600 Alphaシステム,
+     DEC 3000モデル600S Alphaシステム,
+     DEC 3000モデル800 Alphaシステム,
+     DEC 3000モデル800S Alphaシステム
+
+     DEC 4000モデル600シリーズAlphaシステム,
+     DEC 4000モデル700デパートメンンタル・サーバ
+
+     DEC 7000モデル600シリーズAlphaシステム,
+     DEC 7000モデル700エンタープライズ・サーバ
+
+     DEC 10000モデル600シリーズAlphaシステム
+
+     AlphaStation 200 4/100ワークステーション,
+     AlphaStation 200 4/166ワークステーション,
+     AlphaStation 200 4/233ワークステーション
+     AlphaStation 400 4/166システム,
+     AlphaStation 400 4/233ワークステーション
+
+     AlphaServer 1000 4/200システム,
+     AlphaServer 2000 4/200システム,
+     AlphaServer 2000 4/275システム,
+     AlphaServer 2100 4/200システム,
+     AlphaServer 2100 4/275システム,
+     AlphaServer 8200 5/300システム,
+     AlphaServer 8400 5/300システム
+
+適用されるVAXプロセッサ
+
+VAX:    VAXftモデル110,
+        VAXftモデル310,
+        VAXftモデル410,
+        VAXftモデル610,
+
+
+
+                                       8
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+
+        VAXftモデル612
+
+        VAX 4000モデル100,
+        VAX 4000モデル105A,
+        VAX 4000モデル200,
+        VAX 4000モデル300,
+        VAX 4000モデル400,
+        VAX 4000モデル500,
+        VAX 4000モデル505A,
+        VAX 4000モデル600,
+        VAX 4000モデル700,
+        VAX 4000モデル705A
+
+        VAX 6000モデル200シリーズ,
+        VAX 6000モデル300シリーズ,
+        VAX 6000モデル400シリーズ,
+        VAX 6000モデル500シリーズ,
+        VAX 6000モデル600シリーズ
+
+        VAX 7000モデル600シリーズ,
+        VAX 7000モデル700シリーズ
+
+        VAX 8200, VAX 8250, VAX 8300,
+        VAX 8350, VAX 8500, VAX 8530,
+        VAX 8550, VAX 8600, VAX 8650,
+        VAX 8700, VAX 8800, VAX 8810,
+        VAX 8820, VAX 8830, VAX 8840
+
+        VAX 9000モデル110,
+        VAX 9000モデル210,
+        VAX 9000モデル300シリーズ,
+        VAX 9000モデル400シリーズ
+
+        VAX10000モデル600シリーズ
+
+        VAX-11/750, VAX-11/780, VAX-11/785
+
+MicroVAX:   MicroVAX II, MicroVAX 2000,
+            MicroVAX 3100モデル10/10E,
+            MicroVAX 3100モデル20/20E,
+            MicroVAX 3100モデル30,
+            MicroVAX 3100モデル40,
+            MicroVAX 3100モデル80,
+            MicroVAX 3100モデル90,
+
+
+
+                                       9
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+
+            MicroVAX 3300, MicroVAX 3400,
+            MicroVAX 3500, MicroVAX 3600,
+            MicroVAX 3800, MicroVAX 3900
+
+VAXstation: VAXstation II, VAXstation 2000,
+            VAXstation 3100モデル30,
+            VAXstation 3100モデル38,
+            VAXstation 3100モデル40,
+            VAXstation 3100モデル48,
+            VAXstation 3100モデル76,
+            VAXstation 3200, VAXstation 3500,
+            VAXstation 3520, VAXstation 3540
+
+            VAXstation 4000モデル60,
+            VAXstation 4000モデル90,
+            VAXstation 4000モデル90A,
+            VAXstation 4000 VLC
+
+
+VAXserver:  VAXserver 3100モデル10/10E,
+            VAXserver 3100モデル20/20E,
+            VAXserver 3300, VAXserver 3400
+            VAXserver 3500, VAXserver 3600,
+            VAXserver 3602, VAXserver 3800,
+            VAXserver 3900
+
+            VAXserver 4000モデル200,
+            VAXserver 4000モデル300,
+            VAXserver 4000モデル500
+
+            VAXserver 6000モデル210,
+            VAXserver 6000モデル220,
+            VAXserver 6000モデル310,
+            VAXserver 6000モデル320,
+            VAXserver 6000モデル410,
+            VAXserver 6000モデル420,
+            VAXserver 6000モデル510,
+            VAXserver 6000モデル520,
+            VAXserver 6000モデル610,
+            VAXserver 6000モデル620,
+            VAXserver 6000モデル630
+
+
+
+
+
+
+                                      10
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+適用されないプロセッサ
+
+o  MicroVAX I
+
+o  VAXstation I
+
+o  VAXstation 8000
+
+o  VAX-11/752
+
+o  VAX-11/730
+
+o  VAX-11/782
+
+プロセッサ制限事項
+
+スタンドアロンのMicroVAX 2000およびVAXstation 2000システムには，TK50テープ・
+ドライブが必要です。
+
+その他の必要なハードウェア
+
+■ VAXシステムに対して
+
+   o  TK50テープ・ドライブまたはCD-ROMドライブ
+
+   o  システム・ディスク
+
+■ Alphaシステムに対して
+
+   o  CD-ROMドライブ
+
+   o  システム・ディスク
+
+■ 以下のうち少なくとも1つのポストスクリプト・プリンタ
+
+o  弊社のポストスクリプト・プリンタ：シリアル・インターフェイス
+
+   -  日本語ポストスクリプト・プリンタ(LN82R-AJ)
+
+       注意: LN82Rでは，両面印刷はできません。
+       LN82Rの欧文フォントは13種類です。
+
+o  弊社のポストスクリプト・プリンタ：イーサネット・インターフェイス
+
+   -  日本語PrintServer 17/600
+
+   -  日本語turbo PrintServer (LPS20-GJ)
+
+   -  日本語PrintServer 32(LPS32-AJ,LPS32-CJ)
+
+   -  日本語PrintServer 32 plus(LPS32-LJ,LPS32-NJ)
+
+   -  日本語PrintServer 40 (LPS40-AJまたはLPS40-DJ)
+
+       注意: LPS40-AJ/LPS40-DJでは，両面印刷はできません。
+
+                                      11
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+o  弊社以外のポストスクリプト・プリンタ：シリアル・インターフェイス
+   /AppleTalk(LocalTalk)インターフェイス
+
+   -  Apple LaserWriter II NTX-J[TM]
+
+   -  OKI MICROLINE801PS[TM]
+
+   -  OKI MICROLINE801PS+F
+
+   -  OKI MICROLINE800PSIILT
+
+   -  OKI MICROLINE801PSII
+
+   -  OKI MICROLINE801PSII+F
+
+   -  OKI MICROLINE802PSII
+
+   -  OKI MICROLINE802PSII+F
+
+   -  Dataproducts LZR1560
+
+■ 弊社のシリアル・インターフェイスによるプリンタ構成の場合
+
+o  DEC423(MMJ)によるシリアル・インターフェイス。ただし，ホスト側がRS232Cイン
+   ターフェイスの場合，H8575-Aアダプタによる変換が必要。
+
+   -  日本語OpenVMSでサポートされる非同期ターミナル・コントローラ(日本語
+      OpenVMSオペレーティング・システムのソフトウェア仕様書を参照)
+
+   -  DECserver 100 (9600 baud)
+
+   -  DECserver 200/MC (19.2K baud)
+
+   -  DECserver 250 (19.2K baud)
+
+   -  DECserver 300 (19.2K baud)
+
+   -  DECserver 500 (9600 baud)
+
+   -  DECserver 550 (9600 baud)
+
+   -  MUXserver 100 (19.2K baud)
+
+   -  MUXserver 300 (19.2K baud)
+
+   -  CVAXシリアル・インターフェイス
+      (CXA16,CXB16,CX08,DZQ11) (9600 baud)
+
+   -  DECserver 90L (38.4K baud)
+
+o  LN82Rのシリアル・インターフェイスの設定は，8-bit，NOパリティ，XON/XOFFフロ
+   ー制御でなければなりません。
+
+■ PrintServer構成の場合
+
+o  少なくともLPS17/600，LPS32-AJ，LPS32-CJ，LPS32-LJ，LPS32-NJ，LPS20-GJ，
+   LPS40-AJ，LPS40-DJのいずれか1台。
+
+                                      12
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+o  日本語DEC PrintServerサポーティング・ホスト(プリント・クライアントを兼ねて
+   もよい)。
+
+o  イーサネット・コントローラ・インターフェイス
+
+o  サポーティング・ホスト，プリント・クライアント(日本語DECprint Supervisor
+   ソフトウェアを利用するシステム)，PrintServerハードウェアを接続するため
+   のDECnetイーサネット・ハードウェア(イーサネット・ケーブル，H4000/H4004，
+   DELNI，DECXM-AA，DEMPR，イーサネット・トランシーバ・ケーブルなど)。
+
+■ 弊社以外のシリアル・インターフェイスによるプリンタ構成の場合
+
+o  RS232Cによるシリアル・インターフェイス。ただし，ホスト側がDEC423(MMJ)イン
+   ターフェイスの場合，プリンタのインターフェイス・コネクタの部分でH8571-Eア
+   ダプタによる変換が必要。
+
+   -  日本語OpenVMSでサポートされる非同期ターミナル・コントローラ(日本語
+      OpenVMSオペレーティング・システムのソフトウェア仕様書を参照)
+
+   -  DECserver 100 (9600 baud)
+
+   -  DECserver 200/MC (19.2K baud)
+
+   -  DECserver 250 (19.2K baud)
+
+   -  DECserver 300 (19.2K baud)
+
+   -  DECserver 500 (9600 baud)
+
+   -  DECserver 550 (9600 baud)
+
+   -  MUXserver 100 (19.2K baud)
+
+   -  MUXserver 300 (19.2K baud)
+
+   -  CVAXシリアル・インターフェイス
+      (CXA16,CXB16,CX08,DZQ11) (9600 baud)
+
+   -  DECserver 90L (38.4K baud)
+
+o  プリンタのシリアル・インターフェイスの設定は，8-bit，NOパリティ，XON/XOFF
+   フロー制御でなければなりません。
+
+必要なディスク容量
+
+(Block_Cluster_Size=1の場合)_________________________________________________
+
+                        ____________日本語DECprint_Supervisor_for____________
+
+________________________OpenVMS_VAX________OpenVMS_AXP_______________________
+
+インストール時          約12,000ブロック   約9,000ブロック
+
+                        (約6.0 MB)         (約4.5 MB)
+
+                                      13
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+_____________________________________________________________________________
+                        ____________日本語DECprint_Supervisor_for____________
+
+________________________OpenVMS_VAX________OpenVMS_AXP_______________________
+
+
+
+システム運用時          約9,300ブロック    約8,000ブロック
+
+(ALL-IN-1互換キット     (約4.7 MB)         (約4.0 MB)
+なし)
+
+
+
+システム運用時          約11,000ブロック   N/A
+
+(ALL-IN-1互換キット     (約5.5 MB)
+あり)________________________________________________________________________
+
+これらのディスク容量は，システム・ディスク上で必要となるディスク領域を表した
+ものであり，概数です。実際の値は，システムの環境，構成，ソフトウェア・オプシ
+ョンに応じて異なります。
+
+
+9  必要なソフトウェア
+
+すべての構成に対して:
+
+o  日本語OpenVMS VAXオペレーティング・システムV5.5-2，V6.0，V6.1，V6.2
+
+または
+
+o  日本語OpenVMS AXPオペレーティング・システムV1.5，V6.1，V6.2
+
+PrintServer構成のみ:
+
+o  日本語PrintServer Software (旧名称，日本語DEC PrintServerサポーティング・
+   ホスト・ソフトウェア) V5.0 (詳しくは，SPD 25.C2.xx，SPD 47.98.xxまたはSPD
+   25.M2.xxを参照)
+
+o  DECnet for OpenVMS VAX V5.5-2，V6.0，V6.1，V6.2
+
+TCP/IPでの印刷には，
+
+o  DEC TCP/IP Services for OpenVMS AXP V3.1
+
+または
+
+o  DEC TCP/IP Services for OpenVMS VAX V3.1
+
+                                      14
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+AppleTalkプリンタ構成のみ:
+
+o  PATHWORKS for OpenVMS(Macintosh) VAX版 V1.2
+
+o  PATHWORKS for OpenVMS(Macintosh) Alpha版 V1.3
+
+10  ソフトウェア・ライセンス
+
+本ソフトウェアは，日本DEC標準販売約款中のライセンス規定に基づいて提供されま
+す。
+
+日本DECのライセンス条件とその方針についての詳細は，最寄りの日本DECの各支店/営
+業所にお問い合わせください。
+
+日本語DECprint Supervisor for OpenVMS, Base
+
+本ライセンスは，日本語OpenVMS VAXオペレーティング・システム(SPD 25.C4.xx)およ
+び日本語OpenVMS AXPオペレーティング・システム(SPD 28.A9.xx)のライセンスに含ま
+れています。
+
+本ライセンスは，そのシステムからSPDに記述されている弊社のすべての日本語ポスト
+スクリプト・プリンタを制御し，基本的な印刷機能を利用する目的において，日本語
+DECprint Supervisor V1.2 for OpenVMS, Baseソフトウェアを実行することを許可し
+ます。
+
+日本語DECprint Supervisor for OpenVMS, Open
+
+本ライセンスは，ある1つのシステムからSPDに記述されている弊社以外のすべての日
+本語ポストスクリプト・プリンタを制御し，基本的な印刷機能を利用する目的におい
+て，日本語DECprint Supervisor V1.2 for OpenVMS, Openソフトウェアを実行するこ
+とを許可します。
+
+DCPS-Openの機能は，PATHWORKS V5.0 for OpenVMS (SPD 30.50.xx)に含まれており，
+PATHWORKSサーバを通して弊社以外のプリンタへ印刷をする場合，DCPS-Openライセン
+スは必要はありません。
+
+日本語DECprint Supervisor for OpenVMS, Plus
+
+本ライセンスは，ある1つのシステムからSPDに記述されている弊社および弊社以外の
+すべての日本語ポストスクリプト・プリンタで高度な印刷機能を利用する目的におい
+て，日本語DECprint Supervisor V1.2 for OpenVMS, Plusソフトウェアを実行するこ
+とを許可します。
+
+ライセンス管理機能
+
+本ソフトウェアは，日本語OpenVMSのLicense Management Facilityをサポートしてい
+ます。
+
+本製品のライセンス単位は，無制限システム・ユースです。これは，トラディショナ
+ルとクラスタワイドの2つのライセンス・タイプを含む，包括的な用語です。
+
+                                      15
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+ライセンス管理機能に関する詳細は，OpenVMSオペレーティング・システムの
+『Software Product Description』(SPD 25.01.xx)またはドキュメント・セット
+中の『License Management Utility Manual』を参照してください。
+
+
+11  クラスタ環境
+
+本レイヤード・プロダクトは，正規のライセンスを持つVMScluster構成*の上にインス
+トールされている場合，機能上の制限を受けません。本ソフトウェアで必要とされる
+ハードウェアについては，第8節の最小構成の項に記述されているとおりです。
+
+*  クラスタ構成については『VAXcluster Software for OpenVMS VAX Software
+   Product Description (SPD 29.78.xx)』または『VMScluster Software for
+   OpenVMS AXP Software Product Description (SPD 42.18.xx)』に詳しく説明
+   されています。また，この構成にはCI, EthernetおよびMixed Interconnect構成が
+   含まれます。
+
+OpenVMSテーラリング
+
+本レイヤード・プロダクトの全機能を得るには，次のOpenVMS構成要素が必要です。
+
+o  OpenVMS Required Saveset
+
+o  Network Support[1] (PrintServer構成のみ)
+
+o  Secure User's Environment
+
+o  Utilities[1] (DECserver接続のシリアル・プリンタ構成のみ)
+
+o  DECwindows Application Files[1] [2] (DDIF2値イメージ・ファイルの印刷のた
+   め)
+
+日本語OpenVMSのクラスおよびテーラリングについては，日本語OpenVMSオペレーティ
+ング・システムのソフトウェア仕様書を参照してください。
+
+12  オプション・ソフトウェア
+
+o  DEC Distributed Queuing Service for OpenVMS AXP V1.3
+
+o  DEC Distributed Queuing Service for OpenVMS VAX V1.3
+
+o  DECimage Application Services for VMS V3.2
+
+o  DEClaser Printer Monospaced Soft Fonts
+
+_______________________
+  [1] これらはオプションですので，該当する機能を使用しない場合には必要ありま
+
+      せん。
+  [2] これらの構成要素は，OpenVMS VAX V5.5〜V6.1およびOpenVMS AXP V1.0〜V6.1
+
+      では，別プロダクトとして提供されています。
+
+                                      16
+
+ 
+
+
+日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ソフトウェア仕様書
+
+
+13  バージョンアップの考慮
+
+本製品の将来のバージョンでは，必要なハードウェアおよびソフトウェアの最小構成
+が変更されることがあります。
+
+14  提供媒体
+
+OpenVMS VAXシステム:
+
+   TK50ストリーム・テープ
+
+本製品は，『日本語OpenVMS VAX Consolidated Software Distribution CD-ROM』の一
+部としても提供します。
+
+OpenVMS AXPシステム:
+
+本製品は，『日本語OpenVMS AXPソフトウェア・ライブラリ』の一部として，CD-ROMで
+提供します。ソフトウェア・ライブラリは，各種製品のバイナリと，オンライン・ド
+キュメント(ブックリーダ形式)で構成されます。
+
+マニュアルのみ:
+
+日本語DECprint Supervisorのハードコピー・マニュアルを注文する際は，注文番号
+QA-09NJA-GZを使用してください。マニュアル・セットはVAXおよびAlphaプラットフォ
+ームで共通です。
+
+15  注文情報
+
+本製品のインストレーション・キットは，OpenVMS VAX版とOpenVMS AXP版に分かれて
+います。また，インストレーション・キットはライセンスの有無にかかわらず1種類で
+す。くわしくは，最寄りの日本DECの各支店/営業所にお問い合わせください。
+
+提供されるライセンス，サービスおよび媒体の詳細については，最寄りの日本DECの各
+支店/営業所にお問い合わせください。
+
+16  ソフトウェア製品サービス
+
+日本DECでは，さまざまなサービス・オプションを提供しています。詳細については，
+最寄りの日本DEC各支店/営業所にお問い合わせください。
+
+17  保証
+
+本ソフトウェアについては，日本DEC所定のソフトウェア保証基準に定められた保証が
+提供されます。
+
+
+
+
+                                      17
+
+ 
+
+
+ 日本語DECprint Supervisor Version 1.2 for OpenVMS                SPD 48.27.03
+ ソフトウェア仕様書
+
+
+(c) 1996 Digital Equipment Corporation Japan. All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_______________________
+ [TM] Macintosh，AppleTalkおよびLaserWriterは，米国Apple Computer社の登録商標
+
+      です。
+ [TM] Colormate PSは，日本電気株式会社の登録商標です。
+
+ [TM] HP，PCL，およびLaserJetは，米国Hewlett-Packard社の登録商標です。
+ [TM] IBMおよびProprinterは，米国International Business Machines社の登録商標で
+
+      す。
+ [TM] PostScriptは，Adobe Systems Incorporated (アドビ システムズ社)の登録商標
+
+      です。
+ [TM] TEKTRONIXおよびTektronix 4010/4014は，米国Tektronix社の登録商標です。
+
+                                      18
