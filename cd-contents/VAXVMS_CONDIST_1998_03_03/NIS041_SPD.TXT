@@ -1,0 +1,2476 @@
+ 
+
+
+                               DIGITAL
+
+ Software
+ Product
+ Description
+
+ ___________________________________________________________________
+
+ PRODUCT NAME:  DEC Network Integration Server Software, Version 4.1 SPD
+ 36.05.11
+
+ DESCRIPTION
+
+ The DEC Network Integration Server (DECNIS) 500/600 product provides
+ multiprotocol routing, bridging, and X.25 gateway services to host sys-
+ tems on local area networks (LANs) connected to the DECNIS or to host
+ systems connected to the DECNIS over wide area network (WAN) connec-
+ tions. The DECNIS 500/600 software runs on any DECNIS 500 or 600 hard-
+ ware unit.
+
+ Overview
+
+ The DECNIS software provides a routing service for:
+
+ o  TCP/IP hosts
+
+ o  DECnet Phase IV nodes
+
+ o  DECnet/OSI Phase V nodes
+
+ o  OSI-compatible systems
+
+ o  Novell[R] NetWare[R] nodes
+
+ o  AppleTalk[R] nodes
+
+ Multiprotocol routing of IP, DECnet, and OSI is implemented using the
+ Integrated Intermediate System to Intermediate System (Integrated IS-
+ IS) routing protocol. Routing of IP is also supported using Open Short-
+ est Path First (OSPF), Routing Information Protocol (RIP), Border Gate-
+ way Protocol 4 (BGP-4), and Exterior Gateway Protocol (EGP). Routing
+
+                                                      September 1997
+
+                                                         AE-PQBSM-TE
+
+ 
+
+ of Novell NetWare and AppleTalk is implemented on the LAN using na-
+ tive protocols and over the WAN using encapsulation within IP.
+
+ The DECNIS software supports bridging of protocols that can not be routed.
+ Both local bridging between LANs connected to the same DECNIS unit,
+ and remote bridging between two DECNIS units connected over WAN links
+ are supported.
+
+ The DECNIS software provides X.25 gateway and relay services to con-
+ nect end systems on a LAN to X.25 Data Terminal Equipment (DTE) con-
+ nected directly to the DECNIS or connected over an X.25 Packet Switched
+ Data Network (PSDN).
+
+ The DECNIS software image is installed and configured on a host sys-
+ tem called the load host. Once configured, the DECNIS software image
+ and configuration file is loaded from the load host system to the tar-
+ get DECNIS unit. When loaded, the DECNIS software image can be stored
+ in internal non-volatile FLASH) memory so that subsequent software loads
+ can be performed without the need for loading from a load host (flash
+ loading). DECNIS systems equipped with the MPC-II (DNSAN-BH) and MPC-
+ III (DNSBN-AH and DNSBN-BH) can store multiple configuration and im-
+ age files in non-volatile (FLASH) memory.
+
+ The DECNIS software is managed using the Network Command Language (NCL)
+ command line interface which can be run on the DECNIS MPC-II (DNSAN-
+ BH) or MPC-III (DNSBN-AH or DNSBN-BH) and accessed via the console,
+ or from any Windows 95[R], Windows NT[R], DIGITAL UNIX[R] (formerly
+ DEC OSF/1), OpenVMS for Alpha or OpenVMS for VAX system. Event log-
+ ging and data tracing utilities are also available on DIGITAL UNIX,
+ OpenVMS for Alpha and OpenVMS for VAX systems to assist problem solv-
+ ing by logging network events and by tracing control messages received
+ or sent by the DECNIS software.
+
+ The DECNIS software can be managed from the POLYCENTER/NetView[R] net-
+ work management platform or any system supporting the Simple Network
+ Management Protocol (SNMP). SNMP sets, gets, and traps are supported
+ where appropriate for MIB-II, Bridge MIB, FDDI MIB, DS3/E3 MIB and DIG-
+ ITAL Vendor MIB variables.
+
+
+                                  2
+
+ 
+
+ IP Routing
+
+ The DECNIS software provides support for the following IP routing pro-
+ tocols:
+
+ o  OSPF V2 (RFC 1247)
+
+ o  Integrated IS-IS (RFC 1195)
+
+ o  RIP (RFC 1058)
+
+ o  BGP-4 (RFC 1771)
+
+ o  EGP (RFCs 827, 888, and 904)
+
+ The DECNIS supports the OSPF Version 2 protocol as defined by RFC-1247.
+ TOS 0 routing only is supported. The DECNIS OSPF implementation also
+ supports the modifications and enhancements proposed in the replace-
+ ment draft RFC, in particular the virtual link support enhancements
+ and support for IP address super-netting. OSPF is configured using the
+ DECNIS configuration utility and managed dynamically using the NCL com-
+ mand line interface.
+
+ The DECNIS supports the Integrated IS-IS routing protocol as defined
+ in RFC 1195. When using Integrated IS-IS, the software supports equal-
+ cost path splitting of IP data over up to four equal-cost paths. Vari-
+ able, but contiguous, IP subnet masks are also supported. Integrated
+ IS-IS is configured using the DECNIS configuration utility and man-
+ aged dynamically using the NCL command line interface.
+
+ The DECNIS supports Border Gateway Protocol Version 4 (BGP-4) as de-
+ fined in RFC 1771 to provide inter-Autonomous System routing. An Au-
+ tonomous System is a single administrative domain in which routers ex-
+ change intra-domain routing information. BGP-4 allows the DECNIS to
+ exchange intra-domain routes with other BGP-4 routers in other Autonomous
+ Systems. The DECNIS is both a Border Router and BGP Speaker and im-
+ plements both send and receive policies using Route Propagation and
+ Filtering. BGP-4 is managed using the NCL command line interface. Note
+ that an MPC-II (DNSAN-BH) or MPC-III (DNSBN-AH or DNSBN-BH) must be
+ installed to run BGP-4.
+
+                                  3
+
+ 
+
+ The DECNIS also supports the RIP (RFC 1058) and EGP (RFCs 827, 888,
+ and 904) routing protocols. Support for multiple instances of RIP and
+ EGP is provided. In addition to IP routing protocols, the software also
+ supports IP reachable addresses (static routes). RIP and EGP are con-
+ figured using the DECNIS configuration utility and managed dynamically
+ using the NCL command line interface. MIB-II variables as defined in
+ RFC 1213 can also be managed using SNMP sets and gets.
+
+ The DECNIS software supports Virtual Router Cluster (also known as IP
+ Standby), a mechanism that greatly improves the resilience of IP back-
+ bone networks. Enhancements have also been made to the Integrated IS-
+ IS routing protocol algorithm to reduce the time taken to re-compute
+ new routes. Virtual Router Cluster works in conjunction with Integrated
+ IS-IS by providing fast IP router failover, should a router, its LAN
+ connection, or one of its WAN circuits fail. In a typical network, failover
+ is achieved in a way that is totally transparent to applications run-
+ ning on IP host systems.
+
+ The DECNIS software supports Protocol Independent Multicast (PIM) as
+ specified in the draft RFCs, "PIM Protocol Specification, January 1995"
+ and "PIM Motivation and Architecture, January 1995". The DECNIS im-
+ plementation of PIM implements Dense Mode only. PIM allows IP pack-
+ ets to be forwarded to a defined group of hosts simultaneously. Each
+ host in the multicast group must support RFC 1112, "Host Extensions
+ for IP Multicasting". Note that an MPC-II (DNSAN-BH) or MPC-III (DNSBN-
+ AH or DNSBN-BH) must be installed to run PIM.
+
+ The DECNIS software supports full propagation of routes between dif-
+ ferent routing protocols, for example between BGP-4, OSPF, Integrated
+ IS-IS, RIP, and EGP. The propagation of IP routes learnt through one
+ routing protocol into another protocol can be managed using the DEC-
+ NIS configuration utility and the NCL command line interface. Controls
+ can be added to include or exclude routes from single nodes, subnets,
+ or collections of subnets. For RIP and EGP, controls can set up be-
+ tween multiple instances of each protocol.
+
+
+
+
+
+                                  4
+
+ 
+
+ The DECNIS software communicates with IP hosts and gateways on the lo-
+ cal LAN using the ARP protocol (RFC 826). Proxy ARP (RFC 1027) is also
+ supported. The DECNIS software also supports Path MTU Discovery tech-
+ nique as specified in RFC 1191, and ICMP Router Discovery Messages as
+ specified in RFC 1256 to allow IP hosts to distinguish the DECNIS as
+ a router using ICMP messages and procedures. Using ICMP, the DECNIS
+ periodically broadcasts ICMP Router Advertisement messages and responds
+ to ICMP Router Solicitation messages from IP Hosts. All management pa-
+ rameters defined in RFC 1256 are supported. DECNIS also supports an
+ IP Helper function which allows IP routing to forward packets for par-
+ ticular UDP ports to particular IP addresses. Popular UPD ports which
+ can make use of this feature include TFTP (port 69), DNS (port 53),
+ Time Service (port 37), NETBios Name Server (port 137) and NETBios Data-
+ gram Server (port 138).
+
+ The DECNIS software supports IP routing over CSMA/CD, FDDI, PPP, HDLC,
+ Frame Relay, SMDS and ATM PVCs, or dynamically assigned X.25 circuits.
+ The DECNIS supports IP routing over X.25 data links in accordance with
+ RFC 877, and over PPP data links in accordance with RFC 1332. The DEC-
+ NIS implements LLC encapsulation according to RFC 1483 to provide Clas-
+ sical IP over ATM PVCs according to RFC 1577.
+
+ IP Switching
+
+ IP Switching is a method of forwarding IP packets over ATM connections.
+ IP Switches and IP Switch Gateways identify and label IP packets which
+ have the same characteristics and redirect this flow of IP packets onto
+ an ATM virtual circuit. IP Switches provide direct switching of IP pack-
+ ets over ATM virtual circuits in hardware, thus removing the per-router
+ forwarding overhead and reducing latency.
+
+ The DECNIS implements IP Switch Gateway functions to monitor, create
+ and delete IP packet flows, associate flows with ATM virtual circuits,
+ and pass information about flows to IP Switches.
+
+
+
+
+
+
+                                  5
+
+ 
+
+ The DECNIS uses normal IP protocols to communicate with other IP routers
+ and IP hosts on the LAN and communicates with an IP Switch using IP
+ Switching protocols defined in RFCs 1953 and 1954. RFC 1953 defines
+ the types of IP packet flow; the DECNIS supports Type 2 flows based
+ on source and destination address, time to live and version/Internet
+ header length. RFC 1954 defines the flow labels that identify IP pack-
+ ets as part of a flow. The flow label encodes the ATM VPI/VCI to which
+ the flow will be redirected. IP Switching uses flow labels as repre-
+ sentations of ATM connections and interprets the label as an ATM con-
+ nection identifier.
+
+ IP Switching is only supported on the DECNIS ATMcontroller 631. IP Switch-
+ ing is configured using the clearVISN DECNIS Configurator utility and
+ is managed dynamically using the NCL command line interface.
+
+ DECnet Routing
+
+ The DECNIS software implements both the DECnet Phase IV routing al-
+ gorithm (routing vector) and the DECnet/OSI Phase V routing algorithm
+ (link state routing). The DECNIS software supports both intra-area rout-
+ ing (level 1) and inter-area routing (level 2). The DECNIS software
+ can run either the Phase IV or Phase V routing algorithm in either com-
+ bination at each level. When running the Phase V algorithms at either
+ level 1 or level 2, the routing software is still able to handle traf-
+ fic generated by DECnet Phase IV end systems and performs any neces-
+ sary address and header conversions. DECnet routing is configured us-
+ ing the DECNIS configuration utility and is managed using the NCL com-
+ mand line interface.
+
+ The DECNIS software supports path splitting over up to four routing
+ circuits. If the cost between the router and the destination node is
+ the same on multiple WAN circuits, then the DECNIS software splits the
+ traffic across all the circuits.
+
+ It is also possible to route IP traffic using RIP within a DECnet Phase
+ IV only network by running RIP over the DECnet Phase IV level 1 or level
+ 2 links. An IS-IS routing circuit is required in order to handle IP
+ traffic either within a level 1 area or between areas over a level 2
+ link.
+
+                                  6
+
+ 
+
+ The DECNIS supports DECnet routing over CSMA/CD, FDDI, HDLC, DDCMP,
+ and Frame Relay circuits, and over dynamically and statically assigned
+ X.25 circuits. The DECNIS software also supports DECnet routing over
+ PPP data links in accordance with RFC 1376.
+
+ OSI Routing
+
+ The DECNIS software fully implements the requirements of an OSI In-
+ termediate System. The DECNIS software exchanges information about reach-
+ ability of end systems using the OSI IS-IS Intra-Domain Routing Ex-
+ change Protocol as specified in ISO/IEC 10589. OSI-compatible end sys-
+ tems on the same LAN can exchange information with the DECNIS soft-
+ ware and use the OSI End System to Intermediate System (ES-IS) Rout-
+ ing Exchange Protocol as specified in ISO 9542. OSI routing is con-
+ figured using the DECNIS configuration utility and is managed using
+ the NCL command line interface.
+
+ The DECNIS software supports OSI Connectionless Network Protocol (CLNP)
+ routing as specified in ISO 8473, over CSMA/CD, FDDI, HDLC, Frame Re-
+ lay and SMDS circuits, and over dynamically and statically assigned
+ X.25 circuits. The DECNIS software also supports OSI CLNP routing over
+ PPP data links in accordance with RFC 1377.
+
+ Novell NetWare Routing
+
+ The DECNIS software provides support of native Novell NetWare proto-
+ cols over Ethernet and FDDI. Ethernet-II, 802.2, Encapsulated Ether-
+ net (802.2 SNAP), and 802.3 RAW (Novell) data link formats are sup-
+ ported. The following Novell NetWare protocols are supported:
+
+ o  Novell NetWare IPX Forwarding
+
+ o  Novell NetWare Routing Information Protocol (RIP)
+
+ o  Novell NetWare Service Access Protocol (SAP)
+
+
+
+
+
+                                  7
+
+ 
+
+ Novell IPX is supported over wide area links using IP encapsulation
+ according to RFC 1234. The DECNIS software also supports native IPX
+ over leased line circuits using the PPP data link protocol (IPXWAN)
+ according to RFC 1362 but does not support negotiated options. Nov-
+ ell IPX routing is configured using the DECNIS configuration utility
+ and is managed using the NCL command line interface.
+
+ The DECNIS software has been tested and certified for use as a LAN router
+ with Novell NetWare by Novell's test laboratory.
+
+ AppleTalk Routing
+
+ The DECNIS software provides support of native EtherTalk[R], the Ap-
+ ple[R] specification for AppleTalk over Ethernet and FDDI. EtherTalk
+ uses 802.2 SNAP data link format. The following AppleTalk protocols
+ are supported:
+
+ o  AppleTalk Phase-II Forwarding
+
+ o  AppleTalk Phase-II EtherTalk
+
+ o  AppleTalk Phase-II Address Resolution Protocol (AARP)
+
+ o  AppleTalk Phase-II Routing Table Maintenance Protocol (RTMP)
+
+ o  AppleTalk Phase-II Name Binding Protocol (NBP)
+
+ o  AppleTalk Phase-II Zone Information Protocol (ZIP)
+
+ o  AppleTalk Phase-II Echo Protocol (echo replies only)
+
+ AppleTalk is supported over wide area links to other DECNIS systems
+ using IP encapsulation. AppleTalk routing is configured using the DEC-
+ NIS configuration utility and is managed using the NCL command line
+ interface.
+
+
+
+
+
+                                  8
+
+ 
+
+ Bridging
+
+ The DECNIS software supports local and remote bridging between LANs
+ for protocols that cannot be routed (e.g., DIGITAL's LAT) or that are
+ not supported by the DECNIS routing software (e.g., Xerox[R] XNS). The
+ DECNIS software supports a maximum of 15 local or remote bridge port.
+
+ DECnet, IP, OSI, IPX, and AppleTalk protocols are normally routed and
+ cannot be bridged except in the following cases:
+
+ o  DECnet, IP, IPX, and AppleTalk traffic can either be individually
+    routed or bridged on a system wide basis. When routing is not en-
+    abled for any one or more of these protocols, it will be bridged
+    on all interfaces. Bridge filtering can be enabled for DECnet, IP,
+    IPX, and AppleTalk on a port-by-port basis.
+
+ o  OSI null-Internet frames will always be bridged over the Ethernet
+    or FDDI interfaces.
+
+ The DECNIS software implements the IEEE 802.1D Spanning Tree Proto-
+ col and will interoperate with other DIGITAL or IEEE 802.1D-compliant
+ bridges in the same extended LAN. When used as a local bridge, the DECNIS
+ software forwards data packets from one LAN interface to another LAN
+ interface. When bridging IP packets between FDDI and Ethernet inter-
+ faces, frames larger than 1518 bytes will be fragmented before trans-
+ mission over the Ethernet.
+
+ Remote bridging is supported over PPP, HDLC, Frame Relay and ATM PVCs;
+ it is not supported over X.25 and SMDS data links.
+
+ Remote bridging is also supported between a DECNIS unit and NSC[R]/Vitalink[R]
+ TransLAN[R] bridges using the Vitalink Control Protocol (VCP). Remote
+ bridging is supported between a DECNIS 500/600 using the DEC WANcon-
+ troller 622 network interface card and NSC/Vitalink TransLAN III, IV,
+ 320, 335 or 350 remote bridges or TransPATH 335 or 350 bridge/routers
+ running either TransLAN V11.1.4 or TransPATH V11.2.5 software or later.
+
+ When used with TransLAN bridges only one bridging link is supported
+ at a time; load balancing over multiple links is not supported. The
+ Vitalink DLS protocol is not supported by the DECNIS.
+
+                                  9
+
+ 
+
+ Tinygram compression is supported in accordance with RFC 1220 over PPP
+ and VCP data links. This allows Ethernet and 802.3 frames which are
+ padded with zeros, such as LAT frames, to be compressed over remote
+ bridging links. Bridging over multiple remote hops is supported sub-
+ ject to the Bridging Configuration Guidelines section below.
+
+ Bridging is configured using the DECNIS configuration utility and is
+ managed using the NCL command line interface. Bridge MIB variables as
+ defined in RFC 1493 can also be managed using SNMP sets and gets. Bridge
+ traffic, both local and remote, may be filtered based on a combina-
+ tion of source or destination address and protocol type on a port-by-
+ port basis.
+
+ Bridging Configuration Guidelines
+
+ When bridging over remote links, the performance of delay-sensitive
+ protocols (such as LAT) cannot be guaranteed without careful consid-
+ eration of the number of bridging hops and the speed of the lines con-
+ necting the DECNIS units.
+
+ DIGITAL warrants and supports the DECNIS product when used in extended
+ LAN configurations subject to the following configuration restrictions:
+
+ o  The minimum line speed supported for remote bridging between DEC-
+    NIS units is 56 Kbits/s.
+
+ o  Remote bridging is supported over PPP, HDLC, Frame Relay and ATM
+    PVCs but is not supported over X.25 or SMDS circuits, or over satel-
+    lite links.
+
+ o  The maximum number of bridging ports supported by the DECNIS is 15.
+    Consequently, the maximum number of remote bridging links that can
+    be configured on the DECNIS is limited to 15.
+
+ o  A maximum of seven local and remote bridges may be configured in
+    series between any two communicating end stations. Each DECNIS unit,
+    or any other IEEE 802.1D or LANbridge 100 compatible bridge, counts
+    as one bridge towards this maximum configuration of seven bridges.
+
+ o  Local Area VAXcluster (LAVC) is not supported over remote bridg-
+    ing links.
+
+                                 10
+
+ 
+
+ o  PATHWORKS services may be restricted over remote bridging links;
+    please refer to the relevant Software Product Descriptions for fur-
+    ther information.
+
+ o  When bridging between a DECNIS and NSC/Vitalink TransLAN, load bal-
+    ancing and DLS are not supported.
+
+ In addition to the above configuration restrictions, and, when using
+ 56 Kbits/s or 64 Kbits/s links between DECNIS units for remote bridg-
+ ing of LAT, DIGITAL also recommends the following configuration guide-
+ lines to ensure reliable operation:
+
+ o  A maximum of two serial synchronous links should be used in the span-
+    ning tree path between the LAT server and the LAT host.
+
+ o  A minimum of 3 Kbits/s should be allocated for each active LAT ses-
+    sion which needs to be supported simultaneously across the remote
+    link. When using Tinygram compression, 2 Kbits/s should be allo-
+    cated for each active LAT session.
+
+ o  Links should be reserved for LAT and not shared with routed traf-
+    fic such as DECnet, OSI, or IP. Also, other bridged traffic which
+    may generate unnecessary traffic over the remote link should be fil-
+    tered using the DECNIS Bridge Filtering facilities.
+
+ Routing and Bridging over PPP
+
+ The DECNIS software supports routing of IP, IPX, DECnet, and OSI pro-
+ tocols over PPP datalinks as defined by RFCs 1332, 1334, 1362, 1376,
+ 1377 and RFC 1548. Bridging over PPP datalinks is also supported as
+ defined by RFC 1220. PPP Authentication Protocol (PAP), PPP Header Com-
+ pression and PPP SDU size negotiation are also supported.
+
+
+
+
+
+
+
+
+                                 11
+
+ 
+
+ Routing and Bridging over Frame Relay
+
+ The DECNIS software supports connections over Frame Relay data links
+ as specified in the Frame Relay Specification jointly developed by DIG-
+ ITAL Equipment Corporation, StrataCom[R], Inc., Northern Telecom[R],
+ and Cisco[R] Systems Inc.
+
+ Multiple virtual circuits can be multiplexed over a single Frame Re-
+ lay link using the Data Link Control Identifier (DLCI) field of the
+ Frame Relay LAPD header. For details of the Frame Relay options im-
+ plemented, refer to the CONFORMANCE TO STANDARDS section of this SPD.
+
+ Routing of IP, DECnet, and OSI protocols, and bridging of other pro-
+ tocols is supported over Frame Relay PVCs as defined in RFC 1490 us-
+ ing point-to-point encapsulation only, or by using PPP encapsulation
+ within the Frame Relay frame. IPX and AppleTalk can also be routed over
+ Frame Relay within IP. The DECNIS Frame Relay implementation supports
+ both the LMI and ANSI-D switch control procedures.
+
+ Frame Relay is only supported on the DEC WANcontroller 622, DEC WAN-
+ controller 622/HS, and DECNIS HSSIcontroller 641 network interface cards.
+ A maximum of 32 Frame Relay PVCs can be configured per physical in-
+ terface with an overall limit of 128 per DECNIS system. A maximum of
+ 15 Frame Relay PVCs can be configured for remote bridging per DECNIS
+ system.
+
+ The DECNIS supports the following Frame Relay features:
+
+ o  Rate control and dynamic BECN allows the DECNIS to throttle back
+    to the Committed Information Rate (CIR) on a per PVC basis on no-
+    tification of congestion by the network. The DECNIS can throttle
+    back to the CIR or below the CIR until notified by the network that
+    the congestion has cleared. Management options also allow the DEC-
+    NIS to limit throughput to or below the CIR on a continuous basis
+    and not to burst beyond the CIR. This helps to control network op-
+    erating costs as bursting beyond the CIR often means additional cost.
+
+
+
+
+                                 12
+
+ 
+
+ o  Frame Relay counters allow network managers to monitor throughput
+    on a per PVC basis so that they can monitor the overall performance
+    of the network. Counters can also be used to help locate problems
+    in the network and to check billing for network usage by the ser-
+    vice provider.
+
+ o  Queuing allows packet prioritization and filtering to be set up on
+    a per interface basis to ensure time critical traffic is priori-
+    tize over other traffic, to help make optimum use of available band-
+    width, and to avoid unnecessary traffic being sent over the net-
+    work.
+
+ o  DE (Discard Eligibility) allows the DECNIS to indicate to the net-
+    work that certain packets can be discarded in the event of conges-
+    tion. The DECNIS allows the DE bit to be set on a per queue basis,
+    so that packets in low priority queues will be discarded first in
+    the event of network congestion.
+
+ Routing over X.25
+
+ The DECNIS software supports routing over statically and dynamically
+ assigned X.25 virtual circuits. Static X.25 circuits are established
+ when the routing circuit is enabled and remain established until the
+ routing circuit is disabled. Dynamically assigned X.25 circuits are
+ established only when there is information to send over the routing
+ circuit. They are disconnected when there is no further information
+ to send.
+
+ The DECNIS X.25 software supports routing over either Permanent Vir-
+ tual Circuits (PVCs) or Switched Virtual Circuits (SVCs). Each X.25
+ virtual circuit can run only one routing protocol. However, differ-
+ ent routing protocols can be run over separate virtual circuits on the
+ same X.25 DTE connection.
+
+
+
+
+
+
+
+                                 13
+
+ 
+
+ Routing over Switched Multi-megabit Data Service (SMDS)
+
+ Switched Multi-megabit Data Service is a connectionless, cell-switched
+ data transport service and is available at speeds between 56 Kbits/s
+ and 45 Mbits/s. The DECNIS software implements the SMDS Date Exchange
+ Interface (DXI) according to SIG-TS-001/1991 SMDS Data Exchange In-
+ terface Protocol Revision 3.2 and the Bellcore specification using SIP
+ 3 PDUs of up to 4500 bytes with DXI CRC and with 6 octet SMDS addresses.
+ An external SMDS CSU/DSU is required to provide SIP 2 and SIP 1 func-
+ tions.
+
+ Using the WANcontroller 622/HS, the following SMDS Classes of Service
+ are supported:
+
+ o  1.473 Mbits/s using T1 or E1 access lines
+
+ o  4 Mbits/s, 10 Mbits/s, or 16 Mbits/s using T3 or E3 access lines
+
+ Routing of IP, DECnet, and OSI protocols is supported over SMDS us-
+ ing OSPF, Integrated IS-IS and RIP routing protocols. IPX and AppleTalk
+ can also be routed over SMDS using encapsulation within IP.
+
+ Routing and Bridging over ATM
+
+ The DECNIS software supports ATM AAL5 and multiple PVC connections as
+ specified in the ATM Forum Public and Private UNI V3.0.
+
+ Routing of IP, DECnet, and OSI protocols, and bridging of other pro-
+ tocols, is supported over ATM PVCs using LLC encapsulation within ATM
+ cells as defined in RFC 1483. IPX and AppleTalk can also be routed over
+ ATM using encapsulation within IP. The DECNIS also supports Inverse
+ ARP (RFC 1293) and Classical IP as defined in RFC 1577.
+
+ ATM is only supported on the DECNIS ATMcontroller 631 network inter-
+ face card. A maximum of 127 ATM PVCs can be configured per DECNIS sys-
+ tem. A maximum of 15 ATM PVCs can be configured for remote bridging
+ per DECNIS system. DIGITAL's FLOWmaster[R] credit based rate limit-
+ ing is supported by the ATMcontroller 631 for interoperability with
+ the GIGAswitch/ATM.
+
+                                 14
+
+ 
+
+ Note that an MPC-II (DNSAN-BH) or MPC-III (DNSBN-AH or DNSBN-BH) must
+ be installed when using the DECNIS ATMcontroller 631.
+
+ Backup Circuits
+
+ The DECNIS supports a backup circuit feature which detects the fail-
+ ure of a primary routing circuit and establish an alternative or backup
+ routing circuit for the duration of the failure. Primary routing cir-
+ cuits can be PPP, HDLC or DDCMP leased line circuits while secondary
+ circuits can be leased line or switched public network services such
+ as dialup, ISDN or X.25. Invoke and revoke timers can be set up to con-
+ trol the time to wait before enabling or disabling the backup circuit.
+
+ A primary circuit and a backup circuit can be grouped so that one backup
+ circuit can be shared between a number of primary circuits to reduce
+ costs. For example, an ISDN connection can be used as a backup cir-
+ cuit for a number of leased line primary circuits. Backup circuits can
+ also be cascaded such that a backup circuit of one group can be a pri-
+ mary circuit of another.
+
+ Packet Prioritization
+
+ The DECNIS software supports packet prioritization on the LANcontroller
+ 601/602 and WANcontroller 614/618/622/622HS network interface cards
+ so that different protocols or traffic types can be given the differ-
+ ent priorities over LAN and WAN links. Traffic can be prioritized based
+ on protocol type, for example IP, IPX, DECnet, OSI or bridge traffic.
+ Within IP, traffic can be additionally prioritized based on TCP/UDP
+ port number, protocol type or Type of Service. Bridge traffic can also
+ be prioritized based on SAP value, PID value or Ethernet type.
+
+ The DECNIS supports up to eight levels of priority. Packets can be as-
+ signed to priority groups which are then assigned to one of the eight
+ queues. The queues are then processed in order such that high prior-
+ ity packets are always transmitted first. The maximum queue length can
+ be set for each queue to ensure that packets in each queue are pro-
+ cessed appropriately.
+
+
+
+                                 15
+
+ 
+
+ A simple packet filtering mechanism for out bound WAN traffic can be
+ implemented by assigning packets to be filtered to a specific queue
+ whose queue length has been set to zero. Packet and byte counters al-
+ low the number of packets transmitted and discarded to be monitored
+ on a per interface basis.
+
+ Note that the DECNIS automatically prioritizes routing and bridge con-
+ trol traffic to ensure that network stability is maintained at all times.
+
+ Pattern Matching
+
+ An extension to the packet prioritization mechanism allows priority
+ packets to be further classified by packet pattern matching. Specific
+ bit sequences can be matched with masks and on the basis of a match,
+ packets can be assigned to different priority queues. For example, LAT
+ service groups can be filtered to allow only certain services to be
+ advertised across the network.
+
+ IP Packet Filtering
+
+ The DECNIS supports IP packet filtering at the routing level to con-
+ trol access between IP hosts and to control bandwidth utilization on
+ the network. Packet filtering can be set up on each interface based
+ on:
+
+ o  Protocol type such as TCP, UDP, ICMP, IP
+
+ o  Source/destination address and mask
+
+ o  Source/destination port and mask
+
+ o  IP protocol number
+
+ o  ICMP message type and mask
+
+ Combinations of filter characteristics can be set up to describe the
+ packet types to filter. The DECNIS only filters on outgoing circuits
+ which means that the DECNIS will receive all packets before applying
+ packet filters.
+
+                                 16
+
+ 
+
+ Secure Connection Firewall
+
+ The Secure Connection Firewall (also known as the Secure Connection
+ Manager) provides filtering of network connect requests to deny or per-
+ mit access to network resources. The Secure Connection Firewall im-
+ plements access control by creating logical barriers around one or more
+ systems or groups of systems called network domains.
+
+ Nodes, circuits, applications and users can be combined into groups
+ that share the same security requirements and access rules can be set
+ up to apply to each group. Access rules can be based on parameters such
+ as time of day, circuit name, user and host name, source and desti-
+ nation address, IP port and protocol, DECnet node and object, OSI node
+ and application.
+
+ The Secure Connection Firewall is set up using the clearVISN DECNIS
+ Configurator utility.
+
+ Data Compression
+
+ The DECNIS supports data compression on the DEC WANcontroller W622 and
+ W622/HS network interface cards. The data compression uses a propri-
+ etary algorithm operating over HDLC data links and only interoperates
+ with other DECNIS. The algorithm provides a typical data compression
+ ratio of 1.7:1 depending on the type of data.
+
+ The DECNIS only supports data compression of routed (i.e. sequenced)
+ traffic across HDLC data links. However, bridged (i.e. unsequenced)
+ traffic can also be supported over HDLC links that are running data
+ compression for routed traffic. Packet prioritization, pattern match
+ filtering and IP packet filtering can also be implemented over HDLC
+ links that are running data compression.
+
+ Since data compression is implemented in software on the DEC WANcon-
+ troller 622 and 622/HS network interface cards, the maximum line speeds
+ that can be supported while data compression is enabled is signifi-
+ cantly lower than the maximum speed supported without data compres-
+ sion. The maximum line speed at which data compression can be run re-
+ liably is 384 Kbits/s per interface for the DEC WANcontroller 622/HS
+ and 128 Kbits/s per interface for the DEC WANcontroller 622.
+
+                                 17
+
+ 
+
+ X.25 Gateway
+
+ When operating as an X.25 Gateway, the DECNIS software transmits and
+ receives X.25 packets to and from any of the following systems:
+
+ o  Any DIGITAL systems which support the DNA Gateway Access Protocol
+    (GAP)
+
+ o  Any systems located on the same LAN which support the ISO Logical
+    Link Control 2 (LLC2) protocol (as described in ISO 8881)
+
+ o  Any X.25 DTE accessible over an X.25 Public Switched Data Network
+    (PSDN) connected to the DECNIS
+
+ o  Any X.25 DTE connected directly to a port of the DECNIS operating
+    in X.25 DCE mode (ISO 8208 point-to-point mode)
+
+ o  Any X.25 DTE connected to any other DECNIS accessible over the DEC-
+    net/OSI routing network
+
+ When providing wide area access to an X.25 PSDN for end systems on the
+ LAN which use LLC2, the DECNIS software fully implements the recom-
+ mendations in ISO Technical Report 10029 as a CONS LAN/WAN relay.
+
+ X.25 packets can be relayed locally between any X.25 DTE attached to
+ the DECNIS hardware unit and any other similarly attached X.25 DTE or
+ any X.25 system connected to the same LAN. Additionally, X.25 pack-
+ ets can be relayed to remote X.25 DTEs accessible to other DECNIS or
+ DEC X.25 gateway 100/500 servers over a DECnet/OSI routing network.
+ The software does not support the relaying of X.25 packets generated
+ from an X.25 DTE connected to one X.25 PSDN to an X.25 DTE connected
+ to another X.25 PSDN.
+
+ X.25 DTE and Virtual Circuit Support
+
+ The DECNIS allows multiple connections to one or more X.25 PSDNs and
+ can share outgoing calls between all of the DTEs connected to an X.25
+ PSDN. Both Switched Virtual Circuits (SVCs) and Permanent Virtual Cir-
+ cuits (PVCs)are supported. The X.25 Networks section of this SPD pro-
+ vides details of the public X.25 PSDNs and X.25 (1988) optional fa-
+ cilities supported by the DECNIS X.25 software.
+
+                                 18
+
+ 
+
+ The number of X.25 DTEs and virtual circuits that the DECNIS X.25 soft-
+ ware supports depends on the type of management processor installed.
+
+ ___________________________________________________________________
+
+ Table_1:_X.25_DTEs_and_SVCs________________________________________
+
+ Processor    MPC-I     MPC-II    _____________MPC-III______________
+ ___________________________________________________________________
+
+ Part Number  DNSAN-    DNSAN-    DNSBN-   DNSBN-BH
+              AH        BH        AH
+
+ Dynamic      8 MB      16 MB     16 MB    32 MB
+ Memory
+
+ Maximum      32        32        48       48
+ DTEs per
+ system
+
+ Maximum      128       128       256      512
+ active SVCs
+ per_system_________________________________________________________
+
+ Notes:
+
+ o  The actual number of X.25 connections that the DECNIS can sustain
+    at any time may be less than indicated and depends on such factors
+    as the rate at which calls are set up and cleared down, the level
+    of traffic, and the ratio of routing to gateway and relay traffic.
+
+ o  For routing over X.25 and X.25 gateway (GAP), one virtual circuit
+    is established per X.25 connection. For X.25 relay (LLC2), two vir-
+    tual circuits are established per X.25 connection, one incoming vir-
+    tual circuit and one outgoing virtual circuit.
+
+
+
+
+
+                                 19
+
+ 
+
+ X.25 Accounting and Security
+
+ The following accounting information is provided by the DECNIS X.25
+ Gateway software:
+
+ o  Logging of virtual circuit accounting when calls are cleared
+
+ o  Logging of accounting records to a designated Event Logging sink
+
+ o  Logging to multiple sinks for reliability
+
+ The following security mechanisms are supported by the DECNIS X.25 Gate-
+ way software:
+
+ o  Inbound and outbound calls can be controlled on the basis of the
+    remote DTE, the application, and, if applicable, the X.25 Access
+    node
+
+ o  Access to accounting sink management is restricted to authorized
+    users
+
+ o  Access to accounting source management is restricted to authorized
+    users
+
+ Installation and Configuration
+
+ The DECNIS software image is installed on a host system called the load
+ host. The following load hosts systems are supported:
+
+ o  PCs running Microsoft Windows 95 or Windows NT
+
+ o  Alpha systems running DIGITAL UNIX
+
+ o  Alpha systems running OpenVMS
+
+ o  VAX systems running OpenVMS
+
+ Once installed on the load host, the DECNIS software is configured us-
+ ing the host configuration and DECNIS configuration utilities supplied
+ with the product. The host configuration utility allows the DECNIS units
+ to be defined in the load host's network node database. It also al-
+ lows the appropriate system image and unique configuration file for
+ each DECNIS unit to be defined in the load host's network node database.
+
+                                 20
+
+ 
+
+ The DECNIS configuration is used to create the unique configuration
+ file for each DECNIS unit.
+
+ The DECNIS software image and individual configuration files are loaded
+ from the load host system to each target DECNIS unit using BOOTP or
+ DIGITAL's Maintenance Operation Protocol (MOP). Loading can be either
+ locally on the same LAN or extended LAN (downline loading), or over
+ an HDLC or PPP link from a local DECNIS unit connected directly to the
+ target DECNIS unit (agent loading).
+
+ When using agent loading, the DECNIS system performing the loading op-
+ eration must be configured to copy the required files from a suitable
+ load host. Agent loading of DECNIS units may also be daisy-chained over
+ a number of HDLC links provided that the first DECNIS in the chain is
+ on the same LAN as the load host and each member of the chain is a DEC-
+ NIS unit.
+
+ The minimum requirement is for one load host. However, the DECNIS soft-
+ ware image and configuration files can be copied to any number of re-
+ mote load hosts within the network for local loading. The DECNIS soft-
+ ware allows BOOTP load requests broadcast over a LAN to be forwarded
+ to a BOOTP server located anywhere within the network. This helps to
+ protect against loss of service if the main load host is unavailable
+ or unable to load the system for any other reason.
+
+ When loaded, the DECNIS software image and, optionally, the config-
+ uration file, can be stored in the DECNIS internal non-volatile (FLASH)
+ memory so that subsequent software loads can be performed without the
+ need to load from a load host (flash loading). The FLASH memory can
+ be updated dynamically while the DECNIS system is running without dis-
+ rupting network service. The FLASH memory on the MPC-III (DNSBN-AH or
+ DNSBN-BH) can also be partioned into separate areas for system images
+ and configuration files to provide greater flexibility.
+
+
+
+
+
+
+
+                                 21
+
+ 
+
+ clearVISN DECNIS Configurator
+
+ The clearVISN DECNIS Configurator is a Windows 95 and Windows NT graph-
+ ical utility for creating and modifying DECNIS configuration files.
+ The utility configures system, routing and data link paramaters as well
+ as the Secure Connection Firewall and Route Propagation and Filter-
+ ing. DECNIS configurations can be generated live or generated offline
+ for loading at a convenient time. The clearVISN DECNIS Configurator
+ also loads the configuration files using BOOTP and TFTP. A clearVISN
+ BOOTP/TFTP Server utility is also included with the clearVISN DECNIS
+ Configurator.
+
+ A scripting feature allows extra DECNIS configuration commands to be
+ edited and then loaded as part of the main configuration. The script-
+ ing feature allows configuration of functions that are not supported
+ by the clearVISN DECNIS Configurator.
+
+ An NCL command line interface utility is also provided which sets up
+ a Telnet session to the DECNIS console. This allows the DECNIS to be
+ managed dynamically using the NCL command line interface.
+
+ The clearVISN DECNIS Configurator is included with the DECNIS Windows
+ 95/NT software kit and is also offered as part of the clearVISN prod-
+ uct set.
+
+ Updates to the clearVISN DECNIS Configurator are available from time
+ to time for down load from the clearVISN DECNIS Configurator Home Page
+ on the World Wide Web:
+
+ http://www.networks.digital.com/dr/cdc/
+
+ Management
+
+ The DECNIS software conforms to both the IETF Structure of Management
+ Information and to DIGITAL's DECnet Network Architecture (DNA). Man-
+ agement of the DECNIS is supported using either the Simple Network Man-
+ agement Protocol (SNMP) or DIGITAL's implementation of the Control Man-
+ agement Information Protocol (CMIP).
+
+
+                                 22
+
+ 
+
+ The DECNIS V4.1 software supports two types of management processor
+ card:
+
+ o  MPC-II (DNSAN-BH) - this card has 16 MB of dynamic memory and 4 MB
+    of non-volatile (FLASH) memory.
+
+ o  MPC-III (DNSBN-AH or DNSBN-BH) - this card has either 16 or 32 MB
+    of dynamic memory and 4 or 8 MB of non-volatile (FLASH) memory.
+
+ Both the MPC-II and MPC-III have a console port for out-of-band man-
+ agement. The console port provides VT100 terminal support and full mo-
+ dem control for remote connection over a dial up line. The MPC-II and
+ MPC-III also implement TCP and Telnet so that the DECNIS can be man-
+ aged in an IP only environment. Telnet server only is implemented to
+ prevent the local DECNIS console from being used to set up a remote
+ connection to another DECNIS or IP host.
+
+ Note that the DECNIS V4.1 software also supports the MPC-I (DNSAN-AH)
+ which has 8 MB of dynamic memory and 2 MB of non-volatile (FLASH) mem-
+ ory. However, some DECNIS V4.1 software features are not supported on
+ the MPC-I. Refer to the "Hardware Requirements" section for further
+ details.
+
+ The DECNIS software is managed dynamically using the Network Command
+ Language (NCL) command line interface. The MPC-II (DNSAN-BH) and MPC-
+ III (DNSBN-AH or DNSBN-BH) support on-board NCL for dynamic out-of-
+ band management of the local DECNIS router and remote DECNIS routers
+ from the console interface. NCL can also be run on any Windows 95/NT
+ PC, DIGITAL UNIX, OpenVMS for Alpha or OpenVMS for VAX system to pro-
+ vide in-band management of DECNIS systems over the network.
+
+ Dynamic management tasks that can be performed using NCL include:
+
+ o  Management of connections, for example, set up the data links, en-
+    able and disable circuits
+
+ o  Monitoring of network traffic, for example, enable event logging,
+    display counters
+
+
+                                 23
+
+ 
+
+ o  Problem solving, for example, test circuit availability, perform
+    loopback tests
+
+ Event logging and data tracing utilities are also available on DIG-
+ ITAL UNIX, OpenVMS for Alpha, or OpenVMS for VAX systems to assist prob-
+ lem solving by logging network events and by tracing control messages
+ received or sent by the DECNIS software.
+
+ The DECNIS software can be managed dynamically from any system sup-
+ porting the Simple Network Management Protocol (SNMP). SNMP sets and
+ gets are supported where appropriate for the variables defined in the
+ following Management Information Bases (MIBs):
+
+ o  DIGITAL Vendor MIB
+
+ o  MIB-II (RFC 1213)
+
+ o  Bridge MIB (RFC 1493)
+
+ o  FDDI MIB (RFC 1285)
+
+ o  DS3/E3 MIB (RFC 1407)
+
+ MIB-II interface support is provided for CSMA/CD, FDDI, PPP, HDLC, VCP,
+ LAPB, DDCMP and ATM AAL5 data links. SNMP traps are also supported with
+ the ability to send traps to up to four destinations. SNMP can only
+ be used to manage MIB variables when IP routing is enabled.
+
+ The DECNIS responds to, but can not source, IP Pings and OSI Echo re-
+ quests. The DECNIS can also forward echo requests and responses.
+
+ clearVISN Intranet Manager
+
+ The clearVISN Intranet Manager is an SNMP management utility that man-
+ ages DECNIS, RouteAbout and DECswitch routers, as well as other ven-
+ dors' routers. The application also supports other routers and switches
+ that implement MIB-II and other standard MIBs.
+
+
+
+                                 24
+
+ 
+
+ For DECNIS, the clearVISN Intranet Manager provides fault detection,
+ path tracing between selected routers, event generation and report-
+ ing, and performance monitoring. The performance monitoring includes
+ both real time and historical views of data grouped by routers or in-
+ terfaces.
+
+ The clearVISN Intranet Manager is available as part of the clearVISN
+ product set.
+
+ DIGITAL Trace Facility
+
+ The DIGITAL Trace Facility allows data to be monitored as it flows through
+ the software layers and modules of the DECNIS. The DTF application col-
+ lects data from trace points embedded in the router software to help
+ troubleshooting and problem analysis.
+
+ Network Sizing
+
+ The DECNIS software allows memory to be allocated to statically as-
+ signed network parameters to suit different network requirements. This
+ memory is allocated during configuration. The memory left over can be
+ allocated during operation to dynamically assigned network parameters
+ when needed. This feature is called Dynamic Database Sizing.
+
+ The DECNIS configuration utility checks to ensure that memory is not
+ over allocated and also indicates how much memory is left over for dy-
+ namically assigned parameters. When the DECNIS is running, event mes-
+ sages are generated if any of these parameters are approached or ex-
+ ceeded. Full information about which network parameters can be set and
+ how much memory is used is included in the DECNIS documentation. Please
+ consult your local DIGITAL office for more details and for assistance
+ with network sizing and planning.
+
+
+
+
+
+
+
+
+                                 25
+
+ 
+
+ DECNIS Hardware
+
+ The DECNIS software requires either a DECNIS 500 or DECNIS 600 series
+ hardware unit and one or more network interface cards. The DECNIS 500
+ supports up to two network interface cards and the DECNIS 600 supports
+ up to seven network interface cards.
+
+ The following LAN interface cards occupy a single slot of the DECNIS
+ enclosure and are supported by the DECNIS 500 and DECNIS 600 hardware
+ units:
+
+ o  DEC LANcontroller 601 - Single-port Ethernet/IEEE 802.3 interface
+
+ o  DEC LANcontroller 602 - Dual-port Ethernet/IEEE 802.3 interface
+
+ The following LAN network interface cards occupy two slots of the DEC-
+ NIS enclosure and are supported by the DECNIS 600 hardware unit only:
+
+ o  DECNIS FDDIcontroller 621 - Single-port FDDI interface, SAS or DAS
+
+ o  DECNIS ATMcontroller 631/OC-3 - Single-port ATM interface, MMF or
+    SMF
+
+ The following WAN interface cards occupy a single slot of the DECNIS
+ enclosure and are supported by the DECNIS 500 and DECNIS 600 hardware
+ units:
+
+ o  DEC WANcontroller 614 - Four-port, low-speed synchronous interface
+    supporting synchronous line speeds from 1.2 Kbits/s to 128 Kbits
+    /s or asynchronous line speeds from 1.2 Kbits/s to 38.4 Kbits/s
+
+ o  DEC WANcontroller 618 - Eight-port, low-speed synchronous inter-
+    face supporting synchronous line speeds from 1.2 Kbits/s to 128 Kbits
+    /s or asynchronous line speeds from 1.2 Kbits/s to 38.4 Kbits/s
+
+ o  DEC WANcontroller 622 - Dual-port, medium-speed synchronous inter-
+    face supporting synchronous line speeds from 9.6 Kbits/s to 3.1 Mbits
+    /s. Data compression is also supported at line speeds up to 128 Kbit
+    /s.
+
+                                 26
+
+ 
+
+ o  DEC WANcontroller 622/HS - Dual-port, high-speed synchronous in-
+    terface supporting synchronous line speeds from 64 Kbits/s to 12
+    Mbits/s Data compression is also supported at line speeds up to 384
+    Kbits/s.
+
+ Communications over WAN point-to-point links is full-duplex with full
+ modem control on all line(s).
+
+ The following WAN network interface cards occupy two slots of the DEC-
+ NIS enclosure and are supported by the DECNIS 600 hardware unit only:
+
+ o  DECNIS ATMcontroller 631/E3 - Single-port ATM interface, 34 Mbits
+    /s E3
+
+ o  DECNIS ATMcontroller 631/T3 - Single-port ATM interface, 45 Mbits
+    /s T3
+
+ o  DECNIS HSSIcontroller 641 - Single-port EIA-613 High Speed Serial
+    Interface, 52 Mbits/s
+
+ Table 2 and the following notes summarize the functionality and data
+ link support on the DECNIS WAN interface cards.
+
+ ___________________________________________________________________
+
+ Table_2:_Functionality_and_Data_Link_Support_______________________
+
+ Interface_Routing_BridginX.25_PPP___HDLC__FR____SMDS_ATM_AAL5______
+
+ W614²    Yes     Yes     Yes  Yes   Yes   No    No   No
+ W618²    Yes     Yes     Yes  Yes   Yes   No    No   No
+ W622     Yes     Yes     Yes  Yes   Yes   Yes   Yes  No
+ W622/HS  Yes     Yes     Yes  Yes   Yes   Yes   Yes  No
+ W631/E3  Yes     Yes     No   No    No    No    No   Yes
+ W631/T3  Yes     Yes     No   No    No    No    No   Yes
+ W641_____Yes_____Yes_____No___Yes___Yes___Yes___No___No____________
+
+ Notes:
+
+ 1. Bridging is not supported over X.25 and SMDS datalinks.
+
+                                 27
+
+ 
+
+ 2. Routing over synchronous and asynchronous DDCMP data links is also
+    supported on the DEC WANcontroller 614 and 618 network interface
+    cards.
+
+ Physical Line Support
+
+ The DECNIS WAN network interface cards support the following electri-
+ cal interfaces:
+
+ o  DEC WANcontroller 614
+
+    -  V.28 (EIA-RS232-D/EIA-RS232-C)
+
+    -  V.36/V.11 (RS449/RS422)
+
+    -  V.35
+
+ A multi-standard distribution panel with separate adapter cables pro-
+ vides the necessary interchange circuits for each synchronous port,
+ allowing different interface standards to be supported on each port.
+
+ o  DEC WANcontroller 618
+
+    -  V.28 (EIA-RS232-D/EIA-RS232-C)
+
+    -  V.36/V.11 (RS449/RS422)
+
+    -  V.35
+
+ Separate distribution panels with appropriate interface cables pro-
+ vide the necessary interchange circuits for each synchronous port al-
+ lowing the same interface standard to be supported on each port. An
+ extra adapter cable is used with the RS422/V.11 distribution panel to
+ connect to British Telecom Kilostream services.
+
+ o  DEC WANcontroller 622 and 622/HS:
+
+    -  V.36/V.11 (RS449/RS422)
+
+    -  V.35
+
+    -  X.21 (leased line services)
+
+    -  British Telecom Kilostream and Megastream
+
+                                 28
+
+ 
+
+ Where appropriate, separate adapter cables provide the necessary in-
+ terchange circuits for each port. An X.21 adapter cable is used to con-
+ nect to British Telecom Kilostream and Megastream services.
+
+ Reflected clock signals may need to be set up when using the WANcon-
+ troller 622/HS to connect to DSU/CSUs at line speeds greater than 6
+ Mbits/s. This depends on the interface and the length of cable used.
+
+ o  DECNIS HSSIcontroller 641:
+
+    -  EIA-613 (HSSI)
+
+ A suitable DSU/CSU with an EIA-613 (HSSI) interface is required to con-
+ nect to the appropriate network service.
+
+ The synchronous ports on each network interface cards provide only the
+ electrical interface of a DTE rather than a DCE, and do not provide
+ clock signals. An external clock source (such as a modem or DSU/CSU)
+ is required for each synchronous connection.
+
+ Table 3 shows the adapter cables required for each of the electrical
+ interface types.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 29
+
+ 
+
+ ___________________________________________________________________
+
+ Table_3:_Adapter_Cables____________________________________________
+
+ Electrical                 Adapter        Connector
+
+ Interface_Type_____________Cable__________Pinout___________________
+
+ V.28/V.24                  BS23V-02¹      ISO 2110
+ (EIA-RS232-C/D)
+
+ V.36/X.27                  BC19B-02       ISO 4902
+ (V.11, EIA-RS422/449)
+
+ V.35                       BC19F-02       ISO 2593
+
+ X.21 (1980)                BC19C-02       ISO 4903
+ (Leased services)
+
+ EIA-613 (HSSI)             BC19F-H3       EIA-613
+
+ BT[R] Kilostream and       BC19C-02²      ISO 4903
+ Megastream services
+
+ BT Kilostream service      BC21G-02²      ISO 4903
+ (W618_only)________________________________________________________
+
+ Notes:
+
+ 1. This should be ordered as part BS23V-02, which contains the BC23V-
+    02 adapter cable to provide the V.28/V.24 (RS232-D) interface and
+    an adapter that allows it to be used for RS232-C as well. It is only
+    supported with the DEC WANcontroller 614; it is not supported for
+    use with the DEC WANcontroller 622 or 622/HS.
+
+ 2. The BC19C-02 adapter cable is used with a 50-way D-type connector
+    with the DEC WANcontroller 614 when connecting to the BT Kilostream
+    service or with the DEC WANcontroller 622 or 622/HS when connect-
+    ing to the BT Kilostream and Megastream services, or X.21 leased
+    line services. When connecting the DEC WANcontroller 618 to use the
+    BT Kilostream service, the BC21G-02 should be used in conjunction
+    with the V.11/RS422 distribution panel.
+
+                                 30
+
+ 
+
+ T1 and G.703 Services
+
+ The DEC WANcontroller 622 and 622/HS support only clear channel in-
+ terfaces. Connection to a T1 or G.703 line requires a V.35/RS422 to
+ T1/G.703 DSU/CSU converter to provide framing to meet G.704. The DEC
+ WANcontroller 622 and 622/HS do not provide either T1 framing pulses
+ or separate channels for 64 Kbits/s control data for G.703.
+
+ The DEC WANcontroller 622 and 622/HS do not guarantee line density.
+ T1 links can offer only 1.536 Mbits/s or 1.344 Mbits/s rates. 1.536
+ Mbits/s rates require the DSU/CSU converter to offer B8ZS and the line
+ to accept bipolar violations. 1.334 Mbits/s rates require the DSU/CSU
+ converter to offer B7.
+
+ The DEC WANcontroller 622 and 622/HS use CCITT 114 to clock data out
+ of the DTE and will source a CCITT 113 transmit clock. CCITT 113 should
+ be used by the DCE to receive the transmit data. The DEC WANcontroller
+ 622 and 622/HS implement CCITT 113 as a buffered version of CCITT 114.
+ This clocking scheme ensures both network synchronization and mini-
+ mized skew between the clock and data for a range of cable lengths and
+ parameters.
+
+ If the transmit clocking mechanism is not provided by the DCE, the DCE
+ must provide a method of adjusting the phase of the clock used to sam-
+ ple the data with respect to that supplied to the DTE. This requires
+ that the DCE provide test points to allow analysis of the clock and
+ data wave forms and that this adjustment be performed on installation
+ and after any subsequent alteration of the connection cable. This al-
+ ternative method is also required for DCEs using the X.21 interface.
+
+ The DECNIS ATMcontroller 631/E3 supports connection to an E3 line at
+ a line rate of 34.368M bits/s as per G.703. The DECNIS ATMcontroller
+ 631/T3 supports connection to a DS3 line at a line rate of 44.736M bits
+ /s as per G.703. Connection to E3 or DS3 lines is provided using dual
+ 75 ohm BNC connectors. Certain service providers may require a sep-
+ arate CSU to isolate the ATMcontroller 631 from the network.
+
+ The DECNIS HSSIcontroller 641 supports connection to inverse multi-
+ plexed T1/E1, E2, E3 and T3/DS3 lines via a suitable DSU/CSU Connec-
+ tion is provided using an EIA-613 HSSI interface.
+
+                                 31
+
+ 
+
+ For more information about CSU/DSUs that have been tested with the DEC-
+ NIS hardware and software, see Section 1.0.36.
+
+ X.25 Networks
+
+ Table 4 lists the public X.25 PSDNs supported by the DECNIS software.
+
+ ___________________________________________________________________
+
+ Table_4:_Public_PSDNs_Supported____________________________________
+
+ Country_______________Public_Network_and_ITU-T_Revisions___________
+
+ Argentina             Arpac
+
+ Australia             Austpac
+
+ Austria               Datex-P
+
+ Belgium               DCS
+
+ Brazil                Renpac
+
+ Canada                Datapac (1976 or 1980)
+                       DPN-NAS
+                       Faspac
+                       Infoswitch
+
+ Chile                 VTRNET
+
+ China                 CNPAC
+
+ Denmark               Datapak
+
+ Ireland               Eirpac (1980)
+
+ Finland               Datapak
+
+ France                Transpac
+
+ Germany               Datex-P
+
+ Hong Kong             Datapak
+                       GDN
+                       INET
+                       Intelpak
+
+ Indonesia             SKDP
+
+                                 32
+
+ 
+
+
+ ___________________________________________________________________
+
+ Country_______________Public_Network_and_ITU-T_Revisions___________
+
+ Italy                 Itapac
+
+ Japan                 ACE-Telnet
+                       CCVAN
+                       DDX (1976, 1980) See Note 1
+                       INS-P
+                       Jaisnet
+                       Venus-P (1980)
+                       TYMNET[R]
+
+ Luxembourg            LUXPAC
+
+ Malaysia              Maypac
+
+ Mexico                Telepac
+
+ Netherlands           Datanet 1
+
+ New Zealand           Pacnet
+
+ Norway                Datapak
+
+ Pakistan              Paknet
+
+ Philippines           Datanet
+
+ Portugal              Telepac
+
+ Singapore             Telepac
+
+ South Korea           Dacomnet
+
+ Spain                 Iberpac
+
+ Sweden                Datapak
+
+ Switzerland           Telepac (1978, 1980)
+
+ Taiwan                Pacnet
+
+ Turkey                TURPAK
+
+ United Kingdom        PSS
+                       Mercury DataLink X.25
+
+                                 33
+
+ 
+
+
+ ___________________________________________________________________
+
+ Country_______________Public_Network_and_ITU-T_Revisions___________
+
+ United States         Accunet[R]
+                       Autonet[R]
+                       Bell Atlantic
+                       BT[R] TYMNET
+                       CompuServe[R]
+                       ConnNet
+                       Digipac
+                       Fedexitc
+                       Graphnet
+                       Impacs
+                       Infonet
+                       Mark*Net Extended Service
+                       PPSNET
+                       Pulselink
+                       Sinet
+                       Telenet[R]
+                       TYMNET
+                       Western Union PTN-1
+ ______________________Worldnet_____________________________________
+
+ Note:
+
+ 1. DIGITAL offices in Japan can supply the mandatory additional in-
+    formation that explains the special use of the DECNIS software with
+    the DDX PSDN.
+
+ In addition to the public X.25 PSDNs listed in the table above, cer-
+ tain private PSDNs are supported by the DECNIS software and the ap-
+ propriate profiles are included in the product.
+
+ Connection to public X.25 PSDNs not listed in the table above are not
+ supported by DIGITAL at the time of publication. Please consult your
+ local DIGITAL office for any questions you have concerning other pub-
+ lic X.25 networks.
+
+                                 34
+
+ 
+
+ Table 5 shows the X.25 optional facilities supported by the DECNIS soft-
+ ware.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 35
+
+ 
+
+ ___________________________________________________________________
+
+ Table_5:_Optional_X.25_Facilities_Supported_by_the_DECNIS_Software_
+
+                                            DECNIS_Software_Support_
+
+                                 ITU-T
+                                 X.25
+ Optional_Facility_______________(1988)_____Connector_Relay____Routing
+
+ 1. Online facility registra-    6.1        No        No       No
+ tion
+ 2. Extended packet sequence     6.2        Yes       Yes      Yes
+ numbering
+ 3. D-bit modification           6.3        No        No       No
+ 4. Packet retransmission        6.4        No        No       No
+ 5. Incoming calls barred        6.5        N/A       Yes      N/A
+ 6. Outgoing calls barred        6.6        N/A       Yes      N/A
+ 7. One-way logical channel      6.7        Yes       Yes      Yes
+ outgoing
+ 8. One-way logical channel      6.8        Yes       Yes      Yes
+ incoming
+ 9. Non-standard default packet  6.9        Yes       Yes      Yes
+ size
+ 10. Non-standard default        6.10       Yes       Yes      Yes
+ window size
+ 11. Default throughput class    6.11       N/A       See      N/A
+ assignment                                           Note 1
+ 12. Flow control parameter      6.12       Yes       Yes      Yes
+ negotiation
+ 13. Throughput class negotia-   6.13       Yes       See      Yes
+ tion                                                 Note 1
+ 14. Closed User Group (CUG)     6.14.1     Yes       See      Yes
+                                                      Note 1
+ 15. CUG with outgoing access    6.14.2     Yes       See      Yes
+                                                      Note 1
+ 16. CUG with incoming access    6.14.3     Yes       See      Yes
+                                                      Note 1
+
+
+                                 36
+
+ 
+
+
+ Table_5_(Cont.):_Optional_X.25_Facilities_Supported_by_the_DECNIS__
+ _________________Software__________________________________________
+
+                                            DECNIS_Software_Support_
+
+                                 ITU-T
+                                 X.25
+ Optional_Facility_______________(1988)_____Connector_Relay____Routing
+
+ 17. Incoming calls barred       6.14.4     N/A       No       N/A
+ within CUG
+ 18. Outgoing calls barred       6.14.5     N/A       No       N/A
+ within CUG
+ 19. CUG selection               6.14.6     Yes       See      Yes
+                                                      Note 1
+ 20. CUG with outgoing access    6.14.7     No        See      No
+ selection                                            Note 1
+ 21. Absence of both CUG selec-  6.14.8     Yes       See      Yes
+ tion facilities                                      Note 1
+ 22. Bilateral CUG               6.15.1     Yes       See      Yes
+                                                      Note 1
+ 23. Bilateral CUG with outgo-   6.15.2     Yes       See      Yes
+ ing access                                           Note 1
+ 24. Bilateral CUG selection     6.15.3     Yes       See      Yes
+                                                      Note 1
+ 25. Fast select                 6.16       Yes       See      Yes
+                                                      Note 1
+ 26. Fast select acceptance      6.17       Yes       See      Yes
+                                                      Note 1
+ 27. Reverse charging            6.18       Yes       See      Yes
+                                                      Note 1
+ 28. Reverse charging accep-     6.19       Yes       Yes      Yes
+ tance
+ 29. Local charge prevention     6.20       N/A       No       N/A
+ 30. NUI subscription            6.21.1     Yes       See      Yes
+                                                      Note 1
+ 31. NUI override                6.21.2     N/A       No       N/A
+
+
+                                 37
+
+ 
+
+
+ Table_5_(Cont.):_Optional_X.25_Facilities_Supported_by_the_DECNIS__
+ _________________Software__________________________________________
+
+                                            DECNIS_Software_Support_
+
+                                 ITU-T
+                                 X.25
+ Optional_Facility_______________(1988)_____Connector_Relay____Routing
+
+ 32. NUI selection               6.21.3     Yes       See      Yes
+                                                      Note 1
+ 33. Charging information        6.22       Yes       See      Yes
+                                                      Note 1
+ 34. RPOA subscription           6.23.1     N/A       N/A      N/A
+ 35. RPOA selection              6.23.2     Yes       See      Yes
+                                                      Note 1
+ 36. Hunt group                  6.24       See       No       See
+                                            Note 2             Note
+                                                               2
+ 37. Call redirection            6.25.1     N/A       No       N/A
+ 38. Call deflection subscrip-   6.25.2.1   N/A       No       N/A
+ tion
+ 39. Call deflection selection   6.25.2.2   See       No       No
+                                            Note 3
+ 40. Call redirection or call    6.25.3     Yes       See      Yes
+ deflection notification                              Note 1
+ 41. Called line address modi-   6.26       Yes       See      Yes
+ fied notification                                    Note 1
+ 42. Transit delay selection     6.27       Yes       See      Yes
+ and indication                                       Note 1
+ 43. TOA/NPi address selection   6.28       No        No       No
+ and indication
+ 44. Calling Address Extension   G.3.1      Yes       See      Yes
+                                                      Note 1
+ 45. Called Address Extension    G.3.2      Yes       See      Yes
+                                                      Note 1
+
+
+
+                                 38
+
+ 
+
+
+ Table_5_(Cont.):_Optional_X.25_Facilities_Supported_by_the_DECNIS__
+ _________________Software__________________________________________
+
+                                            DECNIS_Software_Support_
+
+                                 ITU-T
+                                 X.25
+ Optional_Facility_______________(1988)_____Connector_Relay____Routing
+
+ 46. Minimum throughput class    G.3.3.1    Yes       See      Yes
+                                                      Note 1
+ 47. End-to-end transit delay    G.3.3.2    Yes       See      Yes
+                                                      Note 1
+ 48. Priority                    G.3.3.3    Yes       See      Yes
+                                                      Note 1
+ 49. Protection                  G.3.3.4    Yes       See      Yes
+                                                      Note 1
+ 50. Expedited data negotiation  G.3.4      Yes       See      Yes
+ _____________________________________________________Note_1________
+
+ Notes:
+
+ 1. The X.25 relay does not act on any of these fields. The informa-
+    tion contained in these fields is passed transparently and has only
+    end-to-end significance.
+
+ 2. PSDN hunt groups are supported but each DTE must be assigned a unique
+    address independent of the hunt group address.
+
+ 3. Support for this facility depends on the user application and the
+    X.25 client implementation. Refer to the X.25 client product SPD
+    for details.
+
+ 4. For connector mode operation, the facilities supported by the DEC-
+    NIS software may be restricted by the X.25 client implementation.
+    Refer to the X.25 client product SPD for details.
+
+ The DECNIS software does not support the following items of the ITU-
+ T X.25 recommendation:
+
+ -  Multi-link protocol
+
+                                 39
+
+ 
+
+ -  Use of the D-bit in outgoing packets
+
+ Frame Relay Networks and Switches
+
+ The DECNIS software has been tested and is known to be compatible with
+ the Frame Relay networks and switches listed in Table 6.
+
+ ___________________________________________________________________
+
+ Table_6:_Frame_Relay_Networks_and_Switches_________________________
+
+ Frame_Relay______Vendor_and_Network_or_Switch______________________
+
+ Networks:        BT GNS Frame Relay Service
+
+                  AT&T[R] Interspan Frame Relay Service
+
+                  MCI[R] Frame Relay Service
+
+                  Sprint Frame Relay Network Service
+
+ Switch:          Cascade STDX 3000 and 6000
+
+ _________________StrataCom_IPX_16/32_______________________________
+
+ Please consult your local DIGITAL office for information concerning
+ other public networks and switches.
+
+ SMDS Networks and Switches
+
+ The DECNIS software has been tested and is known to be compatible with
+ the SMDS networks and switches listed in Table 7.
+
+ ___________________________________________________________________
+
+ Table_7:_SMDS_Networks_and_Switches________________________________
+
+ SMDS_____________Vendor_and_Network_or_Switch______________________
+
+ Networks:        MCI[R] SMDS Network Service
+
+ Switches:________Cascade_STDX_3000_and_6000________________________
+
+ Please consult your local DIGITAL office for information concerning
+ other public networks and switches.
+
+                                 40
+
+ 
+
+ DSU/CSUs
+
+ The DECNIS hardware and software has been tested and is known to be
+ compatible with the Data Service Unit/Channel Service Units (DSU/CSUs)
+ shown in Table 8.
+
+ ___________________________________________________________________
+
+ Table_8:_DSU/CSUs__________________________________________________
+
+ DSU/CSU_Vendor___Model_____________________________________________
+
+ MetroData        FM4000 E1/G.703 DSU
+
+                  FM4800 E2/G.703 DSU
+
+                  FM4900 E3/G.703 DSU
+
+ Digital Link     DL3100 T3 Digital Service MUX
+
+                  DL3100E E3 Digital Service MUX
+
+                  DL3200 T3 SMDS DSU
+
+                  DL3200E E3 SMDS DSU
+
+                  DL3800 T1 Inverse MUX
+
+ _________________DL3800E_E1_Inverse_MUX____________________________
+
+ Please consult your local DIGITAL office for information concerning
+ other public networks and switches.
+
+ Performance
+
+ When operating over serial line connections the overall packet rate
+ will be less than that indicated by the aggregate line speeds and is
+ determined by such factors as:
+
+ o  Type of traffic (routing updates or data packets) and data rates
+
+ o  Mix of protocol types
+
+ o  Proportion of leased line to X.25 and Frame Relay traffic
+
+ o  The path of messages passing through the product (WAN-to-WAN, WAN-
+    to-LAN, or LAN-to-LAN)
+
+ o  Communications line characteristics
+
+                                 41
+
+ 
+
+ o  Frequency and type of errors on the serial links
+
+ o  Network topology
+
+ o  Protocol overhead
+
+ Please contact your local DIGITAL office for further details of the
+ performance characteristics of the DECNIS product.
+
+ CONFORMANCE TO STANDARDS
+
+ The DECNIS software conforms to the following IEEE and ISO standards
+ and ITU-T Recommendations:
+
+ o  IEEE 802.1D-1990-Media Access Control (MAC) Bridges
+
+ o  ISO 8802-2 - Local Area Networks/Part 2: Logical Link Control
+
+ o  ISO 8802-3 - Local Area Networks/Part 3: CSMA/CD Access Method and
+    Physical Layer Specification
+
+ o  ISO 8473 - Specification of Protocol to Provide the Connectionless-
+    mode Network Service
+
+ o  ISO 9542 - End System to Intermediate System (ES-IS) Routing Ex-
+    change Protocol for Use in Conjunction with ISO 8473
+
+ o  ISO/IEC 10589 - Intermediate System to Intermediate System (IS-IS)
+    Intra Domain Routing Exchange Protocol for Use in Conjunction with
+    ISO 8473
+
+ o  ISO 3309 - High-level Data Link Control (HDLC) Frame Structure
+
+ o  ISO 7776 - High-level Data Link Control (HDLC) Procedures: X.25 LAPB-
+    compatible DTE Data Link Procedures
+
+ o  ITU-T recommendation X.25 (1978, 1980, 1984 or 1988) using the LAPB
+    or LAPBE variants of the data link
+
+ o  ISO 8208 - X.25 Packet Level Protocol for Data Terminal Equipment
+
+ o  ISO 8881 - Use of X.25 Packet Level Protocol in Local Area Networks
+    (LLC2)
+
+                                 42
+
+ 
+
+ o  ISO TR 10029 Operation of an X.25 Interworking Unit (CONS LAN/WAN
+    Relay)
+
+ The DECNIS software conforms to the following Internet RFCs and draft
+ RFCs:
+
+ o  RFC 768 - User Datagram Protocol (UDP)
+
+ o  RFC 791 - Internet Protocol (IP)
+
+ o  RFC 792 - Internet Control Message Protocol (ICMP)
+
+ o  RFC 826 - Address Resolution Protocol (ARP)
+
+ o  RFC 827, 888 & 904 - Exterior Gateway Protocol (EGP)
+
+ o  RFC 877 - Standard for the transmission of IP datagrams over pub-
+    lic data networks (X.25)
+
+ o  RFC 922 - Broadcasting Internet Datagrams in the Presence of Sub-
+    nets
+
+ o  RFC 950 - Internet Standard Subnetting Procedure
+
+ o  RFC 951 - BOOTSTRAP Protocol (BOOTP)
+
+ o  RFC 783 - TFTP Protocol (Revision 2)
+
+ o  RFC 1009 - Requirements for Internet Gateways
+
+ o  RFC 1027 - Using ARP to implement transparent subnet gateways
+
+ o  RFC 1058 - Routing Information Protocol (RIP)
+
+ o  RFC 1155 - Structure and Identification of Management Information
+    for TCP/IP-based Internets
+
+ o  RFC 1157 - Simple Network Management Protocol (SNMP)
+
+ o  RFC 1191 - Path MTU Discovery
+
+ o  RFC 1195 - Use of OSI IS-IS for Routing in TCP/IP and Dual Envi-
+    ronments
+
+ o  RFC 1213 - Management Information Base for Network Management of
+    TCP/IP-based Internets (MIB-II)
+
+                                 43
+
+ 
+
+ o  RFC 1220 - Point-to-Point Protocol Extensions for Bridging
+
+ o  RFC 1234 - Tunneling IPX Traffic through IP Networks
+
+ o  RFC 1247 - Open Shortest Path First Routing V2
+
+ o  RFC 1256 - ICMP Router Discovery Messages
+
+ o  RFC 1285 - FDDI Interface Type (SMT 6.2) MIB
+
+ o  RFC 1209 - The Transmission of IP Datagrams over the SMDS Service
+
+ o  RFC 1293 - Inverse Address Resolution Protocol
+
+ o  RFC 1332 - The PPP Internet Protocol Control Protocol (IPCP)
+
+ o  RFC 1334 - PPP Authentication Protocols (PAP only)
+
+ o  RFC 1362 - Novell IPX Over Various WAN Media (IPXWAN)
+
+ o  RFC 1376 - The PPP DECnet Phase IV Control Protocol (DNCP)
+
+ o  RFC 1377 - The OSI Network Layer Control Protocol (OSINLCP)
+
+ o  RFC 1407 - Definitions of Managed Objects for the DS3/E3 Interface
+    Type (Near End Group only)
+
+ o  RFC 1483 - Multiprotocol Encapsulation over ATM Adaption Layer 5
+
+ o  RFC 1490 - Multiprotocol Interconnect over Frame Relay (point-to-
+    point encapsulation only)
+
+ o  RFC 1493 - Definitions of Managed Objects for Bridges
+
+ o  RFC 1542 - Clarifications and Extensions for the Bootstrap Proto-
+    col
+
+ o  RFC 1548 - The Point-to-Point Protocol (PPP)
+
+ o  RFC 1577 - Classical IP and ARP over ATM
+
+ o  RFC 1771 - A Border Gateway Protocol 4 (BGP-4)
+
+ o  RFC 1953 - Ipsilon Flow Management Protocol Specification for IPv4
+
+ o  RFC 1954 - Transmission of Flow Labelled IPv4 on ATM Data Links
+
+ o  Draft RFC - "PIM Protocol Specification, January 1995"
+
+                                 44
+
+ 
+
+ o  Draft RFC - "PIM Motivation and Architecture, January 1995".
+
+ The DECNIS software conforms to the following Frame Relay standards:
+
+ o  RFC 1490 - Multiprotocol Interconnect over Frame Relay (Point-to-
+    Point encapsulation only)
+
+ o  Frame Relay Specification with Extensions document V1.0, Septem-
+    ber 1990
+
+ o  Frame Relay Forum's (FRF) User-Network Interface (UNI) agreement
+
+ o  ANSI T1.617 DSS1 - Signaling Specification for Frame Relay Bearer
+    Service (including the PVC management procedures specified in An-
+    nex D)
+
+ o  ANSI T1.618 DSS1 - Core Aspects of Frame Relay Protocol for use with
+    Frame Relay Bearer Service
+
+ o  ITU-T Q.922 ISDN Data Link Specification for Frame Mode Bearer Ser-
+    vices
+
+ o  ITU-T Q.933 ISDN Signaling Specification for Frame Mode Bearer Ser-
+    vices (including the PVC management procedures specified in Annex
+    A)
+
+ The DECNIS software conforms to the following SMDS standards:
+
+ o  SIG-TS-001/1991 SMDS Data Exchange Interface Protocol Revision 3.2
+
+ INSTALLATION
+
+ If the DECNIS hardware unit is to be used for connection to a public
+ X.25 or Frame Relay network, DIGITAL recommends that a customer's first
+ purchase of the product include installation services. These services
+ provide for installation of the software product by an experienced DIG-
+ ITAL software specialist.
+
+
+
+                                 45
+
+ 
+
+ HARDWARE REQUIREMENTS
+
+ Management Processor Requirements
+
+ The following DECNIS features require an MPC-II (DNSAN-BH) or MPC-III
+ (DNSBN-AH or DNSBN-BH):
+
+ o  DECNIS ATMcontroller 631
+
+ o  DECNIS HSSIcontroller 641
+
+ o  Protocol Independent Multicast (PIM)
+
+ o  Border Gateway Protocol 4 (BGP-4)
+
+ o  TCP/Telnet
+
+ o  Secure Connection Firewall
+
+ o  IP Switching
+
+ Load Host Requirements:
+
+ The following load host processors are supported subject to the re-
+ strictions listed in the Processor Restrictions section of this SPD.
+
+ o  Any Intel[R] 80386, 80486, Pentium[R] PC supported by the Windows
+    95 or Windows NT operating system.
+
+ o  Any Alpha processor supported by the DIGITAL UNIX or OpenVMS for
+    Alpha operating systems.
+
+ o  Any VAX processor supported by the OpenVMS for VAX operating sys-
+    tem.
+
+ The DIGITAL UNIX SPD (41.61.*) and the OpenVMS for Alpha and VAX SPD
+ (25.01) contain lists of supported processors.
+
+
+
+                                 46
+
+ 
+
+ Processor Restrictions:
+
+ Each PC on which the DECNIS software is installed must have:
+
+ o  At least 16 MB of memory (RAM)
+
+ o  At least 20 MB of hard disk space for installation and 16MB for per-
+    manent use
+
+ o  50 MB of hard disk space for each dump file
+
+ o  A direct LAN or serial line WAN connection to the DECNIS hardware
+    unit.
+
+ o  A CD-ROM drive from which to install the software
+
+ Each Alpha or VAX processor on which the DECNIS software is installed
+ must have:
+
+ o  A direct LAN or serial line WAN connection to the DECNIS hardware
+    unit
+
+ o  An appropriate device from which to install the software:
+
+    -  CD-ROM drive
+
+    -  TK50 tape drive
+
+ Disk_Space_Requirements_(Block_Cluster_Size_=_1)___________________
+
+ Load_Host___Installation___________Permanent_Use___________________
+
+ Windows 95  20 MB                  16 MB
+ Windows NT
+
+ DIGITAL     22 MB                  16 MB
+ UNIX
+
+ OpenVMS     105,000 blocks         60,000 blocks
+ for Alpha
+
+ OpenVMS     150,000 blocks         60,000 blocks
+ for_VAX____________________________________________________________
+
+                                 47
+
+ 
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options. The space in-
+ dicated for permanent occupancy does not include the space required
+ to receive an upline dump if that facility is enabled. The amount of
+ space required for dumps depends on the exact hardware configuration.
+ This could be from 20,000 to 100,000 blocks (10 MB to 50 MB) for each
+ dump depending on the DECNIS configuration.
+
+ SOFTWARE REQUIREMENTS
+
+ Each PC used as a load host must be running either:
+
+ o  Microsoft Windows 95 V1.0 or later
+
+ or:
+
+ o  Microsoft Windows NT V3.5 or later
+
+ Each Alpha system used as a load host must be running either:
+
+ o  DIGITAL UNIX Operating System V3.1 or later
+
+ o  DECnet/OSI for DIGITAL UNIX V3.1 or later
+
+ or:
+
+ o  OpenVMS Operating System for Alpha V6.2 or later
+
+ o  DECnet/OSI for Alpha V6.2 or later
+
+ Each VAX system used as a load host must be running:
+
+ o  OpenVMS Operating System for VAX V6.2 or later
+
+ o  DECnet/OSI for OpenVMS VAX V6.2 or later
+
+ When using the DECNIS for X.25 Gateway and Relay services, the fol-
+ lowing X.25 client systems are supported:
+
+ o  Wide Area Networking (WAN) Support V2.0 for DIGITAL UNIX Systems
+    (previously known as X.25 for DIGITAL UNIX Systems)
+
+                                 48
+
+ 
+
+ o  X.25 for OpenVMS Alpha Systems, V1.1
+
+ o  DIGITAL X.25 Client for OpenVMS Alpha Systems V1.2
+
+ o  DECnet/OSI for OpenVMS VAX V6.2 or later
+
+ Note that when using X.25 Gateway or Relay services, access to a DIG-
+ ITAL Name Service (DNS) server is optional.
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware requirements for any future software version of
+ this product may be different from the hardware requirements of this
+ software version.
+
+ DISTRIBUTION MEDIA
+
+ For Windows 95/NT PCs:
+
+ CD-ROM only
+
+ For DIGITAL UNIX Systems:
+
+ CD-ROM only
+
+ For OpenVMS Alpha Systems:
+
+ CD-ROM only
+
+ For OpenVMS VAX Systems:
+
+ TK50 streaming tape only
+
+ ORDERING INFORMATION
+
+
+
+
+
+
+                                 49
+
+ 
+
+ Software Licenses
+
+ DECNIS software licenses allow unrestricted use of the specific soft-
+ ware features to which they relate. The following license is included
+ with each DECNIS hardware platform or packaged system:
+
+ DECNIS Router License: QL-GX7A9-AA
+
+ The DECNIS Router License includes the use of all DECNIS software func-
+ tionality, including IP, DECnet, and OSI routing, and X.25 gateway ser-
+ vices. It also allows use of local or remote bridging, Novell NetWare
+ and AppleTalk routing, and the VCP protocol, all of which in previ-
+ ous software releases required separate software licenses.
+
+ Software Media and Documentation
+
+ Software media and documentation for Windows 95/NT Operating System:
+    QA-GX7AG-H8
+
+ Software media and documentation for DIGITAL UNIX Operating System:
+    QA-GX7AD-H8
+
+ Software media and documentation for OpenVMS for Alpha Operating Sys-
+ tem:
+    QA-GX7AE-H8
+
+ Software media and documentation for OpenVMS for VAX Operating Sys-
+ tem:
+    QA-GX7AA-H5
+
+ The software media and documentation kits for DIGITAL UNIX, OpenVMS
+ for Alpha, and OpenVMS for VAX include a Microsoft ***Help version of
+ the DECNIS Problem Solving Guide.
+
+ Software documentation only for DIGITAL UNIX, OpenVMS for Alpha and
+ OpenVMS for VAX Operating Systems:
+    QA-GX7AA-GZ
+
+ Software Product Services:
+    QT-GX7A*-**
+
+                                 50
+
+ 
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services, and media, refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ A DECNIS software license is required for each DECNIS 500/600 hard-
+ ware unit on which the DECNIS software is used (except as otherwise
+ specified by DIGITAL).
+
+ The licensing provisions of DIGITAL's Standard Terms and Conditions
+ specify that the software and any part thereof (but excluding those
+ parts specific to the load hosts) may be used only on the DECNIS 500
+ /600 hardware unit on which the software is operated, but may be copied,
+ in whole or in part (with the proper inclusion of DIGITAL's copyright
+ notice and any proprietary notices on the software) between multiple
+ load hosts.
+
+ This software is furnished only under a license. For more information
+ about DIGITAL's licensing terms and policies, contact your local DIG-
+ ITAL office.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available. For more information, please
+ contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ DIGITAL has designed the DECNIS software to operate with equipment con-
+ forming to the standards listed in this Software Product Description.
+ When connecting to the public X.25 and Frame Relay networks listed in
+ this Software Product Description, DIGITAL cannot offer its standard
+ warranty for this product unless it has been configured appropriately.
+ If the product has not been configured appropriately, the product will
+ not be supported by DIGITAL.
+
+
+
+
+
+                                 51
+
+ 
+
+ Each X.25 and Frame Relay network listed in the Software Product De-
+ scription indicates DIGITAL's commitment to supporting the DECNIS soft-
+ ware for that public service. However, it does not imply that the ap-
+ propriate networking authority has granted network certification for
+ the product. Please contact your local DIGITAL office for the current
+ information on certification status.
+
+ Warranty for this software product is provided by DIGITAL with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ The above information is valid at the time of release. Please contact
+ your local DIGITAL office for the most up to date information.
+
+ [R] 3Com is a registered trademark of 3Com Corporation.
+
+ [R] AT&T and Accunet are registered trademarks of American Tele-
+     phone and Telegraph Company.
+
+ [R] Apple, AppleTalk, and EtherTalk are registered trademarks of
+     Apple Computer, Inc.
+
+ [R] Autonet is a registered trademark of Sanders Associates, Inc.
+
+ [R] BT is a registered trademark of British Telecommunications
+     plc.
+
+ [R] Cisco is a registered trademark of Cisco Systems.
+
+ [R] CompuServe is a registered trademark of CompuServe, Inc.
+
+ [R] Intel and Pentium are registered trademarks of Intel Corpora-
+     tion, Inc.
+
+ [R] NetView is a registered trademark of International Business
+     Machines.
+
+ [R] Northern Telecom is a registered trademark of Northern Tele-
+     com, Ltd.
+
+ [R] Novell and NetWare are registered trademarks of Novell, Inc.
+
+ [R] OSF/1 is a registered trademark of Open Software Foundation,
+     Inc.
+
+ [R] StrataCom is a registered trademark of StrataCom, Inc.
+
+                                 52
+
+ 
+
+
+ [R] Telenet is a registered trademark of GTE Telenet Communica-
+     tions Corporation.
+
+ [R] TYMNET is a registered trademark of British Telecommunications
+     plc.
+
+ [R] Microsoft, Windows 95 and Windows NT are registered trademarks
+     of Microsoft Corporation.
+
+ [R] UNIX is a registered trademark in the United States and other
+     countries, licensed exclusively through X/Open Company, Ltd.
+
+ [R] Xerox is a registered trademark of Xerox Corporation.
+
+ [R] Vitalink, TransPATH, and TransLAN are registered trademarks of
+     Vitalink Communications Corporation.
+
+ [R] NSC is a registered trademark of Network Systems Corporation.
+
+ [TM] clearVISN, the clearVISN logo, DDCMP, DEC, DECnet, DECNIS,
+     DIGITAL, DNA, FLOWmaster, OpenVMS, PATHWORKS, POLYCENTER,
+     VAX, and the DIGITAL logo, are trademarks of Digital Equipment
+     Corporation.
+
+ All other trademarks and registered trademarks are the property of their
+ respective holders.
+
+ The DECNIS implementation of OSPF is an adaptation of the OSPF imple-
+ mentation developed by the University of Maryland, College Park, Mary-
+ land. © 1989, 1990, 1991, 1992, University of Maryland.
+
+ Permission to use, copy and modify the software and its documentation
+ is granted provided that this copyright notice and these terms shall
+ appear in all copies of the software and its supporting documentation.
+ The origin of this software may not be misrepresented, either by ex-
+ plicit claim or by omission.
+
+ The software is provided "AS IS" and without any express or implied
+ warranties, including but not limited to, the implied warranties of
+ merchantability and fitness for a particular purpose.
+
+                                 53
+
+ 
+
+ The installation program used to install the DECNIS software on your
+ PC, INSTALL, is licensed software provided by Knowledge Dynamics Corp,
+ P.O. Box 780068, San Antonio, Texas 78278 (USA). INSTALL is Copyright
+ (c) 1987-1993 by Knowledge Dynamics Corp which reserves all copyright
+ protection worldwide. INSTALL is provided to you for the exclusive pur-
+ pose of installing the DECNIS software on your PC. Digital Equipment
+ Corporation is exclusively responsible for the support of the DECNIS
+ software, including support during the installation phase. In no event
+ will Knowledge Dynamics Corp provide any technical support for the DEC-
+ NIS software.
+
+ © 1997 Digital Equipment Corporation. All Rights Reserved.
+
+ Possession, use or copying of the software described in this publi-
+ cation is authorized only pursuant to a valid written license from DIG-
+ ITAL or an authorized sublicensor.
+
+ Digital Equipment Corporation makes no representations that the use
+ of its products in the manner described in this document will not in-
+ fringe on existing or future patent rights, nor do the descriptions
+ contained in this publication imply the granting of licenses to make,
+ use, or sell equipment or software in accordance with the description.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 54
