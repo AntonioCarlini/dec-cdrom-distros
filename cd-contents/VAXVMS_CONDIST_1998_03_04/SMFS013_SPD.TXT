@@ -1,0 +1,614 @@
+ 
+
+ DESCRIPTION
+
+ Sequential Media Filesystem (SMF) for OpenVMS is a layered software
+ product that provides an advanced tape file system that is integrated
+ into OpenVMS. SMF makes using low-cost tape media almost as easy and
+ convenient as using disk media.
+
+ Using SMF, users access and manipulate files stored on magnetic tape
+ using standard OpenVMS utilities (such as DIRECTORY and COPY) and through
+ user-written applications that use RMS or OpenVMS high-level language
+ run-time library I/O routines. Data is read directly from and writ-
+ ten directly to an SMF device. In other words, access to data stored
+ on tape does not need to be staged on disk.
+
+ SMF stores file attributes and directory entry information (metadata)
+ in an online Relational Data Base (Rdb) database. The Rdb entries con-
+ tain the equivalent of the Files-11 ODS-2 standard OpenVMS directory
+ and file header information. By storing directory and file header in-
+ formation in an online database, SMF supports operations such as file
+ deletion and renaming which modify the file's metadata without need-
+ ing to access the data stored on the tape. Furthermore, SMF files can
+ be cataloged in hierarchical directories with a full set of disk-like
+ file attributes.
+
+ Applications for which SMF is well-suited are characterized by large
+ files that are accessed sequentially and situations in which it is not
+ cost-effective to store the files on disk. Typical applications where
+ SMF allows dramatic reduction in storage costs include:
+
+ o  Scientific applications, such as the analysis of high-energy physics
+    data
+
+ o  Industry applications, such as seismic exploration data in the oil
+    and gas industry and telemetry data in the aerospace industry
+
+ o  Traditional main-frame business applications, such as payroll
+
+ o  Documentation applications, such as those that use large PostScript
+    [R] files or multimedia data files
+
+                                                          April 1997
+
+                                                        AE-QDKUBD-TE
+
+ 
+
+ o  Manufacturing applications, such as those that require archiving
+    of large, regulated data files
+
+ o  Miscellaneous applications, such as those that access genealogi-
+    cal data and other historical data
+
+ SMF uses the media management capabilities in Media and Device Man-
+ agement Services for OpenVMS (MDMS) to automatically load and unload
+ media. MDMS provides SMF the ability to share media and devices, in-
+ cluding robotically-controlled loaders and media pools, with other ap-
+ plications, such as Archive/Backup System for OpenVMS (ABS) software.
+
+ Features
+
+ To meet your storage management requirements, SMF for OpenVMS provides
+ the following features:
+
+ o  Operates as an integrated part of OpenVMS (Version 6.1, 6.2 or 7.1
+    required for VAX; Version 6.2 or 7.1 required for Alpha)
+
+ o  Provides disk-file-like security (UIC-based file ownership, SOGW
+    protection masks, ACL's, and auditing) for files stored on tape
+
+ o  Provides rapid access to file header information through an online
+    database
+
+ o  Tracks where files are stored on tape
+
+ o  Minimizes tape mounts by doing directory and file-header operations
+    with the online database
+
+ o  Allows multiple users to query tape directories and headers simul-
+    taneously
+
+ o  Performs the necessary tape mounts and dismounts automatically and
+    transparently whenever a user or application reads or writes SMF
+    tape file data
+
+ o  Complies with the ANSI X3.27 standard for on-tape format
+
+ o  Provides a mechanism for importing files from legacy ANSI X3.27 tapes
+
+ o  Provides a mechanism for recovering the space occupied by deleted
+    tape files
+
+                                  2
+
+ 
+
+ o  Provides network file access through the DECnet File Access Lis-
+    tener (FAL)
+
+ o  Reduces backup time, because regular backup operations only need
+    to save the file header information contained in the online database
+    and do not need to save the file contents.
+
+ Software Restrictions
+
+ Because SMF provides direct access to tape devices, the following re-
+ strictions apply:
+
+ o  SMF does not allow nonsequential access to files stored on tape.
+
+ o  SMF files must be opened for exclusive access.
+
+ o  Opening an SMF file locks the file, its associated volume, and the
+    device.
+
+ HARDWARE REQUIREMENTS
+
+ SMF supports the VAX and Alpha processors that OpenVMS supports. For
+ a detailed list of VAX processors supported by OpenVMS, see the Open-
+ VMS VAX Operating System Software Product Description (SPD 25.01.xx).
+ For a detailed list of Alpha processors supported by OpenVMS, see the
+ OpenVMS Alpha Operating System Software Product Description (SPD 41.87.xx).
+
+ As with OpenVMS, the following processors are not supported:
+
+    MicroVAX I
+    VAXstation I
+    VAX-11/725
+    VAX-11/782
+    VAXstation 8000
+
+ Processor Restrictions
+
+ The MicroVAX 2000 and VAXstation 2000 systems require a TK50[TM] for
+ a load device.
+
+ Devices Supported
+
+                                  3
+
+ 
+
+ For a detailed list of devices SMF can use through the Media and De-
+ vice Management Services (MDMS) software, see the table at the end of
+ this document. This table identifies the devices and appropriate adap-
+ tor or controller for each that MDMS supports.
+
+ Device Restrictions
+
+ SMF does not provide support for:
+
+ o  8mm devices
+
+ o  QIC (quarter-inch cartridge) devices
+
+ Minimum Configuration
+
+ A minimum system configuration to run SMF requires:
+
+ o  4 MB memory
+
+ o  One or more tape drives (TK50 or 9-track) supported by MDMS
+
+ o  One or more disk drives supported by OpenVMS
+
+ Disk Space Requirements (Block Cluster Size = 512 bytes)
+
+ Disk space required for    7000 blocks
+ installation:
+
+ Disk space required for    1000 blocks
+ use (permanent):
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximate; actual sizes may vary depending on the user's
+ system environment, configuration, and software options.
+
+
+
+
+
+
+                                  4
+
+ 
+
+ SOFTWARE REQUIREMENTS
+
+ OpenVMS VAX Operating System Version 6.1, 6.2 or 7.1, or OpenVMS Al-
+ pha Operating System Version 6.2 or 7.1
+
+ Not Qualified for OpenVMS Version 7.0: SMF has not been qualified for
+ operation under OpenVMS, Version 7.0. Operations under that version
+ are not supported.
+ Rdb Run-time Version 5.1 or greater
+ Media and Device Management Services for OpenVMS Version 2.8A or Stor-
+ age Library System for OpenVMS Version 2.8A
+ DECnet Phase IV
+
+ SOFTWARE LICENSING
+
+ This software is furnished only under a license. For more information
+ about Digital's licensing terms and policies, contact your local Dig-
+ ital office.
+
+ License Management Facility Support:
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity.
+
+ License units for this product are allocated on an Unlimited System
+ Use basis.
+
+ For more information on the OpenVMS License Management Facility, re-
+ fer to the OpenVMS Operating System Software Product Description (SPD
+ 25.01.xx) or the License Management Facility manual of the OpenVMS Op-
+ erating System documentation set.
+
+
+
+
+
+
+
+
+
+                                  5
+
+ 
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed OpenVMScluster* configuration without restrictions. The
+ HARDWARE REQUIREMENTS sections of this product's Software Product De-
+ scription detail any special hardware required by this product.
+
+ *  OpenVMScluster configurations are fully described in the OpenVM-
+    Scluster Software Product Description (29.78.xx) and include CI,
+    Ethernet, and Mixed Interconnect configurations.
+
+ OpenVMS Tailoring
+
+ For OpenVMS systems, the following classes are required for full func-
+ tionality of this layered product:
+
+ o  OpenVMS Required Save Set
+
+ o  Programming Support
+
+ o  Utilities
+
+ o  System Programming Support
+
+ o  Secure User's Environment
+
+ o  Network Support
+
+ o  OpenVMS Workstation Support
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS Operating System Software Product Description (SPD 25.01.xx).
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the requirements for the current
+ version.
+
+
+                                  6
+
+ 
+
+ DISTRIBUTION MEDIA
+
+ 9-track 1600 BPI Magtape, TK70 or TK50 Streaming Tape
+
+ This layered product is also available as part of the OpenVMS Consol-
+ idated Software Distribution on CD-ROM.
+
+ ORDERING INFORMATION
+
+ VAX:
+
+ o  Software Licenses:
+
+    -  Enterprise: QL-2AXA5-AA
+
+    -  Departmental: QL-2AXA2-AA
+
+    -  Workgroup: QL-2AXAB-AA
+
+ o  Software Media:
+
+    -  TK50 kit: QA-2AXAA-H5
+
+    -  9 Track Mag Tape kit: QA-2AXAA-HM
+
+ o  Software Documentation: QA-2AXAB-GZ
+
+ o  Software Product Services:
+
+    -  Layered Product Support:
+
+          Enterprise: QT-2AXA5-L9
+          Departmental: QT-2AXA2-L9
+          Workgroup: QT-2AXAB-L9
+
+    -  Other:
+
+          Installation: QT-2AXA9-I9
+          MDDS TK50: QT-2AXAA-E5
+          MDDS 16MT9: QT-2AXAA-EM
+          Documentation Services: QT-2AXAB-KZ
+
+                                  7
+
+ 
+
+ Alpha:
+
+ o  Software Licenses:
+
+    -  Enterprise: QL-2AYAQ-AA
+
+    -  Departmental: QL-2AYAG-AA
+
+    -  Workgroup: QL-2AYAE-AA
+
+ o  Software Documentation: QA-2AYAB-GZ
+
+ o  Software Product Services:
+
+    -  Layered Product Support:
+
+          Enterprise: QT-2AYAQ-L9
+          Departmental: QT-2AYAG-L9
+          Workgroup: QT-2AYAE-L9
+
+    -  Other:
+
+          Installation: QT-2AYAQ-I9
+          Documentation Services: QT-2AYAB-KZ
+
+ For additional information on available licenses, services, and me-
+ dia, refer to the appropriate price book or VTX PRICE.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation, contact your local Digital office.
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in the Software Warranty
+ Addendum of this SPD.
+
+ The above information is valid at time of release. Please contact your
+ local Digital office for the most up-to-date information.
+
+                                  8
+
+ 
+
+ © 1997 Digital Equipment Corporation.
+ All rights reserved.
+
+ [TM]Alpha, DEC, DECnet, MicroVAX, OpenVMS, TA, TK, TU, VAX, VAXft,
+    VAX Rdb, VAXserver, VAXstation, VMS, VMScluster, and the
+    DIGITAL logo are trademarks of Digital Equipment Corporation.
+
+ [R] PostScript is a registered trademark of Adobe Systems, Inc.
+
+ DEVICE SUPPORT TABLES
+
+ SMF supports a large array of storage devices, ranging from single-
+ tape drives to automated optical and tape jukeboxes, through the Me-
+ dia and Device Management Services (MDMS) software. Tables 1 and 2 list
+ the devices SMF supports with the specified adapter/controllers. Items
+ marked with a V are supported on VAX systems; those with an A are sup-
+ ported on Alpha systems; those with an X are supported on both. Sup-
+ port for any particular device and adapter/controller configuration
+ is subject to the controller and operating system SPDs. Table 3 de-
+ scribes the adapters/controllers.
+
+ The tables identify devices by Digital-known identifiers. If you use
+ third-party products that contain Digital drives, those drives are shown
+ in the tables under the Digital name.
+
+ If you have devices not identified as supported on the list, SMF may
+ still support them. Digital continually tests its software on addi-
+ tional devices that may not have been added to this list. If you have
+ a question about a particular device, contact Digital customer sup-
+ port.
+
+
+
+
+
+
+
+
+
+
+                                  9
+
+ 
+
+ ___________________________________________________________________
+
+ Table_1:_SCSI_Devices_Supported____________________________________
+
+ Adapter                            HSCnn
+ /Controller- SCSI
+ >___________InternalKZQSA___HS10n__K.SCSI__HSJnn__HSDnn___KZPSA__KZTSA
+
+ Devices
+
+ TLZ04       X       X
+
+ TLZ06/07    X       X              X       X      X
+
+ TSZ05       X       X              X
+
+ TSZ07       X       X              X       X      X
+
+ TZ30/50     X       X
+
+ TZ85        X       X
+
+ TZ86/87     X       X              X       X      X
+ /87N
+
+ TZ88N       X       X                      X
+
+ TZ89        X       X                      X
+
+ Robotics
+
+ TKZ62/64    X       X              X       X      X
+
+ TLZ6L       X       X              X       X      X
+
+ TLZ7L       X       X
+
+ TL810/812   X       X              X       X
+
+ TL820       X       X              X       X      X
+
+ TL822/826   X       X                      X      X
+
+ TL893/894   X       X                      X      X
+ /896
+
+ TZ857       X       X
+
+ TZ867       X       X              X       X      X
+
+ TZ875       X       X              X       X      X
+ /875N
+
+ TZ877       X       X              X       X      X
+ /877N
+
+                                 10
+
+ 
+
+
+ ___________________________________________________________________
+
+ Adapter                            HSCnn
+ /Controller- SCSI
+ >___________InternalKZQSA___HS10n__K.SCSI__HSJnn__HSDnn___KZPSA__KZTSA
+
+ TZ885/887___X_______X______________________X_______________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 11
+
+ 
+
+ ___________________________________________________________________
+
+ Table_2:_DSA_Devices_Supported_____________________________________
+
+ Adapter                                           HSCnn
+ /Controller- DSSI                                         Q-
+ >___________Internal________KFQSA__KFMSA___KFMSB__K.SI____BUS____KDM70
+
+ Devices
+
+ TA77/78                                           X              X
+ /79
+
+ TA80/81                                           X       X      X
+ /81+
+
+ TA85/86                                           X              X
+
+ TA90/E                                            X              X
+
+ TA91/92                                           X              X
+
+ TF70        X
+
+ TF85/86     X               X      X
+
+ TK50/70                                                   X
+
+ Robotics
+
+ TA857/867                                         X              X
+
+ TF857/867   X               X      X
+
+ STK ACS                                           X
+ 4400
+
+ Optical_Devices
+
+ RV20______________________________________________________X________
+
+ ___________________________________________________________________
+
+ Table_3:_Footnotes_to_Device_Tables________________________________
+
+ Item________Information____________________________________________
+
+ SCSI        Native SCSI bus from VAX3100, VAX4000, Alpha 3000, and
+ Internal    Alpha 4000 series machines
+
+ KZQSA       QBUS-SCSI adapter (VAX)
+
+                                 12
+
+ 
+
+
+ ___________________________________________________________________
+
+ Item________Information____________________________________________
+
+ KZMSA       XMI-SCSI adapter (Alpha)
+
+ KZBSA       BI-SCSI adapter
+
+ HSCnn       CRONIC 840 required for robotic control (nn=40, 60,
+ (K.SCSI)    70, 90, 95)
+
+ HSJnn       nn=30, 40; HSOF Version 2.5 required for loader sup-
+             port
+
+             HSOF Version 2.7 is required for the TZ88/885/887N and
+             the TL812/22/26.
+
+ HSDnn       nn=30, 40; HSOF Version 2.5 required for loader sup-
+             port
+
+             HSOF Version 2.7 is required for the TZ88/885/887N and
+             the TL812/22/26.
+
+ DSSI        Native DSSI bus on VAX 4000 and Alpha 4000 class ma-
+ Internal    chines
+
+ KFQSA       QBUS-DSSI adapter
+
+ KFMSA       XMI-DSSI adapter (VAX)
+
+ KFBSA       BI-DSSI adapter (Alpha)
+
+ KDM70       XMI-STI adapter
+
+ TZ875N,     For HSJ and HSD controllers, requires TZ87 firmware
+ TZ877N      version 40 or higher
+
+ STK ACS     Connections are via HSC and TC44 or via KCM44 when
+ 4400        using OpenVMS Version 5.5-2 through 6.2. ACS is not
+ ____________supported_on_OpenVMS_Version_7.0_or_7.1._______________
+
+                                 13
