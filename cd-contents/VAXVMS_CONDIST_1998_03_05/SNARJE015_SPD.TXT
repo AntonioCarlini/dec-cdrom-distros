@@ -1,0 +1,689 @@
+ 
+
+ This SPD describes Digital SNA Remote Job Entry for OpenVMS, which is
+ available for the OpenVMS VAX and OpenVMS Alpha platforms. All infor-
+ mation applies to both platforms unless otherwise indicated.
+
+ DESCRIPTION
+
+ Digital SNA Remote Job Entry for OpenVMS (RJE) is a layered software
+ product that allows suitably configured OpenVMS systems within a DEC-
+ net or TCP/IP network to function as an SNA/RJE workstation or group
+ of workstations that can transmit batch jobs to an IBM host and re-
+ ceive job output. The OpenVMS system user can prepare batch jobs in
+ files, submit the jobs, and obtain the job output. Access to the IBM
+ SNA host environment is via one of the following products:
+
+ o  TCP/IP or DECnet connections:
+
+    o  DEC SNA Peer Server
+
+    o  DEC SNA Domain Gateway
+
+ o  DECnet only connections:
+
+    o  DECnet SNA Gateway for Synchronous Transport
+
+    o  DECnet SNA Gateway for Channel Transport
+
+    o  VMS/SNA - an OpenVMS VAX layered product that supports users on
+       the system where VMS/SNA is running
+
+ By using batch interaction with the IBM host system, RJE can be used
+ to submit data that can be used for periodic update of databases and
+ other applications. Easily modified translation tables resident in ei-
+ ther the SNA gateway or VMS/SNA convert ASCII code to a subset of IBM
+ multi-national EBCDIC for transmission to the IBM host, and from EBCDIC
+ to ASCII on reception of job output.
+
+
+
+                                                       February 1996
+
+                                                         AE-EX17G-TE
+
+ 
+
+ Features
+
+ RJE offers the following features:
+
+ o  Each workstation includes a console interface that an operator can
+    use to communicate with the Job Entry System in the IBM host.
+
+ o  RJE can support record sizes of up to 254 characters.
+
+ o  RJE supports data compression on reader streams and data decompres-
+    sion on printer and punch streams.
+
+ o  The RJE Server can be run on the OpenVMS system to increase through-
+    put of the SNA gateway. When using the DEC SNA Domain Gateway for
+    Channel Transport for access to the IBM host system, the RJE Server
+    must be run on the OpenVMS system.
+
+ o  ASCII to EBCDIC translation is transparent to the user but can be
+    inhibited with /NOTRANSLATE qualifier on the ASSIGN command.
+
+ Sending Jobs to the IBM Host
+
+ Workstation users submit jobs to OpenVMS queues. The workstation trans-
+ mits the queued jobs to the IBM host over the input streams associ-
+ ated with a queue.
+
+ This queuing technique makes it possible for many RJE users to sub-
+ mit jobs at the same time and to do so even if the workstation is in-
+ active. When the operator sets the workstation on, the workstation trans-
+ mits all the jobs in its queues. For each submitted job, the user spec-
+ ifies one or more files containing JCL (Job Control Language) state-
+ ments, data, or programs.
+
+
+
+
+
+
+
+
+                                  2
+
+ 
+
+ Receiving Job Output
+
+ The IBM host returns job output to a workstation over various output
+ streams. Each IBM output stream will have an OpenVMS directory assigned
+ to it. As output from jobs is received on an output stream, it is as-
+ signed a file name identical to the name given to the job as it is ex-
+ ecuted in the IBM system (normally names are specified by user sup-
+ plied JCL). This mechanism allows easy identification of a particu-
+ lar job when several users share the same job stream. In the SNA gate-
+ way environment, job output may be directed to a system on the DEC-
+ net network other than the initiating system.
+
+ Managing the Workstation
+
+ OpenVMS users with the required privilege can issue a set of restricted
+ commands to manage the workstation. These commands allow the user to
+ initialize and control the workstation, and to communicate interac-
+ tively with the IBM batch subsystem. The following functions are avail-
+ able:
+
+ o  Set the workstation ON and OFF
+
+ o  Stop the transmission of a job
+
+ o  Collect logging information in a disk file
+
+ o  Display status
+
+ o  Obtain on-line help information
+
+ Specifying a Server
+
+ When using an SNA gateway, there is an option of running the RJEServer
+ on the SNA gateway (default) or running the RJEServer on the OpenVMS
+ node. (When using the Gateway-CT or VMS/SNA as the transport to the
+ IBM host, you must run the RJEServer on the OpenVMS node.) By running
+ the RJEServer on an OpenVMS node, you can utilize idle OpenVMS resources
+ and increase throughput of your SNA gateway.
+
+
+                                  3
+
+ 
+
+ INSTALLATION
+
+ Only experienced customers should attempt installation of this prod-
+ uct. Digital recommends that all other customers purchase Digital's
+ Installation Services. These services provide for installation of the
+ software product by an experienced Digital Software Specialist.
+
+ Customer Responsibilities
+
+ Before Digital installation of the software the customer must:
+
+ o  Have previously installed all requisite hardware including termi-
+    nals and SNA gateway products;
+
+ o  Obtain, install, and demonstrate as operational any modems and other
+    equipment and facilities necessary to interface to Digital's com-
+    munications equipment;
+
+ o  Demonstrate equivalence of operation for modems other than Bell Sys-
+    tem 201C, 208A or 209A, AT&T 2596 or 2556, Dataphone II (2096A, Dig-
+    ital 2500, or equivalent) type modems or, in Europe, PTT approved
+    modems;
+
+ o  Have generated, to Digital's satisfaction, any necessary IBM host
+    software that will be communicating with the SNA gateway or VMS/SNA
+    and the Remote Job Entry product;
+
+ o  Make available for a reasonable period of time, as mutually agreed
+    by Digital and the customer, all hardware, communications facil-
+    ities, and terminals that are to be used during installation.
+
+ Delays caused by any failure to meet these responsibilities will be
+ charged at the prevailing rate for time and materials.
+
+ Successful use of this product requires that:
+
+ o  The customer must be prepared to work with both Digital and IBM sys-
+    tems personnel to coordinate the pre-installation activities.
+
+
+                                  4
+
+ 
+
+ o  The customer should be capable of modifying IBM component gener-
+    ation parameters to support either the SNA gateway or VMS/SNA and
+    the Remote Job Entry software.
+
+ WARRANTY LIMITATIONS
+
+ IBM Supported Configurations
+
+ This software has been tested and is warranted against IBM System/370
+ and IBM System/390 (includes 9xxx, 30xx, and 43xx series) class pro-
+ cessor systems configured with the following IBM software. While this
+ software may function correctly with other IBM software and equipment,
+ and with software other than that supported by IBM, Digital cannot of-
+ fer its standard warranty for this software unless it has been tested
+ with such equipment and software configurations.
+
+ The RJE software interoperates with the following IBM software:
+
+ ___________________________________________________________________
+ Software_Product________Version__Release___________________________
+
+ MSV/ESA SP JES2         4        2.0
+                                  3.0
+                         5        2.0
+                                  2.2
+
+ MSV/ESA SP JES3         4        2.0
+                                  3.0
+                         5        2.0
+                                  2.2
+
+ ACF/VTAM                3        4.1
+                                  4.2
+                         4        2.0
+                                  3.0
+
+ RSCS____________________3________2.0_______________________________
+
+ Since the introduction of this software, other configurations may have
+ been tested. Please contact your local Digital office for up-to-date
+ information regarding listed configurations.
+
+                                  5
+
+ 
+
+ Refer to the SNA Gateway Software Product Descriptions (SPD 29.76.xx,
+ SPD 25.C6.xx, or SPD 38.69.xx) or the VMS/SNA Software Product Descrip-
+ tion (SPD 27.01.xx) for additional information on supported IBM op-
+ erating systems, access methods and communications front end software.
+
+ PREREQUISITE SUPPORT
+
+ For Digital SNA 3270 Remote Job Entry for OpenVMS to be Digital sup-
+ ported, the customer must have a Digital supported SNA gateway or VMS
+ /SNA configuration.
+
+ HARDWARE REQUIREMENTS
+
+ Processors Supported:
+
+ AlphaSerAlphaServer   4/166
+         400           4/266
+
+         AlphaServer   4/200
+         1000
+
+         AlphaServer   4/233
+         2000
+
+         AlphaServer   4/233
+         2100          5/250
+
+         AlphaServer   5/300
+         8200
+
+         AlphaServer   5/300
+         8400
+
+ AlphaStaAlphaStation  4/100
+         200           4/166
+                       4/233
+
+         AlphaStation  4/233
+         250
+
+         AlphaStation  4/266
+         400
+
+                                  6
+
+ 
+
+
+         AlphaStation  5/266
+         600
+
+ AXP:    DEC 3000      Model 300 AXP Workstation
+                       Model 300L AXP Workstation
+                       Model 300LX AXP Workstation
+                       Model 400 AXP Server
+                       Model 400 AXP Workstation
+                       Model 500 AXP Server
+                       Model 500 AXP Workstation
+                       Model 500X AXP Workstation
+
+         DEC 4000      Model 600 Series
+                       Model 700 Series
+
+         DEC 7000      Model 600 Series
+
+         DEC 10000     Model 600 Series
+
+ VAX:    VAX 4000      Model 100A
+                       Model 200
+                       Model 300
+                       Model 400
+                       Model 500
+                       Model 600
+
+         VAX 6000      Model 200 Series
+                       Model 300 Series
+                       Model 400 Series
+                       Model 500 Series
+                       Model 600 Series
+
+         VAX 7000      Model 600 Series
+                       Model 700 Series
+
+         VAX 8XXX      VAX 8200, VAX 8250, VAX 8300, VAX 8350,
+                       VAX 8500, VAX 8530, VAX 8550, VAX 8600,
+                       VAX 8650, VAX 8700, VAX 8800, VAX 8810, VAX
+                       8820, VAX 8830, VAX 8840
+
+                                  7
+
+ 
+
+
+         VAX 9000      Model 110
+                       Model 210
+                       Model 300 Series
+                       Model 400 Series
+
+         VAX 10000     Model 600 Series
+
+         VAXft 3000    Model 110
+                       Model 310
+                       Model 410
+                       Model 610
+                       Model 612
+
+ MicroVAX:MicroVAX II
+
+         MicroVAX
+         2000
+
+         MicroVAX      Model 10/10E
+         3100          Model 20/20E
+                       Model 30
+                       Model 40
+                       Model 80
+                       Model 90
+                       Model 95
+                       Model 96
+
+         MicroVAX
+         3300
+
+         MicroVAX
+         3400
+
+         MicroVAX
+         3500
+
+         MicroVAX
+         3600
+
+         MicroVAX
+         3800
+
+         MicroVAX
+         3900
+
+                                  8
+
+ 
+
+
+ VAXstatiVAXstation
+         II
+
+         VAXstation
+         2000
+
+         VAXstation    Model 30
+         3100          Model 38
+                       Model 40
+                       Model 48
+                       Model 76
+
+         VAXstation
+         3200
+
+         VAXstation
+         3500
+
+         VAXstation
+         3520
+
+         VAXstation
+         3540
+
+         VAXstation    Model 60
+         4000          Model 90
+                       Model 95
+                       Model 96
+                       VLC
+
+         VAXstation
+         8000
+
+ VAXserveVAXserver     Model 10/10E
+         3100          Model 20/20E
+
+         VAXserver
+         3300
+
+         VAXserver
+         3400
+
+         VAXserver
+         3500
+
+                                  9
+
+ 
+
+
+         VAXserver
+         3600
+
+         VAXserver
+         3800
+
+         VAXserver
+         3900
+
+         VAXserver     Model 200
+         4000          Model 300
+                       Model 400
+                       Model 500
+                       Model 600
+
+         VAXserver     Model 210
+         6000          Model 220
+                       Model 310
+                       Model 320
+                       Model 410
+                       Model 420
+                       Model 510
+                       Model 520
+                       Model 610
+                       Model 620
+                       Model 630
+
+         VAXserver     8200, 8250, 8300, 8350, 8530, 8550, 8650,
+         8XXX          8700, 8800, 8810, 8820, 8830, 8840
+
+ Processors Not Supported:
+
+ VAX-11
+ /730, VAX-11/750, VAX-11/780, VAX-11/785
+
+ Processor Restrictions:
+
+ A TK50 Tape Drive is required for standalone MicroVAX 2000 and VAXs-
+ tation 2000 systems.
+
+                                 10
+
+ 
+
+ DISK SPACE REQUIREMENTS
+
+ For Alpha-Based Systems:
+
+ Disk space required   3328 blocks (1.67 MB)
+ for installation:
+
+ Disk space required   1905 blocks (956 KB)
+ for use (permanent)
+
+ For VAX-Based Systems:
+
+ Disk space required   2910 blocks (1.46 MB)
+ for installation:
+
+ Disk space required   919 blocks (460 KB)
+ for use (permanent)
+
+ These counts refer to the disk space required on the system disk. The
+ sizes are approximations; actual sizes may vary depending on the user's
+ system environment, configuration, and software options selected.
+
+ CLUSTER ENVIRONMENT
+
+ This layered product is fully supported when installed on any valid
+ and licensed VMScluster configuration without restrictions. The HARD-
+ WARE REQUIREMENTS section details any special hardware required by this
+ product.
+
+ VMScluster configurations are described in the VMScluster Software Prod-
+ uct Description (SPD 42.18.xx) and include CI, Ethernet, and Mixed In-
+ terconnect configurations.
+
+ SOFTWARE REQUIREMENTS
+
+ For Alpha Systems:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  DECnet for OpenVMS (SPD 42.25.xx)
+
+ o  Digital TCP/IP Services for OpenVMS Alpha (SPD 46.46.xx)
+
+                                 11
+
+ 
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ o  DEC SNA Peer Server (SPD 51.08.xx)
+
+ For VAX Systems in a DECnet SNA Gateway Environment:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  DECnet-VAX (SPD 48.48.xx)
+
+ o  Digital TCP/IP Services for OpenVMS VAX (SPD 25.A4.xx)
+
+ o  DECnet SNA Gateway for Channel Transport (SPD 29.76.xx) or
+
+    DECnet SNA Gateway for Synchronous Transport (SPD 25.C6.xx) or
+
+    DEC SNA Domain Gateway for Channel Transport (SPD 38.69.xx)
+
+ o  DEC SNA Peer Server (SPD 51.08.xx)
+
+ For VAX Systems in a VMS/SNA Environment:
+
+ o  OpenVMS Operating System for VAX and Alpha, Version 6.1, 6.2, or
+    7.0 (SPD 25.01.xx)
+
+ o  VMS/SNA Software (SPD 27.01.xx)
+
+ OpenVMS Tailoring:
+
+ The following OpenVMS classes are required for full functionality of
+ this layered product:
+
+ o  OpenVMS Required Saveset
+
+ o  Network Support
+
+ o  Utilities
+
+ For more information on OpenVMS classes and tailoring, refer to the
+ OpenVMS Operating System for VAX and Alpha Software Product Descrip-
+ tion (SPD 25.01.xx).
+
+                                 12
+
+ 
+
+ GROWTH CONSIDERATIONS
+
+ The minimum hardware/software requirements for any future version of
+ this product may be different from the minimum requirements for the
+ current version.
+
+ DISTRIBUTION MEDIA
+
+ For Alpha Systems:
+
+ Media and documentation for this product are available on the Digi-
+ tal CD-ROM Software Library for OpenVMS AXP. Documentation in hard-
+ copy format can be ordered separately.
+
+ For VAX Systems:
+
+ 9-track 1600 BPI Magtape, TK50 Streaming Tape
+
+ This product is also available as part of the OpenVMS Consolidated Soft-
+ ware Distribution on CD-ROM. The software documentation for this prod-
+ uct is also available as part of the OpenVMS Online Documentation Li-
+ brary on CD-ROM.
+
+ ORDERING INFORMATION
+
+ Digital SNA Remote Job Entry for OpenVMS, Version 1.5
+
+ For OpenVMS Alpha Systems:
+
+ Software Licenses: QL-10UA*-**
+ Software Documentation: QA-453A*-GZ
+ Software Product Services: QT-10UA*-**
+
+ Media and documentation for this product are available on the Digi-
+ tal CD-ROM Software Library for OpenVMS AXP. Documentation in hard-
+ copy format can be ordered separately.
+
+ For OpenVMS VAX Systems:
+
+
+                                 13
+
+ 
+
+ Software Licenses: QL-453A*-**
+ Software Media: QA-453A*-**
+ Software Documentation: QA-453A*-GZ
+ Software Product Services: QT-453A*-**
+
+ *  Denotes variant fields. For additional information on available li-
+    censes, services and media refer to the appropriate price book.
+
+ SOFTWARE LICENSING
+
+ This software is furnished under the licensing provisions of Digital's
+ Standard Terms and Conditions. For more information about Digital's
+ licensing terms and policies, contact your local Digital office.
+
+ License Management Facility Support
+
+ This layered product supports the OpenVMS License Management Facil-
+ ity. License units for this product are allocated on a CPU-capacity
+ basis.
+
+ For more information on the License Management Facility, refer to the
+ OpenVMS VAX Operating System Software Product Description (SPD 25.01.xx),
+ the OpenVMS AXP Operating System Software Product Description (SPD 41.87.xx),
+ or the License Management Facility manual of the OpenVMS Operating Sys-
+ tem documentation set.
+
+ SOFTWARE PRODUCT SERVICES
+
+ A variety of service options are available from Digital. For more in-
+ formation contact your local Digital office.
+
+
+
+
+
+
+
+
+
+
+                                 14
+
+ 
+
+ SOFTWARE WARRANTY
+
+ Warranty for this software product is provided by Digital with the pur-
+ chase of a license for the product as defined in this SPD.
+
+ [R] IBM is a registered trademark of International Business Ma-
+    chines Corporation.
+
+ [TM]The Digital logo, AXP, DEC, DECnet, Digital, OpenVMS, VMS, and
+    VT are trademarks of Digital Equipment Corporation.
+
+ All other trademarks and registered trademarks are the property of their
+ respective holders.
+
+ © 1993 Digital Equipment Corporation. All Rights Reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                 15
