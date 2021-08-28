@@ -1,0 +1,2413 @@
+%!PS-Adobe-2.0
+%%Creator: VAX DOCUMENT V2.0
+%%+Copyright 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.  
+%%+All Rights Reserved.
+%%DocumentFonts: (atend)
+%%Pages: (atend)
+%%EndComments
+/DEC_DVC$dict where {					%FIND DICTIONARY
+  pop
+}{ %else
+  /DEC_DVC$dict 300 dict def
+} ifelse 
+/BeginDVC$PSDoc {					%BEGIN DOCUMENT
+  vmstatus pop pop 0 eq {
+    DEC_DVC$dict begin  InitializeState
+  }{ %else
+    /DVC$PSJob save def  DEC_DVC$dict begin  InitializeState
+    /DVC$PSFonts save def
+  } ifelse
+} def
+/EndDVC$PSDoc {						%END DOCUMENT
+% --- Preserving current page count ---
+  vmstatus pop pop 0 eq {
+    end
+  }{ %else
+    DVC$PSFonts restore  end  DVC$PSJob restore
+  } ifelse
+} def
+%
+DEC_DVC$dict begin
+%
+mark		% CREATE ISOLatin1Encoding if not there already
+/ISOLatin1Encoding
+  8#000 1 8#054 {StandardEncoding exch get} for 
+  /minus
+  8#056 1 8#217 {StandardEncoding exch get} for 
+  /dotlessi 
+  8#301 1 8#317 {StandardEncoding exch get} for 
+  /space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+  /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen 
+  /registered /macron /degree /plusminus /twosuperior /threesuperior /acute 
+  /mu /paragraph /periodcentered /cedilla /onesuperior /ordmasculine 
+  /guillemotright /onequarter /onehalf /threequarters /questiondown /Agrave 
+  /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla /Egrave /Eacute 
+  /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde 
+  /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave 
+  /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute 
+  /acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute 
+  /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth /ntilde
+  /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash /ugrave 
+  /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+  /ISOLatin1Encoding where not {256 array astore def} if 
+cleartomark
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def 
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/reencodedict 10 dict def			%Local storage for "ReENCODE"
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+} def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+/BP {							% BEGIN PAGE
+  /Magnification exch def
+  /Colorsused 0 def
+  /processcolor false def
+  /RVmatrix matrix def
+  /DVC$PSPage save def
+} def
+%
+/EP {DVC$PSPage restore} def				% END PAGE
+%
+/XP {				% EXIT PAGE (TEMPORARILY) TO ADD FONTS/CHARS
+  % SAVE CURRENT POINT AND COLOR INFORMATION SO IT CAN BE RESET LATER
+  matrix currentmatrix aload pop currentrgbcolor Colorsused processcolor
+  /Xpos where {pop Xpos} {0} ifelse
+  /Ypos where {pop Ypos} {0} ifelse
+  /currentpoint cvx stopped {0 0 moveto currentpoint} if 
+  /DVC$PSPage where {pop DVC$PSPage restore} if
+  moveto
+  /Ypos exch def  /Xpos exch def
+  /processcolor exch def /Colorsused exch def setrgbcolor
+  matrix astore setmatrix
+} def
+%
+/RP {/DVC$PSPage save def} def		% RESUME PAGE
+%
+/PF {GlobalMode  LocalMode} def			% PURGE FONTS TO RECLAIM MEMORY
+%
+/GlobalMode {		% SWITCH TO BASE SAVE/RESTORE LEVEL, SAVING STATE
+  /DEC$EDMS_SEPARATE_COLORS where{pop DEC$EDMS_SEPARATE_COLORS}{9999}ifelse
+  RVmatrix aload pop processcolor
+  PortraitMode  PaperWidth  PaperHeight  PxlResolution  Resolution 
+  Magnification Ymax        Xorigin      Yorigin        RasterScaleFactor
+  % SAVE CURRENTPOINT INFORMATION TO RESET LATER
+  /currentpoint cvx stopped {0 0 moveto currentpoint} if 
+  /DVC$PSPage where {pop DVC$PSPage restore} if
+  DVC$PSFonts restore  RecoverState
+} def
+%
+/RecoverState {					% PRESERVE STATE AT BASE LEVEL
+  20 copy
+  /Ypos exch def           /Xpos exch def        /RasterScaleFactor exch def
+  /Yorigin exch def        /Xorigin exch def     /Ymax exch def
+  /Magnification exch def  /Resolution exch def  /PxlResolution exch def
+  /PaperHeight exch def    /PaperWidth exch def  /PortraitMode exch def
+  /processcolor exch def    matrix astore /RVmatrix exch def
+  dup 9999 ne{/DEC$EDMS_SEPARATE_COLORS exch def}{pop}ifelse
+  DoInitialScaling
+  RVmatrix concat
+  PortraitMode not {PaperWidth 0 SetupLandscape} if
+  Xpos Ypos moveto
+} def
+%
+/InitializeState {		% INITIALIZE STATE VARIABLES TO DEFAULT VALUES
+  /Resolution 3600 def  /PxlResolution 300 def
+  /RasterScaleFactor PxlResolution Resolution div def
+  /PortraitMode true def
+  /Magnification 1000 def  /Xorigin 0 def  /Yorigin 0 def
+  /Xpos 0 def  /Ypos 0 def  /InitialMatrix matrix currentmatrix def
+  /Colorsused 0 def  /processcolor false def  /RVmatrix matrix def
+} def
+%
+/LocalMode {		% SWITCH FROM BASE SAVE/RESTORE LEVEL, RESTORING STATE
+  /Ypos exch def  /Xpos exch def  /RasterScaleFactor exch def
+  /Yorigin exch def  /Xorigin exch def  /Ymax exch def
+  /Magnification exch def  /Resolution exch def  /PxlResolution exch def
+  /PaperHeight exch def  /PaperWidth exch def  /PortraitMode exch def
+  /processcolor exch def  matrix astore /RVmatrix exch def
+  dup 9999 ne{/DEC$EDMS_SEPARATE_COLORS exch def}{pop}ifelse
+  DoInitialScaling
+  RVmatrix concat
+  PortraitMode not {PaperWidth 0 SetupLandscape} if
+  Xpos Ypos moveto
+  /DVC$PSFonts save def  /DVC$PSPage save def
+} def
+%							% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+/Yadjust {Ymax exch sub} def
+%
+/SXY {		% (x,y) POSITION ABSOLUTE, JUST SET Xpos & Ypos, DON'T MOVE
+  Yadjust  /Ypos exch def /Xpos exch def
+} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust  2 copy /Ypos exch def /Xpos exch def  moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop   2 copy /Ypos exch def /Xpos exch def  moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust  2 copy
+  /Ypos exch def /Xpos exch def  moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/R {						% DRAW A RULE
+  /ht exch def  /wd exch def   gsave
+% 0 setgray
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill  grestore  wd 0 rmoveto
+  currentpoint /Ypos exch def /Xpos exch def
+} def
+%
+/RES {		% <PXL-file resolution(pix/inch)> <resolution(pix/inch)> RES
+  /Resolution exch def  /PxlResolution exch def
+  /RasterScaleFactor PxlResolution Resolution div def
+  DoInitialScaling
+} def
+%
+/DoInitialScaling {					% DO INITIAL SCALING
+  InitialMatrix setmatrix  72 Resolution div dup scale
+} def
+%
+/PM {		% <paper-height(pix)> <paper-width(pix)> PM
+  XP
+    /PaperWidth exch def  /PaperHeight exch def
+    /Ymax PaperHeight def /PortraitMode true def
+    DoInitialScaling
+  RP
+} def  
+%
+/SetupLandscape {translate  90 rotate} def
+/LM {		% <paper-height(pix)> <paper-width(pix)> LM 
+  XP
+    /PaperWidth exch def  /PaperHeight exch def
+    /Ymax PaperWidth def  /PortraitMode false def
+    DoInitialScaling PaperWidth 0 SetupLandscape
+  RP
+} def  
+%
+/MAG {						% CHANGE MAGNIFICATION SETTING
+  XP  /Magnification exch def  RP
+} def
+%
+/SPB {		%  <xoffset><yoffset>SPB - BEGIN "\SPECIAL" MODE
+  Yadjust /Yorigin exch def /Xorigin exch def
+  currentrgbcolor Colorsused
+  GlobalMode Xorigin Yorigin translate
+  Resolution 72 div dup scale			% RESTORE DEFAULT SCALING
+  Magnification 1000 div dup scale		% ADJUST FOR ANY MAGNIFICATION
+  /Xpos Xpos 72 Resolution div mul 1000 Magnification div mul def
+  /Ypos Ypos 72 Resolution div mul 1000 Magnification div mul def
+  /spsavobj save def	%SAVE STATE & STACK DEPTH FOR CLEANUP AFTER FIGURE
+  /showpage {} def	%DISABLE DURING FIGURE; `RESTORE' WILL BLOW DEF AWAY
+
+  /DEC$EDMS_SEPARATE_COLORS where       % if separating colors
+  {                                     % then
+    pop processcolor                    %   if using process colors
+    {                                   %   then
+      DEC$EDMS_SEPARATE_COLORS 0 ge     %     if on color pass .ge. 0
+      {                                 %     then
+        { pop 1 } settransfer           %       write only white
+      }{                                %     else
+
+        /DEC$EDMS_TRAP_SWELL where
+        { pop DEC$EDMS_SEPARATE_COLORS -4 eq
+          { /EDMS_setlinewidth /setlinewidth load def
+            /setlinewidth { DEC$EDMS_TRAP_SWELL mul EDMS_setlinewidth } def
+          } if
+        } if
+
+        /EDMS_setrgbcolor               %       set up for a redefine
+          /setrgbcolor load def         %       of the setrgbcolor operator
+
+        currentscreen                   % get the current screen parameters
+        /DEC$EDMS_SCREEN_ANGLE where    % if changing the screen angle
+        {                               % then
+          pop exch pop                  %   replace the old angle
+          DEC$EDMS_SCREEN_ANGLE exch    %   with the new one
+        } if
+        /DEC$EDMS_SCREEN_FREQ where     % if changing the screen frequency
+        {                               % then
+          pop 3 -1 roll pop             %   replace the old frequency
+          DEC$EDMS_SCREEN_FREQ 3 1 roll %   with the new one
+        } if
+          setscreen                     % Set the new parameters
+
+        /setrgbcolor {
+          /b exch def
+          /g exch def
+          /r exch def
+          /c3 1 r sub def
+          /m3 1 g sub def
+          /y3 1 b sub def
+          /k c3 m3 2 copy gt { exch } if pop y3 2 copy gt { exch } if pop def
+          /ik 1 k sub def
+          ik 0 ne
+          { /c4 c3 k sub ik div def
+            /m4 m3 k sub ik div def
+            /y4 y3 k sub ik div def
+          }
+          { /c4 /DEC$EDMS_BLACK_GEN where
+            { pop DEC$EDMS_BLACK_GEN } { 0 } ifelse def
+            /m4 c4 def
+            /y4 c4 def
+          } ifelse
+          1 [ c4 m4 y4 k ]              % pick the separation for this color
+          DEC$EDMS_SEPARATE_COLORS      % pass ( -1 = Cyan, -2 = Magenta,
+          neg 1 sub get sub setgray     % -3 = Yellow, -4 = Black )
+        } def
+      } ifelse                          %     endif
+    }{                                  %   else (if not using process colors)
+      DEC$EDMS_SEPARATE_COLORS 0 ne     %     if not on color pass 0
+      {                                 %     then
+        { pop 1 } settransfer           %       write only white
+      } if                              %     endif
+    } ifelse                            %   endif
+  } if                                  % endif
+  mark
+} def
+%
+/SPE {		% SPE - END "\SPECIAL" MODE
+  cleartomark
+  spsavobj restore 
+  1000 Magnification div dup scale	% UN-ADJUST FOR ANY MAGNIFICATION
+  72 Resolution div dup scale		% RESTORE DEFAULT INTERNAL SCALING
+  LocalMode
+  /Colorsused exch def setrgbcolor
+} def
+%
+/PP
+%
+% If DEC$EDMS_MAKE_FILM is defined, it will add the crop & alignment marks,
+% and the document name, page number, & ink color identifiers to the page.
+%
+% Formal Arguments:	None
+%
+% Referenced Variables: DocumentName
+%			Colorsused
+%			Currentpagecount
+% 			DEC$EDMS_MAKE_FILM
+%
+% Referenced Procedures: AlignMark
+%
+% Side Effects: Leaves the current font as Helvetica 8 point.
+%		Creates the variable "junkstr".
+%
+{ /PageNumber exch def
+  /DEC$EDMS_MAKE_FILM where			% if making film...
+  { pop
+    /DEC$EDMS_SUPPRESS_COLOR where		% if color suppression is on
+    { pop /DEC$EDMS_SEPARATE_COLORS 0 def	% then default to color 0
+      /Colorsused 1 def } if			% ...for everything
+    2 DEC$EDMS_SEPARATE_COLORS exp cvi Colorsused and 0 ne %if correct separatn
+    DEC$EDMS_SEPARATE_COLORS 0 lt or		% ...or if a process color
+    { /Helvetica findfont 400 scalefont setfont
+      20 setlinewidth 0 setgray
+      gsave
+      PaperWidth 1000 add 200 translate 90 rotate 0 0 moveto
+      (Ink: ) show				% show the ink color
+      DEC$EDMS_SEPARATE_COLORS 0 ge
+      { DEC$EDMS_COLOR_NAMES DEC$EDMS_SEPARATE_COLORS get }
+      { (Process ) show [ (Cyan) (Magenta) (Yellow) (Black) ]
+        DEC$EDMS_SEPARATE_COLORS neg 1 sub get } ifelse show
+      /DEC$EDMS_SUPPRESS_COLOR where		% if color suppression is on
+      { pop ( (Color Suppression enabled)) show } if	% tell them about it
+       1800 0 rmoveto
+      (Page: ) show				% show the page number
+      /junkstr 4 string def PageNumber junkstr cvs show
+      ( of ) show DEC$EDMS_TOTAL_PAGES junkstr cvs show
+
+      DEC$EDMS_SEPARATE_COLORS -4 eq
+      { 1800 0 rmoveto (Trap Swell Factor: )show
+        /DEC$EDMS_TRAP_SWELL where	% if trap swell factor is supplied
+        { pop DEC$EDMS_TRAP_SWELL 6 string cvs }
+        { (1 (default)) } ifelse show
+      } if
+
+      DEC$EDMS_SEPARATE_COLORS 0 lt		% if a process color
+      {
+        PaperHeight 2 div 600 add 0 moveto (Screen Angle: ) show
+        /DEC$EDMS_SCREEN_ANGLE where
+            { pop DEC$EDMS_SCREEN_ANGLE junkstr cvs }	% if defined
+            { ((default)) } ifelse show			% if not defined
+         1800 0 rmoveto (Screen Frequency: ) show
+        /DEC$EDMS_SCREEN_FREQ where
+            { pop DEC$EDMS_SCREEN_FREQ junkstr cvs }	% if defined
+            { ((default)) } ifelse show			% if not defined
+      } if
+      grestore
+      gsave
+      -600 200 translate 90 rotate 0 0 moveto
+      (Document: ) show DEC$EDMS_DOCUMENT_ID show	% show document name
+      PaperHeight 2 div 600 add 0 moveto
+      (This film is the property of Digital Equipment Corporation) show
+      grestore
+
+      /mask 15					% all crop marks on by default
+      /DEC$EDMS_SUPPRESS_CROPMARKS where   % if def'd, xor in suppression mask
+          { pop DEC$EDMS_SUPPRESS_CROPMARKS xor } if def
+
+      mask 1 and 1 eq
+        { PaperWidth PaperHeight moveto		% Upper Right
+          450 0 rmoveto 900 0 rlineto -1350 1350 rmoveto 0 -900 rlineto } if
+
+      mask 2 and 2 eq
+        { PaperWidth 0 moveto			% Lower Right
+          450 0 rmoveto 900 0 rlineto -1350 -1350 rmoveto 0 900 rlineto } if
+
+      mask 4 and 4 eq
+        { 0 0 moveto				% Lower Left
+          -450 0 rmoveto -900 0 rlineto 1350 -1350 rmoveto 0 900 rlineto } if
+
+      mask 8 and 8 eq
+        { 0 PaperHeight moveto			% Upper Left
+          -450 0 rmoveto -900 0 rlineto 1350 1350 rmoveto 0 -900 rlineto } if
+      stroke
+
+      /mask 15				 % all registratn marks on by default
+      /DEC$EDMS_SUPPRESS_REGMARKS where	 % if defined, xor in suppression mask
+          { pop DEC$EDMS_SUPPRESS_REGMARKS xor } if def
+
+      mask 1 and 1 eq				% Top Center
+         { gsave PaperWidth 2 div PaperHeight 900 add
+	   /DEC$EDMS_POSITION_REGMARKS where
+	     { pop DEC$EDMS_POSITION_REGMARKS -50 mul add } if
+	   translate AlignMark grestore } if
+
+      mask 2 and 2 eq				% Right Center
+        { gsave PaperWidth 900 add
+	 /DEC$EDMS_POSITION_REGMARKS where
+	  { pop DEC$EDMS_POSITION_REGMARKS -50 mul add } if
+	  PaperHeight 2 div translate AlignMark grestore } if
+
+      mask 4 and 4 eq				% Bottom Center
+        { gsave PaperWidth 2 div -900
+	 /DEC$EDMS_POSITION_REGMARKS where
+	  { pop DEC$EDMS_POSITION_REGMARKS 50 mul add } if
+	 translate AlignMark grestore } if
+
+      mask 8 and 8 eq				% Left Center
+        { gsave -900
+	 /DEC$EDMS_POSITION_REGMARKS where
+	  { pop DEC$EDMS_POSITION_REGMARKS 50 mul add } if
+	 PaperHeight 2 div translate AlignMark grestore } if
+      showpage
+    }
+    { % disabled the 'erasepage ' that was here!
+    } ifelse
+  }
+  { showpage } ifelse
+} def
+/CLRP { % disabled the 'erasepage' that was here!
+  } def
+%
+/DMF {		%  /font-name <point-size(pix)> DMF
+  /psz exch def  /nam exch def  nam findfont psz scalefont setfont
+} def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+} def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+} def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+} def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+} def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+} def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+} def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+} def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+} def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div} def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+} def
+/RunLengthToRasters {
+  % none yet
+} def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+} def
+%
+/int-dict-name {int (-dict) concatnam} def
+/int-dict {int (-dict) concatnam cvx load} def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      } def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+} def 
+/PXLF { true  DefinePXLFont} def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont} def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+} def
+%
+/CKSZ {abs 127 le and} def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if} def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+} def
+%
+/AlignMark
+%
+% This procedure draws an alignment mark centered on the coordinate system
+% origin. If the variable DEC$EDMS_SEPARATE_COLORS = 0 then a "positive"
+% alignment mark is drawn. If DEC$EDMS_SEPARATE_COLORS <> 0 then a "negative"
+% alignment mark is drawn. 
+%
+% Formal Arguments: NONE
+%
+% Referenced Variables: DEC$EDMS_SEPARATE_COLORS
+%
+% Referenced Procedures: NONE
+%
+% Side Effects: NONE
+%
+{ DEC$EDMS_SEPARATE_COLORS 0 eq
+  { 0 0 300 0 360 arc
+    0 -450 moveto 0 450 lineto -450 0 moveto 450 0 lineto stroke }
+  { 0 0 450 0 360 arc fill 1 setgray 0 0 300 0 360 arc 
+    0 -450 moveto 0 450 lineto -450 0 moveto 450 0 lineto stroke 0 setgray }
+  ifelse
+} def
+
+
+/SC
+% If not making film, the following procedure sets the current color using the
+% RGB color model. If making film, the procedure notes the "color pass" and,
+% if the specified color index matches the color pass, subsequent marks are
+% written in black. If the specified color index does not match the color pass,
+% marks are written in white. Use of colors on individual pages is also tracked
+% to allow pages that don't use a particular color to be suppressed on that
+% color pass (by the code in the /PP routine).
+%
+% Formal Arguments: color index (on stack)
+%
+% Referenced Variables: Colorsused
+%			DEC$EDMS_SEPARATE_COLORS
+%			DEC$EDMS_SUPPRESS_COLOR
+%
+% Referenced Procedures: NONE
+%
+% Side Effects: Modifies the variable Colorsused to record use of the color.
+%               Tracks use of color in the variables 'ci' and 'processcolor'.
+%
+{ /ci exch def ci 0 lt			% if the color index is lt 0
+  { /processcolor true def }		% then set 'processcolor' to 'true'.
+  { ci /processcolor false def		% else set 'processcolor' to 'false'.
+    /DEC$EDMS_SUPPRESS_COLOR where	% if suppressing color
+    { pop 0 setgray pop }		% then set "color" to Black
+    { /DEC$EDMS_SEPARATE_COLORS where	% else if separating colors
+      { pop dup DEC$EDMS_SEPARATE_COLORS eq	% then if on this color pass
+        { 0 setgray /Colorsused Colorsused	% then write black (do write)
+          2 3 index exp cvi or def }		% ..and note use of the "color"
+        { 1 setgray } ifelse pop }		% else write white (don't write)
+      { dup (  ) cvs dup length 15 add string	% else if using the color index,
+        /tstr exch def				% ..build up the name of the
+        tstr 0 (DEC$EDMS_COLOR_) putinterval	% ..potential external color
+        tstr exch 15 exch putinterval		% ..name procedure
+        tstr cvn where				% ..and see if it is defined
+          { pop pop tstr cvn cvx exec }		% execute it if it is
+          { DEC$EDMS_COLOR_ARRAY exch get exec	% else exec internal color proc
+        } ifelse
+      } ifelse
+    } ifelse
+  } ifelse
+} def
+
+/RV					% .. gross recto/verso translate
+{ /DEC$EDMS_ENABLE_RECTOVERSO where
+      { pop
+	/RVmatrix DEC$EDMS_ENABLE_RECTOVERSO 50 mul 0 matrix translate def
+	RVmatrix concat
+      } if
+} def
+
+%
+%  Procedures for implementing the "rotate <theta>" special:
+%  <theta> ROTB -
+%        - ROTE -
+ 
+/ROTB {
+  XP
+  gsave
+  Xpos Ypos translate
+  rotate % using <theta> from the stack
+  Xpos neg Ypos neg translate
+  RP
+  } def
+ 
+/ROTE {XP grestore RP} def
+
+end  %DEC_DVC$dict
+%%EndProlog
+%%BeginSetup
+/DEC$EDMS_MAKE_FILM where	% if we are making film...
+ { pop			% ..clean up the stack
+   54 dup translate		% ..make room for the film info
+ } if
+BeginDVC$PSDoc
+/PaperWidth 8.500 Resolution mul def
+/PaperHeight 11.000 Resolution mul def
+/Ymax PaperHeight def
+CLRP 300 3600 RES
+%>  Postamble of file A1$USER:[A1MITVMS.DOCS.SPD_SSA]395900.DVI_PS.
+% DefineFont:F207 Category:15 Pointsize:24
+% DownloadPSFont
+%!PS-Adobe-2.0
+%%Title: PostScript Digital Logo Font, v1.1
+%%Creator: Ned Batchelder
+%%CreationDate: 9-Nov-87
+%%DocumentFonts: Symbol
+%%DocumentSuppliedFonts: DigitalLogo
+%%EndComments
+%
+%		    DIGITAL INTERNAL USE ONLY
+% 
+% INTRODUCTION:
+% This rendition of the Digital logo was prepared by Ned Batchelder using 
+% Adobe Illustrator and hand manipulation of the resulting PostScript code.
+% Photographic masters of the logo were obtained from David Comberg in the
+% Graphic Design Group. Additional consultation was provided by Elliot
+% Hendrickson, one of the original designers of the logo.
+% 
+% USE:
+% This file defines a new PostScript font, called /DigitalLogo. It consists
+% of three characters. (d) is the entire Digital logo, (t) is a small
+% trademark symbol, and (T) is a large trademark symbol. The font is designed
+% so that the argument to scalefont is the height of the logo. There is no
+% extra white space around the logo at all. The trademarks are designed to be
+% shown right after the logo, and they align themselves. The only correct
+% strings to show with this font are (d), (dt), and (dT). There is an entry
+% (named GapWidth) in the font dictionary which gives the unscaled width of
+% the gap between the blocks. This distance is given because it is used as a
+% unit to determine how much space to leave around the logo.
+% 
+% HISTORY:
+% The logo was designed in 1957 by Elliot Hendrickson, who was then working
+% as an independent designer. He was contracted by DEC to do a brochure, and
+% DEC wanted a logo to accompany it. The logo up to then had been the letters
+% DEC in blocks the shape of the plug-in cards that DEC had been producing.
+% Elliot re-worked the logo, incorporating letters which were hand-drawn for 
+% the purpose by Arthur Hover(?). The logo has been maintained since then in 
+% conventional technology, ie, film masters. There was at least one reworking 
+% of the logo at some point.
+% 
+% The masters I received had a number of interesting features. The boxes were
+% not all the same width, and there seemed to be no logic to which boxes were
+% wider. The 'g' was the narrowest, and the 'i' and 'l' were second widest.
+% Also, the two 'i's were not exactly the same shape. On ten-inch masters,
+% (one box to an 8½x11 sheet), the boxes were not rectangles, but were very
+% slightly tapered in wierd ways. I assume that the tapering is the result of
+% too many reproductions, but the difference in widths may have been
+% deliberate at some time. Elliot reports that when he drew it, all boxes
+% were the same width. I have retained the different widths in my version,
+% since the experts I had at hand did not seem to think I should make them
+% uniform.
+% 
+% Please feel free to use this logo, but keep in mind the following:
+% 
+% 1. This code is for INTERNAL USE ONLY.
+% 2. I am not entirely happy with the final shapes of the letters, and am
+% hoping to improve them. Please allow for future updates to this code.
+% 3. Only use this logo within the guidelines of the Corporate Identity
+% program. If you use this font precisely as is, you can't get in much
+% trouble. Don't take the shapes and do strange things with them. 
+% In particular, the Identity states that the logo is a one-color logo: The
+% letters are actually holes in the blocks, through which the background can
+% be seen. Do not modify this code so that the letters are always white.
+% 
+% Edit history:
+% 
+% 21-Sep-87 nmb	    Created as a standalone file with demo.
+%  6-Nov-87 nmb	    Converted to font form.
+%  9-Nov-87 nmb	    Removed // uses for compatibility with LW Classics
+%
+
+%%BeginFont: DigitalLogo
+10 dict begin
+
+/FontInfo 3 dict def
+FontInfo begin
+    /Notice
+(The Digital logo is a registered trademark of Digital Equipment Corporation.)
+    def
+    /FullName (Digital logo) def
+    /version (1.1) def
+    end
+
+/FontType 3 def				% This is a user-defined font
+/FontMatrix matrix def			% Use an identity transform
+/FontBBox [ 0 0 3.383 1 ] def		% Logo itself is biggest
+/GapWidth .070 def			% The width of the gap between boxes
+
+/Encoding 256 array def
+0 1 255 { Encoding exch /.notdef put } bind for
+
+Encoding
+dup (d) 0 get /DEC-logo put		% (d) gives logo
+dup (t) 0 get /smalltrademark put	% (t) gives small trademark
+    (T) 0 get /largetrademark put	% (T) gives large trademark
+
+/Work 15 dict def			% for doing work in font.
+
+/BuildChar {
+    exch begin				% Use the font dictionary
+	Work begin
+	    Encoding exch get		% Look up the character name
+	    load			% Pull out the procedure
+	    exec			% Run it.
+	    end				% Work
+	end				% fontdict
+    } bind def
+
+Work begin
+
+/.notdef {} def
+
+%
+% - `DEC-logo' -
+%
+% Images a DEC logo with the lower left corner at the current origin, with a
+% height of one unit, in the current color.
+% 
+
+/m /moveto load def
+/l /lineto load def
+/c /curveto load def
+
+/DEC-logo {
+    3.383 0 0 0 3.383 1 setcachedevice
+    {	% D
+	% d counter
+	.2930 .3513 m
+	.2932 .3217 .2587 .2758 .2167 .2757 c
+	.1719 .2759 .1280 .3165 .1280 .3977 c
+	.1280 .4801 .1718 .5225 .2153 .5227 c
+	.2587 .5225 .2932 .4760 .2930 .4407 c
+	closepath
+	% d outside
+	.2953 .5787 m
+	.2953 .7600 l
+	.3843 .7600 l
+	.3843 .1960 l
+	.2923 .1960 l
+	.2923 .2220 l
+	.2848 .2144 .2531 .1813 .1990 .1813 c
+	.1426 .1812 .0417 .2282 .0417 .3977 c
+	.0417 .5414 .1171 .6157 .2067 .6157 c
+	.2399 .6157 .2725 .6039 .2953 .5787 c
+	closepath
+	% d box
+	.432 0.0 m
+	.432 1.0 l
+	.000 1.0 l
+	.000 0.0 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	.927 0.0 m
+	.927 1.0 l
+	.502 1.0 l
+	.502 0.0 l
+	closepath
+	% i body
+	.6695 .196 m
+	.6695 .600 l
+	.7595 .600 l
+	.7595 .196 l
+	closepath
+	% i dot
+	.6695 .655 m
+	.6695 .755 l
+	.7595 .755 l
+	.7595 .655 l
+	closepath
+	} exec
+    {	% G
+	% g counter
+	1.2813 .4478 m
+	1.2813 .4837 1.2409 .5208 1.2035 .5208 c
+	1.1713 .5208 1.1215 .5003 1.1215 .4084 c
+	1.1215 .3105 1.1827 .2962 1.2030 .2962 c
+	1.2433 .2962 1.2813 .3239 1.2813 .3667 c
+	closepath
+	% g box
+	0.997 1.0 m
+	1.415 1.0 l
+	1.415 0.0 l
+	0.997 0.0 l
+	closepath
+	% g outside
+	1.2822 .5609 m
+	1.2729 .5742 1.2424 .6044 1.1988 .6044 c
+	1.1311 .6043 1.0367 .5652 1.0367 .3955 c
+	1.0368 .2617 1.1437 .2168 1.1876 .2168 c
+	1.2350 .2167 1.2702 .2443 1.2798 .2547 c
+	1.2798 .2126 l
+	1.2798 .1815 1.2479 .1511 1.1945 .1511 c
+	1.1485 .1512 1.1437 .1807 1.1437 .1953 c
+	1.0497 .1953 l
+	1.0497 .1486 1.0798 .0804 1.1888 .0803 c
+	1.2864 .0803 1.3186 .1176 1.3325 .1316 c
+	1.3442 .1434 1.3617 .1758 1.3617 .2017 c
+	1.3617 .6 l
+	1.2823 .6 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	1.910 0.0 m
+	1.910 1.0 l
+	1.485 1.0 l
+	1.485 0.0 l
+	closepath
+	% i body
+	1.6525 .196 m
+	1.6525 .6 l
+	1.7425 .6 l
+	1.7425 .196 l
+	closepath
+	% i dot
+	1.6525 .655 m
+	1.6525 .755 l
+	1.7425 .755 l
+	1.7425 .655 l
+	closepath
+	} exec
+    {	% T
+	% t
+	2.2128 .7525 m
+	2.1305 .7525 l
+	2.1305 .6071 l
+	2.0874 .6071 l
+	2.0874 .5396 l
+	2.1305 .5396 l
+	2.1305 .2852 l
+	2.1305 .2367 2.1554 .1986 2.2248 .1987 c
+	2.2573 .1987 2.2560 .1985 2.2842 .2034 c
+	2.2842 .2874 l
+	2.2658 .2842 2.2601 .2829 2.2511 .2832 c
+	2.2338 .2837 2.2128 .2898 2.2128 .3206 c
+	2.2128 .5395 l
+	2.2780 .5395 l
+	2.2780 .6071 l
+	2.2128 .6071 l
+	closepath
+	% t box
+	2.404 0.0 m
+	1.980 0.0 l
+	1.980 1.0 l
+	2.404 1.0 l
+	closepath
+	} exec
+    {	% A
+	% a box
+	2.474 0.0 m
+	2.474 1.0 l
+	2.888 1.0 l
+	2.888 0.0 l
+	closepath
+	% a outside
+	2.5439 .4728 m
+	2.6210 .4728 l
+	2.6210 .5138 2.6422 .5353 2.6826 .5353 c
+	2.7470 .5354 2.7449 .5067 2.7448 .4708 c
+	2.7050 .4553 2.7087 .4557 2.6480 .4419 c
+	2.5709 .4241 2.5237 .3911 2.5236 .3112 c
+	2.5237 .2331 2.5793 .1914 2.6420 .1915 c
+	2.7048 .1914 2.7178 .2117 2.7438 .2290 c
+	2.7438 .1978 l
+	2.8422 .1978 l
+	2.8190 .2352 2.8251 .2425 2.8249 .2706 c
+	2.8250 .2926 2.8249 .5080 2.8249 .5080 c
+	2.8250 .5507 2.8028 .5768 2.7883 .5855 c
+	2.7521 .6071 2.7074 .6097 2.6826 .6098 c
+	2.5945 .6096 2.5438 .5653 2.5439 .4728 c
+	closepath
+	% a counter
+	2.7448 .3946 m
+	2.7448 .3401 l
+	2.7448 .3152 2.7145 .2670 2.6550 .2669 c
+	2.6260 .2668 2.6098 .2883 2.6097 .3162 c
+	2.6098 .3442 2.6335 .3657 2.6536 .3697 c
+	2.6745 .3739 2.7226 .3862 2.7448 .3946 c
+	closepath
+	} exec
+    {	% L
+	% l box
+	3.383 0.0 m
+	3.383 1.0 l
+	2.958 1.0 l
+	2.958 0.0 l
+	closepath
+	% l
+	3.1255 .196 m
+	3.1255 .765 l
+	3.2155 .765 l
+	3.2155 .196 l
+	closepath
+	} exec
+    fill
+    } bind def
+
+%
+% % pct `trademark' --
+%
+% Borrow the sans-serif trademark symbol from /Symbol. AFM file says:
+%	C 228 ; WX 786 ; N trademarksans ; B 5 293 725 673 ;
+% We scale it down to pct percent of the height of the logo and superscript 
+% it some, and voila!
+%
+
+/trademark {
+    /s exch .380 div def
+    /w s .725 mul .070 add def
+    /u 1 .673 s mul sub def
+    w 0 0 u w 1 setcachedevice
+    /Symbol findfont s scalefont setfont
+    .070 u m					% Superscript it
+    (\344) show
+    } bind def
+
+% 
+% These are two different trademarks (just different sizes).
+%
+
+/smalltrademark { .15 trademark } def
+/largetrademark { .25 trademark } def
+
+end						% Work dictionary
+
+currentdict					% Get the font dict
+end						% Close it up
+/DigitalLogo exch definefont pop		% Define the font.
+
+%%EndFont
+% EndDownloadPSFont
+/F207 1200.0 /DigitalLogo DPSF
+% DefineFont:F163 Category:10 Pointsize:6
+/NewCenturySchlbk-Roman /NewCenturySchlbk-Roman@DOCPSE DOCPSE ReENCODE
+/F163 300.0 /NewCenturySchlbk-Roman@DOCPSE DPSF
+% DefineFont:F159 Category:10 Pointsize:8
+/F159 400.0 /NewCenturySchlbk-Roman@DOCPSE DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F35 Category:10 Pointsize:10
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F35 500.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F34 Category:10 Pointsize:10
+/F34 500.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F33 Category:10 Pointsize:11
+/Helvetica-BoldOblique /Helvetica-BoldOblique@DOCPSE DOCPSE ReENCODE
+/F33 550.0 /Helvetica-BoldOblique@DOCPSE DPSF
+% DefineFont:F32 Category:10 Pointsize:11
+/F32 550.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+%%BeginDEC$EDMSInfo
+/DEC$EDMS_DOCUMENT_ID () def
+/DEC$EDMS_COLOR_NAMES [ (0_BLACK) ] def
+/DEC$EDMS_COLOR_ARRAY [
+%%RGBCustomColor 0.000 0.000 0.000 0_BLACK
+  { 0.000 0.000 0.000 setrgbcolor } %  0_BLACK DOC$COLOR_INIT
+] def
+/DEC$EDMS_TOTAL_PAGES 0 def
+%%EndDEC$EDMSInfo
+/DEC$EDMS_MAKE_FILM where
+{ pop /DEC$EDMS_SEPARATE_COLORS where
+  { pop }
+  { (ERROR - DEC$EDMS_MAKE_FILM requires DEC$EDMS_SEPARATE_COLORS be defined) = quit } ifelse
+} if
+/DEC$EDMS_SEPARATE_COLORS where
+{ pop /DEC$EDMS_SUPPRESS_COLOR where
+  { pop (ERROR - DEC$EDMS_SEPARATE_COLORS and DEC$EDMS_SUPPRESS_COLOR are mutually exclusive) = quit } if
+} if
+/DVC$PSFonts save def
+%%EndSetup
+%
+%%Page: 1 1
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 4845 XY F16(Software)S 3899 6091 XY(Produ)S 2 x(ct)S 3899 7336 XY
+(Description)S 3899 X 697 y 23316 204 R 3899 8857 XY F40(NOME)S 149 x
+(DEL)S 149 x(PRODOTT)S -9 x(O:)S 598 x F36(ALL-IN-1)S 166 x(MAIL/I)S
+2 x(T)S -37 x(ALIANO)S 165 x(per)S 167 x(VMS,)S 167 x(V)S -28 x(ersione)S
+167 x(1.1)S 24083 X(SPD)S 166 x(44.04.00)S 3899 10949 XY F32(DESCRIZIONE)S
+3899 11945 XY F34(ALL-IN-1)S 219 x(MAIL)S 221 x(\350)S 219 x(un'applicazi)S
+-2 x(one)S 220 x(per)S 219 x(lo)S 219 x(scambio)S 219 x(di)S 220 x(messaggi)S
+219 x(conforme)S 219 x(agli)S 219 x(standard)S 220 x(internazionali)S
+218 x(di)S 3899 X 598 y(posta)S 165 x(elettronica)S 164 x(stabiliti)S
+164 x(dal)S 164 x(CCITT)S 165 x(X.400)S 165 x(P2.)S 222 x(Il)S 164 x
+(prodotto)S 166 x(consente)S 165 x(lo)S 164 x(scambio)S 164 x(di)S 164 x
+(messaggi)S 164 x(e)S 164 x(dati)S 165 x(con)S 164 x(gli)S 3899 X 598 y
+(altri)S 129 x(utenti,)S 138 x(disponendo)S 130 x(di)S 129 x(un'interfaccia)S
+130 x(utente)S 131 x(consistente)S 130 x(tra)S 131 x(stazioni)S 129 x
+(di)S 130 x(lavoro)S 129 x(eterogenee)S 130 x(in)S 130 x(un)S 130 x
+(ambiente)S 3899 X 597 y(client/server)S -28 x(.)S 3899 14735 XY(ALL-IN-1)S
+218 x(MAIL)S 218 x(interagisce,)S 231 x(a)S 218 x(livell)S -2 x(o)S
+218 x(applicativo)S 217 x(del)S 218 x(Message)S 218 x(Router)S 217 x
+(Digital)S 217 x(\(SPD)S 218 x(26.33.xx\),)S 232 x(con)S 218 x(tutti)S
+219 x(i)S 3899 X 598 y(prodotti)S 166 x(MAILbus)S 167 x(gateway)S 166 x
+(e)S 166 x(complementari.)S 3899 16329 XY(ALL-IN-1)S 123 x(MAIL)S 124 x
+(\350)S 123 x(un)S 124 x(prodotto)S 124 x(client/server)S 123 x(che)S
+123 x(supporta)S 124 x(video)S 123 x(terminali,)S 131 x(PC)S 123 x(DOS)S
+-181 y F42(1)S 147 x 181 y F34(PC)S 124 x(Apple\206)S 123 x(Macintosh)S
+(\206,)S 3899 X 598 y(PC)S 167 x(DECwi)S -2 x(ndows,)S 167 x(VMS)S 168 x
+(workstation)S 167 x(ed)S 166 x(altre)S 167 x(unit\340)S 167 x(X1)S
+-37 x(1.)S 224 x(Esso)S 167 x(rappresenta)S 167 x(una)S 167 x(crescita)S
+167 x(di)S 166 x(funzionalit\340)S 167 x(per)S 3899 X 597 y(gli)S 156 x
+(utenti)S 157 x(Digi)S -2 x(tal)S 157 x(VMS)S 157 x(Personal)S 156 x
+(Mail)S 156 x(Utility)S 156 x(\(VMSmail\),)S 158 x(DECwindows)S 155 x
+(VMSmail)S 156 x(o)S 157 x(interfacce)S 157 x(PC)S 156 x(Mail)S 156 x
+(fornite)S 3899 X 598 y(con)S 166 x(il)S 165 x(set)S 167 x(del)S 165 x
+(prodotto)S 167 x(P)S -37 x(A)S -36 x(THWORKS.)S 3899 19118 XY(ALL-IN-1)S
+151 x(MAIL)S 152 x(non)S 151 x(dipende)S 151 x(tecnicamente)S 152 x
+(dal)S 150 x(prodotto)S 152 x(ALL-IN-1)S 152 x(IOS.)S 152 x(Esso)S 151 x
+(pu\362)S 151 x(essere)S 152 x(utilizzato)S 151 x(indipen-)S 3899 X
+598 y(dentemente)S 165 x(da)S 165 x(ALL-IN-1)S(,)S 166 x(il)S 164 x
+(sistema)S 165 x(integrato)S 166 x(d'uf)S -9 x(\211cio)S 164 x(della)S
+164 x(Digital.)S 221 x(Sono)S 165 x(inoltre)S 164 x(disponibil)S -2 x
+(i)S 165 x(i)S 164 x(client)S 165 x(DOS)S 164 x(e)S 3899 X 598 y(DECwindow)S
+-2 x(s)S 143 x(che)S 142 x(si)S 143 x(connettono)S 143 x(direttamente)S
+143 x(al)S 142 x(sistema)S 143 x(ALL-IN-1)S 143 x(IOS)S 143 x(e)S 142 x
+(non)S 143 x(richiedono)S 141 x(il)S 142 x(server)S 142 x(ALL-IN-1)S
+3899 X 598 y(MAIL.)S 199 x(Per)S 198 x(ulteriori)S 197 x(informazioni,)S
+206 x(consultare)S 198 x(il)S 197 x(Software)S 199 x(Product)S 198 x
+(Description)S 198 x(ALL-IN-1)S 198 x(DESKtop)S 199 x(for)S 198 x(DOS)S
+3899 X 597 y(\(SPD)S 166 x(50.20.xx\))S 167 x(e)S 166 x(ALL-IN-1)S 166 x
+(Services)S 166 x(for)S 166 x(DECwindow)S -2 x(s)S 167 x(\(SPD)S 166 x
+(33.22.xx\).)S 3899 22506 XY(Il)S 126 x(client)S 125 x(ALL-IN-1)S 126 x
+(MAIL)S 126 x(fornisce)S 126 x(servizi)S 125 x(per)S 126 x(l'utente.)S
+208 x(Questo)S 126 x(software)S 126 x(risiede)S 125 x(di)S 125 x(solito)S
+125 x(su)S 126 x(un'unit\340)S 125 x(intelligente)S 3899 X 597 y(e)S
+166 x(sfrutta)S 167 x(perci\362)S 166 x(la)S 165 x(capacit\340)S 166 x
+(di)S 166 x(elaborazione)S 165 x(locale)S 165 x(della)S 165 x(stazione)S
+166 x(di)S 166 x(lavoro.)S 3899 24100 XY(I)S 133 x(client)S 132 x(VMS)S
+133 x(\(for)S 133 x(V)S -8 x(ideo)S 132 x(T)S -55 x(erminals)S 131 x
+(o)S 133 x(per)S 133 x(DECwi)S -2 x(ndows\))S 133 x(sono)S 132 x(attivati)S
+133 x(su)S 133 x(VMS)S 133 x(e)S 133 x(devono)S 132 x(risiedere)S 132 x
+(sullo)S 132 x(stesso)S 3899 X 597 y(nodo)S 166 x(o)S 166 x(V)S -37 x
+(AXcluster)S 167 x(del)S 165 x(server)S -27 x(.)S 3899 25694 XY(I)S
+160 x(client)S 159 x(sono)S 159 x(connessi)S 159 x(al)S 159 x(server)S
+159 x(ALL-IN-1)S 159 x(MAIL,)S 161 x(attraverso)S 160 x(il)S 158 x(quale)S
+159 x(vengono)S 159 x(eseguiti)S 159 x(i)S 159 x(servizi)S 159 x(di)S
+159 x(consegna)S 3899 X 597 y(su)S 166 x(rete)S 166 x(locale)S 165 x
+(ed)S 166 x(estesa.)S 3899 27288 XY(Il)S 214 x(V)S -36 x(AX)S 215 x
+(Message)S 214 x(Router)S 215 x(si)S 214 x(incarica)S 214 x(del)S 214 x
+(trasporto)S 215 x(tra)S 215 x(i)S 214 x(server)S 214 x(ALL-IN-1)S 215 x
+(MAIL)S 215 x(e)S 214 x(tra)S 215 x(ALL-IN-1)S 215 x(MAIL)S 215 x(e)S
+214 x(gli)S 3899 X 597 y(altri)S 166 x(prodotti)S 168 x(della)S 166 x
+(famiglia)S 166 x(ALL-IN-1)S 167 x(Fase)S 167 x(II.)S 168 x(Gateway)S
+167 x(opzionali)S 165 x(possono)S 167 x(venir)S 167 x(connessi)S 166 x
+(al)S 167 x(V)S -37 x(AX)S 168 x(Message)S 3899 X 598 y(Router)S 166 x
+(secondo)S 166 x(le)S 165 x(necessit\340,)S 167 x(per)S 166 x(trasferire)S
+166 x(messaggi)S 166 x(in)S 165 x(un)S 166 x(ambiente)S 166 x(multi-fornitore.)S
+3899 29479 XY(L)S -28 x('utente)S 152 x(pu\362)S 150 x(utilizzare)S
+150 x(alternativamente)S 151 x(una)S 151 x(stazione)S 150 x(di)S 151 x
+(lavoro)S 150 x(intelligente)S 150 x(in)S 150 x(uf)S -8 x(\211cio,)S
+154 x(un)S 150 x(video)S 150 x(terminale)S 151 x(da)S 3899 X 598 y(casa)S
+183 x(e)S 182 x(un)S 183 x(PC)S 182 x(DOS)S 182 x(laptop)S 183 x(in)S
+182 x(viaggio.)S 271 x(Sono)S 183 x(forniti)S 182 x(client)S 183 x(per)S
+182 x(le)S 182 x(tre)S 183 x(possibili)S 181 x(situazioni,)S 187 x(con)S
+182 x(l'utilizzo)S 181 x(della)S 3899 X 598 y(stessa)S 167 x(mailbox)S
+165 x(utente)S 166 x(e)S 166 x(degli)S 166 x(stessi)S 166 x(\211le)S
+166 x(sul)S 165 x(server)S -27 x(.)S 3899 31671 XY(ALL-IN-1)S 187 x
+(MAIL)S 189 x(aderisce)S 187 x(alle)S 186 x(raccomandazioni)S 187 x
+(CCITT)S 188 x(X.400)S 188 x(1984)S 187 x(del)S 188 x(National)S 186 x
+(Institut)S 2 x(e)S 187 x(for)S 188 x(Science)S 188 x(and)S 3899 X 598 y
+(T)S -55 x(echnology)S 170 x(\(NIST\).)S 172 x(Esso)S 171 x(fornisce)S
+170 x(un)S 171 x(livell)S -2 x(o)S 171 x(di)S 170 x(servizio)S 170 x
+(messaggi)S 170 x(compatibile)S 170 x(con)S 171 x(quello)S 169 x(del)S
+170 x(sottosist)S 2 x(ema)S 3899 X 598 y(di)S 195 x(posta)S 196 x(elettronica,)S
+203 x(del)S 194 x(sistema)S 196 x(ALL-IN-1)S 195 x(IOS)S 196 x(ed)S
+195 x(include)S 195 x(nuovi)S 194 x(elementi)S 195 x(di)S 195 x(servizio)S
+195 x(de\211niti)S 195 x(in)S 194 x(ALL-IN-1)S 3899 X 598 y(MAIL.)S
+3899 X 761 y 6996 24 R 4106 34621 XY F163(1)S 225 x 141 y F159(In)S
+157 x(questo)S 156 x(Software)S 157 x(Product)S 156 x(Description,)S
+162 x(Personal)S 156 x(Computer)S 157 x(Disk)S 156 x(Operating)S 156 x
+(System)S 156 x(IBM\206,)S 162 x(Microsoft)S 156 x(Corporation')S -15 x
+(s)S 157 x(MS-)S 4497 X 498 y(DOS\206,)S 132 x(e)S 133 x(COMP)S -30 x
+(AQ\206)S 133 x(Computer)S 133 x(Corporation')S -15 x(s)S 133 x(COMP)S
+-30 x(AQ)S 133 x(MS-DOS)S 133 x(vengono)S 134 x(riportati)S 132 x(sempli)S
+-2 x(cemen)S 2 x(te)S 133 x(come)S 133 x(DOS.)S 23873 37101 XY F40(Settembre)S
+150 x(1992)S 24322 X 598 y(AE-PT42A-TE)S 13320 X -126 y F207(dt)S
+%%EndCustomColor
+1 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ NewCenturySchlbk-Roman DigitalLogo
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 2 2
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S
+%%EndCustomColor
+3899 4198 XY
+3899 13164 SPB
+%%BeginDocument: (315103_graphics_it.ps)
+-258.700 -412.100 translate
+%!PS-Adobe-2.0 EPSF-1.2
+%%Title: 315103_GRAPHICS_IT.PS
+%%Creator: VAX DOCUMENT Graphics Rendering Utility
+%%CreationDate: Wed Jul 22 10:01:05 1992
+%%Pages: 1
+%%DocumentFonts: (atend)
+%%DocumentCustomColors: (atend)
+%%BoundingBox: 258.700 412.100 535.600 617.500
+%%EndComments
+%%BeginProlog
+%
+% This file was generated by POSTSCALE
+1.3 1.3 scale
+%
+/ApplDict 150 dict def
+ApplDict begin
+/an /arcn load def
+/ar /arc load def
+/cl /closepath load def
+/cp /eoclip load def
+/ex /exch load def
+/fi /eofill load def
+/Bxr {arcto pop pop pop pop} bind def
+/gs /gsave load def
+/gr /grestore load def
+/li /lineto load def
+/mo /moveto load def
+/np /newpath load def
+/rl /rlineto load def
+/ro /rotate load def
+/rgb /setrgbcolor load def
+/sh /show load def
+/sc /scale load def
+/sd /setdash load def
+/slc /setlinecap load def
+/slj /setlinejoin load def
+/slw /setlinewidth load def
+/st /stroke load def
+/tr /translate load def
+% THIS SECTION WILL DEFINE THE ISOLATIN1 VECTOR...
+mark					% CREATE ISOLatin1 ENCODING
+/ISOLatin1
+  8#000 1 8#054 {StandardEncoding exch get} for 
+  /minus
+  8#056 1 8#217 {StandardEncoding exch get} for 
+  /dotlessi 
+  8#301 1 8#317 {StandardEncoding exch get} for 
+  /space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+  /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen 
+  /registered /macron /degree /plusminus /twosuperior /threesuperior /acute
+  /mu /paragraph /periodcentered /cedilla /onesuperior /ordmasculine 
+  /guillemotright /onequarter /onehalf /threequarters /questiondown /Agrave 
+  /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla /Egrave /Eacute 
+  /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde 
+  /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave 
+  /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute 
+  /acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute 
+  /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth /ntilde
+  /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash /ugrave 
+  /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+  /ISOLatin1 where not {256 array astore def} if 
+cleartomark
+%
+% THIS ROUTINE WILL RE-ENCODE THE FILE...
+/reencodedict 10 dict def			%Local storage for ReENCODE
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	   basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+ 	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+} bind def
+/CBdict 5 dict def
+/CMdict 3 dict def
+/TBdict 5 dict def
+/ELPdict 2 dict def
+/Applpage /showpage load def
+/Arc
+ { np 1 eq  {ar} {an} ifelse } bind def
+/Box
+ { np mo li li li cl } bind def
+/Circle
+ { np 0 360 ar } bind def
+/Ellipse
+ { ELPdict begin
+   /elpscratch matrix def
+   np elpscratch currentmatrix pop
+   tr
+   neg ro
+   sc
+   0 0 1 0 360 ar
+   elpscratch setmatrix
+   end
+ } bind def
+/LF			% (backup_font) (font) LF
+ { dup FontDirectory exch known
+    { findfont exch pop }	% good font
+    { pop findfont }		% bad font
+    ifelse
+ } bind def
+/SF
+{ makefont setfont } bind def
+/Line
+ { np mo li } bind def
+/Pie
+ { np 1 eq  {ar} {an} ifelse li cl } bind def
+/TextBox
+ { TBdict begin
+   /y2 ex def
+   /x2 ex def
+   /y1 ex def
+   /x1 ex def
+   np x1 y1 mo
+   x2 y1 li
+   x2 y2 li
+   x1 y2 li cl
+   end
+ } bind def
+/Text
+ { np mo dup 4 1 roll
+   stringwidth pop ex 72 mul ex sub ex div
+   dup dup sub 3 -1 roll ashow } bind def
+/OText
+ { gs np mo slw false charpath st gr } bind def
+/Label
+ { np mo sh } bind def
+/Caption
+ { np 0 0 mo rmoveto dup stringwidth pop
+   neg 0 rmoveto show
+ } bind def
+/Crop
+ { CBdict begin
+   /y2 ex def
+   /x2 ex def
+   /y1 ex def
+   /x1 ex def
+   np x1 y1 mo
+   x2 y1 li
+   x2 y2 li
+   x1 y2 li cl
+   1 eq {gs fi gr} if
+   clip np
+   end
+ } bind def
+/Cropmark
+ { CMdict begin
+   /ys ex def
+   /xs ex def
+   .2 slw
+   np xs ys mo
+   1 eq {ys add xs ex li st} {xs add ys li st} ifelse
+   end
+ } bind def
+/ImgCropBox
+ { np mo rl rl rl rl clip np } bind def
+end
+%%EndProlog
+%%BeginSetup
+ApplDict begin
+%%EndSetup
+save
+/Courier /Courier@ISO ISOLatin1 ReENCODE      %Setup up default printer font
+%%RGBCustomColor: 0.000 0.000 0.000  0.000_0.000_0.000
+0.000 0.000 0.000 rgb
+199.548 474.947 tr
+1 -1 sc
+0.650 0.600 sc
+0.925 slw
+0 slc
+0 slj
+0 0.000 0.000 327.546 263.157 Crop
+1.851 slw
+18.468 3.701 110.070 3.701 110.070 44.262 18.468 44.262 Box gs
+%%RGBCustomColor: 0.890 0.890 0.890  0.890_0.890_0.890
+0.890 0.890 0.890 rgb
+fi gr st
+127.650 2.776 219.252 2.776 219.252 43.337 127.650 43.337 Box gs
+0.890 0.890 0.890 rgb
+fi gr st
+230.355 2.776 321.957 2.776 321.957 43.337 230.355 43.337 Box gs
+0.890 0.890 0.890 rgb
+fi gr st
+134.127 76.307 225.729 76.307 225.729 116.868 134.127 116.868 Box gs
+0.890 0.890 0.890 rgb
+fi gr st
+113.771 105.092 205.373 105.092 205.373 145.653 113.771 145.653 Box gs
+0.890 0.890 0.890 rgb
+fi gr st
+/AvantGarde-Demi /AvantGarde-Demi@ISO ISOLatin1 ReENCODE
+/Courier@ISO /AvantGarde-Demi@ISO LF [10 0 0 -10 0 0] SF
+17 1.20348 (ALL-IN-1 MAIL per) 130.000 15.612 Text
+14 1.16507 (VMS DECwindows) 131.388 27.641 Text
+13 0.94742 (ALL-IN-1 MAIL) 235.481 16.537 Text
+13 0.93462 (per Macintosh) 236.869 27.641 Text
+14 0.98583 (ALL-IN-1 MAIL ) 23.594 15.612 Text
+7 0.53772 (per DOS) 24.982 27.641 Text
+18 1.24189 (ALL-IN-1 MAIL per ) 136.477 86.858 Text
+15 0.99863 (Terminali video) 140.641 98.886 Text
+1.203 slw
+0 slc
+65.694 66.640 65.694 44.434 Line st
+172.100 66.640 172.100 44.434 Line st
+272.955 66.640 272.955 44.434 Line st
+124.104 103.889 124.104 68.484 Line st
+169.442 173.173 169.442 147.103 Line st
+18 1.34431 (VAX Message Router) 121.210 191.413 Text
+1.851 slw
+290.535 226.458 290.535 199.811 Line st
+261.085 226.585 317.070 226.585 317.070 260.844 261.085 260.844 Box st
+5 0.39689 (MRX a) 276.656 240.915 Text
+5 0.34568 (X.400) 276.656 252.019 Text
+14 0.98583 (ALL-IN-1 MAIL ) 118.897 121.093 Text
+0.925 slw
+79.573 227.047 135.558 227.047 135.558 261.307 79.573 261.307 Box st
+10 0.74257 (MR/S, MR/P) 82.349 240.915 Text
+10 0.67856 (a IBM mail) 83.274 252.019 Text
+20.515 227.047 76.500 227.047 76.500 261.307 20.515 261.307 Box st
+7 0.57613 (Gateway) 24.057 240.915 Text
+8 0.61454 (VMS Mail) 24.057 252.019 Text
+7 0.57613 (Gateway) 1.851 220.560 Text
+1.203 slw
+109.182 226.226 109.182 201.244 Line st
+48.114 226.226 48.114 201.244 Line st
+162.848 226.226 162.848 201.244 Line st
+226.691 226.226 226.691 201.244 Line st
+0.925 slw
+138.950 227.047 194.935 227.047 194.935 261.307 138.950 261.307 Box st
+10 0.72977 (Gate a MCI) 140.641 240.915 Text
+11 0.67856 (Telex, ecc.) 141.566 252.019 Text
+267.562 81.931 323.547 81.931 323.547 110.245 267.562 110.245 Box st
+9 0.62735 (Terminale) 272.955 92.872 Text
+5 0.37129 (video) 280.357 103.975 Text
+1.203 slw
+225.766 96.249 268.328 96.249 Line st
+6 0.40969 (Server) 120.285 133.121 Text
+1.851 slw
+301.245 199.278 36.433 199.278 Line st
+34.698 209.834 34.698 197.864 Line st
+302.101 209.834 302.101 197.864 Line st
+301.245 173.606 36.433 173.606 Line st
+34.698 163.050 34.698 175.020 Line st
+302.101 163.050 302.101 175.020 Line st
+324.260 186.232 303.190 163.994 Line st
+13.463 186.232 34.533 163.994 Line st
+324.260 185.726 303.190 207.964 Line st
+13.463 185.726 34.533 207.964 Line st
+0.925 slw
+200.017 227.047 256.003 227.047 256.003 261.307 200.017 261.307 Box st
+5 0.43530 (UMC a) 203.559 240.915 Text
+6 0.40969 (ULTRIX) 203.559 252.019 Text
+18.505 67.082 325.695 67.082 Line st
+Applpage
+restore
+end
+%%Trailer
+%%DocumentFonts: AvantGarde-Demi
+%%DocumentCustomColors: 0.000_0.000_0.000 0.890_0.890_0.890
+%%EndDocument
+SPE
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 14736 XY F34(Questo)S 141 x(documento)S 141 x(descrive)S 140 x
+(uno)S 141 x(dei)S 140 x(componenti)S 140 x(della)S 140 x(famiglia)S
+140 x(di)S 140 x(prodotti)S 141 x(ALL-IN-1)S 141 x(MAIL.)S 142 x(Fare)S
+141 x(riferimento)S 3899 X 597 y(al)S 146 x(Software)S 147 x(Product)S
+148 x(Description)S 145 x(di)S 147 x(ALL-IN-1)S 146 x(MAIL)S 148 x(Product)S
+147 x(Family)S 146 x(\(SPD)S 147 x(31.51.xx\))S 147 x(per)S 147 x(informazioni)S
+145 x(su)S 147 x(altri)S 3899 X 598 y(componenti)S 166 x(disponibi)S
+-2 x(li.)S 3899 16928 XY F36(Caratteristiche)S 3899 18123 XY F33(Compatibilit\340)S
+183 x(con)S 182 x(VMSm)S 2 x(ail)S 3899 X 797 y F34(L)S -28 x('utente)S
+216 x(pu\362)S 216 x(passare)S 215 x(con)S 216 x(facilit\340)S 215 x
+(da)S 216 x(VMSmail)S 215 x(a)S 216 x(ALL-IN-1)S 215 x(MAIL.)S 217 x
+(Le)S 216 x(interfacce)S 216 x(sono)S 215 x(estensioni)S 215 x(logiche)S
+3899 X 598 y(dell'i)S -2 x(nterfaccia)S 245 x(VMSmail;)S 284 x(i)S 244 x
+(comandi)S 244 x(e)S 244 x(i)S 244 x(servizi)S 244 x(risulteranno)S
+243 x(quindi)S 244 x(familiari)S 243 x(all')S -2 x(utente.)S 2 x(Indirizzi)S
+243 x(e)S 245 x(liste)S 244 x(di)S 3899 X 598 y(distribuzione)S 129 x
+(utilizzati)S 130 x(in)S 129 x(VMSmail)S 130 x(possono)S 130 x(essere)S
+130 x(usati)S 130 x(in)S 130 x(ALL-IN-1)S 130 x(MAIL.)S 132 x(Possono)S
+130 x(anche)S 130 x(essere)S 130 x(utilizzati)S 3899 X 597 y(pseudonimi)S
+234 x(e)S 236 x(nomi)S 235 x(logici)S 234 x(da)S 236 x(client)S 235 x
+(VMS-resident.)S 431 x(La)S 235 x(maggior)S 235 x(parte)S 236 x(degli)S
+234 x(indirizzi)S 234 x(utilizzati)S 235 x(nelle)S 235 x(liste)S 3899 X
+598 y(di)S 230 x(distribuzione)S 229 x(VMSmail)S 230 x(possono)S 230 x
+(essere)S 230 x(utilizzate)S 230 x(in)S 230 x(ALL-IN-1)S 230 x(MAIL)S
+231 x(con)S 231 x(le)S 229 x(stesse)S 231 x(restrizioni)S 230 x(trovate)S
+3899 X 598 y(quando)S 187 x(si)S 187 x(utilizzano)S 187 x(tali)S 186 x
+(liste)S 188 x(da)S 187 x(un)S 187 x(altro)S 187 x(nodo.)S 286 x(\(Consultare)S
+187 x(la)S 186 x(documentazione)S 188 x(del)S 186 x(prodotto)S 188 x
+(per)S 188 x(ulteriori)S 3899 X 598 y(informazioni\).)S 3899 23503 XY
+(Non)S 158 x(\350)S 158 x(richiesta)S 157 x(la)S 158 x(conversione)S
+158 x(di)S 157 x(archivi)S 158 x(per)S 158 x(le)S 157 x(interfacce)S
+159 x(di)S 157 x(tipo)S 159 x(VMS.)S 159 x(\310)S 158 x(richiesta)S
+158 x(la)S 157 x(conversione)S 158 x(soltanto)S 3899 X 598 y(per)S 166 x
+(rendere)S 165 x(disponibili)S 164 x(messaggi)S 166 x(VMSmail)S 165 x
+(dal)S 166 x(PC.)S 3899 25097 XY(Possono)S 196 x(essere)S 196 x(scambiati)S
+196 x(messaggi)S 196 x(con)S 196 x(VMSmail)S 196 x(sullo)S 195 x(stesso)S
+197 x(sistema)S 196 x(o)S 196 x(dovunque)S 196 x(nella)S 195 x(rete)S
+196 x(DECnet)S 3899 X 598 y(per)S 172 x(mezzo)S 173 x(del)S 172 x(V)S
+-37 x(AX)S 173 x(Message)S 173 x(Router)S 172 x(VMSmail)S 172 x(Gateway)S
+-37 x(.)S 242 x(Questo)S 172 x(pu\362)S 172 x(essere)S 173 x(acquistato)S
+173 x(come)S 172 x(opzione)S 172 x(a)S 3899 X 597 y(se)S 166 x(stante)S
+167 x(se)S 166 x(non)S 166 x(\350)S 166 x(incluso)S 165 x(in)S 166 x
+(ALL-IN-1)S 166 x(MAIL)S 166 x(Wide)S 166 x(Area)S 166 x(Network)S 166 x
+(Server)S 166 x(Package.)S 3899 27289 XY(\310)S 131 x(possibile)S 130 x
+(selezionare)S 131 x(un)S 131 x(editor)S 131 x(da)S 131 x(utilizzare)S
+131 x(in)S 131 x(in)S 130 x(ALL-IN-1)S 132 x(MAIL.)S 132 x(Qualsiasi)S
+130 x(editor)S 131 x(richiamato)S 131 x(da)S 131 x(VMSmail)S 3899 X
+597 y(pu\362)S 166 x(esserlo)S 165 x(anche)S 166 x(da)S 166 x(ALL-IN-1)S
+166 x(MAIL.)S 3899 29082 XY F33(Compatibilit\340)S 183 x(con)S 182 x
+(ALL-IN-1)S 3899 X 797 y F34(Possono)S 178 x(essere)S 177 x(scambiati)S
+178 x(messaggi)S 177 x(con)S 178 x(ALL-IN-1)S 177 x(IOS)S 178 x(per)S
+178 x(mezzo)S 177 x(del)S 178 x(V)S -37 x(AX)S 178 x(Message)S 178 x
+(Router)S 177 x(utilizzando)S 3899 X 598 y(lo)S 165 x(stesso)S 167 x
+(stile)S 166 x(di)S 165 x(indirizzamento.)S 3899 31473 XY(I)S 167 x
+(servizi)S 165 x(di)S 166 x(ALL-IN-1)S 166 x(MAIL)S 167 x(sono)S 167 x
+(compatibili)S 165 x(con)S 166 x(quelli)S 165 x(del)S 166 x(sottosistema)S
+167 x(di)S 166 x(posta)S 166 x(elettronica)S 167 x(ALL-IN-1)S(.)S 222 x
+(Per)S 3899 X 598 y(esempio,)S 135 x(le)S 128 x(richieste)S 127 x(di)S
+127 x(noti\211ca)S 128 x(di)S 127 x(ricezione)S 127 x(da)S 128 x(uno)S
+128 x(dei)S 127 x(due)S 128 x(prodotti)S 128 x(sono)S 127 x(accettat)S
+2 x(e)S 128 x(dall')S -2 x(altro.)S 209 x(Nuove)S 128 x(funzio-)S 3899 X
+597 y(nalit\340)S 163 x(de\211nite)S 165 x(nelle)S 163 x(raccomandazioni)S
+163 x(CCITT)S 164 x(X.400)S 165 x(P2)S 164 x(potranno)S 164 x(essere)S
+164 x(sviluppate)S 164 x(in)S 164 x(seguito)S 164 x(da)S 164 x(entrambi)S
+3899 X 598 y(i)S 166 x(prodotti.)S 15431 37373 XY F40(2)S
+%%EndCustomColor
+2 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-BoldOblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 3 3
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 3976 XY F34(Liste)S 182 x(di)S 182 x
+(distribuzione)S 181 x(create)S 182 x(in)S 182 x(ALL-IN-1)S 182 x(IOS)S
+182 x(possono)S 182 x(essere)S 182 x(utilizzate)S 182 x(in)S 182 x(ALL-IN-1)S
+182 x(MAIL.)S 183 x(Esse)S 183 x(avranno)S 3899 X 598 y(le)S 214 x(stesse)S
+216 x(restrizioni)S 213 x(riscontrate)S 215 x(indirizzando)S 214 x(una)S
+214 x(lista)S 215 x(ad)S 214 x(un)S 215 x(altro)S 215 x(nodo)S 214 x
+(ALL-IN-1)S(.)S 368 x(\(Per)S 215 x(ulteriori)S 213 x(dettagli)S 3899 X
+598 y(consultare)S 159 x(la)S 158 x(documentazione)S 159 x(del)S 158 x
+(prodotto\).)S 220 x(Le)S 159 x(stringhe)S 159 x(di)S 158 x(indirizzamento)S
+158 x(utilizzate)S 159 x(da)S 159 x(ALL-IN-1)S 159 x(saranno)S 3899 X
+597 y(ugualmente)S 142 x(valide)S 142 x(per)S 143 x(ALL-IN-1)S 143 x
+(MAIL,)S 144 x(fatta)S 144 x(eccezione)S 142 x(per)S 143 x(quelle)S
+142 x(che)S 143 x(invocano)S 142 x(protocolli)S 142 x(esterni)S 142 x
+(ALL-IN-1)S 3899 X 598 y(\(che)S 166 x(inizian)S -2 x(o)S 167 x(con)S
+166 x(un)S 165 x(tratt)S 2 x(ino)S 165 x(di)S 166 x(sottolineatura\).)S
+3899 7563 XY F33(T)S -10 x(rasporto)S 182 x(di)S 183 x(messa)S -2 x
+(ggi)S 183 x(X.400)S 3899 X 797 y F34(Possono)S 176 x(essere)S 175 x
+(scambiati)S 175 x(messaggi)S 176 x(con)S 175 x(altri)S 175 x(domini)S
+175 x(e)S 175 x(con)S 176 x(servizi)S 175 x(ALL-IN-1)S 175 x(MAIL)S
+177 x(che)S 175 x(siano)S 175 x(conformi)S 176 x(ai)S 3899 X 597 y(criteri)S
+165 x(X.400)S 167 x(P2.)S 222 x(Prove)S 166 x(di)S 166 x(conformit\340)S
+166 x(sono)S 166 x(in)S 166 x(corso)S 166 x(negli)S 165 x(Stati)S 167 x
+(Uniti)S 165 x(e)S 166 x(in)S 166 x(Europa.)S 3899 9954 XY(In)S 235 x
+(ALL-IN-1)S 234 x(MAIL,)S 236 x(ci)S 234 x(si)S 234 x(riferisce)S 234 x
+(ad)S 234 x(ogni)S 234 x(rete)S 235 x(cliente)S 234 x(con)S 235 x(il)S
+233 x(termine)S 234 x("dominio".)S 426 x(All'interno)S 233 x(di)S 234 x
+(tali)S 235 x(reti)S 234 x(i)S 3899 X 597 y(messaggi)S 200 x(sono)S
+200 x(trasportati)S 201 x(via)S 200 x(DECnet)S 201 x(quando)S 200 x
+(disponibi)S -2 x(le.)S 325 x(Il)S 200 x(trasporto)S 201 x(ad)S 200 x
+(un)S 201 x(servizio)S 199 x(X.400)S 201 x(di)S 200 x(un)S 201 x(altro)S
+3899 X 598 y(fornitore)S 166 x(richiede)S 165 x(la)S 166 x(pila)S 165 x
+(OSI)S 166 x(ed)S 166 x(il)S 165 x(V)S -36 x(AX)S 166 x(Message)S 166 x
+(Router)S 166 x(X.400)S 167 x(Gateway)S 165 x(\(MRX\).)S 3899 12145 XY
+(Lo)S 120 x(scambio)S 120 x(di)S 120 x(messaggi)S 120 x(OSI)S 120 x
+(richiede)S 119 x(come)S 121 x(minimo)S 119 x(un)S 120 x(Gateway)S 120 x
+(MRX)S 120 x(in)S 120 x(ogni)S 120 x(dominio)S 119 x(Digital)S 119 x
+(\(normalmente)S 3899 X 598 y(uno)S 203 x(per)S 203 x(ogni)S 202 x(rete)S
+204 x(cliente\).)S 332 x(Consultare)S 203 x(il)S 202 x(Soft)S 2 x(ware)S
+202 x(Product)S 204 x(Description)S 202 x(del)S 203 x(V)S -37 x(AX)S
+204 x(Message)S 203 x(Router)S 203 x(X.400)S 3899 X 598 y(Gateway)S
+166 x(\(SPD)S 166 x(27.50.xx\))S 166 x(per)S 166 x(una)S 166 x(lista)S
+166 x(dell'har)S -2 x(dware)S 166 x(e)S 166 x(del)S 165 x(software)S
+167 x(necessari.)S 3899 14536 XY F33(Supporto)S 183 x(all'ambiente)S
+182 x(Multi)S 2 x(-fornitore)S 3899 X 797 y F34(L)S -28 x('ambiente)S
+124 x(MAILbus)S 124 x(fornisce)S 124 x(una)S 124 x(serie)S 123 x(di)S
+124 x(gateway)S 124 x(ed)S 123 x(un)S 124 x(kit)S 124 x(di)S 124 x(sviluppo)S
+123 x(di)S 123 x(gateway)S 124 x(per)S 124 x(permettere)S 124 x(lo)S
+124 x(scam-)S 3899 X 598 y(bio)S 194 x(di)S 193 x(messaggi)S 194 x(con)S
+194 x(sistemi)S 194 x(diversi.)S 305 x(Consultare)S 194 x(il)S 193 x
+(Software)S 195 x(Product)S 194 x(Description)S 194 x(\(SPD\))S 194 x
+(per)S 194 x(informazioni)S 3899 X 598 y(sull'har)S -2 x(dware)S 166 x
+(e)S 166 x(sul)S 166 x(software)S 166 x(necessari.)S 3899 17725 XY F33
+(Servizio)S 183 x(di)S 183 x(Directory)S 182 x(Services)S 3899 X 797 y
+F34(ALL-IN-1)S 126 x(MAIL)S 127 x(utilizza)S 125 x(il)S 126 x(servizio)S
+125 x(DDS)S 126 x(\(Distributed)S 125 x(Directory)S 126 x(Service\))S
+126 x(come)S 126 x(sua)S 126 x(directory)S 126 x(di)S 126 x(indirizzamento.)S
+3899 X 597 y(Questa)S 222 x(directory)S 222 x(distribuita,)S 237 x(disponibil)S
+-2 x(e)S 223 x(come)S 222 x(parte)S 223 x(del)S 221 x(V)S -36 x(AX)S
+223 x(Message)S 222 x(Router)S -28 x(,)S 237 x(collega)S 222 x(ALL-IN-1)S
+222 x(MAIL,)S 3899 X 598 y(ALL-IN-1)S 166 x(IOS,)S 167 x(i)S 165 x(gateway)S
+166 x(e)S 166 x(qualsiasi)S 165 x(altro)S 166 x(agente,)S 167 x(condividendo)S
+165 x(il)S 165 x(medesimo)S 166 x(servizio.)S 3899 20713 XY(L)S -28 x
+('utente)S 154 x(pu\362)S 153 x(accedere)S 154 x(alle)S 152 x(directory)S
+153 x(DDS)S 153 x(mentre)S 154 x(indiri)S -2 x(zza)S 154 x(un)S 153 x
+(promemoria)S 152 x(o)S 154 x(crea)S 153 x(un)S 153 x(elemento)S 153 x
+(nel)S 153 x(proprio)S 3899 X 598 y(Elenco)S 176 x(Personale)S 176 x
+(Indirizzi)S 175 x(\(EPI\).)S 177 x(Quest'ultimo)S 175 x(\350)S 176 x
+(una)S 177 x(parte)S 176 x(integrante)S 176 x(di)S 176 x(ALL-IN-1)S
+176 x(MAIL)S 177 x(ed)S 176 x(\350)S 176 x(posizionato)S 3899 X 598 y
+(in)S 157 x(ogni)S 156 x(area)S 157 x(di)S 157 x(posta)S 158 x(elettronica)S
+157 x(dell')S -2 x(utente)S 158 x(o)S 158 x(nel)S 156 x(\211le)S 157 x
+(di)S 157 x(memorizzazione)S 156 x(locale)S 156 x(sull'uni)S -2 x(t\340)S
+158 x(client.)S 219 x(L)S -28 x('utente)S 158 x(si)S 3899 X 598 y(riferisce)S
+169 x(ad)S 169 x(un)S 169 x(elemento)S 169 x(dell'EPI)S 169 x(tramite)S
+170 x(lo)S 169 x(pseudonimo)S 168 x(che)S 169 x(lui)S 169 x(stesso)S
+170 x(ha)S 169 x(assegnato.)S 232 x(Le)S 169 x(liste)S 169 x(di)S 169 x
+(distribu-)S 3899 X 597 y(zione)S 165 x(possono)S 166 x(contenere)S
+167 x(pseudonimi.)S 3899 24101 XY(Le)S 157 x(DDS)S 157 x(sono)S 157 x
+(una)S 157 x(risorsa)S 156 x(di)S 157 x(rete)S 158 x(disponibi)S -2 x
+(le)S 157 x(solo)S 157 x(se)S 157 x(la)S 157 x(connessione)S 156 x(con)S
+158 x(in)S 156 x(server)S 157 x(\350)S 157 x(attiva.)S 220 x(Se)S 157 x
+(i)S 157 x(messaggi)S 3899 X 597 y(sono)S 211 x(creati)S 211 x(e)S 211 x
+(indirizzati)S 210 x(su)S 211 x(un)S 211 x(PC,)S 212 x(in)S 210 x(assenza)S
+212 x(di)S 210 x(connessione)S 211 x(con)S 211 x(il)S 210 x(server)S
+-27 x(,)S 223 x(l'utente)S 211 x(pu\362)S 211 x(ancora)S 211 x(usare)S
+3899 X 598 y(pseudonimi)S 165 x(e)S 166 x(liste)S 166 x(di)S 165 x(distribuzione)S
+165 x(memorizzate)S 166 x(localmente)S 166 x(o)S 166 x(introdurre)S
+165 x(l'intera)S 165 x(stringa)S 166 x(di)S 166 x(indiri)S -2 x(zzamento.)S
+3899 26492 XY F33(Liste)S 182 x(di)S 183 x(distribuzione)S 3899 X 797 y
+F34(Le)S 202 x(liste)S 201 x(di)S 202 x(distribuzione)S 201 x(sono)S
+202 x(semplici)S 200 x(\211le)S 202 x(di)S 201 x(testo)S 203 x(memorizzati)S
+202 x(nell')S -2 x(area)S 202 x(di)S 201 x(posta)S 203 x(elettronica)S
+201 x(dell'utente.)S 3899 X 597 y(Queste)S 225 x(liste)S 226 x(possono)S
+225 x(essere)S 225 x(condivise)S 225 x(da)S 226 x(un)S 225 x(gruppo)S
+225 x(di)S 225 x(utenti)S 226 x(utilizzando)S 225 x(le)S 225 x(funzionalit\340)S
+225 x(VMS)S 226 x(Access)S 3899 X 598 y(Control)S 165 x(e)S 166 x(P)S
+-36 x(A)S -37 x(THWORKS.)S 3899 29480 XY(Le)S 220 x(liste)S 221 x(di)S
+220 x(distribuzione)S 220 x(possono)S 220 x(essere)S 221 x(create)S
+221 x(e)S 220 x(gestite)S 222 x(all')S -2 x(interno)S 221 x(del)S 220 x
+(prodotto,)S 235 x(sia)S 221 x(inserendo)S 220 x(la)S 220 x(lista)S
+3899 X 598 y(che)S 205 x(utilizzando)S 205 x(l'i)S -2 x(ntestazione)S
+206 x(di)S 205 x(un)S 205 x(messaggio)S 205 x(come)S 205 x(lista.)S
+340 x(Sul)S 205 x(sistema)S 205 x(pu\362)S 205 x(essere)S 205 x(de\211nita)S
+206 x(una)S 205 x(lista)S 205 x(di)S 3899 X 598 y(distribuzione)S 134 x
+(di)S 135 x(gruppo.)S 211 x(Le)S 136 x(liste)S 135 x(di)S 135 x(distribuzione)S
+134 x(che)S 135 x(risiedono)S 135 x(su)S 135 x(VMS)S 136 x(possono)S
+135 x(essere)S 135 x(espanse)S 136 x(sul)S 135 x(server)S 3899 X 598 y
+(per)S 166 x(ottenere)S 166 x(una)S 166 x(maggiore)S 166 x(ef)S -9 x
+(\211cienza)S 166 x(del)S 165 x(client.)S 15431 37373 XY F40(3)S
+%%EndCustomColor
+3 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-BoldOblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 4 4
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 4013 XY F33(Servizi)S 183 x(per)S
+182 x(l'archiviazione)S 3899 X 797 y F34(ALL-IN-1)S 153 x(MAIL)S 155 x
+(fornisce)S 153 x(una)S 153 x(strutt)S 2 x(ura)S 153 x(per)S 153 x(l'archiviazi)S
+-2 x(one)S 154 x(di)S 153 x(raccoglitori)S 152 x(e)S 154 x(classi\211catori,)S
+155 x(come)S 154 x(per)S 153 x(l'accesso)S 3899 X 597 y(a)S 176 x(\211le)S
+175 x(RMS.)S 176 x(I)S 176 x(servizi)S 175 x(di)S 175 x(archiviazione)S
+174 x(sono)S 176 x(simili)S 174 x(a)S 175 x(VMSmail.)S 251 x(Un'uni)S
+-2 x(t\340)S 177 x(DECwi)S -2 x(ndows)S 176 x(con)S 175 x(dischi)S 175 x
+(locali)S 175 x(pu\362)S 3899 X 598 y(avere)S 166 x(uno)S 166 x(o)S
+166 x(pi\371)S 165 x(classi\211catori)S 166 x(nel)S 165 x(disco)S 166 x
+(locale)S 165 x(oltre)S 166 x(ad)S 166 x(uno)S 166 x(o)S 166 x(pi\371)S
+165 x(classi\211catori)S 166 x(sul)S 165 x(server)S -27 x(.)S 3899 7001 XY
+(I)S 156 x(classi\211catori)S 155 x(basati)S 156 x(su)S 156 x(VMS)S
+156 x(possono)S 156 x(essere)S 156 x(condivisi)S 154 x(tra)S 157 x(gruppi)S
+155 x(di)S 155 x(utenti)S 156 x(con)S 156 x(privilegi)S 154 x(diversi,)S
+158 x(de\211niti)S 155 x(dal)S 3899 X 598 y(controllo)S 165 x(di)S 166 x
+(accesso)S 166 x(VMS.)S 3899 8795 XY F33(Ripristino)S 183 x(di)S 183 x
+(messa)S -2 x(ggi)S 3899 X 797 y F34(I)S 167 x(messaggi)S 165 x(possono)S
+167 x(essere)S 166 x(ripristinati)S 165 x(in)S 166 x(base)S 166 x(alle)S
+166 x(speci\211che)S 166 x(dell')S -2 x(utente)S 168 x(in)S 165 x(certi)S
+167 x(campi)S 165 x(dell'intestazione)S 165 x(e)S 3899 X 597 y(per)S
+166 x(alcune)S 165 x(strutt)S 2 x(ure)S 165 x(di)S 166 x(archiviazione.)S
+3899 11385 XY F33(Formati)S 183 x(di)S 183 x(\211le)S 3899 X 797 y F34
+(Possono)S 207 x(essere)S 206 x(utilizzati)S 206 x(editor)S 206 x(diversi,)S
+216 x(a)S 206 x(cui)S 207 x(sono)S 206 x(associati)S 206 x(diversi)S
+206 x(formati)S 206 x(di)S 206 x(\211le.)S 343 x(ALL-IN-1)S 207 x(MAIL)S
+207 x(pu\362)S 3899 X 598 y(gestire)S 166 x(diversi)S 165 x(formati)S
+167 x(di)S 166 x(\211le)S 166 x(con)S 166 x(caratteristiche)S 167 x
+(che)S 166 x(consentono)S 166 x(una)S 167 x(maggiore)S 165 x(leggibil)S
+-2 x(it\340)S 167 x(dei)S 165 x(messaggi.)S 222 x(Il)S 3899 X 597 y
+(sistema)S 188 x(permette)S 190 x(la)S 188 x(gestione)S 188 x(automatica)S
+189 x(dei)S 188 x(messaggi)S 188 x(in)S 188 x(ASCII,)S 190 x(DDIF)S
+-55 x(,)S 189 x(WPS-PLUS)S 189 x(e)S 189 x(DX)S 188 x(ed)S 189 x(il)S
+188 x(richiam)S -2 x(o)S 3899 X 598 y(di)S 162 x(altri)S 162 x(formattatori)S
+163 x(di)S 162 x(\211le)S 162 x(o)S 163 x(routine)S 162 x(di)S 162 x
+(conversione)S 162 x(conformi)S 162 x(alla)S 162 x(Compound)S 162 x
+(Document)S 162 x(Architecture)S 163 x(\(CDA\))S 3899 X 598 y(Digital.)S
+3899 15569 XY(Il)S 122 x(client)S 122 x(pu\362)S 122 x(essere)S 122 x
+(impostato)S 123 x(per)S 122 x(invocare)S 122 x(visualizzatori)S 121 x
+(o)S 122 x(applicazioni)S 121 x(basati)S 122 x(sul)S 122 x(tipo)S 122 x
+(di)S 122 x(\211le)S 122 x(di)S 122 x(ogni)S 122 x(allegato.)S 3899 16566 XY
+(A)S 143 x(partire)S 142 x(dalla)S 141 x(V)S -27 x(ersione)S 142 x(1.1)S
+143 x(ALL-IN-1)S 143 x(MAIL)S 143 x(pu\362)S 142 x(essere)S 142 x(impostato)S
+143 x(per)S 143 x(eseguire)S 142 x(conversioni)S 141 x(automatiche)S
+143 x(di)S 3899 X 597 y(componenti)S 150 x(di)S 149 x(messaggi)S 150 x
+(come)S 149 x(essi)S 150 x(sono)S 150 x(consegnati,)S 153 x(utilizzando)S
+150 x(servizi)S 149 x(di)S 149 x(conversione)S 149 x(opzionali)S 149 x
+(residenti)S 3899 X 598 y(su)S 208 x(VMS,)S 209 x(come)S 208 x(CDA)S
+207 x(Converter)S 208 x(Library)S 207 x(for)S 209 x(VMS)S 208 x(\(SPD)S
+208 x(31.31.xx\))S 209 x(Digi)S -2 x(tal)S 208 x(o)S 208 x(altri)S 208 x
+(convertitori)S 208 x(di)S 207 x(terze)S 209 x(parti)S 3899 X 598 y
+(come)S 147 x(KEY)S -36 x(pak\206)S 148 x(for)S 148 x(VMS)S 148 x(Quest'ultima)S
+147 x(\350)S 148 x(un'opzione)S 146 x(a)S 148 x(costo)S 148 x(addizionale.)S
+214 x(L)S -27 x('utente)S 148 x(pu\362)S 148 x(registrare)S 147 x(il)S
+147 x(formato)S 3899 X 598 y(del)S 165 x(\211le)S 166 x(nel)S 166 x
+(pro\211lo.)S 3899 19953 XY(Per)S 169 x(notizie)S 169 x(dettagliate)S
+169 x(sull'i)S -2 x(nterscambio)S 169 x(di)S 169 x(formati)S 169 x(speci\211ci)S
+169 x(di)S 168 x(\211le,)S 170 x(specialmente)S 169 x(tra)S 169 x(gateway)S
+-37 x(,)S 171 x(contattare)S 170 x(la)S 3899 X 598 y(sede)S 166 x(Digital)S
+165 x(pi\371)S 165 x(vicina.)S 3899 21547 XY(Prestare)S 234 x(particolare)S
+233 x(attenzione)S 234 x(in)S 233 x(fase)S 235 x(di)S 233 x(scabio)S
+233 x(di)S 233 x(documenti)S 234 x(DDIF)S 234 x(con)S 233 x(ALL-IN-1)S
+234 x(V)S -27 x(ersione)S 233 x(2.3.)S 425 x(Per)S 3899 X 598 y(informazioni)S
+165 x(dettagliate)S 166 x(contatt)S 2 x(are)S 166 x(la)S 165 x(sede)S
+166 x(Digital)S 165 x(pi\371)S 166 x(vicina.)S 3899 23340 XY F33(Guida)S
+3899 X 797 y F34(L)S -28 x('utente)S 113 x(pu\362)S 112 x(ottenre)S
+113 x(la)S 112 x(Guida)S 111 x(di)S 112 x(ALL-IN-1)S 112 x(MAIL)S 113 x
+(utilizzando)S 111 x(la)S 112 x(funzionalit\340)S 112 x(Guida.)S 203 x
+(Essa)S 112 x(fornisce)S 113 x(informazioni)S 3899 X 598 y(di)S 165 x
+(base)S 166 x(su)S 167 x(come)S 166 x(utilizzare)S 165 x(una)S 166 x
+(determinata)S 166 x(funzione)S 166 x(senza)S 166 x(dover)S 166 x(fare)S
+166 x(riferimento)S 166 x(alla)S 165 x(documentazione.)S 3899 25930 XY
+F33(Stampa)S 3899 X 797 y F34(ALL-IN-1)S 155 x(MAIL)S 156 x(sfrutta)S
+156 x(la)S 155 x(funzionalit\340)S 155 x(di)S 154 x(stampa)S 156 x(VMS)S
+155 x(standard)S 156 x(fornite)S 155 x(da)S 155 x(VMS.)S 156 x(L)S -27 x
+('utente)S 155 x(pu\362)S 155 x(speci\211care)S 155 x(le)S 3899 X 598 y
+(destinazioni)S 165 x(di)S 166 x(stampa)S 166 x(e)S 166 x(le)S 166 x
+(opzioni.)S 3899 28521 XY F33(Funzionalit\340)S 182 x(per)S 182 x(la)S
+183 x(gestione)S 182 x(dei)S 182 x(messaggi)S 3899 X 797 y F34(L)S -28 x
+('utente)S 156 x(pu\362)S 156 x(creare,)S 158 x(leggere)S 155 x(e)S
+156 x(spedire)S 155 x(messaggi)S 155 x(utilizzando)S 155 x(i)S 155 x
+(comandi)S 155 x(forniti.)S 218 x(I)S 156 x(messaggi)S 156 x(possono)S
+155 x(conte-)S 3899 X 597 y(nere)S 173 x(informazioni)S 173 x(in)S 173 x
+(diversi)S 172 x(formati,)S 176 x(incluso)S 173 x(il)S 173 x(formato)S
+174 x(DDIF)S 173 x(\(Digital')S -10 x(s)S 173 x(Document)S 174 x(Interchange)S
+174 x(Format\))S 174 x(per)S 3899 X 598 y(documenti)S 166 x(composti.)S
+3899 31509 XY(I)S 196 x(messaggi)S 195 x(possono)S 196 x(essere)S 196 x
+(inoltrati)S 195 x(verso)S 196 x(un'altra)S 195 x(destinazione.)S 310 x
+(Gli)S 195 x(allegati)S 195 x(possono)S 195 x(includere)S 195 x(un)S
+196 x(altro)S 3899 X 598 y(messaggio,)S 166 x(un)S 166 x(documento)S
+166 x(o)S 166 x(un)S 166 x(\211le,)S 166 x(anche)S 166 x(binario.)S
+3899 33104 XY(La)S 155 x(risposta)S 154 x(ai)S 155 x(messaggi)S 154 x
+(\350)S 155 x(di)S 154 x(facile)S 154 x(gestione.)S 218 x(Il)S 155 x
+(sistema)S 155 x(indiri)S -2 x(zza)S 155 x(automaticamente)S 156 x(la)S
+154 x(risposta)S 155 x(da)S 154 x(trasferire)S 3899 X 597 y(al)S 165 x
+(mittente.)S 223 x(L)S -27 x('utente)S 166 x(pu\362)S 166 x(rispondere)S
+165 x(al)S 166 x(mittente,)S 167 x(a)S 166 x(tutt)S 2 x(i)S 165 x(i)S
+166 x(destinatari)S 166 x(originari)S 164 x(o)S 166 x(ad)S 166 x(una)S
+166 x(lista.)S 15431 37373 XY F40(4)S
+%%EndCustomColor
+4 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-BoldOblique
+%%+ Helvetica
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 5 5
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 132 x(MAIL/IT)S -34 x(ALIANO)S 131 x
+(per)S 134 x(VMS,)S 133 x(V)S -25 x(ersione)S 134 x(1.1)S 24279 X(SPD)S
+133 x(44.04.00)S 3899 3976 XY F34(I)S 255 x(messaggi)S 254 x(possono)S
+255 x(essere)S 255 x(indiri)S -2 x(zzati)S 255 x(ad)S 255 x(uno)S 255 x
+(o)S 254 x(pi\371)S 255 x(utenti)S 255 x(di)S 254 x(ogni)S 254 x(destinazione)S
+255 x(MAILbus)S 255 x(valida)S 254 x(\(es.)S 3899 X 598 y(VMSmail)S
+(,)S 264 x(UL)S -37 x(TRIX)S 246 x(mail,)S 264 x(X.400,)S 265 x(ecc.\).)S
+459 x(I)S 245 x(formati)S 245 x(dei)S 244 x(\211le)S 245 x(possono)S
+245 x(essere)S 244 x(modi\211cati)S 245 x(dai)S 244 x(gateway)S 245 x
+(o)S 245 x(da)S 3899 X 598 y(user)S 215 x(agent)S 216 x(per)S 215 x
+(rendere)S 215 x(il)S 215 x(messaggio)S 214 x(leggibile)S 214 x(dal)S
+215 x(destinatario.)S 370 x(Non)S 215 x(tutti)S 216 x(i)S 215 x(formati)S
+216 x(sono)S 215 x(gestiti)S 216 x(da)S 215 x(ogni)S 3899 X 597 y(elemento.)S
+215 x(\310)S 146 x(consigli)S -2 x(abile)S 145 x(piani\211care)S 145 x
+(le)S 145 x(capacit\340)S 145 x(della)S 145 x(rete)S 146 x(in)S 145 x
+(modo)S 145 x(appropriato)S 145 x(per)S 146 x(assicurare)S 145 x(la)S
+145 x(massima)S 3899 X 598 y(leggibi)S -2 x(lit\340)S 166 x(dei)S 166 x
+(messaggi.)S 3899 7563 XY F33(Noti\211che)S 3899 X 797 y F34(\310)S
+125 x(possibile)S 124 x(richiedere)S 124 x(la)S 125 x(noti\211ca)S 125 x
+(di)S 125 x(consegna)S 125 x(e)S 125 x(di)S 124 x(ricezione)S 124 x
+(di)S 125 x(un)S 125 x(messaggio:)S 201 x(viene)S 125 x(generato)S 125 x
+(un)S 125 x(messaggio)S 3899 X 597 y(di)S 165 x(noti\211ca)S 167 x(che)S
+166 x(torna)S 166 x(al)S 166 x(mittente)S 166 x(a)S 166 x(consegna)S
+166 x(o)S 166 x(ricezione)S 165 x(avvenuta.)S 3899 10153 XY F33(Noti\211ca)S
+182 x(interattiva)S 183 x(di)S 183 x(un)S 182 x(nuovo)S 182 x(messa)S
+-2 x(ggio)S 3899 X 797 y F34(L)S -28 x('utente)S 167 x(pu\362)S 166 x
+(scegliere)S 165 x(di)S 165 x(ricevere)S 166 x(la)S 165 x(noti\211ca)S
+167 x(interattiva)S 166 x(di)S 166 x(nuovi)S 165 x(messaggi.)S 3899 12145 XY
+F33(Indirizzo)S 183 x(alternativo)S 183 x(del)S 182 x(messagg)S -2 x
+(io)S 3899 X 797 y F34(L)S -28 x('utente)S 197 x(pu\362)S 195 x(richiedere)S
+195 x(che)S 196 x(tutti)S 197 x(i)S 195 x(messaggi)S 196 x(in)S 195 x
+(entrata)S 197 x(siano)S 195 x(automaticamente)S 197 x(indiri)S -2 x
+(zzati)S 196 x(ad)S 196 x(un)S 196 x(indiri)S -2 x(zzo)S 3899 X 598 y
+(secondario.)S 3899 14736 XY F33(Conse)S -2 x(gna)S 182 x(sulla)S 183 x
+(base)S 181 x(della)S 183 x(priorit\340)S 3899 X 797 y F34(L)S -28 x
+('utente)S 173 x(pu\362)S 172 x(scegliere)S 172 x(la)S 172 x(priorit\340)S
+171 x(per)S 172 x(la)S 172 x(consegna)S 173 x(di)S 171 x(un)S 173 x
+(messaggio.)S 240 x(Pu\362)S 172 x(essere)S 173 x(speci\211cato)S 172 x
+(il)S 172 x(livell)S -2 x(o)S 172 x(della)S 3899 X 598 y(consegna)S
+166 x(\(espresso,)S 166 x(prima)S 166 x(classe,)S 166 x(seconda)S 166 x
+(classe\).)S 221 x(Sono)S 166 x(anche)S 166 x(disponibili)S 164 x(altri)S
+166 x(servizi)S 165 x(per)S 166 x(il)S 165 x(trasporto.)S 3899 17326 XY
+F33(Classi)S 182 x(di)S 183 x(messa)S -2 x(ggio)S 3899 X 797 y F34(L)S
+-28 x('utente)S 218 x(pu\362)S 217 x(impostare)S 218 x(degli)S 216 x
+(indicatori)S 216 x(che)S 218 x(diano)S 216 x(al)S 217 x(destinatario)S
+217 x(informazioni)S 217 x(sulla)S 216 x(natura)S 218 x(del)S 217 x
+(messag-)S 3899 X 598 y(gio:)S 297 x(l'importanza)S 203 x(\(alta,)S
+214 x(media,)S 213 x(bassa\),)S 214 x(la)S 204 x(riservatezza)S 204 x
+(\(messaggio)S 203 x(senza)S 204 x(restrizioni,)S 213 x(personale,)S
+213 x(privato,)S 3899 X 598 y(riservato)S 166 x(alla)S 165 x(Societ\340\).)S
+3899 20315 XY(Per)S 166 x(facilitare)S 166 x(la)S 165 x(rimozione)S
+165 x(automatica)S 167 x(possono)S 166 x(essere)S 165 x(applicate)S
+166 x(ai)S 166 x(messaggi)S 165 x(date)S 167 x(di)S 165 x(scadenza.)S
+3899 21311 XY(Questi)S 166 x(campi)S 165 x(possono)S 166 x(anche)S 166 x
+(essere)S 166 x(utilizzati)S 165 x(per)S 166 x(localizzare)S 165 x(classi)S
+165 x(di)S 166 x(messaggi)S 165 x(nell'archivi)S -2 x(o.)S 3899 22507 XY
+F33(Gestione)S 182 x(di)S 183 x(sistema)S 3899 X 797 y F34(La)S 195 x
+(gestione)S 196 x(locale)S 195 x(richiesta)S 195 x(per)S 195 x(il)S
+195 x(sistema)S 195 x(di)S 195 x(posta)S 196 x(elettronica)S 196 x(\350)S
+195 x(minima)S 195 x(e)S 195 x(generalmente)S 195 x(automatica.)S 311 x
+(\310)S 3899 X 597 y(necessario)S 183 x(un)S 183 x(responsabile)S 182 x
+(di)S 183 x(sistema)S 184 x(o)S 183 x(un)S 184 x(amministratore)S 183 x
+(per)S 183 x(creare)S 183 x(un'area)S 183 x(utente)S 184 x(VMS)S 184 x
+(standard;)S 193 x(la)S 3899 X 598 y(maggior)S 165 x(parte)S 166 x(delle)S
+166 x(funzioni)S 165 x(possono)S 166 x(essere)S 166 x(eseguite)S 166 x
+(dall'utente.)S 3899 25495 XY(Per)S 162 x(eseguire)S 161 x(la)S 162 x
+(manutenzione)S 162 x(dell'a)S -2 x(rchivio)S 162 x(non)S 162 x(sono)S
+162 x(necessarie)S 161 x(funzionalit\340)S 162 x(speciali)S -2 x(.)S
+221 x(Una)S 162 x(o)S 162 x(tutte)S 163 x(le)S 162 x(aree)S 3899 X 598 y
+(utente)S 169 x(sul)S 168 x(server)S 168 x(possono)S 168 x(essere)S
+168 x(salvate)S 168 x(o)S 168 x(ripristinate)S 168 x(tramite)S 168 x
+(le)S 168 x(funzionalit\340)S 168 x(standard)S 168 x(VMS.)S 169 x(La)S
+169 x(gestione)S 3899 X 598 y(delle)S 165 x(strutture)S 167 x(di)S 166 x
+(\211le)S 165 x(disponibili)S 164 x(all'utente)S 166 x(PC)S 166 x(sono)S
+166 x(sotto)S 167 x(il)S 165 x(controllo)S 165 x(dell'utente)S 166 x
+(stesso.)S 3899 27687 XY(Il)S 161 x(sistema)S 161 x(di)S 160 x(gestione)S
+161 x(\350)S 161 x(conforme)S 161 x(a)S 161 x(quello)S 160 x(utilizzato)S
+160 x(dalla)S 160 x(famiglia)S 160 x(di)S 161 x(prodotti)S 161 x(MAILbus.)S
+221 x(Il)S 161 x(server)S 160 x(ALL-IN-1)S 3899 X 598 y(MAIL)S 165 x
+(fornisce)S 164 x(una)S 164 x(funzionalit\340)S 164 x(per)S 164 x(la)S
+163 x(gestione)S 164 x(che)S 165 x(consente)S 164 x(di)S 164 x(apportare)S
+164 x(modi\211che)S 164 x(alla)S 163 x(con\211gurazione)S 163 x(e)S
+3899 X 598 y(di)S 164 x(veri\211care)S 164 x(lo)S 164 x(stato)S 165 x
+(del)S 164 x(sistema)S 165 x(di)S 164 x(posta)S 165 x(elettronica.)S
+221 x(Il)S 164 x(richiamo)S 164 x(di)S 164 x(questa)S 165 x(funzionalit\340)S
+164 x(tramite)S 164 x(la)S 165 x(funzione)S 3899 X 597 y(SYSMAN)S 167 x
+(di)S 165 x(VMS)S 167 x(permette)S 166 x(la)S 166 x(gestione)S 166 x
+(centralizzata)S 166 x(di)S 166 x(tali)S 165 x(operazioni.)S 3899 30676 XY
+F33(Internazionalizzazione)S 3899 X 797 y F34(ALL-IN-1)S 218 x(MAIL)S
+219 x(supporta)S 218 x(operazioni)S 217 x(in)S 218 x(lingue)S 217 x
+(diverse.)S 378 x(Pu\362)S 218 x(essere)S 218 x(distribuito)S 218 x
+(in)S 217 x(una)S 218 x(rete)S 219 x(multilin)S -2 x(gue)S 218 x(e)S
+3899 X 598 y(pu\362)S 187 x(supportare)S 187 x(operazioni)S 186 x(in)S
+186 x(lingue)S 186 x(diverse)S 187 x(su)S 187 x(un)S 187 x(singolo)S
+186 x(server)S -27 x(.)S 284 x(Per)S 187 x(ulteriori)S 186 x(informazioni)S
+186 x(consultare)S 187 x(il)S 3899 X 597 y(System)S 167 x(Support)S
+166 x(Addendum)S 166 x(\(SSA)S 167 x(44.04.00-A\).)S 15431 37373 XY
+F40(5)S
+%%EndCustomColor
+5 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-BoldOblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 6 6
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 3960 XY F34(Per)S 166 x(client)S
+166 x(in)S 165 x(altre)S 166 x(lingue)S 165 x(consultare:)S 5144 X 897 y
+F42(ALL-IN)S -2 x(-1)S 132 x(MAIL)S 132 x(for)S 132 x(VMS)S 14061 X
+(SPD)S 132 x(39.5)S -2 x(9.00)S 5144 X 697 y(ALL-IN)S -2 x(-1)S 132 x
+(MAIL/DANS)S -2 x(K)S 133 x(for)S 132 x(VMS)S 14061 X(SPD)S 132 x(27.H8)S
+-2 x(.00)S 5144 X 698 y(ALL-IN)S -2 x(-1)S 132 x(MAIL/DEUTSCH)S 131 x
+(f\374r)S 132 x(VMS)S 14061 X(SPD)S 132 x(44.0)S -2 x(2.00)S 5144 X
+697 y(ALL-IN)S -2 x(-1)S 132 x(MAIL/ESP)S -31 x(A\321OL)S 132 x(para)S
+131 x(VMS)S 14061 X(SPD)S 132 x(27.H7)S -2 x(.00)S 5144 X 698 y(ALL-IN)S
+-2 x(-1)S 132 x(MAIL/FRAN\307AI)S -2 x(S)S 133 x(pour)S 131 x(VMS)S
+14061 X(SPD)S 132 x(44.0)S -2 x(3.00)S 5144 X 697 y(ALL-IN)S -2 x(-1)S
+132 x(MAIL/NEDE)S -2 x(RLANDS)S 132 x(voor)S 131 x(VMS)S 14061 X(SPD)S
+132 x(27.H9)S -2 x(.00)S 5144 X 697 y(ALL-IN)S -2 x(-1)S 132 x(MAIL/SVEN)S
+-2 x(SKA)S 133 x(f\366r)S 132 x(VMS)S 14061 X(SPD)S 132 x(44.0)S -2 x
+(5.00)S 3899 10237 XY F32(Documen)S -2 x(tazione)S 183 x F33(ALL-IN-1)S
+182 x(MAIL)S 3899 X 797 y F34(La)S 158 x(documentazione)S 158 x(sull'i)S
+-2 x(nstallazione,)S 160 x(la)S 158 x(gestione)S 158 x(del)S 158 x(sistema)S
+158 x(e)S 158 x(le)S 158 x(procedure)S 158 x(dell'utente)S 158 x(per)S
+158 x(il)S 157 x(client)S 158 x(DEC-)S 3899 X 598 y(windows)S 165 x
+(e)S 166 x(V)S -9 x(ideo)S 166 x(T)S -55 x(erminals)S 165 x(sono)S 166 x
+(incluse)S 165 x(nel)S 165 x(kit)S 167 x(di)S 165 x(documentazione.)S
+3899 12827 XY F33(Strutt)S 2 x(ura)S 182 x(del)S 182 x(prodotto)S 3899 X
+797 y F34(ALL-IN-1)S 158 x(MAIL)S 158 x(for)S 158 x(V)S -9 x(ideo)S
+158 x(T)S -55 x(erminal)S -2 x(s,)S 160 x(ALL-IN-1)S 158 x(MAIL)S 159 x
+(per)S 157 x(VMS)S 158 x(DECwindows)S 156 x(e)S 158 x(il)S 157 x(server)S
+158 x(ALL-IN-1)S 157 x(MAIL)S 159 x(per)S 3899 X 598 y(VMS)S 166 x(sono)S
+166 x(prodotti)S 167 x(basati)S 166 x(su)S 166 x(VMS.)S 3899 15417 XY
+F32(ALL-IN-1)S 182 x(MAIL)S 183 x(for)S 183 x(V)S -9 x(ideo)S 182 x
+(T)S -41 x(erminals)S 3899 X 797 y F34(ALL-IN-1)S 203 x(MAIL)S 203 x
+(for)S 203 x(V)S -9 x(ideo)S 202 x(T)S -55 x(erminals)S 202 x(appare)S
+202 x(come)S 203 x(VMSmail,)S 211 x(ma)S 203 x(comunica)S 202 x(direttamente)S
+203 x(con)S 203 x(il)S 202 x(Message)S 3899 X 598 y(Router)S -28 x(,)S
+220 x(ed)S 209 x(utilizza)S 208 x(un)S 209 x(protocollo)S 208 x(con)S
+208 x(accessi)S 209 x(all\371intera)S 208 x(gamma)S 208 x(di)S 208 x
+(servizi)S 208 x(di)S 208 x(posta.)S 351 x(Questo)S 209 x(client)S 208 x
+(\350)S 209 x(co-)S 3899 X 598 y(residente)S 209 x(con)S 208 x(il)S
+209 x(server)S 208 x(ALL-IN-1)S 209 x(MAIL.)S 210 x(Fornisce)S 209 x
+(terminali)S 208 x(con)S 209 x(lo)S 208 x(stesso)S 209 x(accesso)S 209 x
+(ai)S 209 x(servizi)S 208 x(di)S 208 x(ALL-IN-1)S 3899 X 598 y(MAIL.)S
+173 x(Poich\351)S 172 x(esso)S 171 x(condivide)S 171 x(lo)S 172 x(stesso)S
+172 x(server)S 172 x(con)S 172 x(altri)S 171 x(client)S 172 x(ALL-IN-1)S
+171 x(MAIL,)S 173 x(pu\362)S 172 x(essere)S 172 x(utilizzato)S 172 x
+(come)S 3899 X 597 y(alternativa)S 166 x(per)S 166 x(utenti)S 166 x
+(con)S 166 x(pi\371)S 166 x(unit\340)S 166 x(desktop.)S 3899 19801 XY
+F33(Compatibilit\340)S 183 x(con)S 182 x(VMSm)S 2 x(ail)S 3899 X 797 y
+F34(L)S -28 x('utente)S 141 x(pu\362)S 139 x(passare)S 140 x(con)S 140 x
+(facilit\340)S 139 x(da)S 140 x(VMSmail)S 139 x(a)S 140 x(ALL-IN-1)S
+139 x(MAIL)S 141 x(for)S 140 x(V)S -9 x(ideo)S 139 x(T)S -55 x(erminals.)S
+213 x(L)S -28 x('interfaccia)S 139 x(a)S 140 x(linea)S 139 x(di)S 3899 X
+598 y(comandi)S 153 x(\350)S 154 x(un'estensione)S 153 x(logica)S 153 x
+(dell'i)S -2 x(nterfaccia)S 154 x(VMSmail;)S 158 x(i)S 154 x(comandi)S
+153 x(e)S 154 x(i)S 153 x(servizi)S 153 x(in)S 153 x(ALL-IN-1)S 154 x
+(MAIL)S 155 x(for)S 154 x(V)S -9 x(ideo)S 3899 X 598 y(T)S -55 x(erminals)S
+198 x(risulteranno)S 199 x(quindi)S 199 x(familiari)S 198 x(all')S -2 x
+(utente.)S 323 x(Indirizzi,)S 208 x(liste)S 199 x(di)S 199 x(distribuzione)S
+198 x(e)S 200 x(pseudonimi)S 198 x(utilizzati)S 199 x(in)S 3899 X 597 y
+(VMSmail)S 165 x(possono)S 166 x(essere)S 166 x(usati)S 166 x(in)S 166 x
+(ALL-IN-1)S 166 x(MAIL)S 167 x(for)S 166 x(V)S -9 x(ideo)S 166 x(T)S
+-55 x(erminals.)S 3899 23388 XY(ALL-IN-1)S 163 x(MAIL)S 163 x(for)S
+163 x(V)S -9 x(ideo)S 162 x(T)S -55 x(erminals)S 162 x(localizzare)S
+161 x(e)S 163 x(visualizzare)S 161 x(messaggi)S 163 x(nell')S -2 x(archivio)S
+162 x(esitente)S 163 x(di)S 162 x(VMSmail,)S 3899 X 597 y(e)S 166 x
+(copiarli)S 165 x(nell')S -2 x(archivio)S 165 x(ALL-IN-1)S 166 x(MAIL.)S
+3899 25181 XY F33(Editor)S 3899 X 797 y F34(L)S -28 x('editor)S 166 x
+(standard)S 166 x(\350)S 166 x(un)S 166 x(semplice)S 165 x(editor)S
+166 x(di)S 166 x(testo.)S 3899 26974 XY(L)S -28 x('utente)S 178 x(VMS)S
+178 x(pu\362)S 178 x(scegliere)S 176 x(tra)S 178 x(editor)S 178 x(Digi)S
+-2 x(tal)S 178 x(dif)S -9 x(ferenti)S 178 x(e)S 177 x(editor)S 178 x
+(di)S 177 x(terze)S 178 x(parti.)S 256 x(Gli)S 176 x(editor)S 178 x
+(richiamati)S 176 x(tramite)S 3899 X 598 y(VMSmail)S 165 x(possono)S
+166 x(essere)S 166 x(utilizzati)S 166 x(da)S 166 x(ALL-IN-1)S 166 x
+(MAIL.)S 3899 28767 XY F32(ALL-IN-1)S 182 x(MAIL)S 183 x(per)S 182 x
+(VMS)S 184 x(DECwindows)S 3899 X 797 y F34(ALL-IN-1)S 214 x(MAIL)S 215 x
+(per)S 214 x(VMS)S 215 x(DECwindow)S -2 x(s)S 215 x(\350)S 214 x(un'impl)S
+-2 x(ementazione)S 215 x(DECwi)S -2 x(ndows)S 214 x(dei)S 214 x(coponenti)S
+214 x(software)S 215 x(del)S 3899 X 598 y(client)S 123 x(ALL-IN-1)S
+123 x(MAIL.)S 124 x(Esso)S 123 x(\350)S 123 x(conforme)S 123 x(a)S 123 x
+F35(DECwindows)S 122 x(Style)S 123 x(Guide)S 122 x F34(e)S 123 x(pu\362)S
+123 x(essere)S 123 x(utilizzato)S 122 x(su)S 124 x(una)S 122 x(stazione)S
+3899 X 598 y(di)S 200 x(lavoro)S 199 x(membro)S 200 x(dello)S 199 x
+(stesso)S 201 x(Local)S 200 x(Area)S 200 x(V)S -37 x(AXcluster)S 201 x
+(sia)S 200 x(in)S 199 x(modo)S 200 x(remoto)S 201 x(utilizzando)S 199 x
+(qualsiasi)S 199 x(unit\340)S 200 x(di)S 3899 X 598 y(visualizzazi)S
+-2 x(one)S 166 x(X1)S -36 x(1)S 166 x(supportata)S 166 x(dalla)S 166 x
+(Digi)S -2 x(tal.)S 15431 37373 XY F40(6)S
+%%EndCustomColor
+6 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-BoldOblique Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 7 7
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 3996 XY F33(Acce)S -2 x(sso)S 182 x
+(da)S 182 x(altre)S 183 x(piattaforme)S 3899 X 797 y F34(Poich\350)S
+170 x(ALL-IN-1)S 170 x(MAIL)S 171 x(si)S 170 x(conforma)S 170 x(allo)S
+170 x(standard)S 170 x(DECwindow)S -2 x(s,)S 172 x(gli)S 170 x(utenti)S
+170 x(di)S 170 x(unit\340)S 170 x(con)S 170 x(X-servers)S 171 x(possono)S
+3899 X 597 y(accedere)S 220 x(al)S 219 x(prodotto.)S 384 x(In)S 220 x
+(questo)S 220 x(caso)S 220 x(la)S 219 x(composizione)S 219 x(e)S 220 x
+(la)S 219 x(memorizzazione)S 219 x(del)S 220 x(messaggio)S 219 x(non)S
+220 x(sono)S 3899 X 598 y(gestite)S 238 x(dall'uni)S -2 x(t\340)S 239 x
+(desktop)S 238 x(ma)S 238 x(sulla)S 237 x(piattaforma)S 238 x(ALL-IN-1)S
+238 x(MAIL,)S 239 x(mentre)S 238 x(l'unit\340)S 237 x(di)S 238 x(visuali)S
+-2 x(zzazione)S 238 x(viene)S 3899 X 598 y(gestita)S 155 x(da)S 155 x
+(quella)S 154 x(desktop.)S 219 x(Questa)S 155 x(caratteristica)S 155 x
+(fornisce)S 155 x(accesso)S 155 x(ad)S 155 x(unit\340)S 155 x(desktop)S
+155 x(conformi)S 155 x(agli)S 154 x(standard)S 3899 X 598 y(DECwindow)S
+-2 x(s.)S 3899 8379 XY F33(Compatibilit\340)S 183 x(con)S 182 x(VMSm)S
+2 x(ail)S 183 x(e)S 182 x(VMSmail)S 184 x(DECwindows)S 3899 X 797 y
+F34(L)S -28 x('utente)S 169 x(pu\362)S 168 x(passare)S 168 x(con)S 169 x
+(facilit\340)S 167 x(da)S 169 x(VMSmail)S 167 x(o)S 169 x(DECwi)S -2 x
+(ndows)S 168 x(VMSmail)S 168 x(a)S 168 x(ALL-IN-1)S 168 x(MAIL)S 169 x
+(per)S 168 x(VMS)S 169 x(DEC-)S 3899 X 598 y(windows.)S 260 x(L)S -28 x
+('interfaccia)S 179 x(\350)S 179 x(simile)S 178 x(a)S 179 x(quella)S
+178 x(VMSmail)S 178 x(DECwindows;)S 185 x(i)S 179 x(comandi)S 178 x
+(ed)S 179 x(i)S 179 x(servizi)S 178 x(in)S 179 x(ALL-IN-1)S 179 x(MAIL)S
+3899 X 598 y(per)S 184 x(VMS)S 185 x(DECwi)S -2 x(ndows)S 184 x(risulteranno)S
+184 x(quindi)S 183 x(familiari)S 183 x(all'utente.)S 276 x(Indirizzi,)S
+189 x(pseudonimi,)S 188 x(nomi)S 184 x(logici)S 183 x(e)S 184 x(liste)S
+184 x(di)S 3899 X 597 y(distribuzione)S 165 x(utilizzati)S 165 x(in)S
+166 x(VMSmail)S 166 x(possono)S 165 x(essere)S 166 x(utilizzati)S 166 x
+(in)S 165 x(ALL-IN-1)S 166 x(MAIL)S 167 x(per)S 166 x(VMS)S 167 x(DECwi)S
+-2 x(ndows.)S 3899 11966 XY(ALL-IN-1)S 154 x(MAIL)S 154 x(per)S 154 x
+(VMS)S 154 x(DECwin)S -2 x(dows)S 154 x(pu\362)S 153 x(copiare)S 154 x
+(messaggi)S 153 x(da)S 153 x(archivi)S 153 x(esistenti)S 154 x(di)S
+153 x(VMSmail)S 154 x(nell')S -2 x(archivio)S 3899 X 597 y(ALL-IN-1)S
+166 x(MAIL.)S 3899 13759 XY F33(Editor)S 3899 X 797 y F34(L)S -28 x
+('editor)S 166 x(standard)S 166 x(\350)S 166 x(un)S 166 x(semplice)S
+165 x(editor)S 166 x(di)S 166 x(testo.)S 3899 15552 XY(L)S -28 x('utente)S
+168 x(DECwi)S -2 x(ndows)S 167 x(pu\362)S 167 x(scegliere)S 165 x(tra)S
+168 x(editor)S 166 x(Digital)S 166 x(dif)S -9 x(ferenti)S 167 x(e)S
+167 x(editor)S 167 x(di)S 166 x(terze)S 167 x(parti.)S 224 x(Gli)S 166 x
+(editor)S 166 x(richiamati)S 3899 X 598 y(tramite)S 208 x(VMSmail)S
+208 x(DECwindow)S -2 x(s)S 208 x(possono)S 208 x(essere)S 208 x(utilizzati)S
+208 x(da)S 208 x(ALL-IN-1)S 208 x(MAIL)S 209 x(per)S 208 x(for)S 208 x
+(VMS)S 209 x(DECwi)S -2 x(ndows,)S 3899 X 598 y(inclusi)S 165 x(editor)S
+166 x(gra\211ci)S 165 x(come)S 166 x(DECwrite.)S 3899 18242 XY F32(HARD)S
+-2 x(W)S -30 x(ARE)S 183 x(NECESSARIO)S 3899 19238 XY F34(Processori)S
+110 x(e/o)S 111 x(con\211gurazioni)S 110 x(hardware)S 110 x(come)S 111 x
+(speci\211cato)S 110 x(nel)S 111 x(System)S 111 x(Support)S 111 x(Addendum)S
+111 x(\(SSA)S 167 x(44.04.00-A\))S(.)S 3899 20733 XY F32(SOFTW)S -30 x
+(ARE)S 183 x(NECESSARIO)S 3899 21729 XY F34(Per)S 166 x(il)S 165 x(server)S
+166 x(ALL-IN-1)S 166 x(MAIL)S 167 x(per)S 166 x(VMS)S 166 x(e)S 166 x
+(per)S 166 x(ALL-IN-1)S 166 x(MAIL)S 167 x(for)S 166 x(V)S -9 x(ideo)S
+166 x(T)S -55 x(erminals:)S 3899 X 897 y(\201)S 872 x(Sistema)S 166 x
+(operativo)S 166 x(VMS)S 3899 X 896 y(\201)S 872 x(DECnet-V)S -37 x
+(AX)S 3899 24618 XY(Il)S 194 x(server)S 194 x(ALL-IN-1)S 194 x(MAIL)S
+194 x(consegna)S 194 x(messaggi)S 194 x(agli)S 193 x(utenti)S 194 x
+(che)S 194 x(utilizzano)S 194 x(qualsiasi)S 192 x(combinazione)S 193 x
+(dei)S 194 x(client)S 3899 X 598 y(ALL-IN-1)S 142 x(MAIL)S 143 x(disponibi)S
+-2 x(li)S 141 x(su)S 142 x(quel)S 142 x(server)S -28 x(.)S 214 x(In)S
+143 x(questo)S 142 x(modo)S 142 x(tutti)S 143 x(gli)S 141 x(utenti)S
+142 x(di)S 142 x(una)S 142 x(singola)S 141 x(LAN)S 142 x(o)S 142 x(di)S
+141 x(un)S 142 x(singolo)S 3899 X 598 y(V)S -37 x(AXcluster)S 167 x
+(possono)S 166 x(scambiare)S 165 x(messaggi)S 166 x(tralmite)S 166 x
+(un)S 166 x(solo)S 165 x(server)S 166 x(ALL-IN-1)S 166 x(MAIL.)S 3899 26810 XY
+(V)S -9 x(iene)S 138 x(richiesto)S 137 x(il)S 138 x(V)S -37 x(AX)S 139 x
+(Message)S 138 x(Router)S 137 x(per)S 138 x(scambiare)S 138 x(messaggi)S
+137 x(con)S 138 x(utenti)S 139 x(su)S 138 x(altri)S 138 x(server)S 137 x
+(o)S 139 x(su)S 138 x(altri)S 137 x(prodotti)S 3899 X 598 y(di)S 180 x
+(posta)S 180 x(elettronica.)S 264 x(Il)S 180 x(Message)S 180 x(Router)S
+180 x(pu\362)S 180 x(corisiedere)S 179 x(sul)S 180 x(server)S 180 x
+(ALL-IN-1)S 180 x(MAIL)S 180 x(o)S 181 x(pu\362)S 179 x(risiedere)S
+179 x(su)S 181 x(un)S 3899 X 598 y(altro)S 166 x(nodo)S 166 x(DECnet.)S
+222 x(Per)S 166 x(comunicare)S 165 x(con)S 166 x(utenti)S 167 x(VMSmail)S
+165 x(\350)S 166 x(richiesto)S 166 x(anche)S 166 x(il)S 165 x(gateway)S
+166 x(VMSmail.)S 3899 29201 XY F33(Gateway)S 3899 X 797 y F34(Poich\351)S
+166 x(il)S 165 x(Message)S 166 x(Router)S 166 x(fa)S 166 x(parte)S 167 x
+(del)S 165 x(Gateway)S 166 x(VMSmail,)S 166 x(scegliere)S 165 x(uno)S
+166 x(dei)S 165 x(seguenti)S 166 x(prodotti:)S 3899 X 897 y(\201)S 872 x
+(V)S -37 x(AX)S 167 x(Message)S 166 x(Router)S 4945 X 598 y(o)S 3899 X
+896 y(\201)S 872 x(V)S -37 x(AX)S 167 x(Message)S 166 x(Router)S 166 x
+(VMSmail)S 165 x(Gateway)S 3899 33485 XY(Sono)S 158 x(richiesti)S 157 x
+(P)S -36 x(A)S -37 x(THWORKS)S 158 x(for)S 158 x(VMS)S 159 x(e/o)S 158 x
+(P)S -36 x(A)S -37 x(THWORKS)S 158 x(for)S 158 x(Macintosh)S 158 x(\(componenti)S
+158 x(VMS\))S 159 x(per)S 157 x(supportare)S 3899 X 598 y(client)S 175 x
+(DOS)S 174 x(e/o)S 175 x(Macintosh)S 175 x(utilizzando)S 175 x(P)S -37 x
+(A)S -37 x(THWORKS)S 175 x(come)S 175 x(collegamento)S 175 x(tra)S 175 x
+(client)S 175 x(e)S 174 x(server)S -27 x(.)S 249 x(\(Per)S 175 x(ulteriori)S
+3899 X 598 y(informazioni)S 165 x(consultare)S 166 x(gli)S 165 x(SPD)S
+166 x(dei)S 166 x(vari)S 165 x(componenti\).)S -315 x 37373 Y F40(7)S
+%%EndCustomColor
+7 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-BoldOblique
+%%+ Helvetica
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 8 8
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 3960 XY F34(La)S 185 x(maggior)S
+184 x(parte)S 185 x(delle)S 184 x(con\211gurazioni)S 184 x(richiedono)S
+184 x(Message)S 185 x(Router)S -28 x(,)S 190 x(e)S 185 x(tutt)S 2 x
+(i)S 184 x(i)S 185 x(site)S 185 x(che)S 185 x(migrano)S 184 x(da)S 185 x
+(o)S 185 x(intera-)S 3899 X 598 y(giscono)S 194 x(con)S 194 x(un)S 194 x
+(prodotto)S 194 x(VMSmail)S 194 x(richiedono)S 193 x(il)S 193 x(Gateway)S
+194 x(VMSmail.)S 305 x(ALL-IN-1)S 194 x(MAIL)S 195 x(Wide)S 194 x(Area)S
+194 x(Network)S 3899 X 598 y(Server)S 166 x(Package)S 166 x(combina)S
+166 x(questi)S 166 x(componenti)S 166 x(software)S 166 x(con)S 166 x
+(il)S 165 x(server)S 166 x(ALL-IN-1)S 166 x(MAIL.)S 3899 6351 XY F33
+(Per)S 183 x(il)S 183 x(client)S 183 x(ALL-IN-1)S 182 x(MAIL)S 183 x
+(per)S 182 x(VMS)S 185 x(DECwindows)S 182 x(su)S 182 x(una)S 182 x(stazione)S
+182 x(di)S 183 x(lavoro:)S 3899 X 897 y F34(\201)S 872 x(Sistema)S 166 x
+(operativo)S 166 x(VMS)S 167 x(\(ed)S 165 x(i)S 166 x(necesari)S 166 x
+(componenti)S 165 x(VMS)S 167 x(DECwindow)S -2 x(s\))S 3899 X 897 y
+(\201)S 872 x(DECnet-V)S -37 x(AX)S 3899 9241 XY(Per)S 152 x(ulteriori)S
+150 x(informazioni)S 151 x(sulla)S 151 x(disponibi)S -2 x(lit\340)S
+152 x(e)S 151 x(le)S 152 x(versioni)S 150 x(richieste)S 152 x(del)S
+151 x(software)S 152 x(per)S 151 x(il)S 151 x(server)S 152 x(fare)S
+152 x(riferimento)S 3899 X 597 y(al)S 165 x(System)S 167 x(Support)S
+167 x(Addendum)S 166 x(\(SSA)S 166 x(44.04.00-A\))S 167 x(di)S 166 x
+(ALL-IN-1)S 166 x(MAIL.)S 3899 11034 XY F32(Compone)S -2 x(nti)S 184 x
+(software)S 182 x(locali)S 3899 X 797 y F34(Per)S 166 x(informazioni)S
+165 x(sulle)S 165 x(modi\211che)S 166 x(locali)S 165 x(del)S 165 x(prodotto)S
+167 x(consultare)S 166 x(il)S 165 x(System)S 167 x(Support)S 166 x(Addendum)S
+166 x(\(SSA)S 3899 X 598 y(44.04.00-A\).)S 3899 13923 XY F32(INFORMAZIONI)S
+183 x(SULLE)S 182 x(ORDINAZIONI)S 3899 14919 XY F34(Questo)S 166 x(prodotto)S
+167 x(richiede)S 165 x(un)S 166 x(server)S 165 x(ALL-IN-1)S 166 x(MAIL)S
+167 x(ed)S 166 x(almeno)S 166 x(un)S 166 x(client)S 165 x(ALL-IN-1)S
+166 x(MAIL.)S 3899 15916 XY F36(Opzioni)S 168 x(per)S 166 x(il)S 167 x
+(server:)S 3899 16912 XY F34(Selezionare)S 165 x(una)S 166 x(delle)S
+165 x(seguenti)S 166 x(opzioni)S 165 x(per)S 166 x(il)S 165 x(server:)S
+3899 18107 XY F32(ALL-IN-1)S 182 x(MAIL)S 183 x(Local)S 182 x(Area)S
+182 x(Network)S 182 x(Server)S 182 x(Package:)S 3899 X 797 y F34(Questo)S
+144 x(prodotto)S 144 x(\350)S 144 x(utilizzato)S 143 x(come)S 144 x
+(implementazione)S 142 x(se)S 144 x(non)S 144 x(\350)S 144 x(necessario)S
+143 x(lo)S 143 x(scambiot)S 144 x(di)S 143 x(mail)S 143 x(su)S 144 x
+(un)S 143 x(singolo)S 3899 X 598 y(server:)S 3899 20498 XY(Licenza)S
+165 x(e)S 166 x(supporto)S 167 x(software)S 166 x(\(solo)S 166 x(su)S
+166 x(TK50\):)S 4945 X 598 y(QB-YFT)S -36 x(A9-AA)S 3899 X 598 y(Software)S
+167 x(Product)S 166 x(Services:)S 222 x(QT)S -28 x(-YCZA*-**)S 3899 22690 XY
+(Questo)S 158 x(prodotto)S 158 x(include)S 158 x(la)S 157 x(licenza,)S
+159 x(i)S 158 x(supporti)S 158 x(e)S 158 x(la)S 157 x(documentazione)S
+158 x(per)S 158 x(il)S 157 x(server)S 158 x(di)S 157 x(ALL-IN-1)S 158 x
+(MAIL)S 159 x(su)S 158 x(ogni)S 3899 X 598 y(singola)S 165 x(CPU.)S
+3899 24284 XY(Questo)S 192 x(prodotto)S 193 x(serve)S 192 x(per)S 192 x
+(implementare)S 192 x(il)S 191 x(server)S 192 x(ALL-IN-1)S 193 x(MAIL)S
+193 x(su)S 192 x(un)S 192 x(nodo,)S 199 x(V)S -36 x(AXcluster)S 192 x
+(o)S 193 x(Local)S 191 x(Area)S 3899 X 598 y(Network)S 182 x(quando)S
+182 x(il)S 181 x(Message)S 182 x(Router)S 182 x(abbia)S 182 x(gi\340)S
+182 x(una)S 182 x(sua)S 182 x(licenza,)S 186 x(o)S 182 x(se)S 182 x
+(non)S 182 x(\350)S 182 x(necessaria)S 182 x(la)S 182 x(connessione)S
+181 x(a)S 3899 X 598 y(qualsiasi)S 165 x(altro)S 166 x(nodo)S 165 x
+(o)S 166 x(altro)S 166 x(prodotto)S 167 x(di)S 166 x(posta.)S 3899 26675 XY
+F32(ALL-IN-1)S 182 x(MAIL)S 183 x(W)S -5 x(ide)S 183 x(Area)S 182 x
+(Network)S 182 x(Server)S 182 x(Package:)S 3899 X 797 y F34(Questo)S
+166 x(prodotto)S 167 x(\350)S 166 x(utilizzato)S 166 x(per)S 166 x(co\211gurazioni)S
+165 x(con)S 166 x(pi\371)S 166 x(server)S -27 x(,)S 166 x(o)S 166 x
+(dove)S 167 x(sia)S 165 x(richiesto)S 166 x(di)S 166 x(lavorare)S 165 x
+(con)S 166 x(un)S 167 x(altro)S 3899 X 598 y(prodotto)S 167 x(di)S 165 x
+(posta:)S 3899 29066 XY(Licenze)S 165 x(software:)S 223 x(QL-YFUA9-J*)S
+3899 X 598 y(Software)S 167 x(Product)S 166 x(Services:)S 222 x(QT)S
+-28 x(-YCZA*-**)S 3899 30660 XY(Questo)S 172 x(prodotto)S 173 x(include)S
+171 x(licenze)S 171 x(per)S 172 x(il)S 172 x(server)S 172 x(ALL-IN-1)S
+172 x(MAIL,)S 173 x(Message)S 172 x(Router)S -27 x(,)S 174 x(VMSmail)S
+172 x(Gateway)S 172 x(e)S 172 x(Me-)S 3899 X 598 y(ssage)S 230 x(Router)S
+229 x(X.400)S 231 x(Gateway)S -38 x(.)S 413 x(Per)S 230 x(lavorare)S
+229 x(con)S 230 x(un)S 229 x(altro)S 230 x(prodotto)S 230 x(di)S 230 x
+(posta,)S 246 x(devono)S 230 x(essere)S 229 x(acquistati)S 3899 X 598 y
+(supporti)S 218 x(magnetici)S 218 x(e)S 219 x(documentazione:)S 327 x
+(consultare)S 218 x(le)S 218 x(of)S -8 x(ferte)S 219 x(per)S 218 x(il)S
+218 x(server)S 218 x(ALL-IN-1)S 219 x(MAIL)S 219 x(per)S 218 x(VMS,)S
+220 x(pi\371)S 3899 X 598 y(uno)S 154 x(dei)S 153 x(due)S 154 x(package)S
+154 x(di)S 153 x(gateway:)S 216 x(Message)S 154 x(Router)S 154 x(VMSmail)S
+153 x(Gateway)S 154 x(\(SPD)S 154 x(26.33.xx\))S 155 x(o)S 154 x(Message)S
+154 x(Router)S 3899 X 597 y(X.400)S 167 x(Gateway)S 165 x(\(SPD)S 166 x
+(27.50.xx\).)S 3899 34048 XY(Supporto)S 166 x(software:)S 223 x(QA-YFUAA-**)S
+15431 37373 XY F40(8)S
+%%EndCustomColor
+8 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-BoldOblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 9 9
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 3976 XY F34(Questo)S 121 x(prodotto)S
+123 x(include)S 120 x(supporti)S 122 x(software)S 122 x(e)S 121 x(documentazione)S
+121 x(per)S 122 x(il)S 121 x(server)S 121 x(ALL-IN-1)S 121 x(MAIL,)S
+123 x(Message)S 122 x(Router)S 3899 X 598 y(e)S 153 x(VMSmail)S 153 x
+(Gateway)S -37 x(.)S 218 x(Supporti)S 153 x(e)S 154 x(dopcumentazione)S
+153 x(per)S 153 x(il)S 153 x(Message)S 154 x(Router)S 153 x(X.400)S
+154 x(Gateway)S 153 x(devono)S 154 x(essere)S 3899 X 598 y(acquistati)S
+166 x(separatamente.)S 3899 6367 XY F32(Server)S 182 x(ALL-IN-1)S 183 x
+(MAIL)S 182 x(per)S 183 x(VMS:)S 3899 X 797 y F34(Licenze)S 165 x(software:)S
+223 x(QL-YCZ99-**)S 3899 X 598 y(Supporto)S 166 x(software:)S 223 x
+(QA-YCZA*-**)S 3899 X 598 y(Documentazione)S 165 x(software:)S 223 x
+(QA-YCZAA-GZ)S 3899 X 597 y(Software)S 167 x(Product)S 166 x(Services:)S
+222 x(QT)S -28 x(-YCZA*-**)S 3899 10153 XY F32(Server)S 182 x(ALL-IN-1)S
+183 x(MAIL)S 182 x(per)S 183 x(VMS:)S 3899 X 797 y F34(Licenze)S 165 x
+(software:)S 223 x(QL-YCZ99-**)S 3899 X 598 y(Supporto)S 166 x(software:)S
+223 x(QA-YCZA*-**)S 3899 X 597 y(Documentazione)S 165 x(software:)S
+223 x(QA-YCZAA-GZ)S 3899 X 598 y(Software)S 167 x(Product)S 166 x(Services:)S
+222 x(QT)S -28 x(-YCZA*-**)S 3899 13739 XY(Questo)S 205 x(prodotto)S
+206 x(include)S 204 x(supporti)S 205 x(software)S 205 x(e)S 205 x(documentazione)S
+205 x(per)S 205 x(il)S 204 x(server)S -28 x(,)S 216 x(e)S 205 x(soltanto)S
+205 x(i)S 205 x(supporti)S 205 x(\(senza)S 3899 X 598 y(documentazione)S
+220 x(o)S 221 x(licenza\))S 219 x(per)S 220 x(i)S 221 x(client)S 220 x
+(DECwi)S -2 x(ndows)S 221 x(e)S 220 x(V)S -9 x(ideo)S 220 x(T)S -55 x
+(erminals.)S 384 x(Fare)S 221 x(riferimento)S 220 x(alla)S 220 x(sezione)S
+3899 X 598 y F35(Opzioni)S 165 x(per)S 165 x(il)S 166 x(client)S 165 x
+F34(per)S 166 x(informazioni)S 165 x(sulle)S 165 x(licenze)S 166 x(per)S
+165 x(questi)S 166 x(cli)S 3899 15931 XY(Scegliere)S 194 x(questo)S
+196 x(prodotto)S 196 x(per)S 196 x(ordinare)S 194 x(licenze)S 195 x
+(e)S 195 x(supporti)S 195 x(separatamente,)S 204 x(o)S 195 x(per)S 196 x
+(aggiungere)S 194 x(licenze)S 195 x(per)S 3899 X 598 y(pi\371)S 165 x
+(di)S 166 x(una)S 166 x(CPU)S 166 x(in)S 165 x(un)S 166 x(V)S -37 x
+(AXcluster)S -26 x(.)S 3899 17525 XY F36(Opzioni)S 168 x(per)S 166 x
+(il)S 167 x(client:)S 3899 18721 XY F32(ALL-IN-1)S 182 x(MAIL)S 183 x
+(per)S 182 x(VMS)S 184 x(DECwindows:)S 3899 X 797 y F34(Licenze)S 165 x
+(software:)S 223 x(QL-VZ7U*-**)S 3899 X 598 y(Supporto)S 166 x(software:)S
+223 x(Incluse)S 166 x(con)S 166 x(il)S 165 x(supporto)S 166 x(server)S
+3899 X 597 y(Documentazione)S 165 x(software:)S 223 x(QA-VZ7UA-GZ)S
+3899 X 598 y(Software)S 167 x(Product)S 166 x(Services:)S 222 x(QT)S
+-28 x(-VZ7U*-**)S 3899 22507 XY F32(ALL-IN-1)S 182 x(MAIL)S 183 x(for)S
+183 x(V)S -9 x(ideo)S 182 x(T)S -41 x(erminals:)S 3899 X 797 y F34(Licenze)S
+165 x(software:)S 223 x(QL-YHSA9-**)S 3899 X 597 y(Supporto)S 166 x
+(software:)S 223 x(Incluse)S 166 x(con)S 166 x(il)S 165 x(supporto)S
+166 x(server)S 3899 X 598 y(Documentazione)S 165 x(software:)S 223 x
+(QA-YHSAA-GZ)S 3899 X 598 y(Software)S 167 x(Product)S 166 x(Services:)S
+222 x(QT)S -28 x(-VZ7A*-**)S 3899 26093 XY(*)S 852 x(Indica)S 179 x
+(i)S 180 x(campi)S 179 x(variabil)S -2 x(i.)S 262 x(Per)S 180 x(ulteriori)S
+178 x(informazioni)S 179 x(su)S 179 x(licenze,)S 183 x(servizi)S 178 x
+(e)S 180 x(supporti)S 179 x(disponibil)S -2 x(i)S 180 x(consultare)S
+4945 X 598 y(l'apposito)S 165 x(listino.)S 3899 27787 XY(Le)S 220 x
+(informazioni)S 220 x(sopra)S 220 x(riportate)S 220 x(sono)S 221 x(valide)S
+219 x(al)S 220 x(momento)S 221 x(del)S 220 x(rilascio)S 219 x(della)S
+219 x(versione.)S 385 x(Contattare)S 221 x(l'uf)S -9 x(\211cio)S 3899 X
+598 y(Digital)S 165 x(pi\371)S 165 x(vicino)S 166 x(per)S 165 x(informazini)S
+165 x(aggiornate.)S 3899 29879 XY F32(LICENZE)S 183 x(SOFTW)S -30 x
+(ARE)S 3899 30875 XY F34(Questo)S 196 x(prodotto)S 197 x(\350)S 196 x
+(fornito)S 197 x(secondo)S 196 x(le)S 196 x(norme)S 196 x(generali)S
+195 x(espresse)S 196 x(nelle)S 196 x("Condizi)S -2 x(oni)S 196 x(di)S
+196 x(fornitura)S 197 x(di)S 195 x(prodotti")S 3899 X 598 y(Digital.)S
+221 x(Per)S 166 x(ulteriori)S 165 x(informazioni)S 165 x(sulle)S 165 x
+(licenze)S 165 x(Digital,)S 165 x(contatt)S 2 x(are)S 166 x(l'uf)S -10 x
+(\211cio)S 166 x(Digital)S 165 x(pi\371)S 165 x(vicino.)S 3899 32469 XY
+F35(License)S 165 x(Management)S 167 x(Facility)S 3899 33466 XY F34
+(I)S 166 x(prodotti)S 167 x(basati)S 166 x(su)S 166 x(VMS)S 166 x(supportano)S
+167 x(il)S 165 x(VMS)S 166 x(License)S 166 x(Management)S 166 x(Facility)S
+-37 x(.)S 3899 34462 XY(Le)S 166 x(licenze)S 165 x(pe)S 166 x(il)S 165 x
+(server)S 166 x(ALL-IN-1)S 166 x(MAIL)S 167 x(sono)S 166 x(distribuite)S
+165 x(su)S 166 x(base)S 166 x(Unlimited)S 165 x(System)S 167 x(Use)S
+166 x(e)S 166 x(Personal)S 165 x(Use.)S 15431 37373 XY F40(9)S
+%%EndCustomColor
+9 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Page: 10 10
+%%BeginPageSetup
+%%EndPageSetup
+%%PageFonts: (atend)
+%%PageCustomColors: (atend)
+1000 BP PaperHeight PaperWidth PM 0 0 XY 
+%%BeginCustomColor: 0_BLACK
+0 SC 3899 2106 XY F40(ALL-IN-1)S 149 x(MAIL/IT)S -34 x(ALIAN)S -2 x
+(O)S 150 x(per)S 150 x(VMS,)S 149 x(V)S -24 x(ersione)S 150 x(1.1)S
+24246 X(SPD)S 149 x(44.04.00)S 3899 3976 XY F34(Questo)S 136 x(prodotto)S
+138 x(of)S -9 x(fre)S 137 x(anche)S 136 x(una)S 137 x(licenza)S 135 x
+(ad)S 137 x(uso)S 136 x(personale;)S 147 x(ognuna)S 136 x(di)S 136 x
+(esse)S 137 x(permette)S 137 x(ad)S 136 x(un)S 137 x(utente)S 137 x
+(univoco)S 3899 X 598 y(di)S 165 x(utilizzare)S 166 x(il)S 165 x(prodotto.)S
+3899 5570 XY(Il)S 180 x(package)S 180 x(ALL-IN-1)S 180 x(MAIL)S 181 x
+(Wide)S 180 x(Area)S 180 x(Network)S 180 x(Server)S 180 x(Package)S
+180 x(permette)S 181 x(ai)S 180 x(prodotti)S 180 x(che)S 180 x(lo)S
+180 x(compongono)S 3899 X 598 y(di)S 165 x(utilizzarlo)S 165 x(su)S
+166 x(una)S 166 x(base)S 166 x(cluster-wide.)S 3899 7164 XY(Per)S 116 x
+(ulteriori)S 114 x(informazioni)S 115 x(sul)S 115 x(License)S 115 x
+(Management)S 116 x(Facility)S -38 x(,)S 127 x(consultare)S 115 x(il)S
+115 x(documento)S 116 x(VMS)S 116 x(Operating)S 115 x(System)S 3899 X
+598 y(Software)S 171 x(Product)S 172 x(Description)S 170 x(\(SPD)S 171 x
+(25.01.xx\))S 172 x(o)S 171 x(il)S 170 x(manuale)S 170 x F35(License)S
+171 x(Management)S 171 x(Facility)S 171 x F34(della)S 170 x(documen-)S
+3899 X 598 y(tazione)S 166 x(del)S 165 x(sistema)S 167 x(operativo)S
+165 x(VMS.)S 3899 9356 XY(Per)S 166 x(ulteriori)S 165 x(informazioni)S
+165 x(sui)S 166 x(termini)S 165 x(delle)S 165 x(licenze)S 165 x(Digital)S
+(,)S 166 x(contattare)S 167 x(la)S 165 x(sede)S 166 x(Digital)S 165 x
+(pi\371)S 166 x(vicina.)S 3899 10850 XY F32(SOFTW)S -30 x(ARE)S 183 x
+(PRODUCT)S 181 x(SER)S -9 x(VICES)S 3899 11847 XY F34(\310)S 228 x(disponibil)S
+-2 x(e)S 228 x(una)S 228 x(variet\340)S 228 x(di)S 227 x(servizi)S 227 x
+(addizionali)S -2 x(.)S 408 x(Per)S 227 x(ulteriori)S 227 x(informazioni)S
+227 x(contattare)S 229 x(l'uf)S -9 x(\211cio)S 227 x(Digital)S 227 x
+(pi\371)S 3899 X 597 y(vicino.)S 3899 13739 XY F42(\206)S 5144 X(Apple,)S
+132 x(AppleT)S -45 x(alk,)S 133 x(e)S 132 x(Macintosh)S 132 x(sono)S
+132 x(marchi)S 132 x(registrati)S 132 x(della)S 132 x(Apple)S 132 x
+(Comput)S -2 x(er)S -22 x(,)S 132 x(Inc.)S 3899 X 698 y(\206)S 5144 X
+(COMP)S -30 x(AQ)S 133 x(\350)S 132 x(un)S 132 x(marchio)S 132 x(registrato)S
+131 x(della)S 132 x(COMP)S -30 x(AQ)S 133 x(Compu)S -2 x(ter)S 132 x
+(Corpo)S -2 x(ration.)S 3899 X 697 y(\206)S 5144 X(IBM)S 133 x(e)S 132 x
+(PROFS)S 133 x(sono)S 131 x(marchi)S 133 x(registra)S -2 x(ti)S 133 x
+(della)S 133 x(Inter)S -2 x(nationa)S -2 x(l)S 134 x(Business)S 132 x
+(Machines)S 132 x(Corpo)S -2 x(ration.)S 3899 X 698 y(\206)S 5144 X
+(KEY)S -30 x(pak)S 132 x(\350)S 133 x(un)S 132 x(marchio)S 132 x(reg)S
+-2 x(istrato)S 132 x(della)S 133 x(Keywor)S -2 x(d)S 133 x(Of)S -7 x
+(\211ce)S 132 x(T)S -43 x(echno)S -2 x(logies,)S 133 x(Ltd.)S 3899 X
+697 y(\206)S 5144 X(MCI)S 132 x(and)S 132 x(MCI)S 132 x(Mail)S 134 x
+(sono)S 131 x(marchi)S 133 x(registra)S -2 x(ti)S 133 x(della)S 133 x
+(MCI)S 132 x(Commun)S -2 x(ications)S 133 x(Corpo)S -2 x(ration.)S 3899 X
+697 y(\206)S 5144 X(MS,)S 133 x(MS-DOS,)S 131 x(e)S 133 x(Microsoft)S
+132 x(sono)S 132 x(marchi)S 132 x(registra)S -2 x(ti)S 134 x(della)S
+132 x(Microsoft)S 132 x(Corpo)S -2 x(ration.)S 3899 X 698 y(\206)S 5144 X
+(TYMNET)S 133 x(\350)S 133 x(un)S 132 x(marchio)S 132 x(reg)S -2 x(istrato)S
+132 x(della)S 133 x(British)S 133 x(T)S -44 x(elecommun)S -2 x(ications)S
+133 x(PLC.)S 3899 X 697 y(\207)S 846 x(Intel)S 132 x(\350)S 133 x(un)S
+132 x(marchio)S 131 x(registrato)S 131 x(della)S 133 x(Inte)S -2 x(l)S
+134 x(Corp)S -2 x(oration.)S 3899 X 698 y(\207)S 846 x(Windows)S 132 x
+(\350)S 133 x(un)S 132 x(marchio)S 132 x(reg)S -2 x(istrato)S 132 x
+(della)S 133 x(Microsoft)S 132 x(Corpo)S -2 x(ration.)S 3899 X 697 y
+(\207)S 846 x(Il)S 148 x(logo)S 147 x(DIGIT)S -29 x(AL,)S 147 x(ALL)S
+-2 x(-IN-1,)S 150 x(CDA,)S 147 x(CI,)S 147 x(DECnet)S -2 x(,)S 148 x
+(DECwindo)S -2 x(ws,)S 151 x(DECwrite,)S 150 x(DX,)S 147 x(MicroV)S
+-29 x(AX,)S 147 x(MicroVMS,)S 147 x(P)S -30 x(A)S -29 x(THWORKS,)S 147 x
+(TK,)S 5144 X 498 y(UL)S -30 x(TRIX,)S 132 x(V)S -29 x(AX,)S 132 x(V)S
+-30 x(AXcluster)S -22 x(,)S 132 x(V)S -30 x(AXserver)S -23 x(,)S 133 x
+(V)S -30 x(AXstation,)S 131 x(VMS,)S 132 x(e)S 133 x(VT)S 133 x(sono)S
+132 x(marchi)S 132 x(registrati)S 132 x(della)S 132 x(Digital)S 133 x
+(Equipmen)S -2 x(t)S 133 x(Corp)S -2 x(oration.)S 15306 37373 XY F40
+(10)S
+%%EndCustomColor
+10 PP EP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageCustomColors: 0_BLACK
+%
+%%Trailer
+EndDVC$PSDoc
+/DEC$EDMS_MAKE_FILM where	% if we are making film...
+ { pop				% ..clean up the stack
+   -54 dup translate		% ..undo the film translation
+ } if
+%%Pages: 10
+%%DocumentFonts: DigitalLogo NewCenturySchlbk-Roman
+%%+ Helvetica Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica-BoldOblique
+%%DocumentCustomColors: 0_BLACK

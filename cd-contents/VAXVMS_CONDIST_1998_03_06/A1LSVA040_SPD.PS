@@ -1,0 +1,4844 @@
+%!PS-Adobe-3.0
+%%Title: SPD
+%%Creator: VAX DOCUMENT V2.1-1
+%%Copyright: 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.
+%%+All Rights Reserved.
+%%CreationDate: Tue Jan 27 1998 15:49:51
+%%For: BESSAC      
+%%BoundingBox: (atend)
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%DocumentFonts: (atend) 
+%%DocumentNeededFonts: (atend) 
+%%DocumentProcSets: Underlay Color5044
+%%DocumentSuppliedProcSets: Underlay Color5044
+%%DocumentProcessColors: (atend)
+%%DocumentCustomColors: (atend)
+%%EndComments
+%
+%%BeginResource: procset Underlay
+%%CreationDate: (2/10/92)
+%
+% In VAX DOCUMENT V2.1-1, simple EPSF files up to 65,000 bytes long
+% may be an underlay. Define the EPSF as a PostScript proceedure
+% called /UNDERLAY and prefix to DOCUMENT's PS output  For example:.
+% /UNDERLAY ( EPSF code here ) cvx def
+%
+% To create a "Preliminary" underlay change /UNDERLAY* to /UNDERLAY
+/UNDERLAY* (
+  /Note (Preliminary) def
+  /NoteSize 120 def
+  /NoteFont /Helvetica findfont NoteSize scalefont def
+  /Note where { pop Note length 0 gt {
+    /NoteWidth NoteFont setfont Note stringwidth pop def
+    PaperWidth 36 mul PaperHeight 36 mul moveto
+    PaperHeight PaperWidth atan rotate
+    NoteWidth -2 div NoteSize .729 mul -2 div rmoveto 
+    Note true charpath .075 setseparationgray fill
+  }if  }if
+) cvx def
+%%EndResource
+%
+%%BeginResource: procset Color5044
+%%CreationDate: (1/21/91)
+%%Version:1.0 3
+%Implementation of Adobe 5044 color specification
+%/ndf allows command override during color separation
+/Color5044Dict 100 dict def
+Color5044Dict begin
+/bdf {bind def} def
+/ndf
+  {1 index where
+    {pop pop pop
+    }
+    {dup xcheck
+      {bind} if
+    def
+    }
+    ifelse
+  } bdf
+/setcmykcolor
+  {1 exch sub
+  3 
+    {dup 5 -1 roll sub 0 2 copy lt
+      {exch} if
+    pop exch
+    } repeat
+  pop setrgbcolor
+  }ndf
+/setcmykcoloroverprint
+  {4
+    {dup -1 eq
+      {pop 0} if
+      4 1 roll
+    } repeat
+  setcmykcolor
+  } ndf
+/findcmykcustomcolor
+  {5 /packedarray where
+    {pop packedarray
+    }
+    {array astore readonly
+    }
+    ifelse
+  } ndf
+/setcustomcolor
+  {exch aload pop pop
+  4
+    {4 index mul 4 1 roll
+    } repeat
+  setcmykcolor pop
+  } ndf
+/setseparationgray
+  {1 exch sub systemdict /setgray get exec
+  } ndf
+/setoverprint {pop} ndf
+/currentoverprint false ndf
+%CMYK multi-proc colorimage
+/colorimage
+  {4 ne
+    {(\nUnsupported number of colors for colorimage.\n) print flush quit
+    } if
+  not
+    {(\nSingle procedure form  colorimage unsupported.\n) print flush quit
+    } if
+  save 20 dict begin /&saveobj exch def
+  /&Kproc exch def /&Yproc exch def /&Mproc exch def /&Cproc exch def
+    {&Cproc &Mproc &Yproc &Kproc
+    /&K exch def /&Y exch def /&M exch def /&C exch def
+    0 1 &K length 1 sub
+      {/&i exch def
+      &K &i 255
+      &C &i get 30 mul
+      &M &i get 59 mul add
+      &Y &i get 11 mul add
+      &K &i get 100 mul add
+      100 idiv
+      dup 255 gt
+        {pop 255} if
+      sub put
+      } for
+    &K
+    } image
+  &saveobj end restore
+  } ndf
+/customcolorimage
+  {pop systemdict /image get exec
+  } ndf
+/separationimage
+  {systemdict /image get exec
+  } ndf
+end
+%%EndResource
+Color5044Dict begin
+%
+/DEC_DVC$dict 300 dict def
+DEC_DVC$dict begin
+%
+/DVC$PSJob save def
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+}def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+% Exit page (temporarily) to add fonts/characters.
+/XP { }def
+% 
+% Resume page
+/RP { }def
+%
+% End Page: EP
+/EP {DVC$PSPage restore}def
+%
+% Purge fonts to reclaim VM
+/PF {
+  currentoverprint
+  currentrgbcolor
+  EP			%Does restore
+  PageSetup     %Does save
+  setrgbcolor
+  setoverprint
+}def
+%
+% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+%
+/Yadjust {Ymax exch sub} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto
+} def
+%
+/R {						% Draw a rectangle
+  /ht exch def  /wd exch def   gsave
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill grestore wd 0 rmoveto
+}def
+%
+%Setup Page Media:  <paper-height> <paper-width> PM
+/PM {
+  /Xmax exch Resolution mul def
+  /Ymax exch Resolution mul def
+  /UNDERLAY where {
+    pop
+    /eps_save save def		% save before EPSF underlay
+    Resolution 72 div dup scale % Revert coords to points
+    count array astore /DVCstack exch def % save op stack
+    /dict_count countdictstack def % # of dicts
+    userdict begin		% default dict
+    /showpage {}def		% disable showpage
+    0 setgray
+      {UNDERLAY} stopped {(Error executing /UNDERLAY)== quit}if
+    countdictstack dict_count sub {end} repeat % clean up dict stack
+    clear DVCstack aload pop	% restore op stack
+    eps_save restore		% restore after EPSF
+  }if
+  PageSetup
+}def
+%
+%Setup page coordinates
+/PageSetup
+{
+  /DVC$PSPage save def
+  PortraitMode not {PaperWidth 0 translate  90 rotate} if
+  /Xpos 0 def
+  /Ypos 0 def
+}def
+%
+% Begin EPS file: <xoffset> <yoffset> SPB
+/SPB {
+  Yadjust transform		% convert from DVC to device coords
+  EP				% page-level restore
+  /eps_save save def		% save before EPSF
+  Resolution 72 div dup scale 	% Revert coords to points
+  itransform			% convert position back to points  
+  translate			% set position for EPSF
+  PortraitMode not {90 rotate} if % rotate for EPSF
+  count array astore /DVCstack exch def	% save op stack
+  /dict_count countdictstack def % # of dicts
+  userdict begin		% default dict
+  /showpage {}def		% disable showpage
+  0 setgray
+}def
+%
+% End EPS file
+/SPE {
+  countdictstack dict_count sub {end} repeat % clean up dict stack
+  clear DVCstack aload pop	% restore op stack
+  eps_save restore		% restore after EPSF
+  PageSetup			% restore DVC coords
+}def
+%
+% Print-Page Routine: <Page #> PP
+/PP {
+  gsave
+  showpage
+  grestore
+}def
+%
+/DMF {		%  /font-name <point-size> DMF
+  exch findfont exch scalefont setfont
+}def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def
+  /namstr exch cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+}def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+}def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+}def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+}def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+}def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+}def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+}def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+}def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div}def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+}def
+/RunLengthToRasters {
+  % none yet
+}def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+}def
+%
+/int-dict-name {int (-dict) concatnam}def
+/int-dict {int (-dict) concatnam cvx load}def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      }def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+}def 
+/PXLF { true  DefinePXLFont}def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont}def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+}def
+%
+/CKSZ {abs 127 le and}def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if}def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+}def
+%
+% set color routine: Color# SC
+/SC {ColorPalette exch get 1.0 setcustomcolor}bind def
+%
+%%EndProlog
+
+
+%%BeginSetup
+/PxlResolution 300 def
+/Resolution 3600 def
+/RasterScaleFactor PxlResolution Resolution div def
+/PortraitMode true def
+/PaperWidth 8.500 def
+/PaperHeight 11.000 def
+72 Resolution div dup scale
+
+%>  Postamble of file PROJECTS:[BESSAC.AI1.V40A.SV.SPD]SPD.DVI_PS.
+% DefineFont:F44 Category:10 Pointsize:8
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F44 400.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F43 Category:10 Pointsize:8
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F43 400.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F38 Category:10 Pointsize:9
+/F38 450.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F35 Category:10 Pointsize:10
+/F35 500.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F34 Category:10 Pointsize:10
+/F34 500.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F32 Category:10 Pointsize:11
+/F32 550.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+
+%Spot color array for this job
+/ColorPalette [
+0.0 0.0 0.0 1.0 (BLACK) findcmykcustomcolor
+] def
+
+%%EndSetup
+%
+%%Page: (1) 1
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC
+3899 4198 XY
+3899 7187 SPB
+120.000 -692.000 translate
+%%BeginDocument: (DOC$ROOT:[TEX.FORMATS]LOGOTM.EPS)
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: Adobe Illustrator(TM) 5.0
+%%For: (Erik Goetze) (Digital Equipment)
+%%Title: (Digital-TM-Black-Logo-24pt.epsf)
+%%CreationDate: (12/6/93) (12:45 PM)
+%%BoundingBox: -120 692 168 722
+%%DocumentProcessColors: Black
+%%DocumentFonts: Helvetica
+%%DocumentSuppliedResources: procset Adobe_packedarray 2.0 0
+%%+ procset Adobe_cshow 1.1 0
+%%+ procset Adobe_customcolor 1.0 0
+%%+ procset Adobe_typography_AI3 1.0 1
+%%+ procset Adobe_pattern_AI3 1.0 0
+%%+ procset Adobe_Illustrator_AI3 1.0 1
+%AI3_ColorUsage: Black&White
+%AI3_IncludePlacedImages
+%AI3_TemplateBox: 306 396 306 396
+%AI3_TileBox: 12 12 600 780
+%AI3_DocumentPreview: Macintosh_Pic
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Adobe_packedarray 2.0 0
+%%Title: (Packed Array Operators)
+%%Version: 2.0 
+%%CreationDate: (8/2/90) ()
+%%Copyright: ((C) 1987-1990 Adobe Systems Incorporated All Rights Reserved)
+userdict /Adobe_packedarray 5 dict dup begin put
+/initialize
+{
+/packedarray where
+	{
+	pop
+	}
+	{
+	Adobe_packedarray begin
+	Adobe_packedarray
+		{
+		dup xcheck
+			{
+			bind
+			} if
+		userdict 3 1 roll put
+		} forall
+ end
+	} ifelse
+} def
+/terminate
+{
+} def
+/packedarray
+{
+array astore readonly
+} def
+/setpacking
+{
+pop
+} def
+/currentpacking
+{
+false
+} def
+currentdict readonly pop end
+%%EndResource
+Adobe_packedarray /initialize get exec
+%%BeginResource: procset Adobe_cshow 1.1 0
+%%Title: (cshow Operator)
+%%Version: 1.1 
+%%CreationDate: (1/23/89) ()
+%%Copyright: ((C) 1987-1990 Adobe Systems Incorporated All Rights Reserved)
+currentpacking true setpacking
+userdict /Adobe_cshow 3 dict dup begin put
+/initialize
+{
+/cshow where
+	{
+	pop
+	}
+	{
+	userdict /Adobe_cshow_vars 1 dict dup begin put
+	/_cshow
+		{} def
+	Adobe_cshow begin
+	Adobe_cshow
+		{
+		dup xcheck
+			{
+			bind
+			} if
+		userdict 3 1 roll put
+		} forall
+ end
+ end
+	} ifelse
+} def
+/terminate
+{
+} def
+/cshow
+{
+exch
+Adobe_cshow_vars
+	exch /_cshow
+	exch put
+	{
+	0 0 Adobe_cshow_vars /_cshow get exec
+	} forall
+} def
+currentdict readonly pop end
+setpacking
+%%EndResource
+%%BeginResource: procset Adobe_customcolor 1.0 0
+%%Title: (Custom Color Operators)
+%%Version: 1.0 
+%%CreationDate: (5/9/88) ()
+%%Copyright: ((C) 1987-1990 Adobe Systems Incorporated All Rights Reserved)
+currentpacking true setpacking
+userdict /Adobe_customcolor 5 dict dup begin put
+/initialize
+{
+/setcustomcolor where
+	{
+	pop
+	}
+	{
+	Adobe_customcolor begin
+	Adobe_customcolor
+		{
+		dup xcheck
+			{
+			bind
+			} if
+		pop pop
+		} forall
+ end
+	Adobe_customcolor begin
+	} ifelse
+} def
+/terminate
+{
+currentdict Adobe_customcolor eq
+	{
+ end
+	} if
+} def
+/findcmykcustomcolor
+{
+5 packedarray
+}  def
+/setcustomcolor
+{
+exch
+aload pop pop
+4
+	{
+	4 index mul 4 1 roll
+	} repeat
+5 -1 roll pop
+setcmykcolor
+} def
+/setoverprint
+{
+pop
+} def
+currentdict readonly pop end
+setpacking
+%%EndResource
+%%BeginResource: procset Adobe_typography_AI3 2.0 0
+%%Title: (Typography Operators)
+%%Version: 2.0 
+%%CreationDate:(5/31/90) ()
+%%Copyright: ((C) 1987-1990 Adobe Systems Incorporated All Rights Reserved)
+currentpacking true setpacking
+userdict /Adobe_typography_AI3 48 dict dup begin put
+/initialize
+{
+/TZ
+ where
+	{
+	pop
+	}
+	{
+	Adobe_typography_AI3 begin
+	Adobe_typography_AI3
+		{
+		dup xcheck
+			{
+			bind
+			} if
+		pop pop
+		} forall
+ end
+	Adobe_typography_AI3 begin
+	} ifelse
+} def
+/terminate
+{
+currentdict Adobe_typography_AI3 eq
+	{
+ end
+	} if
+} def
+/modifyEncoding
+{
+	/_tempEncode exch ddef
+	
+	/_pntr 0 ddef
+	
+	{
+		counttomark -1 roll
+		dup type dup /marktype eq 		
+		{
+			pop pop exit
+		}
+		{
+			/nametype eq
+			{
+				_tempEncode /_pntr dup load dup 3 1 roll 1 add ddef 3 -1 roll
+				put
+			}
+			{
+				/_pntr exch ddef					
+			}
+			ifelse
+		}
+		ifelse
+	}
+	loop	
+	
+	_tempEncode
+}
+def
+/TE
+{
+	StandardEncoding 256 array copy modifyEncoding 
+	/_nativeEncoding exch def
+} def
+%
+/TZ		
+{
+	dup type /arraytype eq {/_wv exch def} {/_wv 0 def} ifelse 
+	/_useNativeEncoding exch def
+	pop pop
+	
+	findfont _wv type /arraytype eq {_wv makeblendedfont} if dup length 2 add dict
+	
+ begin
+	
+		mark exch
+		{
+			1 index /FID ne { def } if cleartomark mark
+		}
+		forall
+		pop
+		
+		/FontName exch def
+		
+		counttomark 0 eq
+		{
+			1 _useNativeEncoding eq
+			{
+				/Encoding _nativeEncoding def
+			}
+			if
+			cleartomark
+		}
+		{	
+			/Encoding load 256 array copy 
+			modifyEncoding /Encoding exch def
+		}
+		ifelse		
+		FontName currentdict
+ end
+	
+	definefont pop
+}
+def
+/tr
+{
+_ax _ay 3 2 roll
+} def
+/trj
+{
+_cx _cy _sp _ax _ay 6 5 roll
+} def
+/a0
+{
+/Tx
+	{
+	dup 
+	currentpoint 3 2 roll
+	tr _psf
+	newpath moveto
+	tr _ctm _pss
+	} ddef
+/Tj
+	{
+	dup
+	currentpoint 3 2 roll
+	trj _pjsf
+	newpath moveto
+	trj _ctm _pjss
+	} ddef
+	
+} def
+/a1
+{
+/Tx
+	{
+	dup currentpoint 4 2 roll gsave
+	dup currentpoint 3 2 roll
+	tr _psf
+	newpath moveto
+	tr _ctm _pss
+	grestore 3 1 roll moveto tr sp
+	} ddef
+/Tj
+	{
+	dup currentpoint 4 2 roll gsave
+	dup currentpoint 3 2 roll
+	trj _pjsf
+	newpath moveto
+	trj _ctm _pjss
+	grestore 3 1 roll moveto tr sp
+	} ddef
+	
+} def
+/e0
+{
+/Tx
+	{
+	tr _psf
+	} ddef
+/Tj
+	{
+	trj _pjsf
+	} ddef
+} def
+/e1
+{
+/Tx
+	{
+	dup currentpoint 4 2 roll gsave 
+	tr _psf  
+	grestore 3 1 roll moveto tr sp 
+	} ddef
+/Tj
+	{
+	dup currentpoint 4 2 roll gsave 
+	trj _pjsf
+	grestore 3 1 roll moveto tr sp 
+	} ddef
+} def
+/i0
+{
+/Tx
+	{
+	tr sp
+	} ddef
+/Tj
+	{
+	trj jsp
+	} ddef
+} def
+/i1
+{
+W N
+} def
+/o0
+{
+/Tx
+	{
+	tr sw rmoveto
+	} ddef
+/Tj
+	{
+	trj swj rmoveto
+	} ddef
+} def
+/r0
+{
+/Tx
+	{
+	tr _ctm _pss
+	} ddef
+/Tj
+	{
+	trj _ctm _pjss
+	} ddef
+} def
+/r1
+{
+/Tx
+	{
+	dup currentpoint 4 2 roll currentpoint gsave newpath moveto
+	tr _ctm _pss 
+	grestore 3 1 roll moveto tr sp 
+	} ddef
+/Tj
+	{
+	dup currentpoint 4 2 roll currentpoint gsave newpath moveto
+	trj _ctm _pjss
+	grestore 3 1 roll moveto tr sp 
+	} ddef
+} def
+/To
+{
+	pop _ctm currentmatrix pop
+} def
+/TO
+{
+	iTe _ctm setmatrix newpath
+} def
+/Tp
+{
+	pop _tm astore pop _ctm setmatrix 
+	_tDict begin /W {} def /h {} def
+} def
+/TP
+{
+ end
+	iTm 0 0 moveto
+} def
+/Tr
+{
+	_render 3 le {currentpoint newpath moveto} if
+	dup 8 eq {pop 0} {dup 9 eq {pop 1} if} ifelse
+	dup /_render exch ddef
+	_renderStart exch get load exec
+} def
+/iTm
+{
+_ctm setmatrix _tm concat 0 _rise translate _hs 1 scale
+} def
+/Tm
+{
+_tm astore pop iTm 0 0 moveto
+} def
+/Td
+{
+_mtx translate _tm _tm concatmatrix pop iTm 0 0 moveto
+} def
+/iTe
+{
+	_render -1 eq {} {_renderEnd _render get dup null ne {load exec} {pop} ifelse} ifelse
+	/_render -1 ddef
+} def
+/Ta
+{
+pop
+} def
+/Tf
+{
+dup 1000 div /_fScl exch ddef
+exch findfont exch scalefont setfont
+} def
+/Tl
+{
+pop
+0 exch _leading astore pop
+} def
+/Tt
+{
+pop
+} def
+/TW
+{
+3 npop
+} def
+/Tw
+{
+/_cx exch ddef
+} def
+/TC
+{
+3 npop
+} def
+/Tc
+{
+/_ax exch ddef
+} def
+/Ts
+{
+/_rise exch ddef
+currentpoint
+iTm
+moveto
+} def
+/Ti
+{
+3 npop
+} def
+/Tz
+{
+100 div /_hs exch ddef
+iTm
+} def
+/TA
+{
+pop
+} def
+/Tq
+{
+pop
+} def
+/Th
+{
+pop pop pop pop pop
+} def
+/TX {pop} def
+%/Tx
+%/Tj
+/Tk
+{
+exch pop _fScl mul neg 0 rmoveto
+} def
+/TK
+{
+2 npop
+} def
+/T*
+{
+_leading aload pop neg Td
+} def
+/T*-
+{
+_leading aload pop Td
+} def
+/T-
+{
+_hyphen Tx
+} def
+/T+
+{} def
+/TR
+{
+_ctm currentmatrix pop 	
+_tm astore pop 
+iTm 0 0 moveto 
+} def
+/TS
+{
+0 eq {Tx} {Tj} ifelse
+} def
+currentdict readonly pop end
+setpacking
+%%EndResource
+%%BeginResource: procset Adobe_pattern_AI3 1.0 0
+%%Title: (Adobe Illustrator (R) Version 3.0 Pattern Operators)
+%%Version: 1.0 
+%%CreationDate: (7/21/89) ()
+%%Copyright: ((C) 1987-1990 Adobe Systems Incorporated All Rights Reserved)
+currentpacking true setpacking
+userdict /Adobe_pattern_AI3 16 dict dup begin put
+/initialize
+{
+/definepattern where
+	{
+	pop
+	}
+	{
+	Adobe_pattern_AI3 begin
+	Adobe_pattern_AI3
+		{
+		dup xcheck
+			{
+			bind
+			} if
+		pop pop
+		} forall
+	mark
+	cachestatus 7 1 roll pop pop pop pop exch pop exch
+		{
+		{
+		10000 add
+		dup 2 index gt
+			{
+			break
+			} if
+		dup setcachelimit
+		} loop
+		} stopped
+	cleartomark
+	} ifelse
+} def
+/terminate
+{
+currentdict Adobe_pattern_AI3 eq
+	{
+ end
+	} if
+} def
+errordict
+/nocurrentpoint
+{
+pop
+stop
+} put
+errordict
+/invalidaccess
+{
+pop
+stop
+} put
+/patternencoding
+256 array def
+0 1 255
+{
+patternencoding exch ( ) 2 copy exch 0 exch put cvn put
+} for
+/definepattern
+{
+17 dict begin
+/uniform exch def
+/cache exch def
+/key exch def
+/procarray exch def
+/mtx exch matrix invertmatrix def
+/height exch def
+/width exch def
+/ctm matrix currentmatrix def
+/ptm matrix def
+/str 32 string def
+/slice 9 dict def
+slice /s 1 put
+slice /q 256 procarray length div sqrt floor cvi put
+slice /b 0 put
+/FontBBox [0 0 0 0] def
+/FontMatrix mtx matrix copy def
+/Encoding patternencoding def
+/FontType 3 def
+/BuildChar
+	{
+	exch
+ begin
+	slice begin
+	dup q dup mul mod s idiv /i exch def
+	dup q dup mul mod s mod /j exch def
+	q dup mul idiv procarray exch get
+	/xl j width s div mul def
+	/xg j 1 add width s div mul def
+	/yl i height s div mul def
+	/yg i 1 add height s div mul def
+	uniform
+		{
+		1 1
+		}
+		{
+		width 0 dtransform
+		dup mul exch dup mul add sqrt dup 1 add exch div
+		0 height dtransform
+		dup mul exch dup mul add sqrt dup 1 add exch div
+		} ifelse
+	width 0 cache
+		{
+		xl 4 index mul yl 4 index mul xg 6 index mul yg 6 index mul
+		setcachedevice
+		}
+		{
+		setcharwidth
+		} ifelse
+	gsave
+	scale
+	newpath
+	xl yl moveto
+	xg yl lineto
+	xg yg lineto
+	xl yg lineto
+	closepath
+	clip
+	newpath
+ end
+ end
+	exec
+	grestore
+	} def
+key currentdict definefont
+end
+} def
+/patterncachesize
+{
+gsave
+newpath
+0 0 moveto
+width 0 lineto
+width height lineto
+0 height lineto
+closepath
+patternmatrix setmatrix
+pathbbox
+exch ceiling 4 -1 roll floor sub 3 1 roll
+ceiling exch floor sub
+mul 1 add
+grestore
+} def
+/patterncachelimit
+{
+cachestatus 7 1 roll 6 npop 8 mul
+} def
+/patternpath
+{
+exch dup begin setfont
+ctm setmatrix
+concat
+slice exch /b exch slice /q get dup mul mul put
+FontMatrix concat
+uniform
+	{
+	width 0 dtransform round width div exch round width div exch
+	0 height dtransform round height div exch height div exch
+	0 0 transform round exch round exch
+	ptm astore setmatrix
+	}
+	{
+	ptm currentmatrix pop
+	} ifelse
+{currentpoint} stopped not
+	{
+	2 npop
+	pathbbox
+	true
+	4 index 3 index eq
+	4 index 3 index eq
+	and
+		{
+		pop false
+			{
+			{2 npop}
+			{3 npop true}
+			{7 npop true}
+			{pop true}
+			pathforall
+			} stopped
+			{
+			5 npop true
+			} if
+		} if
+		{
+		height div ceiling height mul 4 1 roll
+		width div ceiling width mul 4 1 roll
+		height div floor height mul 4 1 roll
+		width div floor width mul 4 1 roll
+		2 index sub height div ceiling cvi exch
+		3 index sub width div ceiling cvi exch
+		4 2 roll moveto
+		FontMatrix mtx invertmatrix
+		dup dup 4 get exch 5 get rmoveto
+		ptm ptm concatmatrix pop
+		slice /s
+		patterncachesize patterncachelimit div ceiling sqrt ceiling cvi
+		dup slice /q get gt
+			{
+			pop slice /q get
+			} if
+		put
+		0 1 slice /s get dup mul 1 sub
+			{
+			slice /b get add
+			gsave
+			0 1 str length 1 sub
+				{
+				str exch 2 index put
+				} for
+			pop
+			dup
+				{
+				gsave
+				ptm setmatrix
+				1 index str length idiv {str show} repeat
+				1 index str length mod str exch 0 exch getinterval show
+				grestore
+				0 height rmoveto
+				} repeat
+			grestore
+			} for
+		2 npop
+		}
+		{
+		4 npop
+		} ifelse
+	} if
+end
+} def
+/patternclip
+{
+clip
+} def
+/patternstrokepath
+{
+strokepath
+} def
+/patternmatrix
+matrix def
+/patternfill
+{
+dup type /dicttype eq
+	{
+	Adobe_pattern_AI3 /patternmatrix get
+	} if
+gsave
+patternclip
+Adobe_pattern_AI3 /patternpath get exec
+grestore
+newpath
+} def
+/patternstroke
+{
+dup type /dicttype eq
+	{
+	Adobe_pattern_AI3 /patternmatrix get
+	} if
+gsave
+patternstrokepath
+true
+	{
+		{
+			{
+			newpath 
+			moveto
+			}
+			{
+			lineto
+			}
+			{
+			curveto
+			}
+			{
+			closepath
+			3 copy
+			Adobe_pattern_AI3 /patternfill get exec
+			} pathforall
+		3 npop
+		} stopped
+			{
+			5 npop
+			patternclip
+			Adobe_pattern_AI3 /patternfill get exec
+			} if
+	}
+	{
+	patternclip
+	Adobe_pattern_AI3 /patternfill get exec
+	} ifelse
+grestore
+newpath
+} def
+/patternashow
+{
+3 index type /dicttype eq
+	{
+	Adobe_pattern_AI3 /patternmatrix get 4 1 roll
+	} if
+	{
+	2 npop (0) exch
+	2 copy 0 exch put pop
+	gsave
+	false charpath currentpoint
+	6 index 6 index 6 index
+	Adobe_pattern_AI3 /patternfill get exec
+	grestore
+	newpath moveto
+	2 copy rmoveto
+	} exch cshow
+5 npop
+} def
+/patternawidthshow
+{
+6 index type /dicttype eq
+	{
+	Adobe_pattern_AI3 /patternmatrix get 7 1 roll
+	} if
+	{
+	2 npop (0) exch
+	2 copy 0 exch put 
+	gsave
+	_sp eq {5 index 5 index rmoveto} if
+	false charpath currentpoint
+	9 index 9 index 9 index
+	Adobe_pattern_AI3 /patternfill get exec
+	grestore
+	newpath moveto
+	2 copy rmoveto
+	} exch cshow
+8 npop
+} def
+/patternashowstroke
+{
+4 index type /dicttype eq
+	{
+	patternmatrix /patternmatrix get 5 1 roll
+	} if
+4 1 roll
+	{
+	2 npop (0) exch
+	2 copy 0 exch put pop
+	gsave
+	false charpath
+	currentpoint
+	4 index setmatrix
+	7 index 7 index 7 index
+	Adobe_pattern_AI3 /patternstroke get exec
+	grestore
+	newpath moveto
+	2 copy rmoveto
+	} exch cshow
+6 npop
+} def
+/patternawidthshowstroke
+{
+7 index type /dicttype eq
+	{
+	patternmatrix /patternmatrix get 8 1 roll
+	} if
+7 1 roll
+	{
+	2 npop (0) exch
+	2 copy 0 exch put
+	gsave
+	_sp eq {5 index 5 index rmoveto} if
+	false charpath currentpoint
+	7 index setmatrix
+	10 index 10 index 10 index
+	Adobe_pattern_AI3 /patternstroke get exec
+	grestore
+	newpath moveto
+	2 copy rmoveto
+	} exch cshow
+9 npop
+} def
+currentdict readonly pop end
+setpacking
+%%EndResource
+%%BeginResource: procset Adobe_Illustrator_AI3 1.0 3
+%%Title: (Adobe Illustrator (R) Version 3.0 Full Prolog)
+%%Version: 1.0 
+%%CreationDate: (7/22/89) ()
+%%Copyright: ((C) 1987-1990 Adobe Systems Incorporated All Rights Reserved)
+currentpacking true setpacking
+userdict /Adobe_Illustrator_AI3 71 dict dup begin put
+/initialize
+{
+userdict /Adobe_Illustrator_AI3_vars 67 dict dup begin put
+/_lp /none def
+/_pf {} def
+/_ps {} def
+/_psf {} def
+/_pss {} def
+/_pjsf {} def
+/_pjss {} def
+/_pola 0 def
+/_doClip 0 def
+/cf	currentflat def
+/_tm matrix def
+/_renderStart [/e0 /r0 /a0 /o0 /e1 /r1 /a1 /i0] def 
+/_renderEnd [null null null null /i1 /i1 /i1 /i1] def
+/_render -1 def
+/_rise 0 def
+/_ax 0 def
+/_ay 0 def
+/_cx 0 def
+/_cy 0 def
+/_leading [0 0] def
+/_ctm matrix def
+/_mtx matrix def
+/_sp 16#020 def
+/_hyphen (-) def
+/_fScl 0 def
+/_cnt 0 def
+/_hs 1 def
+/_nativeEncoding 0 def
+/_useNativeEncoding 0 def
+/_tempEncode 0 def
+/_pntr 0 def
+/_tDict 2 dict def
+/_wv 0 def
+/Tx {} def
+/Tj {} def
+/CRender {} def
+/_AI3_savepage {} def
+/_gf null def
+/_cf 4 array def
+/_if null def
+/_of false def
+/_fc {} def
+/_gs null def
+/_cs 4 array def
+/_is null def
+/_os false def
+/_sc {} def
+/_pd 1 dict def
+/_ed 15 dict def
+/_pm matrix def
+/_fm null def
+/_fd null def
+/_fdd null def
+/_sm null def
+/_sd null def
+/_sdd null def
+/_i null def
+Adobe_Illustrator_AI3 begin
+Adobe_Illustrator_AI3 dup /nc get begin
+	{
+	dup xcheck
+		{
+		bind
+		} if
+	pop pop
+	} forall
+end
+end
+end
+Adobe_Illustrator_AI3 begin
+Adobe_Illustrator_AI3_vars begin
+newpath
+} def
+/terminate
+{
+end
+end
+} def
+/_
+null def
+/ddef
+{
+Adobe_Illustrator_AI3_vars 3 1 roll put
+} def
+/xput
+{
+dup load dup length exch maxlength eq
+	{
+	dup dup load dup
+	length 2 mul dict copy def
+	} if
+load begin def end
+} def
+/npop
+{
+	{
+	pop
+	} repeat
+} def
+/sw
+{
+dup length exch stringwidth
+exch 5 -1 roll 3 index mul add
+4 1 roll 3 1 roll mul add
+} def
+/swj
+{
+dup 4 1 roll
+dup length exch stringwidth 
+exch 5 -1 roll 3 index mul add
+4 1 roll 3 1 roll mul add 
+6 2 roll /_cnt 0 ddef
+{1 index eq {/_cnt _cnt 1 add ddef} if} forall pop
+exch _cnt mul exch _cnt mul 2 index add 4 1 roll 2 index add 4 1 roll pop pop
+} def
+/ss
+{
+4 1 roll
+	{
+	2 npop 
+	(0) exch 2 copy 0 exch put pop
+	gsave
+	false charpath currentpoint
+	4 index setmatrix
+	stroke
+	grestore
+	moveto
+	2 copy rmoveto
+	} exch cshow
+3 npop
+} def
+/jss
+{
+4 1 roll
+	{
+	2 npop 
+	(0) exch 2 copy 0 exch put 
+	gsave
+	_sp eq 
+		{
+		exch 6 index 6 index 6 index 5 -1 roll widthshow  
+		currentpoint
+		}
+		{
+		false charpath currentpoint
+		4 index setmatrix stroke
+		}ifelse
+	grestore
+	moveto
+	2 copy rmoveto
+	} exch cshow
+6 npop
+} def
+/sp
+{
+	{
+	2 npop (0) exch
+	2 copy 0 exch put pop
+	false charpath
+	2 copy rmoveto
+	} exch cshow
+2 npop
+} def
+/jsp
+{
+	{
+	2 npop 
+	(0) exch 2 copy 0 exch put 
+	_sp eq 
+		{
+		exch 5 index 5 index 5 index 5 -1 roll widthshow  
+		}
+		{
+		false charpath
+		}ifelse
+	2 copy rmoveto
+	} exch cshow
+5 npop
+} def
+/pl
+{
+transform
+0.25 sub round 0.25 add exch
+0.25 sub round 0.25 add exch
+itransform
+} def
+/setstrokeadjust where
+	{
+	pop true setstrokeadjust
+	/c
+	{
+	curveto
+	} def
+	/C
+	/c load def
+	/v
+	{
+	currentpoint 6 2 roll curveto
+	} def
+	/V
+	/v load def
+	/y
+	{
+	2 copy curveto
+	} def
+	/Y
+	/y load def
+	/l
+	{
+	lineto
+	} def
+	/L
+	/l load def
+	/m
+	{
+	moveto
+	} def
+	}
+	{
+	/c
+	{
+	pl curveto
+	} def
+	/C
+	/c load def
+	/v
+	{
+	currentpoint 6 2 roll pl curveto
+	} def
+	/V
+	/v load def
+	/y
+	{
+	pl 2 copy curveto
+	} def
+	/Y
+	/y load def
+	/l
+	{
+	pl lineto
+	} def
+	/L
+	/l load def
+	/m
+	{
+	pl moveto
+	} def
+	} ifelse
+/d
+{
+setdash
+} def
+/cf	{} def
+/i
+{
+dup 0 eq
+	{
+	pop cf
+	} if
+setflat
+} def
+/j
+{
+setlinejoin
+} def
+/J
+{
+setlinecap
+} def
+/M
+{
+setmiterlimit
+} def
+/w
+{
+setlinewidth
+} def
+/H
+{} def
+/h
+{
+closepath
+} def
+/N
+{
+_pola 0 eq 
+	{
+	_doClip 1 eq {clip /_doClip 0 ddef} if 
+	newpath
+	} 
+	{
+	/CRender {N} ddef
+	}ifelse
+} def
+/n
+{N} def
+/F
+{
+_pola 0 eq 
+	{
+	_doClip 1 eq 
+		{
+		gsave _pf grestore clip newpath /_lp /none ddef _fc 
+		/_doClip 0 ddef
+		}
+		{
+		_pf
+		}ifelse
+	} 
+	{
+	/CRender {F} ddef
+	}ifelse
+} def
+/f
+{
+closepath
+F
+} def
+/S
+{
+_pola 0 eq 
+	{
+	_doClip 1 eq 
+		{
+		gsave _ps grestore clip newpath /_lp /none ddef _sc 
+		/_doClip 0 ddef
+		}
+		{
+		_ps
+		}ifelse
+	} 
+	{
+	/CRender {S} ddef
+	}ifelse
+} def
+/s
+{
+closepath
+S
+} def
+/B
+{
+_pola 0 eq 
+	{
+	_doClip 1 eq
+	gsave F grestore 
+		{
+		gsave S grestore clip newpath /_lp /none ddef _sc
+		/_doClip 0 ddef
+		} 
+		{
+		S
+		}ifelse
+	}
+	{
+	/CRender {B} ddef
+	}ifelse
+} def
+/b
+{
+closepath
+B
+} def
+/W
+{
+/_doClip 1 ddef
+} def
+/*
+{
+count 0 ne 
+	{
+	dup type (stringtype) eq {pop} if
+	} if 
+_pola 0 eq {newpath} if
+} def
+/u
+{} def
+/U
+{} def
+/q
+{
+_pola 0 eq {gsave} if
+} def
+/Q
+{
+_pola 0 eq {grestore} if
+} def
+/*u
+{
+_pola 1 add /_pola exch ddef
+} def
+/*U
+{
+_pola 1 sub /_pola exch ddef 
+_pola 0 eq {CRender} if
+} def
+/D
+{pop} def
+/*w
+{} def
+/*W
+{} def
+/`
+{
+/_i save ddef
+6 1 roll 4 npop
+concat pop
+userdict begin
+/showpage {} def
+0 setgray
+0 setlinecap
+1 setlinewidth
+0 setlinejoin
+10 setmiterlimit
+[] 0 setdash
+newpath
+0 setgray
+false setoverprint
+} def
+/~
+{
+end
+_i restore
+} def
+/@
+{} def
+/&
+{} def
+/O
+{
+0 ne
+/_of exch ddef
+/_lp /none ddef
+} def
+/R
+{
+0 ne
+/_os exch ddef
+/_lp /none ddef
+} def
+/g
+{
+/_gf exch ddef
+/_fc
+{
+_lp /fill ne
+	{
+	_of setoverprint
+	_gf setgray
+	/_lp /fill ddef
+	} if
+} ddef
+/_pf
+{
+_fc
+fill
+} ddef
+/_psf
+{
+_fc
+ashow
+} ddef
+/_pjsf
+{
+_fc
+awidthshow
+} ddef
+/_lp /none ddef
+} def
+/G
+{
+/_gs exch ddef
+/_sc
+{
+_lp /stroke ne
+	{
+	_os setoverprint
+	_gs setgray
+	/_lp /stroke ddef
+	} if
+} ddef
+/_ps
+{
+_sc
+stroke
+} ddef
+/_pss
+{
+_sc
+ss
+} ddef
+/_pjss
+{
+_sc
+jss
+} ddef
+/_lp /none ddef
+} def
+/k
+{
+_cf astore pop
+/_fc
+{
+_lp /fill ne
+	{
+	_of setoverprint
+	_cf aload pop setcmykcolor
+	/_lp /fill ddef
+	} if
+} ddef
+/_pf
+{
+_fc
+fill
+} ddef
+/_psf
+{
+_fc
+ashow
+} ddef
+/_pjsf
+{
+_fc
+awidthshow
+} ddef
+/_lp /none ddef
+} def
+/K
+{
+_cs astore pop
+/_sc
+{
+_lp /stroke ne
+	{
+	_os setoverprint
+	_cs aload pop setcmykcolor
+	/_lp /stroke ddef
+	} if
+} ddef
+/_ps
+{
+_sc
+stroke
+} ddef
+/_pss
+{
+_sc
+ss
+} ddef
+/_pjss
+{
+_sc
+jss
+} ddef
+/_lp /none ddef
+} def
+/x
+{
+/_gf exch ddef
+findcmykcustomcolor
+/_if exch ddef
+/_fc
+{
+_lp /fill ne
+	{
+	_of setoverprint
+	_if _gf 1 exch sub setcustomcolor
+	/_lp /fill ddef
+	} if
+} ddef
+/_pf
+{
+_fc
+fill
+} ddef
+/_psf
+{
+_fc
+ashow
+} ddef
+/_pjsf
+{
+_fc
+awidthshow
+} ddef
+/_lp /none ddef
+} def
+/X
+{
+/_gs exch ddef
+findcmykcustomcolor
+/_is exch ddef
+/_sc
+{
+_lp /stroke ne
+	{
+	_os setoverprint
+	_is _gs 1 exch sub setcustomcolor
+	/_lp /stroke ddef
+	} if
+} ddef
+/_ps
+{
+_sc
+stroke
+} ddef
+/_pss
+{
+_sc
+ss
+} ddef
+/_pjss
+{
+_sc
+jss
+} ddef
+/_lp /none ddef
+} def
+/dp
+{
+dup null eq
+{
+pop
+_dp 0 ne
+	{
+	0 1 _dp 1 sub _dl mod
+		{
+		_da exch get 3 get
+		} for
+	_dp 1 sub _dl mod 1 add packedarray
+	_da 0 get aload pop 8 -1 roll 5 -1 roll pop 4 1 roll
+	definepattern pop
+	} if
+}
+{
+_dp 0 ne _dp _dl mod 0 eq and
+	{
+	null dp
+	} if
+7 packedarray _da exch _dp _dl mod exch put
+_dp _dl mod _da 0 get 4 get 2 packedarray
+/_dp _dp 1 add def
+} ifelse
+} def
+/E
+{
+_ed begin
+dup 0 get type /arraytype ne
+	{
+	0
+		{
+		dup 1 add index type /arraytype eq
+			{
+			1 add
+			}
+			{
+			exit
+			} ifelse
+		} loop
+	array astore
+	} if
+/_dd exch def
+/_ury exch def
+/_urx exch def
+/_lly exch def
+/_llx exch def
+/_n exch def
+/_y 0 def
+/_dl 4 def
+/_dp 0 def
+/_da _dl array def
+0 1 _dd length 1 sub
+	{
+	/_d exch _dd exch get def
+	0 2 _d length 2 sub
+		{
+		/_x exch def
+		/_c _d _x get _ ne def
+		/_r _d _x 1 add get cvlit def
+		_r _ ne
+			{
+			_urx _llx sub _ury _lly sub [1 0 0 1 0 0] 
+				[
+				/save cvx
+				_llx neg _lly neg /translate cvx
+				_c
+					{
+					nc /begin cvx
+					} if
+				_r dup type /stringtype eq
+					{
+					cvx
+					}
+					{
+					{exec} /forall cvx
+					} ifelse
+				_c
+					{
+					/end cvx
+					} if
+				/restore cvx
+				] cvx
+			/_fn 12 _n length add string def
+			_y _fn cvs pop
+			/_y _y 1 add def
+			_fn 12 _n putinterval
+			_fn _c false dp
+			_d exch _x 1 add exch put
+			} if
+		} for
+	} for
+null dp
+_n _dd /_pd
+end xput
+} def
+/fc
+{
+_fm dup concatmatrix pop
+} def
+/p
+{
+/_fm exch ddef
+9 -2 roll _pm translate fc
+7 -2 roll _pm scale fc
+5 -1 roll _pm rotate fc
+4 -2 roll exch 0 ne
+	{
+	dup _pm rotate fc
+	1 -1 _pm scale fc
+	neg _pm rotate fc
+	}
+	{
+	pop
+	} ifelse
+dup _pm rotate fc
+exch dup sin exch cos div 1 0 0 1 0 6 2 roll
+_pm astore fc
+neg _pm rotate fc
+_pd exch get /_fdd exch ddef
+/_pf
+{
+save
+/_doClip 0 ddef
+0 1 _fdd length 1 sub
+	{
+	/_fd exch _fdd exch get ddef
+	_fd
+	0 2 _fd length 2 sub
+		{
+		gsave
+		2 copy get dup _ ne
+			{
+			cvx exec _fc
+			}
+			{
+			pop
+			} ifelse
+		2 copy 1 add get dup _ ne
+			{
+			aload pop findfont _fm
+			patternfill
+			}
+			{
+			pop
+			fill
+			} ifelse
+		grestore
+		pop
+		} for
+	pop
+	} for
+restore
+newpath
+} ddef
+/_psf
+{
+save
+/_doClip 0 ddef
+0 1 _fdd length 1 sub
+	{
+	/_fd exch _fdd exch get ddef
+	_fd
+	0 2 _fd length 2 sub
+		{
+		gsave
+		2 copy get dup _ ne
+			{
+			cvx exec _fc
+			}
+			{
+			pop
+			} ifelse
+		2 copy 1 add get dup _ ne
+			{
+			aload pop findfont _fm
+			9 copy 6 npop patternashow
+			}
+			{
+			pop
+			6 copy 3 npop ashow
+			} ifelse
+		grestore
+		pop
+		} for
+	pop
+	} for
+restore
+%3 npop newpath
+sw rmoveto
+} ddef
+/_pjsf
+{
+save
+/_doClip 0 ddef
+0 1 _fdd length 1 sub
+	{
+	/_fd exch _fdd exch get ddef
+	_fd
+	0 2 _fd length 2 sub
+		{
+		gsave
+		2 copy get dup _ ne
+			{
+			cvx exec _fc
+			}
+			{
+			pop
+			} ifelse
+		2 copy 1 add get dup _ ne
+			{
+			aload pop findfont _fm
+			12 copy 6 npop patternawidthshow
+			}
+			{
+			pop 9 copy 3 npop awidthshow
+			} ifelse
+		grestore
+		pop
+		} for
+	pop
+	} for
+restore
+swj rmoveto
+} ddef
+/_lp /none ddef
+} def
+/sc
+{
+_sm dup concatmatrix pop
+} def
+/P
+{
+/_sm exch ddef
+9 -2 roll _pm translate sc
+7 -2 roll _pm scale sc
+5 -1 roll _pm rotate sc
+4 -2 roll exch 0 ne
+	{
+	dup _pm rotate sc
+	1 -1 _pm scale sc
+	neg _pm rotate sc
+	}
+	{
+	pop
+	} ifelse
+dup _pm rotate sc
+exch dup sin exch cos div 1 0 0 1 0 6 2 roll
+_pm astore sc
+neg _pm rotate sc
+_pd exch get /_sdd exch ddef
+/_ps
+{
+save
+/_doClip 0 ddef
+0 1 _sdd length 1 sub
+	{
+	/_sd exch _sdd exch get ddef
+	_sd
+	0 2 _sd length 2 sub
+		{
+		gsave
+		2 copy get dup _ ne
+			{
+			cvx exec _sc
+			}
+			{
+			pop
+			} ifelse
+		2 copy 1 add get dup _ ne
+			{
+			aload pop findfont _sm
+			patternstroke
+			}
+			{
+			pop stroke
+			} ifelse
+		grestore
+		pop
+		} for
+	pop
+	} for
+restore
+newpath
+} ddef
+/_pss
+{
+save
+/_doClip 0 ddef
+0 1 _sdd length 1 sub
+	{
+	/_sd exch _sdd exch get ddef
+	_sd
+	0 2 _sd length 2 sub
+		{
+		gsave
+		2 copy get dup _ ne
+			{
+			cvx exec _sc
+			}
+			{
+			pop
+			} ifelse
+		2 copy 1 add get dup _ ne
+			{
+			aload pop findfont _sm
+			10 copy 6 npop patternashowstroke
+			}
+			{
+			pop 7 copy 3 npop ss
+			} ifelse
+		grestore
+		pop
+		} for
+	pop
+	} for
+restore
+pop sw rmoveto
+} ddef
+/_pjss
+{
+save
+/_doClip 0 ddef
+0 1 _sdd length 1 sub
+	{
+	/_sd exch _sdd exch get ddef
+	_sd
+	0 2 _sd length 2 sub
+		{
+		gsave
+		2 copy get dup _ ne
+			{
+			cvx exec _sc
+			}
+			{
+			pop
+			} ifelse
+		2 copy 1 add get dup _ ne
+			{
+			aload pop findfont _sm
+			13 copy 6 npop patternawidthshowstroke
+			}
+			{
+			pop 10 copy 3 npop jss
+			} ifelse
+		grestore
+		pop
+		} for
+	pop
+	} for
+restore
+pop swj rmoveto
+} ddef
+/_lp /none ddef
+} def
+/A
+{
+pop
+} def
+/nc 3 dict def
+nc begin
+/setgray
+{
+pop
+} bind def
+/setcmykcolor
+{
+4 npop
+} bind def
+/setcustomcolor
+{
+2 npop
+} bind def
+currentdict readonly pop end
+currentdict readonly pop end
+setpacking
+/annotatepage
+{
+} def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeFont: Helvetica
+Adobe_cshow /initialize get exec
+Adobe_customcolor /initialize get exec
+Adobe_typography_AI3 /initialize get exec
+Adobe_pattern_AI3 /initialize get exec
+Adobe_Illustrator_AI3 /initialize get exec
+[
+39/quotesingle 96/grave 128/Adieresis/Aring/Ccedilla/Eacute/Ntilde/Odieresis
+/Udieresis/aacute/agrave/acircumflex/adieresis/atilde/aring/ccedilla/eacute
+/egrave/ecircumflex/edieresis/iacute/igrave/icircumflex/idieresis/ntilde
+/oacute/ograve/ocircumflex/odieresis/otilde/uacute/ugrave/ucircumflex
+/udieresis/dagger/degree/cent/sterling/section/bullet/paragraph/germandbls
+/registered/copyright/trademark/acute/dieresis/.notdef/AE/Oslash
+/.notdef/plusminus/.notdef/.notdef/yen/mu/.notdef/.notdef
+/.notdef/.notdef/.notdef/ordfeminine/ordmasculine/.notdef/ae/oslash
+/questiondown/exclamdown/logicalnot/.notdef/florin/.notdef/.notdef
+/guillemotleft/guillemotright/ellipsis/.notdef/Agrave/Atilde/Otilde/OE/oe
+/endash/emdash/quotedblleft/quotedblright/quoteleft/quoteright/divide
+/.notdef/ydieresis/Ydieresis/fraction/currency/guilsinglleft/guilsinglright
+/fi/fl/daggerdbl/periodcentered/quotesinglbase/quotedblbase/perthousand
+/Acircumflex/Ecircumflex/Aacute/Edieresis/Egrave/Iacute/Icircumflex
+/Idieresis/Igrave/Oacute/Ocircumflex/.notdef/Ograve/Uacute/Ucircumflex
+/Ugrave/dotlessi/circumflex/tilde/macron/breve/dotaccent/ring/cedilla
+/hungarumlaut/ogonek/caron
+TE
+%AI3_BeginEncoding: _Helvetica Helvetica
+[/_Helvetica/Helvetica 0 0 1 TZ
+%AI3_EndEncoding AdobeType
+%AI3_BeginPattern: (Yellow Stripe)
+(Yellow Stripe) 8.4499 4.6 80.4499 76.6 [
+%AI3_Tile
+(0 O 0 R 0 0.4 1 0 k 0 0.4 1 0 K) @
+(
+0 i
+0 J 0 j 3.6 w 4 M []0 d
+%AI3_Note:
+0 D
+8.1999 8.1999 m
+80.6999 8.1999 L
+S
+8.1999 22.6 m
+80.6999 22.6 L
+S
+8.1999 37.0001 m
+80.6999 37.0001 L
+S
+8.1999 51.3999 m
+80.6999 51.3999 L
+S
+8.1999 65.8 m
+80.6999 65.8 L
+S
+8.1999 15.3999 m
+80.6999 15.3999 L
+S
+8.1999 29.8 m
+80.6999 29.8 L
+S
+8.1999 44.1999 m
+80.6999 44.1999 L
+S
+8.1999 58.6 m
+80.6999 58.6 L
+S
+8.1999 73.0001 m
+80.6999 73.0001 L
+S
+) &
+] E
+%AI3_EndPattern
+%%EndSetup
+0 A
+u
+u
+0 O
+0 g
+0 i
+0 J 0 j 1 w 4 M []0 d
+%AI3_Note:
+0 D
+84.7146 693.4118 m
+84.7146 717.3723 L
+73.9468 717.3723 L
+73.9468 693.4118 L
+84.7146 693.4118 L
+f
+107.885 693.4118 m
+107.885 717.3723 L
+97.1172 717.3723 L
+97.1172 693.4118 L
+107.885 693.4118 L
+f
+153.7972 693.4118 m
+153.7972 717.3723 L
+143.8071 717.3723 L
+143.8071 693.4118 L
+153.7972 693.4118 L
+f
+142.6011 693.4118 m
+142.6011 717.3723 L
+131.8333 717.3723 L
+131.8333 693.4118 L
+142.6011 693.4118 L
+f
+1 g
+0.3394 w
+149.9843 699.7139 m
+149.9843 711.7924 L
+147.8778 711.7924 L
+147.8778 699.7139 L
+149.9843 699.7139 L
+f
+0.3371 w
+77.5597 703.8961 m
+77.5583 705.6678 78.2907 706.4587 79.0732 706.4587 c
+79.8557 706.4587 80.5895 705.6465 80.5867 703.8961 c
+80.5837 701.954 79.8557 701.3818 79.0732 701.3818 c
+78.3094 701.3818 77.5609 702.2072 77.5597 703.8961 C
+75.4752 704.1459 L
+75.4676 700.8523 77.2072 699.5718 78.8913 699.5786 c
+79.5828 699.5814 80.2596 699.8286 80.6 700.2937 C
+80.6141 700.3124 80.6584 700.4162 80.6583 700.4183 C
+80.6244 700.2916 80.625 700.1891 V
+80.6233 700.1777 80.6237 700.1406 80.626 699.7119 C
+82.7292 699.716 L
+82.7298 711.7917 L
+80.6446 711.7903 l
+80.6445 707.4887 l
+80.6466 707.4652 80.6931 707.3242 80.6928 707.3244 C
+80.6385 707.4471 80.6163 707.4725 v
+80.1924 707.9585 79.5762 708.2175 78.8114 708.2175 c
+77.2445 708.2175 75.4813 706.8212 75.4752 704.1459 C
+77.5597 703.8961 L
+f
+0 g
+1 w
+95.9113 693.4118 m
+95.9113 717.3723 L
+85.9211 717.3723 L
+85.9211 693.4118 L
+95.9113 693.4118 L
+f
+1 g
+0.3394 w
+91.9657 699.7126 m
+91.9657 708.1225 L
+89.8591 708.1225 L
+89.8591 699.7126 L
+91.9657 699.7126 L
+f
+u
+u
+0.3497 w
+90.9119 709.8997 m
+91.5743 709.8997 92.1113 710.4367 92.1113 711.0991 c
+92.1113 711.7615 91.5743 712.2985 90.9119 712.2985 c
+90.2495 712.2985 89.7124 711.7615 89.7124 711.0991 c
+89.7124 710.4367 90.2495 709.8997 90.9119 709.8997 c
+f
+U
+90.9119 711.0991 m
+F
+U
+0.3371 w
+100.8803 703.8944 m
+100.8816 702.1867 101.6114 701.3801 102.3939 701.3801 c
+103.1765 701.3801 103.9044 701.9523 103.9075 703.8944 c
+103.9102 705.6448 103.1765 706.457 102.3939 706.457 c
+101.6114 706.457 100.879 705.666 100.8803 703.8944 C
+98.7959 704.1441 L
+98.802 706.8195 100.5652 708.2158 102.132 708.2158 c
+102.8969 708.2158 103.5131 707.9568 103.937 707.4708 c
+103.9592 707.4454 104.0136 707.3227 Y
+104.0138 707.3224 103.9673 707.4635 103.9652 707.4869 c
+103.9654 708.1229 l
+105.9299 708.1242 L
+105.9294 699.3371 L
+105.8354 697.0854 104.6192 695.8401 102.3916 695.8686 c
+100.7036 695.8901 99.4582 696.6495 99.0313 697.8617 C
+101.0324 698.4692 L
+101.1394 697.8802 101.6967 697.5308 102.3916 697.5401 c
+103.1804 697.5508 103.944 697.9984 103.944 699.0644 c
+103.944 699.8664 103.9434 700.2651 103.9457 700.2807 C
+103.9494 700.3076 103.979 700.4166 Y
+103.9791 700.4144 103.9348 700.3107 103.9207 700.292 C
+103.5803 699.8269 102.9035 699.5797 102.212 699.5769 c
+100.5279 699.5701 98.7882 700.8506 98.7959 704.1441 C
+100.8803 703.8944 L
+f
+0 g
+1 w
+119.0853 693.4118 m
+119.0853 717.3723 L
+109.0951 717.3723 L
+109.0951 693.4118 L
+119.0853 693.4118 L
+f
+1 g
+0.3394 w
+115.1396 699.7126 m
+115.1396 708.1225 L
+113.0331 708.1225 L
+113.0331 699.7126 L
+115.1396 699.7126 L
+f
+u
+u
+0.3497 w
+114.0858 709.8997 m
+114.7482 709.8997 115.2853 710.4367 115.2853 711.0991 c
+115.2853 711.7615 114.7482 712.2985 114.0858 712.2985 c
+113.4235 712.2985 112.8864 711.7615 112.8864 711.0991 c
+112.8864 710.4367 113.4235 709.8997 114.0858 709.8997 c
+f
+U
+114.0858 711.0991 m
+F
+U
+0 g
+1 w
+130.6197 693.412 m
+130.6197 717.3721 L
+120.2703 717.3721 L
+120.2703 693.412 L
+130.6197 693.412 L
+f
+1 g
+0.3394 w
+126.2505 699.5646 m
+124.7467 699.5831 124.2088 700.5177 124.2538 701.9346 c
+124.2538 706.7883 L
+123.1964 706.7883 L
+123.1964 708.2176 L
+124.2538 708.2176 l
+124.2538 711.3437 L
+126.2705 711.9583 L
+126.2705 708.2176 L
+127.7557 708.2176 L
+127.7557 706.7883 L
+126.2705 706.7883 L
+126.2705 702.1263 L
+126.2616 701.4761 126.4657 701.2903 126.8902 701.2718 c
+127.2805 701.2548 127.656 701.4274 127.829 701.549 C
+127.829 699.9406 L
+127.479 699.7254 126.8368 699.5574 126.2505 699.5646 c
+f
+u
+0.3405 w
+135.6473 702.2915 m
+135.6528 702.8825 136.0338 703.3083 136.5444 703.4443 c
+137.7926 703.7767 138.5964 703.9945 138.6567 704.1716 c
+138.6567 703.2083 L
+138.6474 702.0456 137.9937 701.1894 136.8957 701.171 c
+135.9976 701.1559 135.6425 701.7753 135.6473 702.2915 C
+133.7631 702.2696 L
+133.7837 700.9577 134.523 699.5106 136.3713 699.4877 c
+137.1579 699.478 138.1839 699.8529 138.623 700.446 c
+138.6665 700.4452 L
+138.6668 699.7147 L
+140.6151 699.7143 L
+140.6151 699.7618 L
+140.4057 699.9663 140.4492 700.9912 140.4467 701.171 C
+140.4467 706.2354 l
+140.4454 708.112 138.5671 708.5608 137.4168 708.5535 c
+136.1338 708.5454 134.6208 707.9627 134.1719 706.4661 C
+135.9254 705.934 L
+136.0104 706.4809 136.4723 706.9922 137.388 706.9946 c
+138.2781 706.997 138.6154 706.6432 138.6118 706.211 c
+138.6081 705.7732 138.3433 705.4916 137.9301 705.3532 c
+137.4197 705.1822 136.9937 705.0708 136.0574 704.8326 c
+134.2984 704.385 133.7494 703.1462 133.7631 702.2696 C
+135.6473 702.2915 L
+f
+U
+U
+u
+0 To
+1 0 0 1 154.5163 713.4324 0 Tp
+TP
+0 Tr
+0 g
+1 w
+/_Helvetica 5.4867 Tf
+0 Ts
+100 Tz
+0 Tt
+0 TA
+0 0 5 TC
+100 100 200 TW
+0 0 0 Ti
+0 Ta
+0 Tq
+0 0 Tl
+0 Tc
+0 Tw
+(T) Tx 0 30 Tk 
+(M) Tx 
+(\r) TX 
+TO
+U
+U
+%%PageTrailer
+gsave annotatepage grestore showpage
+%%Trailer
+Adobe_Illustrator_AI3 /terminate get exec
+Adobe_pattern_AI3 /terminate get exec
+Adobe_typography_AI3 /terminate get exec
+Adobe_customcolor /terminate get exec
+Adobe_cshow /terminate get exec
+Adobe_packedarray /terminate get exec
+%%EndDocument
+SPE
+3899 4198 XY
+0 SC 3899 9079 XY F16(Software)S 3899 10325 XY(Produ)S 2 x(ct)S 3899 11570 XY
+(Description)S 3899 X 697 y 23316 204 R 3899 13103 XY F40(DIGIT)S -35 x
+(AL)S 149 x(Of\211ce)S 150 x(Serve)S 2 x(r)S 149 x(for)S 150 x(OpenVMS)S
+150 x(V4.0A/SVENSKA)S 24246 X(SPD:)S 150 x(70.09.00)S 3899 15195 XY
+F32(ALLM\304N)S 181 x(BESKRIVNING)S 3899 16192 XY F34(DIGIT)S -36 x
+(AL\207)S 176 x(Of)S -9 x(\211ce)S 176 x(Server)S 176 x(for)S 177 x
+(OpenVMS)S(\207)S 176 x(V4.0A)S 177 x(bygger)S 176 x(p\345)S 176 x(den)S
+176 x(bevisade)S 175 x(styrkan)S 177 x(hos)S 176 x(b\345de)S 176 x(ALL\203IN\2031)S
+(\207)S 3899 X 597 y(och)S 181 x(MailW)S -10 x(orks\207,)S 185 x(som)S
+180 x(tillhandah\345ller)S 179 x(robusta)S 181 x(och)S 181 x(skalbara)S
+180 x(meddelandetj\344nster)S 180 x(till)S 180 x(en)S 181 x(stort)S
+181 x(antal)S 181 x(postkli-)S 3899 X 598 y(enter)S 150 x(p\345)S 149 x
+(en)S 150 x(rad)S 149 x(olika)S 149 x(serverplattformar)S -27 x(,)S
+153 x(och)S 150 x(som)S 149 x(kommunicerar)S 149 x(med)S 150 x(\212era)S
+149 x(meddelandeposttj\344nster)S -27 x(.)S 216 x(T)S -18 x(ill)S 149 x
+(de)S 3899 X 598 y(fr\344msta)S 167 x(funktionerna)S 166 x(r\344knas:)S
+3899 X 897 y(\201)S 872 x(Den)S 132 x(nya)S 132 x(Klienten)S 132 x(Administrator)S
+132 x(\212yttar)S 133 x(den)S 132 x(dagliga)S 131 x(administrationen)S
+132 x(till)S 131 x(ett)S 133 x(nytt)S 133 x(gra\211skt)S 133 x(anv\344ndargr\344ns-)S
+4945 X 597 y(snitt)S 167 x(\(GUI\))S 165 x(p\345)S 166 x(Windows)S 165 x
+(NT\207)S 167 x(V4.0)S 166 x(och)S 166 x(Windows)S 166 x(95\206.)S 3899 X
+897 y(\201)S 872 x(Alternativet)S 213 x("Endast)S 212 x(arkiv")S 212 x
+(som)S 211 x(avaktiverar)S 212 x(lokal)S 212 x(post)S 212 x(och)S 212 x
+(fj\344rrpost)S 212 x(och)S 212 x(omde\211nierar)S 211 x(Of)S -9 x(\211ce)S
+212 x(Server)S 4945 X 598 y(som)S 166 x(en)S 166 x(skalbar)S 165 x(informationsbeh\345llare.)S
+3899 X 896 y(\201)S 872 x(Distribuerat)S 163 x(arkiv)S -38 x(,)S 165 x
+(d\344r)S 163 x(anv\344ndare)S 163 x(p\345)S 163 x(lokala)S 163 x(system)S
+163 x(kan)S 164 x(n\345)S 163 x(alla)S 162 x(typer)S 164 x(av)S 163 x
+(meddelanden)S 163 x(och)S 163 x(dokument)S 4945 X 598 y(p\345)S 166 x
+(fj\344rrsystem)S 166 x(som)S 166 x(om)S 166 x(de)S 166 x(fanns)S 167 x
+(lokalt.)S 3899 X 897 y(\201)S 872 x(St\366d)S 229 x(f\366r)S 229 x
+(LDAP)S 229 x(\(Lightweight)S 228 x(Directory)S 228 x(Access)S 229 x
+(Protocol\))S 229 x(via)S 228 x(TCP/I)S 2 x(P)S 228 x(m\366jligg\366r)S
+227 x(\345tkomst)S 230 x(till)S 228 x(den)S 228 x(nya)S 4945 X 597 y
+(generationen)S 166 x(av)S 166 x(LDAP-katalogtj\344nster)S 166 x(som)S
+166 x(blir)S 165 x(allt)S 166 x(vanligare)S 165 x(p\345)S 166 x(Internet)S
+167 x(och)S 166 x(intran\344t.)S 3899 X 897 y(\201)S 872 x(M\366jlighet)S
+184 x(att)S 187 x(skapa,)S 191 x(s\344nda)S 185 x(besvara)S 185 x(och)S
+186 x(vidarebefordra)S 185 x(post)S 186 x(fr\345n)S 185 x(Internet)S
+187 x(med)S 185 x(personlig)S 185 x(\345tkomst)S 186 x(till)S 4945 X
+598 y(Of)S -9 x(\211ce)S 176 x(Server-arkivet)S 176 x(med)S 176 x(inloggni)S
+-2 x(ng)S 176 x(och)S 176 x(l\366senordskontroll)S 175 x(i)S 176 x(samband)S
+176 x(med)S 176 x(den)S 175 x(nya)S 176 x(DIGIT)S -36 x(AL)S 176 x(Of)S
+-9 x(\211ce)S 4945 X 598 y(Server)S 182 x(W)S -9 x(eb)S 182 x(Interface)S
+183 x(V5.0)S 183 x(som)S 182 x(installeras)S 181 x(p\345)S 182 x(en)S
+182 x(lokal)S 181 x(Internet-server)S -26 x(.)S 269 x(\304ven)S 183 x
+(m\366jli)S -2 x(ghet)S 183 x(att)S 183 x(publicera)S 4945 X 597 y(alla)S
+165 x(typer)S 166 x(av)S 167 x(dokument)S 166 x(f\366r)S 166 x(allm\344n)S
+165 x(\345tkomst)S 167 x(\211nns)S 166 x(fortf)S 2 x(arande.)S 3899 X
+897 y(\201)S 872 x(St\366d)S 167 x(f\366r)S 166 x(\212era)S 166 x(posttj\344nster:)S
+4945 X 897 y(\202)S 548 x(X.400)S 168 x(via)S 167 x(MAILbus\207)S 169 x
+(400)S 167 x(och)S 167 x(DIGIT)S -36 x(AL)S 168 x(X.500)S 168 x(p\345)S
+167 x(OpenVMS)S 168 x(och)S 167 x(UNIX\206)S 168 x(\(inklusi)S -2 x
+(ve)S 168 x(smtp/MIME)S 2 x(-)S 5991 X 597 y(gateway\))S 4945 X 897 y
+(\202)S 548 x(smtp/MIME)S 168 x(via)S 165 x(direktst\366d)S 167 x(f\366r)S
+166 x(PMDF\206)S 166 x(p\345)S 166 x(\212era)S 166 x(plattformar)S 167 x
+(utan)S 166 x(krav)S 166 x(p\345)S 166 x(Message)S 166 x(Router)S 4945 X
+897 y(\202)S 548 x(V)S -37 x(AX\207-baserad)S 167 x(Message)S 166 x
+(Router)S 3899 X 896 y(\201)S 872 x(St\366d)S 209 x(f\366r)S 209 x(\212era)S
+208 x(klienter)S 209 x(inklusi)S -2 x(ve)S 209 x(Outlook)S 208 x(och)S
+209 x(Exchange)S 208 x(med)S 209 x(anv\344ndning)S 208 x(av)S 208 x
+(DIGIT)S -36 x(AL)S 209 x(Of)S -9 x(\211ce)S 208 x(Server)S 4945 X 598 y
+(MAPI)S 167 x(Driver)S 165 x(V4.0)S 167 x(och)S 166 x(V5.0)S 166 x(\()S
+F35(MAPI-drivrutinen)S F34(\))S 3899 X 897 y(\201)S 872 x(Inbyggd)S
+166 x(POP3-server)S 3899 X 896 y(\201)S 872 x(Feltolerant)S 166 x(arkiv)S
+166 x(och)S 166 x(AIDA-servrar)S 166 x(f\366rb\344ttrar)S 167 x(tillf\366rlitli)S
+-2 x(gheten)S 167 x(f\366r)S 166 x(Outlook)S 166 x(och)S 166 x(Exchange)S
+(-klienter)S 3899 X 897 y(\201)S 872 x(Omfattande)S 167 x(serverbaserat)S
+166 x(\366verg\345ngsverktyg)S 166 x(f\366r)S 167 x(MailW)S -10 x(orks)S
+166 x(inkluderat)S 165 x(som)S 166 x(standard)S 849 x 36776 Y F40(Januari)S
+150 x(1998)S 23899 X 597 y(AE\203RADKA)S -2 x(\203TE)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica Helvetica-Bold
+%%+ Helvetica-Oblique
+%%PageProcessColors: Black
+%%PageCustomColors: (BLACK)
+%
+%%Page: (2) 2
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3976 XY F34(\201)S 872 x(F\366rb\344ttrat)S
+167 x(VT\207-gr\344nssnitt)S 167 x(f\366r)S 167 x(MailW)S -10 x(orks-\366verg\345ng)S
+3899 X 897 y(\201)S 872 x(Meddelanden)S 165 x(delas)S 166 x(av)S 166 x
+(anv\344ndare;)S 166 x(d\344rav)S 166 x(upplever)S 165 x(MailW)S -9 x
+(orks-kunder)S 165 x(diskutnyttjandet)S 167 x(som)S 166 x(minskat)S
+3899 X 896 y(\201)S 872 x(Client)S 165 x(Access)S 167 x(Licensing)S
+3899 X 897 y(\201)S 872 x(F\366rberett)S 167 x(f\366r)S 166 x(\345r)S
+166 x(2000)S 3899 X 897 y(\201)S 872 x(Fullst\344ndig)S 165 x(ALL\203IN\2031)S
+167 x(VT)S -27 x(-funktionalitet)S 166 x(beh\345lls)S 165 x(f\366r)S
+167 x(aktuella)S 165 x(ALL\203IN\2031)S(-system)S 3899 X 896 y(\201)S
+872 x(Ett)S 167 x(gemensamt)S 167 x(programpaket)S 166 x(f\366r)S 166 x
+(Alpha)S 166 x(och)S 166 x(V)S -37 x(AX)S 3899 9555 XY(ALL\203IN\2031)S
+(-kunder)S 207 x(som)S 208 x(uppgraderar)S 207 x(till)S 206 x(Of)S -9 x
+(\211ce)S 208 x(Server)S 207 x(kan)S 208 x(beh\345lla)S 206 x(be\211ntliga)S
+207 x(Capacity-)S 207 x(och)S 208 x(User-licenser)S 3899 X 598 y(och)S
+219 x(d\344rmed)S 220 x(elimi)S -2 x(nera)S 220 x(eventuella)S 219 x
+(administrativa)S 219 x(omkostnader)S -28 x(.)S 383 x(\305tkomst)S 221 x
+(till)S 218 x(all)S 219 x(funktionalitet)S 220 x(i)S 219 x(ALL\203IN\2031)S
+3899 X 598 y(V3.2)S 151 x(t)S 167 x(ex)S 150 x(WPS\203PLUS)S(\207,)S
+155 x(Kundanpassning,)S 154 x(T)S -18 x(idsplanering)S 149 x(och)S 151 x
+(Forum,)S 154 x(om)S 150 x(de)S 151 x(redan)S 150 x(har)S 151 x(aktiverats,)S
+154 x(beh\345lls)S 3899 X 597 y(under)S 166 x(installationen)S 165 x
+(av)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(V4.0A.)S 3899 12345 XY
+(Nya)S 241 x(kunder)S 242 x(och)S 241 x(MailW)S -9 x(orks-kunder)S 241 x
+(anv\344nder)S 241 x(Client)S 241 x(Access)S 242 x(Licensing,)S 260 x
+(vilken)S 241 x(\344ven)S 242 x(ger)S 241 x(beh\366righet)S 242 x(att)S
+3899 X 597 y(anv\344nda)S 157 x(DIGIT)S -36 x(AL)S(-klienter)S 156 x
+(som)S 157 x(T)S -55 x(eamLinks)S(\207)S 157 x(och)S 157 x(MAPI-)S 158 x
+(drivrutinen)S 157 x(s\345v\344l)S 157 x(som)S 157 x(att)S 158 x(den)S
+157 x(ger)S 157 x(\345tkomst)S 158 x(till)S 156 x(alla)S 3899 X 598 y
+(Of)S -9 x(\211ce)S 166 x(Server-m\366jlighe)S -2 x(ter)S -27 x(.)S
+3899 14536 XY(Of)S -9 x(\211ce)S 248 x(Server)S 248 x(tillhandah\345l)S
+-2 x(ler)S 248 x(funktioner)S 248 x(f\366r)S 248 x(mixade)S 248 x(grupper)S
+247 x(av)S 248 x(Windows)S 248 x(NT)S -56 x(,)S 249 x(Windows)S 247 x
+(95,)S 269 x(Microsoft\206)S 3899 X 598 y(Windows\206)S 155 x(V3.1)S
+-36 x(1)S 155 x(och)S 156 x(V3.1,)S 159 x(Apple\206)S 155 x(Macintosh\206)S
+156 x(och)S 155 x(VT)S -26 x(-anv\344ndare)S 155 x(att)S 156 x(kommunicera,)S
+158 x(dela)S 155 x(dokument)S 155 x(och)S 3899 X 598 y(arbeta)S 166 x
+(tillsammans)S 165 x(f\366r)S 167 x(att)S 167 x(gemensamt)S 166 x(h\366ja)S
+165 x(produktiviteten.)S 3899 16728 XY(Genom)S 207 x(den)S 207 x(elektroniska)S
+208 x(posten)S 208 x(och)S 207 x(delning)S 207 x(av)S 207 x(dokument)S
+208 x(i)S 207 x(globala)S 207 x(n\344tverk)S 208 x(kan)S 208 x(anv\344ndare)S
+207 x(s\344nda)S 207 x(och)S 3899 X 598 y(ta)S 263 x(emot)S 262 x(multimediainformation)S
+261 x(som)S 262 x(har)S 262 x(skapats)S 263 x(p\345)S 262 x(avdelningens,)S
+286 x(f\366retagets)S 263 x(eller)S 261 x(anv\344ndarens)S 262 x(eget)S
+3899 X 598 y(system.)S 207 x(Programvaran)S 118 x(\344r)S 118 x(dessutom)S
+119 x(l\344tt)S 119 x(att)S 120 x(hantera)S 118 x(eftersom)S 120 x(den)S
+118 x(\344r)S 119 x(serverbaserad)S 118 x(och)S 118 x(har)S 119 x(m\345nga)S
+118 x(system-)S 3899 X 598 y(hanteringsfunktioner)S -27 x(.)S 3899 20016 XY
+F32(St\366d)S 183 x(f\366r)S 183 x(T)S -41 x(eamLinks-klienter)S 3899 21012 XY
+F35(F\366ljande)S 165 x(tj\344nster)S 167 x(\344r)S 166 x(tillg\344ngl)S
+-2 x(iga)S 166 x(f\366r)S 166 x(T)S -45 x(eamLinks)S 165 x(W)S -4 x
+(indows)S 165 x(V2.7,)S 167 x(V3.0,)S 168 x(och)S 166 x(Macintosh)S
+166 x(V2.5-,)S 167 x(V2.6-klienter:)S 3899 22008 XY F34(Of)S -9 x(\211ce)S
+113 x(Server)S 112 x(tillhandah\345ller)S 111 x(arbetsgruppstj\344nster)S
+113 x(f\366r)S 113 x(T)S -55 x(eamLinks)S(-klienter)S 112 x(via)S 112 x
+(TCP/I)S 2 x(P)S -64 x(,)S 113 x(SLIP)S -64 x(,)S 114 x(DECnet\207,)S
+124 x(asyn-)S 3899 X 598 y(krona)S 112 x(l\344nkar)S 111 x(eller)S 111 x
+(AppleT)S -55 x(alk\206)S 111 x(\(till)S 111 x(Macintosh-)S 112 x(enheter\).)S
+204 x(Servern)S 112 x(g\366r)S 112 x(det)S 112 x(m\366jligt)S 111 x
+(f\366r)S 112 x(T)S -54 x(eamLinks)S(-anv\344ndare)S 111 x(att)S 3899 X
+598 y(f\345)S 128 x(\345tkomst)S 128 x(till)S 127 x(l\345dor)S 127 x
+(i)S 127 x(arkivet,)S 135 x(mappar)S 128 x(och)S 127 x(dokument,)S 136 x
+(meddelandetj\344nster)S -28 x(,)S 136 x(distributionslistor)S 126 x
+(och)S 128 x(hanterings-)S 3899 X 598 y(funktioner)S 166 x(med)S 166 x
+(endast)S 167 x(kort)S 166 x(utbildning)S 165 x(f\366r)S 166 x(VT)S
+-26 x(-)S 166 x(anv\344ndare)S 165 x(som)S 166 x(\344r)S 166 x(vana)S
+166 x(vid)S 166 x(ALL\203IN\2031)S 166 x(och)S 166 x(MailW)S -10 x(orks.)S
+3899 24798 XY(Anv\344ndare)S 147 x(av)S 147 x(Macintosh)S 147 x(och)S
+147 x(persondatorer)S 147 x(med)S 147 x(Windows)S 147 x(kan)S 147 x
+(\366verf\366ra)S 147 x(alla)S 147 x(typer)S 147 x(av)S 147 x(dokument)S
+148 x(\(inklusi)S -2 x(ve)S 3899 X 598 y(multimedia-dokument\))S 224 x
+(fr\345n)S 224 x(sina)S 225 x(till\344mpni)S -2 x(ngar)S 225 x(p\345)S
+224 x(dessa)S 225 x(plattformar)S 225 x(till)S 224 x(arkivet)S 225 x
+(i)S 224 x(Of)S -9 x(\211ce)S 225 x(Server)S 225 x(f\366r)S 225 x(s\344ker)S
+3899 X 598 y(lagring)S(.)S 354 x(Dessa)S 210 x(dokument)S 211 x(kan)S
+210 x(sedan)S 211 x(s\344ndas)S 210 x(via)S 210 x(en)S 211 x(meddelandetj\344nst)S
+210 x(med)S 210 x(hj\344lp)S 210 x(av)S 210 x(be\211ntliga)S 210 x(distribu-)S
+3899 X 597 y(tionslistor)S -28 x(.)S 206 x(Med)S 117 x(Integral)S 118 x
+(distributed)S 117 x(document)S 118 x(sharing)S 116 x(kan)S 118 x(T)S
+-55 x(eamLinks)S(-anv\344ndare)S 116 x(n\345)S 118 x(alla)S 116 x(typer)S
+118 x(av)S 117 x(dokument)S 3899 X 598 y(p\345)S 166 x(fj\344rranslutna)S
+166 x(Of)S -9 x(\211ce)S 166 x(Servers)S 166 x(och)S 166 x(ALL\203IN\2031)S
+(-system.)S 3899 28185 XY(Med)S 182 x(Of)S -9 x(\211ce)S 183 x(Server)S
+183 x(V4.0A)S 183 x(kan)S 183 x(anv\344ndare)S 182 x(av)S 182 x(heterogena)S
+183 x(klienter)S 182 x(\(Windows,)S 186 x(Macintosh,)S 188 x(VT\))S
+183 x(samexistera)S 3899 X 598 y(och)S 166 x(delta)S 166 x(i)S 166 x
+(arbetsgruppsaktiviteter)S -27 x(.)S 3899 29779 XY(Ytterligare)S 111 x
+(information)S 110 x(om)S 111 x(tillg\344ngl)S -2 x(ig)S 111 x(funktionalitet)S
+111 x(fr\345n)S 111 x(T)S -55 x(eamLinks-kli)S -2 x(enter)S 111 x(\211nns)S
+111 x(i)S 110 x(SPD:erna)S 111 x(63.25)S 111 x(\(Windows\))S 3899 X
+598 y(och)S 166 x(48.17)S 166 x(\(Macintosh\).)S 3899 31373 XY F40(Observera)S
+2 x(:)S 299 x F34(Klienttj\344nsterna)S 251 x(kan)S 251 x(ut\366kas)S
+251 x(till)S 250 x(att)S 252 x(omfatta)S 252 x(med)S 250 x(\344n)S 251 x
+(vad)S 251 x(som)S 251 x(erbjuds)S 250 x(av)S 251 x(T)S -55 x(eamLinks)S
+250 x(V3.0-)S 3899 X 598 y(klienten.)S 237 x(ALL\203IN\2031)S(-arkivet)S
+171 x(och)S 172 x(AIDA-servern)S 171 x(f\366r)S 172 x(programutvecklare,)S
+173 x(kompletteras)S 171 x(av)S 172 x(API:er)S 172 x(\(Application)S
+3899 X 598 y(Programming)S 165 x(Interface\).)S 15431 37373 XY F40(2)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (3) 3
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4108 XY F32(ST\326D)S 183 x(F\326R)S 182 x
+(MAPI-KLIE)S 2 x(NTER)S 3899 5105 XY F34(Of)S -9 x(\211ce)S 248 x(Server)S
+247 x(tillhandah\345ll)S -2 x(er)S 248 x(meddelande-)S 247 x(och)S 247 x
+(samarbetstj\344nster)S 248 x(f\366r)S 248 x(till\344mpningar)S 246 x
+(som)S 248 x(utnyttjar)S 249 x(MAPI)S 3899 X 598 y(\(Messaging)S 123 x
+(Application)S 123 x(Programming)S 123 x(Interface\),)S 134 x(exempelvis)S
+122 x(Outlook,)S 132 x(Exchange)S(,)S 133 x(och)S 124 x(Windows)S 123 x
+(Messaging)S 3899 X 597 y(via)S 135 x(DIGIT)S -37 x(AL)S 135 x(Of)S
+-8 x(\211ce)S 135 x(Server)S 135 x(MAPI)S 136 x(Driver)S 134 x(V4.0)S
+136 x(och)S 135 x(V5.0,)S 142 x(som)S 135 x(levereras)S 134 x(separat.)S
+212 x(\304ven)S 136 x(DIGIT)S -37 x(AL)S 135 x(MAPI)S 136 x(Driver)S
+3899 X 598 y(V1.0)S 205 x(for)S 204 x(ALL\203IN\2031)S 205 x(st\366d,)S
+215 x(men)S 204 x(funktionaliteten)S 204 x(\344r)S 204 x(inte)S 205 x
+(lika)S 203 x(omfattande.)S 338 x(Operationer)S 203 x(f\366r)S 205 x
+(elektronisk)S 204 x(post,)S 3899 X 598 y(register)S -28 x(,)S 217 x
+(arkiv)S -37 x(,)S 216 x(grupphantering,)S 216 x(dra)S 206 x(och)S 206 x
+(sl\344pp,)S 217 x(och)S 206 x(dokumentkonvertering)S 206 x(st\366ds)S
+207 x(p\345)S 206 x(arbetsstationer)S 207 x(med)S 3899 X 598 y(32-bitars)S
+225 x(Windows)S 225 x(NT)S 225 x(V4.0)S 226 x(och)S 226 x(Windows)S
+224 x(95)S 226 x(PCar)S -28 x(.)S 400 x(Ytterligare)S 225 x(information)S
+225 x(om)S 226 x(funktionaliteten)S 225 x(\211nns)S 226 x(i)S 3899 X
+597 y(SPD:erna)S 166 x(61.43.02)S 167 x(f\366r)S 166 x(V5.0,)S 168 x
+(61.43.01)S 166 x(f\366r)S 167 x(V4.0)S 166 x(och)S 167 x(61.43.00)S
+166 x(f\366r)S 167 x(V1.0.)S 3899 10186 XY F32(\305TKOMST)S 183 x(TILL)S
+182 x(WEB)S 3899 11182 XY F34(Anv\344ndare)S 198 x(av)S 199 x(Internet)S
+200 x(eller)S 197 x(intran\344t)S 199 x(kan)S 199 x(besvara,)S 207 x
+(vidarebefordra,)S 206 x(skapa)S 199 x(och)S 198 x(s\344nda)S 199 x
+(post)S 199 x(medan)S 198 x(de)S 199 x(an-)S 3899 X 598 y(v\344nder)S
+184 x(sina)S 184 x(egna)S 184 x(personliga)S 183 x(l\345dor)S -28 x
+(,)S 189 x(mappar)S -28 x(,)S 190 x(meddelanden)S 183 x(och)S 184 x
+(dokument,)S 190 x(och)S 184 x(andra)S 184 x(till)S 183 x(vilka)S 184 x
+(beh\366righet)S 3899 X 597 y(har)S 201 x(tilldelats,)S 211 x(med)S
+202 x(inloggni)S -2 x(ng)S 202 x(och)S 202 x(l\366senordskontroll)S
+200 x(via)S 202 x(DIGIT)S -37 x(AL)S 202 x(Of)S -9 x(\211ce)S 202 x
+(Server)S 202 x(W)S -9 x(eb)S 202 x(Interface)S 203 x(V5.0)S 202 x(som)S
+3899 X 598 y(levereras)S 203 x(separat.)S 336 x(Med)S 204 x(hj\344lp)S
+204 x(av)S 204 x(standardwebbl\344sare)S 203 x(som)S 204 x(Netscape)S
+204 x(Navigator)S(\206)S 204 x(och)S 204 x(Microsoft)S 204 x(Internet)S
+3899 X 598 y(Explorer)S 165 x(fr\345n)S 167 x(t)S 166 x(ex)S 166 x(ett)S
+167 x(Internet)S 2 x(-caf\351,)S 166 x(kan)S 166 x(meddelanden)S 166 x
+(och)S 166 x(dokument)S 166 x(visas)S 166 x(och)S 166 x(h\344mtas)S
+166 x(till)S 166 x(PC:n.)S 3899 14569 XY(Alla)S 161 x(dokument)S 161 x
+(som)S 162 x(placeras)S 160 x(i)S 161 x(en)S 162 x(l\345da)S 161 x(med)S
+161 x(l\344s-)S 161 x(eller)S 160 x(Internet-\345tkomst)S 163 x(kan)S
+162 x(n\345s)S 161 x(fr\345n)S 162 x(valfri)S 161 x(plats)S 161 x(p\345)S
+161 x(Internet)S 3899 X 598 y(\(via)S 163 x(brandv\344ggar)S 163 x(och)S
+164 x(eventuella)S 163 x(tunneling-programvara\))S -2 x(.)S 221 x(Det)S
+164 x(kr\344vs)S 164 x(inget)S 163 x(speciellt)S 163 x(HTML-verktyg)S
+164 x(\(Hyper-)S 3899 X 598 y(text)S 157 x(Markup)S 155 x(Language\))S
+156 x(p\345)S 155 x(servern)S 156 x(varken)S 155 x(f\366r)S 157 x(att)S
+156 x(skapa)S 156 x(eller)S 155 x(uppdatera)S 156 x(dokument)S 156 x
+(f\366r)S 156 x(Internet.)S 219 x(Ytt)S 2 x(erligar)S -2 x(e)S 3899 X
+598 y(information)S 166 x(\211nns)S 166 x(i)S 165 x(SPD)S 167 x(61.55.01)S
+166 x(f\366r)S 167 x(V5.0)S 166 x(och)S 166 x(61.55.00)S 167 x(f\366r)S
+167 x(V4.0.)S 3899 17359 XY F40(V)S -8 x(iktigt:)S 299 x F34(Alla)S
+151 x(dokument)S 152 x(i)S 151 x(Of)S -9 x(\211ce)S 152 x(Server-arkivet)S
+151 x(kan)S 152 x(s\344kras)S 151 x(med)S 152 x(hj\344lp)S 150 x(av)S
+152 x(inbyggda)S 151 x(s\344kerhetsfunktioner)S -27 x(.)S 217 x(Om)S
+3899 X 598 y(denna)S 130 x(funktionalitet)S 131 x(inte)S 131 x(anv\344nds)S
+131 x(korrekt)S 131 x(kan)S 130 x(anslutning)S 130 x(till)S 130 x(Internet)S
+132 x(fr\345n)S 131 x(Of)S -9 x(\211ce)S 131 x(Server)S 130 x(\344ventyra)S
+131 x(s\344kerheten)S 3899 X 597 y(i)S 166 x(systemet.)S 222 x(DIGIT)S
+-36 x(AL)S 166 x(ansvarar)S 166 x(inte)S 166 x(f\366r)S 166 x(dokuments\344kerheten)S
+167 x(i)S 166 x(DIGIT)S -37 x(AL)S 167 x(Of)S -9 x(\211ce)S 166 x(Server)S
+-28 x(.)S 3899 20049 XY F32(KLIENTEN)S 182 x(OFFICE)S 183 x(SER)S -9 x
+(VER)S 183 x(ADMINISTRA)S -41 x(T)S -10 x(OR)S 3899 21045 XY F34(Klienten)S
+183 x(Administrator)S 183 x(kan)S 184 x(installeras)S 182 x(p\345)S
+183 x(Intel-\206)S 184 x(och)S 183 x(Alpha-)S 183 x(baserade)S 183 x
+(Windows)S 183 x(NT)S 183 x(V4.0-arbetsst)S 2 x(ationer)S 3899 X 598 y
+(och)S 131 x(Windows)S 130 x(95)S 131 x(Intel-persondatorer)S -27 x
+(.)S 210 x(Den)S 131 x(ger)S 130 x(den)S 131 x(systemansvarige)S 131 x
+(tillg\345ng)S 130 x(till)S 131 x(ett)S 131 x(gra\211skt)S 132 x(gr\344nssnitt)S
+131 x(f\366r)S 132 x(att)S 3899 X 597 y(utf\366ra)S 185 x(olika)S 184 x
+(administrativa)S 184 x(uppgifter)S -27 x(.)S 278 x(\304ven)S 185 x
+(fullst\344ndig)S 184 x(VT)S -26 x(-baserad)S 184 x(systemhantering)S
+185 x(beh\345lls)S 184 x(som)S 184 x(omfatt)S 2 x(ar)S 3899 X 598 y
+(samtliga)S 165 x(systemhanteringsfunkt)S 2 x(ioner)S 165 x(fr\345n)S
+166 x(ALL\203IN\2031)S 167 x(V3.2.)S 3899 23835 XY(Det)S 166 x(nya)S
+166 x(Administrator-gr\344nssnittet)S 167 x(t\344cker)S 166 x(f\366ljande)S
+166 x(omr\345den:)S 3899 X 896 y(\201)S 872 x(Anv\344ndarhantering)S
+4945 X 897 y(\202)S 548 x(Skapa)S 166 x(konton)S 4945 X 896 y(\202)S
+548 x(\304ndra)S 166 x(kontoinformation)S 4945 X 897 y(\202)S 548 x
+(T)S -55 x(a)S 166 x(bort)S 166 x(konton)S 4945 X 897 y(\202)S 548 x
+(D\366pa)S 166 x(om)S 166 x(konton)S 4945 X 896 y(\202)S 548 x(\326verf\366ra)S
+166 x(anv\344ndare)S 3899 X 897 y(\201)S 872 x(Serverhantering)S 4945 X
+897 y(\202)S 548 x(Hantera)S 166 x(arkivservrar)S 4945 X 896 y(\202)S
+548 x(Hantera)S 166 x(AIDA-servrar)S 4945 X 897 y(\202)S 548 x(Hantera)S
+166 x(s\344ndning)S 165 x(och)S 166 x(h\344mtning)S 3899 X 897 y(\201)S
+872 x(Loggningshantering)S 3899 X 896 y(\201)S 872 x(Allm\344n)S 165 x
+(systemhantering)S 15431 37373 XY F40(3)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (4) 4
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3976 XY F34(Administrator-klienten)S 176 x
+(f\366rs\366ker)S 177 x(att)S 177 x(automatiskt)S 178 x(\345teransluta)S
+176 x(till)S 176 x(hanteringsservern)S 176 x(om)S 177 x(ett)S 177 x
+(serverfel)S 176 x(leder)S 176 x(till)S 3899 X 598 y(automatisk)S 166 x
+(omstart.)S 3899 5570 XY(Administrator-klienten)S 178 x(\344r)S 179 x
+(gemensam)S 178 x(f\366r)S 179 x(en)S 179 x(fullst\344ndig)S 178 x(Of)S
+-8 x(\211ce)S 178 x(Server-)S 179 x(installation)S 178 x(och)S 179 x
+(alternativet)S 179 x("Endast)S 3899 X 598 y(arkiv")S 165 x(\(se)S 166 x
+(nedan\).)S 3899 7164 XY F40(Observera)S 2 x(:)S 299 x F34(Administrator-klienten)S
+165 x(kr\344ver)S 166 x(IP-transport)S 168 x(och)S 166 x(st\366der)S
+166 x(inte)S 166 x(n\345gon)S 166 x(version)S 165 x(av)S 166 x(DECnet.)S
+3899 8659 XY F32(AL)S -41 x(TERNA)S -42 x(TIVET)S 184 x("ENDAST)S 182 x
+(ARKIV")S 3899 9655 XY F34(Under)S 216 x(installationen)S 215 x(av)S
+216 x(Of)S -9 x(\211ce)S 217 x(Serve)S 216 x(V4.0A)S 218 x(\211nns)S
+216 x(ett)S 217 x(alternativ)S 216 x(som)S 217 x(avaktiverar)S 216 x
+(alla)S 215 x(lokala)S 216 x(och)S 216 x(externa)S 3899 X 598 y(meddelanden)S
+229 x(till)S 230 x(slutanv\344ndare.)S 414 x(Kunder)S 230 x(b\366r)S
+230 x(v\344lja)S 229 x(det)S 231 x(h\344r)S 230 x(alternativet)S 231 x
+(om)S 230 x(de)S 230 x(vill)S 229 x(standardisera)S 230 x(p\345)S 230 x
+(al-)S 3899 X 597 y(ternerande)S 208 x(meddelandeservrar)S 207 x(som)S
+209 x(anv\344nder)S 208 x(klient/server-\345tkomst,)S 220 x(men)S 208 x
+(fortf)S 2 x(arande)S 208 x(kr\344ver)S 208 x(\345tkomst)S 209 x(till)S
+3899 X 598 y(Of)S -9 x(\211ce)S 166 x(Server-arkivet)S 231 x(med)S 231 x
+(stora)S 231 x(m\344ngder)S 230 x(dokument)S 231 x(och)S 231 x(meddelanden.)S
+416 x(Systemmeddelanden)S 230 x(fungerar)S 3899 X 598 y(med)S 229 x
+(det)S 229 x(h\344r)S 229 x(alternativet.)S 412 x(Anv\344ndare)S 229 x
+(som)S 229 x(har)S 229 x(T)S -55 x(eamLinks-)S 228 x(och)S 229 x(MAPI)S
+230 x(Driver-kli)S -2 x(enter)S 230 x(som)S 229 x(Outlook)S 228 x(och)S
+3899 X 598 y(Exchange)S 209 x(Client)S 208 x(har)S 209 x(\344ven)S 209 x
+(forts\344tt)S 2 x(ningsvis)S 208 x(fullst\344ndig)S 209 x(\345tkomst)S
+210 x(till)S 208 x(distribuerade)S 208 x(meddelanden)S 209 x(och)S 209 x
+(doku-)S 3899 X 597 y(ment)S 191 x(i)S 190 x(Of)S -9 x(\211ce)S 166 x
+(Server-arkivet)S(.)S 296 x(Dessa)S 191 x(klienter)S 190 x(kan)S 191 x
+(\344ven)S 190 x(anv\344nda)S 191 x(ett)S 191 x(alternativt)S 192 x
+(postsystem)S 191 x(som)S 191 x(Microsoft)S 3899 X 598 y(Exchange)S
+166 x(Server)S 166 x(f\366r)S 167 x(att)S 166 x(bearbeta)S 167 x(post.)S
+3899 14835 XY F40(V)S -33 x(ARNI)S -2 x(NG:)S 299 x F34(Om)S 136 x(VT)S
+-26 x(-till\344mpni)S -2 x(ngar)S 137 x(och)S 136 x(anpassningar)S 136 x
+(som)S 137 x(har)S 137 x(skapats)S 137 x(under)S 137 x(ALL\203IN\2031)S
+137 x(\344ven)S 136 x(forts\344t)S 2 x(tningsvis)S 3899 X 598 y(ska)S
+171 x(k\366ras,)S 172 x(rekommenderar)S 170 x(vi)S 170 x(att)S 172 x
+(alternativet)S 171 x("Endast)S 171 x(arkiv")S 170 x(inte)S 171 x(v\344ljs)S
+170 x(som)S 170 x(VT)S -26 x(-\345tkomst)S 171 x(och)S 171 x(att)S 171 x
+(meddelan-)S 3899 X 598 y(dehantering)S 166 x(fr\345n)S 166 x(VT)S -55 x
+(:ar)S 167 x(avbryts)S 166 x(med)S 166 x(alternativet)S 166 x("Endast)S
+167 x(arkiv".)S 3899 17027 XY F40(Observera)S 2 x(:)S 299 x F34(V)S
+-37 x(alet)S 242 x(av)S 241 x(alternativet)S 242 x("Endast)S 241 x(arkiv")S
+241 x(kr\344ver)S 241 x(anv\344ndningen)S 241 x(av)S 241 x(Client)S
+241 x(Access)S 241 x(Licensing.)S 447 x(Se)S 3899 X 598 y(avsnittet)S
+167 x(om)S 166 x(och)S 166 x(licens-)S 165 x(och)S 166 x(orderinformation)S
+166 x(l\344ngre)S 165 x(fram)S 166 x(i)S 166 x(den)S 166 x(h\344r)S
+166 x(SPD:n.)S 3899 19119 XY F32(MEDDELANDE-)S 183 x(OCH)S 182 x(REGISTERTJ\304NSTER)S
+3899 20116 XY F34(Of)S -9 x(\211ce)S 171 x(Server)S 171 x(kan)S 171 x
+(kommunicera)S 170 x(med)S 171 x(ett)S 172 x(antal)S 171 x(meddelande\366verf\366ringsagenter)S
+170 x(\(MT)S -37 x(A:er\))S 172 x(och)S 171 x(katalogtj\344ns-)S 3899 X
+597 y(tagenter)S 167 x(\(DSA:er\).)S 3899 22208 XY F36(MAILbus)S 167 x
+(400)S 3899 23204 XY F34(Med)S 259 x(X/Open\207)S 260 x(XAPI-)S 260 x
+(och)S 260 x(XDS-)S 259 x(gr\344nssnitts-stubs)S 260 x(kan)S 259 x(kunder)S
+260 x(v\344lja)S 258 x(X.400)S 260 x(Alpha-baserade)S 259 x(\(antingen)S
+3899 X 598 y(OpenVMS)S 145 x(eller)S 143 x(DIGIT)S -36 x(AL)S 145 x
+(UNIX\207\))S 145 x(MAILbus)S 145 x(400)S 145 x(och)S 145 x(n\366dv\344ndiga)S
+144 x(DIGIT)S -37 x(AL)S 145 x(X.500)S 146 x(Directory)S 144 x(Service)S
+145 x(Agents)S 3899 X 598 y(som)S 202 x(posttj\344nst)S 204 x(och)S
+203 x(anv\344nda)S 202 x(MT)S -36 x(A:er)S 203 x(och)S 202 x(DSA:er)S
+204 x(n\344r)S 202 x(och)S 203 x(var)S 202 x(de)S 203 x(vill,)S 211 x
+(med)S 202 x(lokal)S 202 x(anslutning)S 202 x(eller)S 202 x(fj\344rran-)S
+3899 X 597 y(slutning)S 165 x(till)S 166 x(Of)S -9 x(\211ce)S 166 x
+(Servers.)S 3899 25994 XY(Med)S 175 x(Message)S 176 x(Router)S 175 x
+(Migration)S 175 x(Package)S 176 x(V1.0)S 177 x(\(QP-042\))S 175 x(kan)S
+175 x(Message)S 176 x(Router)S 175 x(\(MR\)-kunder)S 175 x(\366verg\345r)S
+175 x(fr\345n)S 3899 X 597 y(MR)S 191 x(till)S 192 x(MAILbus)S 192 x
+(400)S 192 x(genom)S 192 x(att)S 193 x(inkludera)S 191 x(MAILbus)S 193 x
+(400)S 192 x(Message)S 192 x(Router)S 192 x(Gateway)S 191 x(\(XMR\))S
+192 x(och)S 192 x(MAILbus)S 3899 X 598 y(Directory)S 113 x(Migration)S
+113 x(T)S -55 x(oolkit)S 114 x(\(DMT\))S 113 x(s\345v\344l)S 113 x(som)S
+114 x(MAILbus)S 114 x(400)S 114 x(MT)S -37 x(A)S 114 x(och)S 114 x(DSA.)S
+114 x(Detta)S 115 x(paket)S 114 x(ombes\366rjer)S 113 x(\366verg\345ng)S
+3899 X 598 y(i)S 166 x(faser)S 166 x(av)S 166 x(tusentals)S 167 x(anv\344ndare)S
+165 x(under)S 166 x(en)S 166 x(l\344ngre)S 165 x(tidsperiod.)S 3899 29281 XY
+F36(PMDF)S 3899 30277 XY F34(Ett)S 117 x(annat)S 117 x(alternativ)S
+116 x(\344r)S 115 x(PMDF)S 117 x(fr\345n)S 116 x(Innosoft)S 117 x(vilka)S
+116 x(levererar)S 115 x(en)S 116 x(AlphaServer)S(\207-baserad)S 116 x
+(smtp/MIME-postt)S 2 x(j\344nst,)S 3899 X 598 y(med)S 184 x(direkt\345tkomst)S
+184 x(till)S 184 x(Of)S -9 x(\211ce)S 184 x(Servers)S 184 x(MRIF)S 184 x
+(V2.0)S 184 x(gr\344nssnitt,)S 190 x(utan)S 184 x(behov)S 184 x(av)S
+184 x(Message)S 183 x(Router)S -27 x(.)S 275 x(PMDF)S 184 x(kan)S 3899 X
+598 y(utnyttja)S 180 x(olika)S 177 x(registertj\344nster)S -27 x(,)S
+182 x(inklusive)S 178 x(sin)S 178 x(egen)S 179 x(PMDF-)S 179 x(X.500/LDAP)S
+180 x(Server)S -28 x(,)S 182 x(s\345v\344l)S 179 x(som)S 178 x(Network)S
+179 x(pro\211le)S 178 x(i)S 3899 X 598 y(Of)S -9 x(\211ce)S 166 x(Server)S
+-27 x(.)S 222 x(PMDF)S 166 x(st\366der)S 166 x(inte)S 166 x(DDS)S 166 x
+(\(Distributed)S 165 x(Directory)S 166 x(Services\))S 166 x(i)S 165 x
+(Message)S 166 x(Router)S -27 x(.)S 15431 37373 XY F40(4)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (5) 5
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3960 XY F36(LDAP)S 3899 4956 XY F34(Of)S
+-9 x(\211ce)S 179 x(Server)S 178 x(st\366der)S 179 x(LDAP)S 179 x(\(Lightweight)S
+178 x(Directory)S 178 x(Access)S 180 x(Protocol\))S 178 x(som)S 179 x
+(m\366jlig)S -2 x(g\366r)S 179 x(anv\344ndningen)S 178 x(av)S 179 x
+(den)S 3899 X 598 y(allt)S 177 x(popul\344rare)S 178 x(registertj\344nsten)S
+178 x(LDAP)S -64 x(.)S 178 x(Implementeringen)S 178 x(i)S 177 x(Of)S
+-9 x(\211ce)S 178 x(Server)S 178 x(V4.0)S 179 x(m\366jli)S -2 x(gg\366r)S
+178 x(anv\344ndningen)S 177 x(av)S 3899 X 597 y(VT)S -27 x(-)S 166 x
+(klienten)S 166 x(och)S 166 x(inbyggda)S 165 x(Of)S -9 x(\211ce)S 166 x
+(Server-verktyg)S 167 x(f\366r)S 166 x(att)S 167 x(fylla)S 166 x(f\366ljande)S
+165 x(LDAP-register:)S 3899 X 897 y(\201)S 872 x(PMDF-X.500/LDAP)S 167 x
+(Server)S 3899 X 897 y(\201)S 872 x(Netscape)S 166 x(Directory)S 166 x
+(Server)S 166 x(V3.0)S 3899 9041 XY(Adress\366kning)S 129 x(st\366ds)S
+130 x(\344ven)S 130 x(fr\345n)S 130 x(T)S -55 x(eamLinks)S(,)S 137 x
+(MAPI-)S 130 x(drivrutinklienter)S 129 x(samt)S 130 x(hanteringsverktyg)S
+130 x(f\366r)S 130 x(VT)S 130 x(och)S 129 x(Of)S -9 x(\211ce)S 3899 X
+597 y(Server)S -28 x(.)S 3899 11133 XY F36(Message)S 166 x(Router/MAILbu)S
+2 x(s)S 166 x(1)S 3899 12129 XY F34(Kunder)S 127 x(kan)S 127 x(forts\344ttningsvis)S
+127 x(anv\344nda)S 127 x(Message)S 127 x(Router)S 127 x(for)S 127 x
+(OpenVMS)S 127 x(V)S -37 x(AX)S 127 x(eftersom)S 128 x(MRIF)S 127 x
+(V2.0-gr\344nssnittet)S 3899 X 598 y(\344r)S 156 x(inkluderat.)S 218 x
+(Med)S 157 x(Message)S 156 x(Router)S 157 x(OpenVMSmail)S 155 x(Gateway)S
+156 x(kan)S 157 x(Of)S -9 x(\211ce)S 156 x(Server-anv\344ndare)S 156 x
+(utbyta)S 158 x(medde-)S 3899 X 598 y(landen)S 238 x(med)S 239 x(anv\344ndare)S
+238 x(av)S 239 x(OpenVMS)S 239 x(Personal)S 239 x(Mail)S 238 x(Utility)S
+-38 x(.)S 441 x(Mer)S 238 x(information)S 239 x(\211nns)S 239 x(i)S
+238 x(Soft)S 2 x(ware)S 238 x(Product)S 3899 X 597 y(Description)S 165 x
+(\(SPD)S 166 x(26.33\))S 166 x(f\366r)S 167 x(Message)S 166 x(Router)S
+166 x(for)S 166 x(OpenVMS)S 166 x(V)S -37 x(AX.)S 3899 14919 XY(Meddelandeutbyte)S
+208 x(med)S 208 x(Internet)S 209 x(och)S 208 x(intran\344t)S 208 x(\344r)S
+208 x(m\366jlig)S 207 x(fr\345n)S 208 x(MAILbus)S 209 x(400,)S 218 x
+(PMDF)S 209 x(och)S 208 x(Message)S 207 x(Router)S -27 x(.)S 3899 X
+597 y(Adressering)S 165 x(med)S 166 x(Internet)S 2 x(-format)S 166 x
+(m\366jligg\366rs)S 165 x(av)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S
+-27 x(.)S 3899 17011 XY F32(POP3-S)S 2 x(ER)S -10 x(VER)S 3899 18007 XY
+F34(Post)S 166 x(Of)S -9 x(\211ce)S 166 x(Protocol)S 166 x(3)S 165 x
+(st\366ds)S 166 x(som)S 166 x(standard)S 166 x(i)S 165 x(Of)S -9 x(\211ce)S
+166 x(Server)S 165 x(V4.0A.)S 167 x(Anv\344ndare)S 166 x(n\345r)S 165 x
+(sin)S 166 x(inkorg)S 165 x(fr\345n)S 165 x(Internet)S 2 x(-)S 3899 X
+598 y(postklienter)S 174 x(som)S 174 x(\344r)S 174 x(standard,)S 176 x
+(t)S 167 x(ex)S 174 x(Eudora)S 174 x(och)S 174 x(Netscape)S 174 x(med)S
+174 x(anv\344ndarnamn)S 173 x(och)S 174 x(l\366senordskontroll.)S 245 x
+(N\344r)S 3899 X 597 y(anslutningen)S 177 x(har)S 178 x(gjorts)S 178 x
+(laddas)S 177 x(inneh\345llet)S 177 x(i)S 178 x(inkorgen)S 177 x(till)S
+177 x(klienten)S 178 x(f\366r)S 178 x(att)S 179 x(kunna)S 178 x(bearbetas)S
+178 x(n\344r)S 178 x(anslutningen)S 3899 X 598 y(\344r)S 207 x(bruten.)S
+345 x(N\344r)S 207 x(anslutningen)S 207 x(g\366rs)S 207 x(igen)S 206 x
+(\366verf\366rs)S 208 x(den)S 207 x(bearbetade)S 207 x(posten)S 208 x
+(till)S 206 x(en)S 207 x(f\366rde\211nierad)S 207 x("sendmail"-)S 3899 X
+598 y(server)S 158 x(som)S 159 x(DIGIT)S -37 x(AL)S 159 x(TCP/IP)S 160 x
+(Services)S 158 x(eller)S 157 x(MultiNet\206)S 159 x(f\366r)S 158 x
+(vidare)S 158 x(distribution.)S 219 x(Of)S -9 x(\211ce)S 159 x(Servern)S
+158 x(POP3)S 158 x(Server)S 3899 X 598 y(erbjuder)S 165 x(ett)S 167 x
+(antal)S 166 x(till\344ggsfunktioner:)S 3899 X 896 y(\201)S 872 x(M\366jligheten)S
+228 x(att)S 229 x(n\345)S 229 x(vilken)S 227 x(personlig)S 228 x(Of)S
+-9 x(\211ce)S 229 x(Server-mapp)S 228 x(eller)S 228 x(delad)S 228 x
+(l\345da)S 228 x(som)S 228 x(helst)S 229 x(och)S 229 x(ladda)S 228 x
+(ned)S 4945 X 598 y(inneh\345lle)S -2 x(t)S 167 x(till)S 165 x(klienten.)S
+3899 X 897 y(\201)S 872 x(Alternativ)S 191 x(f\366r)S 191 x(att)S 192 x
+(ta)S 191 x(bort/beh\345lla)S 190 x(meddelande)S 190 x(p\345)S 191 x
+(server)S -28 x(.)S 296 x(Status)S 192 x(p\345)S 191 x(meddelanden)S
+189 x(som)S 191 x(\211nns)S 191 x(kvar)S 191 x(p\345)S 4945 X 598 y
+(servern)S 166 x(kan)S 166 x(kon\211gureras.)S 3899 X 896 y(\201)S 872 x
+(Konvertering)S 137 x(till)S 136 x(text)S 138 x(av)S 138 x(WPS\203PLUS)S
+137 x(\(V4.2)S 138 x(och)S 137 x(senare\)-)S 137 x(och)S 137 x(W)S -9 x
+(ordPerfect\206)S 138 x(\(V4.1)S 138 x(och)S 137 x(senare\))S 137 x
+(medde-)S 4945 X 598 y(landen)S 165 x(och)S 166 x(dokument)S 167 x(n\344r)S
+166 x(de)S 166 x(\366verf\366rs)S 166 x(till)S 165 x(klienten.)S 3899 X
+897 y(\201)S 872 x(T)S -18 x(illg\344ng)S -2 x(liga)S 166 x(p\345)S
+166 x(b\345de)S 165 x(OpenVMS)S 166 x(Alpha)S 166 x(och)S 166 x(V)S
+-36 x(AX.)S 3899 27870 XY F32(F\326RBERETT)S 182 x(F\326R)S 182 x(\305R)S
+182 x(2000)S 3899 28866 XY F34(Of)S -9 x(\211ce)S 198 x(Server)S 197 x
+(har)S 197 x(f\366rberett)S 2 x(s)S 197 x(f\366r)S 198 x(\345r)S 197 x
+(2000.)S 317 x(Alla)S 197 x(datum)S 197 x(har)S 198 x(lagras)S 197 x
+(i)S 197 x(OpenVMS)S 197 x(64-bitars)S 198 x(format)S 198 x(eller)S
+196 x(NBS-)S 3899 X 598 y(format)S 167 x(och)S 166 x(det)S 166 x(st\366dda)S
+167 x(datumintervallet)S 165 x(\344r)S 166 x(17:e)S 167 x(november)S
+165 x(1858)S 166 x(till)S 166 x(31:e)S 166 x(december)S 166 x(9999.)S
+3899 30460 XY(\305r)S 149 x(som)S 149 x(anges)S 149 x(med)S 148 x(tv\345)S
+150 x(sif)S -9 x(fror)S 149 x(blir)S 148 x(automatiskt)S 150 x(seklet)S
+149 x(f\366r)S 149 x(aktuellt)S 149 x(systemdatum)S 150 x(och)S 148 x
+(lagras)S 149 x(s\345)S 149 x(detta.)S 217 x(Datum-)S 3899 X 598 y(str\344ngen)S
+179 x(29-april-74)S 177 x(t)S 167 x(ex)S 179 x(som)S 179 x(bearbetas)S
+179 x(den)S 179 x(5:e)S 179 x(mars)S 179 x(1998)S 179 x(lagras)S 178 x
+(som)S 179 x(29-apr-1974,)S 182 x(och)S 179 x(den)S 178 x(5:e)S 180 x
+(mars)S 3899 X 598 y(2001)S 166 x(som)S 166 x(29-apr-2074.)S 3899 32652 XY
+(Datums\366kningar)S 165 x(\366ver)S 166 x(tusen\345rsskiftet)S 168 x
+(behandlas)S 165 x(korrekt)S 166 x(n\344r)S 166 x(fullst\344ndigt)S
+166 x(datum)S 167 x(\(och)S 166 x(tid\))S 166 x(lagras.)S 15431 37373 XY
+F40(5)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (6) 6
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(DISTRIBUERA)S -42 x(T)S 183 x
+(ARKIV)S 3899 5009 XY F34(Distributed)S 155 x(Sharing)S 155 x(Option)S
+156 x(\344r)S 155 x(inkluderat)S 155 x(i)S 155 x(Of)S -9 x(\211ce)S
+156 x(Server)S 156 x(som)S 156 x(standard,)S 158 x(vilket)S 155 x(g\366r)S
+156 x(det)S 156 x(m\366jligt)S 155 x(f\366r)S 156 x(anv\344ndare)S 3899 X
+598 y(p\345)S 166 x(fj\344rrsystem)S 166 x(att)S 167 x(n\345)S 166 x
+(dokument)S 167 x(i)S 165 x(utsedda)S 167 x(l\345dor)S 165 x(och)S 166 x
+(mappar)S 166 x(som)S 166 x(om)S 166 x(de)S 166 x(vore)S 166 x(lokala.)S
+3899 6603 XY(Allteftersom)S 220 x(multimedia-do)S -2 x(kument)S 220 x
+(blir)S 218 x(st\366rre)S 220 x(och)S 219 x(st\366rre)S 219 x(och)S
+219 x(distributionslistor)S 219 x(l\344ngre)S 218 x(bidrar)S 219 x(m\366jli)S
+-2 x(gheten)S 3899 X 598 y(att)S 199 x(direkt)S 199 x(n\345)S 198 x
+(information)S 199 x(till)S 197 x(att)S 200 x(belastningen)S 198 x(p\345)S
+198 x(meddelandesystem)S 198 x(minskar)S -28 x(.)S 320 x(Detta)S 199 x
+(leder)S 198 x(i)S 198 x(sin)S 198 x(tur)S 199 x(till)S 198 x(en)S 3899 X
+597 y(prestandaf\366rb\344ttring.)S 269 x(Grupper)S 181 x(av)S 182 x
+(anv\344ndare)S 181 x(f\345r)S 182 x(ett)S 183 x(e-postmeddelade)S 181 x
+(om)S 181 x(att)S 183 x(det)S 182 x(\211nns)S 182 x(ett)S 182 x(dokument)S
+182 x(i)S 182 x(en)S 3899 X 598 y(lokal)S 165 x(mapp)S 166 x(och)S 166 x
+(kan)S 166 x(p\345)S 166 x(s\345)S 166 x(s\344tt)S 167 x(v\344lja)S
+165 x(om)S 166 x(de)S 166 x(vill)S 165 x(h\344mta)S 166 x(det)S 167 x
+(eller)S 165 x(inte.)S 3899 9392 XY(Anv\344ndare)S 156 x(med)S 156 x
+(l\344mplig)S 155 x(beh\366righet,)S 158 x(administrat\366rer)S 155 x
+(och)S 157 x(systemansvariga)S 156 x(kan)S 156 x(skapa)S 156 x(\345tkomstlistor)S
+156 x(och)S 157 x(p\345)S 3899 X 598 y(s\345)S 133 x(s\344tt)S 134 x
+(f\366rs\344kra)S 134 x(sig)S 133 x(om)S 133 x(att)S 134 x(endast)S
+134 x(beh\366riga)S 132 x(anv\344ndare)S 133 x(och)S 134 x(grupper)S
+133 x(av)S 133 x(anv\344ndare)S 133 x(f\345r)S 133 x(\345tkomst)S 135 x
+(till)S 132 x(dokument)S 3899 X 598 y(och)S 166 x(meddelanden)S 165 x
+(inom)S 166 x(vissa)S 165 x(l\345dor)S 166 x(och)S 166 x(mappar)S -28 x
+(.)S 3899 11584 XY(Denna)S 165 x(m\366jligheten)S 165 x(\344r)S 166 x
+(k\344nd)S 166 x(i)S 166 x(ALL\203IN\2031)S 166 x(som)S 166 x(Distributed)S
+166 x(Sharing)S 165 x(Option)S 166 x(\(SPD:)S 166 x(36.97\).)S 3899 13079 XY
+F32(\326VERG\305NGSV)S 2 x(ERKTYG)S 182 x(F\326R)S 183 x(MAIL)S -30 x
+(WORKS)S 3899 14075 XY F34(Of)S -9 x(\211ce)S 284 x(Server)S 284 x(V4.0A)S
+284 x(inkluderar)S 283 x(serverbaserade)S 283 x(\366verg\345ngsverktyg)S
+285 x(som)S 283 x(hj\344lp)S 283 x(f\366r)S 284 x(att)S 285 x(\212ytta)S
+285 x(MailW)S -10 x(orks)S 3899 X 598 y(OpenVMS)S(-anv\344ndardata)S
+211 x(och)S 212 x(meddelandelagr)S -2 x(ing)S 212 x(till)S 210 x(Of)S
+-9 x(\211ce)S 212 x(Server)S -27 x(.)S 358 x(Kunder)S 212 x(kan)S 211 x
+(installera)S 211 x(Of)S -9 x(\211ce)S 211 x(Server)S 3899 X 597 y(p\345)S
+186 x(plats)S 187 x(p\345)S 187 x(be\211ntliga)S 186 x(V)S -37 x(AX-)S
+187 x(och)S 187 x(Alpha-systems)S 187 x(eller)S 186 x(p\345)S 186 x
+(nya)S 187 x(Alpha-system)S 187 x(och)S 186 x(antingen)S 187 x(kopiera)S
+186 x(medde-)S 3899 X 598 y(landelagri)S -2 x(ng)S 209 x(till)S 209 x
+(Of)S -9 x(\211ce)S 209 x(Server-format)S 210 x(\(kr\344ver)S 209 x
+(mer)S 209 x(diskutrymme\),)S 220 x(eller)S 208 x(d\366pa)S 209 x(om)S
+209 x(meddelandelagr)S -2 x(ing)S 209 x(utan)S 3899 X 598 y(att)S 229 x
+(kr\344va)S 229 x(mer)S 228 x(diskutrymme.)S 410 x(Genom)S 228 x(att)S
+229 x(kopiera)S 228 x(inneh\345llet)S 228 x(f\366rs\344krar)S 229 x
+(man)S 228 x(sig)S 228 x(om)S 229 x(att)S 229 x(den)S 229 x(ursprunglig)S
+-2 x(a)S 3899 X 598 y(MailW)S -10 x(orks-milj\366n)S 165 x(l\344mnas)S
+165 x(of\366r\344ndrad.)S 3899 18060 XY F40(Observera)S 2 x(:)S 299 x
+F34(V)S -9 x(i)S 180 x(rekommenderar)S 179 x(att)S 181 x(en)S 180 x
+(fullst\344ndig)S 179 x(s\344kerhetskopia)S 180 x(tas)S 180 x(av)S 180 x
+(MailW)S -9 x(orks-)S 179 x(systemet)S 181 x(innan)S 180 x(\366ver-)S
+3899 X 598 y(g\345ngen)S 166 x(till)S 165 x(Of)S -9 x(\211ce)S 166 x
+(Server)S 166 x(p\345b\366rjas.)S 3899 19654 XY(\326verg\345ngsverktyget)S
+166 x(inkluderar:)S 3899 X 897 y(\201)S 872 x(Ett)S 126 x(kontrollverktyg)S
+126 x(som)S 125 x(anv\344nds)S 125 x(innan)S 125 x(\366verg\345ngen)S
+124 x(startar)S -26 x(.)S 208 x(V)S -27 x(erktyget)S 126 x(rapporterar)S
+125 x(data)S 125 x(som)S 126 x(\344r)S 125 x(relevant)S 4945 X 597 y
+(f\366r)S 166 x(\366verg\345ngen)S 166 x(och)S 166 x(eventuella)S 166 x
+(kon\212ikter)S 166 x(som)S 166 x(kan)S 166 x(uppst\345.)S 3899 X 897 y
+(\201)S 872 x(\326verg\345ng)S 165 x(initierad)S 165 x(av)S 166 x(systemansvarig)S
+166 x(av)S 167 x(en)S 165 x(eller)S 165 x(\212era)S 166 x(anv\344ndare)S
+166 x(samtidigt.)S 3899 X 897 y(\201)S 872 x(\326verg\345ng)S 165 x
+(av)S 166 x(anv\344ndarpro\211ler)S -28 x(,)S 166 x(arkiv)S 166 x(och)S
+166 x(personliga)S 165 x(adressb\366cker)S 3899 X 896 y(\201)S 872 x
+(Meddelandens)S 165 x(integritet)S 167 x(s\344kras.)S 3899 24934 XY
+(Fullst\344ndiga)S 119 x(instruktioner)S 119 x(om)S 119 x(\366verg\345ng)S
+119 x(fr\345n)S 120 x(MailW)S -9 x(orks)S 119 x(OpenVMS)S 119 x(\344r)S
+119 x(inluderade)S 119 x(i)S 119 x(programpaketet)S 120 x(f\366r)S 119 x
+(Of)S -9 x(\211ce)S 3899 X 598 y(Server)S 166 x(V4.0A.)S 3899 27026 XY
+F32(ARKIV/ARKIVHAN)S -2 x(TERING)S 3899 28023 XY F34(Arkivet)S 182 x
+(i)S 181 x(Of)S -9 x(\211ce)S 181 x(Server)S 182 x(\344r)S 181 x(en)S
+182 x(beh\345llar)S -2 x(e)S 182 x(f\366r)S 182 x(multimedia\211l)S
+-2 x(er)S -27 x(.)S 268 x(Dokument)S 181 x(och)S 182 x(meddelande)S
+181 x(av)S 181 x(alla)S 181 x(typer)S 181 x(som)S 3899 X 597 y(HTML,)S
+166 x(Postscript\206,)S 168 x(.DOC,)S 166 x(.XLS,)S 167 x(.PPT)S -54 x
+(,)S 167 x(MPP)S -64 x(,)S 166 x(JPEG,)S 167 x(video,)S 166 x(audio)S
+166 x(och)S 166 x(ASCII)S 167 x(kan)S 166 x(lagras)S 165 x(i)S 166 x
+(arkivet.)S 3899 29617 XY(Arkivet)S 176 x(\344r)S 176 x(feltolerant)S
+176 x(eftersom)S 177 x(det)S 176 x(i)S 176 x(h\344ndelse)S 175 x(av)S
+176 x(ett)S 177 x(arkivserverfel)S 175 x(eller)S 175 x(AIDA-serverfel,)S
+179 x(vid)S 176 x(omstart,)S 179 x(auto-)S 3899 X 597 y(matiskt)S 129 x
+(f\366rs\366ker)S 128 x(\345teransluta)S 128 x(till)S 128 x(MAPI-klienter)S
+-27 x(.)S 209 x(S\345dana)S 128 x(klienter)S 128 x(inkluderar)S 127 x
+(Outlook,)S 136 x(Exchange)S 128 x(och)S 128 x(Windows)S 3899 X 598 y
+(Messaging.)S 3899 31808 XY(Arkivet)S 162 x(anv\344nder)S 162 x(sig)S
+162 x(av)S 163 x(delningsmodel)S -2 x(len)S 162 x(som)S 162 x(inneb\344r)S
+162 x(att)S 163 x(ett)S 163 x(meddelande)S 162 x(som)S 162 x(s\344nds)S
+162 x(till)S 162 x(\212era)S 162 x(mottagare)S 3899 X 598 y(p\345)S
+166 x(det)S 167 x(lokala)S 165 x(systemet)S 167 x(inte)S 166 x(kopieras)S
+166 x(till)S 165 x(alla)S 166 x(mottagare,)S 167 x(utan)S 166 x(anv\344nder)S
+166 x(pekare)S 166 x(som)S 166 x(g\366r)S 166 x(att)S 168 x(alla)S 165 x
+(mottagare)S 3899 X 598 y(l\344ser)S 153 x(en)S 153 x(och)S 154 x(samma)S
+154 x(kopia)S 153 x(av)S 153 x(meddelandet.)S 218 x(Detta)S 154 x(medf\366r)S
+154 x(tv\345)S 154 x(f\366rdelar)S 153 x(framf\366r)S 154 x(modellen)S
+153 x(med)S 153 x(en)S 154 x(kopia)S 153 x(f\366r)S 3899 X 598 y(varje)S
+165 x(mottagare;)S 167 x(b\344ttre)S 167 x(prestanda)S 166 x(och)S 167 x
+(mycket)S 166 x(l\344gre)S 166 x(krav)S 166 x(p\345)S 166 x(diskutrymme.)S
+3899 34598 XY(Arkivet)S 125 x(p\345minner)S 124 x(om)S 125 x(ett)S 125 x
+(vanligt)S 125 x(arkivsk\345p;)S 138 x(med)S 125 x(l\345dor)S 124 x
+(med)S 125 x(dokument)S 125 x(i)S 124 x(mappar)S -27 x(.)S 208 x(Mapparna)S
+124 x(ligger)S 124 x(i)S 124 x(alfabetisk)S 3899 X 598 y(ordning)S 165 x
+(och)S 166 x(dokumenten)S 166 x(i)S 166 x(mapparna)S 166 x(ligger)S
+165 x(i)S 165 x(kronologisk)S 165 x(ordning.)S 15431 37373 XY F40(6)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (7) 7
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3960 XY F34(Information)S 134 x(om)S 134 x
+(varje)S 134 x(dokument)S 134 x(\(som)S 133 x(titel,)S 141 x(tillkomstdatum,)S
+141 x(dokumentnummer)S -27 x(,)S 141 x(f\366rfattare,)S 142 x(nyckelord)S
+133 x(och)S 134 x(typ\))S 3899 X 598 y(f\366rvaras)S 120 x(i)S 119 x
+(arkivet.)S 206 x(Det)S 120 x(\211nns)S 119 x(\344ven)S 120 x(funktioner)S
+120 x(s\345)S 119 x(att)S 121 x(anv\344ndaren)S 119 x(kan)S 120 x(hantera)S
+119 x(inneh\345llet)S 119 x(i)S 119 x(arkivet.)S 207 x(Anv\344ndaren)S
+3899 X 598 y(kan)S 166 x(skriva)S 166 x(ut)S 166 x(eller)S 165 x(ta)S
+167 x(bort)S 166 x(\212era)S 166 x(dokument)S 166 x(\345t)S 167 x(g\345ngen)S
+165 x(och)S 166 x(v\344lja)S 166 x(ut)S 166 x(dokument)S 166 x(enligt)S
+166 x(egna)S 166 x(urvalskriterier)S -29 x(.)S 3899 6152 XY(Ett)S 209 x
+(eller)S 207 x(\212era)S 208 x(dokument)S 208 x(\345t)S 208 x(g\345ngen)S
+208 x(kan)S 208 x(\212yttas,)S 220 x(l\344ggas)S 207 x(i)S 208 x(\212era)S
+207 x(mappar)S 208 x(och)S 208 x(kopieras.)S 347 x(Information)S 208 x
+(s\345som)S 3899 X 598 y(titel)S 159 x(och)S 159 x(nyckelord)S 159 x
+(kan)S 159 x(\344ndras.)S 219 x(N\344r)S 158 x(anv\344ndaren)S 159 x
+(v\344ljer)S 158 x(att)S 160 x(l\344gga)S 158 x(\212era)S 159 x(kopior)S
+159 x(av)S 159 x(dokumentet)S 160 x(i)S 158 x(samma)S 159 x(l\345da)S
+3899 X 598 y(sparas)S 166 x(endast)S 166 x(en)S 166 x(kopia)S 166 x
+(av)S 166 x(dokumentet)S 167 x(vilket)S 165 x(minskar)S 166 x(utrymmesbehovet.)S
+3899 8344 XY(Dokument)S 166 x(som)S 166 x(anv\344ndaren)S 166 x(tar)S
+166 x(bort)S 166 x(sparas)S 166 x(i)S 166 x(mappen)S 166 x(P)S -37 x
+(APPERSKORG)S 166 x(tills)S 165 x(denna)S 166 x(t\366ms.)S 3899 9340 XY
+(I)S 148 x(arkivet)S 147 x(kan)S 148 x(anv\344ndaren)S 147 x(komma)S
+147 x(\345t)S 148 x(dokument)S 148 x(oavsett)S 149 x(dokumentformat.)S
+216 x(Som)S 148 x(standard)S 148 x(st\366ds)S 148 x(alla)S 147 x(typer)S
+147 x(av)S 3899 X 598 y(format,)S 167 x(\344ven)S 166 x(multimedia.)S
+221 x(Dessutom)S 166 x(kan)S 166 x(alla)S 165 x(X.400)S 167 x(P2-attribut)S
+167 x(lagras)S 165 x(i)S 166 x(Of)S -9 x(\211ce)S 166 x(Server-arkivet.)S
+3899 10934 XY(Med)S 199 x(funktionen)S 200 x(f\366r)S 199 x(l\345sning)S
+198 x(kan)S 199 x(varja)S 199 x(anv\344ndare)S 199 x(skydda)S 199 x
+(ett)S 200 x(dokument)S 200 x(medan)S 199 x(det)S 199 x(redigeras,)S
+208 x(lokalt)S 198 x(eller)S 3899 X 598 y(fr\345n)S 193 x(en)S 192 x
+(fj\344rrplats.)S 301 x(Detta)S 193 x(f\366rhindrar)S 192 x(att)S 193 x
+(andra)S 192 x(anv\344ndare)S 192 x(\344ndrar)S 192 x(det)S 193 x(tills)S
+192 x(det)S 193 x(l\345sas)S 192 x(upp)S 192 x(igen.)S 301 x(Under)S
+192 x(tiden)S 3899 X 598 y(det)S 166 x(\344r)S 166 x(l\345st)S 166 x
+(kan)S 166 x(andra)S 166 x(anv\344ndare)S 166 x(l\344sa)S 165 x(det)S
+167 x(men)S 166 x(inte)S 166 x(redigera)S 165 x(dokumentet.)S 3899 13126 XY
+(Dokumenthanteringsmodellen)S 122 x(g\366r)S 124 x(en)S 123 x(klar)S
+123 x(skillnad)S 122 x(mellan)S 123 x(revideringsbara)S 122 x(dokument)S
+124 x(och)S 124 x(dokument)S 124 x(i)S 123 x(slutligt)S 3899 X 598 y
+(format.)S 341 x(Modellen)S 204 x(skiljer)S 204 x(p\345)S 206 x(formatering)S
+205 x(och)S 206 x(utskrift,)S 217 x(vilket)S 205 x(g\366r)S 205 x(att)S
+206 x(formatering)S 206 x(av)S 205 x(dokument)S 206 x(kan)S 206 x(utf\366ras)S
+3899 X 598 y(skilt)S 166 x(fr\345n)S 166 x(utskrift.)S 3899 15816 XY
+F36(Mail)S 167 x(Janitor)S 3899 16812 XY F34(Funktionen)S 240 x(Mail)S
+238 x(Janitor)S 239 x(ing\345r)S 239 x(i)S 239 x(basprodukten.)S 442 x
+(Den)S 239 x(systemansvarige)S 240 x(kan)S 239 x(\212ytta)S 240 x(gamla)S
+239 x(meddelanden)S 239 x(i)S 3899 X 598 y(mapparna)S 215 x(L\304ST)S
+-36 x(A)S 216 x(och)S 216 x(S\304NDA)S 216 x(till)S 215 x(P)S -37 x
+(APPERSKORGEN.)S 216 x(Den)S 216 x(systemansvarige)S 215 x(kan)S 216 x
+(ange)S 216 x(h\366gsta)S 216 x(antalet)S 3899 X 598 y(dagar)S 137 x
+(som)S 137 x(ett)S 138 x(meddelande)S 137 x(kan)S 137 x(lagras)S 136 x
+(i)S 137 x(mapparna)S 137 x(L\304ST)S -36 x(A)S 137 x(och)S 138 x(S\304NDA)S
+137 x(\(standardinst\344llningen)S 136 x(\344r)S 137 x(60)S 137 x(dagar\))S
+3899 X 597 y(och)S 186 x(det)S 186 x(h\366gsta)S 186 x(antalet)S 186 x
+(meddelanden)S 185 x(som)S 185 x(f\345r)S 186 x(tas)S 187 x(bort)S 186 x
+(per)S 185 x(mapp.)S 281 x(Alternativen)S 186 x(Pro\211le)S 185 x(och)S
+186 x(Policies)S 185 x(g\344ller)S 3899 X 598 y(f\366re)S 166 x(standardinst\344llningar)S
+165 x(f\366r)S 166 x(antalet)S 167 x(meddelanden)S 165 x(och)S 166 x
+(den)S 166 x(tid)S 166 x(som)S 166 x(anv\344ndaren)S 166 x(\344r)S 166 x
+(borta.)S 3899 20698 XY F36(Checkmail)S 3899 21694 XY F34(Funktionen)S
+243 x(anv\344nds)S 243 x(f\366r)S 243 x(att)S 243 x(kontrollera)S 243 x
+(om)S 242 x(anv\344ndaren)S 243 x(har)S 242 x(n\345gra)S 243 x(ol\344sta)S
+243 x(eller)S 241 x(os\344nda)S 243 x(meddelanden)S 242 x(i)S 3899 X
+598 y(standardl\345dan)S 166 x(innan)S 165 x(Of)S -9 x(\211ce)S 166 x
+(Server)S 166 x(startas)S 167 x(och)S 166 x(informerar)S 166 x(anv\344ndaren)S
+165 x(om)S 166 x(s\345)S 166 x(\344r)S 166 x(fallet.)S 3899 23786 XY
+F36(Gemensamt)S 165 x(arkiv)S 3899 24782 XY F34(Anv\344ndaren)S 202 x
+(kan)S 201 x(skapa)S 202 x(gemensamma)S 201 x(l\345dor)S 202 x(f\366r)S
+202 x(att)S 202 x(ge)S 202 x(andra)S 201 x(anv\344ndare)S 202 x(m\366jli)S
+-2 x(ghet)S 203 x(att)S 202 x(l\344sa)S 202 x(och)S 201 x(redigera)S
+3899 X 598 y(gemensamma)S 123 x(dokument.)S 208 x(L\345dans)S 124 x
+(\344gare)S 123 x(har)S 124 x(full)S 123 x(\345tkomstkont)S 2 x(roll)S
+122 x(och)S 124 x(styr)S 124 x(vilka)S 123 x(anv\344ndare)S 124 x(som)S
+124 x(skall)S 123 x(komma)S 3899 X 598 y(\345t)S 159 x(l\345dan)S 159 x
+(och)S 159 x(vilka)S 158 x(funktioner)S 159 x(dessa)S 159 x(skall)S
+158 x(f\345)S 160 x(utf\366ra)S 159 x(p\345)S 159 x(dokumenten.)S 220 x
+(N\344r)S 158 x(anv\344ndaren)S 159 x(skall)S 158 x(g\366ra)S 159 x
+(\344ndringar)S 158 x(i)S 3899 X 598 y(ett)S 154 x(gemensamt)S 153 x
+(dokument,)S 157 x(kan)S 153 x(han)S 153 x(eller)S 152 x(hon)S 153 x
+(l\345sa)S 153 x(det)S 154 x(s\345)S 153 x(att)S 154 x(ingen)S 152 x
+(annan)S 153 x(kommer)S 153 x(\345t)S 154 x(det)S 153 x(under)S 153 x
+(tiden.)S 218 x(Den)S 3899 X 597 y(som)S 145 x(d\345)S 145 x(f\366rs\366ker)S
+145 x(redigera)S 144 x(dokumentet)S 146 x(f\345r)S 146 x(meddelande)S
+144 x(om)S 145 x(att)S 146 x(det)S 145 x(anv\344nds)S 145 x(samt)S 146 x
+(om)S 145 x(vem)S 145 x(som)S 145 x(har)S 144 x(l\345st)S 146 x(det.)S
+3899 28170 XY(Med)S 210 x(funktionen)S 210 x(f\366r)S 210 x(l\345sning)S
+209 x(kan)S 209 x(anv\344ndare)S 210 x(av)S 210 x(Outlook,)S 220 x(T)S
+-54 x(eamLinks)S 209 x(eller)S 209 x(VT)S 210 x(l\345sa)S 209 x(ett)S
+211 x(dokument)S 210 x(i)S 209 x(arkivet)S 3899 X 597 y(innan)S 178 x
+(det)S 179 x(laddas)S 179 x(p\345)S 179 x(anv\344ndarens)S 178 x(arbetsstatione,)S
+183 x(och)S 179 x(visa)S 179 x(f\366r)S 179 x(alla)S 178 x(andra)S 178 x
+(anv\344ndare)S 179 x(som)S 179 x(har)S 178 x(\345tkomst)S 180 x(till)S
+3899 X 598 y(dokumentet)S 167 x(att)S 167 x(det)S 166 x(redigeras.)S
+222 x(Om)S 165 x(n\345gon)S 166 x(annan)S 166 x(f\366rs\366ker)S 167 x
+(redigera)S 165 x(dokumentet,)S 167 x(informeras)S 166 x(vederb\366rande)S
+3899 X 598 y(om)S 221 x(att)S 223 x(det)S 222 x(\344r)S 221 x(l\345st)S
+221 x(och)S 222 x(endast)S 222 x(kan)S 221 x(l\344sas.)S 388 x(F\366rst)S
+222 x(n\344r)S 222 x(l\345sningen)S 220 x(har)S 221 x(tagits)S 222 x
+(bort)S 222 x(kan)S 222 x(andra)S 221 x(anv\344ndare)S 221 x(f\345)S
+3899 X 598 y(\345tkomst)S 167 x(till)S 165 x(dokumentet.)S 3899 32055 XY
+F36(Grupper)S 3899 33051 XY F34(Anv\344ndare)S 139 x(med)S 139 x(l\344mpliga)S
+138 x(pro\211linst\344llni)S -2 x(ngar)S 139 x(kan)S 140 x(de\211niera)S
+138 x(ett)S 141 x(antal)S 139 x(anv\344ndare)S 139 x(som)S 139 x(en)S
+139 x(grupp.)S 213 x(Flera)S 139 x(grupper)S 3899 X 598 y(kan)S 166 x
+(de\211nieras)S 166 x(och)S 166 x(grupperna)S 166 x(kan)S 166 x(f\345)S
+167 x(\345tkomstbeh\366righet)S 167 x(till)S 165 x(gemensamma)S 166 x
+(dokument)S 167 x(eller)S 165 x(l\345dor)S -28 x(.)S 222 x(Medlem-)S
+3899 X 598 y(mar)S 192 x(kan)S 192 x(l\344ggas)S 191 x(till)S 192 x
+(och)S 192 x(tas)S 192 x(bort)S 193 x(fr\345n)S 192 x(en)S 192 x(grupp)S
+192 x(och)S 192 x(deras)S 192 x(\345tkomstbeh\366righet)S 193 x(regleras)S
+191 x(d\344rvis)S 192 x(automatiskt)S 3899 X 598 y(eller)S 165 x(tas)S
+166 x(bort.)S 223 x(Anv\344ndare)S 166 x(kan)S 166 x(\344ven)S 166 x
+(se)S 166 x(efter)S 167 x(vilka)S 165 x(grupper)S 165 x(de)S 166 x(tillh\366r)S
+-28 x(.)S 15431 37373 XY F40(7)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (8) 8
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(ELEKTRONISK)S 183 x(POST)S
+3899 5009 XY F35(F\366ljande)S 167 x(information)S 168 x(\344r)S 168 x
+(speci\211k)S 168 x(f\366r)S 168 x(Of\211ce)S 168 x(Server)S 168 x(VT)S
+-45 x(-klient\345tkomst,)S 170 x(och)S 168 x(beskriver)S 167 x(tillg\344ngli)S
+-2 x(g)S 168 x(funktionalitet.)S 3899 X 598 y(M\345nga)S 203 x(av)S
+203 x(dessa)S 203 x(operationer)S 203 x(kan)S 203 x(n\345s)S 203 x(fr\345n)S
+203 x(T)S -45 x(eamLinks)S 203 x(och)S 203 x(\344ven)S 203 x(MAPI-)S
+204 x(till\344mpni)S -2 x(ngar)S -18 x(.)S 333 x(En)S 203 x(komplett)S
+204 x(lista)S 3899 X 597 y(\366ver)S 172 x(varje)S 172 x(produkts)S
+172 x(funktioner)S 173 x(\211nns)S 172 x(i)S 172 x(relevant)S 172 x
+(SPD.)S 172 x(Meddelandehantering)S 171 x(\344r)S 172 x(inte)S 173 x
+(tillg\344ngl)S -2 x(ig)S 172 x(f\366r)S 173 x(alla)S 171 x(klient)S
+3899 X 598 y(eller)S 165 x(VT)S 167 x(om)S 165 x(installationsalternativet)S
+166 x("Endast)S 167 x(arkiv")S 165 x(har)S 166 x(valts.)S 3899 7798 XY
+F34(Systemet)S 154 x(Elektronisk)S 152 x(post)S 153 x(g\366r)S 153 x
+(det)S 153 x(m\366jligt)S 152 x(f\366r)S 153 x(anv\344ndare)S 152 x
+(att)S 154 x(utbyta)S 153 x(meddelanden.)S 217 x(Anv\344ndaren)S 152 x
+(kan)S 153 x(skapa,)S 3899 X 598 y(redigera,)S 223 x(skriva)S 212 x
+(ut,)S 224 x(l\344sa,)S 224 x(ta)S 213 x(bort,)S 224 x(ta)S 213 x(emot,)S
+224 x(s\344nda)S 212 x(och)S 212 x(vidarebefordra)S 212 x(meddelanden.)S
+359 x(\304ven)S 212 x(brevhuvudet)S 3899 X 598 y(\(som)S 166 x(bl)S
+165 x(a)S 166 x(har)S 166 x(uppgifter)S 166 x(om)S 166 x(mottagare)S
+167 x(och)S 166 x(\344rende\))S 166 x(kan)S 166 x(redigeras)S 165 x
+(innan)S 165 x(meddelandet)S 166 x(s\344nds.)S 3899 9990 XY(N\344r)S
+206 x(anv\344ndaren)S 207 x(skapar)S 207 x(ett)S 208 x(meddelande)S
+206 x(anger)S 206 x(han)S 207 x(vilka)S 207 x(mottagare)S 207 x(det)S
+207 x(skall)S 207 x(s\344ndas)S 207 x(till,)S 217 x(och)S 206 x(eventuellt)S
+3899 X 598 y(vilka)S 218 x(som)S 218 x(skall)S 218 x(f\345)S 220 x(kopior)S
+-28 x(.)S 379 x(\304ven)S 219 x(mottagare)S 220 x(av)S 218 x(kopior)S
+218 x(och)S 219 x(dolda)S 218 x(kopior)S 218 x(kan)S 219 x(inkluderas.)S
+379 x(Dessutom)S 218 x(kan)S 3899 X 598 y(anv\344ndaren)S 205 x(ange)S
+206 x(utg\345ngsdatum)S 206 x(f\366r)S 206 x(varje)S 205 x(meddelande)S
+205 x(som)S 206 x(s\344nds.)S 341 x(\304ven)S 206 x(angel\344genhetsgrad)S
+205 x(\(h\366g,)S 216 x(l\345g)S 3899 X 597 y(eller)S 159 x(normal\))S
+160 x(och)S 160 x(s\344kerhetsgrad)S 161 x(\()S(t)S 166 x(ex)S 161 x
+(kon\211dentiellt,)S 161 x(privat)S 161 x(och)S 160 x(personligt\))S
+160 x(kan)S 160 x(anges.)S 220 x(F\366r)S 161 x(att)S 161 x(spara)S
+160 x(tid)S 161 x(vid)S 3899 X 598 y(adresseringen)S 180 x(kan)S 181 x
+(anv\344ndaren)S 181 x(skapa)S 181 x(kortnamn,)S 185 x(eller)S 181 x
+(distributionsli)S -2 x(stor)S 182 x(\(som)S 181 x(bara)S 180 x(anv\344ndaren)S
+181 x(sj\344lv)S 180 x(kan)S 3899 X 598 y(se\).)S -830 x 13975 Y(Inkomna)S
+140 x(meddelanden)S 138 x(kan)S 140 x(vidarebefordras)S 138 x(och/eller)S
+139 x(besvaras.)S 213 x(Svaren)S 140 x(kan)S 139 x(s\344ndas)S 139 x
+(till)S 139 x(avs\344ndaren)S 139 x(enbart)S 3899 X 598 y(eller)S 239 x
+(till)S 239 x(alla)S 239 x(mottagare.)S 444 x(A)S -8 x(vs\344ndaren)S
+239 x(kan)S 240 x(beg\344ra)S 240 x(kvittens)S 241 x(p\345)S 240 x(att)S
+240 x(mottagaren)S 241 x(har)S 240 x(f\345tt)S 241 x(och/eller)S 239 x
+(l\344st)S 241 x(ett)S 3899 X 598 y(meddelande.)S 254 x(Meddelandena)S
+176 x(ges)S 177 x(en)S 177 x(av)S 177 x(f\366ljande)S 177 x(prioritetsgrader:)S
+243 x(express,)S 181 x(f\366rsta)S 178 x(klass)S 176 x(eller)S 176 x
+(andra)S 177 x(klass.)S 3899 X 598 y(A)S -9 x(vs\344ndaren)S 166 x(kan)S
+166 x(sj\344lv)S 165 x(ange)S 166 x(en)S 166 x(tidpunkt)S 167 x(d\345)S
+166 x(meddelandet)S 165 x(skall)S 166 x(s\344ndas.)S 3899 16765 XY(Meddelanden)S
+180 x(ser)S 180 x(ut)S 181 x(som)S 180 x(vanliga)S 180 x(dokument)S
+181 x(och)S 180 x(behandlas)S 180 x(som)S 181 x(s\345dana)S 180 x(av)S
+181 x(anv\344ndaren.)S 265 x(I)S 181 x(Of)S -9 x(\211ce)S 180 x(Server)S
+3899 X 598 y(\211nns)S 128 x(mappar)S 127 x(f\366r)S 128 x(inkommande,)S
+135 x(l\344sta,)S 136 x(skapade)S 127 x(och)S 128 x(s\344nda)S 127 x
+(meddelanden.)S 209 x(N\344r)S 127 x(ett)S 128 x(meddelande)S 127 x
+(har)S 128 x(s\344nts)S 128 x(har)S 3899 X 597 y(avs\344ndare)S 114 x
+(och)S 115 x(mottagare)S 115 x(oftast)S 116 x(tillg\345ng)S 114 x(till)S
+113 x(samma)S 115 x(kopia)S 114 x(av)S 115 x(meddelandet)S 114 x(om)S
+114 x(de)S 115 x(arbetar)S 114 x(p\345)S 115 x(samma)S 114 x(system.)S
+3899 X 598 y(Denna)S 155 x(kopia)S 154 x(kan)S 156 x(inte)S 155 x(redigeras.)S
+217 x(Meddelanden)S 155 x(kan)S 155 x(\212yttas)S 157 x(eller)S 154 x
+(l\344ggas)S 155 x(i)S 154 x(\212era)S 156 x(mappar)S 154 x(i)S 155 x
+(anv\344ndarens)S 155 x(arkiv)S -37 x(.)S 3899 X 598 y(\304ven)S 166 x
+(dokument)S 167 x(fr\345n)S 166 x(arkivet)S 166 x(kan)S 166 x(s\344ndas)S
+166 x(till)S 165 x(andra)S 166 x(anv\344ndare.)S 3899 20152 XY(Anv\344ndaren)S
+198 x(kan)S 199 x(v\344lja)S 197 x(att)S 200 x(l\345ta)S 198 x(alla)S
+198 x(inkommande)S 198 x(meddelanden)S 197 x(vidarebefordras)S 198 x
+(automatiskt)S 200 x(till)S 197 x(en)S 199 x(annan)S 3899 X 598 y(anv\344ndare.)S
+228 x(Dessutom)S 168 x(kan)S 168 x(anv\344ndaren)S 168 x(skapa)S 168 x
+(ett)S 169 x(svarsmeddelande)S 168 x(som)S 168 x(automatiskt)S 169 x
+(s\344nds)S 168 x(som)S 168 x(svar)S 169 x(p\345)S 3899 X 598 y(alla)S
+165 x(inkommande)S 165 x(meddelanden)S 166 x(t)S 166 x(ex)S 166 x(under)S
+166 x(semesterperioden.)S 3899 22344 XY(Det)S 190 x(gemensamma)S 190 x
+(arkivet)S 190 x(i)S 189 x(undersystemet)S 191 x(f\366r)S 191 x(elektronisk)S
+189 x(post)S 191 x(g\366r)S 189 x(att)S 191 x(funktionerna)S 191 x(utf\366rs)S
+191 x(korrekt)S 190 x(\344ven)S 190 x(i)S 3899 X 598 y(gemensamma)S
+139 x(och)S 140 x(distribuerade)S 138 x(milj\366er)S -28 x(.)S 213 x
+(Funktionerna)S 139 x(i)S 139 x(elektronisk)S 140 x(post)S 140 x(utf\366rs)S
+140 x(alltid)S 139 x(i)S 139 x(l\345dan)S 139 x(HUVUDL\305DA.)S 3899 23938 XY
+(En)S 182 x(f\366rteckning)S 182 x(\366ver)S 181 x(ett)S 183 x(meddelandes)S
+181 x(bilagor)S 180 x(kan)S 182 x(visas)S 181 x(och)S 182 x(bilagor)S
+-2 x(na)S 182 x(kan)S 182 x(t)S 166 x(ex)S 182 x(skrivas)S 181 x(ut)S
+182 x(eller)S 181 x(l\344sas.)S 268 x(De)S 3899 X 598 y(kan)S 166 x
+(\344ven)S 166 x(sparas)S 166 x(som)S 166 x(redigerbar)S 165 x(text)S
+167 x(eller)S 165 x(som)S 166 x(meddelanden)S 165 x(som)S 166 x(kan)S
+166 x(vidarebefordras.)S 3899 25532 XY(Med)S 229 x(menyvalet)S 228 x
+(Arbeta)S 230 x(med)S 228 x(n\345gon)S 229 x(annans)S 229 x(post)S 229 x
+(\(AAP\))S 229 x(kan)S 229 x(en)S 229 x(anv\344ndare)S 228 x(sk\366ta)S
+230 x(posten)S 229 x(f\366r)S 229 x(en)S 229 x(annan)S 3899 X 598 y
+(anv\344ndare,)S 162 x(t)S 166 x(ex)S 160 x(en)S 161 x(sekreterare)S
+160 x(f\366r)S 161 x(en)S 160 x(chef.)S 221 x(Menyvalet)S 160 x(Best\344m)S
+161 x(\345tkomst)S 162 x(till)S 159 x(elektronisk)S 160 x(post)S 161 x
+(\(B\305E\))S 161 x(g\366r)S 160 x(det)S 3899 X 597 y(m\366jligt)S 178 x
+(f\366r)S 180 x(anv\344ndaren)S 179 x(att)S 180 x(ange)S 179 x(vilka)S
+179 x(som)S 179 x(skall)S 179 x(f\345)S 179 x(\345tkomst)S 181 x(till)S
+178 x(hans)S 179 x(eller)S 179 x(hennes)S 179 x(post.)S 262 x(N\344r)S
+179 x(n\345gon)S 179 x(annan)S 3899 X 598 y(\344n)S 166 x(\344garen)S
+166 x(skickar)S 165 x(ett)S 167 x(meddelande,)S 166 x(visas)S 166 x
+(b\345de)S 166 x(\344garens)S 165 x(och)S 167 x(avs\344ndarens)S 165 x
+(namn)S 166 x(i)S 166 x(brevhuvudet.)S 3899 28321 XY(I)S 166 x(adresseringen)S
+166 x(ing\345r:)S 3899 X 897 y(\201)S 872 x(Automatisk)S 167 x(igenk\344nning)S
+165 x(av)S 166 x(Internet-adresser)S 3899 X 897 y(\201)S 872 x(St\366d)S
+167 x(f\366r)S 166 x(X.400-adressering)S 3899 X 896 y(\201)S 872 x(F\366r)S
+214 x(bak\345tkompatibilitet)S 213 x(och)S 214 x(minimum)S 213 x(av)S
+213 x(avbrott)S 215 x(f\366r)S 214 x(anv\344ndare)S 213 x(\211nns)S
+214 x(fortsatt)S 215 x(st\366d)S 214 x(f\366r)S 214 x(adressering)S
+213 x(i)S 4945 X 598 y(Message)S 166 x(Router-format,)S 167 x(\344ven)S
+166 x(om)S 166 x(posttj\344nsten)S 167 x(har)S 166 x(ersatts)S 167 x
+(av)S 166 x(MAILbus)S 166 x(400)S 3899 X 897 y(\201)S 872 x(M\366jligheten)S
+165 x(att)S 167 x(skapa)S 166 x(distributionslistor)S 165 x(fr\345n)S
+166 x(adresslistor)S 166 x(i)S 166 x(brevhuvuden)S 3899 X 896 y(\201)S
+872 x(St\366d)S 202 x(f\366r)S 202 x(kortnamn;)S 220 x(l\345nga)S 201 x
+(kortnamn,)S 211 x(manipuleri)S -2 x(ng)S 202 x(av)S 201 x(l\345nga)S
+201 x(adresser)S 201 x(gemensamma)S 201 x(f\366r)S 202 x(s\344nda)S
+201 x(eller)S 4945 X 598 y(mottagna)S 156 x(meddelanden)S 154 x(via)S
+154 x(gateways)S 155 x(till)S 154 x(andra)S 155 x(postsystem;)S 160 x
+(samt)S 155 x(m\366jligheten)S 154 x(att)S 156 x(skapa)S 155 x(kortnamn)S
+155 x(f\366r)S 4945 X 598 y(avs\344ndare)S 166 x(av)S 166 x(ett)S 167 x
+(meddelande.)S 15431 37373 XY F40(8)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (9) 9
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(REGISTER)S 3899 5009 XY F34
+(I)S 183 x(undersystemet)S 183 x(Register)S 182 x(n\345r)S 182 x(anv\344ndaren)S
+182 x(de)S 183 x(register)S 182 x(han)S 182 x(har)S 183 x(tilltr\344de)S
+182 x(till.)S 270 x(Anv\344ndaren)S 183 x(kan)S 182 x(l\344sa)S 182 x
+(poster)S 183 x(i)S 3899 X 598 y(f\366retagets)S 185 x(telefonregister)S
+184 x(som)S 184 x(inneh\345ll)S -2 x(er)S 184 x(telefonnummer)S 184 x
+(och)S 184 x(adresser)S 184 x(och)S 184 x(underh\345ll)S -2 x(s)S 184 x
+(av)S 184 x(den)S 184 x(systeman-)S 3899 X 597 y(svarige.)S 221 x(Det)S
+166 x(\211nns)S 166 x(\344ven)S 166 x(ett)S 167 x(register)S 166 x(\366ver)S
+166 x(alla)S 165 x(Of)S -9 x(\211ce)S 166 x(Server-anv\344ndare)S 166 x
+(p\345)S 166 x(det)S 166 x(aktuella)S 166 x(systemet.)S 3899 7201 XY
+(Funktioner)S 181 x(\211nns)S 181 x(s\345)S 180 x(att)S 182 x(anv\344ndaren)S
+181 x(kan)S 180 x(underh\345lla)S 180 x(och)S 181 x(visa)S 180 x(egna)S
+181 x(telefonregister)S -28 x(,)S 185 x(kortnamn)S 181 x(och)S 181 x
+(distribu-)S 3899 X 597 y(tionslistor)S -28 x(.)S 3899 8795 XY(Med)S
+166 x(MAILbus)S 166 x(400)S 166 x(som)S 166 x(posttj\344nst,)S 168 x
+(ges)S 166 x(registertj\344nster)S 166 x(av)S 166 x(DIGIT)S -36 x(AL)S
+166 x(X.500.)S 223 x(Se)S 166 x(SPD)S 166 x(40.77.)S 3899 9791 XY(Om)S
+160 x(X.500)S 161 x(eller)S 160 x(MAILbus)S 161 x(Directory)S 161 x
+(Service)S 160 x(har)S 161 x(installerats)S 160 x(kan)S 161 x(Of)S -9 x
+(\211ce)S 160 x(Server-anv\344ndare)S 161 x(s\366ka)S 160 x(i)S 161 x
+(adressda-)S 3899 X 598 y(tabaser)S 166 x(utifr\345n)S 167 x(t)S 166 x
+(ex)S 166 x(anst\344llningsnummer)S -28 x(,)S 166 x(namn,)S 166 x(avdelning)S
+165 x(och)S 166 x(telefonnummer)S 167 x(hem)S 165 x(eller)S 165 x(till)S
+166 x(arbetet.)S 3899 11385 XY(Se)S 166 x(\344ven)S 166 x(avsnittet)S
+167 x(om)S 166 x(st\366d)S 167 x(f\366r)S 166 x(LDAP)S 166 x(ovan.)S
+3899 12879 XY F32(SYSTE)S 2 x(MUNDERH\305)S -2 x(LL)S 3899 13876 XY
+F34(Systemhanteringsverktyget)S 127 x(som)S 127 x(kan)S 126 x(n\345s)S
+126 x(fr\345n)S 126 x(VT)S 127 x(kompletterar)S 126 x(funktionerna)S
+126 x(i)S 126 x(gr\344nssnittet)S 127 x(f\366r)S 127 x(Administrator-)S
+3899 X 597 y(klienten)S 165 x(och)S 167 x(anv\344nds)S 166 x(f\366r)S
+166 x(att)S 167 x(utf\366ra)S 167 x(rutinunderh\345ll)S 164 x(som:)S
+3899 X 897 y(\201)S 872 x(Planering)S 165 x(och)S 166 x(omplanering)S
+165 x(av)S 166 x(st\344drutiner)S 3899 X 897 y(\201)S 872 x(Skrivarhantering)S
+3899 X 896 y(\201)S 872 x(Direktunderh\345ll)S 164 x(av)S 167 x(NETWORK.DA)S
+-37 x(T)S -55 x(,)S 167 x(X.500,)S 167 x(LDAP)S 166 x(och)S 166 x(DDS-)S
+165 x(pro\211ler)S 3899 X 897 y(\201)S 872 x(M\344tning)S 166 x(och)S
+166 x(kontroll)S 165 x(av)S 166 x(det)S 167 x(gemensamma)S 166 x(lagringsomr)S
+-2 x(\345det)S 3899 19156 XY(En)S 166 x(systemansvarig)S 166 x(kan)S
+166 x(utse)S 167 x(en)S 166 x(anv\344ndare)S 165 x(till)S 166 x(systemadministrat\366r)S
+166 x(f\366r)S 166 x(att)S 167 x(hj\344lp)S 165 x(till)S 166 x(med)S
+166 x(hanteringen)S 165 x(av:)S 3899 X 896 y(\201)S 872 x(Arkiv-)S 125 x
+(och)S 125 x(AIDA-servrar)S 125 x(som)S 125 x(st\366der)S 126 x(PC-)S
+125 x(och)S 125 x(Macintosh-klienter)S 124 x(och)S 125 x(andra)S 125 x
+(Of)S -9 x(\211ce)S 125 x(Server-komponenter)S 3899 X 897 y(\201)S 872 x
+(anv\344ndarkonton)S 166 x(\(skapa,)S 167 x(ta)S 166 x(bort,)S 167 x
+(\212ytta,)S 167 x(d\366pa)S 166 x(om\))S 3899 X 897 y(\201)S 872 x
+(processer)S 166 x(f\366r)S 166 x(k\366hantering)S 166 x(och)S 166 x
+(f\366r)S 166 x(h\344mtning)S 166 x(och)S 166 x(s\344ndning)S 166 x
+(av)S 166 x(elektronisk)S 165 x(post)S 3899 X 896 y(\201)S 872 x(lagring)S
+165 x(av)S 166 x(dokument)S 3899 X 897 y(\201)S 872 x(systemdistributionslistor)S
+3899 X 897 y(\201)S 872 x(l\345dor)S -28 x(,)S 166 x(\344ven)S 166 x
+(begr\344nsningar)S 166 x(f\366r)S 166 x(enskilda)S 165 x(anv\344ndare)S
+166 x(att)S 167 x(skapa)S 166 x(l\345dor)S 3899 X 896 y(\201)S 872 x
+(Mail)S 165 x(janitor)S 3899 X 897 y(\201)S 872 x(undertryckning)S 166 x
+(av)S 166 x(utskrift)S 167 x(av)S 166 x(distributionslistor)S 3899 X
+897 y(\201)S 872 x(planering)S 165 x(av)S 166 x(st\344drutiner)S 3899 X
+896 y(\201)S 872 x(kontroll)S 165 x(av)S 167 x(undantags-)S 166 x(och)S
+166 x(informationsrapporter)S 166 x(i)S 165 x(Of)S -9 x(\211ce)S 166 x
+(Server)S 3899 X 897 y(\201)S 872 x(avst\344ngning)S 166 x(av)S 166 x
+(Of)S -9 x(\211ce)S 166 x(Server)S 3899 30115 XY(Of)S -9 x(\211ce)S
+166 x(Server-)S 166 x(Administrator)S 166 x(kr\344ver)S 166 x(inte)S
+166 x(systemprivilegier)S 165 x(f\366r)S 166 x(OpenVMS)S(.)S 3899 31111 XY
+(I)S 130 x(Of)S -9 x(\211ce)S 130 x(Server)S 130 x(\211nns)S 130 x(en)S
+130 x(funktion)S 130 x(f\366r)S 131 x(prestandam\344tning)S 130 x(med)S
+129 x(vilken)S 130 x(den)S 129 x(systemansvarige)S 130 x(kan)S 130 x
+(samla)S 130 x(data)S 130 x(vid)S 3899 X 598 y(resursanv\344ndning)S
+173 x(i)S 173 x(Of)S -9 x(\211ce)S 174 x(Server)S 174 x(f\366r)S 174 x
+(f\366rde\211nierade)S 174 x(h\344ndelser)S -28 x(.)S 245 x(T)S -18 x
+(ill\344mpni)S -2 x(ngsprogrammerare)S 173 x(kan)S 174 x(de\211niera)S
+3899 X 598 y(och)S 117 x(skapa)S 117 x(egna)S 116 x(prestandam\344tare.)S
+206 x(Om)S 117 x(man)S 116 x(sl\345r)S 117 x(p\345)S 116 x(m\344tningsfunktionen)S
+118 x(f\366r)S 117 x(en)S 117 x(till\344mpni)S -2 x(ng)S 117 x(visas)S
+117 x(information)S 3899 X 597 y(om)S 114 x(hur)S 114 x(m\345nga)S 114 x
+(g\345nger)S 114 x(m\344tningen)S 115 x(anropas,)S 125 x(anv\344ndning)S
+113 x(av)S 115 x(processorn,)S 125 x(Direct)S 114 x(I/0,)S 126 x(Buf)S
+-9 x(fered)S 115 x(I/0,)S 126 x(Page)S 115 x(Faults.)S 15431 37373 XY
+F40(9)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (10) 10
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(UTSKRIFT)S 3899 5009 XY F34
+(V)S -9 x(id)S 112 x(utskrift)S 114 x(av)S 113 x(dokument)S 112 x(kan)S
+113 x(anv\344ndaren)S 112 x(ange)S 113 x(var)S 112 x(dokumentet)S 114 x
+(skall)S 111 x(skrivas)S 113 x(ut,)S 124 x(antal)S 112 x(kopior)S 112 x
+(samt)S 113 x(utskriftens)S 3899 X 598 y(format.)S 422 x(Utskriften)S
+233 x(kan)S 233 x(g\366ras)S 233 x(p\345)S 232 x(en)S 233 x(skrivare)S
+232 x(som)S 232 x(\344r)S 233 x(ansluten)S 232 x(till)S 232 x(Of)S -9 x
+(\211ce)S 233 x(Server-systemet,)S 251 x(till)S 232 x(ett)S 233 x(annat)S
+3899 X 597 y(dokument)S 205 x(eller)S 204 x(p\345)S 205 x(anv\344ndarens)S
+205 x(terminal.)S 338 x(Utskriften)S 205 x(kan)S 205 x(g\366ras)S 205 x
+(i)S 205 x(en)S 205 x(bakgrundsprocess)S 204 x(p\345)S 205 x(en)S 205 x
+(serverk\366.)S 3899 X 598 y(Detta)S 166 x(g\366r)S 166 x(att)S 167 x
+(terminalen)S 166 x(blir)S 165 x(fri)S 166 x(f\366r)S 166 x(andra)S
+166 x(uppgifter)S -27 x(.)S 3899 7798 XY(V)S -9 x(id)S 166 x(utskrift)S
+167 x(kontrolleras)S 165 x(att)S 167 x(dokumentets)S 167 x(slutliga)S
+165 x(format)S 167 x(st\366ds)S 167 x(av)S 166 x(skrivaren.)S 3899 8795 XY
+(Utskrifts-)S 145 x(och)S 145 x(LPS-utskrift)S 2 x(salternativ)S 145 x
+(\(LPS20,)S 150 x(LPS40,)S 150 x(PS17,)S 150 x(PS32\))S 145 x(kan)S
+145 x(anges)S 145 x(under)S 144 x(en)S 145 x(utskriftsoperation.)S 3899 X
+597 y(Systemde\211nerade)S 166 x(och)S 166 x(anv\344ndarde\211nierade)S
+165 x(utskriftsinst)S 2 x(\344llni)S -2 x(ngar)S 166 x(kan)S 166 x(anv\344ndas.)S
+3899 10887 XY F36(Undertryckning)S 167 x(av)S 166 x(utskrift)S 166 x
+(av)S 166 x(distrib)S 2 x(utionsli)S 2 x(stor)S 3899 11883 XY F34(Anv\344ndaren)S
+155 x(kan)S 155 x(sj\344lv)S 155 x(avg\366ra)S 155 x(om)S 155 x(distributionslistor)S
+155 x(skall)S 154 x(visas)S 155 x(eller)S 154 x(inte)S 156 x(vid)S 155 x
+(l\344sning)S 154 x(och)S 155 x(utskrift)S 156 x(av)S 156 x(medde-)S
+3899 X 598 y(landen.)S 3899 13975 XY F32(UTSKRIFTSTJ\304)S -2 x(NSTER)S
+3899 14972 XY F34(I)S 155 x(Of)S -9 x(\211ce)S 155 x(Server)S 155 x
+(har)S 154 x(anv\344ndaren)S 155 x(m\366jli)S -2 x(ghet)S 155 x(att)S
+156 x(arbeta)S 155 x(med)S 155 x(jobb)S 154 x(som)S 154 x(\344r)S 155 x
+(placerade)S 154 x(i)S 154 x(utskrifts-)S 156 x(och)S 155 x(serverk\366er)S
+3899 X 597 y(samt)S 187 x(k\366er)S 187 x(f\366r)S 187 x(satsvis)S 188 x
+(bearbetning.)S 284 x(Med)S 187 x(hj\344lp)S 186 x(av)S 187 x(alternativen)S
+187 x(p\345)S 187 x(menyerna)S 186 x(f\366r)S 188 x(f\366rteckningar)S
+187 x(kan)S 187 x(anv\344n-)S 3899 X 598 y(daren)S 166 x(f\345)S 166 x
+(information)S 166 x(om)S 166 x(jobb,)S 166 x(ta)S 166 x(bort)S 167 x
+(jobb,)S 166 x(redigera)S 165 x(jobbens)S 165 x(attribut)S 167 x(och)S
+166 x(starta)S 167 x(om)S 166 x(jobb)S 166 x(som)S 166 x(utf\366rs.)S
+3899 17163 XY(K\366er)S 177 x(och)S 178 x(jobb)S 177 x(kan)S 177 x(sk\366tas)S
+178 x(fr\345n)S 178 x(Of)S -9 x(\211ce)S 177 x(Server)S -27 x(.)S 256 x
+(Den)S 177 x(systemansvarige)S 178 x(kan)S 177 x(l\345ta)S 177 x(en)S
+178 x(eller)S 176 x(\212era)S 177 x(anv\344ndare)S 178 x(ha)S 3899 X
+598 y(hand)S 166 x(om)S 166 x(k\366er)S 166 x(som)S 166 x(n\345s)S 166 x
+(fr\345n)S 166 x(systemet.)S 3899 19255 XY F32(ANV\304ND)S -2 x(ARPROFIL)S
+3899 20252 XY F34(P\345)S 166 x(varje)S 166 x(Of)S -9 x(\211ce)S 166 x
+(Server)S 166 x(\211nns)S 166 x(en)S 166 x(anv\344ndarpro\211l)S 165 x
+(som)S 166 x(inneh\345ller)S 165 x(information)S 165 x(om)S 166 x(en)S
+166 x(anv\344ndare.)S 3899 21248 XY(VT)S -27 x(-anv\344ndaren)S 178 x
+(kan)S 179 x(se)S 178 x(och)S 178 x(\344ndra)S 179 x(delar)S 177 x(av)S
+179 x(anv\344ndarpro\211len)S 177 x(som)S 179 x(t)S 166 x(ex)S 179 x
+(fullst\344ndigt)S 178 x(namn,)S 182 x(adress,)S 182 x(telefon-)S 3899 X
+598 y(nummer)S -28 x(,)S 232 x(avdelning)S 218 x(och)S 219 x(titel.)S
+379 x(Anv\344ndaren)S 219 x(kan)S 219 x(dessutom)S 219 x(\344ndra)S
+218 x(uppgifter)S 219 x(om)S 219 x(till)S 217 x(exempel)S 219 x(arbetsvecka,)S
+3899 X 597 y(arbetstider)S -27 x(,)S 247 x(editor)S 231 x(och)S 231 x
+(typ)S 232 x(av)S 231 x(elektronisk)S 230 x(post.)S 417 x(H\344r)S 231 x
+(g\366rs)S 231 x(ocks\345)S 231 x(inst\344llni)S -2 x(ngar)S 231 x(f\366r)S
+232 x(underr\344ttelse)S 231 x(om)S 230 x(nya)S 3899 X 598 y(meddelanden)S
+165 x(och)S 166 x(l\344skvittens.)S 3899 24038 XY(Den)S 204 x(systemansvarige)S
+204 x(lagrar)S 203 x(information)S 204 x(som)S 205 x(anv\344ndarbeh\366righ)S
+-2 x(et,)S 215 x(standardregister)S 204 x(och)S 205 x(\345tkomst)S 205 x
+(till)S 203 x(for-)S 3899 X 597 y(mul\344rbibl)S -2 x(iotek.)S 3899 26130 XY
+F32(INTERNA)S -42 x(TIONELL)S -40 x(T)S 182 x(ST\326D)S 3899 27126 XY
+F34(Of)S -9 x(\211ce)S 140 x(Server)S 141 x(\344r)S 140 x(utformat)S
+142 x(s\345)S 140 x(att)S 141 x(\212era)S 141 x(spr\345k)S 140 x(kan)S
+140 x(anv\344ndas)S 141 x(samtidigt.)S 213 x(V)S -9 x(id)S 140 x(uppgradering)S
+140 x(fr\345n)S 140 x(ALL\203IN\2031)S 141 x(V3.2)S 3899 X 598 y(m\345ste)S
+176 x(P)S -37 x(AK:ar)S 177 x(f\366r)S 175 x(prim\344rt)S 176 x(och)S
+175 x(sekund\344rt)S 176 x(spr\345k)S 175 x(installeras)S 175 x(i)S
+175 x(systemet)S 177 x(f\366re)S 175 x(uppgraderingen)S 175 x(och)S
+175 x(P)S -36 x(AK:ar)S 176 x(f\366r)S 3899 X 597 y(sekund\344rt)S 123 x
+(spr\345k)S 123 x(m\345ste)S 124 x(dessutom)S 123 x(\211nnas)S 124 x
+(kvar)S 123 x(i)S 122 x(systemet)S 124 x(s\345)S 124 x(l\344nge)S 122 x
+(Of)S -9 x(\211ce)S 123 x(Server)S 124 x(anv\344nds.)S 207 x(Of)S -9 x
+(\211ce)S 123 x(Server)S 123 x(kan)S 3899 X 598 y(allts\345)S 170 x
+(anv\344ndas)S 170 x(i)S 169 x(\212erspr\345kiga)S 170 x(datorn\344t)S
+171 x(och)S 170 x(st\366dja)S 170 x(operationer)S 169 x(p\345)S 170 x
+(\212era)S 170 x(spr\345k)S 170 x(p\345)S 171 x(samma)S 170 x(system,)S
+172 x(f\366rutsatt)S 3899 X 598 y(att)S 167 x(alla)S 165 x(spr\345ken)S
+166 x(anv\344nder)S 166 x(samma)S 166 x(version,)S 166 x(inklusi)S -2 x
+(ve)S 166 x(amerikansk)S 166 x(engelska.)S 3899 31011 XY F32(TEXTBEHANDLING)S
+3899 32008 XY F34(I)S 188 x(textbehandlingen)S 188 x(kan)S 188 x(VT)S
+-27 x(-anv\344ndare)S 187 x(och)S 188 x(anv\344ndare)S 188 x(av)S 187 x
+(terminalemuleringar)S 186 x(skapa,)S 194 x(redigera,)S 193 x(skriva)S
+188 x(ut,)S 3899 X 597 y(l\344sa)S 165 x(dokument.)S 223 x(EVE)S 166 x
+(med)S 166 x(EDT\207-tangenter)S 167 x(\344r)S 166 x(den)S 166 x(textbehandlare)S
+166 x(som)S 166 x(medf\366ljer)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S
+-28 x(.)S 15306 37373 XY F40(10)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (11) 11
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(DOKUMENTKONVERTERING)S 3899 5009 XY
+F34(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(st\366der)S 166 x(f\366ljande)S
+166 x(datatyper:)S 3899 X 897 y(\201)S 872 x(Rich)S 165 x(T)S -55 x
+(ext)S 167 x(Format)S 167 x(\(R)S -10 x(TF\))S 3899 X 896 y(\201)S 872 x
+(WK1,)S 167 x(WK3,)S 167 x(DIF)S -55 x(,)S 167 x(MacW)S -9 x(rite\206,)S
+166 x(DX\207,)S 167 x(WPL,)S 167 x(PICT)S -55 x(,)S 167 x(W)S -9 x(ordPerfect)S
+3899 X 897 y(\201)S 872 x(PS)S 167 x(-)S 165 x(slutformat)S 167 x(f\366r)S
+167 x(PostScript)S 167 x(-dokument)S 3899 8795 XY(Alla)S 183 x(datatyper)S
+184 x(kan)S 184 x(l\344sas,)S 188 x(med)S 184 x(undantag)S 184 x(av)S
+183 x(PostScript.)S 276 x(CDA-\207)S 183 x(konverteringsfunktionen)S
+184 x(anv\344nds)S 184 x(f\366r)S 184 x(att)S 3899 X 597 y(konvertera)S
+166 x(till/fr\345n)S 166 x(datatyperna)S 167 x(ovan.)S 3899 10389 XY
+(Anv\344ndaren)S 151 x(kan)S 152 x(s\344nda)S 151 x(och)S 152 x(ta)S
+152 x(emot)S 152 x(dessa)S 152 x(dokument)S 152 x(i)S 151 x(elektronisk)S
+151 x(post,)S 155 x(spara)S 152 x(dem)S 151 x(i)S 151 x(sitt)S 153 x
+(arkiv)S -38 x(,)S 155 x(l\344sa,)S 155 x(skriva)S 3899 X 597 y(ut,)S
+167 x(kopiera)S 166 x(och)S 166 x(konvertera)S 166 x(dem.)S 223 x(Kvaliteten)S
+166 x(p\345)S 166 x(formateringen)S 166 x(hos)S 167 x(de)S 166 x(data)S
+166 x(som)S 167 x(visas)S 166 x(beror)S 165 x(p\345)S 167 x(vilka)S
+165 x(CDA-)S 3899 X 598 y(funktioner)S 184 x(som)S 184 x(tillhandah\345ll)S
+-2 x(es)S 184 x(av)S 185 x(OpenVMS.)S 184 x(I)S 184 x(Of)S -9 x(\211ce)S
+185 x(Server)S 184 x(anv\344nds)S 184 x(CDAs)S 183 x(textf)S 2 x(ormaterare)S
+184 x(som)S 184 x(ger)S 184 x(ett)S 3899 X 598 y(b\344ttre)S 167 x(resultat,)S
+167 x(med)S 165 x(korrekt)S 167 x(formatering)S 166 x(och)S 166 x(externa)S
+166 x(referenser)S -27 x(.)S 3899 13178 XY(CDA-dokument)S 197 x(skrivs)S
+197 x(ut)S 198 x(i)S 197 x(PostScript-format)S 199 x(om)S 198 x(den)S
+197 x(aktuella)S 197 x(skrivaren)S 197 x(klarar)S 197 x(detta;)S 214 x
+(annars)S 197 x(konverteras)S 3899 X 598 y(dokumentet)S 167 x(till)S
+165 x(ASCII-format)S 168 x(f\366re)S 166 x(utskrift.)S 3899 14772 XY
+(Om)S 174 x(en)S 174 x(anv\344ndare)S 175 x(f\366rs\366ker)S 175 x(redigera)S
+173 x(ett)S 176 x(CDA-dokument)S 174 x(med)S 175 x(en)S 174 x(av)S 175 x
+(standardeditorerna,)S 177 x(visas)S 174 x(ett)S 176 x(medde-)S 3899 X
+598 y(lande)S 156 x(om)S 156 x(att)S 157 x(dokumentformatet)S 158 x
+(inte)S 157 x(st\366ds)S 157 x(av)S 156 x(editorn.)S 218 x(Anv\344ndaren)S
+157 x(kan)S 156 x(dock)S 157 x(konvertera)S 156 x(CDA-dokumentet)S 3899 X
+598 y(till)S 178 x(ett)S 180 x(l\344mpli)S -2 x(gt)S 180 x(format)S
+179 x(f\366re)S 179 x(redigeringen)S 178 x(och)S 178 x(sedan)S 179 x
+(anv\344nda)S 179 x(den)S 178 x(\366nskade)S 179 x(editorn.)S 260 x
+(V)S -9 x(id)S 179 x(konvertering)S 178 x(\211nns)S 3899 X 598 y(det)S
+166 x(risk)S 166 x(att)S 167 x(formateringsattributen)S 167 x(f\366rsvinner)S
+-28 x(.)S 3899 17562 XY(F\366r)S 166 x(konverteringar)S 166 x(p\345)S
+166 x(Alpha,)S 166 x(m\345ste)S 166 x(DECwindows\207)S 165 x(V1.2)S
+167 x(vara)S 166 x(installerat)S 165 x(och)S 166 x(l\344gst)S 166 x
+(version)S 166 x(av)S 3899 X 598 y(CDA$ACCESS.EXE)S 167 x(och)S 166 x
+(DDIF$CC_VIEWSHR.EXE)S 167 x(\344r)S 166 x(V1.8.)S 3899 19156 XY(F\366r)S
+179 x(konvertering)S 179 x(p\345)S 179 x(V)S -37 x(AX,)S 180 x(m\345ste)S
+179 x(CDA)S 179 x(Converter)S 178 x(Library)S 179 x(V2.2)S 179 x(vara)S
+179 x(installerat)S 178 x(vilket)S 179 x(\344ven)S 179 x(installerar)S
+178 x(CDA)S 3899 X 598 y(Run-T)S -19 x(ime)S 166 x(Services)S 166 x
+(V1.0.)S 222 x(L\344gst)S 167 x(version)S 165 x(1.7)S 167 x(av)S 166 x
+(CDA$ACCESS.EXE)S 167 x(och)S 166 x(DDIF$CC_VIEWSHR.EXE.)S 3899 21248 XY
+F32(VT)S -30 x(-SPE)S 2 x(CIFIKA)S 182 x(FUNKT)S -2 x(IONER)S 3899 22244 XY
+F34(I)S 201 x(Of)S -9 x(\211ce)S 201 x(Server)S 201 x(\211nns)S 200 x
+(ett)S 202 x(VT)S -27 x(-gr\344nssnitt)S 201 x(f\366r)S 201 x(VT)S -26 x
+(-anv\344ndare)S 200 x(som)S 201 x(\366verg\345r)S 200 x(fr\345n)S 201 x
+(MailW)S -10 x(orks)S 201 x(OpenVMS)S(.)S 326 x(Detta)S 3899 X 598 y
+(gr\344nssnitt)S 166 x(st\366der)S 167 x(elektronisk)S 165 x(post,)S
+167 x(arkivet)S 166 x(och)S 166 x(serverbaserade)S 166 x(utskriftsoperationer)S
+-27 x(.)S 3899 24336 XY F32(SYSTE)S 2 x(MOMF)S -30 x(A)S -41 x(TT)S
+-40 x(AND)S -2 x(E)S 184 x(FUNK)S -2 x(TIONER)S 3899 25632 XY F34(\201)S
+872 x(Menynavigering)S 165 x(f\366r)S 166 x(VT)S -27 x(-anv\344ndare)S
+166 x(och)S 166 x(anv\344ndare)S 166 x(av)S 166 x(terminalemuler)S -2 x
+(ing.)S 3899 X 896 y(\201)S 872 x(T)S -18 x(ill\344mpn)S -2 x(ingar)S
+166 x(n\345s)S 166 x(via)S 166 x(en)S 166 x(hierarki)S 164 x(av)S 167 x
+(menyer)S -28 x(.)S 222 x(V)S -37 x(ana)S 166 x(anv\344ndare)S 166 x
+(kan)S 166 x(enkelt)S 166 x(g\345)S 166 x(f\366rbi)S 166 x(menyer)S
+-28 x(.)S 3899 X 897 y(\201)S 872 x(Anv\344ndare)S 166 x(kan)S 166 x
+(avbryta)S 166 x(den)S 166 x(aktuella)S 166 x(aktiviteten)S 167 x(f\366r)S
+166 x(att)S 167 x(l\344sa)S 166 x(e-post,)S 166 x(visa)S 166 x(aktuell)S
+166 x(tid)S 166 x(eller)S 165 x(n\345)S 166 x(register)S -28 x(.)S 3899 28919 XY
+F32(HJ\344LP)S 3899 29915 XY F34(VT)S -27 x(-anv\344ndaren)S 181 x(kan)S
+182 x(f\345)S 182 x(hj\344lp)S 181 x(\366verallt)S 181 x(i)S 181 x(Of)S
+-9 x(\211ce)S 182 x(Server)S 182 x(genom)S 181 x(att)S 183 x(trycka)S
+182 x(p\345)S 182 x(tangenten)S 182 x -382 y 1488 24 R 22587 X 494 y
+24 492 R 22711 29896 XY F42(HJ\304LP)S 104 x 131 y 24 492 R 22587 X
+20 y 1488 24 R 24075 29915 XY F34(.)S 269 x(I)S 182 x(hj\344lptexten)S
+3899 X 598 y(\211nns)S 166 x(grundl\344ggande)S 165 x(information)S
+166 x(om)S 166 x(funktionerna.)S 345 x 37373 Y F40(1)S -24 x(1)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (12) 12
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(DOKUMENT)S -41 x(A)S -41 x
+(TION)S 3899 5009 XY F34(F\366ljande)S 165 x(dokumentation)S 167 x(medf\366ljer)S
+165 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(som)S 166 x(standard:)S
+3899 X 897 y(\201)S 872 x(Guide)S 165 x(to)S 167 x(the)S 166 x(kit)S
+166 x(\(kort\))S 3899 X 896 y(\201)S 872 x(Guide)S 165 x(to)S 167 x
+(the)S 166 x(Administration)S 166 x(Cli)S -2 x(ent)S 167 x(kit)S 166 x
+(\(kort\))S 3899 X 897 y(\201)S 872 x(Overview)S 165 x(and)S 166 x(Planning)S
+165 x(Guide)S 3899 X 896 y(\201)S 872 x(Installationshandbok)S 3899 X
+897 y(\201)S 872 x(V)S -27 x(ersionsinformation)S 165 x(\(online\))S
+3899 X 897 y(\201)S 872 x(Administration)S 166 x(fr\345n)S 166 x(en)S
+166 x(VT)S -27 x(-terminal)S 3899 X 896 y(\201)S 872 x(MailW)S -10 x
+(orks)S 166 x(Migration)S 166 x(Guide)S 3899 X 897 y(\201)S 872 x(DIGIT)S
+-36 x(AL)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(Administrator)S
+166 x(V)S -9 x(iktigt)S 167 x(\(online\))S 3899 X 897 y(\201)S 872 x
+(DIGIT)S -36 x(AL)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(Administrator)S
+166 x(Direkthj\344lp)S 3899 14174 XY(Ytterligare)S 166 x(exemplar)S
+165 x(av)S 166 x(b\366ckerna)S 166 x(kan)S 166 x(k\366pas)S 166 x(separat.)S
+3899 15669 XY F32(INST)S -40 x(ALLA)S -42 x(TION)S 3899 16665 XY F34
+(Installationen)S 168 x(av)S 169 x(den)S 168 x(h\344r)S 168 x(produkten)S
+169 x(\344r)S 168 x(enkel)S 168 x(och)S 168 x(snabb.)S 229 x(Of)S -9 x
+(\211ce)S 169 x(Server)S 168 x(V4.0A)S 169 x(st\366der)S 169 x(uppgraderingar)S
+167 x(fr\345n)S 3899 X 598 y(ALL\203IN\2031)S 166 x(V3.2)S 167 x(Alpha-)S
+165 x(eller)S 165 x(V)S -36 x(AX-)S 166 x(system.)S 3899 18259 XY(MailW)S
+-10 x(orks)S 149 x(V1.3A-kunder)S 149 x(p\345)S 148 x(OpenVMS)S 149 x
+(V6.2)S 149 x(eller)S 148 x(senare)S 148 x(kan)S 148 x(installera)S
+148 x(Of)S -9 x(\211ce)S 149 x(Server)S 148 x(p\345)S 149 x(be\211ntliga)S
+148 x(system)S 3899 X 598 y(eller)S 165 x(p\345)S 166 x(nya)S 166 x
+(system)S 167 x(och)S 166 x(forts\344tta)S 167 x(med)S 166 x(\366verg\345ngen)S
+166 x(enligt)S 166 x(beskrivningen)S 165 x(i)S 165 x(ett)S 167 x(tidigare)S
+166 x(avsnitt.)S 3899 20351 XY F36(DIGIT)S -36 x(AL)S 166 x(Servicealternativ)S
+3899 21348 XY F34(Denna)S 194 x(programvara)S 195 x(installeras)S 194 x
+(kostnadsfritt)S 196 x(av)S 195 x(Digital)S 194 x(om)S 195 x(programvaran)S
+194 x(inf\366rskaf)S -8 x(fas)S 195 x(med)S 195 x(ett)S 196 x(startservi-)S
+3899 X 597 y(cepaket)S 166 x(som)S 166 x(inkluderar)S 165 x(installationsservice.)S
+3899 23440 XY F36(Uppgradering)S 168 x(fr\345n)S 166 x(tidigare)S 167 x
+(versioner)S 167 x(och)S 166 x(samexisterande)S 167 x(system)S 3899 24436 XY
+F34(Of)S -9 x(\211ce)S 159 x(Server)S 159 x(V4.0-kunder)S 159 x(kan)S
+159 x(uppgradera)S 158 x(till)S 158 x(V4.0A)S 160 x(men)S 159 x(alternativet)S
+159 x(File)S 159 x("Endast)S 159 x(arkiv"\345)S 158 x(inte)S 159 x(tillg\344nglig)S
+-2 x(t.)S 3899 X 598 y(Ett)S 167 x(V4.0-system)S 167 x(ska)S 166 x(aldrig)S
+165 x(installeras)S 166 x(p\345)S 166 x(ett)S 166 x(V)S -45 x(.40A-system.)S
+3899 26030 XY(Kunder)S 166 x(kan)S 166 x(uppgradera)S 165 x(fr\345n)S
+167 x(ALL\203IN\2031)S 166 x(V3.2)S 167 x(och)S 166 x(MailW)S -10 x
+(orks)S 166 x(V1.3A)S 167 x(men)S 166 x(inte)S 166 x(tidigare)S 165 x
+(versioner)S -28 x(.)S 3899 27026 XY(Of)S -9 x(\211ce)S 143 x(Server)S
+143 x(st\366der)S 144 x(inte)S 143 x(system)S 144 x(som)S 143 x(samexisterar)S
+-27 x(,)S 148 x(dvs)S 143 x(versioner)S 143 x(av)S 143 x(ALL\203IN\2031)S
+143 x(och)S 144 x(Of)S -9 x(\211ce)S 143 x(Server)S 143 x(kan)S 143 x
+(inte)S 3899 X 598 y(samtidigt)S 166 x(anv\344nda)S 166 x(samma)S 166 x
+(CPU,)S 166 x(V)S -37 x(AXcluster-\207)S 167 x(eller)S 165 x(VMScluster-\207system.)S
+3899 29118 XY F32(MASKINV)S -40 x(ARUK)S -2 x(RA)S -41 x(V)S 3899 31011 XY
+F36(St\366dda)S 167 x(processorer)S 3899 32008 XY F34(Alpha:)S 221 x
+(Alla)S 166 x(AlphaServer)S(-system)S 166 x(och)S 166 x(arbetsstationer)S
+167 x(som)S 166 x(st\366der)S 166 x(OpenVMS)S 166 x(st\366der)S 166 x
+(\344ven)S 166 x(Of)S -8 x(\211ce)S 166 x(Server)S -28 x(.)S 3899 33004 XY
+F40(Observera)S 2 x(:)S 299 x F34(Minsta)S 166 x(rekommenderade)S 165 x
+(minnesstorlek)S 166 x(\344r)S 166 x(64)S 166 x(Mb.)S 15306 37373 XY
+F40(12)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (13) 13
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3960 XY F34(V)S -37 x(AX:)S 167 x(Alla)S
+166 x(V)S -37 x(AX-processorer)S 166 x(st\366ds)S 167 x(med)S 166 x
+(undantag)S 166 x(av:)S 3899 X 897 y(\201)S 872 x(MicroV)S -37 x(AX\207:)S
+222 x(MicroV)S -37 x(AX)S 167 x(I)S 3899 X 897 y(\201)S 872 x(V)S -37 x
+(AXstat)S 2 x(ion\207:)S 221 x(V)S -36 x(AXstation)S 167 x(I,)S 167 x
+(V)S -37 x(AXstat)S 2 x(ion)S 165 x(8000)S 3899 X 896 y(\201)S 872 x
+(V)S -37 x(AX\2031)S -36 x(1)S(/725,)S 167 x(V)S -37 x(AX\2031)S -36 x
+(1)S(/730,)S 167 x(V)S -37 x(AX\2031)S -36 x(1)S(/750,)S 166 x(V)S -36 x
+(AX\2031)S -37 x(1)S(/782)S 3899 7746 XY F40(Observera)S 2 x(:)S 299 x
+F34(Minsta)S 166 x(rekommenderade)S 165 x(minnesstorlek)S 166 x(f\366r)S
+166 x(st\366dda)S 167 x(V)S -37 x(AX-system)S 167 x(\344r)S 166 x(32)S
+166 x(Mb)S 3899 8742 XY(M\344ngden)S 217 x(minne,)S 230 x(antalet)S
+218 x(processorer)S 217 x(och)S 217 x(diskenheter)S 218 x(som)S 217 x
+(kr\344vs)S 217 x(av)S 218 x(st\366dda)S 218 x(CPU:er)S 217 x(f\366r)S
+218 x(att)S 218 x(k\366ra)S 217 x(Of)S -9 x(\211ce)S 3899 X 598 y(Server)S
+230 x(beror)S 230 x(p\345)S 230 x(antalet)S 230 x(anv\344ndare)S 230 x
+(som)S 230 x(samtidigt)S 230 x(anv\344nder)S 230 x(systemet.)S 415 x
+(Denna)S 229 x(information)S 230 x(uppdateras)S 3899 X 598 y(kontinuerligt.)S
+221 x(Mer)S 166 x(information)S 166 x(f\345r)S 166 x(du)S 166 x(om)S
+166 x(du)S 166 x(kontaktar)S 167 x(ditt)S 166 x(lokala)S 166 x(DIGIT)S
+-37 x(AL)S(-kontor)S -27 x(.)S 3899 11432 XY F36(Annan)S 167 x(st\366dd)S
+167 x(maskinvara)S 3899 12429 XY F34(F\366ljande)S 165 x(terminaler)S
+165 x(st\366ds)S 167 x(f\366r)S 166 x(text:)S 3899 X 896 y(\201)S 872 x
+(VT100\207-serien)S 166 x(\(VT100,)S 167 x(VT100W)S -27 x(,)S 167 x
+(VT101,)S 167 x(VT102,)S 167 x(VT125\))S 166 x(eller)S 165 x(enheter)S
+166 x(i)S 166 x(VT100-emuleringsl\344ge.)S 4945 14322 XY F40(Observer)S
+2 x(a:)S 299 x F34(En)S 115 x(del)S 114 x(av)S 115 x(Of)S -9 x(\211ce)S
+115 x(Server-funktionaliteten)S 116 x(kan)S 114 x(inte)S 115 x(n\345s)S
+115 x(fr\345n)S 115 x(VT100-)S 116 x(eller)S 114 x(VT100W)S -9 x(-terminaler)S
+-28 x(.)S 4945 X 597 y(Mer)S 166 x(information)S 166 x(\211nns)S 166 x
+(i)S 165 x(VT)S -26 x(-handb\366ckerna.)S 3899 X 897 y(\201)S 872 x
+(VT200-serien)S 166 x(\(VT220\207,)S 167 x(VT240,)S 167 x(VT241\))S
+166 x(och)S 166 x(enheter)S 166 x(som)S 167 x(st\366der)S 166 x(VT200-emulering)S
+3899 X 897 y(\201)S 872 x(VT300\207-serien)S 166 x(\(VT320\207,)S 167 x
+(VT330\207,)S 167 x(VT340\207\))S 167 x(och)S 166 x(enheter)S 166 x
+(som)S 166 x(st\366der)S 166 x(VT300-emulering)S 3899 X 896 y(\201)S
+872 x(VT420\207)S 167 x(textvideoterminal)S 3899 X 897 y(\201)S 872 x
+(VT500)S 166 x(textv)S 2 x(ideoterminal)S 3899 X 896 y(\201)S 872 x
+(VT1000\207)S 167 x(i)S 165 x(VT300-)S 167 x(emulerin)S -2 x(gsl\344ge)S
+166 x(eller)S 165 x(via)S 166 x(DECwi)S -2 x(ndows)S 166 x(DECterm\207-l\344ge)S
+3899 X 897 y(\201)S 872 x(Alla)S 165 x(DIGIT)S -36 x(AL)S 166 x(PCar)S
+166 x(i)S 166 x(VT220-)S 166 x(eller)S 165 x(VT300-)S 167 x(emuleri)S
+-2 x(ngsl\344ge)S 3899 X 897 y(\201)S 872 x(T)S -55 x(erminaler)S 165 x
+(i)S 165 x(V)S -36 x(AXstation-serien)S 3899 22690 XY F36(Skrivare)S
+3899 23686 XY F34(Fr\345n)S 134 x(Of)S -9 x(\211ce)S 134 x(Server)S
+134 x(kan)S 134 x(utskriftsjobb)S 134 x(skickas)S 134 x(till)S 133 x
+(de)S 134 x(allra)S 133 x(\212esta)S 134 x(skrivare)S 133 x(till)S 133 x
+(vilka)S 133 x(en)S 134 x(OpenVMS)S(-skrivark\366)S 133 x(\211nns)S
+3899 X 598 y(kopplad.)S 3899 25280 XY(Olika)S 165 x(till\344mpni)S -2 x
+(ngar)S 166 x(st\366der)S 166 x(olika)S 166 x(skrivare.)S 3899 X 897 y
+(\201)S 872 x(Personliga)S 165 x(skrivare:)S 5991 X 897 y(LA70,)S 167 x
+(LA75\207)S 166 x(Plus)S 5991 X 597 y(DEClaser\207)S 165 x(1)S -37 x
+(100,)S 167 x(DEClaser)S 165 x(1)S -37 x(152)S 5991 X 598 y(LA310,)S
+167 x(LA424)S 3899 X 897 y(\201)S 872 x(PC)S 166 x(Printers)S 166 x
+(\(via)S 166 x(terminalemul)S -2 x(ering\):)S 5991 X 897 y(EPSON\206)S
+166 x(LQ-105#,)S 166 x(HP\206)S 166 x(DeskJet\206)S 166 x(500#,)S 5991 X
+597 y(IBM\206)S 167 x(Proprinter\206)S 166 x(X24E#,)S 167 x(NEC)S 165 x
+(PinW)S -9 x(riter\206)S 166 x(6300#,)S 5991 X 598 y(Okidata)S 166 x
+(Microli)S -2 x(ne)S 166 x(393+#,)S 166 x(Panasonic)S 166 x(KX-P1)S
+-36 x(180#,)S 5991 X 598 y(T)S -55 x(oshiba\206)S 166 x(ExpressW)S -9 x
+(riter)S 166 x(400#)S 3899 X 896 y(\201)S 872 x(Gemensamma)S 165 x(skrivare:)S
+5991 X 897 y(DEClaser)S 165 x(3500,)S 166 x(DEClaser)S 166 x(2100/plus,)S
+166 x(DEClaser)S 165 x(2150/plus)S 15306 37373 XY F40(13)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (14) 14
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3960 XY F34(\201)S 872 x(A)S -9 x(vdelningsskrivare:)S
+5991 X 897 y(LP1)S -37 x(1,)S 167 x(DEClaser)S 165 x(3200/plus,)S 166 x
+(DEClaser)S 165 x(3250/plus,)S 5991 X 598 y(T)S -18 x(urbo)S 166 x(PrintServer\207)S
+166 x(20,)S 167 x(PrintServer)S 166 x(17,)S 166 x(PrintServer)S 166 x
+(32)S 3899 6551 XY(#)S 223 x(betecknar)S 223 x(att)S 224 x(denna)S 223 x
+(skrivare)S 223 x(har)S 223 x(bytts)S 224 x(ut)S 224 x(men)S 223 x(utan)S
+223 x(att)S 224 x(funktionstest)S 225 x(har)S 223 x(utf\366rts)S 224 x
+(p\345)S 223 x(den)S 223 x(modell)S 222 x(som)S 3899 X 597 y(ers\344tter)S
+167 x(skrivare.)S 3899 8145 XY F40(Observera)S 2 x(:)S 299 x F34(Ett)S
+163 x(\212ertal)S 163 x(PC:ar)S -27 x(,)S 163 x(PC)S 162 x(BIOS,)S 164 x
+(n\344tverksgr\344nssnitt)S 163 x(och)S 162 x(n\344tverksprogramstackar)S
+163 x(fr\345n)S 163 x(tredjepartsle-)S 3899 X 597 y(verant\366rer)S
+149 x(till)S 149 x(Digital,)S 153 x(kan)S 149 x(anv\344ndas)S 150 x
+(med)S 149 x(PC:ar)S 150 x(och)S 150 x(Macintosh-datorer)S 149 x(som)S
+150 x(\344r)S 149 x(anslutna)S 150 x(till)S 149 x(DIGIT)S -37 x(AL)S
+150 x(Of)S -9 x(\211ce)S 3899 X 598 y(Server)S -28 x(.)S 321 x(En)S
+199 x(del)S 199 x(kombinationer)S 198 x(av)S 199 x(dessa)S 199 x(tredjepartsprodukter)S
+199 x(fungerar)S 199 x(inte)S 199 x(korrekt,)S 208 x(vilket)S 199 x
+(resulterar)S 199 x(i)S 198 x(till-)S 3899 X 598 y(f\344lliga)S 193 x
+(eller)S 193 x(permanenta)S 194 x(problem)S 193 x(f\366r)S 195 x(anv\344ndare)S
+193 x(eller)S 193 x(systemansvariga.)S 306 x(Om)S 194 x(problem)S 193 x
+(uppst\345r)S 194 x(f\366rbeh\345ller)S 3899 X 598 y(sig)S 168 x(Digi)S
+-2 x(tal)S 168 x(r\344tten)S 169 x(att)S 169 x(rekommendera)S 168 x
+(kombinationer)S 167 x(av)S 168 x(de)S 168 x(ovan)S 168 x(n\344mnda)S
+168 x(som)S 168 x(fungerar)S 168 x(korrekt,)S 170 x(f\366r)S 168 x(att)S
+169 x(l\366sa)S 3899 X 597 y(kunders)S 133 x(problem.)S 210 x(DIGIT)S
+-37 x(AL)S 133 x(ansvarar)S 133 x(inte)S 133 x(heller)S 132 x(f\366r)S
+133 x(st\366d)S 133 x(av)S 133 x(kombinationer)S 133 x(av)S 132 x(tredjepartsprodukter)S
+134 x(anv\344nda)S 3899 X 598 y(tillsammans)S 165 x(med)S 166 x(Of)S
+-9 x(\211ce)S 166 x(Server)S 166 x(och)S 166 x(som)S 166 x(ofta)S 167 x
+(uppvisar)S 166 x(felaktig)S 166 x(funktion)S 166 x(hos)S 166 x(kunden.)S
+3899 13226 XY F32(UTR)S -21 x(YMME)S 184 x(P\305)S 183 x(SKIVMI)S 2 x
+(NNE)S 3899 14222 XY F34(Mer)S 166 x(information)S 166 x(om)S 165 x
+(diskutrymmeskraven)S 166 x(\211nns)S 166 x(i)S 166 x(installationshandboken)S
+165 x(till)S 165 x(Of)S -9 x(\211ce)S 167 x(Server)S 166 x(V4.0/V4.0A)S
+2 x(.)S 3899 15716 XY F32(KLUSTERMILJ\326)S 3899 16713 XY F34(Denna)S
+305 x(programvara)S 305 x(f\345r)S 305 x(fullt)S 306 x(st\366d)S 306 x
+(n\344r)S 305 x(den)S 305 x(installeras)S 305 x(p\345)S 305 x(en)S 305 x
+(giltig)S 305 x(och)S 305 x(licensierad)S 304 x(V)S -37 x(AXcluster*-)S
+306 x(el-)S 3899 X 597 y(ler)S 274 x(VMScluster*-kon\211guration)S 274 x
+(med)S 275 x(de)S 274 x(begr\344nsningar)S 274 x(som)S 275 x(anges)S
+274 x(i)S 274 x(OpenVMS)S 275 x(Cluster)S 274 x(Software)S 275 x(SPD)S
+3899 X 598 y(\(29.78.15\).)S 222 x(Detta)S 167 x(g\344ller)S 165 x(endast)S
+166 x(V)S -36 x(AX-,)S 167 x(Alpha-)S 165 x(och)S 166 x(blandade)S 166 x
+(Alpha-)S 165 x(och)S 166 x(V)S -36 x(AX-kluster)S -27 x(.)S 3899 18904 XY
+F40(V)S -33 x(ARNI)S -2 x(NG:)S 299 x F34(V)S -37 x(are)S 171 x(sig)S
+170 x(ett)S 171 x(kluster)S 171 x(best\345r)S 171 x(av)S 170 x(endast)S
+171 x(V)S -36 x(AX-)S 171 x(eller)S 169 x(Alpha-system)S 171 x(eller)S
+170 x(en)S 170 x(blandning)S 170 x(av)S 170 x(V)S -36 x(AX-)S 170 x
+(och)S 3899 X 598 y(Alpha-system,)S 236 x(m\345ste)S 221 x(alla)S 221 x
+(noder)S 221 x(i)S 221 x(Of)S -9 x(\211ce)S 221 x(Server-klustret)S
+222 x(ha)S 221 x(gemensamma)S 221 x(logiska)S 221 x(de\211nitioner)S
+221 x(av)S 221 x(typen)S 3899 X 598 y(OA$)S 166 x(och)S 166 x(en)S 166 x
+(gemensam)S 165 x(SYSUAF)S 2 x(-\211l.)S 3899 21594 XY F32(PROGRAMV)S
+-40 x(ARUKR)S -2 x(A)S -41 x(V)S 3899 X 449 y 23316 48 R 3899 22640 XY
+F38(OpenVMS)S 150 x(V)S -33 x(AX)S 15256 X(OpenVMS)S 151 x(Alpha)S 3899 X
+299 y 23316 48 R 3899 23637 XY F42(OpenV)S -2 x(MS)S 133 x(for)S 132 x
+(V)S -30 x(AX)S 133 x(V6.2)S -2 x(,)S 133 x(V7.0)S 132 x(eller)S 132 x
+(V7.1)S 15256 X(OpenVMS)S 131 x(for)S 132 x(Alpha)S 132 x(V6.2,)S 131 x
+(V7.0)S 132 x(eller)S 133 x(V7.1)S 3899 X 697 y(DECne)S -2 x(t\203V)S
+-30 x(AX)S 132 x(end-n)S -2 x(ode)S 132 x(V5.5)S 15256 X(DECnet)S 131 x
+(V1.5)S 132 x(for)S 132 x(Open)S -2 x(VMS)S 133 x(Alpha)S 3899 X 299 y
+23316 48 R 3899 26127 XY F36(Anpassa)S 166 x(OpenVMS)S 3899 27124 XY
+F34(F\366r)S 215 x(OpenVMS)S 214 x(V6.1-syst)S 2 x(em)S 214 x(kr\344vs)S
+215 x(f\366ljande)S 214 x(klasser)S 215 x(av)S 214 x(OpenVMS)S 215 x
+(f\366r)S 215 x(fullst\344ndig)S 214 x(funktionalitet)S 216 x(f\366r)S
+215 x(denna)S 3899 X 597 y(produkt:)S 3899 X 897 y(\201)S 872 x(Network)S
+166 x(support)S 3899 X 897 y(\201)S 872 x(Programming)S 165 x(support)S
+3899 X 896 y(\201)S 872 x(System)S 167 x(programming)S 165 x(support)S
+3899 X 897 y(\201)S 872 x(Secure)S 166 x(user)S 18 x(')S -9 x(s)S 166 x
+(environment)S 3899 X 896 y(\201)S 872 x(Utilities)S 3899 X 897 y(\201)S
+872 x(BLISS)S 167 x(require)S 165 x(\211les)S 3899 34197 XY(Mer)S 110 x
+(information)S 111 x(om)S 110 x(OpenVMS)S(-klasser)S 110 x(och)S 111 x
+(hur)S 111 x(de)S 110 x(anpassas)S 111 x(\211nns)S 111 x(i)S 110 x(Software)S
+111 x(Product)S 112 x(Description)S 109 x(\(SPD)S 167 x(25.01\))S 3899 X
+598 y(f\366r)S 166 x(OpenVMS)S 166 x(Operating)S 166 x(System)S 166 x
+(for)S 167 x(Alpha)S 165 x(och)S 166 x(V)S -36 x(AX.)S -238 x 37373 Y
+F40(14)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (15) 15
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3960 XY F36(T)S -9 x(ill)S 2 x(\344ggsprogramvara)S
+3899 5255 XY F34(\201)S 872 x(Message)S 166 x(Router)S 166 x(Migration)S
+165 x(Package)S 166 x(V1.0)S 3899 X 896 y(\201)S 872 x(MAILbus)S 167 x
+(400)S 166 x(Message)S 166 x(T)S -19 x(ransfer)S 167 x(Agent)S 166 x
+(for)S 167 x(OpenVMS)S 166 x(V2.0)S 3899 X 897 y(\201)S 872 x(DIGIT)S
+-36 x(AL)S 166 x(X.500)S 167 x(Directory)S 165 x(Service)S 166 x(Agent)S
+167 x(for)S 166 x(OpenVMS)S 166 x(V3.0)S 3899 X 897 y(\201)S 872 x(MAILbus)S
+167 x(400)S 166 x(API)S 167 x(V2.0)S 3899 X 896 y(\201)S 872 x(XMR)S
+166 x(-)S 166 x(MAILbus)S 166 x(400)S 166 x(to)S 167 x(Message)S 166 x
+(Router)S 166 x(gateway)S 166 x(V1.2)S 3899 X 897 y(\201)S 872 x(DMT)S
+166 x(-)S 166 x(MAILbus)S 167 x(Directory)S 165 x(Migration)S 165 x
+(T)S -54 x(oolkit)S 165 x(V1.0)S 3899 X 897 y(\201)S 872 x(MAILbus)S
+167 x(400)S 166 x(smtp)S 166 x(gateway)S 166 x(for)S 167 x(DIGIT)S -37 x
+(AL)S 166 x(UNIX)S 3899 X 896 y(\201)S 872 x(T)S -55 x(eamLinks)S 166 x
+(for)S 166 x(Microsoft)S 166 x(Windows)S 166 x(V2.7)S 167 x(och)S 166 x
+(V3.0)S 3899 X 897 y(\201)S 872 x(T)S -55 x(eamLinks)S 166 x(for)S 166 x
+(Macintosh)S 166 x(V2.5)S 167 x(och)S 166 x(V2.6)S 3899 X 897 y(\201)S
+872 x(DIGIT)S -36 x(AL)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x
+(MAPI)S 167 x(Driver)S 165 x(V4.0)S 167 x(och)S 166 x(V5.0)S 3899 X
+896 y(\201)S 872 x(DIGIT)S -36 x(AL)S 166 x(MAPI)S 167 x(Driver)S 165 x
+(V1.0)S 167 x(for)S 166 x(ALL\203IN\2031)S 3899 X 897 y(\201)S 872 x
+(DIGIT)S -36 x(AL)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(W)S
+-9 x(eb)S 166 x(Interf)S 2 x(ace)S 166 x(V4.0)S 166 x(och)S 166 x(V5.0)S
+3899 X 896 y(\201)S 872 x(ALL\203IN\2031)S 166 x(W)S -9 x(eb)S 166 x
+(Interf)S 2 x(ace)S 166 x(V1.0)S 3899 X 897 y(\201)S 872 x(P)S -37 x
+(A)S -36 x(THWORKS\207)S 166 x(for)S 166 x(DOS)S 166 x(V5.0)S 166 x
+(eller)S 165 x(senare)S 3899 X 897 y(\201)S 872 x(P)S -37 x(A)S -36 x
+(THWORKS)S 166 x(for)S 166 x(OpenVMS)S 166 x(V)S -37 x(AX)S 167 x(V5.0)S
+167 x(eller)S 165 x(senare)S 5111 X 597 y F35(och/eller*)S 4945 X 598 y
+F34(P)S -37 x(A)S -36 x(THWORKS)S 166 x(V5.0)S 166 x(eller)S 165 x(senare)S
+166 x(f\366r)S 167 x(OpenVMS)S 166 x(Alpha)S 3899 X 897 y(\201)S 872 x
+(V)S -37 x(AX)S 167 x(Message)S 166 x(Router)S 166 x(V3.3a.)S 222 x
+(Ej)S 166 x(tillg\344ngli)S -2 x(g)S 166 x(f\366r)S 167 x(OpenVMS)S
+166 x(Alpha)S 3899 X 897 y(\201)S 872 x(V)S -37 x(AX)S 167 x(Message)S
+166 x(Router)S 166 x(OpenVMS)S 166 x(Mail)S 165 x(Gateway)S 166 x(V3.3.)S
+222 x(Ej)S 166 x(tillg\344ngli)S -2 x(g)S 166 x(f\366r)S 167 x(OpenVMS)S
+165 x(Alpha)S 3899 X 896 y(\201)S 872 x(DECnet-PLUS)S 166 x(for)S 166 x
+(OpenVMS)S 166 x(V6.2)S 167 x(eller)S 165 x(senare)S 4945 22689 XY F40
+(Observer)S 2 x(a:)S 299 x F34(L\345nga)S 166 x(nodnamn)S 166 x(st\366ds)S
+166 x(inte.)S 3899 X 897 y(\201)S 872 x(En)S 166 x(av)S 166 x(de)S 166 x
+(st\366dda)S 167 x(JSB)S 166 x(TCP/I)S 2 x(P-stackarna)S 3899 X 897 y
+(\201)S 872 x(DEC\207)S 166 x(TCP/IP)S 167 x(Services)S 166 x(for)S
+166 x(OpenVMS)S 166 x(V4.1-12)S 167 x(eller)S 165 x(senare)S 3899 X
+896 y(\201)S 872 x(Process)S 166 x(Software)S 167 x(MultiNet)S 166 x
+(V3.5)S 166 x(eller)S 165 x(senare)S 3899 X 897 y(\201)S 872 x(Attachmat)S
+2 x(e)S 166 x(PathW)S -18 x(ay\207)S 166 x(V2.5)S 167 x(eller)S 165 x
+(senare)S 3899 X 897 y(\201)S 872 x(Process)S 166 x(TCPware\206)S 166 x
+(V4.1)S 167 x(eller)S 165 x(senare)S 3899 X 896 y(\201)S 872 x(V)S -37 x
+(alfri)S 111 x(produkt)S 111 x(som)S 110 x(st\366der)S 111 x(WinSockets)S
+112 x(API)S 111 x(och)S 111 x(P)S -37 x(A)S -36 x(THWORKS)S 110 x(eller)S
+110 x(DEC)S 110 x(TCP/IP)S 112 x(Services)S 111 x(for)S 111 x(OpenVMS)S
+3899 X 897 y(\201)S 872 x(F\366r)S 166 x(CDA)S 166 x(V)S -37 x(AX-st\366d)S
+167 x(-)S 166 x(CDA)S 166 x(Converter)S 165 x(Library)S 166 x(for)S
+166 x(OpenVMS)S 166 x(V2.2)S 167 x(\(endast)S 166 x(V)S -37 x(AX)S 167 x
+(tillg\344ngli)S -2 x(g\))S 3899 X 897 y(\201)S 872 x(F\366r)S 166 x
+(CDA)S 166 x(Alpha-st\366d)S 166 x(-)S 166 x(DECwindow)S -2 x(s)S 166 x
+(V1.2)S 167 x(for)S 166 x(OpenVMS)S 166 x(Alpha)S 3899 30958 XY(*)S
+204 x F35(och/eller)S 204 x F34(betecknar)S 205 x(att)S 205 x(denna)S
+205 x(programvara)S 204 x(\211nns)S 204 x(tillg\344ngli)S -2 x(g)S 205 x
+(p\345)S 204 x(b\345de)S 205 x(OpenVMS)S 204 x(Alpha-)S 204 x(och)S
+205 x(OpenVMS)S 3899 X 598 y(V)S -37 x(AX-system)S 167 x(och)S 166 x
+(att)S 167 x(b\345da)S 166 x(kan)S 166 x(beh\366vas)S 166 x(i)S 166 x
+(kluster)S 166 x(med)S 166 x(blandad)S 165 x(arkitektur)S 167 x(beroende)S
+165 x(p\345)S 166 x(g\344llande)S 165 x(krav)S -37 x(.)S 3899 32552 XY
+(Kunder)S 176 x(b\366r)S 176 x(kontakta)S 177 x(leverant\366rer)S 176 x
+(av)S 177 x(de)S 176 x(integrerade)S 176 x(tredjepartsprodukterna)S
+176 x(vad)S 176 x(g\344ller)S 176 x(kompatibili)S -2 x(tet)S 178 x(med)S
+3899 X 598 y(Of)S -9 x(\211ce)S 161 x(Server)S 160 x(p\345)S 161 x(V)S
+-37 x(AX)S 161 x(och)S 161 x(Alpha,)S 162 x(eller)S 160 x(kontakta)S
+161 x(ett)S 162 x(lokalt)S 160 x(DIGIT)S -36 x(AL)S(-kontor)S 161 x
+(f\366r)S 161 x(mer)S 160 x(information)S 161 x(om)S 160 x(produkt-)S
+3899 X 598 y(tillg\344ngli)S -2 x(gheten)S 166 x(och)S 166 x(kompatibiliteten)S
+166 x(med)S 166 x(DIGIT)S -36 x(AL)S 166 x(Of)S -9 x(\211ce)S 166 x
+(Server)S 166 x(V4.0A.)S 15306 37373 XY F40(15)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (16) 16
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(LICENSER)S 3899 5009 XY F34
+(DIGIT)S -36 x(AL)S 166 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(V4.0A)S
+167 x(st\366der)S 166 x(tv\345)S 167 x(inb\366rdes)S 165 x(uteslutande)S
+167 x(typer)S 166 x(av)S 166 x(licenser:)S 3899 X 897 y(\201)S 872 x
+(F\366r)S 129 x(kunder)S 128 x(som)S 129 x(uppgraderar)S 128 x(fr\345n)S
+129 x(ALL\203IN\2031)S(,)S 137 x(har)S 128 x(de)S 129 x(traditionella)S
+127 x(licenserna)S 128 x(Clusterwide)S -2 x(,)S 137 x(Capacity)S 128 x
+(och)S 4945 X 597 y(User)S 180 x(\(Concurrent)S 166 x(och)S 166 x(Personal\))S
+180 x(fortsatt)S 182 x(st\366d.)S 266 x(Detta)S 181 x(f\366rs\344krar)S
+180 x(att)S 182 x(kunder)S 180 x(inte)S 181 x(beh\366ver)S 180 x(\344ndra)S
+180 x(n\345got)S 181 x(i)S 4945 X 598 y(de)S 173 x(aktuella)S 173 x
+(licenserna)S 173 x(och)S 173 x(inte)S 174 x(heller)S 172 x(\345draga)S
+173 x(sig)S 174 x(mer)S 173 x(administration.)S 243 x(ALL\203IN\2031)S
+174 x(V3.2)S 174 x(\344r)S 174 x(f\366rberett)S 174 x(f\366r)S 4945 X
+598 y(\345r)S 166 x(2000)S 166 x(f\366rblir)S 165 x(i)S 166 x(prisli)S
+-2 x(stan)S 167 x(och)S 166 x(be\211ntliga)S 166 x(traditionell)S -2 x
+(a)S 166 x(licenser)S 166 x(kan)S 166 x(\344ven)S 166 x(forts\344ttningsvis)S
+167 x(best\344llas.)S 3899 X 896 y(\201)S 872 x(F\366r:)S -885 x 897 y
+(\202)S 548 x(nya)S 166 x(anv\344ndare)S 166 x(av)S 166 x(Of)S -9 x
+(\211ce)S 166 x(Server)S -27 x(,)S 4945 X 897 y(\202)S 548 x(MailW)S
+-10 x(orks-kunder)S 166 x(som)S 166 x(\366verg\345r)S 166 x(till)S 165 x
+(Of)S -9 x(\211ce)S 166 x(Server)S -27 x(,)S 4945 X 896 y(\202)S 548 x
+(val)S 166 x(av)S 166 x(alternativet)S 166 x("Endast)S 167 x(arkiv",)S
+4945 X 897 y(Client)S 165 x(Access)S 167 x(Licensing)S 165 x(\(CAL\))S
+166 x(\344r)S 165 x(obligatoriskt.)S 3899 13676 XY F36(Client)S 167 x
+(Access)S 165 x(Licensi)S 2 x(ng)S 3899 14673 XY F34(Client)S 208 x
+(Access)S 209 x(Licensing)S 208 x(har)S 209 x(den)S 208 x(ekonomiska)S
+209 x(f\366rdelen)S 208 x(att)S 210 x(till)S 208 x(en)S 209 x(anv\344ndare)S
+208 x(ge)S 209 x(\345tkomstbeh\366righeten)S 209 x(till)S 3899 X 597 y
+(Of)S -9 x(\211ce)S 201 x(Server-systemet)S 202 x(och)S 201 x(DIGIT)S
+-36 x(AL)S(-)S 201 x(klienter)S 201 x(i)S 201 x(en)S 201 x(enda)S 201 x
+(licens.)S 326 x(En)S 201 x(CAL)S 201 x(t)S 167 x(ex)S 201 x(skulle)S
+200 x(g\366ra)S 201 x(det)S 202 x(m\366jligt)S 200 x(f\366r)S 3899 X
+598 y(en)S 155 x(anv\344ndare)S 155 x(att)S 157 x(n\345)S 155 x(funktioner)S
+156 x(hos)S 156 x(Of)S -9 x(\211ce)S 155 x(Server)S 156 x(fr\345n)S
+155 x(en)S 156 x(DIGIT)S -37 x(AL)S(-)S 156 x(T)S -55 x(eamLinks)S(-,)S
+158 x(DIGIT)S -37 x(AL)S(-)S 156 x(MAPI-drivrutin,)S 3899 X 598 y(webbl\344sare)S
+138 x(eller)S 139 x(VT)S -27 x(-klient)S 139 x(utan)S 139 x(att)S 141 x
+(kostnaden)S 139 x(av)S 140 x(sj\344lva)S 138 x(klientprogramvaran.)S
+212 x(Om)S 139 x(klienten)S 139 x(har)S 139 x(utvecklats)S 140 x(av)S
+3899 X 598 y(en)S 173 x(tredjepart)S 173 x(m\345ste)S 174 x(dock)S 173 x
+(r\344ttigheterna)S 173 x(att)S 174 x(installera)S 173 x(klienten)S
+172 x(p\345)S 173 x(PC:n)S 174 x(k\366pas)S 173 x(fr\345n)S 173 x(tredjepartsleverant\366ren,)S
+3899 X 597 y(eftersom)S 167 x(r\344ttigheterna)S 166 x(till)S 165 x
+(tredjepartsprodukter)S 167 x(inte)S 166 x(medges)S 166 x(av)S 166 x
+(DIGIT)S -37 x(AL)S 167 x(Of)S -9 x(\211ce)S 166 x(Server)S 166 x(CAL.)S
+3899 18658 XY(Utan)S 209 x(undantag)S 209 x(m\345ste)S 209 x(en)S 209 x
+(CAL)S 209 x(\211nnas)S 208 x(f\366r)S 210 x(varje)S 208 x(anv\344ndare)S
+209 x(i)S 208 x(Of)S -9 x(\211ce)S 209 x(Server-pro\211len;)S 230 x
+(dvs)S 209 x(alla)S 208 x(registrerade)S 3899 X 597 y(anv\344ndare)S
+198 x(m\345ste)S 198 x(alltid)S 197 x(vara)S 198 x(licensiera)S -2 x
+(de)S 198 x(av)S 198 x(en)S 198 x(CAL.)S 199 x(CAL:er)S 198 x(kan)S
+198 x(\212yttas)S 199 x(mellan)S 197 x(system)S 198 x(allteftersom)S
+199 x(an-)S 3899 X 598 y(v\344ndare)S 142 x(\212yttas,)S 149 x(men)S
+142 x(antalet)S 143 x(CAL:er)S 143 x(p\345)S 142 x(platsen)S 143 x(m\345ste)S
+143 x(vara)S 142 x(detsamma)S 143 x(eller)S 141 x(\366verskrida)S 142 x
+(antalet)S 143 x(registrerade)S 3899 X 598 y(anv\344ndare)S 166 x(p\345)S
+166 x(platsen.)S 3899 21447 XY(Of)S -9 x(\211ce)S 160 x(Server)S 159 x
+(V4.0A)S 161 x(licensi)S -2 x(eras)S 160 x(av)S 159 x(tv\345)S 161 x
+(typer)S 159 x(av)S 160 x(Client)S 159 x(Access)S 160 x(License)S 159 x
+(som)S 160 x(inte)S 159 x(kan)S 160 x(f\366rekomma)S 159 x(samtidigt)S
+3899 X 598 y(p\345)S 194 x(en)S 195 x(nod.)S 307 x(Kunder)S 194 x(som)S
+195 x(v\344ljer)S 193 x(fullst\344ndig)S 195 x(installation)S 193 x
+(licensieras)S 193 x(av)S 195 x(Of)S -9 x(\211ce)S 195 x(Server)S 194 x
+(CAL)S 194 x(\(Unique)S 194 x(Product)S 3899 X 598 y(Identi\211er)S
+191 x(\(UPI\))S 191 x(\344r)S 190 x F35(5TD)S F34(.)S 191 x(Kunder)S
+191 x(som)S 190 x(installerar)S 190 x(alternativet)S 191 x("Endast)S
+191 x(arkiv")S 190 x(licensieras)S 190 x(av)S 190 x(FCCAL)S 191 x(\(UPI)S
+191 x(\344r)S 3899 X 597 y F35(5Z4)S F34(.)S 3899 24237 XY F40(Observera)S
+2 x(:)S 299 x F34(I)S 128 x(OpenVMS)S(-kluster)S 128 x(kan)S 128 x(traditionella)S
+128 x(licenser)S 127 x(och)S 128 x(Client)S 127 x(Access)S 129 x(Licensing)S
+127 x(inte)S 128 x(samexistera.)S 209 x(Ett)S 3899 X 598 y(Of)S -9 x
+(\211ce)S 184 x(Server-system)S 185 x(t)S 166 x(ex)S 185 x(som)S 184 x
+(\344r)S 184 x(licensier)S -2 x(at)S 185 x(av)S 184 x(CAL:er)S 185 x
+(kan)S 184 x(inte)S 184 x(l\344ggas)S 184 x(till)S 183 x(ett)S 185 x
+(Of)S -9 x(\211ce)S 185 x(Server)S 184 x(V4.0-kluster)S 3899 X 597 y
+(som)S 166 x(\344r)S 166 x(licensier)S -2 x(at)S 167 x(av)S 166 x(Capacity-)S
+166 x(eller)S 165 x(User-li)S -2 x(censer)S -27 x(.)S 3899 26429 XY
+(Fullst\344ndiga)S 167 x(installationer)S 166 x(av)S 168 x(Of)S -9 x
+(\211ce)S 167 x(Server)S 168 x(och)S 167 x(installationer)S 167 x(med)S
+167 x("Endast)S 168 x(arkiv")S 167 x(p\345)S 167 x(separata)S 168 x
+(noder)S 167 x(inom)S 3899 X 597 y(ett)S 167 x(kluster)S 166 x(till\345ts)S
+166 x(inte.)S 15306 37373 XY F40(16)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (17) 17
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3975 XY F36(Systemlicens)S 167 x(f\366r)S
+166 x(Of\211ce)S 166 x(Server)S 3899 4971 XY F34(F\366rutom)S 258 x
+(CAL:er)S 259 x(m\345ste)S 258 x(varje)S 257 x(Of)S -8 x(\211ce)S 258 x
+(Server-installation)S 257 x(vara)S 257 x(licensierad)S 257 x(av)S 258 x
+(en)S 258 x(Of)S -9 x(\211ce)S 258 x(Server)S 258 x(\(system\))S 3899 X
+598 y(License)S 185 x(\(UPI)S 185 x(\344r)S 185 x(5TB\))S 186 x(och)S
+185 x(installationen)S 185 x("Endast)S 185 x(arkiv")S 185 x(licensierad)S
+184 x(av)S 185 x(en)S 185 x(systemlicens)S 186 x(f\366r)S 185 x(Of)S
+-9 x(\211ce)S 186 x(Server-)S 3899 X 598 y(arkiv)S 110 x(\(UPI)S 111 x
+(\344r)S 111 x F35(5Z2)S F34(.)S 203 x(F\366r)S 111 x(anv\344ndning)S
+110 x(av)S 111 x(Of)S -9 x(\211ce)S 111 x(Server)S 110 x(i)S 111 x(OpenVMS)S
+(-kluster)S 110 x(kr\344vs)S 111 x(en)S 111 x(systemlicens)S 110 x(\(QM-5TB9A-AA)S
+167 x(eller)S 165 x(QM-5Z29A-*A\))S(\))S 3899 X 598 y(per)S 166 x(OpenVMS)S
+(-system)S 166 x(i)S 166 x(klustret.)S 3899 7761 XY(V)S -37 x(arje)S
+177 x(Of)S -9 x(\211ce)S 178 x(Server-programupps\344ttning)S 177 x
+(\(QB-5TBAA-SA\))S 178 x(inkluderar)S 176 x(licens,)S 180 x(media)S
+177 x(och)S 177 x(dokumentation)S 178 x(f\366r)S 3899 X 598 y(Of)S -9 x
+(\211ce)S 161 x(Server)S -27 x(,)S 162 x(och)S 162 x(media,)S 162 x
+(dokumentation)S 161 x(och)S 161 x(licens)S 161 x(f\366r)S 161 x(att)S
+162 x(installera)S 160 x(en)S 161 x(Of)S -8 x(\211ce)S 161 x(Server)S
+161 x(Administrator-klient)S 3899 X 597 y(\(UPI)S 166 x(\344r)S 166 x
+(5TC\).)S 166 x(Ytt)S 2 x(erligar)S -2 x(e)S 166 x(Administrator-klienter)S
+166 x(kan)S 166 x(installeras)S 165 x(med)S 166 x(ytterligare)S 166 x
+(licenser)S 165 x(\(QM-5TC9A-AA\).)S 3899 9953 XY(V)S -37 x(arje)S 166 x
+(Of)S -9 x(\211ce)S 166 x(Server)S 166 x("Endast)S 167 x(arkiv"-programupps\344ttning)S
+165 x(\(QB-5Z2AA-)S 167 x(SA\))S 166 x(inkluderar)S 165 x(licens,)S
+166 x(media)S 166 x(och)S 166 x(do-)S 3899 X 597 y(kumentation)S 212 x
+(f\366r)S 213 x(Of)S -9 x(\211ce)S 212 x(Server)S 212 x("Endast)S 212 x
+(arkiv")S 212 x(och)S 212 x(media,)S 223 x(dokumentation)S 212 x(och)S
+212 x(licens)S 211 x(f\366r)S 213 x(att)S 213 x(installera)S 211 x(en)S
+3899 X 598 y(Of)S -9 x(\211ce)S 157 x(Server)S 157 x(Administrator-klient)S
+157 x(\(UPI=)S F35(5TC)S F34(\).)S 157 x(Ytterligare)S 157 x(Administrator-klienter)S
+157 x(kan)S 157 x(installeras)S 156 x(med)S 157 x(ytterli-)S 3899 X
+598 y(gare)S 166 x(licenser)S 165 x(\(QM-5TC9A-AA\).)S 3899 13240 XY
+F36(Kunder)S 166 x(med)S 167 x(DIGIT)S -37 x(AL)S 166 x(tj\344nsteavtal)S
+3899 14237 XY F34(Alla)S 131 x(MailW)S -10 x(orks-)S 132 x(och)S 131 x
+(ALL\203IN\2031)S(-kunder)S 132 x(som)S 131 x(betalar)S 131 x(f\366r)S
+132 x(media,)S 139 x(Documentation)S 131 x(Distribution)S 131 x(Service)S
+131 x(\(MDDS\))S 3899 X 597 y(har)S 226 x(f\345tt)S 227 x(media,)S 241 x
+(dokumentation)S 227 x(och)S 226 x(licenser)S 225 x(till)S 225 x(Of)S
+-9 x(\211ce)S 227 x(Server)S 226 x(V4.0A)S 227 x(som)S 226 x(del)S 225 x
+(av)S 226 x(avtalet.)S 403 x(Ett)S 227 x(Licensing)S 3899 X 598 y(Information)S
+167 x(Sheet)S 166 x(ing\345r)S 166 x(i)S 165 x(programupps\344ttningen)S
+166 x(d\344r)S 166 x(en)S 166 x(beskrivning)S 165 x(av)S 166 x(licensavtalet)S
+166 x(\211nns.)S 3899 16428 XY(Of)S -9 x(\211ce)S 119 x(Server)S 118 x
+(V4.0A)S 120 x(levereras)S 118 x(p\345)S 118 x(beg\344ran)S 119 x(till)S
+118 x(de)S 118 x(kunder)S 119 x(som)S 118 x(\344r)S 119 x(ber\344ttigade)S
+119 x(till)S 118 x(denna)S 118 x(version.)S 206 x(Of)S -9 x(\211ce)S
+118 x(Server)S 3899 X 598 y(V4.0A)S 219 x(distribueras)S 217 x(\344ven)S
+217 x(till)S 218 x(de)S 217 x(bibliotek)S 217 x(som)S 218 x(inneh\345ller)S
+216 x(OpenVMS)S 218 x(Alpha-)S 217 x(och)S 218 x(V)S -36 x(AX-)S 218 x
+(programprodukter)S -28 x(,)S 3899 X 598 y(tidigare)S 165 x(CONDIST)S
+-55 x(.)S 3899 19118 XY F36(\326verg\345ng)S 166 x(till)S 168 x(Of\211ce)S
+165 x(Server)S 166 x(fr\345n)S 166 x(MailW)S -8 x(orks)S 166 x(och)S
+167 x(ALL\203IN\2031)S 3899 20115 XY F34(MailW)S -10 x(orks-kunder)S
+194 x(m\345ste)S 195 x(ers\344tta)S 195 x(be\211ntliga)S 194 x(licenser)S
+193 x(med)S 194 x(Of)S -9 x(\211ce)S 194 x(Server)S 195 x(system-)S
+194 x(eller)S 193 x(Of)S -9 x(\211ce)S 195 x(Server)S 194 x(arkiv-)S
+3899 X 597 y(licenser)S 232 x(och)S 233 x(skaf)S -8 x(fa)S 234 x(en)S
+233 x(CAL)S 233 x(eller)S 232 x(FCCAL)S 233 x(f\366r)S 234 x(varje)S
+232 x(anv\344ndare)S 233 x(p\345)S 234 x(varje)S 232 x(system.)S 424 x
+(MailW)S -9 x(orks-kunder)S 233 x(p\345)S 3899 X 598 y(DIGIT)S -36 x
+(AL)S 166 x(MDDS)S(-kontrakt)S 174 x(har)S 173 x(f\345tt)S 175 x(100)S
+174 x(CAL:er)S 174 x(gratis.)S 245 x(F\366r)S 174 x(system)S 174 x(med)S
+173 x(\212er)S 174 x(\344n)S 174 x(100)S 173 x(anv\344ndare,)S 176 x
+(kr\344vs)S 174 x(ytter-)S 3899 X 598 y(ligare)S 163 x(Uppgraderings-CAL:er)S
+164 x(\(QM-)S 163 x(5TD9A-C*-)S 164 x(eller)S 163 x(QM-5Z49A-C*-licenser)S
+163 x(om)S 164 x(alternativet)S 165 x("Endast)S 165 x(arkiv")S 3899 X
+598 y(har)S 223 x(installerats\))S 223 x(som)S 223 x(motsvarar)S 224 x
+(antalet)S 224 x(abonnenter)S 223 x(p\345)S 224 x(systemet)S 224 x(vid)S
+223 x(tiden)S 224 x(f\366r)S 223 x(\366verg\345ngen.)S 394 x(F\366r)S
+224 x(Alpha-)S 3899 X 597 y(system)S 207 x(tillhandah\345ll)S -2 x(s)S
+207 x(ytterligare)S 206 x(uppgraderings-CAL:er)S 206 x(utan)S 207 x
+(kostnad.)S 344 x(Under)S 206 x(alla)S 205 x(omst\344ndigheter)S 207 x
+(m\345ste)S 3899 X 598 y(anv\344ndare)S 166 x(som)S 166 x(har)S 165 x
+(lagts)S 167 x(till)S 165 x(efter)S 167 x(\366verg\345ngen)S 165 x(licensieras)S
+165 x(av)S 166 x(ytterligare)S 166 x(en)S 166 x(CAL.)S 3899 24697 XY
+(ALL\203IN\2031)S(-kunder)S 168 x(m\345ste)S 169 x(beh\345lla)S 167 x
+(be\211ntliga)S 168 x(licenser)S -29 x(,)S 170 x(oavsett)S 169 x(om)S
+168 x(de)S 168 x(\344r)S 169 x(av)S 168 x(typen)S 169 x(clusterwide,)S
+168 x(capacity)S 168 x(eller)S 3899 X 598 y(user-based.)S 322 x(De)S
+199 x(kan)S 199 x(i)S 199 x(st\344llet)S 200 x(v\344lja)S 199 x(alternativet)S
+200 x("Endast)S 200 x(arkiv")S 198 x(och)S 200 x(de)S 199 x(n\366dv\344ndiga)S
+199 x(Arkiv)S 199 x(Upgrade)S 199 x(CAL:er)S 3899 X 598 y(\(QM-5Z49A-C*\))S
+214 x(f\366r)S 216 x(varje)S 215 x(abonnent.)S 370 x(P)S -36 x(AK:ar)S
+216 x(m\345ste)S 216 x(f\366rbli)S 215 x(installerade)S 214 x(under)S
+216 x(en)S 215 x(av)S 215 x(Of)S -8 x(\211ce)S 215 x(Server)S 216 x
+(V4.0A)S 3899 X 598 y(eftersom)S 167 x(LMF-kontroller)S 165 x(forts\344tt)S
+2 x(er)S -28 x(.)S 222 x(P)S -36 x(AK:ar)S 167 x(f\366r)S 166 x(sekund\344rt)S
+166 x(spr\345k)S 166 x(m\345ste)S 167 x(alltid)S 165 x(f\366rbli)S 165 x
+(installerade.)S 3899 27985 XY F36(Kunder)S 166 x(utan)S 167 x(serviceavtal)S
+3899 28981 XY F34(Kunder)S 265 x(som)S 266 x(inte)S 266 x(har)S 265 x
+(ett)S 266 x(DIGIT)S -36 x(AL)S(-supportavtal)S 266 x(b\366r)S 265 x
+(kontakta)S 267 x(DIGIT)S -36 x(AL)S 265 x(eller)S 265 x(en)S 266 x
+(kontoansvarig)S 265 x(hos)S 266 x(en)S 3899 X 598 y(DIGIT)S -36 x(AL)S
+(-)S 166 x(partner)S 166 x(om)S 166 x(att)S 167 x(uppgradera)S 165 x
+(till)S 165 x(Of)S -8 x(\211ce)S 166 x(Server)S 166 x(V4.0A.)S 15306 37373 XY
+F40(17)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (18) 18
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(ORDERINFORMA)S -41 x(TION)S
+3899 5607 XY 23316 48 R 3899 6254 XY F40(T)S -33 x(abell)S 149 x(1:)S
+498 x(DIGIT)S -34 x(AL)S 149 x(Of\211ce)S 150 x(Server)S 151 x(for)S
+150 x(OpenVMS)S 150 x(V4.0A)S 3899 X 299 y 23316 48 R 3899 7151 XY F38
+(Ordernr)S -23 x(.)S 8980 X(Beskrivning)S 3899 X 299 y 23316 48 R 12111 8147 XY
+F44(Licenser)S -23 x(,)S 150 x(media)S 147 x(och)S 147 x(dokum)S 2 x
+(entati)S -2 x(on)S 3899 X 697 y F42(QM-5TB9A-A)S -2 x(A)S 8980 X(En)S
+132 x(serverlicens)S 3899 X 698 y(QB-5TBMA-SA)S 8980 X(En)S 132 x(serverlicens,)S
+132 x(media,)S 132 x(dokume)S -2 x(ntation)S 3899 X 697 y(QB-5TBMA-SB)S
+8980 X(En)S 132 x(serverlicens,)S 132 x(media,)S 132 x(dok.)S 198 x
+(+)S 133 x(25)S 132 x(CAL:e)S -2 x(r)S 3899 X 698 y(QB-5TBMA-SC)S 8980 X
+(En)S 132 x(serverlicens,)S 132 x(media,)S 132 x(dok.)S 198 x(+)S 133 x
+(100)S 131 x(CAL:er)S 3899 X 697 y(QB-5TBMA-SD)S 8980 X(En)S 132 x(serverlicens,)S
+132 x(media,)S 132 x(dok.)S 198 x(+)S 133 x(500)S 131 x(CAL:er)S 3899 13029 XY
+(QB-5TBMA-MA)S 8980 X(En)S 132 x(serverup)S -2 x(pgrad)S -2 x(eringslicens,)S
+132 x(media,)S 132 x(dok.)S 3899 X 697 y(QM-5TB9A-C)S -2 x(A)S 8980 X
+(En)S 132 x(serverup)S -2 x(pgrad)S -2 x(eringslicens)S 3899 15121 XY
+(QA-5TBAA-GZ)S 8980 X(Dokume)S -2 x(ntation)S 13538 16516 XY F43(DIGIT)S
+-29 x(AL)S 148 x(Of\211ce)S 149 x(Server)S 3899 X 697 y F42(QM-5TD9A-)S
+-2 x(AA)S 8980 X(En)S 132 x(Client)S 132 x(Access)S 134 x(License)S
+3899 X 697 y(QM-5TD9A-)S -2 x(AB)S 8980 X(25)S 132 x(Client)S 132 x
+(Access)S 133 x(Licenses)S 3899 X 698 y(QM-5TD9A-)S -2 x(AC)S 8980 X
+(50)S 132 x(Client)S 132 x(Access)S 133 x(Licenses)S 3899 X 697 y(QM-5TD9A-)S
+-2 x(AD)S 8980 X(100)S 131 x(Client)S 133 x(Access)S 133 x(Licenses)S
+3899 X 698 y(QM-5TD9A-)S -2 x(AE)S 8980 X(500)S 131 x(Client)S 133 x
+(Access)S 133 x(Licenses)S 3899 21397 XY(QM-5TD9A-)S -2 x(CA)S 8980 X
+(En)S 132 x(Client)S 132 x(Access)S 134 x(Upg)S -2 x(rade)S 132 x(License)S
+3899 X 698 y(QM-5TD9A-)S -2 x(CB)S 8980 X(25)S 132 x(Client)S 132 x
+(Access)S 133 x(Upgrad)S -2 x(e)S 132 x(Licenses)S 3899 X 697 y(QM-5TD9A-)S
+-2 x(CC)S 8980 X(50)S 132 x(Client)S 132 x(Access)S 133 x(Upgrad)S -2 x
+(e)S 132 x(Licenses)S 3899 X 698 y(QM-5TD9A-)S -2 x(CD)S 8980 X(100)S
+131 x(Client)S 133 x(Access)S 133 x(Upgra)S -2 x(de)S 132 x(Licenses)S
+3899 X 697 y(QM-5TD9A-)S -2 x(CE)S 8980 X(500)S 131 x(Client)S 133 x
+(Access)S 133 x(Upgra)S -2 x(de)S 132 x(Licenses)S 12293 25582 XY F43
+(DIGIT)S -29 x(AL)S 146 x(Of\211ce)S 147 x(Server)S 146 x(Administrato)S
+-2 x(r)S 3899 X 697 y F42(QM-5TC9A-)S -2 x(AA)S 8980 X(En)S 132 x(Administrato)S
+-2 x(r)S 133 x(Client)S 132 x(License)S 3899 X 697 y(QM-5TC9A-)S -2 x
+(CA)S 8980 X(En)S 132 x(Administrato)S -2 x(r)S 133 x(Client)S 132 x
+(Upgrad)S -2 x(e)S 133 x(License)S 3899 X 698 y(QB-5TCMA-S)S -2 x(A)S
+8980 X(Administrato)S -2 x(r)S 133 x(Client)S 132 x(License,)S 132 x
+(media,)S 132 x(dokume)S -2 x(ntation)S 3899 X 697 y(QB-5TCAA-M)S -2 x
+(A)S 8980 X(Administrato)S -2 x(r)S 133 x(Client)S 132 x(Upgra)S -2 x
+(de)S 132 x(License,)S 132 x(media,)S 132 x(dokume)S -2 x(ntation)S
+3899 29467 XY 23316 48 R 15306 37373 XY F40(18)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (19) 19
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3650 XY 23316 48 R 3899 4297 XY F40(T)S
+-33 x(abell)S 149 x(2:)S 498 x(DIGIT)S -34 x(AL)S 149 x(Of\211ce)S 150 x
+(Server)S 151 x(for)S 150 x(OpenVMS)S 150 x(V4.0A)S 149 x(-)S 150 x
+(Alternativet)S 150 x("Endast)S 150 x(arkiv")S 3899 X 299 y 23316 48 R
+3899 5194 XY F38(Ordernr)S -23 x(.)S 8980 X(Beskrivning)S 3899 X 299 y
+23316 48 R 12111 6190 XY F44(Licenser)S -23 x(,)S 150 x(media)S 147 x
+(och)S 147 x(dokum)S 2 x(entati)S -2 x(on)S 3899 X 698 y F42(QM-5Z29A-)S
+-2 x(AA)S 8980 X(En)S 132 x(Arkiv)S 133 x(Server-licens)S 3899 X 697 y
+(QB-5Z2MA-S)S -2 x(A)S 8980 X(En)S 132 x(Arkiv)S 133 x(Server-licens,)S
+132 x(media,)S 132 x(doku)S -2 x(mentation)S 3899 X 697 y(QB-5Z2MA-S)S
+-2 x(B)S 8980 X(En)S 132 x(Arkiv)S 133 x(Server-licens,)S 132 x(media,)S
+132 x(dok.)S 198 x(+)S 133 x(25)S 131 x(CAL:er)S 3899 X 698 y(QB-5Z2MA-S)S
+-2 x(C)S 8980 X(En)S 132 x(Arkiv)S 133 x(Server-licens,)S 132 x(media,)S
+132 x(dok.)S 198 x(+)S 133 x(50)S 131 x(CAL:er)S 3899 X 697 y(QB-5Z2MA-S)S
+-2 x(D)S 8980 X(En)S 132 x(serverlicens,)S 132 x(media,)S 132 x(dok.)S
+198 x(+)S 133 x(100)S 131 x(CAL:er)S 3899 X 698 y(QB-5Z2MA-S)S -2 x
+(E)S 8980 X(En)S 132 x(serverlicens,)S 132 x(media,)S 132 x(dok.)S 198 x
+(+)S 133 x(500)S 131 x(CAL:er)S 3899 11769 XY(QB-5Z2MA-M)S -2 x(A)S
+8980 X(En)S 132 x(serverup)S -2 x(pgrad)S -2 x(eringslicens,)S 132 x
+(media,)S 132 x(dok.)S 3899 X 698 y(QM-5Z29A-)S -2 x(CA)S 8980 X(En)S
+132 x(serverup)S -2 x(pgrad)S -2 x(eringslicens)S 3899 13862 XY(QA-5TBAA-GZ)S
+8980 X(Dokume)S -2 x(ntation)S 724 x 15256 Y F43(DIGIT)S -29 x(AL)S
+146 x(Of\211ce)S 148 x(Serve)S -2 x(r)S 147 x(Fil)S 2 x(e)S 147 x(Cabine)S
+-2 x(t)S 3899 X 698 y F42(QM-5Z49A-)S -2 x(AA)S 8980 X(En)S 132 x(Arkiv)S
+133 x(Client)S 133 x(Access-licens)S 3899 X 697 y(QM-5Z49A-)S -2 x(AB)S
+8980 X(25)S 132 x(Arkiv)S 133 x(Client)S 132 x(Access-lic)S 2 x(ens)S
+3899 X 697 y(QM-5Z49A-)S -2 x(AC)S 8980 X(50)S 132 x(Arkiv)S 133 x(Client)S
+132 x(Access-lic)S 2 x(ens)S 3899 X 698 y(QM-5Z49A-)S -2 x(AD)S 8980 X
+(100)S 131 x(Arkiv)S 134 x(Client)S 132 x(Access-)S 133 x(licens)S 3899 X
+697 y(QM-5Z49A-)S -2 x(AE)S 8980 X(500)S 131 x(Arkiv)S 134 x(Client)S
+132 x(Access-licens)S 3899 20138 XY(QM-5Z49A-)S -2 x(CA)S 8980 X(En)S
+132 x(Arkiv)S 133 x(Client)S 133 x(Access)S 133 x(Upgr)S -2 x(ade-licens)S
+3899 X 697 y(QM-5Z49A-)S -2 x(CB)S 8980 X(25)S 132 x(Arkiv)S 133 x(Client)S
+132 x(Access)S 134 x(Upgr)S -2 x(ade-licens)S 3899 X 698 y(QM-5Z49A-)S
+-2 x(CC)S 8980 X(50)S 132 x(Arkiv)S 133 x(Client)S 132 x(Access)S 134 x
+(Upgr)S -2 x(ade-licens)S 3899 X 697 y(QM-5Z49A-)S -2 x(CD)S 8980 X
+(100)S 131 x(Arkiv)S 134 x(Client)S 132 x(Access)S 133 x(Upgra)S -2 x
+(de-licens)S 3899 X 698 y(QM-5Z49A-)S -2 x(CE)S 8980 X(500)S 131 x(Arkiv)S
+134 x(Client)S 132 x(Access)S 133 x(Upgra)S -2 x(de-licens)S 12293 24322 XY
+F43(DIGIT)S -29 x(AL)S 146 x(Of\211ce)S 147 x(Server)S 146 x(Administrato)S
+-2 x(r)S 3899 X 698 y F42(QM-5TC9A-)S -2 x(AA)S 8980 X(En)S 132 x(Administrato)S
+-2 x(r)S 133 x(Client)S 132 x(Access-)S 133 x(lic)S 2 x(ens)S 3899 X
+697 y(QM-5TC9A-)S -2 x(CA)S 8980 X(En)S 132 x(Administrato)S -2 x(r)S
+133 x(Client)S 132 x(Upgrad)S -2 x(e-)S 132 x(licens)S 3899 X 697 y
+(QM-5TCMA-SA)S 8980 X(En)S 132 x(Administrato)S -2 x(r)S 133 x(Client-licens,)S
+132 x(media,)S 132 x(dokumen)S -2 x(tation)S 3899 X 698 y(QM-5TCAA-MA)S
+8980 X(En)S 132 x(Administrato)S -2 x(r)S 133 x(Client)S 132 x(Upgrad)S
+-2 x(e-)S 132 x(licens,)S 133 x(media,)S 132 x(dokumen)S -2 x(tation)S
+15306 37373 XY F40(19)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (20) 20
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 3650 XY 23316 48 R 3899 4297 XY F40(T)S
+-33 x(abell)S 149 x(2)S 149 x(\(Forts)S 2 x(.\):)S 498 x(DIGIT)S -35 x
+(AL)S 149 x(Of\211ce)S 150 x(Serve)S 2 x(r)S 149 x(for)S 150 x(OpenVMS)S
+150 x(V4.0A)S 150 x(-)S 149 x(Alternativet)S 151 x("Endast)S 150 x(arkiv")S
+3899 X 299 y 23316 48 R 3899 5194 XY F38(Ordernr)S -23 x(.)S 8980 X
+(Beskrivning)S 3899 X 299 y 23316 48 R 13628 6190 XY F44(Programvaruservice)S
+3899 7585 XY F42(QT)S -22 x(-5TB9A-T)S -30 x(A)S 8980 X(Of)S -8 x(\211ce)S
+133 x(Server)S 132 x(New)S 132 x(V)S -23 x(ersion)S 132 x(License)S
+3899 X 697 y(QT)S -22 x(-5TBAA-X*)S 8980 X(Of)S -8 x(\211ce)S 133 x
+(Server-)S 131 x(och)S 133 x(CAL-)S -2 x(paket)S 3899 X 698 y(QT)S -22 x
+(-5TBAA-KZ)S 8980 X(Dokume)S -2 x(ntation)S 3899 X 697 y(QT)S -22 x
+(-5TC9A-T)S -30 x(A)S 8980 X(Administrato)S -2 x(r)S 133 x(Client)S
+132 x(New)S 132 x(V)S -22 x(ersion)S 132 x(License)S 3899 X 698 y(QT)S
+-22 x(-5TC9A-XA)S 8980 X(Administrato)S -2 x(r)S 133 x(Client)S 132 x
+(Service)S 3899 X 697 y(QT)S -22 x(-5TD9A-T*)S 8980 X(CAL)S 12992 12467 XY
+F44(Alternativ)S -2 x(et)S 148 x("Endast)S 148 x(arkiv)S -2 x(")S 3899 13862 XY
+F42(QT)S -22 x(-5Z29A-T)S -30 x(A)S 8980 X(Of)S -8 x(\211ce)S 133 x
+(Server)S 132 x(Arkiv)S 133 x(New)S 132 x(V)S -22 x(ersion)S 132 x(License)S
+3899 X 697 y(QT)S -22 x(-5Z2AA-X*)S 8980 X(Of)S -8 x(\211ce)S 133 x
+(Server)S 132 x(och)S 132 x(Arkiv)S 133 x(CAL-)S 132 x(paket)S 3899 X
+697 y(QT)S -22 x(-5Z49A-T*)S 8980 X(Arkiv-CAL)S 3899 X 399 y 23316 48 R
+3899 16751 XY F34(*)S 166 x(Betecknar)S 166 x(varierande)S 166 x(f\344lt.)S
+222 x(Mer)S 166 x(information)S 166 x(om)S 166 x(tillg\344ngl)S -2 x
+(iga)S 166 x(licenser)S -29 x(,)S 167 x(service)S 166 x(och)S 166 x
+(media)S 165 x(\211nns)S 166 x(i)S 166 x(prisli)S -2 x(stan.)S 3899 18245 XY
+F32(PROGRAMV)S -40 x(ARULICENSER)S 3899 19241 XY F34(Denna)S 149 x(programvara)S
+149 x(levereras)S 148 x(under)S 150 x(de)S 149 x(leveransvill)S -2 x
+(kor)S 149 x(som)S 150 x(anges)S 149 x(i)S 149 x(Digitals)S 149 x(Allm\344nna)S
+148 x(leveransvill)S -2 x(kor)S -27 x(.)S 216 x(F\366r)S 3899 X 598 y
+(ytterligare)S 166 x(information)S 166 x(om)S 165 x(Digitals)S 165 x
+(leveransvillkor)S -29 x(,)S 167 x(kontakta)S 167 x(n\344rmaste)S 166 x
+(Digital-kontor)S -28 x(.)S 3899 21333 XY F36(Begr\344nsningar)S 167 x
+(vid)S 167 x(anv\344ndni)S 2 x(ng)S 3899 22330 XY F34(En)S 164 x(T)S
+-55 x(eamLinks)S(-,)S 164 x(MAPI)S 165 x(Driver)S 162 x(eller)S 163 x
+(webbl\344saranslutning)S 162 x(till)S 163 x(Of)S -9 x(\211ce)S 164 x
+(Server)S 164 x(kan)S 164 x(inte)S 163 x(g\366ras)S 164 x(om)S 164 x
+(Of)S -9 x(\211ce)S 164 x(Server-)S 3899 X 598 y(kontot)S 149 x(\344r)S
+148 x(baserat)S 148 x(p\345)S 148 x(ett)S 149 x(konto)S 149 x(d\344r)S
+147 x(\212era)S 148 x(Of)S -9 x(\211ce)S 149 x(Server-anv\344ndare)S
+147 x(delar)S 148 x(p\345)S 148 x(ett)S 149 x(enda)S 148 x(OpenVMS)S
+(-konto.)S 216 x(V)S -37 x(arje)S 3899 X 597 y(T)S -55 x(eamLinks)S
+(-,)S 166 x(MAPI)S 167 x(Driver)S 165 x(eller)S 165 x(webbl\344saranv\344ndare)S
+165 x(m\345ste)S 166 x(har)S 166 x(ett)S 167 x(individuel)S -2 x(lt)S
+166 x(Of)S -9 x(\211ce)S 166 x(Server-konto.)S 3899 24522 XY(L\344gg)S
+166 x(\344ven)S 166 x(m\344rke)S 166 x(till:)S 3899 X 896 y(\201)S 872 x
+(V)S -37 x(arje)S 205 x(Of)S -9 x(\211ce)S 206 x(Server-anv\344ndare)S
+205 x(m\345ste)S 207 x(vara)S 205 x(en)S 206 x(registrerad)S 205 x(OpenVMS)S
+(-)S 205 x(och)S 206 x(Of)S -9 x(\211ce)S 206 x(Server-anv\344ndare)S
+4945 X 598 y(med)S 166 x(namnet)S 166 x(registrerat)S 166 x(i)S 166 x
+(Of)S -9 x(\211ce)S 166 x(Server-pro\211len.)S 3899 X 897 y(\201)S 872 x
+(De)S 145 x(som)S 146 x(ansluter)S 146 x(till)S 145 x(Of)S -9 x(\211ce)S
+146 x(Server)S 146 x(med)S 145 x(klienter)S 146 x(som)S 145 x(inte)S
+146 x(levereras)S 145 x(av)S 146 x(DIGIT)S -36 x(AL)S 146 x(via)S 145 x
+(publicerade)S 145 x(API:)S 2 x(er)S -28 x(,)S 4945 X 597 y(MAPI)S 167 x
+(1)S 166 x(Driver)S 165 x(eller)S 165 x(annat,)S 167 x(m\345ste)S 166 x
+(ocks\345)S 166 x(vara)S 166 x(registrerade)S 166 x(OpenVMS)S(-)S 166 x
+(och)S 166 x(Of)S -9 x(\211ce)S 166 x(Server-anv\344ndare.)S 3899 29005 XY
+F36(St\366d)S 167 x(f\366r)S 166 x(License)S 167 x(Management)S 167 x
+(Facility)S 3899 30001 XY F34(Denna)S 165 x(programvara)S 166 x(st\366der)S
+166 x(OpenVMS)S 166 x(V1.2)S 167 x(License)S 165 x(Management)S 167 x
+(Facility)S -38 x(.)S 3899 30997 XY(Mer)S 200 x(information)S 200 x
+(om)S 201 x(License)S 200 x(Management)S 200 x(Facility)S 201 x(\211nns)S
+200 x(i)S 200 x(Software)S 201 x(Product)S 201 x(Description)S 200 x
+(\(SPD)S 200 x(36.35\))S 201 x(f\366r)S 3899 X 598 y(OpenVMS)S 166 x
+(License)S 165 x(Management)S 167 x(Facility)S -38 x(.)S 15306 37373 XY
+F40(20)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (21) 21
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F44(DIGIT)S -30 x(AL)S 133 x(Of\211ce)S 132 x(Server)S
+132 x(for)S 133 x(OpenVMS)S 133 x(V4.0A)S -2 x(/SVENSKA)S 24576 X(SPD:)S
+131 x(70.09.)S -2 x(00)S 3899 4013 XY F32(PROGRAMV)S -40 x(ARUSER)S
+-10 x(VICE)S 3899 5009 XY F34(Ett)S 218 x(\212ertal)S 217 x(servicealternativ)S
+217 x(\211nns)S 217 x(tillg\344ngl)S -2 x(iga)S 217 x(hos)S 217 x(DIGIT)S
+-36 x(AL)S(.)S 375 x(Kontakta)S 218 x(ditt)S 217 x(lokala)S 216 x(DIGIT)S
+-36 x(AL)S(-kontor)S 218 x(eller)S 216 x(en)S 3899 X 598 y(lokal)S 165 x
+(DIGIT)S -36 x(AL)S(-partner)S 166 x(f\366r)S 166 x(n\344rmare)S 166 x
+(information.)S 3899 7101 XY F32(PROGRAMV)S -40 x(ARUGARA)S -2 x(NTI)S
+3899 8097 XY F34(Denna)S 153 x(programvaruprodukt)S 154 x(omfattas)S
+155 x(av)S 154 x(en)S 154 x(garanti)S 153 x(fr\345n)S 155 x(DIGIT)S
+-37 x(AL)S 154 x(vid)S 154 x(k\366p)S 154 x(av)S 154 x(en)S 154 x(licens)S
+153 x(f\366r)S 154 x(produkten)S 154 x(enligt)S 3899 X 598 y(beskrivningen)S
+165 x(i)S 166 x(Software)S 166 x(W)S -18 x(arranty)S 166 x(Addendum)S
+166 x(till)S 166 x(denna)S 165 x(SPD.)S 3899 9691 XY(\2511998)S 166 x
+(Digital)S 165 x(Equipment)S 166 x(Corporation.)S 221 x(Alla)S 165 x
+(r\344ttigheter)S 167 x(f\366rbeh\345lles.)S 5144 X 897 y F42(ALL\203IN)S
+-2 x(\2031)S(,)S 148 x(AlphaSer)S -2 x(ver)S(,)S 149 x(CDA,)S 145 x
+(DEC,)S 144 x(DEClaser)S -23 x(,)S 149 x(DECnet)S -2 x(,)S 149 x(DECterm,)S
+147 x(DECwindow)S -2 x(s,)S 150 x(DIGIT)S -30 x(AL,)S 145 x(DX,)S 145 x
+(EDT)S -44 x(,)S 145 x(FMS,)S 146 x(LA,)S 145 x(LA75,)S 5144 X 498 y
+(MAILbu)S -2 x(s,)S 168 x(MailW)S -7 x(orks,)S 167 x(MicroV)S -30 x
+(AX,)S 160 x(OpenVMS)S(,)S 166 x(P)S -30 x(A)S -30 x(THWORKS,)S 160 x
+(PrintServe)S -2 x(r)S -22 x(,)S 167 x(T)S -43 x(eamL)S -2 x(inks,)S
+168 x(V)S -30 x(AX,)S 160 x(V)S -30 x(AX)S 133 x(FMS)S(,)S 167 x(V)S
+-30 x(AXcluster)S -22 x(,)S 5144 X 498 y(V)S -29 x(AXstation)S -2 x
+(,)S 151 x(VMScluster)S -23 x(,)S 155 x(VMSmail,)S 155 x(VT)S -44 x
+(,)S 151 x(VT100,)S 154 x(VT220,)S 154 x(VT300,)S 155 x(VT320,)S 154 x
+(VT330,)S 154 x(VT340,)S 154 x(VT420,)S 154 x(VT1000,)S 154 x(WPS\203PLU)S
+-2 x(S)S 5144 X 498 y(och)S 132 x(Digitals)S 134 x(logotyp)S 131 x(\344r)S
+132 x(varum\344rke)S -2 x(n)S 133 x(som)S 132 x(till)S 2 x(h\366r)S
+131 x(Digital)S 133 x(Equipmen)S -2 x(t)S 133 x(Corp)S -2 x(oration.)S
+5144 X 548 y(PostScript)S 132 x(\344r)S 132 x(ett)S 132 x(registrer)S
+-2 x(at)S 133 x(varum\344)S -2 x(rke)S 133 x(som)S 132 x(tillh\366r)S
+133 x(Adob)S -2 x(e)S 133 x(Systems)S 133 x(Inc.)S 5144 X 548 y(Apple,)S
+132 x(AppleT)S -45 x(alk)S 133 x(och)S 132 x(Macintosh)S 132 x(\344r)S
+132 x(registrera)S -2 x(de)S 132 x(varum\344r)S -2 x(ken)S 133 x(som)S
+132 x(tillh\366r)S 133 x(Apple)S 132 x(Compu)S -2 x(ter)S -23 x(,)S
+133 x(Inc.)S 5144 X 548 y(PathW)S -16 x(ay)S 133 x(\344r)S 132 x(ett)S
+132 x(varum\344r)S -2 x(ke)S 133 x(som)S 133 x(tillh\366r)S 132 x(Attachmate)S
+131 x(Corpo)S -2 x(ration.)S 5144 X 548 y(MacW)S -7 x(rite)S 132 x(\344r)S
+132 x(ett)S 132 x(registrera)S -2 x(t)S 133 x(varum\344r)S -2 x(ke)S
+133 x(som)S 132 x(till)S 2 x(h\366r)S 131 x(Claris)S 133 x(Corpo)S -2 x
+(ration.)S 5144 X 548 y(W)S -7 x(ordPe)S -2 x(rfect)S 132 x(\344r)S
+132 x(ett)S 132 x(registrera)S -2 x(t)S 133 x(varum\344r)S -2 x(ke)S
+133 x(som)S 132 x(till)S 2 x(h\366r)S 131 x(Corel)S 132 x(Corpo)S -2 x
+(ration.)S 5144 X 548 y(Hayes)S 132 x(\344r)S 132 x(ett)S 132 x(registrera)S
+-2 x(t)S 133 x(varum\344r)S -2 x(ke)S 133 x(som)S 133 x(tillh\366r)S
+132 x(Hayes)S 133 x(Microcompu)S -2 x(ter)S 132 x(Produ)S -2 x(cts,)S
+133 x(Inc.)S 5144 X 548 y(HP)S 133 x(and)S 131 x(DeskJet)S 132 x(\344r)S
+132 x(registrera)S -2 x(de)S 132 x(varum\344rke)S -2 x(n)S 133 x(som)S
+132 x(till)S 2 x(h\366r)S 131 x(Hewlett-P)S -2 x(ackard)S 132 x(Corpo)S
+-2 x(ration.)S 5144 X 548 y(IBM)S 133 x(and)S 131 x(Propr)S -2 x(inter)S
+132 x(\344r)S 132 x(registrera)S -2 x(de)S 132 x(varum\344rke)S -2 x
+(n)S 133 x(som)S 132 x(till)S 2 x(h\366r)S 131 x(Intern)S -2 x(ational)S
+132 x(Business)S 133 x(Machines)S 132 x(Corp)S -2 x(oration)S -2 x(.)S
+5144 X 548 y(LDAP)S 137 x(Portions)S 137 x(Copyrigh)S -2 x(t)S 138 x
+(1989,)S 138 x(1996)S 136 x(Regen)S -2 x(ts)S 138 x(of)S 138 x(the)S
+137 x(University)S 138 x(of)S 137 x(Michigan.)S 209 x(Alla)S 139 x(r\344ttigh)S
+-2 x(eter)S 137 x(f\366rbe)S -2 x(h\345lles.)S 210 x(LDAP)S 137 x(Directory-)S
+5144 X 498 y(\345tkomstkode)S -2 x(n)S 133 x(i)S 133 x(den)S 132 x(h\344r)S
+131 x(produ)S -2 x(kten)S 132 x(har)S 132 x(skapats)S 132 x(av)S 133 x
+(University)S 132 x(of)S 133 x(Michigan,)S 132 x(Ann)S 131 x(Arbor)S
+-23 x(.)S 5144 X 548 y(PMDF)S 133 x(\344r)S 132 x(ett)S 132 x(registrer)S
+-2 x(at)S 133 x(varum\344)S -2 x(rke)S 133 x(som)S 132 x(tillh\366r)S
+133 x(Inno)S -2 x(soft)S 133 x(Inte)S -2 x(rnationa)S -2 x(l)S 133 x
+(Inc.)S 5144 X 548 y(Intel)S 132 x(\344r)S 132 x(ett)S 132 x(registrera)S
+-2 x(t)S 133 x(varum\344)S -2 x(rke)S 133 x(som)S 132 x(till)S 2 x(h\366r)S
+131 x(Intel)S 132 x(Corpo)S -2 x(ration.)S 5144 X 548 y(T)S -44 x(oshiba)S
+132 x(\344r)S 132 x(ett)S 132 x(registrera)S -2 x(t)S 133 x(varum\344)S
+-2 x(rke)S 133 x(som)S 132 x(till)S 2 x(h\366r)S 131 x(Kabushiki)S 133 x
+(Kaisha)S 132 x(T)S -44 x(oshiba.)S 5144 X 548 y(Microsoft)S 145 x(Exchange)S
+144 x(Server)S 145 x(och)S 145 x(Windows)S 145 x(NT)S 147 x(\344r)S
+145 x(varum\344)S -2 x(rken,)S 148 x(och)S 146 x(Microsoft,)S 148 x
+(Windows)S 145 x(och)S 145 x(Windows)S 146 x(95)S 145 x(\344r)S 145 x
+(registre)S -2 x(rade)S 5144 X 498 y(varum\344rke)S -2 x(n)S 133 x(som)S
+132 x(till)S 2 x(h\366r)S 131 x(Microsoft)S 132 x(Corpo)S -2 x(ration.)S
+5144 X 548 y(PinW)S -7 x(riter)S 132 x(\344r)S 132 x(ett)S 132 x(registrer)S
+-2 x(at)S 133 x(varum\344)S -2 x(rke)S 133 x(som)S 132 x(tillh\366r)S
+133 x(NEC)S 132 x(Corpo)S -2 x(ration.)S 5144 X 548 y(Netscape)S 131 x
+(och)S 133 x(Netscap)S -2 x(e)S 133 x(Navigato)S -2 x(r)S 133 x(\344r)S
+132 x(registre)S -2 x(rade)S 132 x(varum\344)S -2 x(rken)S 132 x(som)S
+133 x(tillh\366r)S 133 x(Netscap)S -2 x(e)S 133 x(Commu)S -2 x(nications)S
+133 x(Corp)S -2 x(oration.)S 5144 X 548 y(MultiNet)S 132 x(och)S 133 x
+(TCPware)S 131 x(\344r)S 132 x(registrer)S -2 x(ade)S 132 x(varum\344r)S
+-2 x(ken)S 132 x(som)S 133 x(tillh\366r)S 133 x(Process)S 132 x(Softwa)S
+-2 x(re)S 132 x(Corpor)S -2 x(ation.)S 5144 X 548 y(EPSON)S 132 x(\344r)S
+132 x(registrera)S -2 x(de)S 132 x(varum\344r)S -2 x(ken)S 133 x(som)S
+132 x(tillh\366r)S 133 x(Seiko)S 133 x(Epson)S 131 x(Kabushiki)S 133 x
+(Kaisha.)S 5144 X 548 y(UNIX)S 132 x(\344r)S 132 x(ett)S 132 x(registrer)S
+-2 x(at)S 133 x(varum\344)S -2 x(rke)S 133 x(i)S 133 x(USA)S 132 x(och)S
+132 x(i)S 134 x(and)S -2 x(ra)S 132 x(l\344nder)S -23 x(,)S 132 x(lic)S
+2 x(ensiera)S -2 x(t)S 133 x(exklusivt)S 134 x(f\366r)S 132 x(via)S
+133 x(X/Ope)S -2 x(n)S 133 x(Compa)S -2 x(ny)S -30 x(,)S 133 x(Limited.)S
+5144 X 548 y(X/Open)S 131 x(\344r)S 132 x(ett)S 132 x(varum\344rke)S
+131 x(som)S 133 x(tillh\366r)S 133 x(X/Open)S 131 x(Compa)S -2 x(ny)S
+133 x(Limited.)S 5144 X 548 y(Intern)S -2 x(ational)S 132 x(Corre)S
+-2 x(ctSpell)S 133 x(stavningskont)S -2 x(roll)S 133 x(\(c\)1987)S 131 x
+(fr\345n)S 132 x(INSO)S 132 x(Corp)S -2 x(oration.)S 198 x(Alla)S 133 x
+(r\344ttigh)S -2 x(eter)S 132 x(f\366rb)S -2 x(eh\345lles.)S 5144 X
+547 y(Roget)S -2 x(s)S 133 x(II)S 133 x(Electronic)S 132 x(Thesauru)S
+-2 x(s:)S 200 x(Electron)S -2 x(ic)S 134 x(Thesauru)S -2 x(s)S 133 x
+(portions)S 132 x(\(c\)19)S -2 x(88)S 132 x(fr\345n)S 132 x(INSO)S 132 x
+(Corpo)S -2 x(ration.)S 5144 X 548 y(Roget)S -2 x(s)S 136 x(II:)S 134 x
+(The)S 134 x(New)S 134 x(Thesaurus)S 134 x(\(c\)19)S -2 x(80)S 134 x
+(fr\345n)S 134 x(Houg)S -2 x(hton-Mif)S -8 x(\212in)S 135 x(Compa)S
+-2 x(ny)S -29 x(.)S 203 x(Licensierat)S 133 x(fr\345n)S 134 x(INSO)S
+134 x(Corpo)S -2 x(ration.)S 202 x(Alla)S 135 x(r\344ttighe)S -2 x(ter)S
+5144 X 499 y(f\366rbe)S -2 x(h\345lles.)S 5144 X 547 y(Usage)S 132 x
+(Alert:)S 199 x(Progra)S -2 x(m)S 133 x(och)S 133 x(datab)S -2 x(aser)S
+132 x(f\366r)S 133 x(Usage)S 132 x(Alert)S 132 x(licensierat)S 133 x
+(fr\345n)S 132 x(INSO)S 133 x(Cor)S -2 x(poration)S -2 x(.)S 200 x(\(c\)1987)S
+131 x(by)S 133 x(INSO)S 133 x(Corpo)S -2 x(ration.)S 199 x(Alla)S 5144 X
+499 y(r\344ttighe)S -2 x(ter)S 132 x(f\366rbe)S -2 x(h\345lles.)S 15306 37373 XY
+F40(21)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (22) 22
+%DEC_EDMS_BlankPage
+PP
+%%PageTrailer
+%%PageFonts:
+%%PageProcessColors:
+%%PageCustomColors:
+%
+%%Trailer
+%%Pages: 22
+%%BoundingBox: 0 0 612 792
+%%DocumentFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%DocumentNeededFonts: Helvetica-Bold
+%%+ Helvetica-Oblique Helvetica
+%%DocumentProcessColors: Black
+%%DocumentCustomColors: (BLACK)
+%%CMYKCustomColor: 0.0 0.0 0.0 1.0 (BLACK)
+%
+DVC$PSJob restore
+end %DEC_DVC$dict
+end %Color5044Dict
+%
+%%EOF
