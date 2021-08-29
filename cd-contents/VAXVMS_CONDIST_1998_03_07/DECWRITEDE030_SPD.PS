@@ -1,0 +1,2028 @@
+%!PS-Adobe-3.0
+%%Title: VAX_SPD
+%%Creator: VAX DOCUMENT T2.2
+%%Copyright: 1986,1987,1988,1989,1990,1991 DIGITAL EQUIPMENT CORPORATION.
+%%+All Rights Reserved.
+%%CreationDate: Tue Jun 21 1994 10:42:19
+%%For: BESSAC      
+%%BoundingBox: (atend)
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%Orientation: Portrait
+%%Pages: (atend)
+%%PageOrder: Ascend
+%%DocumentFonts: (atend) 
+%%DocumentNeededFonts: (atend) 
+%%DocumentProcSets: Underlay Color5044
+%%DocumentSuppliedProcSets: Underlay Color5044
+%%DocumentProcessColors: (atend)
+%%DocumentCustomColors: (atend)
+%%EndComments
+%
+%%BeginResource: procset Underlay
+%%CreationDate: (2/10/92)
+%
+% In VAX DOCUMENT V2.1-1, simple EPSF files up to 65,000 bytes long
+% may be an underlay. Define the EPSF as a PostScript proceedure
+% called /UNDERLAY and prefix to DOCUMENT's PS output  For example:.
+% /UNDERLAY ( EPSF code here ) cvx def
+%
+% To create a "Preliminary" underlay change /UNDERLAY* to /UNDERLAY
+/UNDERLAY* (
+  /Note (Preliminary) def
+  /NoteSize 120 def
+  /NoteFont /Helvetica findfont NoteSize scalefont def
+  /Note where { pop Note length 0 gt {
+    /NoteWidth NoteFont setfont Note stringwidth pop def
+    PaperWidth 36 mul PaperHeight 36 mul moveto
+    PaperHeight PaperWidth atan rotate
+    NoteWidth -2 div NoteSize .729 mul -2 div rmoveto 
+    Note true charpath .075 setseparationgray fill
+  }if  }if
+) cvx def
+%%EndResource
+%
+%%BeginResource: procset Color5044
+%%CreationDate: (1/21/91)
+%%Version:1.0 3
+%Implementation of Adobe 5044 color specification
+%/ndf allows command override during color separation
+/Color5044Dict 100 dict def
+Color5044Dict begin
+/bdf {bind def} def
+/ndf
+  {1 index where
+    {pop pop pop
+    }
+    {dup xcheck
+      {bind} if
+    def
+    }
+    ifelse
+  } bdf
+/setcmykcolor
+  {1 exch sub
+  3 
+    {dup 5 -1 roll sub 0 2 copy lt
+      {exch} if
+    pop exch
+    } repeat
+  pop setrgbcolor
+  }ndf
+/setcmykcoloroverprint
+  {4
+    {dup -1 eq
+      {pop 0} if
+      4 1 roll
+    } repeat
+  setcmykcolor
+  } ndf
+/findcmykcustomcolor
+  {5 /packedarray where
+    {pop packedarray
+    }
+    {array astore readonly
+    }
+    ifelse
+  } ndf
+/setcustomcolor
+  {exch aload pop pop
+  4
+    {4 index mul 4 1 roll
+    } repeat
+  setcmykcolor pop
+  } ndf
+/setseparationgray
+  {1 exch sub systemdict /setgray get exec
+  } ndf
+/setoverprint {pop} ndf
+/currentoverprint false ndf
+%CMYK multi-proc colorimage
+/colorimage
+  {4 ne
+    {(\nUnsupported number of colors for colorimage.\n) print flush quit
+    } if
+  not
+    {(\nSingle procedure form  colorimage unsupported.\n) print flush quit
+    } if
+  save 20 dict begin /&saveobj exch def
+  /&Kproc exch def /&Yproc exch def /&Mproc exch def /&Cproc exch def
+    {&Cproc &Mproc &Yproc &Kproc
+    /&K exch def /&Y exch def /&M exch def /&C exch def
+    0 1 &K length 1 sub
+      {/&i exch def
+      &K &i 255
+      &C &i get 30 mul
+      &M &i get 59 mul add
+      &Y &i get 11 mul add
+      &K &i get 100 mul add
+      100 idiv
+      dup 255 gt
+        {pop 255} if
+      sub put
+      } for
+    &K
+    } image
+  &saveobj end restore
+  } ndf
+/customcolorimage
+  {pop systemdict /image get exec
+  } ndf
+/separationimage
+  {systemdict /image get exec
+  } ndf
+end
+%%EndResource
+Color5044Dict begin
+%
+/DEC_DVC$dict 300 dict def
+DEC_DVC$dict begin
+%
+/DVC$PSJob save def
+%
+/DOCPSE ISOLatin1Encoding 256 array copy def
+mark						% CREATE DOCPSE ENCODING
+  8#055 /hyphen
+  8#201 /bullet    8#202 /emdash     8#203 /endash    8#204 /dagger
+  8#205 /daggerdbl 8#206 /registered 8#207 /trademark %8#210 /Delta
+  8#211 /fi        8#212 /fl         8#213 /OE        8#214 /oe
+  8#215 /Ydieresis
+  counttomark -1 bitshift			% DIVIDE BY 2
+  {DOCPSE 3 1 roll put} repeat			% STACK NOW CONTAINS MARK
+cleartomark
+%
+/ReENCODE {		% /basefont /newfont encoding ReENCODE
+    /newencoding exch def	%ARG: NAME OF ENCODING VECTOR
+    /newfontname exch def	%ARG: NEW NAME FOR FONT AFTER RE-ENCODING
+    findfont
+    /basefontdict exch def	%ARG: NAME OF FONT TO BE RE-ENCODED
+    basefontdict maxlength dict begin	%CREATE AND OPEN NEW DICT
+	basefontdict {		%COPY ENTRIES FROM BASE FONT DICT TO NEW ONE
+	    1 index /FID ne {
+		def		%IF NOT THE ONE WE'RE ENCODING, JUST COPY PTRS
+	    } { %else
+		pop pop		%IGNORE FID AND ENCODING FOR ONE WE'RE ENCODING
+	    } ifelse
+	} forall
+	/FontName newfontname def	%DEFINE NEW NAME 
+	/Encoding newencoding def	%DEFINE NEW ENCODING VECTOR
+	newfontname currentdict definefont	%TURN IT INTO A PS FONT
+	pop			%IGNORE MODIFIED DICT RETURNED BY DEFINEFONT
+    end
+}def
+%
+/cvsstr 64 string def
+/tempmatrix matrix def
+%
+% Exit page (temporarily) to add fonts/characters.
+/XP { }def
+% 
+% Resume page
+/RP { }def
+%
+% End Page: EP
+/EP {DVC$PSPage restore}def
+%
+% Purge fonts to reclaim VM
+/PF {
+  currentoverprint
+  currentrgbcolor
+  EP			%Does restore
+  PageSetup     %Does save
+  setrgbcolor
+  setoverprint
+}def
+%
+% ABBREVIATIONS 
+/S /show load def
+/SV /save load def
+/RST /restore load def
+%
+/Yadjust {Ymax exch sub} def
+%
+/XY {						% (x,y) POSITION ABSOLUTE
+  Yadjust moveto
+} def
+%
+/X {						% (x,0) POSITION ABSOLUTE
+  currentpoint exch pop moveto
+} def
+%
+/Y {						% (0,y) POSITION ABSOLUTE 
+  currentpoint pop exch Yadjust moveto
+} def
+%
+/xy {						% (x,y) POSITION RELATIVE
+  neg rmoveto
+} def
+%
+/x {						% (x,0) POSITION RELATIVE
+  0 rmoveto
+} def
+%
+/y {						% (0,y) POSITION RELATIVE
+  0 exch neg rmoveto
+} def
+%
+/R {						% Draw a rectangle
+  /ht exch def  /wd exch def   gsave
+  currentpoint  newpath  moveto
+  0 ht rlineto  wd 0 rlineto
+  0 ht neg rlineto  wd neg 0 rlineto
+  closepath fill grestore wd 0 rmoveto
+}def
+%
+%Setup Page Media:  <paper-height> <paper-width> PM
+/PM {
+  /Xmax exch Resolution mul def
+  /Ymax exch Resolution mul def
+  /UNDERLAY where {
+    pop
+    /eps_save save def		% save before EPSF underlay
+    Resolution 72 div dup scale % Revert coords to points
+    count array astore /DVCstack exch def % save op stack
+    /dict_count countdictstack def % # of dicts
+    userdict begin		% default dict
+    /showpage {}def		% disable showpage
+    0 setgray
+      {UNDERLAY} stopped {(Error executing /UNDERLAY)== quit}if
+    countdictstack dict_count sub {end} repeat % clean up dict stack
+    clear DVCstack aload pop	% restore op stack
+    eps_save restore		% restore after EPSF
+  }if
+  PageSetup
+}def
+%
+%Setup page coordinates
+/PageSetup
+{
+  /DVC$PSPage save def
+  PortraitMode not {PaperWidth 0 translate  90 rotate} if
+  /Xpos 0 def
+  /Ypos 0 def
+}def
+%
+% Begin EPS file: <xoffset> <yoffset> SPB
+/SPB {
+  Yadjust transform		% convert from DVC to device coords
+  EP				% page-level restore
+  /eps_save save def		% save before EPSF
+  Resolution 72 div dup scale 	% Revert coords to points
+  itransform			% convert position back to points  
+  translate			% set position for EPSF
+  PortraitMode not {90 rotate} if % rotate for EPSF
+  count array astore /DVCstack exch def	% save op stack
+  /dict_count countdictstack def % # of dicts
+  userdict begin		% default dict
+  /showpage {}def		% disable showpage
+  0 setgray
+}def
+%
+% End EPS file
+/SPE {
+  countdictstack dict_count sub {end} repeat % clean up dict stack
+  clear DVCstack aload pop	% restore op stack
+  eps_save restore		% restore after EPSF
+  PageSetup			% restore DVC coords
+}def
+%
+% Print-Page Routine: <Page #> PP
+/PP {
+  gsave
+  showpage
+  grestore
+}def
+%
+/DMF {		%  /font-name <point-size> DMF
+  exch findfont exch scalefont setfont
+}def
+%
+/concatnam {	%  /abcd (xxx) concatnam  ==> /abcdxxx
+  /xxx exch def
+  /namstr exch cvsstr cvs def
+  /newnam namstr length xxx length add string def
+  newnam 0 namstr putinterval
+  newnam namstr length xxx putinterval
+  newnam cvn 
+}def
+%
+/strip {	%  /abcdef 2 strip ==> /cdef
+  /num exch def  /nam exch def
+  /namstr nam cvsstr cvs def
+  /newlen namstr length num sub def
+  namstr num newlen getinterval  cvn
+}def
+%		ROUTINES TO HANDLE PACKING/UNPACKING NUMBERS
+/PackHW {	% <target> <pos> <num> PackHW --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#0000FFFF and 1 pos sub 16 mul bitshift  target or
+}def
+/PackByte {	% <target> <pos> <num> PackByte --> <new target>
+  /num exch def  /pos exch def  /target exch def
+  num 16#000000FF and 3 pos sub 8 mul bitshift   target or
+}def
+/UnpkHW {	%  <pos> <num> UnpkHW --> <unpacked value>
+  /num exch def  /pos exch def
+  num 1 pos sub -16 mul bitshift 16#0000FFFF and
+  dup 16#00007FFF gt {16#00010000 sub} if
+}def
+/UnpkByte {	%  <pos> <num> UnpkByte --> <unpacked value>
+  /num exch def  /pos exch def
+  num 3 pos sub -8 mul bitshift 16#000000FF and
+  dup 16#0000007F gt {16#00000100 sub} if
+}def
+%
+/ps-scalefont {
+    % FOR PS FONTS, LOOK AT SIZE REQUESTED.  IF IT HAS A DECIMAL REMAINDER
+    % EQUIVALENT TO .001-.009 POINTS (I.E., .050-.450 VAXDOC UNITS), THAT'S 
+    % A FLAG TO STRETCH IT VERTICALLY BY ADDING 1-9 EXTRA POINTS TO THE 
+    % VERTICAL SCALING.
+                % save requested size - as entered and as integer
+    dup /x-size exch def cvi /x-int exch def
+                % calc decimal remainder, mul x 1000, round
+    x-size x-int sub 1000 mul round cvi /remainder exch def
+                % see how we scale...
+    remainder 50 lt remainder 450 gt or {
+                % scale isomorphically
+        /ystretch 0 def
+        x-size scalefont
+    } {
+                % scale anamorphically
+        /ystretch remainder def
+        x-int ystretch add /y-size exch def
+        [x-int 0 0 y-size 0 0] makefont
+    } ifelse
+}def
+%
+/DPSF {		% /procname size /fontname DPSF
+    findfont exch ps-scalefont [ exch /setfont cvx ] cvx def
+}def
+%
+/PXLBuildCharDict 17 dict def
+/CMEncodingArray 256 array def
+0 1 255 {CMEncodingArray exch dup cvsstr cvs cvn put} for
+/RasterConvert {RasterScaleFactor div}def
+/TransformBBox {
+  aload pop
+  /BB-ury exch def  /BB-urx exch def  /BB-lly exch def  /BB-llx exch def
+  [ BB-llx RasterConvert BB-lly RasterConvert 
+    BB-urx RasterConvert BB-ury RasterConvert ]
+}def
+/RunLengthToRasters {
+  % none yet
+}def
+/GenerateRasters {			% GENERATE RASTERS FOR "IMAGEMASK"
+  rasters  runlength 1 eq {RunLengthToRasters} if
+}def
+%
+/int-dict-name {int (-dict) concatnam}def
+/int-dict {int (-dict) concatnam cvx load}def
+%
+/DefinePXLFont {
+	%  <int-font-name><ext-font-name><pt-sz(pix)><PXL mag><num-chars>...
+	%  ...[llx lly urx ury]<newfont-fg>DefinePXLFont
+  /newfont exch def  /bb exch def      /num exch def  /psz exch def
+  /dsz exch def      /pxlmag exch def  /ext exch def  /int exch def
+  /fnam ext (-) concatnam pxlmag cvsstr cvs concatnam def
+  newfont not {
+    int-dict-name 13 dict def
+    int-dict begin
+      /FontType 3 def  /FontMatrix [ 1 dsz div 0 0 1 dsz div 0 0 ] def
+      /FontBBox bb TransformBBox def  /Encoding CMEncodingArray def
+      /CharDict 1 dict def  CharDict begin  /Char-Info num array def  end
+      /BuildChar {
+        PXLBuildCharDict begin
+          /char exch def  /fontdict exch def
+          fontdict /CharDict get /Char-Info get char get aload pop
+          /rasters exch def  /PackedWord1 exch def
+          0 PackedWord1 UnpkHW 16#7FFF ne {
+	    /PackedWord2 exch def  /wx 0 PackedWord1 UnpkHW def
+            /rows 2 PackedWord1 UnpkByte def  /cols 3 PackedWord1 UnpkByte def
+            /llx 0 PackedWord2 UnpkByte def   /lly 1 PackedWord2 UnpkByte def
+            /urx 2 PackedWord2 UnpkByte def   /ury 3 PackedWord2 UnpkByte def
+	  }{ %else
+	    /PackedWord2 exch def  /PackedWord3 exch def /PackedWord4 exch def
+            /wx 1 PackedWord1 UnpkHW def    /rows 0 PackedWord2 UnpkHW def
+            /cols 1 PackedWord2 UnpkHW def  /llx 0 PackedWord3 UnpkHW def
+            /lly 1 PackedWord3 UnpkHW def   /urx 0 PackedWord4 UnpkHW def
+            /ury 1 PackedWord4 UnpkHW def
+          } ifelse
+          rows 0 lt {
+	    /rows rows neg def /runlength 1 def
+	  }{ %else
+	    /runlength 0 def
+	  } ifelse
+          wx 0
+          llx RasterConvert lly RasterConvert 
+          urx RasterConvert ury RasterConvert setcachedevice
+          rows 0 ne {
+	    gsave
+	      cols rows true  RasterScaleFactor 
+              0 0 RasterScaleFactor neg llx .5 add neg ury .5 add 
+              tempmatrix astore  GenerateRasters imagemask
+            grestore
+          } if
+        end
+      }def
+    end
+    fnam int-dict definefont pop 
+  } if 
+  int-dict-name fnam findfont psz scalefont def
+  currentdict int [ int-dict /setfont cvx ] cvx put
+}def 
+/PXLF { true  DefinePXLFont}def	% SIGNAL THAT FONT ALREADY LOADED
+/PXLNF {false  DefinePXLFont}def	% SIGNAL THAT FONT NOT ALREADY LOADED
+%
+/PXLC {	% <int-font-name><code><wx><llx><lly><urx><ury>...
+	% ...<rows><cols><runlength><rasters>PXLC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /wx exch def       /code exch def       /int exch def
+  % SEE IF LONG OR SHORT FORMAT IS REQUIRED
+  true cols CKSZ rows CKSZ ury CKSZ urx CKSZ lly CKSZ llx CKSZ 
+  TackRunLengthToRows {
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 llx PackByte 1 lly PackByte 2 urx PackByte 3 ury PackByte
+      0 0 wx PackHW 2 rows PackByte 3 cols PackByte rasters ] put
+  }{ %else
+    int-dict /CharDict get /Char-Info get code 
+    [ 0 0 urx PackHW 1 ury PackHW   0 0 llx PackHW 1 lly PackHW
+      0 0 rows PackHW 1 cols PackHW 0 0 16#7FFF PackHW 1 wx PackHW rasters ] put
+  } ifelse
+}def
+%
+/CKSZ {abs 127 le and}def
+/TackRunLengthToRows {runlength 0 ne {/rows rows neg def} if}def
+%
+/PLOTC {
+  % <wx><dsz><psz><llx><lly><urx><ury><rows><cols><runlength><rasters>PLOTC
+  /rasters exch def  /runlength exch def  /cols exch def  /rows exch def
+  /ury exch def      /urx exch def        /lly exch def   /llx exch def
+  /psz exch def      /dsz exch def        /wx exch def
+  % "PLOT" A CHARACTER'S RASTER PATTERN
+  rows 0 ne {
+    gsave
+      currentpoint translate  psz dsz div dup scale
+      cols rows true  RasterScaleFactor 0 0 RasterScaleFactor 
+      neg llx .5 add neg ury .5 add  tempmatrix astore
+      GenerateRasters imagemask
+    grestore
+  } if
+  wx x
+}def
+%
+% set color routine: Color# SC
+/SC {ColorPalette exch get 1.0 setcustomcolor}bind def
+%
+%%EndProlog
+
+
+%%BeginSetup
+/PxlResolution 300 def
+/Resolution 3600 def
+/RasterScaleFactor PxlResolution Resolution div def
+/PortraitMode true def
+/PaperWidth 8.500 def
+/PaperHeight 11.000 def
+72 Resolution div dup scale
+
+%>  Postamble of file DECWRITE_DOC:[DECWRITE30.DE.SPD_SSA]VAX_SPD.DVI_PS.
+% DefineFont:F207 Category:15 Pointsize:24
+% DownloadPSFont
+%!PS-Adobe-2.0
+%%Title: PostScript Digital Logo Font, v1.1
+%%Creator: Ned Batchelder
+%%CreationDate: 9-Nov-87
+%%DocumentFonts: Symbol
+%%DocumentSuppliedFonts: DigitalLogo
+%%EndComments
+%
+%		    DIGITAL INTERNAL USE ONLY
+% 
+% INTRODUCTION:
+% This rendition of the Digital logo was prepared by Ned Batchelder using 
+% Adobe Illustrator and hand manipulation of the resulting PostScript code.
+% Photographic masters of the logo were obtained from David Comberg in the
+% Graphic Design Group. Additional consultation was provided by Elliot
+% Hendrickson, one of the original designers of the logo.
+% 
+% USE:
+% This file defines a new PostScript font, called /DigitalLogo. It consists
+% of three characters. (d) is the entire Digital logo, (t) is a small
+% trademark symbol, and (T) is a large trademark symbol. The font is designed
+% so that the argument to scalefont is the height of the logo. There is no
+% extra white space around the logo at all. The trademarks are designed to be
+% shown right after the logo, and they align themselves. The only correct
+% strings to show with this font are (d), (dt), and (dT). There is an entry
+% (named GapWidth) in the font dictionary which gives the unscaled width of
+% the gap between the blocks. This distance is given because it is used as a
+% unit to determine how much space to leave around the logo.
+% 
+% HISTORY:
+% The logo was designed in 1957 by Elliot Hendrickson, who was then working
+% as an independent designer. He was contracted by DEC to do a brochure, and
+% DEC wanted a logo to accompany it. The logo up to then had been the letters
+% DEC in blocks the shape of the plug-in cards that DEC had been producing.
+% Elliot re-worked the logo, incorporating letters which were hand-drawn for 
+% the purpose by Arthur Hover(?). The logo has been maintained since then in 
+% conventional technology, ie, film masters. There was at least one reworking 
+% of the logo at some point.
+% 
+% The masters I received had a number of interesting features. The boxes were
+% not all the same width, and there seemed to be no logic to which boxes were
+% wider. The 'g' was the narrowest, and the 'i' and 'l' were second widest.
+% Also, the two 'i's were not exactly the same shape. On ten-inch masters,
+% (one box to an 8½x11 sheet), the boxes were not rectangles, but were very
+% slightly tapered in wierd ways. I assume that the tapering is the result of
+% too many reproductions, but the difference in widths may have been
+% deliberate at some time. Elliot reports that when he drew it, all boxes
+% were the same width. I have retained the different widths in my version,
+% since the experts I had at hand did not seem to think I should make them
+% uniform.
+% 
+% Please feel free to use this logo, but keep in mind the following:
+% 
+% 1. This code is for INTERNAL USE ONLY.
+% 2. I am not entirely happy with the final shapes of the letters, and am
+% hoping to improve them. Please allow for future updates to this code.
+% 3. Only use this logo within the guidelines of the Corporate Identity
+% program. If you use this font precisely as is, you can't get in much
+% trouble. Don't take the shapes and do strange things with them. 
+% In particular, the Identity states that the logo is a one-color logo: The
+% letters are actually holes in the blocks, through which the background can
+% be seen. Do not modify this code so that the letters are always white.
+% 
+% Edit history:
+% 
+% 21-Sep-87 nmb	    Created as a standalone file with demo.
+%  6-Nov-87 nmb	    Converted to font form.
+%  9-Nov-87 nmb	    Removed // uses for compatibility with LW Classics
+%
+
+%%BeginFont: DigitalLogo
+10 dict begin
+
+/FontInfo 3 dict def
+FontInfo begin
+    /Notice
+(The Digital logo is a registered trademark of Digital Equipment Corporation.)
+    def
+    /FullName (Digital logo) def
+    /version (1.1) def
+    end
+
+/FontType 3 def				% This is a user-defined font
+/FontMatrix matrix def			% Use an identity transform
+/FontBBox [ 0 0 3.383 1 ] def		% Logo itself is biggest
+/GapWidth .070 def			% The width of the gap between boxes
+
+/Encoding 256 array def
+0 1 255 { Encoding exch /.notdef put } bind for
+
+Encoding
+dup (d) 0 get /DEC-logo put		% (d) gives logo
+dup (t) 0 get /smalltrademark put	% (t) gives small trademark
+    (T) 0 get /largetrademark put	% (T) gives large trademark
+
+/Work 15 dict def			% for doing work in font.
+
+/BuildChar {
+    exch begin				% Use the font dictionary
+	Work begin
+	    Encoding exch get		% Look up the character name
+	    load			% Pull out the procedure
+	    exec			% Run it.
+	    end				% Work
+	end				% fontdict
+    } bind def
+
+Work begin
+
+/.notdef {} def
+
+%
+% - `DEC-logo' -
+%
+% Images a DEC logo with the lower left corner at the current origin, with a
+% height of one unit, in the current color.
+% 
+
+/m /moveto load def
+/l /lineto load def
+/c /curveto load def
+
+/DEC-logo {
+    3.383 0 0 0 3.383 1 setcachedevice
+    {	% D
+	% d counter
+	.2930 .3513 m
+	.2932 .3217 .2587 .2758 .2167 .2757 c
+	.1719 .2759 .1280 .3165 .1280 .3977 c
+	.1280 .4801 .1718 .5225 .2153 .5227 c
+	.2587 .5225 .2932 .4760 .2930 .4407 c
+	closepath
+	% d outside
+	.2953 .5787 m
+	.2953 .7600 l
+	.3843 .7600 l
+	.3843 .1960 l
+	.2923 .1960 l
+	.2923 .2220 l
+	.2848 .2144 .2531 .1813 .1990 .1813 c
+	.1426 .1812 .0417 .2282 .0417 .3977 c
+	.0417 .5414 .1171 .6157 .2067 .6157 c
+	.2399 .6157 .2725 .6039 .2953 .5787 c
+	closepath
+	% d box
+	.432 0.0 m
+	.432 1.0 l
+	.000 1.0 l
+	.000 0.0 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	.927 0.0 m
+	.927 1.0 l
+	.502 1.0 l
+	.502 0.0 l
+	closepath
+	% i body
+	.6695 .196 m
+	.6695 .600 l
+	.7595 .600 l
+	.7595 .196 l
+	closepath
+	% i dot
+	.6695 .655 m
+	.6695 .755 l
+	.7595 .755 l
+	.7595 .655 l
+	closepath
+	} exec
+    {	% G
+	% g counter
+	1.2813 .4478 m
+	1.2813 .4837 1.2409 .5208 1.2035 .5208 c
+	1.1713 .5208 1.1215 .5003 1.1215 .4084 c
+	1.1215 .3105 1.1827 .2962 1.2030 .2962 c
+	1.2433 .2962 1.2813 .3239 1.2813 .3667 c
+	closepath
+	% g box
+	0.997 1.0 m
+	1.415 1.0 l
+	1.415 0.0 l
+	0.997 0.0 l
+	closepath
+	% g outside
+	1.2822 .5609 m
+	1.2729 .5742 1.2424 .6044 1.1988 .6044 c
+	1.1311 .6043 1.0367 .5652 1.0367 .3955 c
+	1.0368 .2617 1.1437 .2168 1.1876 .2168 c
+	1.2350 .2167 1.2702 .2443 1.2798 .2547 c
+	1.2798 .2126 l
+	1.2798 .1815 1.2479 .1511 1.1945 .1511 c
+	1.1485 .1512 1.1437 .1807 1.1437 .1953 c
+	1.0497 .1953 l
+	1.0497 .1486 1.0798 .0804 1.1888 .0803 c
+	1.2864 .0803 1.3186 .1176 1.3325 .1316 c
+	1.3442 .1434 1.3617 .1758 1.3617 .2017 c
+	1.3617 .6 l
+	1.2823 .6 l
+	closepath
+	} exec
+    {	% I
+	% i box
+	1.910 0.0 m
+	1.910 1.0 l
+	1.485 1.0 l
+	1.485 0.0 l
+	closepath
+	% i body
+	1.6525 .196 m
+	1.6525 .6 l
+	1.7425 .6 l
+	1.7425 .196 l
+	closepath
+	% i dot
+	1.6525 .655 m
+	1.6525 .755 l
+	1.7425 .755 l
+	1.7425 .655 l
+	closepath
+	} exec
+    {	% T
+	% t
+	2.2128 .7525 m
+	2.1305 .7525 l
+	2.1305 .6071 l
+	2.0874 .6071 l
+	2.0874 .5396 l
+	2.1305 .5396 l
+	2.1305 .2852 l
+	2.1305 .2367 2.1554 .1986 2.2248 .1987 c
+	2.2573 .1987 2.2560 .1985 2.2842 .2034 c
+	2.2842 .2874 l
+	2.2658 .2842 2.2601 .2829 2.2511 .2832 c
+	2.2338 .2837 2.2128 .2898 2.2128 .3206 c
+	2.2128 .5395 l
+	2.2780 .5395 l
+	2.2780 .6071 l
+	2.2128 .6071 l
+	closepath
+	% t box
+	2.404 0.0 m
+	1.980 0.0 l
+	1.980 1.0 l
+	2.404 1.0 l
+	closepath
+	} exec
+    {	% A
+	% a box
+	2.474 0.0 m
+	2.474 1.0 l
+	2.888 1.0 l
+	2.888 0.0 l
+	closepath
+	% a outside
+	2.5439 .4728 m
+	2.6210 .4728 l
+	2.6210 .5138 2.6422 .5353 2.6826 .5353 c
+	2.7470 .5354 2.7449 .5067 2.7448 .4708 c
+	2.7050 .4553 2.7087 .4557 2.6480 .4419 c
+	2.5709 .4241 2.5237 .3911 2.5236 .3112 c
+	2.5237 .2331 2.5793 .1914 2.6420 .1915 c
+	2.7048 .1914 2.7178 .2117 2.7438 .2290 c
+	2.7438 .1978 l
+	2.8422 .1978 l
+	2.8190 .2352 2.8251 .2425 2.8249 .2706 c
+	2.8250 .2926 2.8249 .5080 2.8249 .5080 c
+	2.8250 .5507 2.8028 .5768 2.7883 .5855 c
+	2.7521 .6071 2.7074 .6097 2.6826 .6098 c
+	2.5945 .6096 2.5438 .5653 2.5439 .4728 c
+	closepath
+	% a counter
+	2.7448 .3946 m
+	2.7448 .3401 l
+	2.7448 .3152 2.7145 .2670 2.6550 .2669 c
+	2.6260 .2668 2.6098 .2883 2.6097 .3162 c
+	2.6098 .3442 2.6335 .3657 2.6536 .3697 c
+	2.6745 .3739 2.7226 .3862 2.7448 .3946 c
+	closepath
+	} exec
+    {	% L
+	% l box
+	3.383 0.0 m
+	3.383 1.0 l
+	2.958 1.0 l
+	2.958 0.0 l
+	closepath
+	% l
+	3.1255 .196 m
+	3.1255 .765 l
+	3.2155 .765 l
+	3.2155 .196 l
+	closepath
+	} exec
+    fill
+    } bind def
+
+%
+% % pct `trademark' --
+%
+% Borrow the sans-serif trademark symbol from /Symbol. AFM file says:
+%	C 228 ; WX 786 ; N trademarksans ; B 5 293 725 673 ;
+% We scale it down to pct percent of the height of the logo and superscript 
+% it some, and voila!
+%
+
+/trademark {
+    /s exch .380 div def
+    /w s .725 mul .070 add def
+    /u 1 .673 s mul sub def
+    w 0 0 u w 1 setcachedevice
+    /Symbol findfont s scalefont setfont
+    .070 u m					% Superscript it
+    (\344) show
+    } bind def
+
+% 
+% These are two different trademarks (just different sizes).
+%
+
+/smalltrademark { .15 trademark } def
+/largetrademark { .25 trademark } def
+
+end						% Work dictionary
+
+currentdict					% Get the font dict
+end						% Close it up
+/DigitalLogo exch definefont pop		% Define the font.
+
+%%EndFont
+% EndDownloadPSFont
+/F207 1200.0 /DigitalLogo DPSF
+% DefineFont:F42 Category:10 Pointsize:8
+/Helvetica /Helvetica@DOCPSE DOCPSE ReENCODE
+/F42 400.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F40 Category:10 Pointsize:9
+/Helvetica-Bold /Helvetica-Bold@DOCPSE DOCPSE ReENCODE
+/F40 450.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F36 Category:10 Pointsize:10
+/F36 500.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F35 Category:10 Pointsize:10
+/Helvetica-Oblique /Helvetica-Oblique@DOCPSE DOCPSE ReENCODE
+/F35 500.0 /Helvetica-Oblique@DOCPSE DPSF
+% DefineFont:F34 Category:10 Pointsize:10
+/F34 500.0 /Helvetica@DOCPSE DPSF
+% DefineFont:F32 Category:10 Pointsize:11
+/F32 550.0 /Helvetica-Bold@DOCPSE DPSF
+% DefineFont:F16 Category:10 Pointsize:24
+/F16 1200.0 /Helvetica-Bold@DOCPSE DPSF
+
+%Spot color array for this job
+/ColorPalette [
+0.0 0.0 0.0 1.0 (BLACK) findcmykcustomcolor
+] def
+
+%%EndSetup
+%
+%%Page: (1) 1
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 4845 XY F16(Software-)S 3899 6091 XY(Produ)S 2 x(ktbeschreibung)S
+3899 X 697 y 23316 204 R 3899 7611 XY F40(PRODUK)S -2 x(TNAME:)S 598 x
+F36(DECwrite/DEUTSCH)S 165 x(f\374r)S 167 x(OpenVMS)S 166 x(V)S -36 x
+(AX,)S 166 x(V)S -27 x(ersion)S 167 x(3.0)S 24000 X(SPD)S 166 x(25.R8.04)S
+3899 9704 XY F32(Produktbeschre)S -2 x(ibung)S 3899 10700 XY F34(DECwrite\207)S
+241 x(ist)S 241 x(ein)S 241 x(Dokumentverarbeitungssystem,)S 261 x(das)S
+242 x(T)S -55 x(extverarbeitung,)S 261 x(Zeichenfunktionen,)S 261 x
+(Farbtext,)S 3899 X 598 y(Gra\211kerstellung,)S 165 x(datenorientierte)S
+166 x(T)S -55 x(abellenerstellung,)S 165 x(Bildintegration,)S 166 x
+(h\366rbare)S 166 x(Hinwe)S -2 x(isfunktionen)S 3899 X 597 y(und)S 166 x
+(LiveLink\207-V)S -28 x(erbindungen)S 165 x(zu)S 166 x(unterst\374tzt)S
+2 x(en)S 166 x(Anwendungen)S 165 x(und)S 166 x(Daten)S 166 x(miteinander)S
+166 x(kombiniert.)S 3899 12892 XY(DECwrite)S 206 x(ist)S 207 x(besonders)S
+206 x(dann)S 207 x(n\374tzlich,)S 217 x(wenn)S 206 x(mehrere)S 207 x
+(Benutzer)S 207 x(dieselbe)S 206 x(Arbeitsumgebung)S 207 x(verwenden.)S
+3899 X 597 y(Das)S 244 x(Produkt)S 246 x(ist)S 244 x(f\374r)S 245 x
+(viele)S 244 x(unterschiedliche)S 244 x(Plattformen)S 246 x(geeignet)S
+244 x(und)S 245 x(in)S 244 x(mehreren)S 244 x(Sprachen)S 245 x(erh\344ltlich.)S
+3899 X 598 y(Dar\374ber)S 183 x(hinaus)S 184 x(zeichnet)S 184 x(es)S
+184 x(sich)S 183 x(durch)S 184 x(seine)S 183 x(einfache)S 184 x(V)S
+-27 x(erwendung)S 183 x(aus)S 184 x(und)S 184 x(enth\344lt)S 185 x(viele)S
+183 x(erweiterte)S 183 x(Be-)S 3899 X 598 y(nutzerfunktionen,)S 140 x
+(welche)S 131 x(DECwri)S -2 x(te)S 133 x(zur)S 131 x(optimalen)S 131 x
+(T)S -54 x(extverarbeitungsl\366sung)S 131 x(f\374r)S 132 x(gro\337e)S
+132 x(Unternehmen)S 132 x(macht.)S 3899 X 598 y(Benutzer)S 184 x(k\366nnen)S
+184 x(bestimmte)S 184 x(Dokumentformate)S 185 x(und)S 183 x(-stile)S
+184 x(und)S 184 x(somit)S 184 x(einen)S 183 x(internen)S 183 x(Standard)S
+185 x(entwickeln,)S 3899 X 597 y(der)S 166 x(Konsistenz)S 166 x(und)S
+166 x(Qualit\344t)S 166 x(aller)S 165 x(Dokumente)S 166 x(gew\344hrlei)S
+-2 x(stet.)S 3899 16877 XY(DECwrite)S 135 x(entspricht)S 137 x(den)S
+136 x(Konventionen)S 136 x(der)S 136 x(Architektur)S 137 x(Digital\207)S
+135 x(NAS\207)S 137 x(\(Network)S 135 x(Application)S 136 x(Support\))S
+137 x(und)S 3899 X 597 y(erlaubt)S 204 x(somit)S 204 x(Benutzern,)S
+214 x(DECwrite-Dokumente,)S 213 x(die)S 204 x(sowohl)S 203 x(T)S -55 x
+(ext)S 204 x(als)S 204 x(auch)S 204 x(Gra\211ken)S 203 x(enthalten,)S
+215 x(innerhal)S -2 x(b)S 3899 X 598 y(eines)S 165 x(Unternehmens)S
+166 x(untereinander)S 166 x(zu)S 166 x(teilen.)S 3899 19068 XY(DECwrite)S
+174 x(emuliert)S 175 x(die)S 175 x(T)S -55 x(astaturkonvent)S 2 x(ionen)S
+174 x(f\374r)S 176 x(W)S -8 x(ordPerfect\207,)S 179 x(Microsoft\206)S
+176 x(W)S -9 x(ord)S 175 x(und)S 176 x(WPS-PLUS\207,)S 179 x(die)S 3899 X
+598 y(den)S 166 x(Einstieg)S 166 x(in)S 165 x(DECwrite)S 165 x(und)S
+166 x(den)S 166 x(W)S -8 x(echsel)S 165 x(zu)S 166 x(anderen)S 166 x
+(T)S -55 x(extverarbeitungsanwendungen)S 166 x(erleichtern.)S 3899 20663 XY
+(DECwrite)S 137 x(beinhaltet)S 137 x(Konverter)S -27 x(,)S 144 x(die)S
+137 x(die)S 137 x(Zusammenarbeit)S 137 x(mit)S 138 x(Produkten)S 138 x
+(wie)S 137 x(z.B.)S 138 x(Microsoft)S 138 x(W)S -8 x(ord)S 137 x(und)S
+138 x(W)S -9 x(ord-)S 3899 X 597 y(Perfect)S 167 x(erm\366glichen.)S
+3899 22755 XY F32(Eigenschaften)S 3899 23751 XY F35(Benutzerober\212\344che)S
+3899 24747 XY F34(Funktionen)S 154 x(werden)S 153 x(von)S 153 x(DECwrite)S
+153 x(durch)S 153 x(eine)S 153 x(gra\211sche)S 153 x(Benutzerober\212\344che)S
+154 x(in)S 153 x(Form)S 154 x(von)S 153 x(Men\374s)S 154 x(und)S 153 x
+(einer)S 3899 X 598 y(sinnbildor)S -2 x(ientierten)S 166 x(Funktionsleiste)S
+166 x(dargestellt.)S 3899 26341 XY(DECwrite)S 172 x(bietet)S 173 x(dem)S
+172 x(Benutzer)S 173 x(die)S 173 x(M\366glichkei)S -2 x(t,)S 176 x(entweder)S
+172 x(mit)S 173 x(dem)S 172 x(Kurzmen\374)S 173 x(oder)S 172 x(mit)S
+173 x(dem)S 172 x(vollst\344ndigen)S 3899 X 598 y(Men\374)S 248 x(zu)S
+248 x(arbeiten.)S 469 x(Das)S 248 x(Kurzmen\374)S 248 x(enth\344lt)S
+249 x(nur)S 248 x(die)S 248 x(Funktionen,)S 270 x(die)S 248 x(in)S 247 x
+(den)S 249 x(Men\374s)S 248 x(Datei,)S 269 x(Bearbeiten,)S 3899 X 598 y
+(Format,)S 203 x(Erstellen,)S 201 x(Seite,)S 203 x(Zeichnen,)S 202 x
+(W)S -9 x(eiteres)S 194 x(und)S 195 x(Anpassen)S 195 x(am)S 194 x(h\344u\211gsten)S
+195 x(verwendet)S 194 x(werden.)S 307 x(Arbeitet)S 3899 X 597 y(der)S
+209 x(Benutzer)S 211 x(mit)S 209 x(dem)S 210 x(vollst\344ndigen)S 209 x
+(Men\374,)S 221 x(sind)S 209 x(alle)S 209 x(Funktionen)S 210 x(enthalten.)S
+353 x(Es)S 210 x(kann)S 210 x(jederzeit)S 209 x(w\344hrend)S 3899 X
+598 y(der)S 177 x(Bearbeitung)S 176 x(zwischen)S 177 x(Kurzmen\374)S
+177 x(und)S 176 x(vollst\344ndigem)S 176 x(Men\374)S 177 x(umgeschaltet)S
+177 x(werden.)S 254 x(Die)S 176 x(Men\374s)S 177 x(zeigen)S 3899 X 598 y
+(au\337erdem)S 175 x(die)S 175 x(\344quivalenten)S 174 x(T)S -55 x(astaturbefehle,)S
+179 x(so)S 175 x(da\337)S 175 x(die)S 175 x(Funktionen)S 175 x(auch)S
+175 x(ohne)S 175 x(Maus)S 175 x(ausgef\374hrt)S 176 x(werden)S 3899 X
+598 y(k\366nnen.)S 3899 30924 XY(In)S 191 x(der)S 190 x(Funktionsleiste)S
+190 x(kann)S 191 x(der)S 190 x(Benutzer)S 191 x(sich)S 190 x(die)S 190 x
+(Men\374s)S 190 x(f\374r)S 191 x(V)S -28 x(orlagen,)S 197 x(Schriften,)S
+197 x(Schriftgr\366\337e,)S 198 x(T)S -55 x(extaus-)S 3899 X 598 y(richtung,)S
+221 x(Sprachen,)S 221 x(Hervorhebungen)S 209 x(\(normal,)S 220 x(fett)S
+2 x(,)S 221 x(kursiv)S -37 x(,)S 221 x(unterstreichen\),)S 221 x(Zeilenabstand,)S
+221 x(Seitenlayout,)S 3899 X 598 y(Farbauswahl,)S 163 x(sowie)S 161 x
+(Men\374s)S 162 x(f\374r)S 162 x(das)S 162 x(Einf\374gen)S 163 x(von)S
+162 x(T)S -55 x(abellen,)S 162 x(f\374r)S 163 x(bedingten)S 161 x(Inhalt)S
+163 x(und)S 162 x(f\374r)S 162 x(h\366rbare)S 162 x(Hinwei)S -2 x(se)S
+3899 X 597 y(anzeigen)S 191 x(lassen)S 191 x(und)S 192 x(Einstellungen)S
+191 x(vornehmen.)S 298 x(Die)S 191 x(Funktionen)S 192 x(der)S 192 x
+(Funktionsleiste)S 191 x(stehen)S 192 x(dem)S 192 x(Benut-)S 3899 X
+598 y(zer)S 234 x(jederzeit)S 234 x(zur)S 235 x(V)S -27 x(erf\374gung.)S
+427 x(Die)S 234 x(gew\344hlte)S 234 x(Funktion)S 235 x(wird)S 233 x
+(an)S 235 x(der)S 234 x(aktuellen)S 234 x(Position)S 235 x(der)S 234 x
+(Schreibmarke)S 3899 X 598 y(ausgef\374hrt.)S 25143 36902 XY F40(Juni)S
+149 x(1994)S 24256 X 598 y(AE-P)S -33 x(AC9E-TE)S 13320 X -127 y F207
+(dt)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique DigitalLogo
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (2) 2
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3960 XY F34(Zus\344tzlich)S 207 x
+(sind)S 206 x(f\374nf)S 207 x(kontextabh\344ngige)S 207 x(Einblendmen\374s)S
+206 x(verf\374gbar)S -27 x(.)S 343 x(Diese)S 206 x(Men\374s)S 207 x
+(erscheinen)S 206 x(an)S 206 x(der)S 207 x(Zei-)S 3899 X 598 y(gerposition)S
+238 x(und)S 240 x(dienen)S 238 x(dazu,)S 258 x(bestimmte)S 240 x(Arbeitsvorg\344nge)S
+239 x(schneller)S 238 x(und)S 239 x(leichter)S 239 x(auszuf\374hren.)S
+442 x(In)S 240 x(den)S 3899 X 598 y(Einblendmen\374s)S 193 x(sind)S
+193 x(neben)S 194 x(den)S 193 x(am)S 194 x(h\344u\211gsten)S 194 x(benutzten)S
+194 x(T)S -55 x(ext-)S 195 x(und)S 193 x(Gra\211kverarbeitungsfunktionen)S
+194 x(auch)S 3899 X 598 y(die)S 165 x(wichtigsten)S 166 x(V)S -27 x
+(orlagen,)S 166 x(T)S -55 x(abellen)S 165 x(und)S 166 x(Elemente)S 166 x
+(enthalten.)S 3899 6750 XY(DECwrite)S 165 x(unterst\374tzt)S 168 x(au\337erdem)S
+166 x(mehrsprachige)S 165 x(Installationen,)S 167 x(und)S 166 x(Benutzer)S
+166 x(k\366nnen)S 166 x(mit)S 166 x(Hilfe)S 3899 X 598 y(des)S 152 x
+F35(DECwi)S -2 x(ndows\207)S 152 x(Motif\206)S 152 x F34(Session)S 152 x
+(Manager)S 152 x(zwischen)S 151 x(unterschiedlichen)S 151 x(Sprachen)S
+151 x(wechseln.)S 217 x(W)S -9 x(enn)S 152 x(Sie)S 3899 X 597 y(die)S
+188 x(Sprache)S 188 x(im)S 188 x(Session)S 188 x(Manager)S 188 x(festlegen,)S
+195 x(wird)S 188 x(auch)S 188 x(automatisch)S 189 x(die)S 188 x(Benutzerober\212\344chensprache)S
+188 x(f\374r)S 3899 X 598 y(DECwrite)S 165 x(festgelegt.)S 3899 9539 XY
+(Dar\374ber)S 165 x(hinaus)S 166 x(besitzt)S 166 x(die)S 166 x(Benutzerober\212\344che)S
+166 x(folgende)S 166 x(Eigenschaften:)S 3899 X 897 y(\201)S 872 x(Raster)S
+166 x(und)S 166 x(Zeilenlin)S -2 x(eale)S 166 x(mit)S 166 x(Markierungen)S
+165 x(zum)S 166 x(leichteren)S 166 x(Plazieren)S 165 x(von)S 166 x(T)S
+-55 x(extbl\366cken)S 166 x(und)S 166 x(Objekten)S 3899 X 897 y(\201)S
+872 x(Ausrichten)S 166 x(am)S 166 x(Lineal)S 165 x(\(ein-)S 165 x(oder)S
+166 x(ausschaltbar\))S 3899 X 896 y(\201)S 872 x(Anzeige)S 112 x(von)S
+111 x(Stat)S 2 x(usinformationen)S 111 x(zur)S 112 x(aktuellen)S 111 x
+(Seitenzahl,)S 123 x(zur)S 112 x(ersten)S 112 x(und)S 112 x(letzten)S
+112 x(Seitenzahl,)S 123 x(aktuellen)S 4945 X 598 y(V)S -27 x(orlage,)S
+166 x(T)S -55 x(extblockverbindungen)S 165 x(und)S 166 x(Objektgr\366\337e)S
+3899 X 897 y(\201)S 872 x(V)S -27 x(ertikale)S 165 x(und)S 166 x(horizontale)S
+166 x(Roll)S -2 x(eisten)S 3899 14820 XY(DECwrite)S 159 x(besitzt)S
+161 x(die)S 160 x(M\366glichkei)S -2 x(t)S 161 x(zur)S 160 x(Einstellung)S
+160 x(verschiedener)S 159 x(T)S -55 x(astaturbelegungen,)S 162 x(einschlie\337lich)S
+159 x(GOLD)S 3899 X 597 y(KEY\207)S 173 x(zur)S 172 x(Kompatibilit\344t)S
+173 x(mit)S 172 x(WPS-PLUS,)S 174 x(W)S -9 x(ordPerfect)S 173 x(und)S
+172 x(Microsoft)S 173 x(W)S -9 x(ord,)S 175 x(EVE\207,)S 175 x(EDT\207)S
+173 x(und)S 172 x(EMACS)S 3899 X 598 y(f\374r)S 166 x(technische)S 166 x
+(Benutzer)S -27 x(.)S 222 x(Au\337erdem)S 167 x(gibt)S 166 x(es)S 166 x
+(eine)S 165 x(DECwrite-spezi\211sche)S 165 x(T)S -55 x(astaturschnitt)S
+2 x(stelle.)S 3899 17011 XY F35(Hilfe)S 3899 18008 XY F34(DECwrite)S
+240 x(verf\374gt)S 241 x(\374ber)S 241 x(eine)S 240 x(aufgabenorientierte,)S
+260 x(eine)S 240 x(kontextabh\344ngige)S 241 x(und)S 240 x(eine)S 241 x
+(Referenz-Hil)S -2 x(fe.)S 447 x(Ein)S 3899 X 597 y(Online)S -2 x(-Schulungsprogramm,)S
+233 x(auf)S 221 x(das)S 220 x(vom)S 219 x(Hilfe-Men\374)S 219 x(aus)S
+220 x(zugegrif)S -9 x(fen)S 220 x(werden)S 220 x(kann,)S 233 x(unterst\374t)S
+2 x(zt)S 220 x(Benut-)S 3899 X 598 y(zer)S 191 x(beim)S 191 x(Kennenlernen)S
+191 x(von)S 191 x(DECwrite-Konzepten)S 191 x(und)S 191 x(Funktionen)S
+192 x(und)S 191 x(beschleunigt)S 191 x(den)S 191 x(Lernproze\337)S 191 x
+(f\374r)S 3899 X 598 y(Anf\344nger)S -27 x(.)S 3899 20797 XY F35(Editor)S
+3899 21794 XY F34(Der)S 174 x(Editor)S 174 x(von)S 175 x(DECwri)S -2 x
+(te)S 175 x(umfa\337t)S 176 x(alle)S 174 x(wichtigen)S 173 x(T)S -55 x
+(extverarbeitungsfunktionen:)S 240 x(Selektieren,)S 176 x(Ausschneiden,)S
+3899 X 597 y(Kopieren,)S 256 x(Einf\374gen,)S 257 x(Positionier-)S 237 x
+(und)S 238 x(Suchfunktionen,)S 257 x(Funktionen)S 238 x(r\374ckg\344ngig)S
+238 x(machen,)S 256 x(r\374ckg\344ngig)S 238 x(ge-)S 3899 X 598 y(machte)S
+195 x(Funktionen)S 194 x(wieder)S 194 x(aufheben.)S 307 x(W)S -9 x(eiterhin)S
+194 x(ist)S 195 x(das)S 194 x(Suchen)S 195 x(nach)S 194 x(und)S 194 x
+(Ersetzen)S 195 x(von)S 195 x(Sonderzeichen)S 3899 X 598 y(und)S 166 x
+(Leerzeichen)S 165 x(m\366glich.)S 3899 24583 XY(F\374r)S 222 x(Dokumentations-)S
+221 x(und)S 222 x(Publikationsabteilungen)S 220 x(sind)S 222 x(besonders)S
+221 x(die)S 221 x(weitreichenden)S 221 x(Korrekturfunktio-)S 3899 X
+598 y(nen)S 168 x(wie)S 168 x(L\366sch-)S 168 x(und)S 168 x(\304nderungsmarkierungen)S
+168 x(und)S 168 x(auch)S 168 x(die)S 168 x(M\366glichkeit,)S 169 x(Einschubseiten)S
+168 x(zu)S 169 x(erstellen,)S 168 x(von)S 3899 X 598 y(Bedeutung.)S
+3899 26775 XY(DECwrite)S 194 x(verf\374gt)S 195 x(\374ber)S 195 x(eine)S
+194 x(deutsche)S 195 x(und)S 195 x(schweizeri)S -2 x(sche)S 195 x(Silbentrennung)S
+194 x(nach)S 195 x(Houghton)S 195 x(Mif)S -9 x(\212in)S 194 x(\(in)S
+194 x(Zu-)S 3899 X 598 y(sammenarbeit)S 166 x(mit)S 166 x(Langenscheidt\).)S
+3899 28369 XY(Zus\344tzlich)S 219 x(zum)S 218 x(Standardw\366rterbuch)S
+219 x(k\366nnen)S 219 x(Ausnahmew\366rterb\374cher)S 218 x(f\374r)S
+219 x(solche)S 219 x(W\366rter)S 219 x(erstellt)S 219 x(werden,)S 3899 X
+598 y(die)S 152 x(nicht)S 153 x(im)S 153 x(Standardw\366rterbuch)S 153 x
+(eingetragen)S 152 x(sind.)S 217 x(Die)S 152 x(Ausnahmew\366rterb\374cher)S
+153 x(k\366nnen)S 153 x(lokal)S 152 x(erstellt)S 153 x(oder)S 3899 X
+597 y(innerhalb)S 165 x(einer)S 165 x(an)S 166 x(ein)S 166 x(Netzwerk)S
+165 x(angeschlossenen)S 166 x(Arbeitsgruppe)S 166 x(gemeinsam)S 165 x
+(benutzt)S 167 x(werden.)S 3899 30561 XY(Die)S 193 x(Silbentrennung)S
+193 x(kann)S 194 x(mit)S 194 x(manuell)S 193 x(eingef\374gten)S 194 x
+(Bindestrichen)S 194 x(kontrolliert)S 193 x(oder)S 194 x(auch)S 193 x
+(Abschnitt)S 195 x(f\374r)S 194 x(Ab-)S 3899 X 597 y(schnitt)S 231 x
+(indivi)S -2 x(duell)S 230 x(aktiviert)S 230 x(bzw)S -28 x(.)S 415 x
+(deaktiviert)S 230 x(werden.)S 414 x(W)S -9 x(eiterhin)S 230 x(unterst\374tzt)S
+232 x(DECwrite)S 229 x(Silbentrennung)S 230 x(in)S 3899 X 598 y(verschiedenen)S
+205 x(Sprachen)S 207 x(innerhal)S -2 x(b)S 207 x(eines)S 205 x(Dokuments)S
+206 x(\(z.B.)S 208 x(deutsche)S 206 x(und)S 206 x(franz\366sische)S
+207 x(Silbentrennung\).)S 3899 X 598 y(Silbentrennung)S 207 x(ist)S
+207 x(in)S 207 x(folgenden)S 208 x(Sprachen)S 207 x(vorhanden:)S 305 x
+(Englisch,)S 217 x(Amerikanisch,)S 218 x(Franz\366sisch,)S 218 x(Niederl\344n-)S
+3899 X 598 y(disch,)S 166 x(Spanisch,)S 166 x(Italienisch,)S 167 x(Deutsch,)S
+166 x(Schwedisch,)S 166 x(Norwegisch,)S 166 x(Portugiesisch,)S 166 x
+(Finnisch)S 166 x(und)S 165 x(D\344nisch.)S 15431 37373 XY F40(2)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (3) 3
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3976 XY F34(Ebenso)S 122 x(wie)S
+121 x(die)S 121 x(Silbentrennung)S 122 x(k\366nnen)S 121 x(unterschiedliche)S
+121 x(Sprachen)S 122 x(bei)S 121 x(der)S 122 x(Rechtschreibpr\374fung)S
+122 x(verwendet)S 3899 X 598 y(werden.)S 422 x(W)S -9 x(enn)S 233 x
+(z.B.)S 234 x(deutsche)S 233 x(und)S 233 x(franz\366sische)S 233 x(T)S
+-55 x(extteile)S 233 x(innerhalb)S 232 x(eines)S 232 x(Dokuments)S 233 x
+(benutzt)S 234 x(werden,)S 3899 X 598 y(werden)S 178 x(diese)S 178 x
+(W\366rter)S 179 x(in)S 178 x(der)S 179 x(entsprechenden)S 179 x(Sprache)S
+178 x(gepr\374ft,)S 183 x(wenn)S 179 x(das)S 178 x(deutsche)S 179 x
+(und)S 179 x(das)S 178 x(franz\366sische)S 3899 X 597 y(W\366rterbuch)S
+239 x(auf)S 239 x(dem)S 238 x(System)S 240 x(vorhanden)S 238 x(sind.)S
+440 x(Diese)S 237 x(W\366rterb\374cher)S 239 x(stehen)S 239 x(wahlweise)S
+237 x(zur)S 239 x(V)S -27 x(erf\374gung.)S 3899 X 598 y(W)S -9 x(eitere)S
+166 x(Informationen)S 167 x(\211nden)S 166 x(Sie)S 165 x(im)S 166 x
+(Dokument)S 166 x("Software-)S 166 x(und)S 166 x(Hardwareumgebung")S
+165 x(\(SSA)S 167 x(25.R8.04-A\).)S 3899 7363 XY(Au\337erdem)S 166 x
+(ist)S 166 x(ein)S 166 x(Synonymw\366rterbuch)S 166 x(und)S 166 x(eine)S
+165 x(\334berpr\374fung)S 166 x(der)S 166 x(W)S -9 x(ortwahl)S 166 x
+(verf\374gbar)S -28 x(.)S 3899 8360 XY F35(Farben)S 3899 9356 XY F34
+(In)S 152 x(DECwrite)S 151 x(k\366nnen)S 152 x(Benutzer)S 152 x(T)S
+-55 x(ext,)S 156 x(T)S -55 x(abellen,)S 154 x(Gra\211ken)S 152 x(und)S
+151 x(Objekte)S 152 x(in)S 151 x(unterschiedlichen)S 151 x(Farben)S
+152 x(anzeigen)S 3899 X 598 y(lassen,)S 166 x(Farbvorlagendateien)S
+165 x(anlegen)S 166 x(und)S 166 x(Dokumente)S 166 x(auf)S 166 x(PostScript\206-F)S
+2 x(arbdruckern)S 165 x(ausdrucken.)S 3899 10950 XY F35(Zeilenli)S -2 x
+(neal/T)S -45 x(abulatoren)S 3899 11946 XY F34(DECwrite)S 173 x(bietet)S
+175 x(dem)S 175 x(Benutzer)S 175 x(vier)S 174 x(Arten)S 175 x(von)S
+174 x(T)S -55 x(abulatoren:)S 238 x(linksb\374ndig,)S 176 x(rechtsb\374ndig,)S
+177 x(zentriert)S 175 x(und)S 174 x(dezi-)S 3899 X 598 y(mal.)S 331 x
+(Der)S 202 x(Benutzer)S 203 x(kann)S 202 x(die)S 202 x(Einstellungen)S
+202 x(des)S 203 x(Zeilenli)S -2 x(neals)S 202 x(ver\344ndern.)S 331 x
+(Diese)S 202 x(Einstellungen)S 202 x(gelten)S 202 x(f\374r)S 3899 X
+598 y(den)S 206 x(aktuellen)S 205 x(Absatz)S 207 x(sowie)S 205 x(f\374r)S
+206 x(alle)S 205 x(nachfolgenden)S 205 x(Abs\344tze,)S 217 x(f\374r)S
+207 x(die)S 205 x(das)S 206 x(gleiche)S 205 x(Zeilenli)S -2 x(neal)S
+206 x(verwendet)S 3899 X 597 y(wird.)S 221 x(Die)S 165 x(Einstellungen)S
+165 x(des)S 166 x(Zeilenlineal)S -2 x(s)S 167 x(k\366nnen)S 166 x(als)S
+165 x(T)S -55 x(eil)S 165 x(einer)S 166 x(Absatzvorlage)S 166 x(gespeichert)S
+166 x(werden.)S 3899 14736 XY F35(T)S -46 x(abellen)S 3899 15732 XY
+F34(Mit)S 149 x(DECwri)S -2 x(te)S 150 x(k\366nnen)S 149 x(feldorientierte)S
+148 x(T)S -55 x(abellen)S 148 x(erstellt)S 149 x(werden.)S 216 x(T)S
+-55 x(abellen)S 147 x(k\366nnen)S 149 x(T)S -55 x(ext,)S 154 x(Gra\211ken)S
+148 x(oder)S 149 x(Zahlen)S 3899 X 598 y(enthalten.)S 381 x(Innerhalb)S
+219 x(einer)S 219 x(T)S -55 x(abelle)S 218 x(stehen)S 220 x(dem)S 219 x
+(Benutzer)S 219 x(alle)S 219 x(Absatz-)S 219 x(und)S 219 x(T)S -55 x
+(extformat)S 2 x(ierungsfunktionen)S 3899 X 598 y(zur)S 187 x(V)S -28 x
+(erf\374gung,)S 193 x(einschlie\337li)S -2 x(ch)S 187 x(Farbanwendungen)S
+186 x(f\374r)S 187 x(Umri\337,)S 192 x(Hintergrund)S 186 x(und)S 187 x
+(Inhalt)S 187 x(einer)S 186 x(T)S -55 x(abelle.)S 283 x(Zeilen)S 3899 X
+597 y(oder)S 148 x(Spalten)S 149 x(k\366nnen)S 149 x(miteinander)S 147 x
+(verbunden)S 149 x(oder)S 148 x(getrennt,)S 153 x(hinzugef\374gt)S 149 x
+(oder)S 149 x(gel\366scht)S 148 x(werden.)S 216 x(Der)S 148 x(Inhalt)S
+3899 X 598 y(eines)S 213 x(T)S -55 x(abellenfeldes)S 213 x(kann)S 213 x
+(linksb\374ndig,)S 225 x(rechtsb\374ndig)S 213 x(oder)S 214 x(zentriert)S
+214 x(dargestellt)S 213 x(werden.)S 364 x(Die)S 213 x(Funktionen)S 3899 X
+598 y(Kopieren,)S 209 x(Ausschneiden,)S 209 x(Einf\374gen)S 200 x(und)S
+201 x(L\366schen)S 200 x(k\366nnen)S 200 x(ausgef\374hrt)S 201 x(werden.)S
+325 x(In)S 200 x(eine)S 200 x(T)S -55 x(abelle)S 200 x(kann)S 200 x
+(T)S -55 x(ext)S 3899 X 598 y(im)S 152 x(ASCII-Format)S 154 x(importiert)S
+152 x(und,)S 155 x(falls)S 152 x(notwendig,)S 155 x(eine)S 152 x(neue)S
+153 x(T)S -55 x(abelle)S 151 x(erstellt)S 152 x(werden.)S 217 x(T)S
+-55 x(abellen)S 151 x(k\366nnen)S 153 x(\374ber)S 3899 X 597 y(mehrere)S
+181 x(Seiten)S 183 x(hinweg)S 181 x(aufgeteilt)S 182 x(werden,)S 186 x
+(wobei)S 181 x(T)S -55 x(abellenkopfzeilen)S 181 x(automatisch)S 182 x
+(von)S 182 x(einer)S 181 x(Seite)S 183 x(auf)S 182 x(die)S 3899 X 598 y
+(andere)S 166 x(\374bertragen)S 166 x(werden.)S 3899 21510 XY(DECwrite)S
+172 x(verf\374gt)S 174 x(\374ber)S 173 x(vorde\211nierte)S 173 x(T)S
+-55 x(abellenvorlagen)S -2 x(.)S 244 x(Zus\344tzlich)S 173 x(kann)S
+173 x(der)S 173 x(Benutzer)S 174 x(eigene)S 173 x(T)S -55 x(abellenvor-)S
+3899 X 598 y(lagen)S 165 x(de\211nieren)S 166 x(und)S 166 x(speichern.)S
+3899 23104 XY F35(Listenverarbeitung)S 3899 24101 XY F34(Mit)S 221 x
+(dieser)S 221 x(Funktion)S 222 x(kann)S 221 x(der)S 221 x(Benutzer)S
+222 x(Serienbriefe)S 221 x(mit)S 221 x(Hilfe)S 221 x(von)S 221 x(V)S
+-37 x(ariablen)S 220 x(erstellen,)S 235 x(die)S 221 x(in)S 221 x(Standard-)S
+3899 X 597 y(dokumente)S 237 x(eingef\374gt)S 237 x(werden.)S 433 x
+(Die)S 236 x(V)S -37 x(ariablen)S 236 x(werden)S 236 x(in)S 236 x(eine)S
+236 x(Datendatei)S 237 x(eingegeben,)S 254 x(die)S 236 x(das)S 237 x
+(Format)S 3899 X 598 y(einer)S 152 x(T)S -55 x(extdatei)S 153 x(in)S
+152 x(WPS-PLUS)S 153 x(oder)S 153 x(einer)S 151 x(DDIF-Datei)S 153 x
+(\(Digi)S -2 x(tal)S 153 x(Document)S 152 x(Interchange)S 154 x(Format\))S
+153 x(haben)S 152 x(kann.)S 3899 X 598 y(Sie)S 203 x(kann)S 204 x(aber)S
+204 x(auch)S 204 x(im)S 203 x(T)S -55 x(abellenformat)S 203 x(sein.)S
+335 x(Die)S 203 x(Ausgabedokumente)S 204 x(werden)S 203 x(durch)S 204 x
+(die)S 203 x(Listenverarbei-)S 3899 X 598 y(tungsfunktion)S 167 x(automatisch)S
+167 x(im)S 165 x(unterst\374t)S 2 x(zten)S 166 x(Druckformat)S 167 x
+(ausgedruckt.)S 223 x(Dar\374ber)S 165 x(hinaus)S 166 x(kann)S 166 x
+(die)S 166 x(Datei)S 166 x(als)S 3899 X 597 y(DECwrite-Do)S -2 x(kument)S
+167 x(gespeichert)S 166 x(werden.)S 3899 28086 XY F35(V)S -18 x(ariablen)S
+3899 29082 XY F34(Mit)S 126 x(DECwri)S -2 x(te)S 127 x(kann)S 126 x
+(der)S 125 x(Benutzer)S 127 x(V)S -37 x(ariablen)S 125 x(de\211nieren,)S
+134 x(um)S 126 x(die)S 125 x(Erstellung)S 126 x(von)S 125 x(Dokumenten)S
+126 x(zu)S 126 x(vereinfachen,)S 3899 X 598 y(die)S 137 x(h\344u\211g)S
+137 x(verwendete)S 137 x(T)S -55 x(extelemente)S 138 x(wie)S 137 x(Autor)S
+-27 x(,)S 143 x(Firmenname,)S 144 x(Dokumentnummer)S 137 x(etc.)S 212 x
+(enthalten.)S 213 x(W)S -9 x(enn)S 138 x(der)S 3899 X 597 y(Benutzer)S
+153 x(eine)S 153 x(V)S -37 x(ariable)S 152 x(umde\211niert,)S 156 x
+(werden)S 153 x(die)S 152 x(entsprechenden)S 154 x(T)S -55 x(extelemente)S
+153 x(aktualisiert.)S 217 x(V)S -36 x(ariablen)S 152 x(k\366n-)S 3899 X
+598 y(nen)S 166 x(auch)S 166 x(als)S 166 x(V)S -27 x(orlagendokumente)S
+165 x(de\211niert)S 166 x(werden,)S 166 x(damit)S 166 x(sie)S 166 x
+(mehreren)S 166 x(Benutzern)S 166 x(zur)S 166 x(V)S -27 x(erf\374gung)S
+166 x(gestellt)S 3899 X 598 y(werden)S 165 x(k\366nnen.)S 3899 32469 XY
+F35(Bedingter)S 166 x(Inhalt)S 3899 33466 XY F34(Mit)S 177 x(DECwri)S
+-2 x(te)S 178 x(k\366nnen)S 176 x(Benutzer)S 178 x(Bedingungen)S 176 x
+(festlegen,)S 180 x(die)S 177 x(bestimmen,)S 179 x(welche)S 176 x(Dokumentabschnitte)S
+178 x(an-)S 3899 X 597 y(gezeigt)S 236 x(werden.)S 432 x(Diese)S 235 x
+(Funktion)S 237 x(erm\366gli)S -2 x(cht)S 237 x(das)S 236 x(Erstellen)S
+236 x(von)S 236 x(generischen)S 236 x(Dokumenten,)S 254 x(die)S 236 x
+(f\374r)S 236 x(eine)S 3899 X 598 y(bestimmte)S 245 x(Zuh\366rerschaft)S
+245 x(zugeschnitten)S 245 x(werden)S 244 x(k\366nnen,)S 265 x(indem)S
+244 x(der)S 244 x(bedingte)S 245 x(T)S -55 x(ext)S 245 x(entweder)S
+244 x(miteinge-)S 3899 X 598 y(schlossen)S 166 x(wird)S 165 x(oder)S
+166 x(nicht.)S 15431 37373 XY F40(3)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (4) 4
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3960 XY F35(H\366rbarer)S 165 x
+(Inhalt)S 3899 4957 XY F34(H\366rbarer)S 218 x(T)S -55 x(extinhalt)S
+218 x(kann)S 219 x(innerhalb)S 217 x(eines)S 219 x(DECwri)S -2 x(te-Dokuments)S
+219 x(aufgezeichnet)S 219 x(und)S 219 x(anschlie\337end)S 218 x(abge-)S
+3899 X 597 y(spielt)S 154 x(werden.)S 217 x(Hierzu)S 153 x(verwenden)S
+154 x(Sie)S 154 x(eine)S 154 x(W)S -9 x(orkstation)S 155 x(mit)S 154 x
+(T)S -55 x(onkapazit\344t.)S 219 x(Diese)S 153 x(T)S -55 x(onfunktion)S
+155 x(erm\366glicht)S 153 x(es)S 3899 X 598 y(Benutzern,)S 167 x(mit)S
+166 x(einfachen)S 166 x(Mitteln)S 166 x(h\366rbare)S 166 x(Hinw)S -2 x
+(eise)S 166 x(in)S 166 x(einem)S 165 x(Dokument)S 166 x(einzuf\374gen.)S
+3899 7148 XY F35(Inhaltsverzeichnis)S 3899 8145 XY F34(DECwrite)S 185 x
+(erstellt)S 185 x(aus)S 186 x(den)S 185 x(\334berschriften)S 186 x(eines)S
+185 x(Dokumentes)S 185 x(automatisch)S 186 x(ein)S 185 x(Inhaltsverzeichnis.)S
+280 x(Der)S 185 x(Be-)S 3899 X 597 y(nutzer)S 207 x(kann)S 207 x(an)S
+207 x(einer)S 206 x(beliebi)S -2 x(gen)S 207 x(Stelle)S 207 x(in)S 206 x
+(einem)S 206 x(Dokument)S 207 x(das)S 207 x(Inhaltsverzeichnis)S 206 x
+(einf\374gen,)S 218 x(bearbeiten)S 3899 X 598 y(und)S 166 x(aktualisieren.)S
+3899 10336 XY(Die)S 170 x(Eintr\344ge)S 170 x(im)S 170 x(Inhaltsverzeichnis)S
+171 x(werden)S 169 x(auf)S 171 x(der)S 171 x(Basis)S 170 x(der)S 171 x
+(verwendeten)S 170 x(V)S -27 x(orlagen)S 170 x(f\374r)S 171 x(die)S
+170 x(\334berschriften)S 3899 X 598 y(formatiert.)S 221 x(Insgesamt)S
+162 x(wird)S 161 x(das)S 161 x(Format)S 162 x(des)S 162 x(Inhaltsverzeichnisses)S
+161 x(durch)S 161 x(die)S 161 x(ausgew\344hlten)S 161 x(Attribute)S
+163 x(in)S 161 x(der)S 3899 X 598 y(V)S -27 x(orlage)S 165 x(f\374r)S
+166 x(Inhaltsverzeichnisse)S 166 x(bestimmt.)S 3899 12528 XY F35(Register)S
+3899 13525 XY F34(DECwrite)S 203 x(erm\366glicht)S 203 x(Benutzern,)S
+215 x(mit)S 204 x(Hilfe)S 203 x(der)S 204 x(im)S 203 x(Dokument)S 204 x
+(angegebenen)S 204 x(Eintr\344ge)S 204 x(ein)S 203 x(Register)S 204 x
+(zu)S 204 x(ge-)S 3899 X 597 y(nerieren,)S 216 x(das)S 206 x(bis)S 206 x
+(zu)S 206 x(vier)S 206 x(Ebenen)S 206 x(aufweisen)S 206 x(kann.)S 343 x
+(F\374r)S 206 x(jede)S 206 x(Ebene)S 206 x(kann)S 206 x(der)S 207 x
+(Benutzer)S 206 x(eine)S 206 x(bestimmte)S 3899 X 598 y(Reihenfolge)S
+143 x(der)S 144 x(Au\212istung)S 145 x(festlegen)S 144 x(\(z.B.)S 146 x
+(f\374r)S 144 x(Zahlen)S 144 x(und)S 144 x(Sonderzeichen\).)S 215 x
+(Dieses)S 143 x(Register)S 144 x(kann)S 144 x(jederzeit)S 3899 X 598 y
+(bearbeitet)S 166 x(oder)S 166 x(generiert)S 166 x(werden.)S 3899 16314 XY
+F35(Querverwei)S -2 x(se)S 3899 17310 XY F34(Benutzer)S 123 x(k\366nnen)S
+122 x(Querverwei)S -2 x(se)S 122 x(in)S 122 x(DECwrite-Dokumente)S 121 x
+(einf\374gen)S 122 x(\(wie)S 122 x(z.B.)S 123 x("Siehe)S 122 x(Abbildung)S
+121 x(3,)S 132 x(Seite)S 122 x(45"\).)S 3899 X 598 y(Es)S 129 x(kann)S
+128 x(auf)S 129 x(T)S -55 x(ext,)S 137 x(eine)S 127 x(Seitenzahl,)S
+137 x(ein)S 127 x(Kennzeichen,)S 136 x(eine)S 128 x(\334berschrift,)S
+137 x(einen)S 127 x(Absatz)S 130 x(oder)S 128 x(ein)S 128 x(Listenelement)S
+3899 X 598 y(an)S 166 x(jeder)S 165 x(Stelle)S 166 x(des)S 166 x(Dokuments)S
+166 x(verwiesen)S 165 x(werden.)S 3899 19502 XY F35(LiveLink-V)S -19 x
+(erbindungen)S 3899 20498 XY F34(DECwrite)S 162 x(verf\374gt)S 164 x
+(\374ber)S 164 x(die)S 162 x(M\366glichkeit,)S 164 x(LiveLink-V)S -28 x
+(erbindungen)S 162 x(zu)S 164 x(unterst\374tzten)S 165 x(Anwendungen)S
+163 x(und)S 163 x(deren)S 3899 X 598 y(Daten)S 212 x(herzustellen.)S
+360 x(Daten,)S 224 x(die)S 211 x(mit)S 213 x(DECwri)S -2 x(te-Dokumenten)S
+213 x(verbunden)S 211 x(sind,)S 224 x(werden)S 212 x(als)S 211 x(T)S
+-54 x(eil)S 211 x(des)S 212 x(Doku-)S 3899 X 598 y(mentes)S 157 x(angezeigt.)S
+219 x(W)S -8 x(enn)S 157 x(sich)S 156 x(diese)S 157 x(Daten)S 157 x
+(\344ndern,)S 159 x(wird)S 157 x(das)S 157 x(Dokument)S 157 x(jedesmal)S
+156 x(automatisch)S 158 x(aktualisiert)S 3899 X 598 y(und)S 158 x(zeigt)S
+159 x(diese)S 158 x(ge\344nderten)S 158 x(Daten)S 159 x(neu)S 158 x
+(an.)S 219 x(Die)S 158 x(automatische)S 159 x(Aktualisierung)S 158 x
+(kann)S 158 x(auch)S 158 x(nur)S 159 x(nach)S 158 x(W)S -9 x(unsch)S
+3899 X 597 y(vorgenommen)S 129 x(werden.)S 209 x(LiveLink-V)S -28 x
+(erbindungen)S 129 x(zu)S 129 x(Anwendungen)S 129 x(k\366nnen)S 130 x
+(jederzeit)S 128 x(ge\344ndert)S 130 x(oder)S 129 x(gel\366scht)S 3899 X
+598 y(werden.)S 3899 24483 XY(V)S -27 x(erbindungen)S 148 x(zu)S 149 x
+(Daten)S 149 x(sind)S 149 x(\374berall)S 148 x(im)S 149 x(Netzwerk)S
+149 x(m\366glich,)S 152 x(solange)S 149 x(die)S 148 x(entsprechenden)S
+150 x(Zugrif)S -9 x(fsprivilegie)S -2 x(n)S 3899 X 598 y(gesetzt)S 228 x
+(sind.)S 405 x(LiveLink-V)S -28 x(erbindungen)S 226 x(werden)S 227 x
+(mit)S 227 x(einer)S 226 x(Dateiherkunft)S 228 x(angegeben,)S 243 x
+(z.B.)S 228 x(Wie)S 227 x(Dokument,)S 3899 X 598 y(Privates)S 242 x
+(V)S -27 x(erzeichnis,)S 261 x(Systemverzeichnis)S 243 x(oder)S 242 x
+(Einmal)S 241 x(im)S 242 x(Netz.)S 451 x(Dadurch)S 242 x(wird)S 242 x
+(spezi\211ziert,)S 261 x(an)S 242 x(welcher)S 3899 X 598 y(Stelle)S
+134 x(DECwrite)S 134 x(nach)S 135 x(der)S 134 x(zu)S 135 x(verbindenden)S
+134 x(Datei)S 134 x(suchen)S 135 x(soll)S 133 x(und)S 135 x(wie)S 134 x
+(das)S 134 x(gesamte)S 135 x(Dokument)S 135 x(elektronisch)S 3899 X
+597 y(versendet)S 166 x(werden)S 166 x(soll.)S 3899 27871 XY(Zu)S 166 x
+(folgenden)S 166 x(Anwendungen)S 166 x(k\366nnen)S 166 x(LiveLink-V)S
+-29 x(erbindungen)S 166 x(hergestellt)S 166 x(werden:)S 3899 X 896 y
+(\201)S 872 x(DECpaint)S 166 x(\(wir)S -2 x(d)S 167 x(mit)S 166 x(DECwi)S
+-2 x(ndows)S 166 x(Motif)S 166 x(geliefert\))S 3899 X 897 y(\201)S 872 x
+(DECchart\207)S 166 x(\(wird)S 165 x(mit)S 166 x(DECwrite)S 165 x(geliefert\))S
+3899 X 897 y(\201)S 872 x(Equation)S 166 x(Editor)S 166 x(\(wird)S 165 x
+(mit)S 166 x(DECwrite)S 165 x(geliefert\))S 3899 X 896 y(\201)S 872 x
+(DECsound)S 165 x(\(wird)S 165 x(mit)S 167 x(DECwi)S -2 x(ndows)S 166 x
+(Motif)S 166 x(geliefert\))S 3899 32553 XY F35(Datenverbindungen)S 3899 33549 XY
+F34(Benutzer)S 111 x(haben)S 111 x(die)S 110 x(M\366glichkei)S -2 x
+(t,)S 123 x(LiveLink-V)S -28 x(erbindungen)S 110 x(zu)S 111 x(anderen)S
+110 x(DECwrite-Dokumen)S -2 x(ten,)S 123 x(DDIF-Bilddateien)S 3899 X
+598 y(und)S 139 x(-Bildern)S 138 x(einzuf\374gen)S 139 x(\(z.B.)S 140 x
+(Bilder)S -28 x(,)S 145 x(die)S 138 x(mit)S 139 x(DECimage\207)S 138 x
+(erstellt)S 139 x(wurden\).)S 212 x(V)S -27 x(erweise)S 138 x(zu)S 139 x
+(Formatdaten)S 140 x(\(z.B.)S 3899 X 598 y(Encapsulated)S 166 x(PostScript)S
+167 x(\(EPS\))S 167 x(von)S 166 x(Adobe\207)S 166 x(Illustrator\))S
+166 x(k\366nnen)S 166 x(ebenso)S 166 x(eingef\374gt)S 166 x(werden.)S
+15431 37373 XY F40(4)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (5) 5
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3960 XY F35(Konverter)S 3899 4957 XY
+F34(Zum)S 210 x(Datenaustausch)S 210 x(mit)S 210 x(nicht-CDA\207-konformen)S
+210 x(Anwendungen)S 209 x(wird)S 209 x(von)S 210 x(DECwri)S -2 x(te)S
+211 x(die)S 209 x("CDA)S 209 x(Conver-)S 3899 X 597 y(ter)S 231 x(Architecture")S
+230 x(eingesetzt.)S 415 x(Dadurch)S 230 x(wird)S 229 x(gew\344hrleistet,)S
+247 x(da\337)S 230 x(unterschiedliche)S 230 x(Formate)S 231 x(in)S 229 x
+(das)S 231 x(Digi)S -2 x(tal)S 3899 X 598 y(Document)S 166 x(Interchange)S
+167 x(Format)S 166 x(\(DDIF\),)S 167 x(das)S 166 x(DECwri)S -2 x(te-Dateiformat,)S
+168 x(konvertiert)S 166 x(werden)S 165 x(k\366nnen.)S 3899 7148 XY(DECwrite)S
+135 x(verf\374gt)S 137 x(\374ber)S 136 x(einen)S 136 x(Konverter)S -27 x
+(,)S 142 x(mit)S 137 x(dem)S 136 x(WPS-PLUS-Dokumente)S 136 x(in)S 136 x
+(und)S 136 x(von)S 136 x(DDIF)S 137 x(konvertiert)S 136 x(wer-)S 3899 X
+598 y(den)S 157 x(k\366nnen)S 158 x(und)S 158 x(dar\374ber)S 157 x(hinaus)S
+157 x(\374ber)S 157 x(einen)S 158 x(DX-Konverter)S 157 x(\(f\374r)S
+158 x(DX-Dateien)S 157 x(aus)S 158 x(WPS-PLUS)S 158 x(oder)S 158 x(anderen)S
+3899 X 598 y(Anwendungen\).)S 3899 9340 XY(W)S -9 x(eiterhin)S 161 x
+(sind)S 160 x(WK1,)S 164 x(WK3,)S 163 x(DIF)S -55 x(,)S 161 x(CALCGRD,)S
+161 x(ASCII-T)S -54 x(abellenkonver)S -2 x(ter)S 162 x(und)S 161 x(ASCII-Feldkonverter)S
+162 x(verf\374gbar)S -27 x(,)S 3899 X 598 y(mit)S 166 x(denen)S 166 x
+(Daten)S 166 x(dieser)S 165 x(Formate)S 167 x(in)S 165 x(DECchart)S
+166 x(\374bertragen)S 166 x(werden)S 166 x(k\366nnen.)S 3899 10934 XY
+(Zus\344tzliche)S 207 x(Konverter)S 208 x(sind)S 207 x(\374ber)S 207 x
+(die)S 206 x(CDA)S 207 x(Converter)S 207 x(Library)S 207 x(f\374r)S
+207 x(OpenVMS\207)S 208 x(V)S -37 x(AX\207)S 208 x(erh\344ltlich.)S
+344 x(W)S -8 x(eitere)S 3899 X 598 y(Informationen)S 193 x(\211nden)S
+193 x(Sie)S 193 x(im)S 193 x(Dokument)S 192 x("Hardware-)S 192 x(und)S
+193 x(Softwareumgebung")S 193 x(f\374r)S 193 x(CDA)S 193 x(Converter)S
+193 x(Library)S -38 x(,)S 3899 X 598 y(\(SSA)S 167 x(31-31.XX\).)S 3899 13126 XY
+(Zus\344tzlich)S 211 x(gibt)S 211 x(es)S 210 x(einen)S 211 x(Interleaf-Konverter)S
+211 x(von)S 211 x(einem)S 210 x(Dritthersteller)S -28 x(,)S 223 x(mit)S
+211 x(dem)S 210 x(DECwrite-Dokumente)S 210 x(in)S 3899 X 598 y(und)S
+220 x(von)S 221 x(Interleaf\207)S 222 x(konvertiert)S 220 x(werden)S
+220 x(k\366nnen.)S 386 x(Dieser)S 220 x(Konverter)S 221 x(erm\366glicht)S
+220 x(Benutzern,)S 235 x(DECwrite)S 220 x(als)S 3899 X 598 y(V)S -27 x
+(orbereitungs-T)S -56 x(ool)S 232 x(f\374r)S 233 x(teurere)S 232 x(Interleaf)S
+233 x(TPS\207-Sof)S 2 x(tware)S 232 x(verwenden)S 231 x(zu)S 233 x(k\366nnen.)S
+420 x(Der)S 232 x(Konverter)S 233 x(ist)S 232 x(bei)S 3899 X 597 y(Keyword)S
+166 x(Of)S -9 x(\211ce)S 166 x(T)S -55 x(echnologies,)S 165 x(Ltd.,)S
+168 x(Calgary)S -38 x(,)S 167 x(Kanada,)S 166 x(erh\344ltlich.)S 3899 15916 XY
+F35(DECwrite-Do)S -2 x(kumente)S 167 x(versenden)S 3899 16912 XY F34
+(W)S -9 x(enn)S 211 x(Sie)S 210 x(die)S 210 x(Produkte)S 211 x(DECwindow)S
+-2 x(s)S 211 x(Motif)S 211 x(Mail)S 210 x(oder)S 210 x(OpenVMS)S 211 x
+(Mail)S 209 x(Utility)S 210 x(zum)S 211 x(V)S -27 x(ersenden)S 210 x
+(eines)S 210 x(Do-)S 3899 X 598 y(kumentes)S 224 x(verwenden,)S 239 x
+(erstellen)S 223 x(diese)S 224 x(Softwareprodukte)S 225 x(eine)S 224 x
+(einzige)S 223 x(Datei,)S 238 x(die)S 224 x(sowohl)S 223 x(das)S 224 x
+(DECwrite-)S 3899 X 597 y(Dokument)S 204 x(als)S 203 x(auch)S 203 x
+(alle)S 203 x(verbundenen)S 203 x(Dateien)S 204 x(enth\344lt,)S 214 x
+(und)S 203 x(sendet)S 204 x(diese)S 203 x(an)S 204 x(den)S 204 x(jewei)S
+-2 x(ligen)S 203 x(Empf\344nger)S -27 x(.)S 3899 X 598 y(Dieser)S 165 x
+(kann)S 166 x(anschlie\337end)S 165 x(die)S 166 x(Datei)S 166 x(und)S
+166 x(auch)S 166 x(alle)S 165 x(verbundenen)S 165 x(Dateien)S 166 x
+(einlesen.)S 3899 19701 XY F35(Exportieren)S 166 x(zum)S 166 x(Bookreader)S
+3899 20698 XY F34(Mit)S 172 x(DECwrite)S 172 x(k\366nnen)S 173 x(Onli)S
+-2 x(ne-Dokumentationen)S 173 x(erstellt)S 172 x(und)S 173 x(so)S 172 x
+(aufbereitet)S 173 x(werden,)S 174 x(da\337)S 173 x(sie)S 172 x(in)S
+173 x(der)S 172 x(Online-)S 3899 X 597 y(Bibliothek)S 145 x(des)S 145 x
+(Bookreaders\207)S 146 x(abgelegt)S 145 x(werden)S 145 x(k\366nnen.)S
+215 x(DECwrite)S 145 x(erstellt)S 145 x(themengegliederte)S 145 x(oder)S
+146 x(seiten-)S 3899 X 598 y(orientierte)S 175 x(B\374cher)S -27 x(.)S
+251 x(Gra\211ken,)S 179 x(T)S -55 x(abellen)S 174 x(und)S 176 x(Fu\337noten)S
+177 x(k\366nnen)S 176 x(auch)S 175 x(im)S 176 x(Einblendmen\374)S 175 x
+(in)S 175 x(einem)S 175 x(separaten)S 3899 X 598 y(Fenster)S 143 x(angezeigt)S
+142 x(werden.)S 213 x(Das)S 142 x(DECwrite-Inhaltsverzeichnis)S 141 x
+(und)S 143 x(das)S 142 x(-Register)S 142 x(dienen)S 142 x(im)S 141 x
+(Bookreader)S 143 x(zur)S 3899 X 598 y(Orientierung)S 165 x(innerhalb)S
+165 x(des)S 166 x(Buches.)S 222 x(Querverwei)S -2 x(se)S 166 x(werden)S
+166 x(ebenfalls)S 165 x(in)S 166 x(den)S 166 x(Bookreader)S 166 x(\374bernommen.)S
+3899 24085 XY F35(V)S -18 x(orlagen)S 3899 25081 XY F34(F\374r)S 166 x
+(folgende)S 166 x(Elemente)S 166 x(k\366nnen)S 166 x(V)S -27 x(orlagen)S
+165 x(vom)S 166 x(Benutzer)S 167 x(erstellt)S 166 x(werden:)S 3899 X
+897 y(\201)S 872 x(Abs\344tze)S 3899 X 896 y(\201)S 872 x(\334berschriften)S
+3899 X 897 y(\201)S 872 x(Listen)S 3899 X 897 y(\201)S 872 x(T)S -55 x
+(abellen)S 3899 X 896 y(\201)S 872 x(Fu\337noten)S 3899 X 897 y(\201)S
+872 x(Inhaltsverzeichnisse)S 3899 X 897 y(\201)S 872 x(Register)S 3899 32454 XY
+(Mit)S 164 x(Hilfe)S 163 x(der)S 164 x(V)S -27 x(orlagen)S 163 x(werden)S
+164 x(die)S 163 x(einzelnen)S 163 x(T)S -55 x(extelemente)S 165 x(vom)S
+164 x(Benutzer)S 164 x(formatiert.)S 222 x(Durch)S 164 x(\304nderung)S
+164 x(der)S 3899 X 597 y(V)S -27 x(orlagenattribute)S 166 x(lassen)S
+165 x(sich)S 166 x(andere)S 166 x(V)S -27 x(orlagen,)S 166 x(beispiel)S
+-2 x(sweise)S 166 x(f\374r)S 166 x(T)S -55 x(extvorspann)S 166 x(oder)S
+166 x(Untertitel,)S 167 x(erstellen.)S 3899 34048 XY(V)S -27 x(orlagen,)S
+138 x(die)S 130 x(in)S 131 x(DECwri)S -2 x(te)S 132 x(vorde\211niert)S
+131 x(sind,)S 138 x(k\366nnen)S 131 x(kopiert)S 131 x(und)S 131 x(anschlie\337end)S
+130 x(ge\344ndert)S 131 x(oder)S 131 x(vom)S 131 x(Benutzer)S 3899 X
+597 y(neu)S 153 x(erstellt)S 153 x(werden.)S 217 x(Die)S 153 x(V)S -27 x
+(orlagen)S 152 x(k\366nnen)S 153 x(f\374r)S 154 x(beliebige)S 152 x
+(Dokumente)S 153 x(verwendet)S 153 x(werden.)S 217 x(Ein)S 153 x(gemeinsamer)S
+3899 X 598 y(Zugrif)S -9 x(f)S 167 x(auf)S 166 x(V)S -27 x(orlagendokumente)S
+166 x(ist)S 166 x(m\366glich.)S 15431 37373 XY F40(5)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (6) 6
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3960 XY F34(Dieses)S 220 x(Konzept)S
+221 x(von)S 221 x(Elementen,)S 235 x(auf)S 221 x(die)S 220 x(V)S -27 x
+(orlagen)S 220 x(angewendet)S 221 x(werden,)S 234 x(erm\366glicht)S
+220 x(eine)S 220 x(T)S -18 x(rennung)S 220 x(von)S 3899 X 598 y(Dokumentinhalt)S
+198 x(und)S 199 x(Dokumentformat.)S 320 x(Somit)S 199 x(bestimmt)S 199 x
+(der)S 198 x(Benutzer)S 199 x(selbst)S 199 x(das)S 199 x(Erscheinungsbil)S
+-2 x(d)S 199 x(eines)S 3899 X 598 y(Dokuments.)S 297 x(V)S -27 x(orlageninformationen)S
+190 x(werden)S 191 x(in)S 190 x(Dialogboxen)S 190 x(angezeigt,)S 198 x
+(in)S 191 x(denen)S 191 x(der)S 191 x(Benutzer)S 191 x(dann)S 191 x
+(\304n-)S 3899 X 598 y(derungen)S 166 x(wie)S 165 x(z.B.)S 167 x(Punktgr\366\337e,)S
+167 x(Schrift,)S 168 x(Zeilenabst\344nde,)S 166 x(Ausrichtung)S 166 x
+(usw)S -28 x(.)S 222 x(vornehmen)S 166 x(kann.)S 3899 6750 XY(Das)S
+190 x(Erscheinungsbild)S 190 x(eines)S 191 x(Dokuments)S 191 x(wird)S
+189 x(automatisch)S 192 x(ver\344ndert,)S 198 x(wenn)S 190 x(der)S 191 x
+(Benutzer)S 191 x(eine)S 190 x(V)S -27 x(orlagen-)S 3899 X 598 y(de\211nition)S
+178 x(\344ndert.)S 262 x(Einem)S 179 x(Element)S 179 x(kann)S 179 x
+(jederzeit)S 178 x(eine)S 179 x(neue)S 179 x(V)S -27 x(orlage)S 178 x
+(zugeordnet)S 179 x(werden.)S 261 x(Es)S 179 x(k\366nnen)S 179 x(z.B.)S
+3899 X 597 y(alle)S 158 x(Haupt\374berschriften)S 158 x(in)S 159 x(Unter\374berschriften)S
+158 x(ge\344ndert)S 159 x(werden,)S 160 x(indem)S 158 x(der)S 158 x
+(Benutzer)S 159 x(lediglich)S 157 x(die)S 158 x(entspre-)S 3899 X 598 y
+(chende)S 194 x(V)S -28 x(orlage)S 194 x(f\374r)S 194 x(Unter\374berschriften)S
+194 x(auf)S 194 x(alle)S 193 x(Haupt\374berschriften)S 194 x(anwendet.)S
+305 x(Diese)S 193 x(\304nderung)S 193 x(kann)S 194 x(f\374r)S 3899 X
+598 y(das)S 202 x(gesamte)S 202 x(Dokument)S 201 x(vorgenommen)S 202 x
+(werden,)S 210 x(so)S 202 x(da\337)S 202 x(auch)S 201 x(lange)S 202 x
+(Dokumente)S 201 x(einfach)S 202 x(und)S 202 x(schnell)S 200 x(zu)S
+3899 X 598 y(bearbeiten)S 166 x(sind.)S 3899 10735 XY(F\374r)S 208 x
+(lokale)S 207 x(\304nderungen,)S 219 x(wie)S 207 x(beispielswei)S -2 x
+(se)S 208 x(das)S 208 x(Unterstreichen)S 208 x(eines)S 208 x(W)S -9 x
+(ortes,)S 219 x(steht)S 209 x(die)S 208 x(Funktionsleiste,)S 3899 X
+598 y(der)S 141 x(Knopf)S 142 x(zum)S 142 x(Unterstreichen,)S 147 x
+(das)S 141 x(Men\374)S 142 x(Format)S 142 x(oder)S 141 x(das)S 142 x
+(Feld)S 141 x(f\374r)S 142 x(T)S -55 x(extattribute)S 143 x(zur)S 141 x
+(V)S -27 x(erf\374gung,)S 147 x(mit)S 142 x(denen)S 3899 X 598 y(verschiedene)S
+160 x(T)S -55 x(extattribute)S 161 x(wie)S 160 x(z.B.)S 161 x(Schriftart,)S
+163 x(-gr\366\337e,)S 162 x(-farbe,)S 162 x(-neigung)S 160 x(usw)S -28 x
+(.)S 220 x(festgelegt)S 161 x(werden.)S 219 x(DECwrite)S 3899 X 597 y
+(f\374hrt)S 199 x(somit)S 197 x(\304nderungen)S 198 x(schnell)S 197 x
+(und)S 198 x(nur)S 198 x(einmal,)S 205 x(aber)S 197 x(global)S 197 x
+(f\374r)S 199 x(das)S 197 x(ganze)S 198 x(Dokument)S 198 x(zutref)S
+-8 x(fend)S 198 x(durch,)S 3899 X 598 y(wenn)S 165 x(globale)S 165 x
+(V)S -27 x(orlagen\344nderungen)S 165 x(nicht)S 166 x(angemessen)S 166 x
+(sind.)S 3899 14122 XY F35(Seitengestaltung)S 167 x(und)S 165 x(Seitennumerierung)S
+3899 15119 XY F34(DECwrite)S 286 x(verf\374gt)S 288 x(\374ber)S 287 x
+(eine)S 287 x(V)S -9 x(ielzahl)S 286 x(von)S 288 x(Layoutfunktionen)S
+288 x(f\374r)S 287 x(T)S -55 x(ext,)S 319 x(Seiten)S 287 x(und)S 288 x
+(Dokumente.)S 585 x(T)S -55 x(ext-)S 3899 X 597 y(vorlagen)S 291 x(werden)S
+290 x(in)S 291 x(einem)S 291 x(anderen)S 291 x(Abschnitt)S 292 x(n\344her)S
+291 x(erl\344utert)S 291 x(\(siehe)S 291 x("V)S -27 x(orlagen")S 290 x
+(in)S 291 x(dieser)S 291 x(Software-)S 3899 X 598 y(Produktbeschreibung\).)S
+435 x(Seiten)S 238 x(werden)S 236 x(mit)S 238 x(Hilfe)S 236 x(von)S
+238 x(Seitenvorlagen)S 236 x(formatiert,)S 257 x(die)S 236 x(sowohl)S
+237 x(f\374r)S 237 x(einfach)S 3899 X 598 y(bedruckte)S 177 x(als)S
+177 x(auch)S 177 x(f\374r)S 178 x(doppelseitig)S 176 x(gedruckte)S 178 x
+(Seiten)S 177 x(de\211niert)S 177 x(werden)S 177 x(k\366nnen.)S 255 x
+(Ein)S 177 x(Dokument)S 177 x(kann)S 177 x(eine)S 3899 X 598 y(beliebi)S
+-2 x(ge)S 157 x(Anzahl)S 157 x(von)S 157 x(Seitenvorlagen)S 156 x(enthalten.)S
+219 x(Elemente,)S 160 x(die)S 156 x(auf)S 157 x(jeder)S 157 x(Seite)S
+157 x(vorkommen,)S 159 x(wie)S 156 x(z.B.)S 158 x(Kopf-)S 3899 X 597 y
+(und)S 123 x(Fu\337zeilen,)S 132 x(Firmenzeichen)S 122 x(oder)S 123 x
+(Seiten-)S 124 x(und)S 123 x(Spaltenlinien,)S 131 x(k\366nnen)S 123 x
+(auf)S 123 x(der)S 123 x(Layoutseite)S 124 x(de\211niert)S 123 x(werden)S
+3899 X 598 y(und)S 166 x(so)S 166 x(automatisch)S 166 x(auf)S 167 x
+(jeder)S 165 x(Seite)S 166 x(erscheinen,)S 166 x(die)S 166 x(neu)S 166 x
+(erstellt)S 166 x(wird.)S 3899 19701 XY(Dem)S 203 x(Benutzer)S 203 x
+(stehen)S 204 x(zwei)S 202 x(M\366glichkeiten)S 202 x(zur)S 203 x(V)S
+-27 x(erf\374gung,)S 213 x(das)S 203 x(Layout)S 204 x(einer)S 202 x
+(Seite)S 204 x(festzulegen:)S 296 x(mit)S 203 x(Hilfe)S 3899 X 598 y
+(einer)S 197 x(Dialogbox)S 197 x(oder)S 197 x(interaktiv)S 198 x(durch)S
+198 x(das)S 198 x(Erstellen)S 198 x(einer)S 197 x(Layoutseite.)S 318 x
+(Der)S 197 x(T)S -55 x(ext\212u\337)S 199 x(zwischen)S 197 x(einzelnen)S
+3899 X 598 y(Seiten)S 196 x(bzw)S -28 x(.)S 312 x(Spalten)S 196 x(wird)S
+195 x(entweder)S 196 x(automatisch)S 196 x(von)S 196 x(DECwrite)S 195 x
+(vorgenommen)S 195 x(oder)S 196 x(kann)S 196 x(vom)S 196 x(Benutzer)S
+3899 X 598 y(gesteuert)S 167 x(werden,)S 166 x(was)S 165 x(z.B.)S 168 x
+(f\374r)S 166 x(nicht)S 166 x(fortlaufenden)S 167 x(T)S -55 x(ext)S
+166 x(\(wie)S 165 x(in)S 166 x(Hauszeitschriften\))S 166 x(sinnvoll)S
+165 x(ist.)S 3899 22491 XY(Formatierungsm\366glichkeiten)S 165 x(unter)S
+166 x(DECwrite:)S 3899 X 897 y(\201)S 872 x(Automatischer)S 167 x(Seitenumbruch)S
+166 x(mit)S 166 x(automatischer)S 166 x(Seitennumerierung)S 3899 X 896 y
+(\201)S 872 x(Kopf-)S 167 x(und)S 165 x(Fu\337zeilen)S 166 x(mit)S 166 x
+(T)S -55 x(ext)S 167 x(oder)S 166 x(Gra\211k)S 3899 X 897 y(\201)S 872 x
+(Bis)S 220 x(zu)S 221 x(100)S 220 x(Spalten)S 220 x(pro)S 220 x(Seite,)S
+235 x(mit)S 220 x(der)S 220 x(M\366glichkeit,)S 234 x(die)S 220 x(Anzahl)S
+220 x(der)S 220 x(Spalten)S 220 x(auf)S 221 x(einer)S 220 x(Seite)S
+220 x(frei)S 220 x(zu)S 4945 X 598 y(kombinieren,)S 165 x(wie)S 166 x
+(z.B.)S 167 x(zwei)S 165 x(Spalten)S 166 x(oben)S 166 x(und)S 166 x
+(drei)S 166 x(unten)S 3899 X 896 y(\201)S 872 x(Silbentrennung)S 165 x
+(laut)S 166 x(Lexikon)S 166 x(und)S 166 x(Algorithmus)S 3899 X 897 y
+(\201)S 872 x(Ausrichtung)S 166 x(\(Blocksatz,)S 167 x(linksb\374ndig,)S
+165 x(rechtsb\374ndig,)S 167 x(zentriert\))S 3899 X 896 y(\201)S 872 x
+(Farbiger)S 166 x(T)S -55 x(ext)S 3899 X 897 y(\201)S 872 x(Farbige)S
+166 x(Umrisse)S 165 x(und)S 166 x(farbiges)S 166 x(Ausf\374llen)S 166 x
+(f\374r)S 166 x(Gra\211ken)S 3899 X 897 y(\201)S 872 x(Bedingter)S 218 x
+(Inhalt)S 218 x(erm\366glicht)S 218 x(das)S 218 x(Anzeigen)S 218 x(oder)S
+217 x(V)S -27 x(erdecken)S 218 x(von)S 218 x(Dokumentabschnitten,)S
+232 x(je)S 218 x(nachdem)S 4945 X 598 y(welche)S 159 x(Bedingungen)S
+160 x(gew\344hlt)S 160 x(wurden.)S 219 x(Benutzer)S 161 x(k\366nnen)S
+160 x(hiermit)S 160 x(mehrere)S 160 x(unterschiedliche)S 159 x(V)S -27 x
+(ersionen)S 4945 X 597 y(mit)S 166 x(demselben)S 165 x(Dokument)S 166 x
+(erstellen.)S 3899 X 897 y(\201)S 872 x(V)S -27 x(ertikale)S 165 x(Ausrichtung)S
+3899 X 897 y(\201)S 872 x(Restzeilenkontrolle)S 165 x(beim)S 165 x(Umbruch)S
+3899 X 896 y(\201)S 872 x(Manuelles)S 165 x(Unterschneiden)S 165 x(\(Kerning\))S
+3899 X 897 y(\201)S 872 x(Schriftgr\366\337en)S 167 x(von)S 166 x(2)S
+166 x(bis)S 165 x(300)S 166 x(Punkt)S 167 x(in)S 166 x(0,01)S 166 x
+(Punkt-Schritten)S 15431 37373 XY F40(6)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (7) 7
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3976 XY F34(\201)S 872 x(Unterst\374tzung)S
+167 x(der)S 166 x(Installation)S 166 x(zus\344tzlicher)S 166 x(Schriftarten)S
+3899 X 897 y(\201)S 872 x(Unterst\374tzung)S 167 x(des)S 166 x(Zeichensatzes)S
+166 x(ISO-Latin)S 167 x(1)S 3899 X 896 y(\201)S 872 x(Aufzeichnen)S
+166 x(von)S 166 x(Makros)S 166 x(f\374r)S 167 x(Befehlsfolgen)S 3899 X
+897 y(\201)S 872 x(Listen)S 111 x(mit)S 110 x(automatischer)S 111 x
+(Kennzeichnung)S 111 x(der)S 110 x(Listenelemente)S 111 x(und)S 110 x
+(vom)S 111 x(Benutzer)S 111 x(de\211nierbaren)S 110 x(Einz\374gen)S
+3899 X 897 y(\201)S 872 x(Automatische)S 220 x(Numerierung)S 218 x(von)S
+220 x(Abschnitten,)S 234 x(Kapiteln,)S 233 x(\334berschriften,)S 234 x
+(Abs\344tzen,)S 234 x(Listen)S 219 x(\(mit)S 220 x(Unter-)S 4945 X 597 y
+(punkten\),)S 167 x(Fu\337noten)S 167 x(und)S 166 x(Anh\344ngen)S 3899 X
+897 y(\201)S 872 x(Automatische)S 167 x(V)S -27 x(erweise,)S 165 x(z.B.)S
+167 x(auf)S 167 x(T)S -55 x(ext)S 167 x(und)S 165 x(Seitenzahlen)S 166 x
+(von)S 166 x(\334berschriften)S 3899 X 897 y(\201)S 872 x(Numerische)S
+165 x(V)S -27 x(erweise)S 165 x(f\374r)S 166 x(Fu\337noten)S 167 x(und)S
+166 x(automatisches)S 167 x(Hochstellen)S 165 x(der)S 166 x(V)S -27 x
+(erweise)S 3899 X 896 y(\201)S 872 x(Anmerkungen)S 166 x(am)S 166 x
+(T)S -55 x(extrand)S 3899 X 897 y(\201)S 872 x(L\366schmarkierungen,)S
+166 x(\304nderungsmarkierungen)S 165 x(und)S 166 x(Einschubseiten)S
+3899 X 897 y(\201)S 872 x(Rechtschreibpr\374fung)S 3899 X 896 y(\201)S
+872 x(W)S -9 x(ortwahl)S 166 x(und)S 166 x(Synonymw\366rterbuch)S 166 x
+(\(nur)S 165 x(f\374r)S 167 x(Amerikanisch\))S 3899 X 897 y(\201)S 872 x
+(Automatisches)S 167 x(Erstellen)S 166 x(von)S 166 x(Inhaltsverzeichnis)S
+165 x(und)S 166 x(Register)S 166 x(\(bis)S 165 x(zu)S 166 x(vier)S 166 x
+(Eintragsebenen\))S 3899 X 896 y(\201)S 872 x(T)S -55 x(abulatoren)S
+166 x(\(rechts,)S 167 x(links,)S 165 x(zentriert,)S 167 x(dezimal\))S
+165 x(mit)S 166 x(oder)S 166 x(ohne)S 166 x(benutzerde\211nierten)S
+166 x(F\374hrungslinien)S 3899 X 897 y(\201)S 872 x(Gleichungsedi)S
+-2 x(tor)S 3899 X 897 y(\201)S 872 x(V)S -27 x(erwendung)S 165 x(von)S
+166 x(Dateien)S 166 x(im)S 165 x(EPS-Format)S 168 x(\(Encapsulated)S
+166 x(PostScript\))S 3899 X 896 y(\201)S 872 x(LiveLink-V)S -28 x(erbindungen)S
+165 x(zu)S 166 x(anderen)S 166 x(unterst\374tzt)S 2 x(en)S 166 x(Anwendungen)S
+3899 X 897 y(\201)S 872 x(Unterschiedliche)S 165 x(Seitengr\366\337en)S
+166 x(und)S 166 x(Hoch-)S 166 x(bzw)S -28 x(.)S 222 x(Querformat)S 166 x
+(in)S 165 x(einem)S 166 x(Dokument)S 3899 20016 XY F35(V)S -18 x(erbindung)S
+165 x(zu)S 166 x(Dokument)S 3899 21012 XY F34(Mit)S 185 x(DECwrite)S
+185 x(k\366nnen)S 185 x(verschiedene)S 185 x(Dateien)S 185 x(zu)S 186 x
+(einem)S 184 x(Dokument)S 186 x(zusammengef\374gt)S 186 x(werden.)S
+279 x(Kapitel)S 186 x(und)S 3899 X 598 y(Seiten)S 113 x(werden)S 112 x
+(dabei)S 112 x(korrekt)S 112 x(numeriert.)S 204 x(Inhaltsverzeichnis)S
+112 x(und)S 113 x(Register)S 112 x(k\366nnen)S 112 x(f\374r)S 113 x
+(das)S 113 x(gesamte)S 112 x(Dokument)S 3899 X 598 y(erstellt)S 232 x
+(werden.)S 420 x(So)S 232 x(k\366nnen)S 232 x(mehrere)S 232 x(Benutzer)S
+233 x(an)S 232 x(unterschiedlichen)S 231 x(T)S -55 x(eilen)S 232 x(eines)S
+231 x(Dokuments)S 233 x(arbeiten)S 3899 X 597 y(und)S 241 x(es)S 241 x
+(sp\344ter)S 241 x(zu)S 241 x(einem)S 240 x(Gesamtdokument)S 241 x(zusammenstellen.)S
+446 x(DECwrite)S 240 x(kann)S 241 x(somit)S 241 x(in)S 241 x(Multi-Autoren-)S
+3899 X 598 y(Umgebungen)S 165 x(eingesetzt)S 167 x(werden.)S 3899 24400 XY
+F35(Gra\211ken)S 3899 25396 XY F34(DECwrite)S 113 x(verf\374gt)S 116 x
+(\374ber)S 114 x(einen)S 114 x(objektorientierten)S 114 x(Editor)S 114 x
+(f\374r)S 115 x(farbige)S 114 x(Gra\211ken,)S 125 x(mit)S 114 x(dem)S
+114 x(folgende)S 115 x(Objekte)S 113 x(erstellt)S 3899 X 598 y(werden)S
+160 x(k\366nnen:)S 219 x(am)S 160 x(Winkel)S 160 x(ausgerichtete)S 161 x
+(Linien,)S 161 x(Quadrate,)S 162 x(Quadrate)S 160 x(mit)S 161 x(gegl\344tteten)S
+161 x(Ecken,)S 163 x(Rechtecke,)S 3899 X 597 y(Rechtecke)S 138 x(mit)S
+138 x(gegl\344tteten)S 139 x(Ecken,)S 144 x(Kreise,)S 144 x(Ovale,)S
+143 x(of)S -8 x(fene)S 138 x(und)S 138 x(geschlossene)S 138 x(Kreissegmente,)S
+144 x(of)S -9 x(fene)S 139 x(und)S 138 x(ge-)S 3899 X 598 y(schlossene)S
+180 x(Kreissektoren,)S 184 x(Linienz\374ge)S 179 x(und)S 180 x(V)S -9 x
+(ielecke.)S 263 x(Objekte)S 180 x(k\366nnen)S 180 x(mit)S 180 x(Mustern)S
+181 x(gef\374llt)S 180 x(oder)S 180 x(schraf)S -9 x(\211ert)S 3899 X
+598 y(werden.)S 263 x(Die)S 179 x(Umrisse)S 179 x(k\366nnen)S 179 x
+(durchgezogen,)S 184 x(gepunktet)S 181 x(oder)S 179 x(gestrichelt)S
+180 x(sein)S 179 x(bzw)S -27 x(.)S 263 x(wiederum)S 179 x(ein)S 179 x
+(Muster)S 3899 X 598 y(enthalten.)S 222 x(Die)S 165 x(Strichst\344rke)S
+167 x(ist)S 166 x(variabel.)S 221 x(Freihandzeichnungen)S 165 x(sind)S
+166 x(ebenso)S 166 x(m\366glich.)S 3899 29381 XY(Zeichnungen)S 152 x
+(und)S 152 x(Bilder)S 151 x(k\366nnen)S 153 x(mit)S 152 x(Pfeilen)S
+152 x(\(oder)S 152 x(Linien\),)S 154 x(die)S 152 x(eine)S 152 x(einfache,)S
+155 x(doppelte,)S 156 x(of)S -9 x(fene)S 153 x(oder)S 152 x(ausge-)S
+3899 X 598 y(f\374llte)S 166 x(Pfeilspitze)S 166 x(haben,)S 166 x(sowie)S
+166 x(mit)S 166 x(erkl\344rendem)S 165 x(T)S -55 x(ext)S 166 x(versehen)S
+166 x(werden.)S 3899 30975 XY(Alle)S 110 x(Objekte)S 111 x(\(einschli)S
+-2 x(e\337lich)S 111 x(der)S 111 x(T)S -55 x(extzeilen\))S 110 x(k\366nnen)S
+111 x(in)S 111 x(ihrer)S 110 x(Gr\366\337e)S 111 x(ver\344ndert)S 111 x
+(und)S 111 x(skaliert)S 110 x(werden)S 111 x(\(prozentual)S 3899 X 598 y
+(oder)S 169 x(auf)S 171 x(exakte)S 170 x(Abmessungen\).)S 233 x(W\344hrend)S
+169 x(der)S 170 x(Skalierung)S 169 x(kann)S 170 x(der)S 169 x(Benutzer)S
+170 x(w\344hlen,)S 171 x(ob)S 169 x(die)S 170 x(Linienbr)S -2 x(eite)S
+3899 X 597 y(auch)S 177 x(skaliert)S 177 x(werden)S 176 x(soll)S 176 x
+(oder)S 177 x(nicht.)S 255 x(Ausrichten,)S 181 x(Duplizi)S -2 x(eren)S
+177 x(und)S 177 x(Einstellen)S 177 x(der)S 177 x(Abst\344nde)S 177 x
+(erlauben)S 177 x(dem)S 3899 X 598 y(Benutzer)S -27 x(,)S 167 x(Gra\211ken,)S
+165 x(Schemata)S 167 x(oder)S 166 x(Flu\337diagramme)S 165 x(auf)S 167 x
+(einfache)S 166 x(Art)S 166 x(und)S 166 x(W)S -8 x(eise)S 165 x(zu)S
+166 x(erstellen.)S 3899 33764 XY(Gra\211ken)S 223 x(k\366nnen)S 223 x
+(an)S 224 x(jeder)S 222 x(Stelle)S 224 x(im)S 223 x(Dokument)S 223 x
+(plaziert)S 223 x(werden,)S 238 x(auch)S 223 x(in)S 223 x(T)S -54 x
+(abellen)S -2 x(feldern,)S 239 x(in)S 223 x(Kopf-)S 224 x(oder)S 3899 X
+598 y(Fu\337zeilen.)S 216 x(W)S -9 x(enn)S 148 x(Gra\211ken)S 147 x
+(in)S 148 x(Rahmen)S 147 x(plaziert)S 148 x(werden,)S 151 x(k\366nnen)S
+148 x(sie)S 148 x(an)S 147 x(verschiedenen)S 148 x(Stellen)S 148 x(im)S
+147 x(T)S -55 x(ext)S 149 x(oder)S 3899 X 598 y(Rand)S 165 x(verankert)S
+167 x(oder)S 166 x(auf)S 166 x(einer)S 165 x(Seite)S 167 x(\211xiert)S
+166 x(werden.)S 221 x(Diese)S 165 x(Rahmen)S 166 x(k\366nnen)S 166 x
+(im)S 165 x(T)S -55 x(ext)S 167 x("mit\212ie\337en".)S 15431 37373 XY
+F40(7)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (8) 8
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3976 XY F35(Gra\211kkatalog)S 3899 4972 XY
+F34(DECwrite)S 160 x(bietet)S 161 x(einen)S 161 x(umfangreichen)S 160 x
+(Gra\211kkatalog)S 161 x(in)S 160 x(den)S 161 x(DDIF-Bilddatei-und)S
+160 x(DDIF-Bildformaten)S 161 x(und)S 161 x(im)S 3899 X 598 y(EPS-Format)S
+210 x(an.)S 350 x(Alle)S 208 x(V)S -27 x(orlagen)S 208 x(des)S 209 x
+(DDIF-Gra\211kkatalogs)S 208 x(k\366nnen)S 209 x(mit)S 209 x(DECwri)S
+-2 x(te)S 210 x(bearbeitet)S 208 x(werden.)S 350 x(Der)S 3899 X 598 y
+(Gra\211kkatalog)S 165 x(kann)S 166 x(mit)S 166 x(Hilfe)S 166 x(eines)S
+165 x(Bitmuster-Editors)S 167 x(wie)S 165 x(z.B.)S 168 x(DECwi)S -2 x
+(ndows)S 166 x(Paint)S 166 x(bearbeitet)S 167 x(werden.)S 3899 7164 XY
+F35(DECchart)S 3899 8160 XY F34(DECchart)S 145 x(ist)S 146 x(eine)S
+145 x(benutzerfreundliche)S 146 x(Gra\211kanwendu)S -2 x(ng)S 146 x
+(zum)S 146 x(Erstellen)S 145 x(professioneller)S 145 x(Gesch\344ftsgra\211ken,)S
+3899 X 598 y(die)S 159 x(gedruckt)S 160 x(oder)S 160 x(in)S 159 x(das)S
+159 x(DECwrite-Dokument)S 159 x(integriert)S 160 x(werden)S 159 x(k\366nnen.)S
+219 x(Eine)S 160 x(Gra\211k)S 159 x(wird)S 159 x(automatisch)S 160 x
+(er-)S 3899 X 598 y(stellt,)S 141 x(wenn)S 134 x(die)S 134 x(Daten)S
+134 x(und)S 134 x(die)S 134 x(Diagrammart)S 134 x(zur)S 134 x(Darstellung)S
+133 x(angegeben)S 134 x(wurden.)S 211 x(DECchart)S 134 x(bietet)S 135 x
+(folgende)S 3899 X 598 y(M\366glichkeiten:)S 3899 X 896 y(\201)S 872 x
+(Neun)S 223 x(vorde\211nierte)S 224 x(Diagram)S -2 x(marten:)S 338 x
+(Balken-,)S 238 x(S\344ulen-,)S 224 x(Zeilen-,)S 237 x(Kreis-,)S 239 x
+(Fl\344chen-,)S 238 x(Streu-,)S 239 x(Min-Max-,)S 4945 X 598 y(H\344u\211gkeits-)S
+166 x(und)S 166 x(Kombinationsdiagramm)S -2 x(e)S 3899 X 897 y(\201)S
+872 x(Bis)S 166 x(zu)S 166 x(45)S 166 x(Diagrammvorl)S -2 x(agen)S 3899 X
+896 y(\201)S 872 x(V)S -27 x(orde\211nierte)S 227 x(Diagrammvorl)S -2 x
+(agen,)S 243 x(die)S 227 x(ver\344ndert)S 228 x(und)S 227 x(an)S 227 x
+(benutzerspezi\211sche)S 227 x(Bed\374rfnisse)S 228 x(angepa\337t)S
+4945 X 598 y(werden)S 165 x(k\366nnen)S 3899 X 897 y(\201)S 872 x(Datenimport)S
+166 x(von)S 166 x(Lotus\2061-2-3-\206,)S 167 x(DIF-)S 166 x(und)S 166 x
+(ASCII-Dateien)S 3899 X 896 y(\201)S 872 x(Benutzerfreundliches)S 167 x
+(Arbeitsblatt)S 167 x(zur)S 167 x(Dateneingabe)S 166 x(und)S 167 x(-\344nderung)S
+166 x(\(Ausschneiden,)S 167 x(Kopieren,)S 167 x(Einf\374-)S 4945 X 598 y
+(gen)S 166 x(von)S 166 x(Daten)S 166 x(in)S 166 x(das)S 166 x(Arbeitsblatt\))S
+3899 X 897 y(\201)S 872 x(Automatisches)S 167 x(Erzeugen)S 166 x(einer)S
+165 x(T)S -18 x(rendlinie)S 165 x(f\374r)S 166 x(Streudiagramme)S 3899 X
+896 y(\201)S 872 x(Erg\344nzungen)S 183 x(und)S 184 x(Hervorhebungen)S
+182 x(an)S 184 x(beliebi)S -2 x(gen)S 184 x(Stellen)S 183 x(des)S 184 x
+(Diagramms:)S 255 x(T)S -54 x(ext,)S 188 x(Linien,)S 188 x(Rechtecke,)S
+4945 X 598 y(Pfeilspitzen)S 3899 X 897 y(\201)S 872 x(Farbunterst\374tzung)S
+218 x(auf)S 217 x(dem)S 216 x(Bildschirm)S 215 x(f\374r:)S 323 x(Achsen,)S
+230 x(Grundli)S -2 x(nien,)S 229 x(Rahmen,)S 229 x(Raster)S -27 x(,)S
+229 x(Legenden,)S 229 x(Be-)S 4945 X 598 y(schriftungen,)S 167 x(T)S
+-55 x(eilstriche,)S 166 x(F\374llattribute)S 166 x(und)S 166 x(Erg\344nzungen)S
+3899 X 896 y(\201)S 872 x(\304ndern)S 175 x(der)S 175 x(Einstellung)S
+175 x(folgender)S 175 x(Diagram)S -2 x(mattribute:)S 241 x(Achsen,)S
+179 x(Grundl)S -2 x(inien,)S 177 x(W)S -8 x(erte,)S 178 x(Rahmen,)S
+177 x(Raster)S -27 x(,)S 4945 X 598 y(Legenden,)S 159 x(Beschriftungen,)S
+159 x(T)S -55 x(eilstriche,)S 158 x(Schatt)S 2 x(ierungen,)S 158 x(Abstand)S
+157 x(zwischen)S 156 x(den)S 157 x(einzelnen)S 155 x(Balken)S 157 x
+(und)S 4945 X 598 y(Prozentsatz)S 167 x(der)S 166 x(\334berlappung)S
+3899 X 896 y(\201)S 872 x(\304ndern)S 166 x(von)S 166 x(T)S -55 x(extatt)S
+2 x(ributen:)S 221 x(Schriftgr\366\337e,)S 168 x(Schriftart,)S 167 x
+(Schriftst\344rke)S 167 x(und)S 166 x(Schriftneigung)S 3899 X 897 y
+(\201)S 872 x(Flexibili)S -2 x(t\344t)S 181 x(beim)S 180 x(Speichern)S
+180 x(von)S 180 x(Daten:)S 250 x(Daten,)S 184 x(Diagrammvorlagen)S -2 x
+(,)S 185 x(Diagrammer)S -2 x(g\344nzungen)S 180 x(und)S 180 x(Far-)S
+4945 X 598 y(ben)S 166 x(k\366nnen)S 166 x(einzeln)S 165 x(oder)S 166 x
+(zusammen)S 166 x(gespeichert)S 166 x(werden)S 3899 X 896 y(\201)S 872 x
+(Frei)S 166 x(w\344hlbare)S 165 x(F\374llmuster)S -28 x(,)S 167 x(Linienmuster)S
+-28 x(,)S 166 x(Markierungsarten)S 166 x(und)S 166 x(Attribute)S 3899 X
+897 y(\201)S 872 x(Anpassung)S 166 x(an)S 166 x(benutzerspezi\211sche)S
+166 x(Einstellungen)S 3899 X 897 y(\201)S 872 x(M\366glichkeit,)S 166 x
+(Erg\344nzungen)S 166 x(zu)S 166 x(verschieben)S 165 x(und)S 166 x(in)S
+166 x(der)S 165 x(Gr\366\337e)S 166 x(zu)S 166 x(ver\344ndern)S 3899 28385 XY
+F35(Bildformate)S 3899 29381 XY F34(Mit)S 164 x(DECwri)S -2 x(te)S 164 x
+(k\366nnen)S 164 x(LiveLink-V)S -28 x(erbindungen)S 163 x(zu)S 164 x
+(Farb-,)S 164 x(Schwarzwei\337-)S 163 x(und)S 163 x(Graustufenbildern)S
+163 x(erstellt)S 164 x(wer-)S 3899 X 598 y(den.)S 455 x(Bilder)S 243 x
+(k\366nnen)S 244 x(mit)S 243 x(der)S 244 x(DECimage)S 243 x(Scan)S 244 x
+(Software)S 244 x(eingescannt)S 244 x(oder)S 244 x(mit)S 243 x(der)S
+244 x(DECwindow)S -2 x(s)S 244 x(Paint)S 3899 X 597 y(Screen)S 218 x
+(Utility)S 218 x(erstellt)S 218 x(werden.)S 378 x(W)S -9 x(eiterhin)S
+218 x(k\366nnen)S 218 x(TIFF-Bilder)S 219 x(wie)S 217 x(z.B.)S 219 x
+(TIF)S 2 x(F)S -55 x(,)S 218 x(GIF)S -55 x(,)S 219 x(PICT)S 219 x(und)S
+218 x(MacPaint\206)S 3899 X 598 y(\374ber)S 172 x(einen)S 171 x(Konverter)S
+173 x(importiert)S 172 x(werden.)S 239 x(W)S -9 x(eitere)S 172 x(Informat)S
+2 x(ionen)S 171 x(\211nden)S 172 x(Sie)S 172 x(im)S 172 x(Dokument)S
+172 x("Hardware-)S 171 x(und)S 3899 X 598 y(Softwareumgebung")S 166 x
+(f\374r)S 166 x(CDA)S 166 x(Converter)S 166 x(Library)S -38 x(,)S 167 x
+(SSA)S 167 x(31-31.XX.)S 3899 32768 XY(Auch)S 207 x(zu)S 208 x(Bildern,)S
+217 x(die)S 206 x(mit)S 208 x(DECwi)S -2 x(ndows)S 207 x(Paint)S 208 x
+(erstellt)S 207 x(wurden,)S 217 x(k\366nnen)S 207 x(LiveLink-V)S -28 x
+(erbindungen)S 207 x(hergestellt)S 3899 X 598 y(werden.)S 221 x(Es)S
+166 x(ist)S 167 x(m\366glich,)S 165 x(diese)S 166 x(Bilder)S 165 x(in)S
+166 x(DECwri)S -2 x(te)S 167 x(zu)S 166 x(beschriften,)S 167 x(zu)S
+166 x(skalieren)S 165 x(oder)S 166 x(zu)S 166 x(beschneiden.)S 3899 34362 XY
+(W)S -9 x(enn)S 169 x(LiveLink-V)S -28 x(erbindungen)S 169 x(zu)S 169 x
+(Encapsulated)S 170 x(PostScript)S 170 x(hergestellt)S 170 x(werden,)S
+170 x(werden)S 169 x(diese)S 169 x(nur)S 169 x(auf)S 170 x(dem)S 3899 X
+598 y(Bildschirm)S 165 x(angezeigt,)S 166 x(wenn)S 166 x(die)S 165 x
+(Display)S 165 x(PostScript\206)S 167 x(Erweiterung)S 166 x(f\374r)S
+166 x(DECwindows)S 165 x(installier)S -2 x(t)S 167 x(ist.)S 15431 37373 XY
+F40(8)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica-Oblique
+%%+ Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (9) 9
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3976 XY F34(W)S -9 x(eitere)S 166 x
+(Konverter)S 166 x(sind)S 166 x(wahlwei)S -2 x(se)S 167 x(in)S 165 x
+(der)S 166 x(CDA)S 166 x(Converter)S 165 x(Library)S 166 x(verf\374gbar)S
+-28 x(.)S 3899 4972 XY F35(V)S -18 x(orlagendokumente)S 3899 5969 XY
+F34(DECwrite)S 195 x(enth\344lt)S 197 x(15)S 197 x(vorde\211nierte)S
+196 x(V)S -27 x(orlagendokumente:)S 282 x(Allgemein1,)S 203 x(Allgemein2,)S
+204 x(Brief,)S 204 x(Handbuch,)S 204 x(Kurz-)S 3899 X 597 y(mitteilung,)S
+176 x(Interne)S 176 x(Mitteilung,)S 176 x(Milit\344rische)S 173 x(Spezi\211kation,)S
+177 x(Zeitschrift,)S 178 x(Preisliste,)S 176 x(Bericht,)S 178 x(Folien)S
+174 x(\(T)S -56 x(echnisch\),)S 3899 X 598 y(Folien)S 284 x(\(Quer\),)S
+313 x(Folien)S 284 x(\(Hoch\),)S 313 x(T)S -54 x(echnische)S 283 x(Publikation)S
+284 x(und)S 284 x(T)S -55 x(elefonverzeichnis.)S 576 x(Diese)S 284 x
+(V)S -28 x(orlagendoku-)S 3899 X 598 y(mente)S 247 x(k\366nnen)S 247 x
+(als)S 247 x(Layoutvorlagen)S 246 x(f\374r)S 247 x(jedes)S 247 x(Dokument)S
+247 x(verwendet)S 247 x(oder)S 246 x(vom)S 247 x(Benutzer)S 248 x(an)S
+247 x(spezi\211sche)S 3899 X 598 y(Gegebenheiten)S 193 x(angepa\337t)S
+195 x(werden.)S 307 x(F\374r)S 194 x(die)S 194 x(Funktion)S 195 x("Exportieren)S
+194 x(zum)S 194 x(Bookreader")S 194 x(stehen)S 195 x(Bookreader-)S 3899 X
+597 y(V)S -27 x(orlagendokumente)S 165 x(zur)S 166 x(V)S -27 x(erf\374gung.)S
+3899 9954 XY F35(Qualitativ)S 165 x(hochwertige)S 166 x(Ausgabe)S 3899 10950 XY
+F34(Die)S 247 x(Schwarz-/W)S -8 x(ei\337ausgabe)S 248 x(erfolgt)S 248 x
+(auf)S 249 x(hochwertigen)S 248 x(PostScript-Druckern)S 248 x(von)S
+249 x(Digi)S -2 x(tal)S 249 x(Equipment,)S 269 x(bei-)S 3899 X 598 y
+(spielswei)S -2 x(se)S 181 x(LN03)S 180 x(ScriptPrinter\207,)S 185 x
+(DEClaser\2073250,)S 183 x(PrintServer\20720,)S 185 x(turbo)S 181 x
+(PrintServer20,)S 184 x(PrintServer40)S 3899 X 597 y(und)S 151 x(PrintServer40)S
+152 x(Plus.)S 217 x(DECwrite)S 151 x(liefert)S 151 x(au\337erdem)S 152 x
+(farbige)S 151 x(PostScript-Ausgaben)S 153 x(auf)S 152 x(vielen)S 151 x
+(Farbdruckern)S 3899 X 598 y(von)S 166 x(Digital)S 165 x(Equipment)S
+166 x(und)S 166 x(anderen)S 165 x(Herstellern.)S 3899 14238 XY F32(Mindest-Hardwarekon\211g)S
+-2 x(uration)S 3899 15234 XY F34(Die)S 166 x(Prozessor-)S 167 x(und)S
+167 x(Hardwarekon\211gurationen)S 166 x(werden)S 167 x(im)S 166 x(Dokument)S
+168 x("Hardw)S -2 x(are-)S 167 x(und)S 167 x(Softwareumgebung")S 3899 X
+598 y(\(SSA)S 167 x(25.R8.04-A\))S 166 x(angegeben.)S 3899 16828 XY
+F35(Anzeigeger\344te)S 3899 17824 XY F34(DECwrite)S 185 x(ist)S 185 x
+(auf)S 186 x(jedem)S 185 x(der)S 185 x(in)S 185 x(der)S 186 x(Hardware-)S
+184 x(und)S 185 x(Soft)S 2 x(wareumgebung)S 184 x(erw\344hnten)S 185 x
+(Prozessoren)S 186 x(lauf)S -9 x(f\344hig,)S 3899 X 598 y(verlangt)S
+136 x(aber)S 136 x(ein)S 135 x(Anzeigeger\344t.)S 212 x(Zu)S 137 x(den)S
+136 x(unterst\374tzt)S 2 x(en)S 136 x(Anzeigeger\344ten)S 136 x(geh\366ren)S
+136 x(ein)S 135 x(VT1200*,)S 143 x(ein)S 136 x(VT1300*,)S 3899 X 598 y
+(ein)S 219 x(VXT2000\207)S 221 x(V)S -37 x(AXELN)S 220 x(Window)S 219 x
+(Server)S -27 x(,)S 233 x(ein)S 219 x(PC)S 220 x(mit)S 219 x(PC)S 220 x
+(DECwindow)S -2 x(s)S 220 x(oder)S 219 x(ein)S 220 x(PC)S 219 x(mit)S
+220 x(eXcursion)S 219 x(f\374r)S 3899 X 597 y(Windows*.)S 3899 X 897 y
+F42(*)S 5144 X(Diese)S 145 x(Ger\344te)S 143 x(k\366nnen)S 143 x(nicht)S
+145 x(empfoh)S -2 x(len)S 145 x(werd)S -2 x(en,)S 148 x(wen)S -2 x(n)S
+145 x(die)S 145 x(Leistung)S -2 x(sf\344higkeit)S 144 x(einer)S 144 x
+(W)S -7 x(orkstation)S 144 x(gew\374n)S -2 x(scht)S 145 x(wird.)S 223 x
+(Bei)S 145 x(der)S 5144 X 498 y(V)S -22 x(erwen)S -2 x(dung)S 131 x
+(dieser)S 132 x(Anzeigege)S -2 x(r\344te)S 132 x(mu\337)S 132 x(eine)S
+132 x(Reihe)S 132 x(von)S 132 x(Einschr\344nkung)S -2 x(en)S 132 x(beacht)S
+-2 x(et)S 133 x(werd)S -2 x(en,)S 132 x(wie)S 132 x(z.B.)S 133 x(folgen)S
+-2 x(de:)S 5144 X 897 y(\201)S 6190 X(Anzahl)S 132 x(der)S 132 x(Fenster)S
+-23 x(,)S 133 x(die)S 132 x(gleichzeitig)S 133 x(ge\366f)S -9 x(fnet)S
+132 x(werd)S -2 x(en)S 132 x(k\366nnen)S 5144 X 647 y(\201)S 6190 X
+(Anzahl)S 132 x(der)S 132 x(Gra\211ken)S 132 x(ode)S -2 x(r)S 133 x
+(Bilder)S 132 x(in)S 133 x(einem)S 132 x(Dokumen)S -2 x(t)S 5144 X 648 y
+(\201)S 6190 X(Die)S 133 x(ben\366)S -2 x(tige)S 132 x(Zeit,)S 133 x
+(um)S 133 x(Schrifttype)S -2 x(n)S 133 x(beim)S 132 x(\326f)S -7 x(fne)S
+-2 x(n)S 133 x(eines)S 132 x(Dokumen)S -2 x(ts)S 133 x(herun)S -2 x
+(terzulade)S -2 x(n)S 5144 X 648 y(\201)S 6190 X(Unterst\374)S -2 x
+(tzung)S 132 x(der)S 131 x(Bookrea)S -2 x(derfun)S -2 x(ktion)S 5144 X
+647 y(\201)S 6190 X(Unterst\374)S -2 x(tzung)S 132 x(der)S 131 x(Funktionen)S
+132 x(Ausschneide)S -2 x(n)S 133 x(und)S 131 x(Einf\374ge)S -2 x(n)S
+133 x(in)S 133 x(unte)S -2 x(rschiedlichen)S 132 x(Anwend)S -2 x(unge)S
+-2 x(n)S 133 x(und)S 131 x(bei)S 133 x(umfan)S -2 x(greichen)S 6190 X
+498 y(Dokumen)S -2 x(ten)S 132 x(mit)S 133 x(T)S -43 x(ext,)S 132 x
+(Gra\211ken)S 132 x(und)S 131 x(Bildern)S 5144 X 648 y(\201)S 6190 X
+(Fehlen)S 132 x(einiger)S 132 x(Schrifttypen)S 5144 X 647 y(\201)S 6190 X
+(Keine)S 132 x(Unter)S -2 x(st\374tzung)S 132 x(von)S 132 x(Display)S
+133 x(PostScript)S 3899 27438 XY F34(W)S -9 x(eitere)S 225 x(Informationen)S
+225 x(\374ber)S 224 x(unterst\374t)S 2 x(zte)S 225 x(Hardwarekon\211gur)S
+-2 x(ationen)S 225 x(\211nden)S 225 x(Sie)S 224 x(im)S 224 x(Dokument)S
+225 x("Hardware-)S 3899 X 598 y(und)S 166 x(Softwareumgebung")S 166 x
+(\(SSA)S 167 x(25.R8.04-A\).)S 3899 29530 XY F32(Erforderliche)S 183 x
+(Software)S 3899 30527 XY F34(Die)S 165 x(folgende)S 166 x(Software)S
+167 x(ist)S 166 x(erforderlich,)S 166 x(um)S 165 x(die)S 166 x(V)S -27 x
+(ersion)S 165 x(3.0)S 167 x(von)S 166 x(DECwri)S -2 x(te)S 167 x(ausf\374hren)S
+166 x(zu)S 166 x(k\366nnen:)S 3899 X 896 y(\201)S 872 x(Betriebssystem)S
+167 x(OpenVMS)S 166 x(V)S -37 x(AX)S 3899 X 897 y(\201)S 872 x(OpenVMS)S
+166 x(DECwindow)S -2 x(s)S 166 x(Motif)S 3899 33416 XY(N\344here)S 239 x
+(Informationen)S 239 x(zur)S 240 x(V)S -27 x(erf\374gbarkeit)S 239 x
+(von)S 239 x(erforderlicher)S 239 x(oder)S 239 x(zus\344tzlicher)S 239 x
+(Software)S 240 x(und)S 239 x(der)S 239 x(jeweil)S -2 x(s)S 3899 X 597 y
+(erforderlichen)S 165 x(V)S -27 x(ersion)S 165 x(\211nden)S 166 x(Sie)S
+166 x(im)S 166 x(Dokument)S 166 x("Hardwar)S -2 x(e-)S 166 x(und)S 166 x
+(Softwareumgebung")S 166 x(\(SSA)S 167 x(25.R8.04-A\).)S 15431 37373 XY
+F40(9)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (10) 10
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3996 XY F32(Bestellinformationen)S
+4945 5291 XY F34(Software-Lizenzen:)S 222 x(QL-VVFG*-**)S 4945 X 598 y
+(Software-Datentr\344ger:)S 222 x(QA-VVFGA-H5)S 4945 X 597 y(Software-Dokumentation:)S
+222 x(QA-VVFGA-GZ)S 4945 X 598 y(Software-Produktdienstleistungen:)S
+222 x(QT)S -27 x(-VVFG*-**)S 3899 8479 XY F42(*)S 5144 X(Das)S 137 x
+(Zeichen)S 136 x(*)S 137 x(steht)S 135 x(f\374r)S 136 x(variable)S 136 x
+(Felder)S -22 x(.)S 207 x(W)S -7 x(eitere)S 135 x(Informa)S -2 x(tionen)S
+135 x(\374ber)S 136 x(die)S 136 x(zur)S 136 x(V)S -22 x(erf\374g)S -2 x
+(ung)S 136 x(stehen)S -2 x(den)S 136 x(Lizenzen,)S 136 x(Dienstleistun-)S
+5144 X 498 y(gen)S 132 x(und)S 131 x(Softwa)S -2 x(re-Date)S -2 x(ntr\344g)S
+-2 x(er)S 132 x(\211nden)S 132 x(Sie)S 132 x(in)S 133 x(den)S 132 x
+(jeweiligen)S 132 x(Preislisten.)S 3899 9973 XY F40(Hinweis:)S 298 x
+F34(Software-Produktdienstleistungen)S 184 x(f\374r)S 184 x(DECwrite)S
+183 x(in)S 183 x(amerikanisch)S 183 x(werden)S 183 x(nur)S 184 x(in)S
+183 x(den)S 183 x(V)S -27 x(ereinigten)S 3899 X 598 y(Staaten)S 167 x
+(angeboten.)S 3899 12065 XY F32(Softwareli)S 2 x(zenzierung)S 3899 13062 XY
+F34(F\374r)S 161 x(dieses)S 160 x(Softwareprodukt)S 162 x(einschlie\337li)S
+-2 x(ch)S 161 x(Folgeversionen)S 160 x(gelten)S 161 x(die)S 160 x(Bestimmungen)S
+161 x(des)S 161 x(Abschnitts)S 161 x(Soft)S 2 x(-)S 3899 X 597 y(warelizen)S
+-2 x(z)S 235 x(der)S 234 x(Allgemeinen)S 233 x(Gesch\344ftsbedingungen)S
+234 x(von)S 234 x(Digital)S 233 x(Equipment.)S 426 x(N\344here)S 234 x
+(Informationen)S 235 x(zur)S 3899 X 598 y(Softwarelizenzierung)S 165 x
+(erhalten)S 166 x(Sie)S 166 x(bei)S 165 x(der)S 166 x(n\344chstgelegenen)S
+166 x(Gesch\344ftsstelle)S 166 x(von)S 166 x(Digital)S 165 x(Equipment.)S
+3899 15253 XY F35(Unterst\374tzung)S 167 x(der)S 166 x(License)S 165 x
+(Management)S 166 x(Facility)S 3899 16250 XY F34(Dieses)S 165 x(Softwareprodukt)S
+167 x(unterst\374tzt)S 168 x(die)S 166 x(VMS)S 166 x(License)S 166 x
+(Management)S 166 x(Facility)S -37 x(.)S 3899 17246 XY(Lizenzeinhei)S
+-2 x(ten)S 186 x(f\374r)S 185 x(dieses)S 185 x(Produkt)S 186 x(werden)S
+184 x(als)S 185 x(clusterweite)S 184 x(Lizenzen,)S 190 x(personenabh\344ngige)S
+184 x(Lizenzen)S 185 x(und)S 3899 X 598 y(benutzerlimitierte)S 223 x
+(Lizenzen)S 224 x(vergeben.)S 395 x(Eine)S 224 x(personenabh\344ngige)S
+223 x(Lizenz)S 224 x(f\374r)S 224 x(dieses)S 224 x(Softwareprodukt)S
+225 x(gilt)S 3899 X 597 y(f\374r)S 159 x(einen)S 159 x(bestimmten,)S
+161 x(namentlich)S 158 x(genannten)S 160 x(Benutzer)S -27 x(,)S 161 x
+(wobei)S 158 x(als)S 158 x(dieser)S 159 x(Benutzer)S 159 x(eine)S 159 x
+(physische)S 158 x(Person)S 3899 X 598 y(anzusehen)S 176 x(ist.)S 252 x
+(Bei)S 176 x(einer)S 175 x(benutzerlimitierten)S 175 x(Lizenz)S 176 x
+(hat)S 176 x(ein)S 176 x(beliebi)S -2 x(ger)S 176 x(Benutzer)S 177 x
+(Zugrif)S -9 x(f)S 177 x(auf)S 176 x(das)S 176 x(Software-)S 3899 X
+598 y(produkt.)S 3899 20633 XY(N\344here)S 174 x(Informationen)S 175 x
+(zur)S 175 x(License)S 174 x(Management)S 174 x(Facility)S 175 x(\211nden)S
+174 x(Sie)S 175 x(in)S 174 x(der)S 174 x(Software-Produktbeschreibung)S
+3899 X 598 y(zu)S 174 x(OpenVMS)S 174 x(V)S -37 x(AX)S 174 x(\(SPD)S
+174 x(25.01.xx\))S 175 x(oder)S 174 x(im)S 173 x(Handbuch)S 174 x(zur)S
+174 x(License)S 173 x(Management)S 174 x(Facility)S -37 x(,)S 176 x
+(das)S 174 x(Bestandteil)S 3899 X 598 y(der)S 166 x(Dokumentation)S
+166 x(zu)S 166 x(OpenVMS)S 166 x(V)S -37 x(AX)S 167 x(ist.)S 3899 22825 XY
+(W)S -9 x(eitere)S 195 x(Informationen)S 195 x(\374ber)S 194 x(die)S
+195 x(allgemei)S -2 x(nen)S 195 x(Gesch\344ftsbedingungen)S 194 x(bei)S
+195 x(der)S 194 x(Lizenzvergabe)S 194 x(erhalten)S 195 x(Sie)S 3899 X
+598 y(bei)S 165 x(der)S 166 x(n\344chstgelegenen)S 166 x(Gesch\344ftsstelle)S
+166 x(von)S 166 x(Digital)S 165 x(Equipment.)S 3899 24917 XY F32(Software-P)S
+2 x(roduktdienstleistungen)S 3899 25913 XY F34(Digital)S 225 x(Equipment)S
+227 x(bietet)S 227 x(umfangreiche)S 227 x(Software-)S 227 x(Dienstleistungspakete)S
+226 x(an.)S 404 x(F\374r)S 227 x(weitere)S 226 x(Informationen)S 3899 X
+598 y(wenden)S 165 x(Sie)S 166 x(sich)S 166 x(bitte)S 166 x(an)S 166 x
+(die)S 166 x(n\344chstgelegene)S 166 x(Gesch\344ftsstelle)S 166 x(von)S
+166 x(Digital)S 165 x(Equipment.)S 3899 28006 XY F32(Gew\344hrleistung)S
+3899 29002 XY F34(Art,)S 176 x(Umfang)S 173 x(und)S 173 x(Dauer)S 172 x
+(der)S 173 x(Softwaregew\344hrleistung)S 173 x(sind)S 172 x(in)S 173 x
+(dem)S 173 x(Abschnitt)S 174 x(Gew\344hrl)S -2 x(eistung)S 174 x(f\374r)S
+173 x(Software-)S 3899 X 598 y(produkte)S 166 x(in)S 166 x(den)S 166 x
+(Allgemein)S -2 x(en)S 166 x(Gesch\344ftsbedingungen)S 166 x(von)S 166 x
+(Digital)S 165 x(Equipment)S 166 x(geregelt.)S 3899 30596 XY(\251)S
+166 x(Digital)S 165 x(Equipment)S 166 x(Corporation)S 165 x(1989,)S
+167 x(1994.)S 221 x(Alle)S 166 x(Rechte)S 166 x(vorbehalten.)S 3899 31592 XY
+(Digital)S 163 x(Equipment)S 165 x(Corporation)S 164 x(garantiert)S
+165 x(nicht,)S 165 x(da\337)S 165 x(die)S 164 x(Benutzung)S 165 x(der)S
+165 x(Produkte)S 165 x(gem\344\337)S 165 x(dieser)S 164 x(V)S -28 x
+(er\366f)S -8 x(fent-)S 3899 X 598 y(lichung)S 177 x(nicht)S 178 x(andere)S
+178 x(bereits)S 177 x(bestehende)S 179 x(oder)S 177 x(zuk\374nftige)S
+179 x(Rechte)S 178 x(verletzt.)S 258 x(Dar\374ber)S 177 x(hinaus)S 178 x
+(beinhalten)S 177 x(die)S 3899 X 598 y(Erkl\344rungen)S 241 x(in)S 241 x
+(dieser)S 241 x(V)S -27 x(er\366f)S -9 x(fentlichung)S 241 x(nicht)S
+242 x(die)S 241 x(Gew\344hrung)S 240 x(von)S 242 x(Lizenzen,)S 260 x
+(um)S 241 x(Ger\344te)S 242 x(oder)S 241 x(Software)S 3899 X 597 y(herzustellen,)S
+166 x(zu)S 166 x(verwenden)S 165 x(oder)S 166 x(zu)S 166 x(verkaufen.)S
+15306 37373 XY F40(10)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%+ Helvetica-Oblique
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Page: (11) 11
+%%PageFonts: (atend)
+%%PageProcessColors: (atend)
+%%PageCustomColors: (atend)
+PaperHeight PaperWidth PM 0 0 XY
+0 SC 3899 2106 XY F40(DECwrite/DEUTSC)S -2 x(H)S 149 x(f\374r)S 150 x
+(OpenVMS)S 150 x(V)S -33 x(AX,)S 149 x(V)S -25 x(ersion)S 150 x(3.0)S
+24321 X(SPD)S 149 x(25.R8.04)S 3899 3976 XY F34(Usage)S 203 x(Alert,)S
+213 x(Electronic)S 203 x(Thesaurus,)S 213 x(International)S 203 x(Hyphenators)S
+204 x(und)S 203 x(International)S 203 x(CorrectSpell)S 203 x(sind)S
+202 x(lizen-)S 3899 X 598 y(ziert)S 210 x(von)S 210 x(Houghton)S 210 x
+(Mif)S -9 x(\212in)S 209 x(Company)S -37 x(.)S 354 x(Copyright)S 209 x
+(\251)S 210 x(1985,)S 222 x(1987,)S 221 x(1988)S 210 x(von)S 210 x(Houghton)S
+210 x(Mif)S -9 x(\212in.)S 353 x(Deutsches)S 3899 X 598 y(Copyright)S
+171 x(1985,)S 172 x(1987)S 172 x(von)S 171 x(Langenscheidt)S 171 x(K.G.)S
+172 x(Franz\366sisches)S 171 x(Copyright)S 171 x(in)S 171 x(Zusammenarbeit)S
+171 x(mit)S 171 x(Librairi)S -2 x(e)S 3899 X 597 y(Larousse.)S 359 x
+(Italienisches)S 211 x(Copyright)S 212 x(1988)S 211 x(von)S 212 x(Nicola)S
+211 x(Zanichelli)S -2 x(.)S 360 x(Alle)S 211 x(Rechte)S 212 x(vorbehalten.)S
+359 x(U.S.)S 212 x(Pat.Nrn.)S 3899 X 598 y(4,580,241,)S 167 x(4,724,523)S
+166 x(und)S 166 x(4,771,401.)S 222 x(Kanadische)S 165 x(Pat.)S 2 x(Nr)S
+-28 x(.)S 221 x(1,203,916.)S 223 x(Thesaurus)S 166 x(U.S.)S 166 x(Pat.Nr)S
+-26 x(.)S 221 x(4,724,523.)S 3899 X 598 y(Englisch)S 240 x(basiert)S
+241 x(auf)S 241 x(The)S 241 x(American)S 240 x(Heritage)S 241 x(Dictionary)S
+-38 x(.)S 446 x(Thesaurus)S 241 x(basiert)S 241 x(auf)S 241 x(Roget')S
+-10 x(s)S 241 x(II)S 242 x(Thesaurus.)S 3899 X 598 y(Die)S 183 x(Reproduktion)S
+183 x(von)S 184 x(T)S -55 x(eilprogrammen)S 183 x(oder)S 184 x(Algorithmen)S
+183 x(sowie)S 184 x(deren)S 183 x(R\374ck\374bersetzung)S 184 x(in)S
+184 x(Quell)S -2 x(code)S 184 x(ist)S 3899 X 597 y(verboten.)S 3899 9157 XY
+(Arts)S 167 x(and)S 166 x(Letters\206)S 166 x(Clip)S 165 x(Art)S 167 x
+(ist)S 166 x(lizenziert)S 165 x(f\374r)S 167 x(Digi)S -2 x(tal)S 167 x
+(Equipment)S 166 x(Corporation,)S 165 x(Maynard,)S 167 x(Massachusetts.)S
+3899 X 597 y(Copyright)S 165 x(\251)S 167 x(Computer)S 165 x(Support)S
+167 x(Corporation)S 165 x(1985-1990.)S 222 x(Alle)S 165 x(Rechte)S 166 x
+(vorbehalten.)S 3899 10751 XY(Studio)S 166 x(Advertising)S 166 x(Art)S
+167 x(clip)S 165 x(ist)S 166 x(lizenziert)S 165 x(f\374r)S 167 x(Digi)S
+-2 x(tal)S 166 x(Equipment)S 167 x(Corporation,)S 165 x(Maynard,)S 167 x
+(Massachusetts.)S 3899 X 597 y(Copyright)S 165 x(\251)S 167 x(Studio)S
+166 x(Advertising)S 166 x(Art)S 166 x(1988.)S 222 x(Alle)S 165 x(Rechte)S
+167 x(vorbehalten.)S 3899 12345 XY(\206)S 163 x(Adobe,)S 163 x(Display)S
+162 x(PostScript)S 163 x(und)S 163 x(PostScript)S 163 x(sind)S 162 x
+(eingetragene)S 162 x(W)S -18 x(arenzeichen)S 162 x(von)S 162 x(Adobe)S
+163 x(Systems)S 163 x(Incor-)S 3899 X 597 y(porated.)S 3899 13939 XY
+(\206)S 166 x(Arts)S 167 x(and)S 166 x(Letters)S 167 x(ist)S 166 x(ein)S
+165 x(eingetragenes)S 166 x(W)S -18 x(arenzeichen)S 165 x(der)S 166 x
+(Computer)S 166 x(Support)S 166 x(Corporation.)S 3899 14935 XY(\207)S
+166 x(Interleaf)S 167 x(und)S 166 x(TPS)S 167 x(sind)S 165 x(W)S -18 x
+(arenzeichen)S 165 x(der)S 166 x(Interleaf,)S 168 x(Inc.)S 3899 15931 XY
+(\206)S 166 x(Lotus)S 167 x(und)S 165 x(1-2-3)S 166 x(sind)S 166 x(eingetragene)S
+165 x(W)S -18 x(arenzeichen)S 166 x(der)S 165 x(Lotus)S 167 x(Development)S
+165 x(Corporation.)S 3899 16928 XY(\206)S 166 x(Microsoft)S 167 x(und)S
+165 x(MS-DOS)S 166 x(sind)S 166 x(eingetragene)S 165 x(W)S -18 x(arenzeichen)S
+165 x(der)S 166 x(Microsoft)S 167 x(Corporation.)S 3899 17924 XY(\206)S
+166 x(Motif,)S 167 x(OSF)S -55 x(,)S 166 x(OSF/Motif)S 168 x(sind)S
+165 x(eingetragene)S 166 x(W)S -18 x(arenzeichen)S 165 x(der)S 166 x
+(Open)S 165 x(Software)S 167 x(Foundation,)S 167 x(Inc.)S 3899 18920 XY
+(\207)S 166 x(W)S -9 x(ordPerfect)S 167 x(ist)S 166 x(ein)S 166 x(W)S
+-18 x(arenzeichen)S 165 x(der)S 166 x(W)S -9 x(ordPerfect)S 167 x(Corporation.)S
+3899 19916 XY(Alle)S 165 x(anderen)S 166 x(W)S -18 x(arenzeichen)S 165 x
+(und)S 166 x(eingetragene)S 166 x(W)S -18 x(arenzeichen)S 165 x(sind)S
+166 x(Eigentum)S 166 x(ihrer)S 165 x(jeweil)S -2 x(igen)S 166 x(Besitzer)S
+-27 x(.)S 3899 20913 XY(\207)S 111 x(Bookreader)S -28 x(,)S 122 x(CDA,)S
+111 x(DEC,)S 111 x(DECchart,)S 122 x(DECfonts,)S 123 x(DECimage,)S 121 x
+(DEClaser)S -28 x(,)S 122 x(DECpaint,)S 122 x(DECwi)S -2 x(ndows,)S
+122 x(DECwrite,)S 3899 X 597 y(Digital,)S 307 x(DX,)S 280 x(EDT)S -55 x
+(,)S 279 x(GOLD)S 278 x(KEY)S -63 x(,)S 280 x(LiveLink,)S 307 x(LN03)S
+279 x(ScriptPrinter)S -27 x(,)S 308 x(OpenVMS,)S 280 x(PrintServer)S
+-28 x(,)S 308 x(V)S -36 x(AX,)S 280 x(V)S -36 x(AXELN,)S 3899 X 598 y
+(VMScluster)S -27 x(,)S 160 x(VXT2000)S 161 x(und)S 160 x(das)S 160 x
+(Digital-Firm)S -2 x(enzeichen)S 160 x(sind)S 160 x(W)S -19 x(arenzeichen)S
+160 x(der)S 159 x(Digital)S 159 x(Equipment)S 160 x(Corpora-)S 3899 X
+598 y(tion.)S 15318 37373 XY F40(1)S -24 x(1)S
+EP PP
+%%PageTrailer
+%%PageFonts: Helvetica-Bold Helvetica
+%%PageProcessColors:
+%%PageCustomColors: (BLACK)
+%
+%%Trailer
+%%Pages: 11
+%%BoundingBox: 0 0 612 792
+%%DocumentFonts: DigitalLogo Helvetica
+%%+ Helvetica-Bold Helvetica-Oblique
+%%DocumentNeededFonts: Helvetica Helvetica-Bold
+%%+ Helvetica-Oblique
+%%DocumentProcessColors:
+%%DocumentCustomColors: (BLACK)
+%%CMYKCustomColor: 0.0 0.0 0.0 1.0 (BLACK)
+%
+DVC$PSJob restore
+end %DEC_DVC$dict
+end %Color5044Dict
+%
+%%EOF
