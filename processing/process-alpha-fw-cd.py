@@ -55,6 +55,30 @@ def parse_entry(line: str, line_number: int) -> dict[str, str]:
 
     family, processor, smm_values, remainder = fields
 
+    # V3.8 format: firmware followed by a single boot-flags selector.
+    old_match = re.fullmatch(
+        r"(\[[^\]]+\][^\s]+)\s+([01])\s*",
+        remainder,
+    )
+
+    if old_match:
+        firmware, boot_selector = old_match.groups()
+        flags = int(boot_selector)
+
+        boot_flags = "0x80" if flags == 1 else "0xA0"
+
+        return {
+            "family": family,
+            "processor": processor,
+            "smm": smm_values,
+            "firmware": firmware,
+            "flags": f"0x{flags:X}",
+            "decoded": f"Boot flags 0,{boot_flags}",
+            "srm_version": "",
+            "platform": comment.strip(),
+        }
+
+    # Later format: firmware, flags bitmask and SRM version.
     match = ENTRY_RE.search(remainder)
     if not match:
         raise ValueError("could not parse firmware, flags and SRM version")
@@ -83,7 +107,6 @@ def parse_entry(line: str, line_number: int) -> dict[str, str]:
         "srm_version": srm_version,
         "platform": comment.strip(),
     }
-
 
 def make_wiki_table(entries: list[dict[str, str]]) -> str:
     """Render parsed entries as a MediaWiki table."""
